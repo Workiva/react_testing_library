@@ -14,3 +14,8 @@ targets:
             - --csp
             # Disable minification for easier test/example debugging
             - --no-minify
+      test_html_builder:
+        options:
+          templates:
+            "test/unit/unit_test_template.html":
+              - "test/unit/**_test.dart"

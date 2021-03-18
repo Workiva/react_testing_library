@@ -14,9 +14,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// A testing library for OverReact components that mimics the API of
-/// the [JS `react-testing-library` package](https://testing-library.com/docs/react-testing-library/intro)
-library react_testing_library;
+import 'dart:html' show document;
 
-export 'package:react_testing_library/src/dom_testing_library.dart';
-export 'package:react_testing_library/src/react_testing_library.dart';
+import 'package:react_testing_library/src/dom/within.dart' show within;
+
+/// Exposes all the "top-level" queries exposed by the dom-testing-library,
+/// but the scope/container is defaulted to `document.body`.
+///
+/// > See: <https://testing-library.com/docs/queries/about/#screen>
+final screen = within(document.body);

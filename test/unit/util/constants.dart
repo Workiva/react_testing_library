@@ -14,9 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// A testing library for OverReact components that mimics the API of
-/// the [JS `react-testing-library` package](https://testing-library.com/docs/react-testing-library/intro)
-library react_testing_library;
+import 'package:test/test.dart' show Timeout;
 
-export 'package:react_testing_library/src/dom_testing_library.dart';
-export 'package:react_testing_library/src/react_testing_library.dart';
+const asyncQueryTimeout = Duration(milliseconds: 200);
+final asyncQueryTestTimeout = Timeout(asyncQueryTimeout * 2);
