@@ -1,0 +1,7 @@
+platforms:
+  - chrome
+
+paths:
+  - test/unit/
+
+concurrency: 8
