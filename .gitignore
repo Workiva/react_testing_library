@@ -26,3 +26,6 @@ doc/api/
 
 # OS Files
 .DS_Store
+node_modules
+*.lock
+yarn-error.log
