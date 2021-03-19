@@ -1196,6 +1196,8 @@ Future<List<E>> findAllByRole<E extends Element>(
 /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
 ///
+/// {@macro EnableTestModeCallout}
+///
 /// Throws if no element is found within the provided [container].
 /// Use [queryByTestId] if a RTE is not expected.
 ///
@@ -1221,6 +1223,8 @@ E getByTestId<E extends Element>(
 
 /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
+///
+/// {@macro EnableTestModeCallout}
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByTestId] if a RTE is not expected.
@@ -1248,6 +1252,8 @@ List<E> getAllByTestId<E extends Element>(
 /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
 ///
+/// {@macro EnableTestModeCallout}
+///
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByTestId] if a RTE is expected.
 ///
@@ -1271,6 +1277,8 @@ E queryByTestId<E extends Element>(
 
 /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
+///
+/// {@macro EnableTestModeCallout}
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByTestId] if a RTE is expected.
@@ -1298,6 +1306,8 @@ List<E> queryAllByTestId<E extends Element>(
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
 /// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+///
+/// {@macro EnableTestModeCallout}
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -1344,6 +1354,8 @@ Future<E> findByTestId<E extends Element>(
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
 /// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+///
+/// {@macro EnableTestModeCallout}
 ///
 /// Throws if no elements are found within the provided [container].
 ///

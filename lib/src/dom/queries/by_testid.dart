@@ -15,6 +15,10 @@
 // limitations under the License.
 
 /// https://testing-library.com/docs/queries/bytestid/
+///
+/// {@template EnableTestModeCallout}
+/// **When using a `*ByTestId` query on an OverReact component, you must call `enableTestMode()` within `main()` of your test(s).**
+/// {@endtemplate}
 @JS()
 library react_testing_library.src.dom.queries.by_testid;
 
@@ -35,6 +39,8 @@ import 'package:react_testing_library/src/util/error_message_utils.dart' show wi
 mixin ByTestIdQueries on IQueries {
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
+  ///
+  /// {@macro EnableTestModeCallout}
   ///
   /// Throws if no element is found.
   /// Use [queryByTestId] if a RTE is not expected.
@@ -67,6 +73,8 @@ mixin ByTestIdQueries on IQueries {
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
+  /// {@macro EnableTestModeCallout}
+  ///
   /// Throws if no elements are found.
   /// Use [queryAllByTestId] if a RTE is not expected.
   ///
@@ -97,6 +105,8 @@ mixin ByTestIdQueries on IQueries {
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
+  /// {@macro EnableTestModeCallout}
+  ///
   /// Returns `null` if no element is found.
   /// Use [getByTestId] if a RTE is expected.
   ///
@@ -120,6 +130,8 @@ mixin ByTestIdQueries on IQueries {
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
+  ///
+  /// {@macro EnableTestModeCallout}
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByTestId] if a RTE is expected.
@@ -149,6 +161,8 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
   /// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+  ///
+  /// {@macro EnableTestModeCallout}
   ///
   /// Throws if exactly one element is not found.
   ///
@@ -202,6 +216,8 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
   /// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+  ///
+  /// {@macro EnableTestModeCallout}
   ///
   /// Throws if no elements are found.
   ///
