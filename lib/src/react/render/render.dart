@@ -27,7 +27,7 @@ import 'package:test/test.dart' show addTearDown;
 
 import 'package:react_testing_library/src/react/render/types.dart' show JsRenderResult, RenderOptions;
 
-/// Renders the [ui] into the DOM, returning a [RenderResult] API that can be used
+/// Renders the [ui] element into the DOM, returning a [RenderResult] API that can be used
 /// to do things like [RenderResult.rerender] with different props, or to call
 /// a query function scoped within the [container] that was rendered into.
 ///
@@ -86,20 +86,34 @@ RenderResult render(
 /// The model returned from [render], which includes all the [ScopedQueries] scoped to the
 /// container that was rendered within.
 ///
-/// TODO: Document fields / methods
-/// TODO: Document how to use the bound queries on the container
+/// > See: <https://testing-library.com/docs/react-testing-library/api/#render-result>
 class RenderResult extends ScopedQueries {
   RenderResult._(this._jsRenderResult, this._renderedElement) : super(() => _jsRenderResult.container);
 
   final JsRenderResult _jsRenderResult;
 
+  /// The rendered VDOM instance that was passed to [render] as the first argument.
   ReactElement get renderedElement => _renderedElement;
   ReactElement _renderedElement;
 
+  /// The containing DOM node of your rendered [ReactElement] _(via [render])_.
+  ///
+  /// > See: <https://testing-library.com/docs/react-testing-library/api/#container-1>
   Element get container => _jsRenderResult.container;
 
+  /// The containing DOM node where your [ReactElement] is rendered in the [container].
+  ///
+  /// If you don't specify the `baseElement` in the options of [render], it will default to `document.body`.
+  ///
+  /// This is useful when the component you want to test renders something outside the container `div`,
+  /// e.g. when you want to snapshot test your portal component which renders its HTML directly in the body.
+  ///
+  /// > See: <https://testing-library.com/docs/react-testing-library/api/#baseelement-1>
   Element get baseElement => _jsRenderResult.baseElement;
 
+  /// A shortcut for `console.log(prettyDOM(baseElement))`.
+  ///
+  /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([
     Element baseElement,
     int maxLength,
@@ -108,13 +122,27 @@ class RenderResult extends ScopedQueries {
   ]) =>
       _jsRenderResult.debug(baseElement, maxLength, options);
 
+  /// Updates the props of the [renderedElement] by providing an updated [ui] element.
+  ///
+  /// > See: <https://testing-library.com/docs/react-testing-library/api/#rerender>
   void rerender(ReactElement ui) {
     _renderedElement = ui;
     _jsRenderResult.rerender(ui);
   }
 
+  /// Unmounts the [renderedElement].
+  ///
+  /// This is automatically called in the `tearDown` of each test that calls [render]
+  /// unnecessary unless you set `autoTearDown` to `false`.
+  ///
+  /// > See: <https://testing-library.com/docs/react-testing-library/api/#unmount>
   void unmount() => _jsRenderResult.unmount();
 
+  /// Returns a `DocumentFragment` of your [renderedElement].
+  ///
+  /// This can be useful if you need to avoid live bindings and see how your component reacts to events.
+  ///
+  /// > See: <https://testing-library.com/docs/react-testing-library/api/#asfragment>
   DocumentFragment asFragment() => _jsRenderResult.asFragment();
 }
 

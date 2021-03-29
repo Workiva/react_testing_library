@@ -15,7 +15,7 @@
 // limitations under the License.
 
 @JS()
-library react_testing_library.src.dom.matches.types;
+library react_testing_library.src.dom.matches.get_default_normalizer;
 
 import 'package:js/js.dart';
 

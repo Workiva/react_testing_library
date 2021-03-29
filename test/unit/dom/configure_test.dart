@@ -34,7 +34,7 @@ main() {
 
       test('with the expected testIdAttribute value', () {
         expect(rtl.getConfig().testIdAttribute, defaultTestIdKey,
-            reason: 'The value of Config.testIdAttribute should default to what we use in the Workiva ecosystem, '
+            reason: 'The value of Config.testIdAttribute should default to what we use in the OverReact ecosystem, '
                 'rather than the `data-testid` value that the JS testing-library uses by default.');
       });
     });

@@ -129,7 +129,7 @@ List<ImageElement> queryAllByAltText(
 /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByAltText] or [queryByAltText] in a `waitFor` function.
+/// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -175,7 +175,7 @@ Future<ImageElement> findByAltText(
 /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByAltText] or [queryByAltText] in a `waitFor` function.
+/// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
 ///
@@ -325,7 +325,7 @@ List<E> queryAllByDisplayValue<E extends Element>(
 /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
+/// a non-async query like [getByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -371,7 +371,7 @@ Future<E> findByDisplayValue<E extends Element>(
 /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
+/// a non-async query like [getByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
 ///
@@ -543,7 +543,7 @@ List<E> queryAllByLabelText<E extends Element>(
 /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByLabelText] or [queryByLabelText] in a `waitFor` function.
+/// a non-async query like [getByLabelText] or [queryByLabelText] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -595,7 +595,7 @@ Future<E> findByLabelText<E extends Element>(
 /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByLabelText] or [queryByLabelText] in a `waitFor` function.
+/// a non-async query like [getByLabelText] or [queryByLabelText] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
 ///
@@ -752,7 +752,7 @@ List<E> queryAllByPlaceholderText<E extends Element>(
 /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
+/// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -798,7 +798,7 @@ Future<E> findByPlaceholderText<E extends Element>(
 /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
+/// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
 ///
@@ -1051,7 +1051,7 @@ List<E> queryAllByRole<E extends Element>(
 /// waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByRole] or [queryByRole] in a `waitFor` function.
+/// a non-async query like [getByRole] or [queryByRole] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -1122,7 +1122,7 @@ Future<E> findByRole<E extends Element>(
 /// waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByRole] or [queryByRole] in a `waitFor` function.
+/// a non-async query like [getByRole] or [queryByRole] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
 ///
@@ -1305,7 +1305,7 @@ List<E> queryAllByTestId<E extends Element>(
 /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+/// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
 ///
 /// {@macro EnableTestModeCallout}
 ///
@@ -1353,7 +1353,7 @@ Future<E> findByTestId<E extends Element>(
 /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+/// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
 ///
 /// {@macro EnableTestModeCallout}
 ///
@@ -1555,7 +1555,7 @@ List<E> queryAllByText<E extends Element>(
 /// waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByText] or [queryByText] in a `waitFor` function.
+/// a non-async query like [getByText] or [queryByText] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -1616,7 +1616,7 @@ Future<E> findByText<E extends Element>(
 /// waiting 1000ms (or the provided [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByText] or [queryByText] in a `waitFor` function.
+/// a non-async query like [getByText] or [queryByText] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
 ///
@@ -1781,7 +1781,7 @@ List<E> queryAllByTitle<E extends Element>(
 /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByTitle] or [queryByTitle] in a `waitFor` function.
+/// a non-async query like [getByTitle] or [queryByTitle] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -1827,7 +1827,7 @@ Future<E> findByTitle<E extends Element>(
 /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-/// a non-async query like [findByTitle] or [queryByTitle] in a `waitFor` function.
+/// a non-async query like [getByTitle] or [queryByTitle] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
 ///

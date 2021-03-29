@@ -283,7 +283,7 @@ mixin ByRoleQueries on IQueries {
   /// waiting 1000ms (or the provided [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-  /// a non-async query like [findByRole] or [queryByRole] in a `waitFor` function.
+  /// a non-async query like [getByRole] or [queryByRole] in a `waitFor` function.
   ///
   /// Throws if exactly one element is not found.
   ///
@@ -361,7 +361,7 @@ mixin ByRoleQueries on IQueries {
   /// waiting 1000ms (or the provided [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-  /// a non-async query like [findByRole] or [queryByRole] in a `waitFor` function.
+  /// a non-async query like [getByRole] or [queryByRole] in a `waitFor` function.
   ///
   /// Throws if no elements are found.
   ///

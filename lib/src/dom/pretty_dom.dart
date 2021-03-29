@@ -21,8 +21,13 @@ import 'dart:html' show Element;
 
 import 'package:js/js.dart';
 
+/// Returns a readable representation of the DOM tree of the given [node].
+///
+/// This can be helpful for instance when debugging tests.
+///
+/// See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging#prettydom) for more details and examples.
 String prettyDOM(
-  Element dom, {
+  Element node, {
   int maxLength,
   bool callToJSON,
   bool escapeRegex,
@@ -47,7 +52,7 @@ String prettyDOM(
   if (printFunctionName != null) options.printFunctionName = printFunctionName;
   if (themeReceived != null) options.themeReceived = themeReceived;
 
-  return _prettyDOM(dom, maxLength, OptionsReceived());
+  return _prettyDOM(node, maxLength, OptionsReceived());
 }
 
 @JS('rtl.prettyDOM')

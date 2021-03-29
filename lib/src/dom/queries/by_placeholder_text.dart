@@ -145,7 +145,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-  /// a non-async query like [findByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
+  /// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
   ///
   /// Throws if exactly one element is not found.
   ///
@@ -198,7 +198,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-  /// a non-async query like [findByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
+  /// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
   ///
   /// Throws if no elements are found.
   ///

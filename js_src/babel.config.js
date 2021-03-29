@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 module.exports = function getBabelConfig(api) {
   const useESModules = !api.env('api');
   return {

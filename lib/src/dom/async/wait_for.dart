@@ -38,7 +38,7 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 /// Similar to <https://testing-library.com/docs/dom-testing-library/api-async/#waitfor>, but designed to
 /// work with the `dart:test` package's [expect] function and Dart [Future]s instead of JS `Promise`s.
 ///
-/// * If you're waiting for an element to existing in the DOM, use a `findBy*` query instead.
+/// * If you're waiting for an element to exist in the DOM, use a `findBy*` query instead.
 /// * If you're waiting for an element to be removed from the DOM, use [waitForElementToBeRemoved] instead.
 ///
 /// ## Options

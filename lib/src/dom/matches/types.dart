@@ -162,6 +162,7 @@ class MatcherOptions {
   /// Use the `errorMessage` argument to customize error messages displayed when
   /// tests using the query fail.
   /// {@endtemplate}
+  external String get _errorMessage;
 }
 
 @JS()

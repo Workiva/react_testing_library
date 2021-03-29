@@ -160,7 +160,7 @@ mixin ByTestIdQueries on IQueries {
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-  /// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+  /// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
   ///
   /// {@macro EnableTestModeCallout}
   ///
@@ -215,7 +215,7 @@ mixin ByTestIdQueries on IQueries {
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
-  /// a non-async query like [findByTestId] or [queryByTestId] in a `waitFor` function.
+  /// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
   ///
   /// {@macro EnableTestModeCallout}
   ///
