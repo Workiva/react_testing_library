@@ -40,8 +40,7 @@ class JsRenderResult {
   external void debug([
     Element baseElement,
     int maxLength,
-    // TODO
-    /*prettyFormat.OptionsReceived*/ dynamic options,
+    /*prettyFormat.OptionsReceived*/ Object options,
   ]);
 
   external void rerender(ReactElement ui);

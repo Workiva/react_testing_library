@@ -51,8 +51,7 @@ abstract class IQueries {
     final waitForOptions = SharedJsWaitForOptions();
     if (timeout != null) waitForOptions.timeout = timeout.inMilliseconds;
     if (interval != null) waitForOptions.interval = interval.inMilliseconds;
-    // TODO: Wire this up / test the interop to ensure the stack trace is intact
-    // if (onTimeout != null) waitForOptions.onTimeout = allowInterop(onTimeout);
+    if (onTimeout != null) waitForOptions.onTimeout = allowInterop(onTimeout);
     // ignore: invalid_use_of_protected_member
     if (mutationObserverOptions != null) waitForOptions.mutationObserverOptions = mutationObserverOptions.toJs();
 

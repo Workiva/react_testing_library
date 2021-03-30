@@ -72,7 +72,7 @@ main() {
                     container: renderResult.container),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
-                  /*TODO: Assert that the error matches a `getByAltText` error message*/
+                  hasToStringValue(contains('alt text: somethingThatDoesNotExist')),
                 )));
           }, timeout: asyncQueryTestTimeout);
         });
@@ -92,7 +92,7 @@ main() {
                       container: renderResult.container),
                   throwsA(allOf(
                     isA<TestingLibraryElementError>(),
-                    /*TODO: Assert that the error matches a `findByAltText` error message*/
+                    hasToStringValue(contains('alt text: somethingThatDoesNotExist')),
                   )));
             }, timeout: asyncQueryTestTimeout);
 
@@ -202,7 +202,6 @@ main() {
       });
     });
 
-    // TODO: Add tests where only a single element in a list of multiple elements is removed, etc.
     group('waitForElementsToBeRemoved()', () {
       Element elementThatWillBeRemovedAfterDelay;
       Element anotherElementThatWillBeRemovedAfterDelay;

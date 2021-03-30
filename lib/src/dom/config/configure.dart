@@ -51,7 +51,6 @@ void configure({
     ..defaultHidden = defaultHidden ?? existingConfig.defaultHidden
     ..showOriginalStackTrace = showOriginalStackTrace ?? existingConfig.showOriginalStackTrace
     ..throwSuggestions = throwSuggestions ?? existingConfig.throwSuggestions
-    // TODO: Wrap this?
     ..getElementError = getElementError != null ? allowInterop(_getJsGetElementError) : existingConfig.getElementError);
 }
 
