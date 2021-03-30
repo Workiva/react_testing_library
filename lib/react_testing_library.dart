@@ -21,3 +21,4 @@ library react_testing_library;
 export 'package:react_testing_library/src/dom_testing_library.dart';
 export 'package:react_testing_library/src/react_testing_library.dart';
 export 'package:react_testing_library/src/matchers.dart';
+export 'package:react_testing_library/src/util/error_message_utils.dart' show TestingLibraryElementError;

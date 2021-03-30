@@ -16,8 +16,11 @@
 
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/dom/config/configure.dart';
+import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
+
+import '../util/matchers.dart';
 
 main() {
   group('getConfig()', () {
@@ -52,7 +55,7 @@ main() {
           throwSuggestions: !initialConfig.throwSuggestions,
           getElementError: (message, container) {
             final customMessage = [message, 'something custom'].join('\n\n');
-            return TestFailure(customMessage);
+            return TestingLibraryElementError(customMessage);
           });
 
       final newConfig = rtl.getConfig();
@@ -62,18 +65,13 @@ main() {
       expect(newConfig.defaultHidden, !initialConfig.defaultHidden);
       expect(newConfig.showOriginalStackTrace, !initialConfig.showOriginalStackTrace);
       expect(newConfig.throwSuggestions, !initialConfig.throwSuggestions);
-
-      // TODO: Uncomment this test once the interop for getElementError is working
-      // String failureMessage;
-      // expect(() {
-      //   try {
-      //     rtl.screen.getByTestId('does-not-exist');
-      //   } catch (err) {
-      //     failureMessage = (err as TestFailure).message;
-      //     rethrow;
-      //   }
-      // }, throwsA(TestFailure));
-      // expect(failureMessage, endsWith('something custom'));
+      expect(
+          () => rtl.screen.getByTestId('does-not-exist'),
+          throwsA(allOf(
+            isA<TestingLibraryElementError>(),
+            hasToStringValue(contains('something custom')),
+            hasToStringValue(endsWith('</body>')),
+          )));
 
       // Set things back to the initial value
       jsConfigure(initialConfig);
