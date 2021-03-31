@@ -19,17 +19,100 @@ import 'dart:svg' show AnimatedString;
 
 import 'package:matcher/matcher.dart';
 
-/// Returns a matcher that matches an element that has [classes].
+/// Allows you to check whether an [Element] has certain [classes] within its HTML `class` attribute.
+///
+/// [classes] can be a String of space-separated CSS classes, or an [Iterable] of String CSS classes.
+///
+/// Similar to [jest-dom's `toHaveClass` matcher](https://github.com/testing-library/jest-dom#tohaveclass).
+/// However, instead of the JS `.not.toHaveClass()` pattern, you should use [excludesClasses], and instead of
+/// using the `{exact: true}` option as you do in JS, you should use [hasExactClasses].
+///
+/// ### Examples
+/// ```html
+/// &lt;button data-test-id="delete-button" class="btn extra btn-danger">
+///   Delete item
+/// &lt;/button>
+/// &lt;button data-test-id="no-classes">No Classes&lt;/button>
+/// ```
+///
+/// ```dart
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// import 'package:test/test.dart';
+///
+/// main() {
+///   test('', () {
+///     final deleteButton = rtl.screen.getByTestId('delete-button');
+///
+///     expect(deleteButton, hasClasses('extra'));
+///     expect(deleteButton, hasClasses('btn-danger btn'));
+///     expect(deleteButton, hasClasses(['btn-danger', 'btn']));
+///   });
+/// }
+/// ```
 Matcher hasClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.expected(classes));
 
-/// Returns a matcher that matches an element that has [classes], with no additional or duplicated classes.
+/// Allows you to check whether an [Element] has certain [classes] within its HTML `class` attribute,
+/// with no additional or duplicated classes like the [hasClasses] matcher allows.
+///
+/// [classes] can be a String of space-separated CSS classes, or an [Iterable] of String CSS classes.
+///
+/// Similar to [jest-dom's `toHaveClass` matcher](https://github.com/testing-library/jest-dom#tohaveclass)
+/// when the `exact` option is set to `true`.
+///
+/// ### Examples
+/// ```html
+/// <button data-test-id="delete-button" class="btn extra btn-danger">
+///   Delete item
+/// </button>
+/// <button data-test-id="no-classes">No Classes</button>
+/// ```
+///
+/// ```dart
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// import 'package:test/test.dart';
+///
+/// main() {
+///   test('', () {
+///     final deleteButton = rtl.screen.getByTestId('delete-button');
+///
+///     expect(deleteButton, hasExactClasses('btn-danger extra btn'));
+///     expect(deleteButton, hasExactClasses(['btn-danger', 'extra', 'btn']));
+///   });
+/// }
+/// ```
 Matcher hasExactClasses(classes) =>
     _ElementClassNameMatcher(ClassNameMatcher.expected(classes, allowExtraneous: false));
 
-/// Returns a matcher that matches an element that does not have [classes].
+/// Allows you to check whether an [Element] does not have certain [classes] within its HTML `class` attribute.
+///
+/// [classes] can be a String of space-separated CSS classes, or an [Iterable] of String CSS classes.
+///
+/// Similar to using `.not.hasClasses(classes)` in the jest-dom JS API.
+///
+/// ### Examples
+/// ```html
+/// <button data-test-id="delete-button" class="btn extra btn-danger">
+///   Delete item
+/// </button>
+/// <button data-test-id="no-classes">No Classes</button>
+/// ```
+///
+/// ```dart
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// import 'package:test/test.dart';
+///
+/// main() {
+///   test('', () {
+///     final deleteButton = rtl.screen.getByTestId('delete-button');
+///
+///     expect(deleteButton, excludesClasses('not-there'));
+///     expect(deleteButton, hasClasses(['not-there', 'nope']));
+///   });
+/// }
+/// ```
 Matcher excludesClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.unexpected(classes));
 
-/// Match a list of class names on a component
+/// Match a list of class names on a component.
 class ClassNameMatcher extends Matcher {
   ClassNameMatcher.expected(_expectedClasses, {this.allowExtraneous = true})
       : expectedClasses = getClassIterable(_expectedClasses).toSet(),
@@ -51,9 +134,9 @@ class ClassNameMatcher extends Matcher {
   static Iterable getClassIterable(dynamic classNames) {
     Iterable classes;
     if (classNames is Iterable<String>) {
-      classes = classNames.where((className) => className != null).expand(splitSpaceDelimitedString);
+      classes = classNames.where((className) => className != null).expand(_splitSpaceDelimitedString);
     } else if (classNames is String) {
-      classes = splitSpaceDelimitedString(classNames);
+      classes = _splitSpaceDelimitedString(classNames);
     } else {
       throw ArgumentError.value(classNames, 'Must be a list of classNames or a className string', 'classNames');
     }
@@ -153,7 +236,7 @@ class _ElementClassNameMatcher extends CustomMatcher {
 /// __Example:__
 ///
 ///     splitSpaceDelimitedString('   foo bar     baz') // ['foo', 'bar', 'baz']
-List<String> splitSpaceDelimitedString(String string) {
+List<String> _splitSpaceDelimitedString(String string) {
   const int SPACE = 32; // ' '.codeUnits.first;
 
   List<String> strings = [];
