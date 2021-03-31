@@ -70,3 +70,32 @@ Matcher buildContainsPatternUsing(String templatePattern, String expectedValueTh
 
   return contains(templatePattern.replaceAll(valueNotFoundPlaceholder, expectedValueThatWasNotFound));
 }
+
+/// Utility for asserting that [matcher] will fail on [value].
+///
+/// Copyright (c) 2012, the Dart project authors.
+void shouldFail(value, Matcher matcher, expected) {
+  var failed = false;
+  try {
+    expect(value, matcher);
+  } on TestFailure catch (err) {
+    failed = true;
+
+    var _errorString = err.message;
+
+    if (expected is String) {
+      expect(_errorString, equalsIgnoringWhitespace(expected));
+    } else {
+      expect(_errorString.replaceAll(RegExp(r'[\s\n]+'), ' '), expected);
+    }
+  }
+
+  expect(failed, isTrue, reason: 'Expected to fail.');
+}
+
+/// Utility for asserting that [matcher] will pass on [value].
+///
+/// Copyright (c) 2012, the Dart project authors.
+void shouldPass(value, Matcher matcher) {
+  expect(value, matcher);
+}
