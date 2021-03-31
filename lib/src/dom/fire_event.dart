@@ -41,6 +41,9 @@ external bool fireEvent(
   Event event,
 );
 
+@JS('rtl.fireEventObj')
+external JsMap get _fireEventObj;
+
 /// Since Dart doesn't support anonymous objects that can act as both a Map and a function
 /// like the JS `fireEvent` can, this function acts as a proxy for:
 ///
@@ -66,7 +69,7 @@ external bool fireEvent(
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
   final bool Function(Element, [/*JsObject*/ dynamic]) jsFireEventByNameFn =
-      JsBackedMap.fromJs(fireEvent as JsMap)[eventName];
+      JsBackedMap.fromJs(_fireEventObj)[eventName];
 
   if (eventProperties == null) {
     return jsFireEventByNameFn(element);
