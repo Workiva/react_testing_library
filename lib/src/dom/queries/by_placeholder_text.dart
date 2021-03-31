@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_placeholder_text;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -251,7 +251,7 @@ mixin ByPlaceholderTextQueries on IQueries {
 
 @JS('rtl.getByPlaceholderText')
 external Element _jsGetByPlaceholderText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -259,7 +259,7 @@ external Element _jsGetByPlaceholderText(
 
 @JS('rtl.getAllByPlaceholderText')
 external List<Element> _jsGetAllByPlaceholderText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -267,7 +267,7 @@ external List<Element> _jsGetAllByPlaceholderText(
 
 @JS('rtl.queryByPlaceholderText')
 external Element _jsQueryByPlaceholderText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -275,7 +275,7 @@ external Element _jsQueryByPlaceholderText(
 
 @JS('rtl.queryAllByPlaceholderText')
 external List<Element> _jsQueryAllByPlaceholderText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,

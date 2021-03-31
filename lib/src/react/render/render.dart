@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.react.render.render;
 
-import 'dart:html' show DocumentFragment, Element;
+import 'dart:html' show DocumentFragment, Element, Node;
 
 import 'package:js/js.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
@@ -45,7 +45,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// > See: <https://testing-library.com/docs/react-testing-library/api#render>
 RenderResult render(
   ReactElement ui, {
-  Element container,
+  Node container,
   Element baseElement,
   bool hydrate = false,
   // TODO: Implement if CPLAT-13502 is deemed necessary

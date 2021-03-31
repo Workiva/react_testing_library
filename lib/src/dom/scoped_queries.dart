@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show Element;
+import 'dart:html' show Node;
 
 import 'package:meta/meta.dart';
 import 'package:react_testing_library/src/dom/queries/by_alt_text.dart' show ByAltTextQueries;
@@ -46,5 +46,5 @@ abstract class ScopedQueries
 
   @protected
   @override
-  final Element Function() getContainerForScope;
+  final Node Function() getContainerForScope;
 }

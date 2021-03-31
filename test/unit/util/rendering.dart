@@ -22,6 +22,7 @@ import 'package:react/react_client/react_interop.dart' show ReactElement;
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 
 import 'constants.dart';
+import 'shadow_dom.dart';
 
 const validRoleInDom = 'button';
 const validRoleNotInDom = 'tablist';
@@ -57,6 +58,10 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
         '$_uniqueName baz',
       ),
       react.p({}, '$_uniqueName single byText match'),
+      ShadowNested(
+        {},
+        react.button({'type': 'button'}, _uniqueName),
+      ),
     );
   }
 

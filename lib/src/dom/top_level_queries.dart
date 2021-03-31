@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show Element, ImageElement, InputElement, LabelElement, SelectElement, TextAreaElement;
+import 'dart:html' show Element, ImageElement, InputElement, LabelElement, Node, SelectElement, TextAreaElement;
 
 import 'package:react_testing_library/src/dom/async/types.dart'
     show MutationObserverOptions, QueryTimeoutFn, defaultMutationObserverOptions;
@@ -43,7 +43,7 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 ImageElement getByAltText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -69,7 +69,7 @@ ImageElement getByAltText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<ImageElement> getAllByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -94,7 +94,7 @@ List<ImageElement> getAllByAltText(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 ImageElement queryByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -118,7 +118,7 @@ ImageElement queryByAltText(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 List<ImageElement> queryAllByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -152,7 +152,7 @@ List<ImageElement> queryAllByAltText(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<ImageElement> findByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -198,7 +198,7 @@ Future<ImageElement> findByAltText(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<ImageElement>> findAllByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -239,7 +239,7 @@ Future<List<ImageElement>> findAllByAltText(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByDisplayValue<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -265,7 +265,7 @@ E getByDisplayValue<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByDisplayValue<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -290,7 +290,7 @@ List<E> getAllByDisplayValue<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 E queryByDisplayValue<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -314,7 +314,7 @@ E queryByDisplayValue<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 List<E> queryAllByDisplayValue<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -348,7 +348,7 @@ List<E> queryAllByDisplayValue<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<E> findByDisplayValue<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -394,7 +394,7 @@ Future<E> findByDisplayValue<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<E>> findAllByDisplayValue<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -439,7 +439,7 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByLabelText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -471,7 +471,7 @@ E getByLabelText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByLabelText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -502,7 +502,7 @@ List<E> getAllByLabelText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 E queryByLabelText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -531,7 +531,7 @@ E queryByLabelText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 List<E> queryAllByLabelText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -570,7 +570,7 @@ List<E> queryAllByLabelText<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<E> findByLabelText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -622,7 +622,7 @@ Future<E> findByLabelText<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<E>> findAllByLabelText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -665,7 +665,7 @@ Future<List<E>> findAllByLabelText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByPlaceholderText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -691,7 +691,7 @@ E getByPlaceholderText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByPlaceholderText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -717,7 +717,7 @@ List<E> getAllByPlaceholderText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 E queryByPlaceholderText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -741,7 +741,7 @@ E queryByPlaceholderText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 List<E> queryAllByPlaceholderText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -775,7 +775,7 @@ List<E> queryAllByPlaceholderText<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<E> findByPlaceholderText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -821,7 +821,7 @@ Future<E> findByPlaceholderText<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<E>> findAllByPlaceholderText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -869,7 +869,7 @@ Future<List<E>> findAllByPlaceholderText<E extends Element>(
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
 E getByRole<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -921,7 +921,7 @@ E getByRole<E extends Element>(
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
 List<E> getAllByRole<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -972,7 +972,7 @@ List<E> getAllByRole<E extends Element>(
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
 E queryByRole<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1022,7 +1022,7 @@ E queryByRole<E extends Element>(
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
 List<E> queryAllByRole<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1083,7 +1083,7 @@ List<E> queryAllByRole<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<E> findByRole<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1154,7 +1154,7 @@ Future<E> findByRole<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<E>> findAllByRole<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1213,7 +1213,7 @@ Future<List<E>> findAllByRole<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByTestId<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1241,7 +1241,7 @@ E getByTestId<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByTestId<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1268,7 +1268,7 @@ List<E> getAllByTestId<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 E queryByTestId<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1294,7 +1294,7 @@ E queryByTestId<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 List<E> queryAllByTestId<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1330,7 +1330,7 @@ List<E> queryAllByTestId<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<E> findByTestId<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1378,7 +1378,7 @@ Future<E> findByTestId<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<E>> findAllByTestId<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1429,7 +1429,7 @@ Future<List<E>> findAllByTestId<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1468,7 +1468,7 @@ E getByText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1506,7 +1506,7 @@ List<E> getAllByText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 E queryByText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1542,7 +1542,7 @@ E queryByText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 List<E> queryAllByText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1589,7 +1589,7 @@ List<E> queryAllByText<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<E> findByText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1650,7 +1650,7 @@ Future<E> findByText<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<E>> findAllByText<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1695,7 +1695,7 @@ Future<List<E>> findAllByText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByTitle<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1721,7 +1721,7 @@ E getByTitle<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByTitle<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1746,7 +1746,7 @@ List<E> getAllByTitle<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 E queryByTitle<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1770,7 +1770,7 @@ E queryByTitle<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 List<E> queryAllByTitle<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1804,7 +1804,7 @@ List<E> queryAllByTitle<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<E> findByTitle<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,
@@ -1850,7 +1850,7 @@ Future<E> findByTitle<E extends Element>(
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<List<E>> findAllByTitle<E extends Element>(
-  Element container,
+  Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
   NormalizerFn Function(NormalizerOptions) normalizer,

@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_title;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -251,7 +251,7 @@ mixin ByTitleQueries on IQueries {
 
 @JS('rtl.getByTitle')
 external Element _jsGetByTitle(
-  Element container,
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,
@@ -259,7 +259,7 @@ external Element _jsGetByTitle(
 
 @JS('rtl.getAllByTitle')
 external List<Element> _jsGetAllByTitle(
-  Element container,
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,
@@ -267,7 +267,7 @@ external List<Element> _jsGetAllByTitle(
 
 @JS('rtl.queryByTitle')
 external Element _jsQueryByTitle(
-  Element container,
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,
@@ -275,7 +275,7 @@ external Element _jsQueryByTitle(
 
 @JS('rtl.queryAllByTitle')
 external List<Element> _jsQueryAllByTitle(
-  Element container,
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,

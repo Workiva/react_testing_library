@@ -19,7 +19,7 @@
 library react_testing_library.src.dom.async.wait_for;
 
 import 'dart:async';
-import 'dart:html' show Element, MutationObserver, document;
+import 'dart:html' show Element, MutationObserver, Node, document;
 
 import 'package:js/js.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
@@ -53,7 +53,7 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<T> waitFor<T>(
   FutureOr<T> Function() expectation, {
-  Element container,
+  Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,
@@ -163,7 +163,7 @@ Future<T> waitFor<T>(
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<void> waitForElementToBeRemoved(
   FutureOr<Element> Function() callback, {
-  Element container,
+  Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,
@@ -215,7 +215,7 @@ Future<void> waitForElementToBeRemoved(
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
 Future<void> waitForElementsToBeRemoved(
   FutureOr<List<Element>> Function() callback, {
-  Element container,
+  Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,

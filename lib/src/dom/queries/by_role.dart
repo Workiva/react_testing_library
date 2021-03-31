@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_role;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
@@ -440,7 +440,7 @@ mixin ByRoleQueries on IQueries {
 
 @JS('rtl.getByRole')
 external Element _jsGetByRole(
-  Element container,
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,
@@ -448,7 +448,7 @@ external Element _jsGetByRole(
 
 @JS('rtl.getAllByRole')
 external List<Element> _jsGetAllByRole(
-  Element container,
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,
@@ -456,7 +456,7 @@ external List<Element> _jsGetAllByRole(
 
 @JS('rtl.queryByRole')
 external Element _jsQueryByRole(
-  Element container,
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,
@@ -464,7 +464,7 @@ external Element _jsQueryByRole(
 
 @JS('rtl.queryAllByRole')
 external List<Element> _jsQueryAllByRole(
-  Element container,
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,

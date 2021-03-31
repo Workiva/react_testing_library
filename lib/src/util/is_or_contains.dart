@@ -14,10 +14,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show Element;
+import 'dart:html' show Node;
 
 /// Returns whether [root] is the same as or contains the [other] node.
 ///
 /// Returns false if either [root] or [other] is null.
-bool isOrContains(Element root, Element other) =>
+bool isOrContains(Node root, Node other) =>
     ((root != null && other != null) && (root == other || root.contains(other)));

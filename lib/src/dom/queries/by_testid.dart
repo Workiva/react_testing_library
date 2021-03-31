@@ -22,7 +22,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_testid;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -270,7 +270,7 @@ mixin ByTestIdQueries on IQueries {
 
 @JS('rtl.getByTestId')
 external Element _jsGetByTestId(
-  Element container,
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,
@@ -278,7 +278,7 @@ external Element _jsGetByTestId(
 
 @JS('rtl.getAllByTestId')
 external List<Element> _jsGetAllByTestId(
-  Element container,
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,
@@ -286,7 +286,7 @@ external List<Element> _jsGetAllByTestId(
 
 @JS('rtl.queryByTestId')
 external Element _jsQueryByTestId(
-  Element container,
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,
@@ -294,7 +294,7 @@ external Element _jsQueryByTestId(
 
 @JS('rtl.queryAllByTestId')
 external List<Element> _jsQueryAllByTestId(
-  Element container,
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,

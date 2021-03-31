@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_alt_text;
 
-import 'dart:html' show Element, ImageElement;
+import 'dart:html' show ImageElement, Node;
 
 import 'package:js/js.dart';
 
@@ -251,7 +251,7 @@ mixin ByAltTextQueries on IQueries {
 
 @JS('rtl.getByAltText')
 external ImageElement _jsGetByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -259,7 +259,7 @@ external ImageElement _jsGetByAltText(
 
 @JS('rtl.getAllByAltText')
 external List<ImageElement> _jsGetAllByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -267,7 +267,7 @@ external List<ImageElement> _jsGetAllByAltText(
 
 @JS('rtl.queryByAltText')
 external ImageElement _jsQueryByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -275,7 +275,7 @@ external ImageElement _jsQueryByAltText(
 
 @JS('rtl.queryAllByAltText')
 external List<ImageElement> _jsQueryAllByAltText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,

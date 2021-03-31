@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_label_text;
 
-import 'dart:html' show Element, LabelElement;
+import 'dart:html' show Element, LabelElement, Node;
 
 import 'package:js/js.dart';
 
@@ -284,7 +284,7 @@ mixin ByLabelTextQueries on IQueries {
 
 @JS('rtl.getByLabelText')
 external Element _jsGetByLabelText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -292,7 +292,7 @@ external Element _jsGetByLabelText(
 
 @JS('rtl.getAllByLabelText')
 external List<Element> _jsGetAllByLabelText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -300,7 +300,7 @@ external List<Element> _jsGetAllByLabelText(
 
 @JS('rtl.queryByLabelText')
 external Element _jsQueryByLabelText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -308,7 +308,7 @@ external Element _jsQueryByLabelText(
 
 @JS('rtl.queryAllByLabelText')
 external List<Element> _jsQueryAllByLabelText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,

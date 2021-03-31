@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_text;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -331,7 +331,7 @@ mixin ByTextQueries on IQueries {
 
 @JS('rtl.getByText')
 external Element _jsGetByText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -339,7 +339,7 @@ external Element _jsGetByText(
 
 @JS('rtl.getAllByText')
 external List<Element> _jsGetAllByText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -347,7 +347,7 @@ external List<Element> _jsGetAllByText(
 
 @JS('rtl.queryByText')
 external Element _jsQueryByText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -355,7 +355,7 @@ external Element _jsQueryByText(
 
 @JS('rtl.queryAllByText')
 external List<Element> _jsQueryAllByText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,

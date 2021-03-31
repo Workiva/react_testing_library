@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_display_value;
 
-import 'dart:html' show Element, InputElement, SelectElement, TextAreaElement;
+import 'dart:html' show Element, InputElement, Node, SelectElement, TextAreaElement;
 
 import 'package:js/js.dart';
 
@@ -252,7 +252,7 @@ mixin ByDisplayValueQueries on IQueries {
 
 @JS('rtl.getByDisplayValue')
 external Element _jsGetByDisplayValue(
-  Element container,
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,
@@ -260,7 +260,7 @@ external Element _jsGetByDisplayValue(
 
 @JS('rtl.getAllByDisplayValue')
 external List<Element> _jsGetAllByDisplayValue(
-  Element container,
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,
@@ -268,7 +268,7 @@ external List<Element> _jsGetAllByDisplayValue(
 
 @JS('rtl.queryByDisplayValue')
 external Element _jsQueryByDisplayValue(
-  Element container,
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,
@@ -276,7 +276,7 @@ external Element _jsQueryByDisplayValue(
 
 @JS('rtl.queryAllByDisplayValue')
 external List<Element> _jsQueryAllByDisplayValue(
-  Element container,
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,
