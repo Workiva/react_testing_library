@@ -55,9 +55,7 @@ main() {
 
     group('renders the provided element in a default container', () {
       test('', () {
-        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai'), autoTearDownCallback: () {
-          calls.add('autoTearDownCallback');
-        });
+        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai'));
         expect(document.body.contains(renderedResult.container), isTrue);
         expect(renderedResult.container.children, hasLength(1));
         expect(renderedResult.container.children.single.text, 'oh hai');
@@ -81,9 +79,15 @@ main() {
 
       group('and then unmounts / removes it by default, also calling the provided autoTearDownCallback', () {
         test('', () {
-          expect(document.body.children, isEmpty);
-          expect(calls, ['autoTearDownCallback']);
-          calls.clear();
+          addTearDown(() {
+            expect(document.body.children, isEmpty);
+            expect(calls, ['autoTearDownCallback']);
+            calls.clear();
+          });
+
+          rtl.render(react.div({'id': 'root'}, 'oh hai'), autoTearDownCallback: () {
+            calls.add('autoTearDownCallback');
+          });
         });
 
         group('unless autoTearDown is false', () {
