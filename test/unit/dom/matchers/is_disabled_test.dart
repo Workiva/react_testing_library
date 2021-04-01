@@ -63,4 +63,36 @@ main() {
       });
     });
   });
+
+  group('isEnabled matcher', () {
+    group('passes when', () {
+      test('provided a valid Element that is not disabled', () {
+        shouldPass(InputElement(), isEnabled);
+      });
+    });
+
+    group('provides a useful failure message when', () {
+      test('the matched item is not an element', () {
+        shouldFail(null, isEnabled, contains('Which: is not a valid Element.'));
+      });
+
+      group('the matched item is not a type of element that can be disabled', () {
+        test('', () {
+          final renderResult = render(react.div({defaultTestIdKey: 'div'}));
+          final divNode = renderResult.getByTestId('div');
+          shouldFail(divNode, isEnabled, contains('Which: is not a type of HTML element that can be disabled.'));
+        });
+
+        test('even when nested within a FormElement that is disabled', () {
+          final renderResult = render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})));
+          final divNode = renderResult.getByTestId('div');
+          shouldFail(divNode, isEnabled, contains('Which: is not a type of HTML element that can be disabled.'));
+        });
+      });
+
+      test('the matched item is disabled', () {
+        shouldFail(InputElement()..disabled = true, isEnabled, contains('Which: is disabled.'));
+      });
+    });
+  });
 }
