@@ -74,7 +74,7 @@ Matcher buildContainsPatternUsing(String templatePattern, String expectedValueTh
 /// Utility for asserting that [matcher] will fail on [value].
 ///
 /// Copyright (c) 2012, the Dart project authors.
-void shouldFail(value, Matcher matcher, expected) {
+void shouldFail(value, Matcher matcher, expected, {bool useDoubleQuotes = false}) {
   var failed = false;
   try {
     expect(value, matcher);
@@ -86,7 +86,11 @@ void shouldFail(value, Matcher matcher, expected) {
     if (expected is String) {
       expect(_errorString, equalsIgnoringWhitespace(expected));
     } else {
-      expect(_errorString.replaceAll(RegExp(r'[\s\n]+'), ' '), expected);
+      var escapedErrorString = _errorString.replaceAll(RegExp(r'[\s\n]+'), ' ');
+      if (useDoubleQuotes) {
+        escapedErrorString = escapedErrorString.replaceAll("\'", '"');
+      }
+      expect(escapedErrorString, expected);
     }
   }
 
