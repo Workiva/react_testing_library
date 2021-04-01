@@ -48,6 +48,8 @@ import 'contains_element.dart' show containsElement;
 /// >
 /// > The element must be added to the document to be found by [isInTheDocument].
 /// > If you desire to search in a detached element please use: [containsElement]
+///
+/// {@category Matchers}
 const Matcher isInTheDocument = _IsInTheDocument();
 
 class _IsInTheDocument extends Matcher {

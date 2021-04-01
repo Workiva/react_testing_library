@@ -42,6 +42,8 @@ import 'package:matcher/matcher.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 Matcher containsElement(Element descendant) => _ContainsElement(descendant);
 
 class _ContainsElement extends Matcher {

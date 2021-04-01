@@ -39,6 +39,8 @@ import 'package:matcher/matcher.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 const Matcher isEmptyDomElement = _IsEmptyDomElement();
 
 class _IsEmptyDomElement extends Matcher {

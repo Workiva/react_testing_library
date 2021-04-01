@@ -45,11 +45,15 @@ import 'package:matcher/matcher.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 const Matcher isDisabled = _IsDisabled();
 
 /// Allows you to check whether an element is not disabled from the user's perspective.
 ///
 /// Use this matcher to avoid double negation via [isDisabled] in your tests.
+///
+/// {@category Matchers}
 const Matcher isEnabled = _IsEnabled();
 
 class _IsDisabled extends Matcher {

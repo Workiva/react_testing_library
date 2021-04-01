@@ -49,6 +49,8 @@ import 'package:matcher/matcher.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 Matcher hasClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.expected(classes));
 
 /// Allows you to check whether an [Element] has certain [classes] within its HTML `class` attribute,
@@ -80,6 +82,8 @@ Matcher hasClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.expecte
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 Matcher hasExactClasses(classes) =>
     _ElementClassNameMatcher(ClassNameMatcher.expected(classes, allowExtraneous: false));
 
@@ -110,6 +114,8 @@ Matcher hasExactClasses(classes) =>
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 Matcher excludesClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.unexpected(classes));
 
 /// Match a list of class names on a component.
