@@ -89,8 +89,5 @@ class JsError {
   external set stack(String value);
 }
 
-@JS('rtl.buildTestingLibraryElementError')
-external JsError buildTestingLibraryElementError(Object message);
-
 @JS('rtl.buildJsGetElementError')
 external JsError buildJsGetElementError(Object message, Element container);

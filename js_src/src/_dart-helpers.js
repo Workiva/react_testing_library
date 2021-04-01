@@ -20,6 +20,5 @@ const buildJsGetElementError = function(message, container) {
 }
 
 export {
-  buildTestingLibraryElementError,
   buildJsGetElementError,
 };
