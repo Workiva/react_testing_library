@@ -21,6 +21,7 @@ library react_testing_library.src.react.render.render;
 import 'dart:html' show DocumentFragment, Element, Node;
 
 import 'package:js/js.dart';
+import 'package:meta/meta.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:test/test.dart' show addTearDown;
@@ -83,10 +84,13 @@ RenderResult render(
   return RenderResult._(jsResult, ui);
 }
 
-/// The model returned from [render], which includes all the [ScopedQueries] scoped to the
-/// container that was rendered within.
+/// The model returned from [render], which includes all the `ScopedQueries` scoped to the
+/// [container] that the [renderedElement] was rendered within.
 ///
 /// > See: <https://testing-library.com/docs/react-testing-library/api/#render-result>
+///
+/// {@category Queries}
+@sealed
 class RenderResult extends ScopedQueries {
   RenderResult._(this._jsRenderResult, this._renderedElement) : super(() => _jsRenderResult.container);
 

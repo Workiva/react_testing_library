@@ -43,6 +43,9 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByAltText}
 E getByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -69,6 +72,9 @@ E getByAltText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByAltText}
 List<E> getAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -94,6 +100,9 @@ List<E> getAllByAltText<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByAltText}
 E queryByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -118,6 +127,9 @@ E queryByAltText<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByAltText}
 List<E> queryAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -153,6 +165,10 @@ List<E> queryAllByAltText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByAltText}
+/// {@category Async}
 Future<E> findByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -200,6 +216,10 @@ Future<E> findByAltText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByAltText}
+/// {@category Async}
 Future<List<E>> findAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -241,6 +261,9 @@ Future<List<E>> findAllByAltText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByDisplayValue}
 E getByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
@@ -267,6 +290,9 @@ E getByDisplayValue<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByDisplayValue}
 List<E> getAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
@@ -292,6 +318,9 @@ List<E> getAllByDisplayValue<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByDisplayValue}
 E queryByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
@@ -316,6 +345,9 @@ E queryByDisplayValue<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByDisplayValue}
 List<E> queryAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
@@ -350,6 +382,10 @@ List<E> queryAllByDisplayValue<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByDisplayValue}
+/// {@category Async}
 Future<E> findByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
@@ -396,6 +432,10 @@ Future<E> findByDisplayValue<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByDisplayValue}
+/// {@category Async}
 Future<List<E>> findAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
@@ -438,6 +478,9 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByLabelText}
 E getByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -467,6 +510,9 @@ E getByLabelText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByLabelText}
 List<E> getAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -495,6 +541,9 @@ List<E> getAllByLabelText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsSelectorArgDescription}
+///
+/// {@category Queries}
+/// {@category ByLabelText}
 E queryByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -521,6 +570,9 @@ E queryByLabelText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsSelectorArgDescription}
+///
+/// {@category Queries}
+/// {@category ByLabelText}
 List<E> queryAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -557,6 +609,10 @@ List<E> queryAllByLabelText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByLabelText}
+/// {@category Async}
 Future<E> findByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -606,6 +662,10 @@ Future<E> findByLabelText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByLabelText}
+/// {@category Async}
 Future<List<E>> findAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -649,6 +709,9 @@ Future<List<E>> findAllByLabelText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByPlaceholderText}
 E getByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -675,6 +738,9 @@ E getByPlaceholderText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByPlaceholderText}
 List<E> getAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -701,6 +767,9 @@ List<E> getAllByPlaceholderText<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByPlaceholderText}
 E queryByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -725,6 +794,9 @@ E queryByPlaceholderText<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByPlaceholderText}
 List<E> queryAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -759,6 +831,10 @@ List<E> queryAllByPlaceholderText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByPlaceholderText}
+/// {@category Async}
 Future<E> findByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -805,6 +881,10 @@ Future<E> findByPlaceholderText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByPlaceholderText}
+/// {@category Async}
 Future<List<E>> findAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -853,6 +933,9 @@ Future<List<E>> findAllByPlaceholderText<E extends Element>(
 /// {@macro byRoleOptionsExpanded}
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
+///
+/// {@category Queries}
+/// {@category ByRole}
 E getByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
@@ -905,6 +988,9 @@ E getByRole<E extends Element>(
 /// {@macro byRoleOptionsExpanded}
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
+///
+/// {@category Queries}
+/// {@category ByRole}
 List<E> getAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
@@ -956,6 +1042,9 @@ List<E> getAllByRole<E extends Element>(
 /// {@macro byRoleOptionsExpanded}
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
+///
+/// {@category Queries}
+/// {@category ByRole}
 E queryByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
@@ -1006,6 +1095,9 @@ E queryByRole<E extends Element>(
 /// {@macro byRoleOptionsExpanded}
 /// {@macro byRoleOptionsQueryFallbacks}
 /// {@macro byRoleOptionsLevel}
+///
+/// {@category Queries}
+/// {@category ByRole}
 List<E> queryAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
@@ -1067,6 +1159,10 @@ List<E> queryAllByRole<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByRole}
+/// {@category Async}
 Future<E> findByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
@@ -1138,6 +1234,10 @@ Future<E> findByRole<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByRole}
+/// {@category Async}
 Future<List<E>> findAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
@@ -1201,6 +1301,9 @@ Future<List<E>> findAllByRole<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByTestId}
 E getByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
@@ -1233,6 +1336,9 @@ E getByTestId<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByTestId}
 List<E> getAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
@@ -1264,6 +1370,9 @@ List<E> getAllByTestId<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByTestId}
 E queryByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
@@ -1294,6 +1403,9 @@ E queryByTestId<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByTestId}
 List<E> queryAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
@@ -1334,6 +1446,10 @@ List<E> queryAllByTestId<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByTestId}
+/// {@category Async}
 Future<E> findByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
@@ -1386,6 +1502,10 @@ Future<E> findByTestId<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByTestId}
+/// {@category Async}
 Future<List<E>> findAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
@@ -1428,6 +1548,9 @@ Future<List<E>> findAllByTestId<E extends Element>(
 /// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsIgnoreArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByText}
 E getByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1458,6 +1581,9 @@ E getByText<E extends Element>(
 /// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsIgnoreArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByText}
 List<E> getAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1487,6 +1613,9 @@ List<E> getAllByText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsIgnoreArgDescription}
+///
+/// {@category Queries}
+/// {@category ByText}
 E queryByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1514,6 +1643,9 @@ E queryByText<E extends Element>(
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsIgnoreArgDescription}
+///
+/// {@category Queries}
+/// {@category ByText}
 List<E> queryAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1552,6 +1684,10 @@ List<E> queryAllByText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByText}
+/// {@category Async}
 Future<E> findByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1604,6 +1740,10 @@ Future<E> findByText<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByText}
+/// {@category Async}
 Future<List<E>> findAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1649,6 +1789,9 @@ Future<List<E>> findAllByText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByTitle}
 E getByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
@@ -1675,6 +1818,9 @@ E getByTitle<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
+///
+/// {@category Queries}
+/// {@category ByTitle}
 List<E> getAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
@@ -1700,6 +1846,9 @@ List<E> getAllByTitle<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByTitle}
 E queryByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
@@ -1724,6 +1873,9 @@ E queryByTitle<E extends Element>(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+///
+/// {@category Queries}
+/// {@category ByTitle}
 List<E> queryAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
@@ -1758,6 +1910,10 @@ List<E> queryAllByTitle<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByTitle}
+/// {@category Async}
 Future<E> findByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
@@ -1804,6 +1960,10 @@ Future<E> findByTitle<E extends Element>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Queries}
+/// {@category ByTitle}
+/// {@category Async}
 Future<List<E>> findAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {

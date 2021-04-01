@@ -1,0 +1,36 @@
+<style>
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+</style>

@@ -51,6 +51,8 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Async}
 Future<T> waitFor<T>(
   FutureOr<T> Function() expectation, {
   Node container,
@@ -161,6 +163,8 @@ Future<T> waitFor<T>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Async}
 Future<void> waitForElementToBeRemoved(
   FutureOr<Element> Function() callback, {
   Node container,
@@ -213,6 +217,8 @@ Future<void> waitForElementToBeRemoved(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Async}
 Future<void> waitForElementsToBeRemoved(
   FutureOr<List<Element>> Function() callback, {
   Node container,

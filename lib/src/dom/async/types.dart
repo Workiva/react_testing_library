@@ -88,6 +88,8 @@ class JsMutationObserverOptions {
 
 /// Builds a set of options that can be used for any async query like `waitFor`,
 /// or a "findBy" / "findAllBy" query.
+///
+/// @nodoc
 class MutationObserverOptions {
   const MutationObserverOptions({
     this.subtree = true,

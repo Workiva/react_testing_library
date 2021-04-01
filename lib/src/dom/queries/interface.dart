@@ -23,9 +23,11 @@ import 'package:react_testing_library/src/dom/matches/types.dart';
 
 /// An interface shared by all the individual query type mixins.
 abstract class IQueries {
+  /// @nodoc
   @protected
   Node Function() get getContainerForScope;
 
+  /// @nodoc
   @protected
   MatcherOptions buildMatcherOptions({
     bool exact = true,
@@ -41,6 +43,7 @@ abstract class IQueries {
     return matcherOptions;
   }
 
+  /// @nodoc
   @protected
   SharedJsWaitForOptions buildWaitForOptions({
     Duration timeout,

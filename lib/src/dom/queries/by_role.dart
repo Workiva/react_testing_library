@@ -34,6 +34,7 @@ import 'package:react_testing_library/src/util/error_message_utils.dart' show wi
 /// The public API is either the top level function by the same name as the methods in here,
 /// or the methods by the same name exposed by `screen` / `within()`.
 mixin ByRoleQueries on IQueries {
+  /// @nodoc
   @protected
   ByRoleOptions buildByRoleOptions({
     bool exact = true,

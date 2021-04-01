@@ -14,14 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show document;
+/// {@category Dom}
+library rtl.matchers;
 
-import 'package:react_testing_library/src/dom/within.dart' show within;
-
-/// Exposes all the "top-level" queries exposed by the dom-testing-library,
-/// but the scope/container is defaulted to `document.body`.
-///
-/// > See: <https://testing-library.com/docs/queries/about/#screen>
-///
-/// {@category Queries}
-final screen = within(document.body);
+export '../src/matchers/css_class_matchers.dart' show hasClasses, hasExactClasses, excludesClasses;

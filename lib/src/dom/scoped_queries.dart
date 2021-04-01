@@ -30,7 +30,7 @@ import 'package:react_testing_library/src/dom/queries/interface.dart' show IQuer
 /// PRIVATE. DO NOT EXPORT.
 ///
 /// Only visible for the purposes of extension by specific
-/// querying objects like `RenderResult` and `_WithinQueries`.
+/// querying objects like `RenderResult` and `WithinQueries`.
 abstract class ScopedQueries
     with
         IQueries,
@@ -44,6 +44,7 @@ abstract class ScopedQueries
         ByTitleQueries {
   ScopedQueries(this.getContainerForScope);
 
+  /// @nodoc
   @protected
   @override
   final Node Function() getContainerForScope;
