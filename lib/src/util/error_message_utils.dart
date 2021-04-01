@@ -20,27 +20,19 @@ library react_testing_library.src.util.error_message_utils;
 import 'dart:html' show Element;
 
 import 'package:js/js.dart' show JS;
-import 'package:test/test.dart' show addTearDown;
 
-import 'package:react_testing_library/src/dom/config/configure.dart' show configure, getConfig;
+import 'package:react_testing_library/src/dom/config/configure.dart' show configure;
 
 /// Builds and configures react-testing-library to use a custom value for `JsConfig.getElementError`
 /// if any queries fail in the current test.
-///
-/// Automatically restores the `JsConfig.getElementError` value that was set before this function was called
-/// within the `tearDown` of the current test.
 void setEphemeralElementErrorMessage(
     Object Function(Object originalMessage, Element container) customErrorMessageBuilder) {
-  final existingElementErrorFn = getConfig().getElementError;
-  buildDartGetElementError(Object originalMessage, Element container) {
-    return buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container);
+  TestingLibraryElementError buildCustomDartGetElementError(Object originalMessage, Element container) {
+    return TestingLibraryElementError.fromJs(
+        buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container));
   }
 
-  configure(getElementError: buildDartGetElementError);
-
-  addTearDown(() {
-    configure(getElementError: existingElementErrorFn);
-  });
+  configure(getElementError: buildCustomDartGetElementError);
 }
 
 /// Catches any potential `JsError`s thrown by JS query function by calling [getJsQueryResult],
@@ -59,7 +51,7 @@ T withErrorInterop<T>(T Function() getJsQueryResult, {String errorMessage}) {
   return returnValue;
 }
 
-// TODO: Do we need to export this for consumers?
+/// A custom error class to be used when a react_testing_library test fails.
 class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
@@ -75,7 +67,6 @@ class TestingLibraryElementError extends Error {
   String toString() => message;
 }
 
-// TODO: Do we need to export this for consumers?
 class TestingLibraryAsyncTimeout extends Error {
   TestingLibraryAsyncTimeout(this.message) : super();
 

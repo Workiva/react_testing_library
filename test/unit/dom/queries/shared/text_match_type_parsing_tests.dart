@@ -185,8 +185,6 @@ void testTextMatchTypes<E extends Element>(
               ? queryFn(container, roleValueThatShouldCauseFailure, exact: exact)
               : queryFn(roleValueThatShouldCauseFailure, exact: exact);
           queryFnString = '$queryName($roleValueThatShouldCauseFailure, exact: $exact)';
-
-          // TODO: Add a test using the expected failure matcher when the role is not valid in an individual test suite for role queries.
         }
       }
 

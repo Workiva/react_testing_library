@@ -34,7 +34,6 @@ Matcher toThrowErrorMatchingInlineSnapshot(
   Matcher arbitraryMatcher2,
   Matcher arbitraryMatcher3,
 ]) {
-  // TODO: Would be nice to create a custom matcher class so that we could customize the error message based on which of the matcher(s) are not present.
   final errorNameMatcher = hasToStringValue(contains('TestingLibraryElementError'));
   final snapshotMatcher = hasToStringValue(stringSnapshotMatcher);
   final prettyDomMatcher =

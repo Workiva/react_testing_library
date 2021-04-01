@@ -21,6 +21,7 @@ import 'dart:html' show Element;
 
 import 'package:js/js.dart' show JS, allowInterop;
 import 'package:react_testing_library/src/dom/config/types.dart' show JsConfig;
+import 'package:react_testing_library/src/util/error_message_utils.dart';
 
 export 'package:react_testing_library/src/dom/config/types.dart' show JsConfig;
 
@@ -34,8 +35,13 @@ void configure({
   bool defaultHidden,
   bool showOriginalStackTrace,
   bool throwSuggestions,
-  /*TestFailure*/ Function(Object message, Element container) getElementError,
+  TestingLibraryElementError Function(Object message, Element container) getElementError,
 }) {
+  JsError _getJsGetElementError(Object message, Element container) {
+    final dartError = allowInterop(getElementError)(message, container);
+    return buildJsGetElementError(dartError.message, container);
+  }
+
   final existingConfig = getConfig();
   return jsConfigure(JsConfig()
     ..testIdAttribute = testIdAttribute ?? existingConfig.testIdAttribute
@@ -45,8 +51,7 @@ void configure({
     ..defaultHidden = defaultHidden ?? existingConfig.defaultHidden
     ..showOriginalStackTrace = showOriginalStackTrace ?? existingConfig.showOriginalStackTrace
     ..throwSuggestions = throwSuggestions ?? existingConfig.throwSuggestions
-    // TODO: Wrap this?
-    ..getElementError = getElementError != null ? allowInterop(getElementError) : existingConfig.getElementError);
+    ..getElementError = getElementError != null ? allowInterop(_getJsGetElementError) : existingConfig.getElementError);
 }
 
 @JS('rtl.configure')

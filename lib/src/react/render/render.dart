@@ -117,8 +117,8 @@ class RenderResult extends ScopedQueries {
   void debug([
     Element baseElement,
     int maxLength,
-    // TODO
-    /*prettyFormat.OptionsReceived*/ dynamic options,
+    // TODO: Implement a full interop for this type if consumer usage warrants it
+    /*prettyFormat.OptionsReceived*/ Object options,
   ]) =>
       _jsRenderResult.debug(baseElement, maxLength, options);
 
