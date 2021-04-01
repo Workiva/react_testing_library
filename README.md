@@ -88,7 +88,7 @@ _test/unit/rtl_unit_test_template.html_
       <title>React Testing Library Unit Test</title>
       <script src="packages/react/react.js"></script>
       <script src="packages/react/react_dom.js"></script>
-      <script src="packages/react_testing_library/react-testing-library.js"></script>
+      <script src="packages/react_testing_library/js/react-testing-library.js"></script>
 
       {test}
   </head>
@@ -108,7 +108,7 @@ _test/unit/some_unit_test.html_
       <title>Some Unit Test</title>
       <script src="packages/react/react.js"></script>
       <script src="packages/react/react_dom.js"></script>
-      <script src="packages/react_testing_library/react-testing-library.js"></script>
+      <script src="packages/react_testing_library/js/react-testing-library.js"></script>
 
       <link rel="x-dart-test" href="some_unit_test.dart">
       <script src="packages/test/dart.js"></script>
