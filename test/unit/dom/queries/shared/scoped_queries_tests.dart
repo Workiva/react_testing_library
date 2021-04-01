@@ -138,7 +138,7 @@ void hasQueriesScopedTo(
     });
 
     group('', () {
-      testTextMatchTypes<ImageElement>(
+      testTextMatchTypes(
         'AltText',
         textMatchArgName: 'text',
         queryShouldMatchOn: scopeName,

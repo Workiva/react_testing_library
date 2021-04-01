@@ -123,7 +123,7 @@ main() {
         return query;
       }
 
-      testTextMatchTypes<ImageElement>(
+      testTextMatchTypes(
         'AltText',
         textMatchArgName: 'text',
         queryShouldMatchOn: scopeName,
