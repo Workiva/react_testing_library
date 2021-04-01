@@ -44,6 +44,17 @@ jobs:
       - name: Run tests (dart2js)
         run: dart run build_runner test -r
 
+      - name: Generate Dartdoc
+        run: pub global activate dartdoc && dartdoc --show-undocumented-categories
+        if: ${{ matrix.sdk == 'stable' }}
+
+      - name: Archive Dartdoc Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dartdoc
+          path: doc/api/
+        if: ${{ matrix.sdk == 'stable' }}
+
   build_legacy:
     runs-on: ubuntu-latest
     strategy:
