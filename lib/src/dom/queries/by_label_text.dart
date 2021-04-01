@@ -45,14 +45,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   E getByLabelText<E extends Element>(
@@ -79,14 +76,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
@@ -114,10 +108,6 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -142,10 +132,6 @@ mixin ByLabelTextQueries on IQueries {
   /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
   ///
   /// ## Options
-  ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
   ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
@@ -176,14 +162,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
@@ -235,14 +218,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options

@@ -432,14 +432,11 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
 /// __[text]__
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByLabelText<E extends Element>(
   Node container,
@@ -464,14 +461,11 @@ E getByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
 /// __[text]__
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByLabelText<E extends Element>(
   Node container,
@@ -496,14 +490,11 @@ List<E> getAllByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
 /// __[text]__
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
 E queryByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -525,14 +516,11 @@ E queryByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
 /// __[text]__
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
 List<E> queryAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -556,14 +544,11 @@ List<E> queryAllByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
 /// __[text]__
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 ///
 /// ## Async Options
@@ -608,14 +593,11 @@ Future<E> findByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
 /// __[text]__
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 ///
 /// ## Async Options
@@ -1439,21 +1421,12 @@ Future<List<E>> findAllByTestId<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
-/// ### [ignore]
-/// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-/// This defaults to `'script'` because generally you don't want to select script tags, but if your
-/// content is in an inline script file, then the script tag could be returned.
-///
-/// If you'd rather disable this behavior, set to `false`.
-///
 /// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
+/// {@macro MatcherOptionsIgnoreArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 E getByText<E extends Element>(
   Node container,
@@ -1478,21 +1451,12 @@ E getByText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
-/// ### [ignore]
-/// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-/// This defaults to `'script'` because generally you don't want to select script tags, but if your
-/// content is in an inline script file, then the script tag could be returned.
-///
-/// If you'd rather disable this behavior, set to `false`.
-///
 /// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
+/// {@macro MatcherOptionsIgnoreArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 List<E> getAllByText<E extends Element>(
   Node container,
@@ -1517,21 +1481,12 @@ List<E> getAllByText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
-/// ### [ignore]
-/// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-/// This defaults to `'script'` because generally you don't want to select script tags, but if your
-/// content is in an inline script file, then the script tag could be returned.
-///
-/// If you'd rather disable this behavior, set to `false`.
-///
 /// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
+/// {@macro MatcherOptionsIgnoreArgDescription}
 E queryByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1553,21 +1508,12 @@ E queryByText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
-/// ### [ignore]
-/// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-/// This defaults to `'script'` because generally you don't want to select script tags, but if your
-/// content is in an inline script file, then the script tag could be returned.
-///
-/// If you'd rather disable this behavior, set to `false`.
-///
 /// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
+/// {@macro MatcherOptionsIgnoreArgDescription}
 List<E> queryAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
@@ -1592,21 +1538,12 @@ List<E> queryAllByText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
-/// ### [ignore]
-/// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-/// This defaults to `'script'` because generally you don't want to select script tags, but if your
-/// content is in an inline script file, then the script tag could be returned.
-///
-/// If you'd rather disable this behavior, set to `false`.
-///
 /// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
+/// {@macro MatcherOptionsIgnoreArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 ///
 /// ## Async Options
@@ -1653,21 +1590,12 @@ Future<E> findByText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [selector]
-/// If there are multiple labels with the same text, you can use `selector`
-/// to specify the element you want to match.
-///
-/// ### [ignore]
-/// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-/// This defaults to `'script'` because generally you don't want to select script tags, but if your
-/// content is in an inline script file, then the script tag could be returned.
-///
-/// If you'd rather disable this behavior, set to `false`.
-///
 /// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
+/// {@macro MatcherOptionsSelectorArgDescription}
+/// {@macro MatcherOptionsIgnoreArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
 ///
 /// ## Async Options

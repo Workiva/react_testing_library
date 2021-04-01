@@ -479,12 +479,6 @@ class ByRoleOptions {
   external NormalizerFn Function(NormalizerOptions) get normalizer;
   external set normalizer(NormalizerFn Function(NormalizerOptions) value);
 
-  external String get selector;
-  external set selector(String value);
-
-  external /*String|bool*/ get ignore;
-  external set ignore(/*String|bool*/ value);
-
   /// {@template byRoleOptionsName}
   /// You can also query the returned element(s) by their [accessible name](https://www.w3.org/TR/accname-1.1/)
   /// by specifying the `name` argument: `getByRole(expectedRole, name: 'The name')`.

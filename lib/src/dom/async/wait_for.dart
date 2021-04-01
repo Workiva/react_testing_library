@@ -243,10 +243,3 @@ Future<void> waitForElementsToBeRemoved(
       onTimeout: onTimeout,
       mutationObserverOptions: mutationObserverOptions)));
 }
-
-@JS()
-@anonymous
-class WaitForOptions extends SharedJsWaitForOptions {
-  external Element get container;
-  external set container(Element value);
-}

@@ -44,17 +44,6 @@ mixin ByTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -85,17 +74,6 @@ mixin ByTextQueries on IQueries {
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
   /// ## Options
-  ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
   ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
@@ -128,17 +106,6 @@ mixin ByTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -163,17 +130,6 @@ mixin ByTextQueries on IQueries {
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
   /// ## Options
-  ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
   ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
@@ -204,17 +160,6 @@ mixin ByTextQueries on IQueries {
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
   /// ## Options
-  ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
   ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
@@ -272,17 +217,6 @@ mixin ByTextQueries on IQueries {
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
   /// ## Options
-  ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
   ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
