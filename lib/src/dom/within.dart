@@ -21,8 +21,8 @@ import 'package:react_testing_library/src/util/is_or_contains.dart';
 import 'package:test/test.dart' show addTearDown, expect, isNotNull, isTrue;
 
 /// Queries scoped to the provided [container].
-class _WithinQueries extends ScopedQueries {
-  _WithinQueries(this.container) : super(() => container);
+class WithinQueries extends ScopedQueries {
+  WithinQueries(this.container) : super(() => container);
 
   final Node container;
 }
@@ -38,7 +38,7 @@ class _WithinQueries extends ScopedQueries {
 /// ```
 ///
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-within>
-_WithinQueries within(Node node) {
+WithinQueries within(Node node) {
   expect(node, isNotNull, reason: 'You must provide a non-null element as the single argument to within().');
   if (node is! ShadowRoot) {
     expect(isOrContains(document.body, node), isTrue,
@@ -46,7 +46,7 @@ _WithinQueries within(Node node) {
             'The element you provide as the single argument to within() must exist in the DOM. Did you forget to append the element to the body?');
   }
 
-  var withinQueriesInstance = _WithinQueries(node);
+  var withinQueriesInstance = WithinQueries(node);
   addTearDown(() {
     withinQueriesInstance = null;
   });
