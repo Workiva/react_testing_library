@@ -44,6 +44,8 @@ import 'package:matcher/matcher.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 const Matcher isFocused = _IsFocused();
 
 class _IsFocused extends Matcher {

@@ -48,6 +48,8 @@ import 'package:matcher/matcher.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@category Matchers}
 Matcher hasAttribute(String attribute, dynamic value) => _ElementAttributeMatcher(attribute, wrapMatcher(value));
 
 class _ElementAttributeMatcher extends CustomMatcher {
