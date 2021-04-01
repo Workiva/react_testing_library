@@ -14,12 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// A testing library for OverReact components that mimics the API of
-/// the [JS `react-testing-library` package](https://testing-library.com/docs/react-testing-library/intro)
-library react_testing_library;
+/// https://testing-library.com/docs/react-testing-library/intro
+library react_testing_library.src.user_events;
 
-export 'package:react_testing_library/src/dom_testing_library.dart';
-export 'package:react_testing_library/src/react_testing_library.dart';
-export 'package:react_testing_library/src/matchers.dart';
-export 'package:react_testing_library/src/user_events.dart';
-export 'package:react_testing_library/src/util/error_message_utils.dart' show TestingLibraryElementError;
+export 'user_events/user_event.dart';
