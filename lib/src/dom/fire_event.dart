@@ -49,7 +49,7 @@ external JsMap get _fireEventObj;
 ///
 /// ```js
 /// // JS API
-/// fireEvent['click'](someElement, {'button': 2});
+/// fireEvent.click(someElement, {'button': 2});
 /// ```
 ///
 /// Where the Dart API equivalent of the above call would be:
