@@ -14,7 +14,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show Element, ImageElement, InputElement, LabelElement, Node, SelectElement, TextAreaElement;
+import 'dart:html'
+    show AreaElement, Element, ImageElement, InputElement, LabelElement, Node, SelectElement, TextAreaElement;
 
 import 'package:react_testing_library/src/dom/async/types.dart'
     show MutationObserverOptions, QueryTimeoutFn, defaultMutationObserverOptions;
@@ -25,8 +26,8 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 //  ByAltText
 // ----------------------------------------------------
 
-/// Returns a single [ImageElement] with the given [text] as the value of the `alt` attribute,
-/// defaulting to an [exact] match.
+/// Returns a single [ImageElement], [InputElement] or [AreaElement] with the given [text] as the value of
+/// the `alt` attribute, defaulting to an [exact] match.
 ///
 /// Throws if no element is found within the provided [container].
 /// Use [queryByAltText] if a RTE is not expected.
@@ -42,7 +43,7 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
-ImageElement getByAltText<E extends Element>(
+E getByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -51,8 +52,8 @@ ImageElement getByAltText<E extends Element>(
 }) =>
     within(container).getByAltText(text, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
 
-/// Returns a list of [ImageElement]s with the given [text] as the value of the `alt` attribute,
-/// defaulting to an [exact] match.
+/// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
+/// the `alt` attribute, defaulting to an [exact] match.
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByAltText] if a RTE is not expected.
@@ -68,7 +69,7 @@ ImageElement getByAltText<E extends Element>(
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
 /// {@macro MatcherOptionsErrorMessage}
-List<ImageElement> getAllByAltText(
+List<E> getAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -77,8 +78,8 @@ List<ImageElement> getAllByAltText(
 }) =>
     within(container).getAllByAltText(text, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
 
-/// Returns a single [ImageElement] with the given [text] as the value of the `alt` attribute,
-/// defaulting to an [exact] match.
+/// Returns a single [ImageElement], [InputElement] or [AreaElement] with the given [text] as the value of
+/// the `alt` attribute, defaulting to an [exact] match.
 ///
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByAltText] if a RTE is expected.
@@ -93,7 +94,7 @@ List<ImageElement> getAllByAltText(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
-ImageElement queryByAltText(
+E queryByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -101,8 +102,8 @@ ImageElement queryByAltText(
 }) =>
     within(container).queryByAltText(text, exact: exact, normalizer: normalizer);
 
-/// Returns a list of [ImageElement]s with the given [text] as the value of the `alt` attribute,
-/// defaulting to an [exact] match.
+/// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
+/// the `alt` attribute, defaulting to an [exact] match.
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByAltText] if a RTE is expected.
@@ -117,7 +118,7 @@ ImageElement queryByAltText(
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
-List<ImageElement> queryAllByAltText(
+List<E> queryAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -125,8 +126,9 @@ List<ImageElement> queryAllByAltText(
 }) =>
     within(container).queryAllByAltText(text, exact: exact, normalizer: normalizer);
 
-/// Returns a future with a single [ImageElement] value with the given [text] as the value of the `alt` attribute,
-/// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
+/// Returns a future with a single [ImageElement], [InputElement] or [AreaElement] value with the given [text]
+/// as the value of the `alt` attribute, defaulting to an [exact] match after waiting `1000ms`
+/// (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
 /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
@@ -151,7 +153,7 @@ List<ImageElement> queryAllByAltText(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
-Future<ImageElement> findByAltText(
+Future<E> findByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -171,8 +173,9 @@ Future<ImageElement> findByAltText(
         onTimeout: onTimeout,
         mutationObserverOptions: mutationObserverOptions);
 
-/// Returns a list of [ImageElement]s with the given [text] as the value of the `alt` attribute,
-/// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
+/// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s with the given [text]
+/// as the value of the `alt` attribute, defaulting to an [exact] match after waiting `1000ms`
+/// (or the specified [timeout] duration).
 ///
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
 /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
@@ -197,7 +200,7 @@ Future<ImageElement> findByAltText(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
-Future<List<ImageElement>> findAllByAltText(
+Future<List<E>> findAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
