@@ -1205,6 +1205,10 @@ Future<List<E>> findAllByRole<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
+/// ## Priority
+/// `getByTestId` should be used as a last resort only when a more accessible query is not an option.
+/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+///
 /// ## Options
 ///
 /// __[testId]__
@@ -1232,6 +1236,10 @@ E getByTestId<E extends Element>(
 /// > Related: [getByTestId]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
+///
+/// ## Priority
+/// `getAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
 ///
 /// ## Options
 ///
@@ -1261,6 +1269,10 @@ List<E> getAllByTestId<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
+/// ## Priority
+/// `queryByTestId` should be used as a last resort only when a more accessible query is not an option.
+/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+///
 /// ## Options
 ///
 /// __[testId]__
@@ -1286,6 +1298,10 @@ E queryByTestId<E extends Element>(
 /// > Related: [queryByTestId]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
+///
+/// ## Priority
+/// `queryAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
 ///
 /// ## Options
 ///
@@ -1314,6 +1330,10 @@ List<E> queryAllByTestId<E extends Element>(
 /// > Related: [findAllByTestId]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
+///
+/// ## Priority
+/// `findByTestId` should be used as a last resort only when a more accessible query is not an option.
+/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
 ///
 /// ## Options
 ///
@@ -1362,6 +1382,10 @@ Future<E> findByTestId<E extends Element>(
 /// > Related: [findByTestId]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
+///
+/// ## Priority
+/// `findAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
 ///
 /// ## Options
 ///

@@ -49,6 +49,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `getByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -82,6 +86,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `getAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -114,6 +122,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `queryByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -139,6 +151,10 @@ mixin ByTestIdQueries on IQueries {
   /// > Related: [queryByTestId]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
+  ///
+  /// ## Priority
+  /// `queryAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
   ///
   /// ## Options
   ///
@@ -169,6 +185,10 @@ mixin ByTestIdQueries on IQueries {
   /// > Related: [findAllByTestId]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
+  ///
+  /// ## Priority
+  /// `findByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
   ///
   /// ## Options
   ///
@@ -224,6 +244,10 @@ mixin ByTestIdQueries on IQueries {
   /// > Related: [findByTestId]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
+  ///
+  /// ## Priority
+  /// `findAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
   ///
   /// ## Options
   ///
