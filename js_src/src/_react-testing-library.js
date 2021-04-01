@@ -12,6 +12,7 @@ configure({
 const fireEventObj = fireEvent;
 
 export * from '@testing-library/react';
+export {eventMap} from '@testing-library/dom/dist/event-map';
 export {
   buildTestingLibraryElementError,
   buildJsGetElementError,

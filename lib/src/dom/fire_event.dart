@@ -59,6 +59,9 @@ external JsMap get _fireEventObj;
 /// fireEventByName('click', someElement, {'button': 2});
 /// ```
 ///
+/// The [eventName] must be one of the keys found in the
+/// JS [`eventMap`](https://github.com/testing-library/dom-testing-library/blob/master/src/event-map.js)
+///
 /// > **NOTE:**
 /// >
 /// > Most projects have a few use cases for [fireEventByName], but the majority of the time you should
@@ -68,6 +71,11 @@ external JsMap get _fireEventObj;
 ///
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
+  final _validEventNames = JsBackedMap.fromJs(_jsEventMap).keys;
+  if (!_validEventNames.contains(eventName)) {
+    throw ArgumentError.value(eventName, 'eventName');
+  }
+
   final bool Function(Element, [/*JsObject*/ dynamic]) jsFireEventByNameFn =
       JsBackedMap.fromJs(_fireEventObj)[eventName];
 
@@ -77,3 +85,6 @@ bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
 
   return jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties));
 }
+
+@JS('rtl.eventMap')
+external JsMap get _jsEventMap;
