@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show DivElement, Element, document;
+import 'dart:html' show DivElement;
 
 import 'package:react_testing_library/src/matchers/has_attribute.dart';
 import 'package:test/test.dart';
