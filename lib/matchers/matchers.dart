@@ -21,6 +21,7 @@ export '../src/matchers/contains_element.dart' show containsElement;
 export '../src/matchers/css_class_matchers.dart' show hasClasses, hasExactClasses, excludesClasses;
 export '../src/matchers/has_attribute.dart' show hasAttribute;
 export '../src/matchers/has_form_values.dart' show hasFormValues;
+export '../src/matchers/has_styles.dart' show hasStyles;
 export '../src/matchers/is_disabled.dart' show isDisabled, isEnabled;
 export '../src/matchers/is_in_the_document.dart' show isInTheDocument;
 export '../src/matchers/is_empty_dom_element.dart' show isEmptyDomElement;
