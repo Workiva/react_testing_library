@@ -100,6 +100,6 @@ void shouldFail(value, Matcher matcher, expected, {bool useDoubleQuotes = false}
 /// Utility for asserting that [matcher] will pass on [value].
 ///
 /// Copyright (c) 2012, the Dart project authors.
-void shouldPass(value, Matcher matcher) {
-  expect(value, matcher);
+void shouldPass(value, Matcher matcher, {String reason}) {
+  expect(value, matcher, reason: reason);
 }
