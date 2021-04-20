@@ -29,3 +29,4 @@ export '../src/matchers/is_disabled.dart' show isDisabled, isEnabled;
 export '../src/matchers/is_in_the_document.dart' show isInTheDocument;
 export '../src/matchers/is_empty_dom_element.dart' show isEmptyDomElement;
 export '../src/matchers/is_focused.dart' show isFocused;
+export '../src/matchers/is_partially_checked.dart' show isPartiallyChecked;
