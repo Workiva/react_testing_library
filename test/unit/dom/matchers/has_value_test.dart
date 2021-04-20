@@ -14,14 +14,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
-import 'package:react_testing_library/react_testing_library.dart' show hasValue, render, RenderResult;
+import 'package:react_testing_library/react_testing_library.dart' show hasDisplayValue, hasValue, render, RenderResult;
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 
 main() {
-  group('hasValue matcher', () {
+  sharedHasValueTests('hasValue matcher', matcherFn: hasValue);
+  sharedHasValueTests('hasDisplayValue matcher', matcherFn: hasDisplayValue, valueDescription: 'display value');
+}
+
+@isTestGroup
+void sharedHasValueTests(String description,
+    {Matcher Function([dynamic]) matcherFn, String valueDescription = 'value'}) {
+  group(description, () {
     RenderResult renderedResult;
     tearDown(() {
       renderedResult = null;
@@ -38,13 +46,13 @@ main() {
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByRole('textbox'), hasValue('John'));
+          shouldPass(renderedResult.getByRole('textbox'), matcherFn('John'));
         });
 
         test('fuzzy string matcher(s)', () {
           shouldPass(
               renderedResult.getByRole('textbox'),
-              hasValue(allOf(
+              matcherFn(allOf(
                 startsWith('Jo'),
                 endsWith('hn'),
               )));
@@ -60,11 +68,11 @@ main() {
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByRole('textbox'), hasValue('I am here to say something nice about you'));
+          shouldPass(renderedResult.getByRole('textbox'), matcherFn('I am here to say something nice about you'));
         });
 
         test('fuzzy string matcher(s)', () {
-          shouldPass(renderedResult.getByRole('textbox'), hasValue(contains('something nice')));
+          shouldPass(renderedResult.getByRole('textbox'), matcherFn(contains('something nice')));
         });
       });
 
@@ -78,11 +86,11 @@ main() {
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByRole('spinbutton'), hasValue(35));
+          shouldPass(renderedResult.getByRole('spinbutton'), matcherFn(35));
         });
 
         test('number matcher', () {
-          shouldPass(renderedResult.getByRole('spinbutton'), hasValue(greaterThan(18)));
+          shouldPass(renderedResult.getByRole('spinbutton'), matcherFn(greaterThan(18)));
         });
       });
 
@@ -94,14 +102,18 @@ main() {
                 {'name': 'account-type'},
                 react.option({
                   'value': 'personal',
-                }, 'personal'),
+                }, 'personal description'),
                 react.option({
                   'value': 'business',
                   'selected': true,
-                }, 'business'),
+                }, 'business description'),
               ));
 
-              shouldPass(renderedResult.getByRole('combobox'), hasValue('business'));
+              if (matcherFn == hasValue) {
+                shouldPass(renderedResult.getByRole('combobox'), matcherFn('business'));
+              } else if (matcherFn == hasDisplayValue) {
+                shouldPass(renderedResult.getByRole('combobox'), matcherFn('business description'));
+              }
             });
 
             test('using a matcher', () {
@@ -109,18 +121,27 @@ main() {
                 {'name': 'account-type'},
                 react.option({
                   'value': 'personal',
-                }, 'personal'),
+                }, 'personal description'),
                 react.option({
                   'value': 'business',
-                }, 'business'),
+                }, 'business description'),
               ));
 
-              shouldPass(
-                  renderedResult.getByRole('combobox'),
-                  hasValue(allOf(
-                    isNotNull,
-                    isNot('business'),
-                  )));
+              if (matcherFn == hasValue) {
+                shouldPass(
+                    renderedResult.getByRole('combobox'),
+                    matcherFn(allOf(
+                      isNotNull,
+                      isNot('business'),
+                    )));
+              } else if (matcherFn == hasDisplayValue) {
+                shouldPass(
+                    renderedResult.getByRole('combobox'),
+                    matcherFn(allOf(
+                      isNotNull,
+                      isNot('business description'),
+                    )));
+              }
             });
           });
 
@@ -137,7 +158,7 @@ main() {
               }, 'business'),
             ));
 
-            shouldPass(renderedResult.getByRole('combobox'), hasValue());
+            shouldPass(renderedResult.getByRole('combobox'), matcherFn());
           });
         });
 
@@ -151,29 +172,42 @@ main() {
                 },
                 react.option({
                   'value': 'pepperoni',
-                }, 'pepperoni'),
+                }, 'Delicious Pepperoni'),
                 react.option({
                   'value': 'sausage',
                   'selected': true,
-                }, 'sausage'),
+                }, 'Italian Sausage'),
                 react.option({
                   'value': 'pineapple',
                   'disabled': true,
-                }, 'pineapple'),
+                }, 'Processed Sweetened Pineapple'),
               ));
             });
 
             test('exact match', () {
-              shouldPass(renderedResult.getByRole('listbox'), hasValue(['sausage']));
+              if (matcherFn == hasValue) {
+                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['sausage']));
+              } else if (matcherFn == hasDisplayValue) {
+                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['Italian Sausage']));
+              }
             });
 
             test('using a matcher', () {
-              shouldPass(
-                  renderedResult.getByRole('listbox'),
-                  hasValue(allOf(
-                    isNotEmpty,
-                    isNot(contains('pineapple')),
-                  )));
+              if (matcherFn == hasValue) {
+                shouldPass(
+                    renderedResult.getByRole('listbox'),
+                    matcherFn(allOf(
+                      isNotEmpty,
+                      isNot(contains('pineapple')),
+                    )));
+              } else if (matcherFn == hasDisplayValue) {
+                shouldPass(
+                    renderedResult.getByRole('listbox'),
+                    matcherFn(allOf(
+                      isNotEmpty,
+                      isNot(contains('Processed Sweetened Pineapple')),
+                    )));
+              }
             });
           });
 
@@ -187,24 +221,33 @@ main() {
                 react.option({
                   'value': 'pepperoni',
                   'selected': true,
-                }, 'pepperoni'),
+                }, 'Delicious Pepperoni'),
                 react.option({
                   'value': 'sausage',
                   'selected': true,
-                }, 'sausage'),
+                }, 'Italian Sausage'),
                 react.option({
                   'value': 'pineapple',
                   'disabled': true,
-                }, 'pineapple'),
+                }, 'Processed Sweetened Pineapple'),
               ));
             });
 
             test('exact match', () {
-              shouldPass(renderedResult.getByRole('listbox'), hasValue(['pepperoni', 'sausage']));
+              if (matcherFn == hasValue) {
+                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['pepperoni', 'sausage']));
+              } else if (matcherFn == hasDisplayValue) {
+                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['Delicious Pepperoni', 'Italian Sausage']));
+              }
             });
 
             test('using a matcher', () {
-              shouldPass(renderedResult.getByRole('listbox'), hasValue(isNot(contains('pineapple'))));
+              if (matcherFn == hasValue) {
+                shouldPass(renderedResult.getByRole('listbox'), matcherFn(isNot(contains('pineapple'))));
+              } else if (matcherFn == hasDisplayValue) {
+                shouldPass(
+                    renderedResult.getByRole('listbox'), matcherFn(isNot(contains('Processed Sweetened Pineapple'))));
+              }
             });
           });
 
@@ -217,18 +260,18 @@ main() {
               react.option({
                 'value': 'white sauce',
                 'disabled': true,
-              }, 'white sauce'),
+              }, 'white sauce description'),
               react.option({
                 'value': 'bbq chicken',
                 'disabled': true,
-              }, 'bbq chicken'),
+              }, 'bbq chicken description'),
               react.option({
                 'value': 'pineapple',
                 'disabled': true,
-              }, 'pineapple'),
+              }, 'pineapple description'),
             ));
 
-            shouldPass(renderedResult.getByRole('listbox'), hasValue());
+            shouldPass(renderedResult.getByRole('listbox'), matcherFn());
           });
         });
       });
@@ -245,9 +288,9 @@ main() {
 
           shouldFail(
             renderedResult.getByRole('textbox'),
-            hasValue('Jane'),
+            matcherFn('Jane'),
             allOf(
-              contains('Expected: An element with a value of \'Jane\''),
+              contains('Expected: An element with a $valueDescription of \'Jane\''),
               contains('Which: has element with value \'John\''),
             ),
           );
@@ -261,9 +304,9 @@ main() {
 
           shouldFail(
             renderedResult.getByRole('textbox'),
-            hasValue('I have something nice to say'),
+            matcherFn('I have something nice to say'),
             allOf(
-              contains('Expected: An element with a value of \'I have something nice to say\''),
+              contains('Expected: An element with a $valueDescription of \'I have something nice to say\''),
               contains('Which: has element with value \'I have nothing nice to say\''),
             ),
           );
@@ -278,9 +321,9 @@ main() {
 
           shouldFail(
             renderedResult.getByRole('spinbutton'),
-            hasValue(36),
+            matcherFn(36),
             allOf(
-              contains('Expected: An element with a value of <36>'),
+              contains('Expected: An element with a $valueDescription of <36>'),
               contains('Which: has element with value <35>'),
             ),
           );
@@ -294,21 +337,32 @@ main() {
               },
               react.option({
                 'value': 'personal',
-              }, 'personal'),
+              }, 'personal description'),
               react.option({
                 'value': 'business',
                 'selected': true,
-              }, 'business'),
+              }, 'business description'),
             ));
 
-            shouldFail(
-              renderedResult.getByRole('combobox'),
-              hasValue('personal'),
-              allOf(
-                contains('Expected: An element with a value of \'personal\''),
-                contains('Which: has element with value \'business\''),
-              ),
-            );
+            if (matcherFn == hasValue) {
+              shouldFail(
+                renderedResult.getByRole('combobox'),
+                matcherFn('personal'),
+                allOf(
+                  contains('Expected: An element with a $valueDescription of \'personal\''),
+                  contains('Which: has element with value \'business\''),
+                ),
+              );
+            } else if (matcherFn == hasDisplayValue) {
+              shouldFail(
+                renderedResult.getByRole('combobox'),
+                matcherFn('personal description'),
+                allOf(
+                  contains('Expected: An element with a $valueDescription of \'personal description\''),
+                  contains('Which: has element with value \'business description\''),
+                ),
+              );
+            }
           });
 
           test('when multiple options can be selected', () {
@@ -320,26 +374,39 @@ main() {
               react.option({
                 'value': 'pepperoni',
                 'selected': true,
-              }, 'pepperoni'),
+              }, 'Delicious Pepperoni'),
               react.option({
                 'value': 'sausage',
                 'selected': true,
-              }, 'sausage'),
+              }, 'Italian Sausage'),
               react.option({
                 'value': 'pineapple',
                 'disabled': true,
-              }, 'pineapple'),
+              }, 'Processed Sweetened Pineapple'),
             ));
 
-            shouldFail(
-              renderedResult.getByRole('listbox'),
-              hasValue(['pineapple', 'pepperoni']),
-              allOf(
-                contains('Expected: An element with a value of [\'pineapple\', \'pepperoni\']'),
-                contains('Which: has element with value [\'pepperoni\', \'sausage\'] which at '
-                    'location [0] is \'pepperoni\' instead of \'pineapple\''),
-              ),
-            );
+            if (matcherFn == hasValue) {
+              shouldFail(
+                renderedResult.getByRole('listbox'),
+                matcherFn(['pineapple', 'pepperoni']),
+                allOf(
+                  contains('Expected: An element with a $valueDescription of [\'pineapple\', \'pepperoni\']'),
+                  contains('Which: has element with value [\'pepperoni\', \'sausage\'] which at '
+                      'location [0] is \'pepperoni\' instead of \'pineapple\''),
+                ),
+              );
+            } else if (matcherFn == hasDisplayValue) {
+              shouldFail(
+                renderedResult.getByRole('listbox'),
+                matcherFn(['Processed Sweetened Pineapple', 'Delicious Pepperoni']),
+                allOf(
+                  contains('Expected: An element with a $valueDescription of '
+                      '[\'Processed Sweetened Pineapple\', \'Delicious Pepperoni\']'),
+                  contains('Which: has element with value [\'Delicious Pepperoni\', \'Italian Sausage\'] which at '
+                      'location [0] is \'Delicious Pepperoni\' instead of \'Processed Sweetened Pineapple\''),
+                ),
+              );
+            }
           });
         });
       });
@@ -354,8 +421,8 @@ main() {
 
           shouldFail(
             renderedResult.getByRole('checkbox'),
-            hasValue('true'),
-            contains('The hasValue matcher does not support checkbox / radio inputs. '
+            matcherFn('true'),
+            contains('The _HasValue() matcher does not support checkbox / radio inputs. '
                 'Use either the isChecked or hasFormValues matcher instead.'),
           );
         });
@@ -369,8 +436,8 @@ main() {
 
           shouldFail(
             renderedResult.getByRole('radio'),
-            hasValue('true'),
-            contains('The hasValue matcher does not support checkbox / radio inputs. '
+            matcherFn('true'),
+            contains('The _HasValue() matcher does not support checkbox / radio inputs. '
                 'Use either the isChecked or hasFormValues matcher instead.'),
           );
         });
