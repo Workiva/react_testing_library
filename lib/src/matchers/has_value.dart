@@ -65,11 +65,21 @@ import 'package:react_testing_library/src/matchers/is_checked.dart' show isCheck
 /// {@category Matchers}
 Matcher hasValue([dynamic value]) => _HasValue(value);
 
+/// Allows you to check whether the given form element has the specified displayed value
+/// _(the one the end user will see)_.
+///
+/// Identical to [hasValue] in all cases except for `<select>`s when you want to get the
+/// text content of an `<option>` instead of its `value` attribute.
+Matcher hasDisplayValue([dynamic value]) =>
+    _HasValue(value, getOptionValue: (option) => option.text, valueDescription: 'display value');
+
 class _HasValue extends CustomMatcher {
   final dynamic expectedValue;
+  final dynamic Function(OptionElement option) getOptionValue;
 
-  _HasValue(this.expectedValue)
-      : super('An element with ${expectedValue == null ? 'no value' : 'a value of'}', 'element', expectedValue);
+  _HasValue(this.expectedValue, {this.getOptionValue, String valueDescription = 'value'})
+      : super('An element with ${expectedValue == null ? 'no $valueDescription' : 'a $valueDescription of'}', 'element',
+            expectedValue);
 
   @override
   bool matches(item, Map matchState) {
@@ -84,12 +94,12 @@ class _HasValue extends CustomMatcher {
     if (element is InputElement) {
       final type = element.getAttribute('type');
       if (type == 'checkbox' || type == 'radio') {
-        throw ArgumentError('The hasValue matcher does not support checkbox / radio inputs. '
+        throw ArgumentError('The _HasValue() matcher does not support checkbox / radio inputs. '
             'Use either the isChecked or hasFormValues matcher instead.');
       }
     }
 
-    return getValueOf(element);
+    return getValueOf(element, getOptionValue: getOptionValue);
   }
 }
 
@@ -100,7 +110,7 @@ class _HasValue extends CustomMatcher {
 ///
 /// This function does not support `<input type="checkbox">` or `<input type="radio">` value parsing.
 /// The `hasFormValues` matcher has special logic built-in for that.
-dynamic getValueOf(Element element) {
+dynamic getValueOf(Element element, {dynamic Function(OptionElement option) getOptionValue}) {
   if (element is InputElement) {
     final type = element.getAttribute('type');
     switch (type) {
@@ -116,14 +126,15 @@ dynamic getValueOf(Element element) {
         break;
     }
   } else if (element is SelectElement) {
+    getOptionValue ??= (option) => option.value;
     final selectedOptions = element.options.where((option) => option.selected);
     if (selectedOptions.isEmpty) {
       return element.multiple ? const [] : null;
     } else if (selectedOptions.length == 1) {
-      final selectedValue = selectedOptions.single.value;
-      return element.multiple ? [selectedValue] : selectedValue;
+      final selectedValues = selectedOptions.map(getOptionValue);
+      return element.multiple ? selectedValues.toList() : selectedValues.single;
     } else {
-      return selectedOptions.map((option) => option.value).toList();
+      return selectedOptions.map(getOptionValue).toList();
     }
   } else if (element is TextAreaElement) {
     return element.value;

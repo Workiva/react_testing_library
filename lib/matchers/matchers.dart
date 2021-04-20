@@ -23,7 +23,7 @@ export '../src/matchers/has_attribute.dart' show hasAttribute;
 export '../src/matchers/has_form_values.dart' show hasFormValues;
 export '../src/matchers/has_styles.dart' show hasStyles;
 export '../src/matchers/has_text_content.dart' show hasTextContent;
-export '../src/matchers/has_value.dart' show hasValue;
+export '../src/matchers/has_value.dart' show hasDisplayValue, hasValue;
 export '../src/matchers/is_checked.dart' show isChecked;
 export '../src/matchers/is_disabled.dart' show isDisabled, isEnabled;
 export '../src/matchers/is_in_the_document.dart' show isInTheDocument;
