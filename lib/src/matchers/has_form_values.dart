@@ -19,6 +19,7 @@ import 'dart:js';
 
 import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/dom/debugging.dart';
+import 'package:react_testing_library/src/matchers/has_value.dart' show getValueOf;
 import 'package:react_testing_library/src/util/js_utils.dart';
 
 /// Allows you to check if a [FormElement] or [FieldSetElement] contains form controls for each given name
@@ -112,28 +113,13 @@ class _HasFormValues extends CustomMatcher {
                   .singleWhere((radioEl) => (radioEl as RadioButtonInputElement).checked, orElse: () => null);
               actualNamesAndValues[elementNameToTest] = selectedRadioElement?.value;
               break;
-            case 'number':
-              actualNamesAndValues[elementNameToTest] = num.tryParse(childElement.value);
-              break;
-            case 'text':
             default:
-              actualNamesAndValues[elementNameToTest] = childElement.value;
+              actualNamesAndValues[elementNameToTest] = getValueOf(childElement);
+              ;
               break;
           }
-        } else if (childElement is SelectElement) {
-          final selectedOptions = childElement.options.where((option) => option.selected);
-          if (selectedOptions.isEmpty) {
-            actualNamesAndValues[elementNameToTest] = childElement.multiple ? const [] : null;
-          } else if (selectedOptions.length == 1) {
-            final selectedValue = selectedOptions.single.value;
-            actualNamesAndValues[elementNameToTest] = childElement.multiple ? [selectedValue] : selectedValue;
-          } else {
-            actualNamesAndValues[elementNameToTest] = selectedOptions.map((option) => option.value).toList();
-          }
-        } else if (childElement is TextAreaElement) {
-          actualNamesAndValues[elementNameToTest] = childElement.value;
         } else {
-          actualNamesAndValues[elementNameToTest] = childElement.getAttribute('value');
+          actualNamesAndValues[elementNameToTest] = getValueOf(childElement);
         }
       });
     });
