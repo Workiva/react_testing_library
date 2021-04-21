@@ -1,0 +1,186 @@
+// @dart = 2.7
+
+// Copyright 2021 Workiva Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import 'dart:html' show Element, querySelector;
+
+import 'package:react/react.dart' as react;
+import 'package:react_testing_library/react_testing_library.dart' show RenderResult, hasDescription, render;
+import 'package:test/test.dart';
+
+import '../../util/matchers.dart';
+
+main() {
+  group('hasDescription matcher', () {
+    RenderResult renderedResult;
+
+    setUp(() {
+      renderedResult = render(react.div(
+        {},
+        react.button({
+          'aria-label': 'Close',
+          'aria-describedby': 'description-close',
+        }, 'X'),
+        react.button({
+          'aria-label': 'Has Multiple Descriptions',
+          'aria-describedby': 'description-close some-other-description',
+        }, 'X'),
+        react.button({}, 'Delete'),
+        react.button({'aria-describedby': 'not-found'}, 'Has id not found'),
+        react.div({'id': 'description-close'}, 'Closing will discard   any changes'),
+        react.div({'id': 'some-other-description'}, 'Some other  description'),
+      ));
+    });
+
+    tearDown(() {
+      renderedResult = null;
+    });
+
+    group('[element with a single id as its aria-describedby attribute value]', () {
+      Element closeButtonElement;
+      setUp(() {
+        closeButtonElement = renderedResult.getByRole('button', name: 'Close');
+      });
+
+      group('passes when an is provided a', () {
+        group('String that is an exact match of the element description', () {
+          test('when normalizeWhitespace = true (default)', () {
+            shouldPass(closeButtonElement, hasDescription('Closing will discard any changes'));
+          });
+
+          test('when normalizeWhitespace = false', () {
+            shouldPass(closeButtonElement, hasDescription('Closing will discard   any changes', false));
+          });
+        });
+
+        test('RegExp', () {
+          shouldPass(closeButtonElement, hasDescription(RegExp(r'^closing', caseSensitive: false)));
+        });
+
+        test('a matcher that matches the element description', () {
+          shouldPass(closeButtonElement, hasDescription(),
+              reason: 'A null expected value should be treated as `allOf(isA<String>(), isNotEmpty)`');
+          shouldPass(closeButtonElement, hasDescription(contains('will discard')));
+        });
+      });
+    });
+
+    group('[element with multiple, space-separated ids as its aria-describedby attribute value]', () {
+      Element buttonElementWithMultipleDescriptions;
+      setUp(() {
+        buttonElementWithMultipleDescriptions = renderedResult.getByRole('button', name: 'Has Multiple Descriptions');
+      });
+
+      group('passes when an is provided a', () {
+        group('String that is an exact match of the element descriptions', () {
+          test('when normalizeWhitespace = true (default)', () {
+            shouldPass(buttonElementWithMultipleDescriptions,
+                hasDescription('Closing will discard any changes Some other description'));
+          });
+
+          test('when normalizeWhitespace = false', () {
+            shouldPass(buttonElementWithMultipleDescriptions,
+                hasDescription('Closing will discard   any changes Some other  description', false));
+          });
+        });
+
+        test('RegExp', () {
+          shouldPass(buttonElementWithMultipleDescriptions,
+              hasDescription(RegExp(r'^closing.*description$', caseSensitive: false)));
+        });
+
+        test('a matcher that matches the element description', () {
+          shouldPass(buttonElementWithMultipleDescriptions, hasDescription(),
+              reason: 'A null expected value should be treated as `allOf(isA<String>(), isNotEmpty)`');
+          shouldPass(
+              buttonElementWithMultipleDescriptions,
+              hasDescription(allOf(
+                contains('will discard'),
+                contains('other description'),
+              )));
+        });
+      });
+    });
+
+    group('provides a useful failure message when', () {
+      test('the first argument of `expect()` is not a valid HTML Element', () {
+        shouldFail(
+            'Not an HTML Element',
+            hasDescription('Not an HTML Element'),
+            allOf(
+              contains('Expected: An HTML Element that is described by HTML Element(s) that have description '
+                  'value of \'Not an HTML Element\''),
+              contains('Actual: \'Not an HTML Element\''),
+              contains('Which: is not a valid HTML Element.'),
+            ));
+      });
+
+      test('the first argument of `expect()` is an HTML Element without an `aria-describedby` attribute', () {
+        final buttonWithNoAriaDescribedbyAttr = renderedResult.getByRole('button', name: 'Delete');
+        expect(buttonWithNoAriaDescribedbyAttr.getAttribute('aria-describedby'), isNull,
+            reason: 'Test setup sanity check');
+        shouldFail(
+            buttonWithNoAriaDescribedbyAttr,
+            hasDescription(),
+            allOf(
+              contains('Expected: An HTML Element that is described by HTML Element(s) that have description value of'),
+              contains('Actual: ButtonElement:<button>'),
+              contains('Which: does not have an aria-describedby attribute.'),
+            ));
+      });
+
+      test(
+          'the first argument of `expect()` is an HTML Element with an `aria-describedby` attribute '
+          'value that does not correspond to the id of any elements found in the DOM', () {
+        final buttonWithInvalidAriaDescribedbyAttr = renderedResult.getByRole('button', name: 'Has id not found');
+        final ariaDescribedByAttrValue = buttonWithInvalidAriaDescribedbyAttr.getAttribute('aria-describedby');
+        expect(querySelector('#$ariaDescribedByAttrValue'), isNull, reason: 'Test setup sanity check');
+        shouldFail(
+            buttonWithInvalidAriaDescribedbyAttr,
+            hasDescription(),
+            allOf(
+              contains('Expected: An HTML Element that is described by HTML Element(s) that have description value of'),
+              contains('Actual: ButtonElement:<button>'),
+              contains('Which: has an aria-described by attribute value of "$ariaDescribedByAttrValue", which does not '
+                  'match the id attribute of any Element in the DOM.'),
+            ));
+      });
+
+      test('the String provided is not found within the provided element\'s description', () {
+        shouldFail(
+            renderedResult.getByRole('button', name: 'Close'),
+            hasDescription('Invalid description'),
+            allOf(
+              contains('Expected: An HTML Element that is described by HTML Element(s) that have description '
+                  'value of \'Invalid description\''),
+              contains('Actual: ButtonElement:<button>'),
+              contains('Which: has description with value \'Closing will discard any changes\''),
+            ));
+      });
+
+      test('the RegExp provided does not have a match within the provided element\'s description', () {
+        shouldFail(
+            renderedResult.getByRole('button', name: 'Close'),
+            hasDescription(RegExp(r'Invalid description$')),
+            allOf(
+              contains('Expected: An HTML Element that is described by HTML Element(s) that have description '
+                  'value of match \'Invalid description\$\''),
+              contains('Actual: ButtonElement:<button>'),
+              contains('Which: has description with value \'Closing will discard any changes\''),
+            ));
+      });
+    });
+  });
+}
