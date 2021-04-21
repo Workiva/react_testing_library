@@ -16,15 +16,17 @@
 
 import 'dart:html';
 
-import 'package:matcher/matcher.dart' as m;
+import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/util/element_text_content_matcher_mixin.dart';
 
 /// Allows you to check whether an element whether the given element has a text content or not.
 ///
-/// When a `String` argument is passed through, it will perform a partial case-sensitive match to the element content.
+/// When a `String` argument is passed through, it will perform a whole case-sensitive match to the element content.
 ///
-/// To perform a case-insensitive match, you can construct a `RegExp` with `caseSensitive` set to true.
+/// The whitespace of the element content is normalized unless you set [normalizeWhitespace] to false.
 ///
-/// If you want to match the whole content, you can use a `RegExp` to do it.
+/// To perform a partial or case-insensitive match, you can use any of the string matchers like `contains`, or
+/// construct a `RegExp` with `caseSensitive` set to true.
 ///
 /// Similar to [jest-dom's `toHaveTextContent` matcher](https://github.com/testing-library/jest-dom#tohavetextcontent).
 ///
@@ -42,65 +44,40 @@ import 'package:matcher/matcher.dart' as m;
 ///   test('', () {
 ///     final element = rtl.screen.getByTestId('text-content');
 ///
-///     expect(element, hasTextContent('Content'));
-///     expect(element, hasTextContent(RegExp(r'^Text Content$'))); // to match the whole content
+///     expect(element, hasTextContent('Text Content'));
+///     expect(element, hasTextContent(RegExp(r'Content$'))); // to match the whole content
 ///     expect(element, hasContent(RegExp('content', caseSensitive: false))); // to use case-insensitive match
-///     expect(element, isNot(hasContent('content')));
+///     expect(element, isNot(hasContent('foo')));
+///     expect(element, hasContent()); // Will match a non-empty description
 ///   });
 /// }
 /// ```
 ///
 /// {@category Matchers}
-m.Matcher hasTextContent(
-  Pattern stringOrRegExp, {
-  bool normalizeWhitespace = true,
-}) =>
-    _HasTextContent(stringOrRegExp, normalizeWhitespace: normalizeWhitespace);
+Matcher hasTextContent([dynamic expectedTextContent, bool normalizeWhitespace = true]) =>
+    _HasTextContent(expectedTextContent, normalizeWhitespace: normalizeWhitespace);
 
-class _HasTextContent extends m.Matcher {
-  final dynamic matcher;
+class _HasTextContent extends CustomMatcher with ElementTextContentMatcherMixin {
+  final dynamic expectedTextContent;
   final bool normalizeWhitespace;
 
-  _HasTextContent(this.matcher, {this.normalizeWhitespace = true}) {
-    if (matcher is! String && matcher is! RegExp) {
-      throw ArgumentError('must be a String or a RegExp');
-    }
-  }
+  _HasTextContent(dynamic expectedTextContent, {this.normalizeWhitespace = true})
+      : expectedTextContent = ElementTextContentMatcherMixin.normalizeExpectedTextContent(expectedTextContent),
+        super(
+          'An HTML Element with text content value of',
+          'text content',
+          ElementTextContentMatcherMixin.normalizeExpectedTextContent(expectedTextContent),
+        );
 
   @override
-  m.Description describe(m.Description description) {
-    final matcherTypeDescription =
-        matcher is RegExp ? "has a match within '/${(matcher as RegExp).pattern}/'" : "contains '$matcher'";
-    return description.add('An element with text content that $matcherTypeDescription');
-  }
+  featureValueOf(item) => getNormalizedTextContentOf(item, normalizeWhitespace: normalizeWhitespace);
 
   @override
-  m.Description describeMismatch(
-      covariant Element item, m.Description mismatchDescription, Map matchState, bool verbose) {
-    return mismatchDescription.add("has text content '${featureValueOf(item)}'");
-  }
-
-  @override
-  bool matches(covariant Element item, Map matchState) {
-    final itemTextContentValue = featureValueOf(item);
-
-    return matcher is RegExp
-        ? m.matches(matcher).matches(itemTextContentValue, matchState)
-        : m.contains(matcher).matches(itemTextContentValue, matchState);
-  }
-
-  String featureValueOf(covariant Element item) {
-    String featureValue;
-    if (normalizeWhitespace) {
-      featureValue = item.text.replaceAll(RegExp(r'\s+'), ' ');
-    } else {
-      // NOTE: I'm not sure why the jest-dom implementation only replaces &nbsp; when `normalizeWhitespace` is false,
-      // but for now we should just leave it as-is to mimic that behavior.
-      //
-      // See: <https://github.com/testing-library/jest-dom/blob/master/src/to-have-text-content.js#L10-L12>
-      featureValue = item.text.replaceAll(RegExp(r'\u00a0'), ' '); // Replace &nbsp; with normal spaces
+  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is! Element) {
+      return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
-    return featureValue;
+    return super.describeMismatch(item, mismatchDescription, matchState, verbose);
   }
 }
