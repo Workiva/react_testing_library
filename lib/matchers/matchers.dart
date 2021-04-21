@@ -20,6 +20,7 @@ library rtl.matchers;
 export '../src/matchers/contains_element.dart' show containsElement;
 export '../src/matchers/css_class_matchers.dart' show hasClasses, hasExactClasses, excludesClasses;
 export '../src/matchers/has_attribute.dart' show hasAttribute;
+export '../src/matchers/has_description.dart' show hasDescription;
 export '../src/matchers/has_form_values.dart' show hasFormValues;
 export '../src/matchers/has_styles.dart' show hasStyles;
 export '../src/matchers/has_text_content.dart' show hasTextContent;
