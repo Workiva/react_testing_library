@@ -38,49 +38,63 @@ main() {
     });
 
     group('passes when provided a', () {
-      test('String that the element text content contains', () {
-        shouldPass(rootElement, hasTextContent('ick brown fo'));
-        shouldPass(rootElement, hasTextContent('The '));
-        shouldPass(rootElement, hasTextContent('o'));
-        shouldPass(rootElement, hasTextContent('(lazy) dog'), reason: 'White space should be normalized by default');
+      group('String that is an exact match of the element text content', () {
+        test('when normalizeWhitespace = true (default)', () {
+          shouldPass(rootElement, hasTextContent('The quick brown fox jumps over the (lazy) dog'));
+        });
+
+        test('when normalizeWhitespace = false', () {
+          shouldPass(rootElement, hasTextContent('The quick brown fox jumps over the (lazy)    dog', false));
+        });
       });
 
       test('RegExp', () {
         shouldPass(rootElement, hasTextContent(RegExp(r'^The.*dog$')));
-        shouldPass(rootElement, hasTextContent(RegExp(r'^The quick brown fox jumps over the \(lazy\) dog$')),
-            reason: 'White space should be normalized by default');
+        shouldPass(rootElement,
+            hasTextContent(RegExp(r'^The quick BROWN fox jumps over the \(lazy\) dog$', caseSensitive: false)));
+      });
+
+      test('a matcher that matches the element text content', () {
+        shouldPass(rootElement, hasTextContent(),
+            reason: 'A null expected value should be treated as `allOf(isA<String>(), isNotEmpty)`');
+        shouldPass(rootElement, isNot(hasTextContent('john doe')));
+        shouldPass(rootElement, hasTextContent(startsWith('The quick ')));
+        shouldPass(rootElement, hasTextContent(matches(RegExp(r'^The.*dog$'))));
       });
     });
 
     group('provides a useful failure message when', () {
+      test('the first argument of `expect()` is not a valid HTML Element', () {
+        shouldFail(
+            'Not an HTML Element',
+            hasTextContent('Not an HTML Element'),
+            allOf(
+              contains('Expected: An HTML Element with text content value of \'Not an HTML Element\''),
+              contains('Actual: \'Not an HTML Element\''),
+              contains('Which: is not a valid HTML Element.'),
+            ));
+      });
+
       test('the String provided is not found within the provided element\'s text content', () {
         shouldFail(
             rootElement,
             hasTextContent('The Dog'),
             allOf(
-              contains('An element with text content that contains \'The Dog\''),
-              contains('Which: has text content \'The quick brown fox jumps over the (lazy) dog\''),
+              contains('Expected: An HTML Element with text content value of \'The Dog\''),
+              contains('Actual: SpanElement:<span>'),
+              contains('Which: has text content with value \'The quick brown fox jumps over the (lazy) dog\''),
             ));
       });
 
       test('the RegExp provided does not have a match within the provided element\'s text content', () {
-        final badRegExp = RegExp(r'jumps over the$');
         shouldFail(
             rootElement,
-            hasTextContent(badRegExp),
+            hasTextContent(RegExp(r'jumps over the$')),
             allOf(
-              contains('An element with text content that has a match within \'/${badRegExp.pattern}/\''),
-              contains('Which: has text content \'The quick brown fox jumps over the (lazy) dog\''),
+              contains('Expected: An HTML Element with text content value of match \'jumps over the\$\''),
+              contains('Actual: SpanElement:<span>'),
+              contains('Which: has text content with value \'The quick brown fox jumps over the (lazy) dog\''),
             ));
-      });
-
-      test('the stringOrRegExp argument is not a String or RegExp', () {
-        expect(
-            () => hasTextContent(null),
-            throwsA(allOf(
-              isA<ArgumentError>(),
-              hasToStringValue(contains('must be a String or a RegExp')),
-            )));
       });
     });
   });
