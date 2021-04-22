@@ -17,6 +17,7 @@
 import 'dart:html' show DivElement, Element, document;
 
 import 'package:react_testing_library/matchers.dart' show isFocused;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
@@ -78,7 +79,7 @@ main() {
       });
 
       test('the matched item is not an element', () {
-        shouldFail(null, isFocused, contains('Which: is not a valid Element.'));
+        shouldFail(null, isFocused, contains('Which: $notAnElementMismatchDescription'));
       });
     });
   });

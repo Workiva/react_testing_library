@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to assert whether an element contains another element as a descendant or not.
 ///
@@ -29,19 +30,32 @@ import 'package:matcher/matcher.dart';
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show containsElement;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final ancestor = rtl.screen.getByTestId('ancestor');
-///     final descendant = rtl.screen.getByTestId('descendant');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(
+///       react.span({'data-test-id': 'ancestor'},
+///         react.span({'data-test-id': 'descendant'}),
+///       ),
+///     );
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     final ancestor = result.getByTestId('ancestor');
+///     final descendant = result.getByTestId('descendant');
+///
+///     // Use the `containsElement` matcher as the second argument of `expect()`
 ///     expect(ancestor, containsElement(descendant));
 ///     expect(descendant, isNot(containsElement(ancestor)));
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 Matcher containsElement(Element descendant) => _ContainsElement(descendant);
@@ -70,7 +84,7 @@ class _ContainsElement extends Matcher {
   @override
   Description describeMismatch(ancestor, Description mismatchDescription, Map matchState, bool verbose) {
     if (!matchState['ancestorIsElement']) {
-      return mismatchDescription..add('is not a valid Element.');
+      return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
     return mismatchDescription..add('does not contain $descendant.');

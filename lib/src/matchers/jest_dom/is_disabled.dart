@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to assert whether an element is disabled from the user's perspective.
 ///
@@ -28,23 +29,39 @@ import 'package:matcher/matcher.dart';
 /// ### Examples
 ///
 /// ```html
-/// &lt;button data-test-id="button" type="submit" disabled>submit&lt;/button>
-/// &lt;fieldset disabled>&lt;input type="text" data-test-id="input" />&lt;/fieldset>
-/// &lt;a href="..." disabled>link&lt;/a>
+/// &lt;div>
+///   &lt;button type="submit" disabled>submit&lt;/button>
+///   &lt;fieldset disabled>&lt;input type="text" name="username" value="jane.doe" />&lt;/fieldset>
+///   &lt;a href="..." disabled>link&lt;/a>
+/// &lt;/div>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show isDisabled;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     expect(rtl.screen.getByTestId('button'), isDisabled);
-///     expect(rtl.screen.getByTestId('input'), isDisabled);
-///     expect(rtl.screen.getByText('link'), isNot(isDisabled));
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.div({},
+///       react.button({'type': 'submit', 'disabled': true}, 'submit'),
+///       react.fieldset({'disabled': true},
+///         react.input({'type': 'text', 'value': 'jane.doe'}),
+///       ),
+///       react.a({'href': '...', 'disabled': true}, 'link'),
+///     ));
+///
+///     // Use the `isDisabled` matcher as the second argument of `expect()`
+///     expect(result.getByRole('button'), isDisabled);
+///     expect(result.getByRole('textbox'), isDisabled);
+///     expect(result.getByText('link'), isNot(isDisabled)); // Anchor elements cannot be disabled
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 const Matcher isDisabled = _IsDisabled();
@@ -99,11 +116,11 @@ class _IsDisabled extends Matcher {
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] != true) {
-      return mismatchDescription..add('is not a valid Element.');
+      return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
     if (matchState['canBeDisabled'] != true) {
-      mismatchDescription.add('is not a type of HTML element that can be disabled.');
+      mismatchDescription.add('is not a type of HTML Element that can be disabled.');
     } else {
       mismatchDescription.add(defaultMismatchDescription);
     }

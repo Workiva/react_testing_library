@@ -17,6 +17,7 @@
 import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show isChecked;
 import 'package:react_testing_library/react_testing_library.dart' show render;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
@@ -69,14 +70,14 @@ main() {
 
     group('provides a useful failure message when', () {
       test('the matched item is not an element', () {
-        shouldFail(null, isChecked, contains('Which: is not a valid Element.'));
+        shouldFail(null, isChecked, contains('Which: $notAnElementMismatchDescription'));
       });
 
       group('the matched item is not a type of element that can be checked', () {
         test('', () {
           final renderResult = render(react.div({defaultTestIdKey: 'div'}));
           final divNode = renderResult.getByTestId('div');
-          shouldFail(divNode, isChecked, contains('Which: is not a type of HTML element that can be checked.'));
+          shouldFail(divNode, isChecked, contains('Which: is not a type of HTML Element that can be checked.'));
         });
       });
 

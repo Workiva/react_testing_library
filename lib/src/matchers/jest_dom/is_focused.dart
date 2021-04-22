@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to assert whether an element has focus or not.
 ///
@@ -25,17 +26,24 @@ import 'package:matcher/matcher.dart';
 /// ### Examples
 ///
 /// ```html
-/// &lt;div>&lt;input type="text" data-test-id="element-to-focus" />&lt;/div>
+/// &lt;input type="text" name="username" value="jane.doe" />
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show containsElement;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final input = rtl.screen.getByTestId('element-to-focus');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.input({'type': 'text', 'name': 'username'}));
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     final input = result.getByTestId('element-to-focus');
+///
+///     // Use the `isFocused` matcher as the second argument of `expect()`
 ///     input.focus();
 ///     expect(input, isFocused);
 ///
@@ -44,6 +52,8 @@ import 'package:matcher/matcher.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 const Matcher isFocused = _IsFocused();
@@ -66,7 +76,7 @@ class _IsFocused extends Matcher {
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
-      return mismatchDescription..add('is not a valid Element.');
+      return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
     if (!document.documentElement.contains(item)) {

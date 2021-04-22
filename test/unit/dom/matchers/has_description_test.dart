@@ -19,6 +19,7 @@ import 'dart:html' show Element, querySelector;
 import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasDescription;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
@@ -124,7 +125,7 @@ main() {
               contains('Expected: An HTML Element that is described by HTML Element(s) that have description '
                   'value of \'Not an HTML Element\''),
               contains('Actual: \'Not an HTML Element\''),
-              contains('Which: is not a valid HTML Element.'),
+              contains('Which: $notAnElementMismatchDescription'),
             ));
       });
 

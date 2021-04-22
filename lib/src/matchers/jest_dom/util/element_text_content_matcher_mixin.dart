@@ -20,8 +20,6 @@ import 'package:matcher/matcher.dart';
 
 /// A mixin with utilities for matchers that match [Element] text content.
 mixin ElementTextContentMatcherMixin on CustomMatcher {
-  String get notAnElementMismatchDescription => 'is not a valid HTML Element.';
-
   String getNormalizedTextContentOf(Element item, {bool normalizeWhitespace = true}) {
     if (!normalizeWhitespace) return item.text;
 

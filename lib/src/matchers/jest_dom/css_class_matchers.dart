@@ -18,6 +18,7 @@ import 'dart:html';
 import 'dart:svg' show AnimatedString;
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to check whether an [Element] has certain [classes] within its HTML `class` attribute.
 ///
@@ -29,20 +30,28 @@ import 'package:matcher/matcher.dart';
 ///
 /// ### Examples
 /// ```html
-/// &lt;button data-test-id="delete-button" class="btn extra btn-danger">
-///   Delete item
-/// &lt;/button>
-/// &lt;button data-test-id="no-classes">No Classes&lt;/button>
+/// &lt;button class="btn extra btn-danger">Delete&lt;/button>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasClasses;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final deleteButton = rtl.screen.getByTestId('delete-button');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(
+///       react.button({'className': 'btn extra btn-danger'},
+///         'Delete',
+///       ),
+///     );
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     final deleteButton = result.getByRole('button', name: 'Delete');
+///
+///     // Use the `hasClasses` matcher as the second argument of `expect()`
 ///     expect(deleteButton, hasClasses('extra'));
 ///     expect(deleteButton, hasClasses('btn-danger btn'));
 ///     expect(deleteButton, hasClasses(['btn-danger', 'btn']));
@@ -50,8 +59,10 @@ import 'package:matcher/matcher.dart';
 /// }
 /// ```
 ///
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// {@category Matchers}
-Matcher hasClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.expected(classes));
+Matcher hasClasses(classes) => _ElementClassNameMatcher(_ClassNameMatcher.expected(classes));
 
 /// Allows you to check whether an [Element] has certain [classes] within its HTML `class` attribute,
 /// with no additional or duplicated classes like the [hasClasses] matcher allows.
@@ -63,29 +74,39 @@ Matcher hasClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.expecte
 ///
 /// ### Examples
 /// ```html
-/// <button data-test-id="delete-button" class="btn extra btn-danger">
-///   Delete item
-/// </button>
-/// <button data-test-id="no-classes">No Classes</button>
+/// &lt;button class="btn extra btn-danger">Delete&lt;/button>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasExactClasses;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final deleteButton = rtl.screen.getByTestId('delete-button');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(
+///       react.button({'className': 'btn extra btn-danger'},
+///         'Delete',
+///       ),
+///     );
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     final deleteButton = result.getByRole('button', name: 'Delete');
+///
+///     // Use the `hasExactClasses` matcher as the second argument of `expect()`
 ///     expect(deleteButton, hasExactClasses('btn-danger extra btn'));
 ///     expect(deleteButton, hasExactClasses(['btn-danger', 'extra', 'btn']));
 ///   });
 /// }
 /// ```
 ///
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// {@category Matchers}
 Matcher hasExactClasses(classes) =>
-    _ElementClassNameMatcher(ClassNameMatcher.expected(classes, allowExtraneous: false));
+    _ElementClassNameMatcher(_ClassNameMatcher.expected(classes, allowExtraneous: false));
 
 /// Allows you to check whether an [Element] does not have certain [classes] within its HTML `class` attribute.
 ///
@@ -95,36 +116,46 @@ Matcher hasExactClasses(classes) =>
 ///
 /// ### Examples
 /// ```html
-/// <button data-test-id="delete-button" class="btn extra btn-danger">
-///   Delete item
-/// </button>
-/// <button data-test-id="no-classes">No Classes</button>
+/// &lt;button class="btn extra btn-danger">Delete&lt;/button>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show excludesClasses;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final deleteButton = rtl.screen.getByTestId('delete-button');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(
+///       react.button({'className': 'btn extra btn-danger'},
+///         'Delete',
+///       ),
+///     );
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     final deleteButton = result.getByRole('button', name: 'Delete');
+///
+///     // Use the `excludesClasses` matcher as the second argument of `expect()`
 ///     expect(deleteButton, excludesClasses('not-there'));
-///     expect(deleteButton, hasClasses(['not-there', 'nope']));
+///     expect(deleteButton, excludesClasses(['not-there', 'nope']));
 ///   });
 /// }
 /// ```
 ///
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// {@category Matchers}
-Matcher excludesClasses(classes) => _ElementClassNameMatcher(ClassNameMatcher.unexpected(classes));
+Matcher excludesClasses(classes) => _ElementClassNameMatcher(_ClassNameMatcher.unexpected(classes));
 
 /// Match a list of class names on a component.
-class ClassNameMatcher extends Matcher {
-  ClassNameMatcher.expected(_expectedClasses, {this.allowExtraneous = true})
+class _ClassNameMatcher extends Matcher {
+  _ClassNameMatcher.expected(_expectedClasses, {this.allowExtraneous = true})
       : expectedClasses = getClassIterable(_expectedClasses).toSet(),
         unexpectedClasses = {};
 
-  ClassNameMatcher.unexpected(_unexpectedClasses)
+  _ClassNameMatcher.unexpected(_unexpectedClasses)
       : unexpectedClasses = getClassIterable(_unexpectedClasses).toSet(),
         allowExtraneous = true,
         expectedClasses = {};
@@ -231,6 +262,15 @@ class _ElementClassNameMatcher extends CustomMatcher {
   _ElementClassNameMatcher(matcher) : super('Element that', 'className', matcher);
   @override
   featureValueOf(covariant Element actual) => actual.className;
+
+  @override
+  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is! Element) {
+      return mismatchDescription..add(notAnElementMismatchDescription);
+    }
+
+    return super.describeMismatch(item, mismatchDescription, matchState, verbose);
+  }
 }
 
 /// Returns a List of space-delimited tokens efficiently split from the specified [string].

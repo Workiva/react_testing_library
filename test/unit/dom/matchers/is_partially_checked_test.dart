@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react_testing_library/matchers.dart' show isPartiallyChecked;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
@@ -37,13 +38,13 @@ main() {
 
     group('provides a useful failure message when', () {
       test('the matched item is not an element', () {
-        shouldFail(null, isPartiallyChecked, contains('Which: is not a valid Element.'));
+        shouldFail(null, isPartiallyChecked, contains('Which: $notAnElementMismatchDescription'));
       });
 
       group('the matched item is not a type of element that can be partially checked', () {
         test('', () {
           shouldFail(
-              DivElement(), isPartiallyChecked, contains('Which: is not a type of HTML element that can be checked.'));
+              DivElement(), isPartiallyChecked, contains('Which: is not a type of HTML Element that can be checked.'));
         });
       });
 

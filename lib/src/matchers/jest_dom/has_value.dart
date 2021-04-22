@@ -19,6 +19,7 @@ import 'dart:html';
 import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/has_form_values.dart' show hasFormValues;
 import 'package:react_testing_library/src/matchers/jest_dom/is_checked.dart' show isChecked;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.dart';
 
 /// Allows you to check whether the given form element has the specified [value].
@@ -34,34 +35,55 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 /// ### Examples
 ///
 /// ```html
-/// &lt;input type="text" value="text" data-test-id="input-text" />
-/// &lt;input type="number" value="5" data-test-id="input-number" />
-/// &lt;input type="text" data-test-id="input-empty" />
-/// &lt;select multiple data-test-id="select-number">
-///   &lt;option value="first">First Value&lt;/option>
-///   &lt;option value="second" selected>Second Value&lt;/option>
-///   &lt;option value="third" selected>Third Value&lt;/option>
-/// &lt;/select>
+/// &lt;form>
+///   &lt;input type="text" name="username" value="jane.doe" />
+///   &lt;input type="number" name="age" value="35" />
+///   &lt;input type="text" name="occupation" />
+///   &lt;select multiple name="options">
+///     &lt;option value="first">First Value&lt;/option>
+///     &lt;option value="second" selected>Second Value&lt;/option>
+///     &lt;option value="third" selected>Third Value&lt;/option>
+///   &lt;/select>
+/// &lt;/form>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasValue;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     const textInput = rtl.screen.getByTestId('input-text');
-///     const numberInput = rtl.screen.getByTestId('input-number');
-///     const emptyInput = rtl.screen.getByTestId('input-empty');
-///     const selectInput = rtl.screen.getByTestId('select-number');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.form({},
+///       react.input({'type': 'text', name: 'username', value: 'jane.doe'}),
+///       react.input({'type': 'number', 'name': 'age', value: '35'}),
+///       react.input({'type': 'text', 'name': 'occupation'}),
+///       react.select({'multiple': true},
+///         react.option({'value': 'first'}, 'First Value'),
+///         react.option({'value': 'second' selected: true}, 'Second Value'),
+///         react.option({'value': 'third', selected: true}, 'Third Value'),
+///       ),
+///     ));
 ///
-///     expect(textInput, hasValue('text'));
-///     expect(numberInput, hasValue(5));
+///     // Use react_testing_library queries to store references to the node(s)
+///     const textInput = result.getByRole('textbox', name: 'username');
+///     const numberInput = result.getByRole('spinbutton', name: 'age');
+///     const emptyInput = result.getByRole('textbox', name: 'occupation');
+///     const selectInput = result.getByRole('listbox', name: 'options');
+///
+///     // Use the `hasValue` matcher as the second argument of `expect()`
+///     expect(textInput, hasValue('jane.doe'));
+///     expect(numberInput, hasValue(35));
 ///     expect(emptyInput, isNot(hasValue()));
-///     expect(selectInput, isNot(hasValue(['second', 'third'])));
+///     expect(selectInput, hasValue(['second', 'third']));
+///     expect(selectInput, hasValue(['first']));
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 Matcher hasValue([dynamic value]) => _HasValue(value);
@@ -71,6 +93,8 @@ Matcher hasValue([dynamic value]) => _HasValue(value);
 ///
 /// Identical to [hasValue] in all cases except for `<select>`s when you want to get the
 /// text content of an `<option>` instead of its `value` attribute.
+///
+/// {@category Matchers}
 Matcher hasDisplayValue([dynamic value]) =>
     _HasValue(value, getOptionValue: (option) => option.text, valueDescription: 'display value');
 
@@ -91,15 +115,43 @@ class _HasValue extends CustomMatcher {
   }
 
   @override
-  dynamic featureValueOf(covariant Element element) {
+  dynamic featureValueOf(item) {
+    Element element;
+    try {
+      element = item;
+    } catch (_) {
+      // If its not an element, the mismatch description will say so.
+      return null;
+    }
+
     if (element is InputElement) {
       final type = element.getAttribute('type');
       if (type == 'checkbox' || type == 'radio') {
-        throw ArgumentError('The _HasValue() matcher does not support checkbox / radio inputs. '
-            'Use either the isChecked or hasFormValues matcher instead.');
+        return null;
       }
     }
 
     return getValueOf(element, getOptionValue: getOptionValue);
+  }
+
+  @override
+  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is! Element) {
+      return mismatchDescription..add(notAnElementMismatchDescription);
+    } else if (itemIsCheckboxOrRadioInput(item)) {
+      return mismatchDescription
+        ..add('is a checkbox/radio input, which cannot be used with a '
+            'hasValue / hasDisplayValue matcher. Use either the isChecked or hasFormValues matcher instead.');
+    }
+
+    return super.describeMismatch(item, mismatchDescription, matchState, verbose);
+  }
+
+  bool itemIsCheckboxOrRadioInput(item) {
+    if (item is InputElement) {
+      final type = item.getAttribute('type');
+      return type == 'checkbox' || type == 'radio';
+    }
+    return false;
   }
 }
