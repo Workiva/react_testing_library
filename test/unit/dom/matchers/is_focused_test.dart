@@ -16,7 +16,7 @@
 
 import 'dart:html' show DivElement, Element, document;
 
-import 'package:react_testing_library/react_testing_library.dart' show isFocused;
+import 'package:react_testing_library/matchers.dart' show isFocused;
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';

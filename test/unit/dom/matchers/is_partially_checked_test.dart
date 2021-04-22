@@ -16,7 +16,7 @@
 
 import 'dart:html';
 
-import 'package:react_testing_library/react_testing_library.dart' show isPartiallyChecked;
+import 'package:react_testing_library/matchers.dart' show isPartiallyChecked;
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';

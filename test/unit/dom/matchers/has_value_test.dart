@@ -16,7 +16,8 @@
 
 import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
-import 'package:react_testing_library/react_testing_library.dart' show hasDisplayValue, hasValue, render, RenderResult;
+import 'package:react_testing_library/matchers.dart' show hasDisplayValue, hasValue;
+import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';

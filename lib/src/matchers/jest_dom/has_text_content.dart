@@ -17,7 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
-import 'package:react_testing_library/src/matchers/util/element_text_content_matcher_mixin.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_content_matcher_mixin.dart';
 
 /// Allows you to check whether an element whether the given element has a text content or not.
 ///
