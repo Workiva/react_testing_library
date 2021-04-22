@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to check whether the given element is `checked`.
 ///
@@ -28,47 +29,54 @@ import 'package:matcher/matcher.dart';
 /// ### Examples
 ///
 /// ```html
-/// &lt;input type="checkbox" checked data-test-id="input-checkbox-checked" />
-/// &lt;input type="checkbox" data-test-id="input-checkbox-unchecked" />
-/// &lt;div role="checkbox" aria-checked="true" data-test-id="aria-checkbox-checked" />
-/// &lt;div
-///   role="checkbox"
-///   aria-checked="false"
-///   data-test-id="aria-checkbox-unchecked"
-/// />
+/// &lt;div>
+///   &lt;input type="checkbox" name="pepperoni" checked />
+///   &lt;input type="checkbox" name="pineapple" />
+///   &lt;div role="checkbox" aria-checked="true">Red Sauce&lt;/div>
+///   &lt;div role="checkbox" aria-checked="false">White Sauce&lt;/div>
+///   &lt;div role="switch" aria-checked="true">Mozzarella&lt;/div>
+///   &lt;div role="switch" aria-checked="false">Cheddar&lt;/div>
+/// &lt;/div>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show isChecked;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     const inputCheckboxChecked = rtl.screen.getByTestId('input-checkbox-checked');
-///     const inputCheckboxUnchecked = rtl.screen.getByTestId('input-checkbox-unchecked');
-///     const ariaCheckboxChecked = rtl.screen.getByTestId('aria-checkbox-checked');
-///     const ariaCheckboxUnchecked = rtl.screen.getByTestId('aria-checkbox-unchecked');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.div({},
+///       react.input({'type': 'checkbox', 'name': 'pepperoni', 'checked': true}),
+///       react.input({'type': 'checkbox', 'name': 'pineapple'}),
+///       react.div({'role': 'checkbox', 'aria-checked': 'true'}, 'Red Sauce'),
+///       react.div({'role': 'checkbox', 'aria-checked': 'false'}, 'White Sauce'),
+///       react.div({'role': 'switch', 'aria-checked': 'true'}, 'Mozzarella'),
+///       react.div({'role': 'switch', 'aria-checked': 'false'}, 'Cheddar'),
+///     ));
+///
+///     // Use react_testing_library queries to store references to the node(s)
+///     const inputCheckboxChecked = result.getByRole('checkbox', name: 'pepperoni');
+///     const inputCheckboxUnchecked = result.getByRole('checkbox', name: 'pineapple');
+///     const ariaCheckboxChecked = result.getByRole('checkbox', name: 'Red Sauce');
+///     const ariaCheckboxUnchecked = result.getByRole('checkbox', name: 'White Sauce');
+///     const ariaSwitchChecked = result.getByRole('switch', name: 'Mozzarella');
+///     const ariaSwitchUnchecked = result.getByRole('switch', name: 'Cheddar');
+///
+///     // Use the `isChecked` matcher as the second argument of `expect()`
 ///     expect(inputCheckboxChecked, isChecked);
 ///     expect(inputCheckboxUnchecked, isNot(isChecked));
 ///     expect(ariaCheckboxChecked, isChecked);
 ///     expect(ariaCheckboxUnchecked, isNot(isChecked));
-///
-///     const inputRadioChecked = rtl.screen.getByTestId('input-radio-checked');
-///     const inputRadioUnchecked = rtl.screen.getByTestId('input-radio-unchecked');
-///     const ariaRadioChecked = rtl.screen.getByTestId('aria-radio-checked');
-///     const ariaRadioUnchecked = rtl.screen.getByTestId('aria-radio-unchecked');
-///     expect(inputRadioChecked, isChecked);
-///     expect(inputRadioUnchecked, isNot(isChecked));
-///     expect(ariaRadioChecked, isChecked);
-///     expect(ariaRadioUnchecked, isNot(isChecked));
-///
-///     const ariaSwitchChecked = rtl.screen.getByTestId('aria-switch-checked');
-///     const ariaSwitchUnchecked = rtl.screen.getByTestId('aria-switch-unchecked');
 ///     expect(ariaSwitchChecked, isChecked);
 ///     expect(ariaSwitchUnchecked, isNot(isChecked));
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 const Matcher isChecked = _IsChecked();
@@ -124,15 +132,11 @@ class _IsChecked extends Matcher {
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] != true) {
-      return mismatchDescription..add('is not a valid Element.');
+      return mismatchDescription..add(notAnElementMismatchDescription);
+    } else if (matchState['canBeChecked'] != true) {
+      return mismatchDescription..add('is not a type of HTML Element that can be checked.');
     }
 
-    if (matchState['canBeChecked'] != true) {
-      mismatchDescription.add('is not a type of HTML element that can be checked.');
-    } else {
-      mismatchDescription.add(defaultMismatchDescription);
-    }
-
-    return mismatchDescription;
+    return mismatchDescription..add(defaultMismatchDescription);
   }
 }

@@ -150,5 +150,12 @@ class RenderResult extends ScopedQueries {
   DocumentFragment asFragment() => _jsRenderResult.asFragment();
 }
 
+/// {@template RenderSupportsReactAndOverReactCallout}
+/// > __NOTE:__ `render()` supports React vDom elements / custom components created using either the
+///   [react](https://pub.dev/packages/react) or [over_react](https://pub.dev/packages/over_react) packages.
+/// >
+/// > The examples shown here use the `react` package since the `react_testing_library` does not have a direct
+///   dependency on `over_react` - but both libraries are fully supported.
+/// {@endtemplate}
 @JS('rtl.render')
 external JsRenderResult _render(ReactElement ui, RenderOptions options);

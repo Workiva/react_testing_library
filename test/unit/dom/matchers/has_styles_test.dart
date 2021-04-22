@@ -19,7 +19,10 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasStyles;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
+
+import '../../util/matchers.dart';
 
 main() {
   group('hasStyles matcher', () {
@@ -28,36 +31,36 @@ main() {
 
     tearDown(() {
       renderedResult = null;
-      externalStyleSheet.remove();
+      externalStyleSheet?.remove();
       externalStyleSheet = null;
     });
 
+    setUp(() {
+      externalStyleSheet = StyleElement()
+        ..innerText = '''
+        .foo {
+          font-size: 27px;
+          font-weight: bold;
+          flex-grow: 2;
+          content: attr(title);
+        }
+      ''';
+      document.head.append(externalStyleSheet);
+
+      renderedResult = render(react.button({
+        'className': 'foo',
+        'style': {
+          'backgroundColor': 'red',
+          'borderColor': 'rgba(0,0,0,.5)',
+          'color': '#cc0000',
+          'display': 'block',
+          'zIndex': 2,
+        },
+        'title': 'this is the title'
+      }));
+    });
+
     group('passes', () {
-      setUp(() {
-        externalStyleSheet = StyleElement()
-          ..innerText = '''
-          .foo {
-            font-size: 27px;
-            font-weight: bold;
-            flex-grow: 2;
-            content: attr(title);
-          }
-        ''';
-        document.head.append(externalStyleSheet);
-
-        renderedResult = render(react.button({
-          'className': 'foo',
-          'style': {
-            'backgroundColor': 'red',
-            'borderColor': 'rgba(0,0,0,.5)',
-            'color': '#cc0000',
-            'display': 'block',
-            'zIndex': 2,
-          },
-          'title': 'this is the title'
-        }));
-      });
-
       group('when checking a single property', () {
         group('set using an inline style', () {
           test('matched to a string', () {
@@ -152,6 +155,15 @@ main() {
           });
         });
       });
+    });
+
+    group('provides a useful failure message when', () {
+      test('the first argument of `expect()` is not a valid HTML Element', () {
+        shouldFail('Not an HTML Element', hasStyles('background-color: red'),
+            contains('Which: $notAnElementMismatchDescription'));
+      });
+
+      // TODO: Add more failure cases here
     });
   });
 }

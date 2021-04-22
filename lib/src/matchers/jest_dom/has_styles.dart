@@ -18,6 +18,7 @@ import 'dart:html';
 
 import 'package:color/color.dart';
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to check if a certain element has some specific CSS property value(s) applied.
 ///
@@ -31,21 +32,31 @@ import 'package:matcher/matcher.dart';
 /// ### Examples
 ///
 /// ```html
-/// &lt;button
-///   style="display: block; background-color: red"
-/// >
-///   Delete item
+/// &lt;button style="display: block; background-color: red">
+///   Delete
 /// &lt;/button>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasStyles;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final button = rtl.screen.getByRole('button');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(
+///       react.button({'style': {
+///         'display': 'block',
+///         'backgroundColor': 'red',
+///       }}, 'Delete'),
+///     );
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     final button = result.getByRole('button', name: 'Delete');
+///
+///     // Use the `hasStyles` matcher as the second argument of `expect()`
 ///     expect(button, hasStyles('display: block'));
 ///     expect(button, hasStyles({'display': 'block'}));
 ///     expect(button, hasStyles('''
@@ -68,6 +79,8 @@ import 'package:matcher/matcher.dart';
 /// }
 /// ```
 ///
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// {@category Matchers}
 Matcher hasStyles(Object styles) => _HasStyles(styles);
 
@@ -80,7 +93,15 @@ class _HasStyles extends CustomMatcher {
         super('A element with styles', 'styles', _convertStylesToMap(expectedStyles));
 
   @override
-  featureValueOf(covariant Element element) {
+  featureValueOf(item) {
+    Element element;
+    try {
+      element = item;
+    } catch (_) {
+      // If its not an element, the mismatch description will say so.
+      return null;
+    }
+
     final allComputedStyles = element.getComputedStyle();
     final stylesToCompare = <String, dynamic>{};
     final invalidPropertyNames =
@@ -94,6 +115,15 @@ class _HasStyles extends CustomMatcher {
       stylesToCompare[stylePropertyToCheck] = normalizeValue(stylePropertyToCheck, actualValue);
     });
     return stylesToCompare;
+  }
+
+  @override
+  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is! Element) {
+      return mismatchDescription..add(notAnElementMismatchDescription);
+    }
+
+    return super.describeMismatch(item, mismatchDescription, matchState, verbose);
   }
 
   static Map<String, dynamic> _convertStylesToMap(Object styles) {

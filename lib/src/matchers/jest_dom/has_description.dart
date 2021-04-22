@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_content_matcher_mixin.dart';
 
 /// Allows you to check whether the given element has a description or not.
@@ -51,25 +52,39 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasDescription;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     const closeButton = rtl.screen.getByRole('button', {name: 'Close'});
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.div({},
+///       react.button({
+///         'aria-label': 'Close',
+///         'aria-describedby': 'description-close',
+///       }, 'X'),
+///       react.div({'id': 'description-close'}, 'Closing will discard any changes'),
+///       react.button({}, 'Delete'),
+///     ));
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     const closeButton = result.getByRole('button', {name: 'Close'});
+///     const deleteButton = result.getByRole('button', {name: 'Delete'});
+///
+///     // Use the `hasDescription` matcher as the second argument of `expect()`
 ///     expect(closeButton, hasDescription('Closing will discard any changes'));
 ///     expect(closeButton, hasDescription(contains('will discard')));
 ///     expect(closeButton, hasDescription(RegExp(r'^closing', caseSensitive: false))); // to use case-insensitive match
 ///     expect(closeButton, isNot(hasDescription('Other description')));
 ///     expect(closeButton, hasDescription()); // Will match a non-empty description
-///
-///     const deleteButton = rtl.screen.getByRole('button', {name: 'Delete'});
-///
 ///     expect(deleteButton, isNot(hasDescription())); // Will match a missing or empty-string description
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 Matcher hasDescription([dynamic expectedDescription, bool normalizeWhitespace = true]) =>

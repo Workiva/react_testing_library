@@ -19,6 +19,7 @@ import 'dart:js';
 
 import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/dom/debugging.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.dart';
 import 'package:react_testing_library/src/util/js_utils.dart';
 
@@ -44,13 +45,26 @@ import 'package:react_testing_library/src/util/js_utils.dart';
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasFormValues;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final form = rtl.screen.getByTestId('login-form');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.form({'data-test-id': 'login-form'},
+///       react.input({'type': 'text', 'name': 'username', value: 'jane.doe'}),
+///       react.input({'type': 'number', 'name': 'age', value: '35'}),
+///       react.input({'type': 'password', 'name': 'password', value: '12345678'}),
+///       react.input({'type': 'checkbox', 'name': 'rememberMe', checked: true}),
+///       react.button({'type': 'submit'}, 'Sign in'),
+///     ));
 ///
+///     // Use react_testing_library queries to store references to the node(s)
+///     final form = result.getByTestId('login-form');
+///
+///     // Use the `hasFormValues` matcher as the second argument of `expect()`
 ///     expect(form, hasFormValues({
 ///       'username': 'jane.doe',
 ///       'rememberMe': true,
@@ -64,6 +78,8 @@ import 'package:react_testing_library/src/util/js_utils.dart';
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 Matcher hasFormValues(Map<String, dynamic> valuesMap) => _HasFormValues(valuesMap);
@@ -79,7 +95,15 @@ class _HasFormValues extends CustomMatcher {
       getFormElements(formElement).where((el) => valuesMap.containsKey(el.getAttribute('name')));
 
   @override
-  featureValueOf(covariant Element formElement) {
+  featureValueOf(item) {
+    Element formElement;
+    try {
+      formElement = item;
+    } catch (_) {
+      // If its not an element, the mismatch description will say so.
+      return null;
+    }
+
     final actualNamesAndValues = <String, dynamic>{};
     valuesMap.forEach((elementNameToTest, value) {
       getItemFormElementsToTest(formElement).forEach((childElement) {
@@ -129,6 +153,10 @@ class _HasFormValues extends CustomMatcher {
 
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is! Element) {
+      return mismatchDescription..add(notAnElementMismatchDescription);
+    }
+
     var extraDescription = '';
 
     if (getItemFormElementsToTest(item).isEmpty) {

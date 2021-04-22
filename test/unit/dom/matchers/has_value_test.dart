@@ -18,6 +18,7 @@ import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasDisplayValue, hasValue;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
@@ -279,6 +280,40 @@ void sharedHasValueTests(String description,
     });
 
     group('provides a useful failure message when', () {
+      test('the first argument of `expect()` is not a valid HTML Element', () {
+        shouldFail('Not an HTML Element', hasValue('yo'), contains('Which: $notAnElementMismatchDescription'));
+      });
+
+      group('the element is', () {
+        test('a CheckboxInputElement', () {
+          renderedResult = render(react.input({
+            'type': 'checkbox',
+            'name': 'business-in-front',
+            'checked': true,
+          }));
+
+          shouldFail(
+              renderedResult.getByRole('checkbox'),
+              matcherFn('true'),
+              contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
+                  'matcher. Use either the isChecked or hasFormValues matcher instead.'));
+        });
+
+        test('a RadioInputElement', () {
+          renderedResult = render(react.input({
+            'type': 'radio',
+            'name': 'business-in-front',
+            'checked': true,
+          }));
+
+          shouldFail(
+              renderedResult.getByRole('radio'),
+              matcherFn('true'),
+              contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
+                  'matcher. Use either the isChecked or hasFormValues matcher instead.'));
+        });
+      });
+
       group('the provided value does not match the value found in a', () {
         test('TextInputElement', () {
           renderedResult = render(react.input({
@@ -409,38 +444,6 @@ void sharedHasValueTests(String description,
               );
             }
           });
-        });
-      });
-
-      group('the element is', () {
-        test('a CheckboxInputElement', () {
-          renderedResult = render(react.input({
-            'type': 'checkbox',
-            'name': 'business-in-front',
-            'checked': true,
-          }));
-
-          shouldFail(
-            renderedResult.getByRole('checkbox'),
-            matcherFn('true'),
-            contains('The _HasValue() matcher does not support checkbox / radio inputs. '
-                'Use either the isChecked or hasFormValues matcher instead.'),
-          );
-        });
-
-        test('a RadioInputElement', () {
-          renderedResult = render(react.input({
-            'type': 'radio',
-            'name': 'business-in-front',
-            'checked': true,
-          }));
-
-          shouldFail(
-            renderedResult.getByRole('radio'),
-            matcherFn('true'),
-            contains('The _HasValue() matcher does not support checkbox / radio inputs. '
-                'Use either the isChecked or hasFormValues matcher instead.'),
-          );
         });
       });
     });

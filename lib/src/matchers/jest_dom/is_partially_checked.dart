@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to check whether the given element is `checked`.
 ///
@@ -37,10 +38,11 @@ import 'package:matcher/matcher.dart';
 ///   aria-checked="false"
 ///   data-test-id="aria-checkbox-unchecked"
 /// />
-/// &lt;input type="checkbox" data-test-id="input-checkbox-indeterminate" />
+/// &lt;input type="checkbox" data-test-id="input-checkbox-indeterminate" indeterminate />
 /// ```
 ///
 /// ```dart
+/// import 'package:react_testing_library/matchers.dart' show isPartiallyChecked;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
@@ -116,15 +118,11 @@ class _IsPartiallyChecked extends Matcher {
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] != true) {
-      return mismatchDescription..add('is not a valid Element.');
+      return mismatchDescription..add(notAnElementMismatchDescription);
+    } else if (matchState['canBePartiallyChecked'] != true) {
+      return mismatchDescription..add('is not a type of HTML Element that can be checked.');
     }
 
-    if (matchState['canBePartiallyChecked'] != true) {
-      mismatchDescription.add('is not a type of HTML element that can be checked.');
-    } else {
-      mismatchDescription.add(defaultMismatchDescription);
-    }
-
-    return mismatchDescription;
+    return mismatchDescription..add(defaultMismatchDescription);
   }
 }
