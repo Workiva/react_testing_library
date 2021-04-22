@@ -71,8 +71,7 @@ external JsMap get _fireEventObj;
 ///
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
-  final _validEventNames = JsBackedMap.fromJs(_jsEventMap).keys;
-  if (!_validEventNames.contains(eventName)) {
+  if (!JsBackedMap.fromJs(_jsEventMap).keys.contains(eventName)) {
     throw ArgumentError.value(eventName, 'eventName');
   }
 
