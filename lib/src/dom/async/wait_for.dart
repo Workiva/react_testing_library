@@ -105,14 +105,14 @@ Future<T> waitFor<T>(
 
     try {
       final result = expectation();
-      if (result is Future<T>) {
+      if (result is Future) {
         // Since we'll time out the expectation's future using the same `timeout` duration,
         // cancel the `overallTimeoutTimer` so that we don't fail with a generic `TestingLibraryAsyncTimeout`
         // before the specified `expectation` has a chance to fail with a more useful / contextual error.
         overallTimeoutTimer.cancel();
         resultPending = true;
-        await result.then((resolvedValue) {
-          onDone(null, resolvedValue);
+        await (result as Future).then((resolvedValue) {
+          onDone(null, resolvedValue as T);
         }, onError: (error) {
           onDone(error, result);
         }).timeout(timeout, onTimeout: handleTimeout);
