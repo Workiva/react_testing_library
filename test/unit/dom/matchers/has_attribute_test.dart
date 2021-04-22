@@ -72,7 +72,7 @@ main() {
           hasAttribute('index', '1'),
           allOf(
             contains('Expected: Element with "index" attribute value of \'1\''),
-            contains('Actual: DivElement:<div> Which: does not have an "index" attribute.'),
+            contains('Which: does not have an "index" attribute.'),
           ),
         );
       });
@@ -84,7 +84,7 @@ main() {
           hasAttribute('index', '1'),
           allOf(
             contains('Expected: Element with "index" attribute value of \'1\''),
-            contains('Actual: DivElement:<div> Which: has "index" attribute with value \'-1\' which is different.'),
+            contains('Which: has "index" attribute with value \'-1\' which is different.'),
           ),
         );
       });

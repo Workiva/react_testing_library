@@ -83,7 +83,6 @@ main() {
             hasTextContent('The Dog'),
             allOf(
               contains('Expected: An HTML Element with text content value of \'The Dog\''),
-              contains('Actual: SpanElement:<span>'),
               contains('Which: has text content with value \'The quick brown fox jumps over the (lazy) dog\''),
             ));
       });
@@ -94,7 +93,6 @@ main() {
             hasTextContent(RegExp(r'jumps over the$')),
             allOf(
               contains('Expected: An HTML Element with text content value of match \'jumps over the\$\''),
-              contains('Actual: SpanElement:<span>'),
               contains('Which: has text content with value \'The quick brown fox jumps over the (lazy) dog\''),
             ));
       });
