@@ -163,7 +163,50 @@ main() {
             contains('Which: $notAnElementMismatchDescription'));
       });
 
-      // TODO: Add more failure cases here
+      group('a single value does not match', () {
+        test('and the expected value is a string', () {
+          shouldFail(
+              renderedResult.getByRole('button'),
+              hasStyles('display: inline'),
+              allOf(
+                contains('Expected: A element with styles {\'display\': \'inline\'}'),
+                contains('Actual: ButtonElement:<button> Which: has styles with value {\'display\': \'block\'}'),
+                contains('which at location [\'display\'] is \'block\' instead of \'inline\''),
+              ));
+        });
+
+        test('and the expected value is a map', () {
+          shouldFail(
+              renderedResult.getByRole('button'),
+              hasStyles({
+                'font-size': '27px',
+                'display': 'inline',
+              }),
+              allOf(
+                contains('Expected: A element with styles '
+                    '{\'font-size\': \'27px\', \'display\': \'inline\'}'),
+                contains('Actual: ButtonElement:<button> Which: has styles with value '
+                    '{\'font-size\': \'27px\', \'display\': \'block\'}'),
+                contains('which at location [\'display\'] is \'block\' instead of \'inline\''),
+              ));
+        });
+      });
+
+      test('multiple values do not match', () {
+        shouldFail(
+            renderedResult.getByRole('button'),
+            hasStyles({
+              'font-size': '26px',
+              'display': 'inline',
+            }),
+            allOf(
+              contains('Expected: A element with styles '
+                  '{\'font-size\': \'26px\', \'display\': \'inline\'}'),
+              contains('Actual: ButtonElement:<button> Which: has styles with value '
+                  '{\'font-size\': \'27px\', \'display\': \'block\'}'),
+              contains('which at location [\'font-size\'] is \'27px\' instead of \'26px\''),
+            ));
+      });
     });
   });
 }
