@@ -15,7 +15,6 @@
 // limitations under the License.
 
 import 'dart:html' show Element;
-import 'dart:svg' show SvgElement;
 
 import 'package:react_testing_library/matchers.dart' show excludesClasses, hasClasses, hasExactClasses;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -64,9 +63,10 @@ main() {
           shouldFail(
               testElement,
               hasClasses('class1 class2'),
-              'Expected: Element that has the classes: {class1, class2}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'class1\' which is missing classes: {class2}');
+              allOf(
+                contains('Expected: Element that has the classes: {class1, class2}'),
+                contains('Which: has className with value \'class1\' which is missing classes: {class2}'),
+              ));
         });
 
         test('the element has no classes', () {
@@ -74,9 +74,10 @@ main() {
           shouldFail(
               testElement,
               hasClasses('class1 class2'),
-              'Expected: Element that has the classes: {class1, class2}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'\' which is missing classes: {class1, class2}');
+              allOf(
+                contains('Expected: Element that has the classes: {class1, class2}'),
+                contains('Which: has className with value \'\' which is missing classes: {class1, class2}'),
+              ));
         });
       });
 
@@ -100,9 +101,8 @@ main() {
         });
 
         test('the element has the exact classes and is an SvgElement', () {
-          // Test workaround for https://github.com/dart-lang/sdk/issues/36200.
-          // This may be removed when the workaround is removed.
-          testElement = SvgElement.svg('<svg class="class1 class2"/>');
+          testElement = Element.svg();
+          testElement.className = 'class1 class2';
           shouldPass(testElement, hasExactClasses(['class1', 'class2']));
         });
       });
@@ -117,9 +117,11 @@ main() {
           shouldFail(
               testElement,
               hasExactClasses('class1 class2'),
-              'Expected: Element that has ONLY the classes: {class1, class2}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'class1 class1 class2\' which has extraneous classes: [class1]');
+              allOf(
+                contains('Expected: Element that has ONLY the classes: {class1, class2}'),
+                contains(
+                    'Which: has className with value \'class1 class1 class2\' which has extraneous classes: [class1]'),
+              ));
         });
 
         test('the element has extraneous classes', () {
@@ -127,9 +129,11 @@ main() {
           shouldFail(
               testElement,
               hasExactClasses('class1 class2'),
-              'Expected: Element that has ONLY the classes: {class1, class2}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'class1 class2 class3\' which has extraneous classes: [class3]');
+              allOf(
+                contains('Expected: Element that has ONLY the classes: {class1, class2}'),
+                contains(
+                    'Which: has className with value \'class1 class2 class3\' which has extraneous classes: [class3]'),
+              ));
         });
 
         test('the element has only some classes', () {
@@ -137,9 +141,10 @@ main() {
           shouldFail(
               testElement,
               hasExactClasses('class1 class2'),
-              'Expected: Element that has ONLY the classes: {class1, class2}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'class1\' which is missing classes: {class2}');
+              allOf(
+                contains('Expected: Element that has ONLY the classes: {class1, class2}'),
+                contains('Which: has className with value \'class1\' which is missing classes: {class2}'),
+              ));
         });
 
         test('the element has no classes', () {
@@ -147,9 +152,10 @@ main() {
           shouldFail(
               testElement,
               hasExactClasses('class1 class2'),
-              'Expected: Element that has ONLY the classes: {class1, class2}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'\' which is missing classes: {class1, class2}');
+              allOf(
+                contains('Expected: Element that has ONLY the classes: {class1, class2}'),
+                contains('Which: has className with value \'\' which is missing classes: {class1, class2}'),
+              ));
         });
       });
 
@@ -178,9 +184,10 @@ main() {
           shouldFail(
               testElement,
               excludesClasses('class2 class3'),
-              'Expected: Element that does not have the classes: {class2, class3}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'class1 class2\' which has unwanted classes: {class2}');
+              allOf(
+                contains('Expected: Element that does not have the classes: {class2, class3}'),
+                contains('Which: has className with value \'class1 class2\' which has unwanted classes: {class2}'),
+              ));
         });
 
         test('the element has some of the excluded classes (specified as an Iterable)', () {
@@ -188,9 +195,10 @@ main() {
           shouldFail(
               testElement,
               excludesClasses(['class2', 'class3']),
-              'Expected: Element that does not have the classes: {class2, class3}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'class1 class2\' which has unwanted classes: {class2}');
+              allOf(
+                contains('Expected: Element that does not have the classes: {class2, class3}'),
+                contains('Which: has className with value \'class1 class2\' which has unwanted classes: {class2}'),
+              ));
         });
 
         test('the element has all of the excluded classes', () {
@@ -198,9 +206,11 @@ main() {
           shouldFail(
               testElement,
               excludesClasses('class2 class3'),
-              'Expected: Element that does not have the classes: {class2, class3}'
-              ' Actual: DivElement:<div>'
-              ' Which: has className with value \'class1 class2 class3\' which has unwanted classes: {class2, class3}');
+              allOf(
+                contains('Expected: Element that does not have the classes: {class2, class3}'),
+                contains(
+                    'Which: has className with value \'class1 class2 class3\' which has unwanted classes: {class2, class3}'),
+              ));
         });
       });
 

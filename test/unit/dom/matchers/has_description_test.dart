@@ -138,7 +138,6 @@ main() {
             hasDescription(),
             allOf(
               contains('Expected: An HTML Element that is described by HTML Element(s) that have description value of'),
-              contains('Actual: ButtonElement:<button>'),
               contains('Which: does not have an aria-describedby attribute.'),
             ));
       });
@@ -154,7 +153,6 @@ main() {
             hasDescription(),
             allOf(
               contains('Expected: An HTML Element that is described by HTML Element(s) that have description value of'),
-              contains('Actual: ButtonElement:<button>'),
               contains('Which: has an aria-described by attribute value of "$ariaDescribedByAttrValue", which does not '
                   'match the id attribute of any Element in the DOM.'),
             ));
@@ -167,7 +165,6 @@ main() {
             allOf(
               contains('Expected: An HTML Element that is described by HTML Element(s) that have description '
                   'value of \'Invalid description\''),
-              contains('Actual: ButtonElement:<button>'),
               contains('Which: has description with value \'Closing will discard any changes\''),
             ));
       });
@@ -179,7 +176,6 @@ main() {
             allOf(
               contains('Expected: An HTML Element that is described by HTML Element(s) that have description '
                   'value of match \'Invalid description\$\''),
-              contains('Actual: ButtonElement:<button>'),
               contains('Which: has description with value \'Closing will discard any changes\''),
             ));
       });

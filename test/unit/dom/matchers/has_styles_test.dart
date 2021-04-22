@@ -170,7 +170,7 @@ main() {
               hasStyles('display: inline'),
               allOf(
                 contains('Expected: A element with styles {\'display\': \'inline\'}'),
-                contains('Actual: ButtonElement:<button> Which: has styles with value {\'display\': \'block\'}'),
+                contains('Which: has styles with value {\'display\': \'block\'}'),
                 contains('which at location [\'display\'] is \'block\' instead of \'inline\''),
               ));
         });
@@ -185,7 +185,7 @@ main() {
               allOf(
                 contains('Expected: A element with styles '
                     '{\'font-size\': \'27px\', \'display\': \'inline\'}'),
-                contains('Actual: ButtonElement:<button> Which: has styles with value '
+                contains('Which: has styles with value '
                     '{\'font-size\': \'27px\', \'display\': \'block\'}'),
                 contains('which at location [\'display\'] is \'block\' instead of \'inline\''),
               ));
@@ -202,7 +202,7 @@ main() {
             allOf(
               contains('Expected: A element with styles '
                   '{\'font-size\': \'26px\', \'display\': \'inline\'}'),
-              contains('Actual: ButtonElement:<button> Which: has styles with value '
+              contains('Which: has styles with value '
                   '{\'font-size\': \'27px\', \'display\': \'block\'}'),
               contains('which at location [\'font-size\'] is \'27px\' instead of \'26px\''),
             ));
