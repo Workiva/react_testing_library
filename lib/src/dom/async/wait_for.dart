@@ -70,15 +70,15 @@ Future<T> waitFor<T>(
   MutationObserver observer;
   Timer intervalTimer;
   Timer overallTimeoutTimer;
-  Completer resultPending;
+  bool resultPending;
   final doneCompleter = Completer<T>();
 
   void onDone(dynamic error, FutureOr<T> result) {
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
     observer.disconnect();
-    if (resultPending?.isCompleted == false) {
-      resultPending.complete();
+    if (resultPending != null) {
+      resultPending = false;
     }
 
     if (error != null) {
@@ -101,7 +101,7 @@ Future<T> waitFor<T>(
   }
 
   FutureOr checkCallback([_]) async {
-    if (resultPending != null && !resultPending.isCompleted) return;
+    if (resultPending == false) return;
 
     try {
       final result = expectation();
@@ -110,9 +110,8 @@ Future<T> waitFor<T>(
         // cancel the `overallTimeoutTimer` so that we don't fail with a generic `TestingLibraryAsyncTimeout`
         // before the specified `expectation` has a chance to fail with a more useful / contextual error.
         overallTimeoutTimer.cancel();
-        resultPending = Completer();
+        resultPending = true;
         await result.then((resolvedValue) {
-          resultPending.complete();
           onDone(null, resolvedValue);
         }, onError: (error) {
           onDone(error, result);
