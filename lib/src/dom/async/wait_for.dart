@@ -165,7 +165,7 @@ Future<T> waitFor<T>(
 ///
 /// {@category Async}
 Future<void> waitForElementToBeRemoved(
-  FutureOr<Element> Function() callback, {
+  Element Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
@@ -219,7 +219,7 @@ Future<void> waitForElementToBeRemoved(
 ///
 /// {@category Async}
 Future<void> waitForElementsToBeRemoved(
-  FutureOr<List<Element>> Function() callback, {
+  List<Element> Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
@@ -227,7 +227,7 @@ Future<void> waitForElementsToBeRemoved(
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   container ??= document.body;
-  final els = await callback();
+  final els = callback();
 
   if (els == null || els.isEmpty) {
     throw TestingLibraryElementError('The callback must return one or more non-null Elements.');
