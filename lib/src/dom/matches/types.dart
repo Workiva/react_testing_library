@@ -31,7 +31,8 @@ import 'package:react_testing_library/src/util/error_message_utils.dart';
 /// See the [JS `TextMatch` docs](https://testing-library.com/docs/queries/about#textmatch) for more details
 /// and examples.
 /// {@endtemplate}
-class TextMatch {
+@sealed
+abstract class TextMatch {
   /// Parses the provided [value], checking its type and returning a value compatible with the JS `TextMatch` type.
   ///
   /// See: <https://testing-library.com/docs/queries/about#textmatch>
