@@ -17,7 +17,7 @@
 import 'dart:html' show Element;
 import 'dart:svg' show SvgElement;
 
-import 'package:react_testing_library/react_testing_library.dart' show excludesClasses, hasClasses, hasExactClasses;
+import 'package:react_testing_library/matchers.dart' show excludesClasses, hasClasses, hasExactClasses;
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';

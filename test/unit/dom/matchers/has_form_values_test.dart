@@ -19,7 +19,8 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactDomComponentFactoryProxy;
-import 'package:react_testing_library/react_testing_library.dart' show hasFormValues, render, RenderResult;
+import 'package:react_testing_library/matchers.dart' show hasFormValues;
+import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
