@@ -57,13 +57,13 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
 ///     final result = rtl.render(react.form({},
-///       react.input({'type': 'text', name: 'username', value: 'jane.doe'}),
+///       react.input({'type': 'text', name: 'username', 'value': 'jane.doe'}),
 ///       react.input({'type': 'number', 'name': 'age', value: '35'}),
 ///       react.input({'type': 'text', 'name': 'occupation'}),
 ///       react.select({'multiple': true},
 ///         react.option({'value': 'first'}, 'First Value'),
-///         react.option({'value': 'second' selected: true}, 'Second Value'),
-///         react.option({'value': 'third', selected: true}, 'Third Value'),
+///         react.option({'value': 'second' 'selected': true}, 'Second Value'),
+///         react.option({'value': 'third', 'selected': true}, 'Third Value'),
 ///       ),
 ///     ));
 ///
@@ -151,7 +151,11 @@ class _HasValue extends CustomMatcher {
     if (item is InputElement) {
       final type = item.getAttribute('type');
       return type == 'checkbox' || type == 'radio';
+    } else if (item is Element) {
+      final role = item.getAttribute('role');
+      return role == 'checkbox' || role == 'radio';
     }
+
     return false;
   }
 }

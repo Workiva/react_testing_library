@@ -54,9 +54,7 @@ mixin ElementTextContentMatcherMixin on CustomMatcher {
         expectedTextContent is Matcher ||
         expectedTextContent is RegExp ||
         expectedTextContent is String) return;
-    throw ArgumentError(
-        'HTML Element text content matchers only accept a Matcher, RegExp, or a String as the expected value. \n'
-        'You provided: $expectedTextContent\n '
-        'Which is a: ${expectedTextContent.runtimeType}');
+    throw ArgumentError.value(expectedTextContent,
+        'HTML Element text content matchers only accept a Matcher, RegExp, or a String as the expected value.');
   }
 }

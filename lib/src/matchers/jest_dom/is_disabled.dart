@@ -117,15 +117,11 @@ class _IsDisabled extends Matcher {
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] != true) {
       return mismatchDescription..add(notAnElementMismatchDescription);
+    } else if (matchState['canBeDisabled'] != true) {
+      return mismatchDescription..add('is not a type of HTML Element that can be disabled.');
     }
 
-    if (matchState['canBeDisabled'] != true) {
-      mismatchDescription.add('is not a type of HTML Element that can be disabled.');
-    } else {
-      mismatchDescription.add(defaultMismatchDescription);
-    }
-
-    return mismatchDescription;
+    return mismatchDescription..add(defaultMismatchDescription);
   }
 }
 
