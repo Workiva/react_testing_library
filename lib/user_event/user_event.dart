@@ -14,7 +14,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// https://testing-library.com/docs/react-testing-library/intro
-library react_testing_library.src.user_events;
+/// A library that provides more advanced simulation of browser interactions
+/// than the built-in fireEvent method.
+///
+/// Learn more: <https://testing-library.com/docs/ecosystem-user-event/>.
+/// {@category UserEvent}
+library rtl.user_event;
 
-export 'user_events/user_event.dart';
+export '../src/user_events/user_event.dart';

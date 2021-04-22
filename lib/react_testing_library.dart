@@ -22,6 +22,6 @@ export 'package:react_testing_library/dom/async.dart';
 export 'package:react_testing_library/dom/configure.dart';
 export 'package:react_testing_library/dom/debugging.dart';
 export 'package:react_testing_library/dom/events.dart';
-export 'package:react_testing_library/src/user_events.dart';
 export 'package:react_testing_library/dom/queries.dart';
 export 'package:react_testing_library/react/react.dart';
+export 'package:react_testing_library/user_event/user_event.dart';
