@@ -19,10 +19,10 @@ import 'dart:html';
 import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
-/// Allows you to check whether the given element is `checked`.
+/// Allows you to check whether the given element is partially `checked` _a.k.a `indeterminate`_.
 ///
 /// It accepts an `input` of type `checkbox` or `radio` and elements with a `role` of `checkbox`, `radio` or `switch`
-/// with a valid `aria-checked` attribute of "true" or "false".
+/// with a valid `aria-checked` attribute value.
 ///
 /// Similar to [jest-dom's `toBePartiallyChecked` matcher](https://github.com/testing-library/jest-dom#tobepartiallychecked).
 ///

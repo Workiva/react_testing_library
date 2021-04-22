@@ -20,14 +20,14 @@ import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_content_matcher_mixin.dart';
 
-/// Allows you to check whether an element whether the given element has a text content or not.
+/// Allows you to check whether an element has the [expected] text content or not.
 ///
 /// When a `String` argument is passed through, it will perform a whole case-sensitive match to the element content.
 ///
 /// The whitespace of the element content is normalized unless you set [normalizeWhitespace] to false.
 ///
 /// To perform a partial or case-insensitive match, you can use any of the string matchers like `contains`, or
-/// construct a `RegExp` with `caseSensitive` set to true.
+/// construct a `RegExp` with `caseSensitive` set to false.
 ///
 /// Similar to [jest-dom's `toHaveTextContent` matcher](https://github.com/testing-library/jest-dom#tohavetextcontent).
 ///
@@ -53,7 +53,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 ///
 ///     // Use the `hasTextContent` matcher as the second argument of `expect()`
 ///     expect(button, hasTextContent('Text Content'));
-///     expect(button, hasTextContent(RegExp(r'Content$'))); // to match the whole content
+///     expect(button, hasTextContent(RegExp(r'Content$'))); // to match partially
 ///     expect(button, hasContent(RegExp('content', caseSensitive: false))); // to use case-insensitive match
 ///     expect(button, isNot(hasContent('foo')));
 ///     expect(button, hasContent()); // Will match a non-empty description
@@ -64,8 +64,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
-Matcher hasTextContent([dynamic expectedTextContent, bool normalizeWhitespace = true]) =>
-    _HasTextContent(expectedTextContent, normalizeWhitespace: normalizeWhitespace);
+Matcher hasTextContent([dynamic expected, bool normalizeWhitespace = true]) =>
+    _HasTextContent(expected, normalizeWhitespace: normalizeWhitespace);
 
 class _HasTextContent extends CustomMatcher with ElementTextContentMatcherMixin {
   final dynamic expectedTextContent;
