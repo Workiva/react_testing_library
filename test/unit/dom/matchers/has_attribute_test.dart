@@ -16,7 +16,7 @@
 
 import 'dart:html' show DivElement;
 
-import 'package:react_testing_library/react_testing_library.dart' show hasAttribute;
+import 'package:react_testing_library/matchers.dart' show hasAttribute;
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';

@@ -17,9 +17,9 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
-import 'package:react_testing_library/src/matchers/has_form_values.dart' show hasFormValues;
-import 'package:react_testing_library/src/matchers/is_checked.dart' show isChecked;
-import 'package:react_testing_library/src/matchers/util/get_value_of.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/has_form_values.dart' show hasFormValues;
+import 'package:react_testing_library/src/matchers/jest_dom/is_checked.dart' show isChecked;
+import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.dart';
 
 /// Allows you to check whether the given form element has the specified [value].
 ///

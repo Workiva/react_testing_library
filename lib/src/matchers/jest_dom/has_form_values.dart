@@ -19,7 +19,7 @@ import 'dart:js';
 
 import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/dom/debugging.dart';
-import 'package:react_testing_library/src/matchers/util/get_value_of.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.dart';
 import 'package:react_testing_library/src/util/js_utils.dart';
 
 /// Allows you to check if a [FormElement] or [FieldSetElement] contains form controls for each given name
