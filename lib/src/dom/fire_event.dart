@@ -23,6 +23,8 @@ import 'package:js/js.dart';
 import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 
+import '../user_events/user_event.dart';
+
 /// Fires a DOM [event] on the provided [element].
 ///
 /// > **NOTE:**
@@ -62,9 +64,7 @@ external JsMap get _fireEventObj;
 /// > **NOTE:**
 /// >
 /// > Most projects have a few use cases for [fireEventByName], but the majority of the time you should
-///   probably use `@testing-library/user-event`.
-/// >
-/// > TODO: Link to the user event interop provided by this library once implemented (CPLAT-13506)
+///   probably use [UserEvent] utilities instead.
 ///
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 bool fireEventByName(String eventName, Element element, [Map eventProperties]) {

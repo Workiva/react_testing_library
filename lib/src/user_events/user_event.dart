@@ -23,11 +23,31 @@ import 'package:js/js.dart';
 import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 
+import '../dom/fire_event.dart';
+
 dynamic _jsifyEventData(Map eventData) =>
     jsifyAndAllowInterop(eventData ?? const {});
 
+/// Test utilities that provide more advanced simulation of browser interactions
+/// than the built-in [fireEvent] method.
 class UserEvent {
-  /// See: https://testing-library.com/docs/ecosystem-user-event/#clickelement-eventinit-options
+  /// Clicks [element], depending on what [element] is it can have different
+  /// side effects.
+  ///
+  /// Note that [click] will trigger hover events before clicking. To disable
+  /// this, set the [skipHover] option to `true`.
+  ///
+  /// Use [init] to set options on the initial [MouseEvent]. For example,
+  ///
+  /// ```dart
+  /// UserEvent.click(element, init: {'shiftKey': true});
+  /// ```
+  ///
+  /// Use [clickCount] to update the initial click count. See documentation on
+  /// [UIEvent.detail](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/detail)
+  /// for more information.
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#clickelement-eventinit-options>.
   static bool click(
     Element element, {
     Map init,

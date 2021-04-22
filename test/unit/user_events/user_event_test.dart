@@ -50,15 +50,16 @@ main() {
       // Sanity check.
       expect(calls, hasLength(1));
       expect(calls.single, isA<MouseEvent>());
+      final event = calls.single as MouseEvent;
 
       // Verify init MouseEvent.
-      expect((calls.single as MouseEvent).shiftKey, hasInit ? isTrue : isFalse);
+      expect(event.shiftKey, hasInit ? isTrue : isFalse);
 
       // Verify hover event.
       expect(hoverEventCount, equals(skipHover ? 0 : 1));
 
       // Verify click count was incremented.
-      expect((calls.single as MouseEvent).detail, equals(clickCount + 1));
+      expect(event.detail, equals(clickCount + 1));
     }
 
     test('', () {
