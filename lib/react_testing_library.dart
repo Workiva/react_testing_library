@@ -23,5 +23,4 @@ export 'package:react_testing_library/dom/configure.dart';
 export 'package:react_testing_library/dom/debugging.dart';
 export 'package:react_testing_library/dom/events.dart';
 export 'package:react_testing_library/dom/queries.dart';
-export 'package:react_testing_library/matchers/matchers.dart';
 export 'package:react_testing_library/react/react.dart';
