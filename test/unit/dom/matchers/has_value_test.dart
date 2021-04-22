@@ -299,11 +299,37 @@ void sharedHasValueTests(String description,
                   'matcher. Use either the isChecked or hasFormValues matcher instead.'));
         });
 
+        test('an element with role="checkbox"', () {
+          renderedResult = render(react.div({
+            'role': 'checkbox',
+            'aria-checked': 'true',
+          }));
+
+          shouldFail(
+              renderedResult.getByRole('checkbox'),
+              matcherFn('true'),
+              contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
+                  'matcher. Use either the isChecked or hasFormValues matcher instead.'));
+        });
+
         test('a RadioInputElement', () {
           renderedResult = render(react.input({
             'type': 'radio',
             'name': 'business-in-front',
             'checked': true,
+          }));
+
+          shouldFail(
+              renderedResult.getByRole('radio'),
+              matcherFn('true'),
+              contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
+                  'matcher. Use either the isChecked or hasFormValues matcher instead.'));
+        });
+
+        test('an element with role="radio"', () {
+          renderedResult = render(react.div({
+            'role': 'radio',
+            'aria-checked': 'true',
           }));
 
           shouldFail(

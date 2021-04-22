@@ -139,7 +139,6 @@ class _HasFormValues extends CustomMatcher {
               break;
             default:
               actualNamesAndValues[elementNameToTest] = getValueOf(childElement);
-              ;
               break;
           }
         } else {

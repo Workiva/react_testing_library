@@ -104,7 +104,7 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
 
   @override
   featureValueOf(item) {
-    List<Element> elementsWithDescriptions = _elementsThatDescribe(item);
+    final elementsWithDescriptions = _elementsThatDescribe(item);
 
     if (elementsWithDescriptions?.isEmpty ?? true) return null;
     return elementsWithDescriptions
