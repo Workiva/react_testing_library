@@ -64,31 +64,31 @@ main() {
       group('when checking a single property', () {
         group('set using an inline style', () {
           test('matched to a string', () {
-            expect(renderedResult.getByRole('button'), hasStyles('background-color: red'));
-            expect(renderedResult.getByRole('button'), hasStyles('color: #cc0000'));
-            expect(renderedResult.getByRole('button'), hasStyles('border-color: rgba(0, 0, 0, .5)'));
+            shouldPass(renderedResult.getByRole('button'), hasStyles('background-color: red'));
+            shouldPass(renderedResult.getByRole('button'), hasStyles('color: #cc0000'));
+            shouldPass(renderedResult.getByRole('button'), hasStyles('border-color: rgba(0, 0, 0, .5)'));
           });
 
           test('matched to a Map', () {
-            expect(renderedResult.getByRole('button'), hasStyles({'z-index': '2'}),
+            shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': '2'}),
                 reason: 'string values that can be converted to nums should match their num equivalent');
-            expect(renderedResult.getByRole('button'), hasStyles({'z-index': 2}),
+            shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': 2}),
                 reason: 'num values should match their string equivalent');
           });
         });
 
         group('set using an external stylesheet', () {
           test('matched to a string', () {
-            expect(renderedResult.getByRole('button'), hasStyles('font-size: 27px'));
-            expect(renderedResult.getByRole('button'), hasStyles('content: "this is the title"'));
+            shouldPass(renderedResult.getByRole('button'), hasStyles('font-size: 27px'));
+            shouldPass(renderedResult.getByRole('button'), hasStyles('content: "this is the title"'));
           });
 
           test('matched to a Map', () {
-            expect(renderedResult.getByRole('button'), hasStyles({'flex-grow': '2'}),
+            shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': '2'}),
                 reason: 'string values that can be converted to nums should match their num equivalent');
-            expect(renderedResult.getByRole('button'), hasStyles({'flex-grow': 2}),
+            shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': 2}),
                 reason: 'num values should match their string equivalent');
-            expect(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}),
+            shouldPass(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}),
                 reason: 'num values should match their string equivalent');
           });
         });
@@ -97,7 +97,7 @@ main() {
       group('when checking multiple properties', () {
         group('set using an inline style', () {
           test('matched to a string', () {
-            expect(renderedResult.getByRole('button'), hasStyles('''
+            shouldPass(renderedResult.getByRole('button'), hasStyles('''
               background-color: red;
               color: #cc0000;
               border-color: rgba(0, 0, 0, .5);
@@ -107,7 +107,7 @@ main() {
           });
 
           test('matched to a Map', () {
-            expect(
+            shouldPass(
                 renderedResult.getByRole('button'),
                 hasStyles({
                   'background-color': 'red',
@@ -117,7 +117,7 @@ main() {
                   'z-index': '2',
                 }),
                 reason: 'string values that can be converted to nums should match their num equivalent');
-            expect(
+            shouldPass(
                 renderedResult.getByRole('button'),
                 hasStyles({
                   'z-index': 2,
@@ -128,7 +128,7 @@ main() {
 
         group('set using an external stylesheet', () {
           test('matched to a string', () {
-            expect(renderedResult.getByRole('button'), hasStyles('''
+            shouldPass(renderedResult.getByRole('button'), hasStyles('''
               font-size: 27px;
               font-weight: bold;
               flex-grow: 2;
@@ -137,7 +137,7 @@ main() {
           });
 
           test('matched to a Map', () {
-            expect(
+            shouldPass(
                 renderedResult.getByRole('button'),
                 hasStyles({
                   'font-size': '27px',
@@ -146,7 +146,7 @@ main() {
                   'content': '"this is the title"',
                 }),
                 reason: 'string values that can be converted to nums should match their num equivalent');
-            expect(
+            shouldPass(
                 renderedResult.getByRole('button'),
                 hasStyles({
                   'flex-grow': 2,
