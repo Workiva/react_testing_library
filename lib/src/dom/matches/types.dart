@@ -46,7 +46,7 @@ abstract class TextMatch {
       // regex matching using a Dart regex within that interop'd function call.
       RegExp regExp = value;
       final dartValue = (String content, Element _) => regExp.hasMatch(content);
-      value = allowInterop(dartValue);
+      return allowInterop(dartValue);
     } else if (value is Function) {
       // Display the nicest string representation of the Dart function that we can as the value that
       // could not be matched to the consumer in the test failure message instead of the string
@@ -55,7 +55,7 @@ abstract class TextMatch {
           _replaceDartInteropFunctionStringWith('$functionValueErrorMessage\n\n    $value\n\n'));
 
       // Set the value to an interop'd function.
-      value = allowInterop<Function>(value);
+      return allowInterop<Function>(value);
     } else if (value is! String) {
       throw ArgumentError('Argument must be a String, a RegExp or a function that returns a bool.');
     }
