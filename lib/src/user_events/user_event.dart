@@ -37,10 +37,10 @@ class UserEvent {
   /// Note that [click] will trigger hover events before clicking. To disable
   /// this, set the [skipHover] option to `true`.
   ///
-  /// Use [init] to set options on the initial [MouseEvent]. For example,
+  /// Use [eventInit] to set options on the initial [MouseEvent]. For example,
   ///
   /// ```dart
-  /// UserEvent.click(element, init: {'shiftKey': true});
+  /// UserEvent.click(element, eventInit: {'shiftKey': true});
   /// ```
   ///
   /// Use [clickCount] to update the initial click count. See documentation on
@@ -50,7 +50,7 @@ class UserEvent {
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#clickelement-eventinit-options>.
   static bool click(
     Element element, {
-    Map init,
+    Map eventInit,
     bool skipHover = false,
     int clickCount = 0,
   }) {
@@ -58,7 +58,21 @@ class UserEvent {
         JsBackedMap.from({'skipHover': skipHover, 'clickCount': clickCount})
             .jsObject;
     return JsBackedMap.fromJs(userEvent)['click'](
-        element, _jsifyEventData(init), options);
+        element, _jsifyEventData(eventInit), options);
+  }
+
+  /// Clicks [element] twice, depending on what [element] is it can have
+  /// different side effects.
+  ///
+  /// Use [eventInit] to set options on the initial [MouseEvent]. For example,
+  ///
+  /// ```dart
+  /// UserEvent.dblClick(element, eventInit: {'shiftKey': true});
+  /// ```
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#dblclickelement-eventinit-options>.
+  static bool dblClick(Element element, {Map eventInit}) {
+    return JsBackedMap.fromJs(userEvent)['dblClick'](element, _jsifyEventData(eventInit),);
   }
 }
 

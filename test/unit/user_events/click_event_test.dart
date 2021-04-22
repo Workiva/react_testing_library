@@ -43,7 +43,7 @@ main() {
     });
 
     void _verifyClickEvent({
-      bool hasInit = false,
+      bool hasEventInit = false,
       bool skipHover = false,
       int clickCount = 0,
     }) {
@@ -52,8 +52,8 @@ main() {
       expect(calls.single, isA<MouseEvent>());
       final event = calls.single as MouseEvent;
 
-      // Verify init MouseEvent.
-      expect(event.shiftKey, hasInit ? isTrue : isFalse);
+      // Verify initial MouseEvent.
+      expect(event.shiftKey, hasEventInit ? isTrue : isFalse);
 
       // Verify hover event.
       expect(hoverEventCount, equals(skipHover ? 0 : 1));
@@ -67,12 +67,12 @@ main() {
       _verifyClickEvent();
     });
 
-    test('init', () {
+    test('eventInit', () {
       rtl.UserEvent.click(
         renderedResult.getByRole('button'),
-        init: {'shiftKey': true},
+        eventInit: {'shiftKey': true},
       );
-      _verifyClickEvent(hasInit: true);
+      _verifyClickEvent(hasEventInit: true);
     });
 
     test('skipHover', () {
