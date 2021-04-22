@@ -1,5 +1,6 @@
 import {configure, fireEvent} from '@testing-library/react';
 import {buildTestingLibraryElementError, buildJsGetElementError} from './_dart-helpers';
+import userEvent from '@testing-library/user-event';
 
 // Configure the test id to match what the OverReact ecosystem defaults to.
 configure({
@@ -12,9 +13,9 @@ configure({
 const fireEventObj = fireEvent;
 
 export * from '@testing-library/react';
-export * from '@testing-library/user-event';
 export {
   buildTestingLibraryElementError,
   buildJsGetElementError,
   fireEventObj,
+  userEvent,
 };

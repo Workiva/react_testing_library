@@ -27,16 +27,18 @@ dynamic _jsifyEventData(Map eventData) =>
     jsifyAndAllowInterop(eventData ?? const {});
 
 class UserEvent {
+  /// See: https://testing-library.com/docs/ecosystem-user-event/#clickelement-eventinit-options
   static bool click(
     Element element, {
     Map init,
     bool skipHover = false,
     int clickCount = 0,
   }) {
-    final options = JsBackedMap.from(
-        {'skipHover': skipHover, 'clickCount': clickCount});
+    final options =
+        JsBackedMap.from({'skipHover': skipHover, 'clickCount': clickCount})
+            .jsObject;
     return JsBackedMap.fromJs(userEvent)['click'](
-        element, _jsifyEventData(init));
+        element, _jsifyEventData(init), options);
   }
 }
 
