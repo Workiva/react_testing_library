@@ -19,6 +19,7 @@ import 'dart:html' show DivElement;
 import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' show render;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
@@ -33,11 +34,11 @@ main() {
 
     group('provides a useful failure message when', () {
       test('the matched item is not an element', () {
-        shouldFail(null, isInTheDocument, contains('Which: is not a valid Element.'));
+        shouldFail(null, isInTheDocument, contains('Which: $notAnElementMismatchDescription'));
       });
 
       test('the matched item is not in the document', () {
-        shouldFail(DivElement(), isInTheDocument, contains('Which: is not an element in the document.'));
+        shouldFail(DivElement(), isInTheDocument, contains('Which: is not an Element in the document.'));
       });
     });
   });

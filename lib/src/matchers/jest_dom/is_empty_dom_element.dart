@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 /// Allows you to assert whether an element has content or not.
 ///
@@ -29,16 +30,28 @@ import 'package:matcher/matcher.dart';
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show isEmptyDomElement;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     expect(rtl.screen.getByTestId('empty'), isEmptyDomElement);
-///     expect(rtl.screen.getByTestId('not-empty'), isNot(isEmptyDomElement));
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(
+///       react.span({'data-test-id': 'not-empty'},
+///         react.span({'data-test-id': 'empty'}),
+///       ),
+///     );
+///
+///     // Use the `isEmptyDomElement` matcher as the second argument of `expect()`
+///     expect(result.getByTestId('empty'), isEmptyDomElement);
+///     expect(result.getByTestId('not-empty'), isNot(isEmptyDomElement));
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 const Matcher isEmptyDomElement = _IsEmptyDomElement();
@@ -62,11 +75,9 @@ class _IsEmptyDomElement extends Matcher {
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (!matchState['isElement']) {
-      return mismatchDescription..add('is not a valid Element.');
+      return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
-    mismatchDescription.add('is not an empty DOM Element.');
-
-    return mismatchDescription;
+    return mismatchDescription..add('is not an empty DOM Element.');
   }
 }

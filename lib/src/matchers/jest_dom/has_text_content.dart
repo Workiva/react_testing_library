@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_content_matcher_mixin.dart';
 
 /// Allows you to check whether an element whether the given element has a text content or not.
@@ -33,25 +34,34 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// ### Examples
 ///
 /// ```html
-/// &lt;span data-test-id="text-content">Text Content&lt;/span>
+/// &lt;button>Text Content&lt;/button>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasTextContent;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final element = rtl.screen.getByTestId('text-content');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.button({}, 'Text Content'));
 ///
-///     expect(element, hasTextContent('Text Content'));
-///     expect(element, hasTextContent(RegExp(r'Content$'))); // to match the whole content
-///     expect(element, hasContent(RegExp('content', caseSensitive: false))); // to use case-insensitive match
-///     expect(element, isNot(hasContent('foo')));
-///     expect(element, hasContent()); // Will match a non-empty description
+///     // Use react_testing_library queries to store references to the node(s)
+///     final button = result.getByRole('button');
+///
+///     // Use the `hasTextContent` matcher as the second argument of `expect()`
+///     expect(button, hasTextContent('Text Content'));
+///     expect(button, hasTextContent(RegExp(r'Content$'))); // to match the whole content
+///     expect(button, hasContent(RegExp('content', caseSensitive: false))); // to use case-insensitive match
+///     expect(button, isNot(hasContent('foo')));
+///     expect(button, hasContent()); // Will match a non-empty description
 ///   });
 /// }
 /// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 Matcher hasTextContent([dynamic expectedTextContent, bool normalizeWhitespace = true]) =>

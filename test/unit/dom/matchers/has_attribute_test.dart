@@ -17,6 +17,7 @@
 import 'dart:html' show DivElement;
 
 import 'package:react_testing_library/matchers.dart' show hasAttribute;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
@@ -34,21 +35,59 @@ main() {
       shouldPass(testElement, hasAttribute('index', '1'));
     });
 
+    test('should pass when the element has the attribute set to anything', () {
+      testElement.setAttribute('index', '1');
+      shouldPass(testElement, hasAttribute('index'));
+    });
+
     test('should pass when the element has the attribute set to a value that matches the matcher', () {
       testElement.setAttribute('index', 'foo bar baz');
       shouldPass(testElement, hasAttribute('index', contains('foo')));
     });
 
-    test('should fail when the element has the attribute set to the wrong value', () {
-      testElement.setAttribute('index', '-1');
-      shouldFail(
+    group('provides a useful failure message when', () {
+      test('the first argument of `expect()` is not a valid HTML Element', () {
+        shouldFail(
+            'Not an HTML Element',
+            hasAttribute('index'),
+            allOf(
+              contains('Expected: Element with "index" attribute value of not null'),
+              contains('Actual: \'Not an HTML Element\''),
+              contains('Which: $notAnElementMismatchDescription'),
+            ));
+
+        shouldFail(
+            'Not an HTML Element',
+            hasAttribute('index', '1'),
+            allOf(
+              contains('Expected: Element with "index" attribute value of \'1\''),
+              contains('Actual: \'Not an HTML Element\''),
+              contains('Which: $notAnElementMismatchDescription'),
+            ));
+      });
+
+      test('the element does not have the attribute set', () {
+        shouldFail(
           testElement,
           hasAttribute('index', '1'),
-          'Expected: Element with "index" attribute that equals \'1\''
-          ' Actual: DivElement:<div> Which: has attributes with value \'-1\' which is different.'
-          ' Expected: 1'
-          ' Actual: -1'
-          ' ^ Differ at offset 0');
+          allOf(
+            contains('Expected: Element with "index" attribute value of \'1\''),
+            contains('Actual: DivElement:<div> Which: does not have an "index" attribute.'),
+          ),
+        );
+      });
+
+      test('the element has the attribute set to the wrong value', () {
+        testElement.setAttribute('index', '-1');
+        shouldFail(
+          testElement,
+          hasAttribute('index', '1'),
+          allOf(
+            contains('Expected: Element with "index" attribute value of \'1\''),
+            contains('Actual: DivElement:<div> Which: has "index" attribute with value \'-1\' which is different.'),
+          ),
+        );
+      });
     });
   });
 }

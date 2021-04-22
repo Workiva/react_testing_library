@@ -17,48 +17,82 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
-/// Allows you to check whether an element has an [attribute] that matches the provided [value] or not.
+/// Allows you to check whether an element has an [attribute] that matches the provided [valueOrMatcher] or not.
 ///
-/// You can also optionally use a `Matcher` as the [value] to do partial string matching
-/// (e.g. using `contains()`, `startsWith`, `endsWith`, etc).
+/// You can also optionally use a `Matcher` as the [valueOrMatcher] to do partial string matching
+/// (e.g. using `contains()`, `startsWith()`, `endsWith()`, etc).
 ///
 /// Similar to [jest-dom's `toHaveAttribute` matcher](https://github.com/testing-library/jest-dom#tohaveattribute).
 ///
 /// ### Examples
 ///
 /// ```html
-/// &lt;button data-test-id="ok-button" type="submit" disabled>ok&lt;/button>
+/// &lt;button type="submit" aria-label="Submit the form">ok&lt;/button>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show hasAttribute;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final button = rtl.screen.getByTestId('ok-button');
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(
+///       react.button({'type': 'submit', 'aria-label': 'Submit the form'}, 'ok'),
+///     );
 ///
-///     expect(button, hasAttribute('disabled'));
+///     // Use react_testing_library queries to store references to the node(s)
+///     final button = result.getByRole('button', name: 'ok');
+///
+///     // Use the `hasAttribute` matcher as the second argument of `expect()`
 ///     expect(button, hasAttribute('type', 'submit'));
 ///     expect(button, isNot(hasAttribute('type', 'button'))));
-///
-///     expect(button, hasAttribute('type', contains('sub')));
+///     expect(button, hasAttribute('aria-label', contains('Submit')));
 ///     expect(button, hasAttribute('type', isNot(contains('but'))));
+///     expect(button, hasAttribute('aria-label')); // Shorthand for `hasAttribute('aria-label', isNotNull)`
 ///   });
 /// }
 /// ```
 ///
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// {@category Matchers}
-Matcher hasAttribute(String attribute, dynamic value) => _ElementAttributeMatcher(attribute, wrapMatcher(value));
+Matcher hasAttribute(String attribute, [dynamic valueOrMatcher]) => _ElementAttributeMatcher(attribute, valueOrMatcher);
 
 class _ElementAttributeMatcher extends CustomMatcher {
-  _ElementAttributeMatcher(String attribute, dynamic matcher)
-      : _attributeName = attribute,
-        super('Element with "$attribute" attribute that equals', 'attributes', matcher);
+  final String _attributeName;
 
-  String _attributeName;
+  _ElementAttributeMatcher(String attribute, dynamic valueOrMatcher)
+      : _attributeName = attribute,
+        super(
+          'Element with "$attribute" attribute value of',
+          '"$attribute" attribute',
+          valueOrMatcher == null ? isNotNull : valueOrMatcher,
+        );
 
   @override
-  featureValueOf(covariant Element element) => element.getAttribute(_attributeName);
+  featureValueOf(item) {
+    try {
+      return (item as Element).getAttribute(_attributeName);
+    } catch (_) {
+      // If its not an element, the mismatch description will say so.
+    }
+
+    return null;
+  }
+
+  @override
+  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is! Element) {
+      return mismatchDescription..add(notAnElementMismatchDescription);
+    } else if ((item as Element).getAttribute(_attributeName) == null) {
+      return mismatchDescription..add('does not have an "$_attributeName" attribute.');
+    }
+
+    return super.describeMismatch(item, mismatchDescription, matchState, verbose);
+  }
 }

@@ -18,6 +18,7 @@ import 'dart:html' show Element;
 import 'dart:svg' show SvgElement;
 
 import 'package:react_testing_library/matchers.dart' show excludesClasses, hasClasses, hasExactClasses;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
@@ -54,6 +55,10 @@ main() {
       });
 
       group('fails when', () {
+        test('the matched item is not an element', () {
+          shouldFail(null, hasClasses('foo'), contains('Which: $notAnElementMismatchDescription'));
+        });
+
         test('the element has only some classes', () {
           testElement.className = 'class1';
           shouldFail(
@@ -103,6 +108,10 @@ main() {
       });
 
       group('fails when', () {
+        test('the matched item is not an element', () {
+          shouldFail(null, hasExactClasses('foo'), contains('Which: $notAnElementMismatchDescription'));
+        });
+
         test('the element has the exact classes with duplication', () {
           testElement.className = 'class1 class1 class2';
           shouldFail(
@@ -160,6 +169,10 @@ main() {
       });
 
       group('fails when', () {
+        test('the matched item is not an element', () {
+          shouldFail(null, excludesClasses('foo'), contains('Which: $notAnElementMismatchDescription'));
+        });
+
         test('the element has some of the excluded classes', () {
           testElement.className = 'class1 class2';
           shouldFail(

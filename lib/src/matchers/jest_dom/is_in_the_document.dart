@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:matcher/matcher.dart';
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
 import 'contains_element.dart' show containsElement;
 
@@ -27,19 +28,32 @@ import 'contains_element.dart' show containsElement;
 /// ### Examples
 ///
 /// ```html
-/// &lt;span data-test-id="html-element">&lt;span>Html Element&lt;/span>&lt;/span>
-/// &lt;svg data-test-id="svg-element">&lt;/svg>
+/// &lt;div>
+///   &lt;span data-test-id="html-element">&lt;span>Html Element&lt;/span>&lt;/span>
+///   &lt;svg data-test-id="svg-element">&lt;/svg>
+/// &lt;/div>
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/matchers.dart' show isChecked;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     expect(rtl.screen.getByTestId('html-element'), isInTheDocument);
-///     expect(rtl.screen.getByTestId('svg-element'), isInTheDocument);
-///     expect(rtl.screen.queryByTestId('does-not-exist'), isNot(isInTheDocument));
+///     // Render the DOM shown in the example snippet above
+///     final result = rtl.render(react.div({},
+///       react.span({'data-test-id': 'html-element'},
+///         'Html Element',
+///       ),
+///       react.svg({'data-test-id': 'svg-element'}),
+///     ));
+///
+///     // Use the `containsElement` matcher as the second argument of `expect()`
+///     expect(result.getByTestId('html-element'), isInTheDocument);
+///     expect(result.getByTestId('svg-element'), isInTheDocument);
+///     expect(result.queryByTestId('does-not-exist'), isNot(isInTheDocument));
 ///   });
 /// }
 /// ```
@@ -68,9 +82,9 @@ class _IsInTheDocument extends Matcher {
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
-      return mismatchDescription..add('is not a valid Element.');
+      return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
-    return mismatchDescription..add('is not an element in the document.');
+    return mismatchDescription..add('is not an Element in the document.');
   }
 }

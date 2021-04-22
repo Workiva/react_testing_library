@@ -17,6 +17,7 @@
 import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show isEmptyDomElement;
 import 'package:react_testing_library/react_testing_library.dart' show render;
+import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
@@ -33,7 +34,7 @@ main() {
 
     group('provides a useful failure message when', () {
       test('the matched item is not an element', () {
-        shouldFail(null, isEmptyDomElement, contains('Which: is not a valid Element.'));
+        shouldFail(null, isEmptyDomElement, contains('Which: $notAnElementMismatchDescription'));
       });
 
       test('the matched item has empty children', () {
