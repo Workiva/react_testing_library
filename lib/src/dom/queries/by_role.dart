@@ -53,7 +53,7 @@ mixin ByRoleQueries on IQueries {
       ..hidden = hidden
       ..queryFallbacks = queryFallbacks;
     if (normalizer != null) byRoleOptions.normalizer = allowInterop(normalizer);
-    if (name != null) byRoleOptions.name = TextMatch.parse(name);
+    if (name != null) byRoleOptions.name = TextMatch.toJs(name);
     if (selected != null) byRoleOptions.selected = selected;
     if (checked != null) byRoleOptions.checked = checked;
     if (pressed != null) byRoleOptions.pressed = pressed;
@@ -104,7 +104,7 @@ mixin ByRoleQueries on IQueries {
       withErrorInterop(
           () => _jsGetByRole(
               getContainerForScope(),
-              TextMatch.parse(role),
+              TextMatch.toJs(role),
               buildByRoleOptions(
                   exact: exact,
                   normalizer: normalizer,
@@ -159,7 +159,7 @@ mixin ByRoleQueries on IQueries {
       withErrorInterop(
           () => _jsGetAllByRole(
                   getContainerForScope(),
-                  TextMatch.parse(role),
+                  TextMatch.toJs(role),
                   buildByRoleOptions(
                       exact: exact,
                       normalizer: normalizer,
@@ -213,7 +213,7 @@ mixin ByRoleQueries on IQueries {
   }) =>
       _jsQueryByRole(
           getContainerForScope(),
-          TextMatch.parse(role),
+          TextMatch.toJs(role),
           buildByRoleOptions(
               exact: exact,
               normalizer: normalizer,
@@ -265,7 +265,7 @@ mixin ByRoleQueries on IQueries {
   }) =>
       _jsQueryAllByRole(
               getContainerForScope(),
-              TextMatch.parse(role),
+              TextMatch.toJs(role),
               buildByRoleOptions(
                   exact: exact,
                   normalizer: normalizer,

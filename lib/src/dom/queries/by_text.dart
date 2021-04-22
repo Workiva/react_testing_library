@@ -60,7 +60,7 @@ mixin ByTextQueries on IQueries {
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetByText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetByText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore)),
           errorMessage: errorMessage);
 
@@ -89,7 +89,7 @@ mixin ByTextQueries on IQueries {
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetAllByText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetAllByText(getContainerForScope(), TextMatch.toJs(text),
                   buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
               // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
               .cast<E>(),
@@ -117,7 +117,7 @@ mixin ByTextQueries on IQueries {
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryByText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryByText(getContainerForScope(), TextMatch.toJs(text),
           buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore));
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
@@ -142,7 +142,7 @@ mixin ByTextQueries on IQueries {
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryAllByText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryAllByText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
           // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
           .cast<E>();

@@ -35,7 +35,7 @@ class TextMatch {
   /// Parses the provided [value], checking its type and returning a value compatible with the JS `TextMatch` type.
   ///
   /// See: <https://testing-library.com/docs/queries/about#textmatch>
-  static dynamic parse(dynamic value) {
+  static dynamic toJs(dynamic value) {
     if (value is RegExp) {
       // Display the regex as the value that could not be matched to the consumer in the test failure message
       // instead of the string representation of the `dartValue` (interop'd function) set below.

@@ -69,7 +69,7 @@ mixin ByTestIdQueries on IQueries {
       withErrorInterop(
           () => _jsGetByTestId(
                 getContainerForScope(),
-                TextMatch.parse(testId),
+                TextMatch.toJs(testId),
                 buildMatcherOptions(exact: exact, normalizer: normalizer),
               ),
           errorMessage: errorMessage);
@@ -104,7 +104,7 @@ mixin ByTestIdQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTestId(getContainerForScope(), TextMatch.parse(testId),
+          () => _jsGetAllByTestId(getContainerForScope(), TextMatch.toJs(testId),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
               // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
               .cast<E>(),
@@ -138,7 +138,7 @@ mixin ByTestIdQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByTestId(
-          getContainerForScope(), TextMatch.parse(testId), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -167,8 +167,8 @@ mixin ByTestIdQueries on IQueries {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
-      _jsQueryAllByTestId(getContainerForScope(), TextMatch.parse(testId),
-              buildMatcherOptions(exact: exact, normalizer: normalizer))
+      _jsQueryAllByTestId(
+              getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer))
           // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
           .cast<E>();
 

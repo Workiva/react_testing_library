@@ -29,7 +29,7 @@ import '../../../util/rendering.dart';
 String getStringThatFuzzyMatches(String exactValue) => exactValue.substring(2);
 
 /// Tests both success and failure scenarios for queries with [textMatchArgName] that utilize
-/// [TextMatch.parse] to allow `String`, `RegExp` and `Function`s as values to find one or more
+/// [TextMatch.toJs] to allow `String`, `RegExp` and `Function`s as values to find one or more
 /// matches of type [E] for [queryShouldMatchOn].
 ///
 /// Exercises the 3 types of queries (queryBy, getBy and findBy) - which should be returned from
@@ -287,7 +287,7 @@ void testTextMatchTypes<E extends Element>(
   }
 
   group('when the $textMatchArgName argument is a', () {
-    group('String (TextMatch.parse),', () {
+    group('String (TextMatch.toJs),', () {
       String fuzzyValue = getStringThatFuzzyMatches(queryShouldMatchOn);
 
       group('and exact = true (default),', () {
@@ -408,7 +408,7 @@ void testTextMatchTypes<E extends Element>(
       });
     });
 
-    group('RegExp (TextMatch.parse),', () {
+    group('RegExp (TextMatch.toJs),', () {
       group('and a failure/null return value is expected for the', () {
         const badRegExPattern = '^$queryShouldNotMatchOn\$';
 
@@ -439,7 +439,7 @@ void testTextMatchTypes<E extends Element>(
       });
     });
 
-    group('Function (TextMatch.parse),', () {
+    group('Function (TextMatch.toJs),', () {
       group('and a failure/null return value is expected for the', () {
         scopedQueriesByName.forEach((queryName, queryGetter) {
           textMatchShouldFailFor(queryName, queryGetter,

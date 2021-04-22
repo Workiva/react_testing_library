@@ -60,7 +60,7 @@ mixin ByLabelTextQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByLabelText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetByLabelText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector)),
           errorMessage: errorMessage);
 
@@ -90,7 +90,7 @@ mixin ByLabelTextQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByLabelText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetAllByLabelText(getContainerForScope(), TextMatch.toJs(text),
                   buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector))
               // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
               .cast<E>(),
@@ -118,7 +118,7 @@ mixin ByLabelTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
     String selector,
   }) =>
-      _jsQueryByLabelText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryByLabelText(getContainerForScope(), TextMatch.toJs(text),
           buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector));
 
   /// Returns a list of elements that are associated with a [LabelElement] with the given [text],
@@ -143,7 +143,7 @@ mixin ByLabelTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
     String selector,
   }) =>
-      _jsQueryAllByLabelText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryAllByLabelText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector))
           // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
           .cast<E>();

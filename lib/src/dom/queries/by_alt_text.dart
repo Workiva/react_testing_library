@@ -58,7 +58,7 @@ mixin ByAltTextQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetByAltText(
-              getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
           errorMessage: errorMessage);
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
@@ -85,7 +85,7 @@ mixin ByAltTextQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByAltText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetAllByAltText(getContainerForScope(), TextMatch.toJs(text),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
               // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
               .cast<E>(),
@@ -113,7 +113,7 @@ mixin ByAltTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByAltText(
-          getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
   /// the `alt` attribute, defaulting to an [exact] match.
@@ -137,7 +137,7 @@ mixin ByAltTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByAltText(
-              getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
+              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
           // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
           .cast<E>();
 

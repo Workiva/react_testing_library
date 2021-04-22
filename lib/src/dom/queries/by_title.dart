@@ -57,8 +57,8 @@ mixin ByTitleQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByTitle(getContainerForScope(), TextMatch.parse(title),
-              buildMatcherOptions(exact: exact, normalizer: normalizer)),
+          () => _jsGetByTitle(
+              getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer)),
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
@@ -85,7 +85,7 @@ mixin ByTitleQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTitle(getContainerForScope(), TextMatch.parse(title),
+          () => _jsGetAllByTitle(getContainerForScope(), TextMatch.toJs(title),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
               // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
               .cast<E>(),
@@ -113,7 +113,7 @@ mixin ByTitleQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByTitle(
-          getContainerForScope(), TextMatch.parse(title), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match.
@@ -137,7 +137,7 @@ mixin ByTitleQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByTitle(
-              getContainerForScope(), TextMatch.parse(title), buildMatcherOptions(exact: exact, normalizer: normalizer))
+              getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer))
           // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
           .cast<E>();
 

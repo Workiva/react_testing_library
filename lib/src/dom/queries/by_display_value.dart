@@ -55,8 +55,8 @@ mixin ByDisplayValueQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByDisplayValue(getContainerForScope(), TextMatch.parse(value),
-              buildMatcherOptions(exact: exact, normalizer: normalizer)),
+          () => _jsGetByDisplayValue(
+              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer)),
           errorMessage: errorMessage);
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
@@ -85,7 +85,7 @@ mixin ByDisplayValueQueries on IQueries {
       withErrorInterop(
           () => _jsGetAllByDisplayValue(
                   getContainerForScope(),
-                  TextMatch.parse(value),
+                  TextMatch.toJs(value),
                   buildMatcherOptions(
                       exact: exact,
                       normalizer: normalizer)) // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
@@ -114,7 +114,7 @@ mixin ByDisplayValueQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByDisplayValue(
-          getContainerForScope(), TextMatch.parse(value), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
   /// defaulting to an [exact] match.
@@ -138,7 +138,7 @@ mixin ByDisplayValueQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByDisplayValue(
-              getContainerForScope(), TextMatch.parse(value), buildMatcherOptions(exact: exact, normalizer: normalizer))
+              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer))
           // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
           .cast<E>();
 
