@@ -301,7 +301,7 @@ external Element _jsGetByTestId(
 ]);
 
 @JS('rtl.getAllByTestId')
-external List<Element> _jsGetAllByTestId(
+external List< /*Element*/ dynamic> _jsGetAllByTestId(
   Node container,
   /*TextMatch*/
   testId, [
@@ -317,7 +317,7 @@ external Element _jsQueryByTestId(
 ]);
 
 @JS('rtl.queryAllByTestId')
-external List<Element> _jsQueryAllByTestId(
+external List< /*Element*/ dynamic> _jsQueryAllByTestId(
   Node container,
   /*TextMatch*/
   testId, [

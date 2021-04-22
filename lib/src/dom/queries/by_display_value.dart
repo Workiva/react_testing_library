@@ -258,7 +258,7 @@ external Element _jsGetByDisplayValue(
 ]);
 
 @JS('rtl.getAllByDisplayValue')
-external List<Element> _jsGetAllByDisplayValue(
+external List< /*Element*/ dynamic> _jsGetAllByDisplayValue(
   Node container,
   /*TextMatch*/
   value, [
@@ -274,7 +274,7 @@ external Element _jsQueryByDisplayValue(
 ]);
 
 @JS('rtl.queryAllByDisplayValue')
-external List<Element> _jsQueryAllByDisplayValue(
+external List< /*Element*/ dynamic> _jsQueryAllByDisplayValue(
   Node container,
   /*TextMatch*/
   value, [

@@ -260,7 +260,7 @@ external Element _jsGetByAltText(
 ]);
 
 @JS('rtl.getAllByAltText')
-external List<Element> _jsGetAllByAltText(
+external List< /*Element*/ dynamic> _jsGetAllByAltText(
   Node container,
   /*TextMatch*/
   text, [
@@ -276,7 +276,7 @@ external Element _jsQueryByAltText(
 ]);
 
 @JS('rtl.queryAllByAltText')
-external List<Element> _jsQueryAllByAltText(
+external List< /*Element*/ dynamic> _jsQueryAllByAltText(
   Node container,
   /*TextMatch*/
   text, [

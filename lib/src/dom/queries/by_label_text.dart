@@ -271,7 +271,7 @@ external Element _jsGetByLabelText(
 ]);
 
 @JS('rtl.getAllByLabelText')
-external List<Element> _jsGetAllByLabelText(
+external List< /*Element*/ dynamic> _jsGetAllByLabelText(
   Node container,
   /*TextMatch*/
   text, [
@@ -287,7 +287,7 @@ external Element _jsQueryByLabelText(
 ]);
 
 @JS('rtl.queryAllByLabelText')
-external List<Element> _jsQueryAllByLabelText(
+external List< /*Element*/ dynamic> _jsQueryAllByLabelText(
   Node container,
   /*TextMatch*/
   text, [

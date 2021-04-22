@@ -448,7 +448,7 @@ external Element _jsGetByRole(
 ]);
 
 @JS('rtl.getAllByRole')
-external List<Element> _jsGetAllByRole(
+external List< /*Element*/ dynamic> _jsGetAllByRole(
   Node container,
   /*TextMatch*/
   role, [
@@ -464,7 +464,7 @@ external Element _jsQueryByRole(
 ]);
 
 @JS('rtl.queryAllByRole')
-external List<Element> _jsQueryAllByRole(
+external List< /*Element*/ dynamic> _jsQueryAllByRole(
   Node container,
   /*TextMatch*/
   role, [

@@ -258,7 +258,7 @@ external Element _jsGetByPlaceholderText(
 ]);
 
 @JS('rtl.getAllByPlaceholderText')
-external List<Element> _jsGetAllByPlaceholderText(
+external List< /*Element*/ dynamic> _jsGetAllByPlaceholderText(
   Node container,
   /*TextMatch*/
   text, [
@@ -274,7 +274,7 @@ external Element _jsQueryByPlaceholderText(
 ]);
 
 @JS('rtl.queryAllByPlaceholderText')
-external List<Element> _jsQueryAllByPlaceholderText(
+external List< /*Element*/ dynamic> _jsQueryAllByPlaceholderText(
   Node container,
   /*TextMatch*/
   text, [

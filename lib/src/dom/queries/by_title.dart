@@ -258,7 +258,7 @@ external Element _jsGetByTitle(
 ]);
 
 @JS('rtl.getAllByTitle')
-external List<Element> _jsGetAllByTitle(
+external List< /*Element*/ dynamic> _jsGetAllByTitle(
   Node container,
   /*TextMatch*/
   title, [
@@ -274,7 +274,7 @@ external Element _jsQueryByTitle(
 ]);
 
 @JS('rtl.queryAllByTitle')
-external List<Element> _jsQueryAllByTitle(
+external List< /*Element*/ dynamic> _jsQueryAllByTitle(
   Node container,
   /*TextMatch*/
   title, [

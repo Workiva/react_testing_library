@@ -272,7 +272,7 @@ external Element _jsGetByText(
 ]);
 
 @JS('rtl.getAllByText')
-external List<Element> _jsGetAllByText(
+external List< /*Element*/ dynamic> _jsGetAllByText(
   Node container,
   /*TextMatch*/
   text, [
@@ -288,7 +288,7 @@ external Element _jsQueryByText(
 ]);
 
 @JS('rtl.queryAllByText')
-external List<Element> _jsQueryAllByText(
+external List< /*Element*/ dynamic> _jsQueryAllByText(
   Node container,
   /*TextMatch*/
   text, [
