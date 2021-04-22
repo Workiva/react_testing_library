@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_alt_text;
 
-import 'dart:html' show Element, ImageElement;
+import 'dart:html' show AreaElement, Element, ImageElement, InputElement, Node;
 
 import 'package:js/js.dart';
 
@@ -33,8 +33,8 @@ import 'package:react_testing_library/src/util/error_message_utils.dart' show wi
 /// The public API is either the top level function by the same name as the methods in here,
 /// or the methods by the same name exposed by `screen` / `within()`.
 mixin ByAltTextQueries on IQueries {
-  /// Returns a single [ImageElement] with the given [text] as the value of the `alt` attribute,
-  /// defaulting to an [exact] match.
+  /// Returns a single [ImageElement], [InputElement] or [AreaElement] with the given [text] as the value of
+  /// the `alt` attribute, defaulting to an [exact] match.
   ///
   /// Throws if no element is found.
   /// Use [queryByAltText] if a RTE is not expected.
@@ -50,7 +50,7 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
-  ImageElement getByAltText(
+  E getByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
@@ -58,11 +58,11 @@ mixin ByAltTextQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetByAltText(
-              getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
           errorMessage: errorMessage);
 
-  /// Returns a list of [ImageElement]s with the given [text] as the value of the `alt` attribute,
-  /// defaulting to an [exact] match.
+  /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
+  /// the `alt` attribute, defaulting to an [exact] match.
   ///
   /// Throws if no elements are found.
   /// Use [queryAllByAltText] if a RTE is not expected.
@@ -78,21 +78,21 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
-  List<ImageElement> getAllByAltText(
+  List<E> getAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByAltText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetAllByAltText(getContainerForScope(), TextMatch.toJs(text),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
-              .cast<ImageElement>(),
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+              .cast<E>(),
           errorMessage: errorMessage);
 
-  /// Returns a single [ImageElement] with the given [text] as the value of the `alt` attribute,
-  /// defaulting to an [exact] match.
+  /// Returns a single [ImageElement], [InputElement] or [AreaElement] with the given [text] as the value of
+  /// the `alt` attribute, defaulting to an [exact] match.
   ///
   /// Returns `null` if no element is found.
   /// Use [getByAltText] if a RTE is expected.
@@ -107,16 +107,16 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  ImageElement queryByAltText(
+  E queryByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByAltText(
-          getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
-  /// Returns a list of [ImageElement]s with the given [text] as the value of the `alt` attribute,
-  /// defaulting to an [exact] match.
+  /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
+  /// the `alt` attribute, defaulting to an [exact] match.
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByAltText] if a RTE is expected.
@@ -131,18 +131,19 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  List<ImageElement> queryAllByAltText(
+  List<E> queryAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByAltText(
-              getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
-          .cast<ImageElement>();
+              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+          .cast<E>();
 
-  /// Returns a future with a single [ImageElement] value with the given [text] as the value of the `alt` attribute,
-  /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
+  /// Returns a future with a single [ImageElement], [InputElement] or [AreaElement] value with the given [text]
+  /// as the value of the `alt` attribute, defaulting to an [exact] match after waiting `1000ms`
+  /// (or the specified [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
   /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
@@ -167,7 +168,7 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro sharedWaitForOptionsIntervalDescription}
   /// {@macro sharedWaitForOptionsOnTimeoutDescription}
   /// {@macro sharedWaitForOptionsMutationObserverDescription}
-  Future<ImageElement> findByAltText(
+  Future<E> findByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
@@ -194,8 +195,9 @@ mixin ByAltTextQueries on IQueries {
     );
   }
 
-  /// Returns a list of [ImageElement]s with the given [text] as the value of the `alt` attribute,
-  /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
+  /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s with the given [text]
+  /// as the value of the `alt` attribute, defaulting to an [exact] match after waiting `1000ms`
+  /// (or the specified [timeout] duration).
   ///
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
   /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
@@ -220,7 +222,7 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro sharedWaitForOptionsIntervalDescription}
   /// {@macro sharedWaitForOptionsOnTimeoutDescription}
   /// {@macro sharedWaitForOptionsMutationObserverDescription}
-  Future<List<ImageElement>> findAllByAltText(
+  Future<List<E>> findAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
@@ -231,7 +233,7 @@ mixin ByAltTextQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByAltText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByAltText` return value.
     return waitFor(
       () => getAllByAltText(
@@ -250,32 +252,32 @@ mixin ByAltTextQueries on IQueries {
 }
 
 @JS('rtl.getByAltText')
-external ImageElement _jsGetByAltText(
-  Element container,
+external Element _jsGetByAltText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByAltText')
-external List<ImageElement> _jsGetAllByAltText(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByAltText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryByAltText')
-external ImageElement _jsQueryByAltText(
-  Element container,
+external Element _jsQueryByAltText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByAltText')
-external List<ImageElement> _jsQueryAllByAltText(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByAltText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,

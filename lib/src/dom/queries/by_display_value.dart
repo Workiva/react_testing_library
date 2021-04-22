@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_display_value;
 
-import 'dart:html' show Element, InputElement, SelectElement, TextAreaElement;
+import 'dart:html' show Element, InputElement, Node, SelectElement, TextAreaElement;
 
 import 'package:js/js.dart';
 
@@ -55,8 +55,8 @@ mixin ByDisplayValueQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByDisplayValue(getContainerForScope(), TextMatch.parse(value),
-              buildMatcherOptions(exact: exact, normalizer: normalizer)),
+          () => _jsGetByDisplayValue(
+              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer)),
           errorMessage: errorMessage);
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
@@ -85,10 +85,9 @@ mixin ByDisplayValueQueries on IQueries {
       withErrorInterop(
           () => _jsGetAllByDisplayValue(
                   getContainerForScope(),
-                  TextMatch.parse(value),
+                  TextMatch.toJs(value),
                   buildMatcherOptions(
-                      exact: exact,
-                      normalizer: normalizer)) // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+                      exact: exact, normalizer: normalizer)) // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -114,7 +113,7 @@ mixin ByDisplayValueQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByDisplayValue(
-          getContainerForScope(), TextMatch.parse(value), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
   /// defaulting to an [exact] match.
@@ -138,8 +137,8 @@ mixin ByDisplayValueQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByDisplayValue(
-              getContainerForScope(), TextMatch.parse(value), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer))
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single [InputElement], [TextAreaElement] or [SelectElement] that has the matching [value] displayed,
@@ -232,7 +231,7 @@ mixin ByDisplayValueQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByDisplayValue because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByDisplayValue` return value.
     return waitFor(
       () => getAllByDisplayValue<E>(
@@ -252,15 +251,15 @@ mixin ByDisplayValueQueries on IQueries {
 
 @JS('rtl.getByDisplayValue')
 external Element _jsGetByDisplayValue(
-  Element container,
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByDisplayValue')
-external List<Element> _jsGetAllByDisplayValue(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByDisplayValue(
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,
@@ -268,15 +267,15 @@ external List<Element> _jsGetAllByDisplayValue(
 
 @JS('rtl.queryByDisplayValue')
 external Element _jsQueryByDisplayValue(
-  Element container,
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByDisplayValue')
-external List<Element> _jsQueryAllByDisplayValue(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByDisplayValue(
+  Node container,
   /*TextMatch*/
   value, [
   MatcherOptions options,

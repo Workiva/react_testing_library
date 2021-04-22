@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_label_text;
 
-import 'dart:html' show Element, LabelElement;
+import 'dart:html' show Element, LabelElement, Node;
 
 import 'package:js/js.dart';
 
@@ -45,14 +45,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   E getByLabelText<E extends Element>(
@@ -63,7 +60,7 @@ mixin ByLabelTextQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByLabelText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetByLabelText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector)),
           errorMessage: errorMessage);
 
@@ -79,14 +76,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
@@ -96,9 +90,9 @@ mixin ByLabelTextQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByLabelText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetAllByLabelText(getContainerForScope(), TextMatch.toJs(text),
                   buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -114,10 +108,6 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -128,7 +118,7 @@ mixin ByLabelTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
     String selector,
   }) =>
-      _jsQueryByLabelText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryByLabelText(getContainerForScope(), TextMatch.toJs(text),
           buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector));
 
   /// Returns a list of elements that are associated with a [LabelElement] with the given [text],
@@ -143,10 +133,6 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -157,9 +143,9 @@ mixin ByLabelTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
     String selector,
   }) =>
-      _jsQueryAllByLabelText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryAllByLabelText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element that is associated with a [LabelElement] with the given [text],
@@ -176,14 +162,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
@@ -235,14 +218,11 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
@@ -263,7 +243,7 @@ mixin ByLabelTextQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByLabelText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByLabelText` return value.
     return waitFor(
       () => getAllByLabelText<E>(
@@ -284,15 +264,15 @@ mixin ByLabelTextQueries on IQueries {
 
 @JS('rtl.getByLabelText')
 external Element _jsGetByLabelText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByLabelText')
-external List<Element> _jsGetAllByLabelText(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByLabelText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -300,15 +280,15 @@ external List<Element> _jsGetAllByLabelText(
 
 @JS('rtl.queryByLabelText')
 external Element _jsQueryByLabelText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByLabelText')
-external List<Element> _jsQueryAllByLabelText(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByLabelText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,

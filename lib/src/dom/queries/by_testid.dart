@@ -22,7 +22,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_testid;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -49,6 +49,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `getByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -65,7 +69,7 @@ mixin ByTestIdQueries on IQueries {
       withErrorInterop(
           () => _jsGetByTestId(
                 getContainerForScope(),
-                TextMatch.parse(testId),
+                TextMatch.toJs(testId),
                 buildMatcherOptions(exact: exact, normalizer: normalizer),
               ),
           errorMessage: errorMessage);
@@ -82,6 +86,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `getAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -96,9 +104,9 @@ mixin ByTestIdQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTestId(getContainerForScope(), TextMatch.parse(testId),
+          () => _jsGetAllByTestId(getContainerForScope(), TextMatch.toJs(testId),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -114,6 +122,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `queryByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -126,7 +138,7 @@ mixin ByTestIdQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByTestId(
-          getContainerForScope(), TextMatch.parse(testId), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -140,6 +152,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `queryAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -151,9 +167,9 @@ mixin ByTestIdQueries on IQueries {
     bool exact = true,
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
-      _jsQueryAllByTestId(getContainerForScope(), TextMatch.parse(testId),
-              buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+      _jsQueryAllByTestId(
+              getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer))
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
@@ -169,6 +185,10 @@ mixin ByTestIdQueries on IQueries {
   /// > Related: [findAllByTestId]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
+  ///
+  /// ## Priority
+  /// `findByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
   ///
   /// ## Options
   ///
@@ -225,6 +245,10 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
+  /// ## Priority
+  /// `findAllByTestId` should be used as a last resort only when a more accessible query is not an option.
+  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  ///
   /// ## Options
   ///
   /// ### [testId]
@@ -250,7 +274,7 @@ mixin ByTestIdQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTestId because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByTestId` return value.
     return waitFor(
       () => getAllByTestId<E>(
@@ -270,15 +294,15 @@ mixin ByTestIdQueries on IQueries {
 
 @JS('rtl.getByTestId')
 external Element _jsGetByTestId(
-  Element container,
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByTestId')
-external List<Element> _jsGetAllByTestId(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByTestId(
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,
@@ -286,15 +310,15 @@ external List<Element> _jsGetAllByTestId(
 
 @JS('rtl.queryByTestId')
 external Element _jsQueryByTestId(
-  Element container,
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByTestId')
-external List<Element> _jsQueryAllByTestId(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByTestId(
+  Node container,
   /*TextMatch*/
   testId, [
   MatcherOptions options,

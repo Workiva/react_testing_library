@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show Element;
+import 'dart:html' show Node;
 import 'dart:js' show allowInterop;
 
 import 'package:meta/meta.dart';
@@ -23,9 +23,11 @@ import 'package:react_testing_library/src/dom/matches/types.dart';
 
 /// An interface shared by all the individual query type mixins.
 abstract class IQueries {
+  /// @nodoc
   @protected
-  Element Function() get getContainerForScope;
+  Node Function() get getContainerForScope;
 
+  /// @nodoc
   @protected
   MatcherOptions buildMatcherOptions({
     bool exact = true,
@@ -41,6 +43,7 @@ abstract class IQueries {
     return matcherOptions;
   }
 
+  /// @nodoc
   @protected
   SharedJsWaitForOptions buildWaitForOptions({
     Duration timeout,

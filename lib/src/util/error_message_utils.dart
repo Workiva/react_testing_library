@@ -55,9 +55,10 @@ T withErrorInterop<T>(T Function() getJsQueryResult, {String errorMessage}) {
 class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
-  factory TestingLibraryElementError.fromJs(JsError jsError, {String errorMessage}) {
+  factory TestingLibraryElementError.fromJs(/*JsError*/ jsError, {String errorMessage}) {
     final message = errorMessage == null ? jsError.toString() : '$jsError\n\n$errorMessage';
-    return TestingLibraryElementError(message, StackTrace.fromString(jsError.stack));
+    final stack = jsError is JsError ? StackTrace.fromString(jsError.stack) : null;
+    return TestingLibraryElementError(message, stack);
   }
 
   final String message;
@@ -87,9 +88,6 @@ class JsError {
   external String get stack;
   external set stack(String value);
 }
-
-@JS('rtl.buildTestingLibraryElementError')
-external JsError buildTestingLibraryElementError(Object message);
 
 @JS('rtl.buildJsGetElementError')
 external JsError buildJsGetElementError(Object message, Element container);

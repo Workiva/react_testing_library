@@ -14,11 +14,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:html';
+
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 import '../dom/queries/shared/scoped_queries_tests.dart';
 import '../util/rendering.dart';
+import '../util/shadow_dom.dart';
 
 main() {
   group('within(<container>)', () {
@@ -35,6 +38,13 @@ main() {
         final queries = rtl.within(_renderResult.container);
         return ScopedQueriesTestWrapper(queries, _renderResult);
       });
+    });
+
+    test('supports querying within a shadowRoot', () {
+      final elsForQuerying = elementsForQuerying('<container>');
+      final renderResult = rtl.render(elsForQuerying);
+      final nodeWithShadowRoot = renderResult.getByTestId(nodeWithShadowRootDefaultTestId);
+      expect(rtl.within(nodeWithShadowRoot.shadowRoot).getByRole('button'), isA<ButtonElement>());
     });
   });
 }

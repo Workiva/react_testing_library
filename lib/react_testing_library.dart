@@ -18,8 +18,10 @@
 /// the [JS `react-testing-library` package](https://testing-library.com/docs/react-testing-library/intro)
 library react_testing_library;
 
-export 'package:react_testing_library/src/dom_testing_library.dart';
-export 'package:react_testing_library/src/react_testing_library.dart';
-export 'package:react_testing_library/src/matchers.dart';
+export 'package:react_testing_library/dom/async.dart';
+export 'package:react_testing_library/dom/configure.dart';
+export 'package:react_testing_library/dom/debugging.dart';
+export 'package:react_testing_library/dom/events.dart';
 export 'package:react_testing_library/src/user_events.dart';
-export 'package:react_testing_library/src/util/error_message_utils.dart' show TestingLibraryElementError;
+export 'package:react_testing_library/dom/queries.dart';
+export 'package:react_testing_library/react/react.dart';

@@ -31,11 +31,12 @@ import 'package:react_testing_library/src/util/error_message_utils.dart';
 /// See the [JS `TextMatch` docs](https://testing-library.com/docs/queries/about#textmatch) for more details
 /// and examples.
 /// {@endtemplate}
-class TextMatch {
+@sealed
+abstract class TextMatch {
   /// Parses the provided [value], checking its type and returning a value compatible with the JS `TextMatch` type.
   ///
   /// See: <https://testing-library.com/docs/queries/about#textmatch>
-  static dynamic parse(dynamic value) {
+  static dynamic toJs(dynamic value) {
     if (value is RegExp) {
       // Display the regex as the value that could not be matched to the consumer in the test failure message
       // instead of the string representation of the `dartValue` (interop'd function) set below.
@@ -45,7 +46,7 @@ class TextMatch {
       // regex matching using a Dart regex within that interop'd function call.
       RegExp regExp = value;
       final dartValue = (String content, Element _) => regExp.hasMatch(content);
-      value = allowInterop(dartValue);
+      return allowInterop(dartValue);
     } else if (value is Function) {
       // Display the nicest string representation of the Dart function that we can as the value that
       // could not be matched to the consumer in the test failure message instead of the string
@@ -54,7 +55,7 @@ class TextMatch {
           _replaceDartInteropFunctionStringWith('$functionValueErrorMessage\n\n    $value\n\n'));
 
       // Set the value to an interop'd function.
-      value = allowInterop<Function>(value);
+      return allowInterop<Function>(value);
     } else if (value is! String) {
       throw ArgumentError('Argument must be a String, a RegExp or a function that returns a bool.');
     }

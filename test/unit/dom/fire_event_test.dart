@@ -20,6 +20,8 @@ import 'package:react/react.dart' as react;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
+import '../util/matchers.dart';
+
 main() {
   group('', () {
     List<Event> calls;
@@ -52,6 +54,17 @@ main() {
       expect(calls, hasLength(1));
       expect(calls.single, isA<MouseEvent>());
       expect((calls.single as MouseEvent).shiftKey, isTrue);
+    });
+
+    test('fireEventByName() throws when an invalid eventName is provided', () {
+      expect(
+          () => rtl.fireEventByName('definitelyNotValid', renderedResult.getByRole('button'), {
+                'shiftKey': true,
+              }),
+          throwsA(allOf(
+            isA<ArgumentError>(),
+            hasToStringValue(contains('Invalid argument (eventName): "definitelyNotValid"')),
+          )));
     });
   });
 }

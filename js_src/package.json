@@ -9,7 +9,7 @@
     "src"
   ],
   "module": "src/_react-testing-library.js",
-  "prodBundle": "../lib/react-testing-library.js",
+  "prodBundle": "../lib/js/react-testing-library.js",
   "scripts": {
     "build": "yarn build:bundle",
     "build:bundle": "rollup -c"

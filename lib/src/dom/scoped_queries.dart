@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:html' show Element;
+import 'dart:html' show Node;
 
 import 'package:meta/meta.dart';
 import 'package:react_testing_library/src/dom/queries/by_alt_text.dart' show ByAltTextQueries;
@@ -30,7 +30,7 @@ import 'package:react_testing_library/src/dom/queries/interface.dart' show IQuer
 /// PRIVATE. DO NOT EXPORT.
 ///
 /// Only visible for the purposes of extension by specific
-/// querying objects like `RenderResult` and `_WithinQueries`.
+/// querying objects like `RenderResult` and `WithinQueries`.
 abstract class ScopedQueries
     with
         IQueries,
@@ -44,7 +44,8 @@ abstract class ScopedQueries
         ByTitleQueries {
   ScopedQueries(this.getContainerForScope);
 
+  /// @nodoc
   @protected
   @override
-  final Element Function() getContainerForScope;
+  final Node Function() getContainerForScope;
 }

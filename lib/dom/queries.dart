@@ -14,19 +14,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// https://testing-library.com/docs/dom-testing-library/intro
-library react_testing_library.src.dom_testing_library;
+/// {@category Dom}
+library rtl.dom.queries;
 
-export 'dom/async/types.dart' show MutationObserverOptions;
-export 'dom/async/wait_for.dart' show waitFor, waitForElementToBeRemoved, waitForElementsToBeRemoved;
-export 'dom/config/configure.dart' show configure, getConfig;
-export 'dom/fire_event.dart' show fireEvent, fireEventByName;
-export 'dom/matches/get_default_normalizer.dart' show getDefaultNormalizer;
-export 'dom/pretty_dom.dart' show prettyDOM;
-export 'dom/screen.dart' show screen;
-export 'dom/within.dart' show within;
+export '../src/dom/async/types.dart' show MutationObserverOptions;
+export '../src/dom/matches/get_default_normalizer.dart' show getDefaultNormalizer;
+export '../src/dom/screen.dart' show screen;
+export '../src/dom/within.dart' show within, WithinQueries;
 // ignore: directives_ordering
-export 'dom/top_level_queries.dart'
+export '../src/dom/top_level_queries.dart'
     show
         getByAltText,
         getAllByAltText,

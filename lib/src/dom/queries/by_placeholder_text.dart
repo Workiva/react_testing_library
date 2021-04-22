@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_placeholder_text;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -58,7 +58,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetByPlaceholderText(
-              getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [text] as the value of the `placeholder` attribute,
@@ -85,9 +85,9 @@ mixin ByPlaceholderTextQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByPlaceholderText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetAllByPlaceholderText(getContainerForScope(), TextMatch.toJs(text),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -113,7 +113,7 @@ mixin ByPlaceholderTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByPlaceholderText(
-          getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of elements with the given [text] as the value of the `placeholder` attribute,
   /// defaulting to an [exact] match.
@@ -137,8 +137,8 @@ mixin ByPlaceholderTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByPlaceholderText(
-              getContainerForScope(), TextMatch.parse(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [text] as the value of the `placeholder` attribute,
@@ -231,7 +231,7 @@ mixin ByPlaceholderTextQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByPlaceholderText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByPlaceholderText` return value.
     return waitFor(
       () => getAllByPlaceholderText<E>(
@@ -251,15 +251,15 @@ mixin ByPlaceholderTextQueries on IQueries {
 
 @JS('rtl.getByPlaceholderText')
 external Element _jsGetByPlaceholderText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByPlaceholderText')
-external List<Element> _jsGetAllByPlaceholderText(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByPlaceholderText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -267,15 +267,15 @@ external List<Element> _jsGetAllByPlaceholderText(
 
 @JS('rtl.queryByPlaceholderText')
 external Element _jsQueryByPlaceholderText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByPlaceholderText')
-external List<Element> _jsQueryAllByPlaceholderText(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByPlaceholderText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,

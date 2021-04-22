@@ -1,0 +1,31 @@
+dartdoc:
+  exclude:
+    - react_testing_library # exclude the big "catch-all" library since we want the exports to be broken up a little nicer in the docs
+  header:
+    - doc/styles.html
+  categories:
+    "Async":
+      markdown: doc/async_methods.md
+    "Matchers":
+      markdown: doc/matchers.md
+    "Queries":
+      markdown: doc/about_queries.md
+    "ByAltText":
+      markdown: doc/queries/by_alt_text.md
+    "ByDisplayValue":
+      markdown: doc/queries/by_display_value.md
+    "ByLabelText":
+      markdown: doc/queries/by_label_text.md
+    "ByPlaceholderText":
+      markdown: doc/queries/by_placeholder_text.md
+    "ByRole":
+      markdown: doc/queries/by_role.md
+    "ByTestId":
+      markdown: doc/queries/by_test_id.md
+    "ByText":
+      markdown: doc/queries/by_text.md
+    "ByTitle":
+      markdown: doc/queries/by_title.md
+  linkToSource:
+    root: "."
+    uriTemplate: "https://github.com/Workiva/react_testing_library/blob/1.0.0-alpha.0/%f%#L%l%"

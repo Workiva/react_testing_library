@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_role;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
@@ -34,6 +34,7 @@ import 'package:react_testing_library/src/util/error_message_utils.dart' show wi
 /// The public API is either the top level function by the same name as the methods in here,
 /// or the methods by the same name exposed by `screen` / `within()`.
 mixin ByRoleQueries on IQueries {
+  /// @nodoc
   @protected
   ByRoleOptions buildByRoleOptions({
     bool exact = true,
@@ -52,7 +53,7 @@ mixin ByRoleQueries on IQueries {
       ..hidden = hidden
       ..queryFallbacks = queryFallbacks;
     if (normalizer != null) byRoleOptions.normalizer = allowInterop(normalizer);
-    if (name != null) byRoleOptions.name = TextMatch.parse(name);
+    if (name != null) byRoleOptions.name = TextMatch.toJs(name);
     if (selected != null) byRoleOptions.selected = selected;
     if (checked != null) byRoleOptions.checked = checked;
     if (pressed != null) byRoleOptions.pressed = pressed;
@@ -103,7 +104,7 @@ mixin ByRoleQueries on IQueries {
       withErrorInterop(
           () => _jsGetByRole(
               getContainerForScope(),
-              TextMatch.parse(role),
+              TextMatch.toJs(role),
               buildByRoleOptions(
                   exact: exact,
                   normalizer: normalizer,
@@ -158,7 +159,7 @@ mixin ByRoleQueries on IQueries {
       withErrorInterop(
           () => _jsGetAllByRole(
                   getContainerForScope(),
-                  TextMatch.parse(role),
+                  TextMatch.toJs(role),
                   buildByRoleOptions(
                       exact: exact,
                       normalizer: normalizer,
@@ -170,7 +171,7 @@ mixin ByRoleQueries on IQueries {
                       expanded: expanded,
                       queryFallbacks: queryFallbacks,
                       level: level))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -212,7 +213,7 @@ mixin ByRoleQueries on IQueries {
   }) =>
       _jsQueryByRole(
           getContainerForScope(),
-          TextMatch.parse(role),
+          TextMatch.toJs(role),
           buildByRoleOptions(
               exact: exact,
               normalizer: normalizer,
@@ -264,7 +265,7 @@ mixin ByRoleQueries on IQueries {
   }) =>
       _jsQueryAllByRole(
               getContainerForScope(),
-              TextMatch.parse(role),
+              TextMatch.toJs(role),
               buildByRoleOptions(
                   exact: exact,
                   normalizer: normalizer,
@@ -276,7 +277,7 @@ mixin ByRoleQueries on IQueries {
                   expanded: expanded,
                   queryFallbacks: queryFallbacks,
                   level: level))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [role] value, defaulting to an [exact] match after
@@ -411,7 +412,7 @@ mixin ByRoleQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByRole because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5),
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676),
     // and some weirdness with the wrong error message being displayed when the role is found, but the name arg is
     // specified and it isn't found in the DOM.
     return waitFor(
@@ -440,15 +441,15 @@ mixin ByRoleQueries on IQueries {
 
 @JS('rtl.getByRole')
 external Element _jsGetByRole(
-  Element container,
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,
 ]);
 
 @JS('rtl.getAllByRole')
-external List<Element> _jsGetAllByRole(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByRole(
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,
@@ -456,15 +457,15 @@ external List<Element> _jsGetAllByRole(
 
 @JS('rtl.queryByRole')
 external Element _jsQueryByRole(
-  Element container,
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,
 ]);
 
 @JS('rtl.queryAllByRole')
-external List<Element> _jsQueryAllByRole(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByRole(
+  Node container,
   /*TextMatch*/
   role, [
   ByRoleOptions options,
@@ -478,12 +479,6 @@ class ByRoleOptions {
 
   external NormalizerFn Function(NormalizerOptions) get normalizer;
   external set normalizer(NormalizerFn Function(NormalizerOptions) value);
-
-  external String get selector;
-  external set selector(String value);
-
-  external /*String|bool*/ get ignore;
-  external set ignore(/*String|bool*/ value);
 
   /// {@template byRoleOptionsName}
   /// You can also query the returned element(s) by their [accessible name](https://www.w3.org/TR/accname-1.1/)

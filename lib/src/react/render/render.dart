@@ -18,9 +18,10 @@
 @JS()
 library react_testing_library.src.react.render.render;
 
-import 'dart:html' show DocumentFragment, Element;
+import 'dart:html' show DocumentFragment, Element, Node;
 
 import 'package:js/js.dart';
+import 'package:meta/meta.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:test/test.dart' show addTearDown;
@@ -45,7 +46,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// > See: <https://testing-library.com/docs/react-testing-library/api#render>
 RenderResult render(
   ReactElement ui, {
-  Element container,
+  Node container,
   Element baseElement,
   bool hydrate = false,
   // TODO: Implement if CPLAT-13502 is deemed necessary
@@ -83,10 +84,13 @@ RenderResult render(
   return RenderResult._(jsResult, ui);
 }
 
-/// The model returned from [render], which includes all the [ScopedQueries] scoped to the
-/// container that was rendered within.
+/// The model returned from [render], which includes all the `ScopedQueries` scoped to the
+/// [container] that the [renderedElement] was rendered within.
 ///
 /// > See: <https://testing-library.com/docs/react-testing-library/api/#render-result>
+///
+/// {@category Queries}
+@sealed
 class RenderResult extends ScopedQueries {
   RenderResult._(this._jsRenderResult, this._renderedElement) : super(() => _jsRenderResult.container);
 
@@ -146,5 +150,12 @@ class RenderResult extends ScopedQueries {
   DocumentFragment asFragment() => _jsRenderResult.asFragment();
 }
 
+/// {@template RenderSupportsReactAndOverReactCallout}
+/// > __NOTE:__ `render()` supports React vDom elements / custom components created using either the
+///   [react](https://pub.dev/packages/react) or [over_react](https://pub.dev/packages/over_react) packages.
+/// >
+/// > The examples shown here use the `react` package since the `react_testing_library` does not have a direct
+///   dependency on `over_react` - but both libraries are fully supported.
+/// {@endtemplate}
 @JS('rtl.render')
 external JsRenderResult _render(ReactElement ui, RenderOptions options);

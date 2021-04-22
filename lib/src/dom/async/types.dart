@@ -20,6 +20,9 @@ library react_testing_library.src.dom.async.types;
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
 
+/// A function typedef used by `onTimeout` parameters in asynchronous `find*` / `waitFor` queries.
+///
+/// Returns either an `Error` or a `TestFailure` when provided with the [originalError].
 typedef QueryTimeoutFn = /*Error || TestFailure*/ Object Function(/*Error*/ Object originalError);
 
 @JS()
@@ -88,6 +91,8 @@ class JsMutationObserverOptions {
 
 /// Builds a set of options that can be used for any async query like `waitFor`,
 /// or a "findBy" / "findAllBy" query.
+///
+/// @nodoc
 class MutationObserverOptions {
   const MutationObserverOptions({
     this.subtree = true,

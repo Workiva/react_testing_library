@@ -22,4 +22,6 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 /// but the scope/container is defaulted to `document.body`.
 ///
 /// > See: <https://testing-library.com/docs/queries/about/#screen>
+///
+/// {@category Queries}
 final screen = within(document.body);

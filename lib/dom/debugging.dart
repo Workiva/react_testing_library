@@ -14,7 +14,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// https://testing-library.com/docs/react-testing-library/intro
-library react_testing_library.src.react_testing_library;
+/// {@category Dom}
+library rtl.dom.debugging;
 
-export 'react/render/render.dart' show render, RenderResult;
+export '../src/dom/pretty_dom.dart' show prettyDOM;
+export '../src/util/error_message_utils.dart' show TestingLibraryElementError;

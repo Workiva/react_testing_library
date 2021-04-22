@@ -23,75 +23,81 @@ import 'package:js/js.dart';
 
 /// Returns a readable representation of the DOM tree of the given [node].
 ///
-/// This can be helpful for instance when debugging tests.
+/// This can be helpful when debugging tests:
 ///
-/// See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging#prettydom) for more details and examples.
+/// ```dart
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// import 'package:test/test.dart';
+///
+/// main() {
+///   test('', () {
+///     final renderedResult = rtl.render(someReactVDom);
+///     print(rtl.prettyDOM(renderedResult.container));
+///   });
+/// }
+/// ```
+///
+/// ## Options
+///
+/// `prettyDOM` is built atop [Jest's `prettyFormat` function](https://github.com/facebook/jest/tree/master/packages/pretty-format),
+/// which has many options that are only relevant when formatting JavaScript code, not HTML. Because of this,
+/// the options exposed here are a subset of the [`prettyFormat` options](https://github.com/facebook/jest/tree/master/packages/pretty-format#usage-with-options).
+///
+/// ### maxLength
+/// An optional argument to limit the size of the resulting string output, for cases when it becomes too large.
+///
+/// {@macro prettyDomOptionsIndent}
+/// {@macro prettyDomOptionsMaxDepth}
+/// {@macro prettyDomOptionsMin}
+///
+/// > **At this time, formatting plugins and syntax highlighting are not supported.**
+///
+/// > See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom) for more details and examples.
 String prettyDOM(
   Element node, {
   int maxLength,
-  bool callToJSON,
-  bool escapeRegex,
-  bool escapeString,
-  bool highlight,
   int indent,
   int maxDepth,
   bool min,
-  /*Plugins*/ plugins,
-  bool printFunctionName,
-  /*ThemeReceived*/ themeReceived,
 }) {
-  final options = OptionsReceived();
-  if (callToJSON != null) options.callToJSON = callToJSON;
-  if (escapeRegex != null) options.escapeRegex = escapeRegex;
-  if (escapeString != null) options.escapeString = escapeString;
-  if (highlight != null) options.highlight = highlight;
+  final options = PrettyDomOptions();
   if (indent != null) options.indent = indent;
   if (maxDepth != null) options.maxDepth = maxDepth;
   if (min != null) options.min = min;
-  if (plugins != null) options.plugins = plugins;
-  if (printFunctionName != null) options.printFunctionName = printFunctionName;
-  if (themeReceived != null) options.themeReceived = themeReceived;
 
-  return _prettyDOM(node, maxLength, OptionsReceived());
+  return _jsPrettyDOM(node, maxLength, options);
 }
 
 @JS('rtl.prettyDOM')
-external String _prettyDOM([
-  dom,
-  maxLength,
-  OptionsReceived options,
+external String _jsPrettyDOM([
+  Element dom,
+  int maxLength,
+  PrettyDomOptions options,
 ]);
 
+/// A subset of <https://github.com/facebook/jest/tree/master/packages/pretty-format#usage-with-options>
+/// that make sense given that [prettyDOM] is intended to format HTML output only.
 @JS()
 @anonymous
-class OptionsReceived {
-  external bool get callToJSON;
-  external set callToJSON(bool value);
-
-  external bool get escapeRegex;
-  external set escapeRegex(bool value);
-
-  external bool get escapeString;
-  external set escapeString(bool value);
-
-  external bool get highlight;
-  external set highlight(bool value);
-
+class PrettyDomOptions {
+  /// {@template prettyDomOptionsIndent}
+  /// ### indent
+  /// The number of spaces in each level of indentation, defaulting to `2`.
+  /// {@endtemplate}
   external int get indent;
   external set indent(int value);
 
+  /// {@template prettyDomOptionsMaxDepth}
+  /// ### maxDepth
+  /// The number of nested levels to print in the DOM tree.
+  /// {@endtemplate}
   external int get maxDepth;
   external set maxDepth(int value);
 
+  /// {@template prettyDomOptionsMin}
+  /// ### min
+  /// Whether to minimize added space: no indentation nor line breaks. Defaults to `false`.
+  /// {@endtemplate}
   external bool get min;
   external set min(bool value);
-
-  external /*Plugins*/ get plugins;
-  external set plugins(/*Plugins*/ value);
-
-  external bool get printFunctionName;
-  external set printFunctionName(bool value);
-
-  external /*ThemeReceived*/ get themeReceived;
-  external set themeReceived(/*ThemeReceived*/ value);
 }

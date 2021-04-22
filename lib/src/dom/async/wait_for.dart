@@ -19,7 +19,7 @@
 library react_testing_library.src.dom.async.wait_for;
 
 import 'dart:async';
-import 'dart:html' show Element, MutationObserver, document;
+import 'dart:html' show Element, MutationObserver, Node, document;
 
 import 'package:js/js.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
@@ -51,9 +51,11 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Async}
 Future<T> waitFor<T>(
   FutureOr<T> Function() expectation, {
-  Element container,
+  Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,
@@ -68,15 +70,15 @@ Future<T> waitFor<T>(
   MutationObserver observer;
   Timer intervalTimer;
   Timer overallTimeoutTimer;
-  Completer resultPending;
+  bool resultPending;
   final doneCompleter = Completer<T>();
 
-  void onDone(dynamic error, FutureOr<T> result) {
+  void onDone(dynamic error, [FutureOr<T> result]) {
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
     observer.disconnect();
-    if (resultPending?.isCompleted == false) {
-      resultPending.complete();
+    if (resultPending != null) {
+      resultPending = false;
     }
 
     if (error != null) {
@@ -99,21 +101,20 @@ Future<T> waitFor<T>(
   }
 
   FutureOr checkCallback([_]) async {
-    if (resultPending != null && !resultPending.isCompleted) return;
+    if (resultPending == false) return;
 
     try {
       final result = expectation();
-      if (result is Future<T>) {
+      if (result is Future) {
         // Since we'll time out the expectation's future using the same `timeout` duration,
         // cancel the `overallTimeoutTimer` so that we don't fail with a generic `TestingLibraryAsyncTimeout`
         // before the specified `expectation` has a chance to fail with a more useful / contextual error.
         overallTimeoutTimer.cancel();
-        resultPending = Completer();
-        await result.then((resolvedValue) {
-          resultPending.complete();
-          onDone(null, resolvedValue);
+        resultPending = true;
+        await (result as Future).then((resolvedValue) {
+          onDone(null, resolvedValue as T);
         }, onError: (error) {
-          onDone(error, result);
+          onDone(error);
         }).timeout(timeout, onTimeout: handleTimeout);
       } else {
         onDone(null, result);
@@ -161,9 +162,11 @@ Future<T> waitFor<T>(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Async}
 Future<void> waitForElementToBeRemoved(
-  FutureOr<Element> Function() callback, {
-  Element container,
+  Element Function() callback, {
+  Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,
@@ -213,16 +216,18 @@ Future<void> waitForElementToBeRemoved(
 /// {@macro sharedWaitForOptionsIntervalDescription}
 /// {@macro sharedWaitForOptionsOnTimeoutDescription}
 /// {@macro sharedWaitForOptionsMutationObserverDescription}
+///
+/// {@category Async}
 Future<void> waitForElementsToBeRemoved(
-  FutureOr<List<Element>> Function() callback, {
-  Element container,
+  List<Element> Function() callback, {
+  Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   container ??= document.body;
-  final els = await callback();
+  final els = callback();
 
   if (els == null || els.isEmpty) {
     throw TestingLibraryElementError('The callback must return one or more non-null Elements.');
@@ -242,11 +247,4 @@ Future<void> waitForElementsToBeRemoved(
       interval: interval,
       onTimeout: onTimeout,
       mutationObserverOptions: mutationObserverOptions)));
-}
-
-@JS()
-@anonymous
-class WaitForOptions extends SharedJsWaitForOptions {
-  external Element get container;
-  external set container(Element value);
 }

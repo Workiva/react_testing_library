@@ -14,4 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export 'matchers/css_class_matchers.dart' show hasClasses, hasExactClasses, excludesClasses;
+/// {@category Dom}
+library rtl.dom.events;
+
+export '../src/dom/fire_event.dart' show fireEvent, fireEventByName;

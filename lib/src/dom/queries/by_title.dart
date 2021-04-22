@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_title;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -57,8 +57,8 @@ mixin ByTitleQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByTitle(getContainerForScope(), TextMatch.parse(title),
-              buildMatcherOptions(exact: exact, normalizer: normalizer)),
+          () => _jsGetByTitle(
+              getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer)),
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
@@ -85,9 +85,9 @@ mixin ByTitleQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTitle(getContainerForScope(), TextMatch.parse(title),
+          () => _jsGetAllByTitle(getContainerForScope(), TextMatch.toJs(title),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -113,7 +113,7 @@ mixin ByTitleQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByTitle(
-          getContainerForScope(), TextMatch.parse(title), buildMatcherOptions(exact: exact, normalizer: normalizer));
+          getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer));
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match.
@@ -137,8 +137,8 @@ mixin ByTitleQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByTitle(
-              getContainerForScope(), TextMatch.parse(title), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer))
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [title] as the value of the `title` attribute,
@@ -231,7 +231,7 @@ mixin ByTitleQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTitle because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByTitle` return value.
     return waitFor(
       () => getAllByTitle<E>(
@@ -251,15 +251,15 @@ mixin ByTitleQueries on IQueries {
 
 @JS('rtl.getByTitle')
 external Element _jsGetByTitle(
-  Element container,
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByTitle')
-external List<Element> _jsGetAllByTitle(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByTitle(
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,
@@ -267,15 +267,15 @@ external List<Element> _jsGetAllByTitle(
 
 @JS('rtl.queryByTitle')
 external Element _jsQueryByTitle(
-  Element container,
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByTitle')
-external List<Element> _jsQueryAllByTitle(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByTitle(
+  Node container,
   /*TextMatch*/
   title, [
   MatcherOptions options,

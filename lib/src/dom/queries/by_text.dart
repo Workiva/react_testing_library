@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.dom.queries.by_text;
 
-import 'dart:html' show Element;
+import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 
@@ -44,17 +44,6 @@ mixin ByTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -71,7 +60,7 @@ mixin ByTextQueries on IQueries {
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetByText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetByText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore)),
           errorMessage: errorMessage);
 
@@ -85,17 +74,6 @@ mixin ByTextQueries on IQueries {
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
   /// ## Options
-  ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
   ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
@@ -111,9 +89,9 @@ mixin ByTextQueries on IQueries {
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetAllByText(getContainerForScope(), TextMatch.parse(text),
+          () => _jsGetAllByText(getContainerForScope(), TextMatch.toJs(text),
                   buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -128,17 +106,6 @@ mixin ByTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -150,7 +117,7 @@ mixin ByTextQueries on IQueries {
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryByText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryByText(getContainerForScope(), TextMatch.toJs(text),
           buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore));
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
@@ -164,17 +131,6 @@ mixin ByTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -186,9 +142,9 @@ mixin ByTextQueries on IQueries {
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryAllByText(getContainerForScope(), TextMatch.parse(text),
+      _jsQueryAllByText(getContainerForScope(), TextMatch.toJs(text),
               buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [text] content, defaulting to an [exact] match after
@@ -204,17 +160,6 @@ mixin ByTextQueries on IQueries {
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
   /// ## Options
-  ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
   ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
@@ -273,17 +218,6 @@ mixin ByTextQueries on IQueries {
   ///
   /// ## Options
   ///
-  /// ### [selector]
-  /// If there are multiple labels with the same text, you can use `selector`
-  /// to specify the element you want to match.
-  ///
-  /// ### [ignore]
-  /// Accepts a query selector. If `node.matches` returns true for that selector, the node will be ignored.
-  /// This defaults to `'script'` because generally you don't want to select script tags, but if your
-  /// content is in an inline script file, then the script tag could be returned.
-  ///
-  /// If you'd rather disable this behavior, set to `false`.
-  ///
   /// ### [text]
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
@@ -309,7 +243,7 @@ mixin ByTextQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByText` return value.
     return waitFor(
       () => getAllByText<E>(
@@ -331,15 +265,15 @@ mixin ByTextQueries on IQueries {
 
 @JS('rtl.getByText')
 external Element _jsGetByText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByText')
-external List<Element> _jsGetAllByText(
-  Element container,
+external List< /*Element*/ dynamic> _jsGetAllByText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
@@ -347,15 +281,15 @@ external List<Element> _jsGetAllByText(
 
 @JS('rtl.queryByText')
 external Element _jsQueryByText(
-  Element container,
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByText')
-external List<Element> _jsQueryAllByText(
-  Element container,
+external List< /*Element*/ dynamic> _jsQueryAllByText(
+  Node container,
   /*TextMatch*/
   text, [
   MatcherOptions options,
