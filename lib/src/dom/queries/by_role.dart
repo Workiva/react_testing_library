@@ -171,7 +171,7 @@ mixin ByRoleQueries on IQueries {
                       expanded: expanded,
                       queryFallbacks: queryFallbacks,
                       level: level))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -277,7 +277,7 @@ mixin ByRoleQueries on IQueries {
                   expanded: expanded,
                   queryFallbacks: queryFallbacks,
                   level: level))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [role] value, defaulting to an [exact] match after
@@ -412,7 +412,7 @@ mixin ByRoleQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByRole because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5),
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676),
     // and some weirdness with the wrong error message being displayed when the role is found, but the name arg is
     // specified and it isn't found in the DOM.
     return waitFor(

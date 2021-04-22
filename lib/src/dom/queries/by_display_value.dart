@@ -87,8 +87,7 @@ mixin ByDisplayValueQueries on IQueries {
                   getContainerForScope(),
                   TextMatch.toJs(value),
                   buildMatcherOptions(
-                      exact: exact,
-                      normalizer: normalizer)) // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+                      exact: exact, normalizer: normalizer)) // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -139,7 +138,7 @@ mixin ByDisplayValueQueries on IQueries {
   }) =>
       _jsQueryAllByDisplayValue(
               getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single [InputElement], [TextAreaElement] or [SelectElement] that has the matching [value] displayed,
@@ -232,7 +231,7 @@ mixin ByDisplayValueQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByDisplayValue because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByDisplayValue` return value.
     return waitFor(
       () => getAllByDisplayValue<E>(

@@ -87,7 +87,7 @@ mixin ByTitleQueries on IQueries {
       withErrorInterop(
           () => _jsGetAllByTitle(getContainerForScope(), TextMatch.toJs(title),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -138,7 +138,7 @@ mixin ByTitleQueries on IQueries {
   }) =>
       _jsQueryAllByTitle(
               getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [title] as the value of the `title` attribute,
@@ -231,7 +231,7 @@ mixin ByTitleQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTitle because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByTitle` return value.
     return waitFor(
       () => getAllByTitle<E>(

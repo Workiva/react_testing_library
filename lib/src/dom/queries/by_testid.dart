@@ -106,7 +106,7 @@ mixin ByTestIdQueries on IQueries {
       withErrorInterop(
           () => _jsGetAllByTestId(getContainerForScope(), TextMatch.toJs(testId),
                   buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
               .cast<E>(),
           errorMessage: errorMessage);
 
@@ -169,7 +169,7 @@ mixin ByTestIdQueries on IQueries {
   }) =>
       _jsQueryAllByTestId(
               getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5
+          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           .cast<E>();
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
@@ -274,7 +274,7 @@ mixin ByTestIdQueries on IQueries {
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTestId because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://dartpad.dev/6d3df9e7e03655ed33f5865596829ef5)
+    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
     // like we can/must on the `getAllByTestId` return value.
     return waitFor(
       () => getAllByTestId<E>(
