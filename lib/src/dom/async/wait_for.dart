@@ -73,7 +73,7 @@ Future<T> waitFor<T>(
   bool resultPending;
   final doneCompleter = Completer<T>();
 
-  void onDone(dynamic error, FutureOr<T> result) {
+  void onDone(dynamic error, [FutureOr<T> result]) {
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
     observer.disconnect();
@@ -114,7 +114,7 @@ Future<T> waitFor<T>(
         await (result as Future).then((resolvedValue) {
           onDone(null, resolvedValue as T);
         }, onError: (error) {
-          onDone(error, result);
+          onDone(error);
         }).timeout(timeout, onTimeout: handleTimeout);
       } else {
         onDone(null, result);
