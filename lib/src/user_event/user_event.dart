@@ -54,11 +54,12 @@ class UserEvent {
     bool skipHover = false,
     int clickCount = 0,
   }) {
-    final options =
-        JsBackedMap.from({'skipHover': skipHover, 'clickCount': clickCount})
-            .jsObject;
+    final options = {'skipHover': skipHover, 'clickCount': clickCount};
     return JsBackedMap.fromJs(_userEvent)['click'](
-        element, _jsifyEventData(eventInit), options);
+      element,
+      _jsifyEventData(eventInit),
+      JsBackedMap.from(options).jsObject,
+    );
   }
 
   /// Clicks [element] twice, depending on what [element] is it can have
@@ -72,7 +73,10 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#dblclickelement-eventinit-options>.
   static void dblClick(Element element, {Map eventInit}) {
-    return JsBackedMap.fromJs(_userEvent)['dblClick'](element, _jsifyEventData(eventInit),);
+    return JsBackedMap.fromJs(_userEvent)['dblClick'](
+      element,
+      _jsifyEventData(eventInit),
+    );
   }
 
   /// TODO finish this description
@@ -94,32 +98,45 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
   static void type(
-      Element element, String text, {
-        bool skipClick = false,
-        bool skipAutoClose = false,
-        int initialSelectionStart,
-        int initialSelectionEnd,
-      }) {
-    final options = <String, dynamic>{'skipClick': skipClick, 'skipAutoClose': skipAutoClose,};
-    if(initialSelectionStart != null) {
+    Element element,
+    String text, {
+    bool skipClick = false,
+    bool skipAutoClose = false,
+    int initialSelectionStart,
+    int initialSelectionEnd,
+  }) {
+    final options = <String, dynamic>{
+      'skipClick': skipClick,
+      'skipAutoClose': skipAutoClose,
+    };
+    if (initialSelectionStart != null) {
       options.putIfAbsent('initialSelectionStart', () => initialSelectionStart);
     }
-    if(initialSelectionEnd != null) {
+    if (initialSelectionEnd != null) {
       options.putIfAbsent('initialSelectionEnd', () => initialSelectionEnd);
     }
 
-    JsBackedMap.fromJs(_userEvent)['type'](element, text, JsBackedMap.from(options).jsObject,);
+    JsBackedMap.fromJs(_userEvent)['type'](
+      element,
+      text,
+      JsBackedMap.from(options).jsObject,
+    );
   }
 
   static Future<void> typeWithDelay(
-      Element element, String text, int delay, {
-        bool skipClick = false,
-        bool skipAutoClose = false,
-        dynamic initialSelectionStart,
-        dynamic initialSelectionEnd,
-      }) async {
-    final options = {'delay': delay, 'skipClick': skipClick, 'skipAutoClose': skipAutoClose,};
-    final map = JsBackedMap.from(options).jsObject;
+    Element element,
+    String text,
+    int delay, {
+    bool skipClick = false,
+    bool skipAutoClose = false,
+    dynamic initialSelectionStart,
+    dynamic initialSelectionEnd,
+  }) async {
+    final options = {
+      'delay': delay,
+      'skipClick': skipClick,
+      'skipAutoClose': skipAutoClose,
+    };
     // if(initialSelectionStart != null) {
     //   options.putIfAbsent('initialSelectionStart', () => initialSelectionStart);
     // }
@@ -127,7 +144,11 @@ class UserEvent {
     //   options.putIfAbsent('initialSelectionEnd', () => initialSelectionEnd);
     // }
 
-    await promiseToFuture(JsBackedMap.fromJs(_userEvent)['type'](element, text, map,));
+    await promiseToFuture(JsBackedMap.fromJs(_userEvent)['type'](
+      element,
+      text,
+      JsBackedMap.from(options).jsObject,
+    ));
   }
 }
 

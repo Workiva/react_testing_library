@@ -68,16 +68,36 @@ main() {
     group('skipAutoClose:', () {
       test('false (default)', () {
         rtl.UserEvent.type(textbox, 'oh {ctrl}hai');
-        expect(textbox, hasValue('oh '), reason: 'ctrl modifier key stops input from recieving the remaining characters',);
-        expect(keyUpCalls.last, equals('Control'), reason: 'ctrl modifier key will be closed at the end of the type event',);
+        expect(
+          textbox,
+          hasValue('oh '),
+          reason:
+              'ctrl modifier key stops input from recieving the remaining characters',
+        );
+        expect(
+          keyUpCalls.last,
+          equals('Control'),
+          reason:
+              'ctrl modifier key will be closed at the end of the type event',
+        );
 
         _verifyTypeEvent();
       });
 
       test('true', () {
         rtl.UserEvent.type(textbox, 'oh {ctrl}hai', skipAutoClose: true);
-        expect(textbox, hasValue('oh '), reason: 'ctrl modifier key stops input from recieving the remaining characters',);
-        expect(keyUpCalls.last, equals('i'), reason: 'ctrl modifier key will be closed at the end of the type event',);
+        expect(
+          textbox,
+          hasValue('oh '),
+          reason:
+              'ctrl modifier key stops input from recieving the remaining characters',
+        );
+        expect(
+          keyUpCalls.last,
+          equals('i'),
+          reason:
+              'ctrl modifier key will be closed at the end of the type event',
+        );
 
         _verifyTypeEvent();
       });

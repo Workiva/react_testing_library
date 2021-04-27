@@ -42,9 +42,7 @@ main() {
       renderedResult = rtl.render(elementToRender);
     });
 
-    void _verifyDblClickEvent({
-      bool hasEventInit = false
-    }) {
+    void _verifyDblClickEvent({bool hasEventInit = false}) {
       // Sanity check.
       expect(calls, hasLength(2));
       calls.forEach((event) {
