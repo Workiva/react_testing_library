@@ -23,7 +23,7 @@ import 'package:js/js.dart';
 import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 
-import '../user_events/user_event.dart';
+import '../user_event/user_event.dart';
 
 /// Fires a DOM [event] on the provided [element].
 ///

@@ -21,4 +21,4 @@
 /// {@category UserEvent}
 library rtl.user_event;
 
-export '../src/user_events/user_event.dart';
+export '../src/user_event/user_event.dart';
