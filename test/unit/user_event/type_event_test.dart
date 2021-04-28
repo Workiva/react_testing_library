@@ -17,107 +17,136 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client/js_backed_map.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/react_testing_library.dart';
 import 'package:test/test.dart';
 
 main() {
-  group('UserEvent.type', () {
+  group('User type events:', () {
     int clickEventCount;
-    Element textbox;
+    InputElement input;
     List<String> keyUpCalls;
+    List<String> calls;
 
     setUp(() {
       clickEventCount = 0;
       keyUpCalls = [];
+      calls = [];
 
       rtl.render(react.input({
         'id': 'root',
         'onClick': (_) => clickEventCount++,
         'onKeyUp': (react.SyntheticKeyboardEvent e) => keyUpCalls.add(e.key),
+        'onKeyDown': (react.SyntheticKeyboardEvent e) {
+          final event = e.nativeEvent as KeyboardEvent;
+          calls.add('${input.selectionStart} ${input.selectionEnd} ${event.key} ${input.value}');
+        },
       }));
 
-      textbox = rtl.screen.getByRole('textbox');
-      expect(textbox, hasValue(''), reason: 'sanity check');
+      input = rtl.screen.getByRole('textbox');
+      // expect(textbox, hasValue(''), reason: 'sanity check');
     });
 
-    void _verifyTypeEvent({
-      bool skipClick = false,
-    }) {
-      // Verify click event.
-      expect(clickEventCount, equals(skipClick ? 0 : 1));
+    group('UserEvent.type', () {
+      void _verifyTypeEvent({
+        bool skipClick = false,
+      }) {
+        // Verify click event.
+        expect(clickEventCount, equals(skipClick ? 0 : 1));
 
-      // expect(calls.length, isTrue);
-      // expect((calls.first as MouseEvent).ctrlKey, isTrue);
-    }
+        // expect(calls.length, isTrue);
+        // expect((calls.first as MouseEvent).ctrlKey, isTrue);
+      }
 
-    test('', () {
-      rtl.UserEvent.type(textbox, 'oh hai');
-      expect(textbox, hasValue('oh hai'));
-      _verifyTypeEvent();
-    });
-
-    test('skipClick', () {
-      // Manually focus the element since click will be skipped.
-      textbox.focus();
-      rtl.UserEvent.type(textbox, 'oh hai', skipClick: true);
-      expect(textbox, hasValue('oh hai'));
-      _verifyTypeEvent(skipClick: true);
-    });
-
-    group('skipAutoClose:', () {
-      test('false (default)', () {
-        rtl.UserEvent.type(textbox, 'oh {ctrl}hai');
-        expect(
-          textbox,
-          hasValue('oh '),
-          reason:
-              'ctrl modifier key stops input from recieving the remaining characters',
-        );
-        expect(
-          keyUpCalls.last,
-          equals('Control'),
-          reason:
-              'ctrl modifier key will be closed at the end of the type event',
-        );
-
+      test('', () {
+        rtl.UserEvent.type(input, 'oh hai');
+        expect(input, hasValue('oh hai'));
         _verifyTypeEvent();
       });
 
-      test('true', () {
-        rtl.UserEvent.type(textbox, 'oh {ctrl}hai', skipAutoClose: true);
-        expect(
-          textbox,
-          hasValue('oh '),
-          reason:
-              'ctrl modifier key stops input from recieving the remaining characters',
-        );
-        expect(
-          keyUpCalls.last,
-          equals('i'),
-          reason:
-              'ctrl modifier key will be closed at the end of the type event',
-        );
+      test('skipClick', () {
+        // Manually focus the element since click will be skipped.
+        input.focus();
+        rtl.UserEvent.type(input, 'oh hai', skipClick: true);
+        expect(input, hasValue('oh hai'));
+        _verifyTypeEvent(skipClick: true);
+      });
 
-        _verifyTypeEvent();
+      group('skipAutoClose:', () {
+        test('false (default)', () {
+          rtl.UserEvent.type(input, 'oh {ctrl}hai');
+          expect(
+            input,
+            hasValue('oh '),
+            reason:
+            'ctrl modifier key stops input from receiving the remaining characters',
+          );
+          expect(
+            keyUpCalls.last,
+            equals('Control'),
+            reason:
+            'ctrl modifier key will be closed at the end of the type event',
+          );
+
+          _verifyTypeEvent();
+        });
+
+        test('true', () {
+          rtl.UserEvent.type(input, 'oh {ctrl}hai', skipAutoClose: true);
+          expect(
+            input,
+            hasValue('oh '),
+            reason:
+            'ctrl modifier key stops input from receiving the remaining characters',
+          );
+          expect(
+            keyUpCalls.last,
+            equals('i'),
+            reason:
+            'ctrl modifier key will be closed at the end of the type event',
+          );
+
+          _verifyTypeEvent();
+        });
+      });
+
+      group('initialSelectionStart and initialSelectionEnd', () {
+        // test('when they are the same number', () {
+        //   rtl.UserEvent.type(input, 'this is a bad example');
+        //   // Sanity check.
+        //   expect(input, hasValue('this is a bad example'));
+        //   print('${input.selectionStart} ${input.selectionEnd}');
+        //   // todo why is it typing backwards!
+        //   input.setSelectionRange(0, 0);
+        //   print(input.selectionDirection);
+        //   print('${input.selectionStart} ${input.selectionEnd}');
+        //   rtl.UserEvent.type(input, 'good');
+        //   // expect(calls, true);
+        //   print('${input.selectionStart} ${input.selectionEnd}');
+        //   expect(input, hasValue('goodthis is a bad example'));
+        // });
+
+        // todo get setSelectionRange to work with type
+        // test('when some text is selected', () {
+        //   rtl.UserEvent.type(input, 'this is a bad example');
+        //   // Sanity check.
+        //   expect(input, hasValue('this is a bad example'));
+        //   print('${input.selectionStart} ${input.selectionEnd}');
+        //   input.setSelectionRange(10, 13);
+        //   print(input.selectionDirection);
+        //   print('${input.selectionStart} ${input.selectionEnd}');
+        //   rtl.UserEvent.type(input, 'good');
+        //   expect(calls, true);
+        //   print('${input.selectionStart} ${input.selectionEnd}');
+        //   expect(input, hasValue('this is a good example'));
+        // });
       });
     });
-
-    // group('initialSelectionStart and initialSelectionEnd', () {
-    //   test('when they are the same number', () {});
-    //
-    //   test('when some text is selected', () {
-    //     rtl.UserEvent.type(textbox, 'this is a bad example');
-    //     // Sanity check.
-    //     expect(textbox, hasValue('this is a bad example'));
-    //
-    //     rtl.UserEvent.type(textbox, 'good', initialSelectionStart: 10, initialSelectionEnd: 13);
-    //     expect(textbox, hasValue('this is a good example'));
-    //   });
-    // });
 
     // TODO: fix [rtl.UserEvent.typeWithDelay] because longer strings take way longer than 1 millisecond per letter
-    // group('typeWithDelay', () {
+    // group('UserEvent.typeWithDelay', () {
     //   test('', () async {
     //     await rtl.UserEvent.typeWithDelay(textbox, 'hi', 1);
     //     await rtl.waitFor(() => expect(textbox, hasValue('hi')));

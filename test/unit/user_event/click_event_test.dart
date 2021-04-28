@@ -21,7 +21,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 main() {
-  group('UserEvent.click', () {
+  group('User click events:', () {
     List<Event> calls;
     int hoverEventCount;
     rtl.RenderResult renderedResult;
@@ -42,54 +42,89 @@ main() {
       renderedResult = rtl.render(elementToRender);
     });
 
-    void _verifyClickEvent({
-      bool hasEventInit = false,
-      bool skipHover = false,
-      int clickCount = 0,
-    }) {
-      // Sanity check.
-      expect(calls, hasLength(1));
-      expect(calls.single, isA<MouseEvent>());
-      final event = calls.single as MouseEvent;
+    group('UserEvent.click', () {
+      void _verifyClickEvent({
+        bool hasEventInit = false,
+        bool skipHover = false,
+        int clickCount = 0,
+      }) {
+        // Sanity check.
+        expect(calls, hasLength(1));
+        expect(calls.single, isA<MouseEvent>());
+        final event = calls.single as MouseEvent;
 
-      // Verify initial MouseEvent.
-      expect(event.shiftKey, hasEventInit ? isTrue : isFalse);
+        // Verify initial MouseEvent.
+        expect(event.shiftKey, hasEventInit ? isTrue : isFalse);
 
-      // Verify hover event.
-      expect(hoverEventCount, equals(skipHover ? 0 : 1));
+        // Verify hover event.
+        expect(hoverEventCount, equals(skipHover ? 0 : 1));
 
-      // Verify click count was incremented.
-      expect(event.detail, equals(clickCount + 1));
-    }
+        // Verify click count was incremented.
+        expect(event.detail, equals(clickCount + 1));
+      }
 
-    test('', () {
-      rtl.UserEvent.click(renderedResult.getByRole('button'));
-      _verifyClickEvent();
+      test('', () {
+        rtl.UserEvent.click(renderedResult.getByRole('button'));
+        _verifyClickEvent();
+      });
+
+      test('eventInit', () {
+        rtl.UserEvent.click(
+          renderedResult.getByRole('button'),
+          eventInit: {'shiftKey': true},
+        );
+        _verifyClickEvent(hasEventInit: true);
+      });
+
+      test('skipHover', () {
+        rtl.UserEvent.click(
+          renderedResult.getByRole('button'),
+          skipHover: true,
+        );
+        _verifyClickEvent(skipHover: true);
+      });
+
+      test('clickCount', () {
+        final clickCount = 5;
+        rtl.UserEvent.click(
+          renderedResult.getByRole('button'),
+          clickCount: clickCount,
+        );
+        _verifyClickEvent(clickCount: clickCount);
+      });
     });
 
-    test('eventInit', () {
-      rtl.UserEvent.click(
-        renderedResult.getByRole('button'),
-        eventInit: {'shiftKey': true},
-      );
-      _verifyClickEvent(hasEventInit: true);
-    });
+    group('UserEvent.dblClick', () {
+      void _verifyDblClickEvent({bool hasEventInit = false}) {
+        // Sanity check.
+        expect(calls, hasLength(2));
+        calls.forEach((event) {
+          expect(event, isA<MouseEvent>());
 
-    test('skipHover', () {
-      rtl.UserEvent.click(
-        renderedResult.getByRole('button'),
-        skipHover: true,
-      );
-      _verifyClickEvent(skipHover: true);
-    });
+          // Verify initial MouseEvent.
+          expect((event as MouseEvent).shiftKey, hasEventInit ? isTrue : isFalse);
+        });
 
-    test('clickCount', () {
-      final clickCount = 5;
-      rtl.UserEvent.click(
-        renderedResult.getByRole('button'),
-        clickCount: clickCount,
-      );
-      _verifyClickEvent(clickCount: clickCount);
+        // Verify click count was incremented twice.
+        expect((calls.first as MouseEvent).detail, equals(1));
+        expect((calls[1] as MouseEvent).detail, equals(2));
+
+        // Verify hover event only happens once.
+        expect(hoverEventCount, equals(1));
+      }
+
+      test('', () {
+        rtl.UserEvent.dblClick(renderedResult.getByRole('button'));
+        _verifyDblClickEvent();
+      });
+
+      test('eventInit', () {
+        rtl.UserEvent.dblClick(
+          renderedResult.getByRole('button'),
+          eventInit: {'shiftKey': true},
+        );
+        _verifyDblClickEvent(hasEventInit: true);
+      });
     });
   });
 }

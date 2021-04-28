@@ -126,12 +126,15 @@ class UserEvent {
   static Future<void> typeWithDelay(
     Element element,
     String text,
+    // todo possibly change type to Duration
     int delay, {
     bool skipClick = false,
     bool skipAutoClose = false,
     dynamic initialSelectionStart,
     dynamic initialSelectionEnd,
   }) async {
+
+    // todo add arg check to make sure delay is greater than 0
     final options = {
       'delay': delay,
       'skipClick': skipClick,
