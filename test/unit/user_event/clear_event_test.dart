@@ -23,17 +23,19 @@ import 'package:test/test.dart';
 
 main() {
   group('UserEvent.clear', () {
-    test('on an InputElement', () async {
-      final renderedResult = rtl.render(react.input(
-          {'defaultValue': 'Hello, World!',}));
+    test('on an InputElement', () {
+      final renderedResult = rtl.render(react.input({
+        'defaultValue': 'Hello, World!',
+      }));
       final input = renderedResult.getByRole('textbox') as InputElement;
       rtl.UserEvent.clear(input);
       expect(input, hasValue(''));
     });
 
     test('on an TextAreaElement', () {
-      final renderedResult = rtl.render(react.textarea(
-          {'defaultValue': 'Hello, World!',}));
+      final renderedResult = rtl.render(react.textarea({
+        'defaultValue': 'Hello, World!',
+      }));
       final textarea = renderedResult.getByRole('textbox') as TextAreaElement;
       expect(textarea, hasValue('Hello, World!'), reason: 'sanity check');
       rtl.UserEvent.clear(textarea);

@@ -89,7 +89,7 @@ main() {
           // Verify initial click event.
           expect(clickEventCalls, hasLength(1));
           final clickEvent = clickEventCalls.single;
-          expect(clickEvent.shiftKey, hasClickInit ? isTrue : isFalse);
+          expect(clickEvent.shiftKey, hasClickInit);
 
           // Verify initial change event.
           expect(changeEventCalls, hasLength(1));

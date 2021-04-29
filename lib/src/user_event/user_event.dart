@@ -40,6 +40,10 @@ List<File> _unjsifyFileList(dynamic fileList) {
   return convertedFiles;
 }
 
+// todo possibly add tests for the arg type errors these could throw (if not add type checks here)
+
+// todo add examples to doc comments and create dartdoc pages
+
 /// Test utilities that provide more advanced simulation of browser interactions
 /// than the built-in [fireEvent] method.
 class UserEvent {
@@ -258,13 +262,49 @@ class UserEvent {
   static void clear(Element element) {
     // todo delete this workaround when I figure out why typing {selectall} doesn't work in dart
     // https://codesandbox.io/s/user-event-clear-thivp?file=/src/__tests__/index.js
-    if(element is InputElement) {
+    if (element is InputElement) {
       element.setSelectionRange(0, element.value.length);
-    } else if(element is TextAreaElement) {
+    } else if (element is TextAreaElement) {
       element.setSelectionRange(0, element.value.length);
     }
     // end workaround
-    return JsBackedMap.fromJs(_userEvent)['clear'](element);
+    JsBackedMap.fromJs(_userEvent)['clear'](element);
+  }
+
+  /// Selects the specified [values] of [selectElement].
+  ///
+  /// [values] can either be a list of values or [OptionElement]s.
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#selectoptionselement-values>.
+  static void selectOptions(
+    SelectElement selectElement,
+    List<dynamic> values, {
+    Map clickInit,
+  }) {
+    JsBackedMap.fromJs(_userEvent)['selectOptions'](
+      selectElement,
+      values,
+      _jsifyEventData(clickInit),
+    );
+  }
+
+  /// Removes the selection for the specified [values] of [selectElement].
+  ///
+  /// [selectElement] must have the `multiple` attribute set to `true`.
+  ///
+  /// [options] can either be a list of values or [OptionElement]s.
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#deselectoptionselement-values>.
+  static void deselectOptions(
+    SelectElement selectElement,
+    List<dynamic> values, {
+    Map clickInit,
+  }) {
+    JsBackedMap.fromJs(_userEvent)['deselectOptions'](
+      selectElement,
+      values,
+      _jsifyEventData(clickInit),
+    );
   }
 }
 
