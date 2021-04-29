@@ -58,8 +58,6 @@ main() {
         expect(rtl.prettyDOM(vDomRootRef.current, min: true), _expectedPrettyDomWithMinSetToTrue);
       });
     });
-
-    // TODO: Add tests for some of the options, and possibly trim down the options or document which ones are useful?
   });
 }
 
