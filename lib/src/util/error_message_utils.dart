@@ -68,15 +68,6 @@ class TestingLibraryElementError extends Error {
   String toString() => message;
 }
 
-class TestingLibraryAsyncTimeout extends Error {
-  TestingLibraryAsyncTimeout(this.message) : super();
-
-  final String message;
-
-  @override
-  String toString() => message;
-}
-
 @JS('Error')
 class JsError {
   external String get name;

@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
@@ -104,7 +105,7 @@ main() {
                       container: renderResult.container,
                       timeout: asyncQueryTimeout ~/ 2),
                   throwsA(allOf(
-                    isA<TestingLibraryAsyncTimeout>(),
+                    isA<TimeoutException>(),
                     hasToStringValue(contains('Timed out in waitFor after')),
                   )));
             }, timeout: asyncQueryTestTimeout);
@@ -116,10 +117,10 @@ main() {
         expect(
             () async => await rtl.waitFor(() => expect(renderResult.container.contains(rootElement), isFalse),
                     container: renderResult.container, onTimeout: (error) {
-                  return TestingLibraryAsyncTimeout('This is a custom message\n\noriginalError: \n$error');
+                  return TimeoutException('This is a custom message\n\noriginalError: \n$error');
                 }),
             throwsA(allOf(
-              isA<TestingLibraryAsyncTimeout>(),
+              isA<TimeoutException>(),
               hasToStringValue(contains('This is a custom message')),
               hasToStringValue(contains('Expected')),
             )));
@@ -169,7 +170,7 @@ main() {
                 () async => await rtl.waitForElementToBeRemoved(() => elementThatWillBeRemovedAfterDelay,
                     container: renderResult.container, timeout: shortTimeout),
                 throwsA(allOf(
-                  isA<TestingLibraryAsyncTimeout>(),
+                  isA<TimeoutException>(),
                   hasToStringValue(
                       contains('The element returned from the callback was still present in the container after')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
@@ -254,7 +255,7 @@ main() {
                 () async => await rtl.waitForElementsToBeRemoved(() => [elementThatWillBeRemovedAfterDelay],
                     container: renderResult.container, timeout: shortTimeout),
                 throwsA(allOf(
-                  isA<TestingLibraryAsyncTimeout>(),
+                  isA<TimeoutException>(),
                   hasToStringValue(
                       contains('The element returned from the callback was still present in the container after')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
@@ -285,7 +286,7 @@ main() {
                     container: renderResult.container,
                     timeout: shortTimeout),
                 throwsA(allOf(
-                  isA<TestingLibraryAsyncTimeout>(),
+                  isA<TimeoutException>(),
                   hasToStringValue(
                       contains('The element returned from the callback was still present in the container after')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
