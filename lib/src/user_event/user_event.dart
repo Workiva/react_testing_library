@@ -249,6 +249,23 @@ class UserEvent {
       element.files = _unjsifyFileList(element.files);
     }
   }
+
+  /// Selects the text inside [element] and deletes it.
+  ///
+  /// [element] can be an [InputElement] or [TextAreaElement].
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#clearelement>.
+  static void clear(Element element) {
+    // todo delete this workaround when I figure out why typing {selectall} doesn't work in dart
+    // https://codesandbox.io/s/user-event-clear-thivp?file=/src/__tests__/index.js
+    if(element is InputElement) {
+      element.setSelectionRange(0, element.value.length);
+    } else if(element is TextAreaElement) {
+      element.setSelectionRange(0, element.value.length);
+    }
+    // end workaround
+    return JsBackedMap.fromJs(_userEvent)['clear'](element);
+  }
 }
 
 @JS('rtl.userEvent')
