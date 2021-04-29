@@ -401,6 +401,7 @@ void hasQueriesScopedTo(
     test('limiting the scope of the query as expected', () {
       final outOfScopeElement = DivElement()..text = 'out-of-scope';
       document.body.append(outOfScopeElement);
+      addTearDown(outOfScopeElement.remove);
 
       queries = renderAndGetQueries();
       if (queries.getContainerForScope() != document.body) {
@@ -410,8 +411,6 @@ void hasQueriesScopedTo(
         expect(queries.queryByText('out-of-scope'), isNotNull,
             reason: 'The screen query should return elements that are found within the document.');
       }
-
-      outOfScopeElement.remove();
     });
   });
 }

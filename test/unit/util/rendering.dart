@@ -83,7 +83,7 @@ final DelayedRenderOf = react.registerFunctionComponent(_DelayedRenderOf, displa
 _DelayedRenderOf(Map props) {
   final Duration delay = props['delay'] as Duration ?? asyncQueryTimeout;
   final onDidRenderAfterDelay = props['onDidRenderAfterDelay'] as void Function();
-  final shouldRenderUpdatedChildren = useState(delay.inMilliseconds == 0 ? true : false);
+  final shouldRenderUpdatedChildren = useState(delay == Duration.zero);
 
   useEffect(() {
     final timer = Timer(delay, () {
@@ -97,7 +97,7 @@ _DelayedRenderOf(Map props) {
     if (shouldRenderUpdatedChildren.value) {
       onDidRenderAfterDelay?.call();
     }
-  }, [shouldRenderUpdatedChildren.value]);
+  }, [shouldRenderUpdatedChildren.value, onDidRenderAfterDelay]);
 
   dynamic _renderChildren() {
     if (!shouldRenderUpdatedChildren.value) return props['children'];

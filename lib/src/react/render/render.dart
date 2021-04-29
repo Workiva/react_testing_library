@@ -68,7 +68,7 @@ RenderResult render(
       try {
         renderOptions.wrapper = wrapper().componentFactory.type;
       } catch (err) {
-        throw ArgumentError.value(wrapper, 'wrapper must be a ReactComponentFactoryProxy or UiFactory');
+        throw ArgumentError.value(wrapper, 'wrapper', 'wrapper must be a ReactComponentFactoryProxy or UiFactory');
       }
     }
   }
@@ -78,13 +78,13 @@ RenderResult render(
 
   final jsResult = _render(ui, renderOptions);
 
-  addTearDown(() {
-    if (autoTearDown) {
+  if (autoTearDown) {
+    addTearDown(() {
       jsResult.unmount();
       jsResult.container?.remove();
       onDidTearDown?.call();
-    }
-  });
+    });
+  }
 
   return RenderResult._(jsResult, ui);
 }

@@ -192,7 +192,7 @@ void testTextMatchTypes<E extends Element>(
         expect(getQueryResult(), getFailureMatcher(snapshotPatternForFailureMatcher),
             reason: '\nCalling the following query should not have returned any elements:\n\n$queryFnString');
       } else {
-        expect(() async => await getQueryResult(), getFailureMatcher(snapshotPatternForFailureMatcher),
+        expect(() => getQueryResult(), getFailureMatcher(snapshotPatternForFailureMatcher),
             reason: '\nCalling the following query should have thrown:\n\n$queryFnString');
       }
     }, timeout: asyncQueryTestTimeout);
@@ -272,7 +272,7 @@ void testTextMatchTypes<E extends Element>(
         } else {
           test('unless only a single element is expected', () async {
             expect(
-                () async => await getQueryResult(),
+                () => getQueryResult(),
                 throwsA(allOf(
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains('Here are the matching elements')),
@@ -344,7 +344,7 @@ void testTextMatchTypes<E extends Element>(
       }
 
       group('and normalizer is customized', () {
-        // TODO
+        // TODO: Create standalone tests for this for each query type since a shared test will be too convoluted here
       });
 
       group('and errorMessage is customized when a failure is expected for the', () {
@@ -360,7 +360,7 @@ void testTextMatchTypes<E extends Element>(
             if (queryTypeName == 'Role') {
               if (textMatchArgName == 'role') {
                 expect(
-                    () async => await queryFn(validRoleNotInDom, errorMessage: 'This is custom'),
+                    () => queryFn(validRoleNotInDom, errorMessage: 'This is custom'),
                     throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                         hasToStringValue(contains('This is custom')))));
               } else if (textMatchArgName == 'name') {
@@ -372,7 +372,7 @@ void testTextMatchTypes<E extends Element>(
               }
             } else {
               expect(
-                  () async => await queryFn(queryShouldNotMatchOn, errorMessage: 'This is custom'),
+                  () => queryFn(queryShouldNotMatchOn, errorMessage: 'This is custom'),
                   throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                       hasToStringValue(contains('This is custom')))));
             }
@@ -387,19 +387,19 @@ void testTextMatchTypes<E extends Element>(
             if (queryTypeName == 'Role') {
               if (textMatchArgName == 'role') {
                 expect(
-                    () async => await queryFn(container, validRoleNotInDom, errorMessage: 'This is custom'),
+                    () => queryFn(container, validRoleNotInDom, errorMessage: 'This is custom'),
                     throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                         hasToStringValue(contains('This is custom')))));
               } else if (textMatchArgName == 'name') {
                 expect(
-                    () async => await queryFn(container, validRoleInDom,
-                        name: queryShouldNotMatchOn, errorMessage: 'This is custom'),
+                    () =>
+                        queryFn(container, validRoleInDom, name: queryShouldNotMatchOn, errorMessage: 'This is custom'),
                     throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                         hasToStringValue(contains('This is custom')))));
               }
             } else {
               expect(
-                  () async => await queryFn(container, queryShouldNotMatchOn, errorMessage: 'This is custom'),
+                  () => queryFn(container, queryShouldNotMatchOn, errorMessage: 'This is custom'),
                   throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                       hasToStringValue(contains('This is custom')))));
             }

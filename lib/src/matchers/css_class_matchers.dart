@@ -55,7 +55,7 @@ class ClassNameMatcher extends Matcher {
     } else if (classNames is String) {
       classes = splitSpaceDelimitedString(classNames);
     } else {
-      throw ArgumentError.value(classNames, 'Must be a list of classNames or a className string', 'classNames');
+      throw ArgumentError.value(classNames, 'classNames', 'Must be a list of classNames or a className string');
     }
 
     return classes;
@@ -72,7 +72,7 @@ class ClassNameMatcher extends Matcher {
     } else if (className is AnimatedString) {
       castClassName = className.baseVal;
     } else {
-      throw ArgumentError.value(className, 'Must be a string type');
+      throw ArgumentError.value(className, 'className', 'Must be a string type');
     }
 
     Iterable actualClasses = getClassIterable(castClassName);

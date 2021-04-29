@@ -69,8 +69,7 @@ main() {
       group('queryAllByLabelText', () {
         test('[matches]', () {
           final result = renderResult.queryAllByLabelText('Username', selector: 'input');
-          expect(result, hasLength(1));
-          expect(result.single, isA<TextInputElement>());
+          expect(result, [isA<TextInputElement>()]);
         });
 
         test('[no matches]', () {
@@ -97,8 +96,7 @@ main() {
       group('getAllByLabelText', () {
         test('[matches]', () {
           final result = renderResult.getAllByLabelText('Username', selector: 'input');
-          expect(result, hasLength(1));
-          expect(result.single, isA<TextInputElement>());
+          expect(result, [isA<TextInputElement>()]);
         });
 
         test('[no matches]', () {
@@ -119,7 +117,7 @@ main() {
 
         test('[no match]', () async {
           expect(
-              () async => await renderResult.findByLabelText('Username', selector: 'p'),
+              () => renderResult.findByLabelText('Username', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
@@ -131,13 +129,12 @@ main() {
       group('findAllByLabelText', () {
         test('[matches]', () async {
           final result = await renderResult.findAllByLabelText('Username', selector: 'input');
-          expect(result, hasLength(1));
-          expect(result.single, isA<TextInputElement>());
+          expect(result, [isA<TextInputElement>()]);
         });
 
         test('[no matches]', () async {
           expect(
-              () async => await renderResult.findAllByLabelText('Username', selector: 'p'),
+              () => renderResult.findAllByLabelText('Username', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
