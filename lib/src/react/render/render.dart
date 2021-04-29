@@ -61,11 +61,11 @@ RenderResult render(
   if (baseElement != null) renderOptions.baseElement = baseElement;
   if (wrapper != null) {
     if (wrapper is ReactComponentFactoryProxy) {
-      ui = wrapper({}, ui);
+      renderOptions.wrapper = wrapper.type;
     } else {
       // Its probably a UiFactory
       try {
-        ui = wrapper()(ui) as ReactElement;
+        renderOptions.wrapper = wrapper().componentFactory.type;
       } catch (err) {
         throw ArgumentError.value(wrapper, 'wrapper must be a ReactComponentFactoryProxy or UiFactory');
       }

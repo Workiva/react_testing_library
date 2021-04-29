@@ -61,6 +61,9 @@ class RenderOptions {
   external Node get baseElement;
   external set baseElement(Node value);
 
+  external dynamic get wrapper;
+  external set wrapper(dynamic value);
+
   external bool get hydrate;
   external set hydrate(bool value);
 
