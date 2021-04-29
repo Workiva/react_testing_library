@@ -79,6 +79,8 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
@@ -110,6 +112,8 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   E queryByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
@@ -135,6 +139,8 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   List<E> queryAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
@@ -165,6 +171,8 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
@@ -222,6 +230,8 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options

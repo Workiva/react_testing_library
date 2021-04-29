@@ -50,7 +50,6 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
-  /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   E getByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
@@ -112,6 +111,7 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   E queryByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
@@ -137,6 +137,7 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
   List<E> queryAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
