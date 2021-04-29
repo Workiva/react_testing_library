@@ -42,6 +42,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// This must be a [Element] that exists in the DOM at the time that `render` is called.
 /// * __[wrapper]__, which will be wrapped around the [ui] - which is
 /// especially useful when testing components that need a context provider of some kind.
+/// This should be an OverReact `UiFactory` or a [ReactComponentFactoryProxy].
 ///
 /// > See: <https://testing-library.com/docs/react-testing-library/api#render>
 RenderResult render(
@@ -66,7 +67,7 @@ RenderResult render(
       try {
         ui = wrapper()(ui) as ReactElement;
       } catch (err) {
-        throw ArgumentError('wrapper must be a ReactComponentFactoryProxy or UiFactory');
+        throw ArgumentError.value(wrapper, 'wrapper must be a ReactComponentFactoryProxy or UiFactory');
       }
     }
   }
