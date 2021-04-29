@@ -103,9 +103,9 @@ mixin ByRoleQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetByRole(
-              getContainerForScope(),
-              TextMatch.toJs(role),
-              buildByRoleOptions(
+                getContainerForScope(),
+                TextMatch.toJs(role),
+                buildByRoleOptions(
                   exact: exact,
                   normalizer: normalizer,
                   hidden: hidden,
@@ -115,7 +115,9 @@ mixin ByRoleQueries on IQueries {
                   pressed: pressed,
                   expanded: expanded,
                   queryFallbacks: queryFallbacks,
-                  level: level)),
+                  level: level,
+                ),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [role] value, defaulting to an [exact] match.
@@ -158,21 +160,21 @@ mixin ByRoleQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetAllByRole(
-                  getContainerForScope(),
-                  TextMatch.toJs(role),
-                  buildByRoleOptions(
-                      exact: exact,
-                      normalizer: normalizer,
-                      hidden: hidden,
-                      name: name,
-                      selected: selected,
-                      checked: checked,
-                      pressed: pressed,
-                      expanded: expanded,
-                      queryFallbacks: queryFallbacks,
-                      level: level))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+                getContainerForScope(),
+                TextMatch.toJs(role),
+                buildByRoleOptions(
+                  exact: exact,
+                  normalizer: normalizer,
+                  hidden: hidden,
+                  name: name,
+                  selected: selected,
+                  checked: checked,
+                  pressed: pressed,
+                  expanded: expanded,
+                  queryFallbacks: queryFallbacks,
+                  level: level,
+                ),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [role] value, defaulting to an [exact] match.
@@ -212,19 +214,21 @@ mixin ByRoleQueries on IQueries {
     int level,
   }) =>
       _jsQueryByRole(
-          getContainerForScope(),
-          TextMatch.toJs(role),
-          buildByRoleOptions(
-              exact: exact,
-              normalizer: normalizer,
-              hidden: hidden,
-              name: name,
-              selected: selected,
-              checked: checked,
-              pressed: pressed,
-              expanded: expanded,
-              queryFallbacks: queryFallbacks,
-              level: level));
+        getContainerForScope(),
+        TextMatch.toJs(role),
+        buildByRoleOptions(
+          exact: exact,
+          normalizer: normalizer,
+          hidden: hidden,
+          name: name,
+          selected: selected,
+          checked: checked,
+          pressed: pressed,
+          expanded: expanded,
+          queryFallbacks: queryFallbacks,
+          level: level,
+        ),
+      ) as E;
 
   /// Returns a list of elements with the given [role] value, defaulting to an [exact] match.
   ///
@@ -264,21 +268,21 @@ mixin ByRoleQueries on IQueries {
     int level,
   }) =>
       _jsQueryAllByRole(
-              getContainerForScope(),
-              TextMatch.toJs(role),
-              buildByRoleOptions(
-                  exact: exact,
-                  normalizer: normalizer,
-                  hidden: hidden,
-                  name: name,
-                  selected: selected,
-                  checked: checked,
-                  pressed: pressed,
-                  expanded: expanded,
-                  queryFallbacks: queryFallbacks,
-                  level: level))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(role),
+        buildByRoleOptions(
+          exact: exact,
+          normalizer: normalizer,
+          hidden: hidden,
+          name: name,
+          selected: selected,
+          checked: checked,
+          pressed: pressed,
+          expanded: expanded,
+          queryFallbacks: queryFallbacks,
+          level: level,
+        ),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [role] value, defaulting to an [exact] match after
   /// waiting 1000ms (or the provided [timeout] duration).

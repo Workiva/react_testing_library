@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -29,7 +30,7 @@ main() {
 
     group('returns a RenderResult', () {
       test('', () {
-        final elementToRender = react.div({'id': 'root'}, 'oh hai');
+        final elementToRender = react.div({'id': 'root'}, 'oh hai') as ReactElement;
         final renderedResult = rtl.render(elementToRender);
         expect(renderedResult.container, isA<Element>());
         expect(renderedResult.baseElement, isA<Element>());
@@ -55,25 +56,25 @@ main() {
 
     group('renders the provided element in a default container', () {
       test('', () {
-        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai'));
+        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement);
         expect(document.body.contains(renderedResult.container), isTrue);
-        expect(renderedResult.container.children, hasLength(1));
-        expect(renderedResult.container.children.single.text, 'oh hai');
+        expect(renderedResult.container.childNodes, hasLength(1));
+        expect(renderedResult.container.childNodes.single.text, 'oh hai');
       });
 
       test('wrapped in a wrapper when specified', () {
-        rtl.render(react.div({'id': 'root'}, 'oh hai'), wrapper: react.aside);
+        rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, wrapper: react.aside);
         final wrapperElement = querySelector('aside');
         expect(wrapperElement, isNotNull);
         expect(wrapperElement.querySelector('#root'), isNotNull);
       });
 
       test('and then updates the DOM when rerender is called', () {
-        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai'));
-        final elementForRerender = react.div({'id': 'root'}, 'different');
+        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement);
+        final elementForRerender = react.div({'id': 'root'}, 'different') as ReactElement;
         renderedResult.rerender(elementForRerender);
-        expect(renderedResult.container.children, hasLength(1));
-        expect(renderedResult.container.children.single.text, 'different');
+        expect(renderedResult.container.childNodes, hasLength(1));
+        expect(renderedResult.container.childNodes.single.text, 'different');
         expect(renderedResult.renderedElement, same(elementForRerender));
       });
 
@@ -85,7 +86,7 @@ main() {
             calls.clear();
           });
 
-          rtl.render(react.div({'id': 'root'}, 'oh hai'), autoTearDownCallback: () {
+          rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, autoTearDownCallback: () {
             calls.add('autoTearDownCallback');
           });
         });
@@ -99,7 +100,7 @@ main() {
           });
 
           test('', () {
-            renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai'), autoTearDown: false);
+            renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, autoTearDown: false);
           });
 
           test('', () {
@@ -110,15 +111,16 @@ main() {
     });
 
     group('renders the provided element in the provided container', () {
-      Element customContainer;
+      Node customContainer;
 
       test('', () {
         customContainer = document.body.append(DivElement()..id = 'custom-container');
-        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai'), container: customContainer);
+        final renderedResult =
+            rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, container: customContainer);
         expect(renderedResult.container, same(customContainer));
         expect(document.body.contains(renderedResult.container), isTrue);
-        expect(renderedResult.container.children, hasLength(1));
-        expect(renderedResult.container.children.single.text, 'oh hai');
+        expect(renderedResult.container.childNodes, hasLength(1));
+        expect(renderedResult.container.childNodes.single.text, 'oh hai');
       });
 
       group('and then unmounts / removes it by default', () {
@@ -137,8 +139,8 @@ main() {
 
           test('', () {
             customContainer = document.body.append(DivElement()..id = 'custom-container');
-            renderedResult =
-                rtl.render(react.div({'id': 'root'}, 'oh hai'), container: customContainer, autoTearDown: false);
+            renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement,
+                container: customContainer, autoTearDown: false);
           });
 
           test('', () {

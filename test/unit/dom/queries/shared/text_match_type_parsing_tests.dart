@@ -64,7 +64,7 @@ void testTextMatchTypes<E extends Element>(
   Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelQueryQueriesByName = const {},
   Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelGetQueriesByName = const {},
   Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelFindQueriesByName = const {},
-  Element Function() getContainerForTopLevelQueries,
+  Node Function() getContainerForTopLevelQueries,
   bool textMatchArgSupportsFuzzyMatching = true,
   String failureSnapshotPattern,
 }) {
@@ -208,7 +208,7 @@ void testTextMatchTypes<E extends Element>(
   }) {
     String queryFnString;
     Function queryFn;
-    Element container;
+    Node container;
     dynamic Function() getQueryResult;
 
     void sharedSetup({bool renderMultipleElsMatchingQuery = false}) {

@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -32,9 +33,9 @@ main() {
       final elementToRender = react.button({
         'id': 'root',
         'onClick': (react.SyntheticMouseEvent event) {
-          calls.add(event.nativeEvent);
+          calls.add(event.nativeEvent as Event);
         }
-      }, 'oh hai');
+      }, 'oh hai') as ReactElement;
       renderedResult = rtl.render(elementToRender);
     });
 

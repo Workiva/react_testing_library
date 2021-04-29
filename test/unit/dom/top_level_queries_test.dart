@@ -82,7 +82,7 @@ main() {
 
     group('contains queries that can be scoped to the specified container', () {
       const scopeName = 'top level';
-      Element container;
+      Node container;
       String expectedPrettyDom;
 
       tearDown(() {

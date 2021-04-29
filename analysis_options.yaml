@@ -6,3 +6,5 @@ analyzer:
     duplicate_import: warning
     missing_required_param: error
     must_call_super: error
+  strong-mode:
+    implicit-casts: false

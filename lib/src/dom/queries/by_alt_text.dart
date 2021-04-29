@@ -58,7 +58,10 @@ mixin ByAltTextQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetByAltText(
-              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
@@ -85,10 +88,11 @@ mixin ByAltTextQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByAltText(getContainerForScope(), TextMatch.toJs(text),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByAltText(
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single [ImageElement], [InputElement] or [AreaElement] with the given [text] as the value of
@@ -113,7 +117,10 @@ mixin ByAltTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByAltText(
-          getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
   /// the `alt` attribute, defaulting to an [exact] match.
@@ -137,9 +144,10 @@ mixin ByAltTextQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByAltText(
-              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single [ImageElement], [InputElement] or [AreaElement] value with the given [text]
   /// as the value of the `alt` attribute, defaulting to an [exact] match after waiting `1000ms`

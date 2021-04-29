@@ -127,8 +127,8 @@ main() {
     });
 
     group('waitForElementToBeRemoved()', () {
-      Element elementThatWillBeRemovedAfterDelay;
-      Element elementInDomButOutsideContainer;
+      Node elementThatWillBeRemovedAfterDelay;
+      Node elementInDomButOutsideContainer;
       Duration delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       Duration shortTimeout = asyncQueryTimeout ~/ 4;
 
@@ -203,11 +203,11 @@ main() {
     });
 
     group('waitForElementsToBeRemoved()', () {
-      Element elementThatWillBeRemovedAfterDelay;
-      Element anotherElementThatWillBeRemovedAfterDelay;
-      Element elementThatWillNotBeRemovedAfterDelay;
-      Element elementInDomButOutsideContainer;
-      Element anotherElementInDomButOutsideContainer;
+      Node elementThatWillBeRemovedAfterDelay;
+      Node anotherElementThatWillBeRemovedAfterDelay;
+      Node elementThatWillNotBeRemovedAfterDelay;
+      Node elementInDomButOutsideContainer;
+      Node anotherElementInDomButOutsideContainer;
       Duration delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       Duration shortTimeout = asyncQueryTimeout ~/ 4;
 

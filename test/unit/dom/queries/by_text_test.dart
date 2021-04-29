@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -48,7 +49,7 @@ main() {
             {},
             'Foo',
           ),
-        ));
+        ) as ReactElement);
 
         expect(renderResult.queryAllByText('Foo'), hasLength(2));
       });
@@ -156,7 +157,7 @@ main() {
             {},
             'Foo',
           ),
-        ));
+        ) as ReactElement);
       });
 
       group('can be set to a String query to ignore certain elements matching the selector query:', () {

@@ -17,7 +17,7 @@
 @JS()
 library react_testing_library.src.dom.pretty_dom;
 
-import 'dart:html' show Element;
+import 'dart:html' show Node;
 
 import 'package:js/js.dart';
 
@@ -54,7 +54,7 @@ import 'package:js/js.dart';
 ///
 /// > See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom) for more details and examples.
 String prettyDOM(
-  Element node, {
+  Node node, {
   int maxLength,
   int indent,
   int maxDepth,
@@ -70,7 +70,7 @@ String prettyDOM(
 
 @JS('rtl.prettyDOM')
 external String _jsPrettyDOM([
-  Element dom,
+  Node dom,
   int maxLength,
   PrettyDomOptions options,
 ]);

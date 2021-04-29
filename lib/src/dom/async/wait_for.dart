@@ -19,7 +19,7 @@
 library react_testing_library.src.dom.async.wait_for;
 
 import 'dart:async';
-import 'dart:html' show Element, MutationObserver, Node, document;
+import 'dart:html' show MutationObserver, Node, document;
 
 import 'package:js/js.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
@@ -165,7 +165,7 @@ Future<T> waitFor<T>(
 ///
 /// {@category Async}
 Future<void> waitForElementToBeRemoved(
-  Element Function() callback, {
+  Node Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
@@ -219,7 +219,7 @@ Future<void> waitForElementToBeRemoved(
 ///
 /// {@category Async}
 Future<void> waitForElementsToBeRemoved(
-  List<Element> Function() callback, {
+  List<Node> Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),

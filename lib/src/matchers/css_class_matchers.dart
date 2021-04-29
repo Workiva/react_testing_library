@@ -113,9 +113,9 @@ class ClassNameMatcher extends Matcher {
 
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
-    Set missingClasses = matchState['missingClasses'];
-    Set unwantedClasses = matchState['unwantedClasses'];
-    List extraneousClasses = matchState['extraneousClasses'];
+    final missingClasses = matchState['missingClasses'] as Set;
+    final unwantedClasses = matchState['unwantedClasses'] as Set;
+    final extraneousClasses = matchState['extraneousClasses'] as List;
 
     List<String> descriptionParts = [];
     if (allowExtraneous) {

@@ -17,7 +17,7 @@
 @JS()
 library react_testing_library.src.react.render.types;
 
-import 'dart:html' show DocumentFragment, Element;
+import 'dart:html' show DocumentFragment, Node;
 
 import 'package:js/js.dart';
 import 'package:react/react_client/react_interop.dart' show ReactElement;
@@ -31,14 +31,14 @@ import 'package:react_testing_library/src/react/render/render.dart';
 @JS()
 @anonymous
 class JsRenderResult {
-  external Element get container;
-  external set container(Element value);
+  external Node get container;
+  external set container(Node value);
 
-  external Element get baseElement;
-  external set baseElement(Element value);
+  external Node get baseElement;
+  external set baseElement(Node value);
 
   external void debug([
-    Element baseElement,
+    Node baseElement,
     int maxLength,
     /*prettyFormat.OptionsReceived*/ Object options,
   ]);
@@ -55,11 +55,11 @@ class JsRenderResult {
 @JS()
 @anonymous
 class RenderOptions {
-  external Element get container;
-  external set container(Element value);
+  external Node get container;
+  external set container(Node value);
 
-  external Element get baseElement;
-  external set baseElement(Element value);
+  external Node get baseElement;
+  external set baseElement(Node value);
 
   external bool get hydrate;
   external set hydrate(bool value);

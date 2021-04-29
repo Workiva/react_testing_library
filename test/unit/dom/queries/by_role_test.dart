@@ -60,7 +60,7 @@ main() {
           renderCheckbox(checked: true),
           renderCheckboxWithSwitchAsFallback(),
           react.div({'ref': emptyElementRef}),
-        ));
+        ) as ReactElement);
 
         expect(emptyElementRef.current, isNotNull);
         expect(renderResult.queryAllByRole('button'), hasLength(greaterThan(1)));
@@ -782,7 +782,7 @@ main() {
   });
 }
 
-ReactElement renderButton({bool pressed = false, bool expanded = false}) {
+renderButton({bool pressed = false, bool expanded = false}) {
   return react.button(
     {
       'type': 'button',
@@ -793,14 +793,14 @@ ReactElement renderButton({bool pressed = false, bool expanded = false}) {
   );
 }
 
-ReactElement renderDialog() {
+renderDialog() {
   return react.div(
     {'role': 'dialog'},
     'Read me',
   );
 }
 
-ReactElement renderTab({bool selected = false}) {
+renderTab({bool selected = false}) {
   return react.button(
     {
       'type': 'button',
@@ -811,7 +811,7 @@ ReactElement renderTab({bool selected = false}) {
   );
 }
 
-ReactElement renderCheckbox({bool checked = false}) {
+renderCheckbox({bool checked = false}) {
   return react.button(
     {
       'type': 'button',
@@ -822,7 +822,7 @@ ReactElement renderCheckbox({bool checked = false}) {
   );
 }
 
-ReactElement renderCheckboxWithSwitchAsFallback({bool checked = false}) {
+renderCheckboxWithSwitchAsFallback({bool checked = false}) {
   return react.button(
     {
       'type': 'button',

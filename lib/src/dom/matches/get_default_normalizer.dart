@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/dom/matches/types.dart';
 /// multiple adjacent whitespace characters into a single space ([collapseWhitespace]).
 ///
 /// > See: <https://testing-library.com/docs/queries/about#normalization>
-NormalizerFn getDefaultNormalizer({bool trim = true, collapseWhitespace = true}) {
+NormalizerFn getDefaultNormalizer({bool trim = true, bool collapseWhitespace = true}) {
   return _jsGetDefaultNormalizer(NormalizerOptions()
     ..trim = trim
     ..collapseWhitespace = collapseWhitespace);

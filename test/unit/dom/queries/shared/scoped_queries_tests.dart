@@ -31,7 +31,8 @@ import '../../../util/rendering.dart';
 import 'text_match_type_parsing_tests.dart';
 
 class ScopedQueriesTestWrapper {
-  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult renderResult]) : renderResult = renderResult ?? queries;
+  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult renderResult])
+      : renderResult = renderResult ?? queries as rtl.RenderResult;
 
   final ScopedQueries queries;
   final rtl.RenderResult renderResult;

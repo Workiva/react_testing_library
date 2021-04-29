@@ -60,8 +60,11 @@ mixin ByTextQueries on IQueries {
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetByText(getContainerForScope(), TextMatch.toJs(text),
-              buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore)),
+          () => _jsGetByText(
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
@@ -91,10 +94,11 @@ mixin ByTextQueries on IQueries {
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetAllByText(getContainerForScope(), TextMatch.toJs(text),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByText(
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [text] content, defaulting to an [exact] match.
@@ -121,8 +125,11 @@ mixin ByTextQueries on IQueries {
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryByText(getContainerForScope(), TextMatch.toJs(text),
-          buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore));
+      _jsQueryByText(
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+      ) as E;
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
   ///
@@ -148,10 +155,11 @@ mixin ByTextQueries on IQueries {
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryAllByText(getContainerForScope(), TextMatch.toJs(text),
-              buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+      _jsQueryAllByText(
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [text] content, defaulting to an [exact] match after
   /// waiting 1000ms (or the provided [timeout] duration).

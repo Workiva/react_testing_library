@@ -71,7 +71,7 @@ mixin ByTestIdQueries on IQueries {
                 getContainerForScope(),
                 TextMatch.toJs(testId),
                 buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
@@ -104,10 +104,11 @@ mixin ByTestIdQueries on IQueries {
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTestId(getContainerForScope(), TextMatch.toJs(testId),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByTestId(
+                getContainerForScope(),
+                TextMatch.toJs(testId),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
@@ -138,7 +139,10 @@ mixin ByTestIdQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByTestId(
-          getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(testId),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -168,9 +172,10 @@ mixin ByTestIdQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByTestId(
-              getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(testId),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).

@@ -47,7 +47,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 RenderResult render(
   ReactElement ui, {
   Node container,
-  Element baseElement,
+  Node baseElement,
   bool hydrate = false,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
@@ -64,7 +64,7 @@ RenderResult render(
     } else {
       // Its probably a UiFactory
       try {
-        ui = wrapper()(ui);
+        ui = wrapper()(ui) as ReactElement;
       } catch (err) {
         throw ArgumentError('wrapper must be a ReactComponentFactoryProxy or UiFactory');
       }
@@ -96,14 +96,14 @@ class RenderResult extends ScopedQueries {
 
   final JsRenderResult _jsRenderResult;
 
-  /// The rendered VDOM instance that was passed to [render] as the first argument.
+  /// The rendered VDOM instance ([ReactElement]) that was passed to [render] as the first argument.
   ReactElement get renderedElement => _renderedElement;
   ReactElement _renderedElement;
 
   /// The containing DOM node of your rendered [ReactElement] _(via [render])_.
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#container-1>
-  Element get container => _jsRenderResult.container;
+  Node get container => _jsRenderResult.container;
 
   /// The containing DOM node where your [ReactElement] is rendered in the [container].
   ///
@@ -113,13 +113,13 @@ class RenderResult extends ScopedQueries {
   /// e.g. when you want to snapshot test your portal component which renders its HTML directly in the body.
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#baseelement-1>
-  Element get baseElement => _jsRenderResult.baseElement;
+  Node get baseElement => _jsRenderResult.baseElement;
 
   /// A shortcut for `console.log(prettyDOM(baseElement))`.
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([
-    Element baseElement,
+    Node baseElement,
     int maxLength,
     // TODO: Implement a full interop for this type if consumer usage warrants it
     /*prettyFormat.OptionsReceived*/ Object options,
@@ -151,4 +151,4 @@ class RenderResult extends ScopedQueries {
 }
 
 @JS('rtl.render')
-external JsRenderResult _render(ReactElement ui, RenderOptions options);
+external JsRenderResult _render(/*ReactElement*/ dynamic ui, RenderOptions options);

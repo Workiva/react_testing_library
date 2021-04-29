@@ -56,7 +56,10 @@ mixin ByDisplayValueQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetByDisplayValue(
-              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+                getContainerForScope(),
+                TextMatch.toJs(value),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
@@ -84,11 +87,10 @@ mixin ByDisplayValueQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetAllByDisplayValue(
-                  getContainerForScope(),
-                  TextMatch.toJs(value),
-                  buildMatcherOptions(
-                      exact: exact, normalizer: normalizer)) // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+                getContainerForScope(),
+                TextMatch.toJs(value),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single [InputElement], [TextAreaElement] or [SelectElement] that has the matching [value] displayed,
@@ -113,7 +115,10 @@ mixin ByDisplayValueQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryByDisplayValue(
-          getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(value),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
   /// defaulting to an [exact] match.
@@ -137,9 +142,10 @@ mixin ByDisplayValueQueries on IQueries {
     NormalizerFn Function(NormalizerOptions) normalizer,
   }) =>
       _jsQueryAllByDisplayValue(
-              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(value),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single [InputElement], [TextAreaElement] or [SelectElement] that has the matching [value] displayed,
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
