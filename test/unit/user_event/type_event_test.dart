@@ -17,10 +17,8 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client/js_backed_map.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
-import 'package:react_testing_library/react_testing_library.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -41,7 +39,8 @@ main() {
         'onKeyUp': (react.SyntheticKeyboardEvent e) => keyUpCalls.add(e.key),
         'onKeyDown': (react.SyntheticKeyboardEvent e) {
           final event = e.nativeEvent as KeyboardEvent;
-          calls.add('${input.selectionStart} ${input.selectionEnd} ${event.key} ${input.value}');
+          calls.add(
+              '${input.selectionStart} ${input.selectionEnd} ${event.key} ${input.value}');
         },
       }));
 
@@ -81,13 +80,13 @@ main() {
             input,
             hasValue('oh '),
             reason:
-            'ctrl modifier key stops input from receiving the remaining characters',
+                'ctrl modifier key stops input from receiving the remaining characters',
           );
           expect(
             keyUpCalls.last,
             equals('Control'),
             reason:
-            'ctrl modifier key will be closed at the end of the type event',
+                'ctrl modifier key will be closed at the end of the type event',
           );
 
           _verifyTypeEvent();
@@ -99,13 +98,13 @@ main() {
             input,
             hasValue('oh '),
             reason:
-            'ctrl modifier key stops input from receiving the remaining characters',
+                'ctrl modifier key stops input from receiving the remaining characters',
           );
           expect(
             keyUpCalls.last,
             equals('i'),
             reason:
-            'ctrl modifier key will be closed at the end of the type event',
+                'ctrl modifier key will be closed at the end of the type event',
           );
 
           _verifyTypeEvent();

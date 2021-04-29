@@ -18,6 +18,7 @@
 library react_testing_library.src.user_event.user_event;
 
 import 'dart:html';
+import 'dart:js_util';
 
 import 'package:js/js.dart';
 import 'package:react/react_client/js_backed_map.dart';
@@ -27,6 +28,17 @@ import '../dom/fire_event.dart';
 
 dynamic _jsifyEventData(Map eventData) =>
     jsifyAndAllowInterop(eventData ?? const {});
+
+// Converts a JsMap FileList to a List<File>.
+List<File> _unjsifyFileList(dynamic fileList) {
+  if (fileList is! JsMap) return fileList;
+  final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
+  final convertedFiles = <File>[];
+  for (int i = 0; i < jsFileList['length']; i++) {
+    convertedFiles.add(jsFileList['item'](i));
+  }
+  return convertedFiles;
+}
 
 /// Test utilities that provide more advanced simulation of browser interactions
 /// than the built-in [fireEvent] method.
@@ -133,7 +145,6 @@ class UserEvent {
     dynamic initialSelectionStart,
     dynamic initialSelectionEnd,
   }) async {
-
     // todo add arg check to make sure delay is greater than 0
     final options = {
       'delay': delay,
@@ -152,6 +163,91 @@ class UserEvent {
       text,
       JsBackedMap.from(options).jsObject,
     ));
+  }
+
+  /// Uploads [file] to [element].
+  ///
+  /// [element] must be an [InputElement] with a `type` attribute of "file" or a
+  /// [LabelElement] for a file [InputElement].
+  ///
+  /// Use [clickInit] and [changeInit] to initialize the click and change events
+  /// that occur as a part of the upload.
+  ///
+  /// By default, the `accept` attribute on [element] will be ignored when
+  /// [upload]ing files. Set [applyAccept] to true to allow `accept` to filter
+  /// files.
+  ///
+  /// To upload multiple files, use [uploadMultiple].
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#uploadelement-file--clickinit-changeinit->.
+  static dynamic upload(
+    /*InputElement | LabelElement*/ Element element,
+    File file, {
+    Map clickInit,
+    Map changeInit,
+    bool applyAccept = false,
+  }) {
+    final init = {
+      'clickInit': _jsifyEventData(clickInit),
+      'changeInit': _jsifyEventData(changeInit),
+    };
+    final options = {'applyAccept': applyAccept};
+    JsBackedMap.fromJs(_userEvent)['upload'](
+      element,
+      file,
+      JsBackedMap.from(init).jsObject,
+      JsBackedMap.from(options).jsObject,
+    );
+
+    if (element is LabelElement && element.control is InputElement) {
+      (element.control as InputElement).files =
+          _unjsifyFileList((element.control as InputElement).files);
+    } else if (element is InputElement) {
+      element.files = _unjsifyFileList(element.files);
+    }
+  }
+
+  /// Uploads [files] to [element].
+  ///
+  /// [element] must be an [InputElement] with `type` attribute of "file" and
+  /// `multiple` attribute of `true` or a [LabelElement] for a multiple file
+  /// [InputElement].
+  ///
+  /// Use [clickInit] and [changeInit] to initialize the click and change events
+  /// that occur as a part of the upload.
+  ///
+  /// By default, the `accept` attribute on [element] will be ignored when
+  /// [upload]ing files. Set [applyAccept] to true to allow `accept` to filter
+  /// files.
+  ///
+  /// To upload a single file, use [upload].
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#uploadelement-file--clickinit-changeinit->.
+  static void uploadMultiple(
+    /*InputElement | LabelElement*/ Element element,
+    List<File> files, {
+    Map clickInit,
+    Map changeInit,
+    bool applyAccept = false,
+  }) {
+    final init = {
+      'clickInit': _jsifyEventData(clickInit),
+      'changeInit': _jsifyEventData(changeInit),
+    };
+    final options = {'applyAccept': applyAccept};
+    JsBackedMap.fromJs(_userEvent)['upload'](
+      element,
+      files,
+      JsBackedMap.from(init).jsObject,
+      JsBackedMap.from(options).jsObject,
+    );
+
+    if (element is LabelElement && element.control is InputElement) {
+      (element.control as InputElement).files =
+          _unjsifyFileList((element.control as InputElement).files);
+    } else if (element is InputElement) {
+      element.files = _unjsifyFileList(element.files);
+    }
   }
 }
 

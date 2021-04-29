@@ -102,7 +102,8 @@ main() {
           expect(event, isA<MouseEvent>());
 
           // Verify initial MouseEvent.
-          expect((event as MouseEvent).shiftKey, hasEventInit ? isTrue : isFalse);
+          expect(
+              (event as MouseEvent).shiftKey, hasEventInit ? isTrue : isFalse);
         });
 
         // Verify click count was incremented twice.
