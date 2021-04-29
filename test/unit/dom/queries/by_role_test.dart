@@ -107,7 +107,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -126,7 +126,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -143,7 +143,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -162,7 +162,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -206,7 +206,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -225,7 +225,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -242,7 +242,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -261,7 +261,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -306,7 +306,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -326,7 +326,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -344,7 +344,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -364,7 +364,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -409,7 +409,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -429,7 +429,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -447,7 +447,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -467,7 +467,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -511,7 +511,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -530,7 +530,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -547,7 +547,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -566,7 +566,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -612,7 +612,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -632,7 +632,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -650,7 +650,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -670,7 +670,7 @@ main() {
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
                   hasToStringValue(
                       contains('There are no accessible roles. But there might be some inaccessible roles.')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(emptyElementRef.current))),
+                  hasToStringValue(contains(rtl.prettyDOM(emptyElementRef.current))),
                 )));
           });
         });
@@ -718,7 +718,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -737,7 +737,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -754,7 +754,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -773,7 +773,7 @@ main() {
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });

@@ -26,10 +26,12 @@ import 'package:react_testing_library/src/dom/config/configure.dart' show config
 /// Builds and configures react-testing-library to use a custom value for `JsConfig.getElementError`
 /// if any queries fail in the current test.
 void setEphemeralElementErrorMessage(
-    Object Function(Object originalMessage, Element container) customErrorMessageBuilder) {
+    Object Function(Object originalMessage, Element container) customErrorMessageBuilder,
+    {StackTrace jsStackTrace}) {
   TestingLibraryElementError buildCustomDartGetElementError(Object originalMessage, Element container) {
     return TestingLibraryElementError.fromJs(
-        buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container));
+        buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container),
+        jsStackTrace: jsStackTrace);
   }
 
   configure(getElementError: buildCustomDartGetElementError);
@@ -40,24 +42,24 @@ void setEphemeralElementErrorMessage(
 ///
 /// Optionally, a [errorMessage] can be provided to customize the error message.
 T withErrorInterop<T>(T Function() getJsQueryResult, {String errorMessage}) {
-  T returnValue;
-
   try {
-    returnValue = getJsQueryResult();
-  } catch (e) {
-    throw TestingLibraryElementError.fromJs(e, errorMessage: errorMessage);
+    return getJsQueryResult();
+  } catch (e, st) {
+    if (e is JsError && e.name == 'TestingLibraryElementError') {
+      throw TestingLibraryElementError.fromJs(e, jsStackTrace: st, errorMessage: errorMessage);
+    } else {
+      rethrow;
+    }
   }
-
-  return returnValue;
 }
 
 /// A custom error class to be used when a react_testing_library test fails.
 class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
-  factory TestingLibraryElementError.fromJs(/*JsError*/ jsError, {String errorMessage}) {
+  factory TestingLibraryElementError.fromJs(/*JsError*/ jsError, {StackTrace jsStackTrace, String errorMessage}) {
     final message = errorMessage == null ? jsError.toString() : '$jsError\n\n$errorMessage';
-    final stack = jsError is JsError ? StackTrace.fromString(jsError.stack) : null;
+    final stack = jsError is JsError ? jsStackTrace ?? StackTrace.fromString(jsError.stack) : null;
     return TestingLibraryElementError(message, stack);
   }
 
@@ -65,7 +67,11 @@ class TestingLibraryElementError extends Error {
   final StackTrace jsStackTrace;
 
   @override
-  String toString() => message;
+  String toString() => '$message\n\n'
+      '------------------------------\n'
+      'Query Failure Stack Trace:\n'
+      '$jsStackTrace\n'
+      '------------------------------';
 }
 
 @JS('Error')

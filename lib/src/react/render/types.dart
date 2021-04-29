@@ -22,6 +22,7 @@ import 'dart:html' show DocumentFragment, Node;
 import 'package:js/js.dart';
 import 'package:react/react_client/react_interop.dart' show ReactElement;
 import 'package:react/react_client/js_backed_map.dart';
+import 'package:react_testing_library/src/dom/pretty_dom.dart' show PrettyDomOptions;
 
 import 'package:react_testing_library/src/react/render/render.dart';
 
@@ -32,15 +33,12 @@ import 'package:react_testing_library/src/react/render/render.dart';
 @anonymous
 class JsRenderResult {
   external Node get container;
-  external set container(Node value);
-
   external Node get baseElement;
-  external set baseElement(Node value);
 
   external void debug([
     Node baseElement,
     int maxLength,
-    /*prettyFormat.OptionsReceived*/ Object options,
+    PrettyDomOptions options,
   ]);
 
   external void rerender(ReactElement ui);

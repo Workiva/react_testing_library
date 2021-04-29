@@ -89,7 +89,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -107,7 +107,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -123,7 +123,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -141,7 +141,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });

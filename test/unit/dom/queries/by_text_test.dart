@@ -87,7 +87,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -105,7 +105,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -121,7 +121,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -139,7 +139,7 @@ main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -194,7 +194,7 @@ main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -212,7 +212,7 @@ main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -228,7 +228,7 @@ main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });
@@ -246,7 +246,7 @@ main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(endsWith(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
           });
         });

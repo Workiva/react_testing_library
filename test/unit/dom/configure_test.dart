@@ -70,7 +70,7 @@ main() {
           throwsA(allOf(
             isA<TestingLibraryElementError>(),
             hasToStringValue(contains('something custom')),
-            hasToStringValue(endsWith('</body>')),
+            hasToStringValue(contains('</body>')),
           )));
 
       // Set things back to the initial value

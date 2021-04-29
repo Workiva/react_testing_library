@@ -102,7 +102,7 @@ void testTextMatchTypes<E extends Element>(
     // When running only a single test, if the query is an async one,
     // RenderResult.container will not be accurate when called - so `expectedPrettyDom` will be null.
     final expectedPrettyDom = getExpectedPrettyDom();
-    final stringPrettyDomMatcher = expectedPrettyDom != null ? endsWith(expectedPrettyDom) : null;
+    final stringPrettyDomMatcher = expectedPrettyDom != null ? contains(expectedPrettyDom) : null;
     return toThrowErrorMatchingInlineSnapshot(containsMatcher, stringPrettyDomMatcher);
   }
 
@@ -276,7 +276,7 @@ void testTextMatchTypes<E extends Element>(
                 throwsA(allOf(
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains('Here are the matching elements')),
-                  hasToStringValue(endsWith(getExpectedPrettyDom())),
+                  hasToStringValue(contains(getExpectedPrettyDom())),
                 )),
                 reason:
                     '\nCalling the following query should have thrown as a result of more than one matching element being found:\n\n$queryFnString');

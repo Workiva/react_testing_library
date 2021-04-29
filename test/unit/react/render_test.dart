@@ -86,7 +86,7 @@ main() {
             calls.clear();
           });
 
-          rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, autoTearDownCallback: () {
+          rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, onDidTearDown: () {
             calls.add('autoTearDownCallback');
           });
         });

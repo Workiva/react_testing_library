@@ -23,6 +23,7 @@ import 'dart:html' show DocumentFragment, Element, Node;
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
+import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:test/test.dart' show addTearDown;
 
@@ -33,7 +34,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// a query function scoped within the [container] that was rendered into.
 ///
 /// By default, the [container] will be removed from the DOM and [RenderResult.unmount] will be called
-/// along with an optional [autoTearDownCallback] in the `tearDown` of any test that calls this
+/// along with an optional [onDidTearDown] in the `tearDown` of any test that calls this
 /// function unless [autoTearDown] is set to false.
 ///
 /// Optionally, you can specify:
@@ -54,7 +55,7 @@ RenderResult render(
   // Map<String, Query> queries,
   /*UiFactory || ReactComponentFactoryProxy*/ wrapper,
   bool autoTearDown = true,
-  Function() autoTearDownCallback,
+  void Function() onDidTearDown,
 }) {
   final renderOptions = RenderOptions()..hydrate = hydrate;
   if (container != null) renderOptions.container = container;
@@ -71,6 +72,9 @@ RenderResult render(
       }
     }
   }
+  if (!autoTearDown && onDidTearDown != null) {
+    throw ArgumentError('onDidTearDown cannot be set when autoTearDown is false.');
+  }
 
   final jsResult = _render(ui, renderOptions);
 
@@ -78,7 +82,7 @@ RenderResult render(
     if (autoTearDown) {
       jsResult.unmount();
       jsResult.container?.remove();
-      autoTearDownCallback?.call();
+      onDidTearDown?.call();
     }
   });
 
@@ -118,12 +122,13 @@ class RenderResult extends ScopedQueries {
 
   /// A shortcut for `console.log(prettyDOM(baseElement))`.
   ///
+  /// > __NOTE: It's recommended to use `screen.debug` instead.__
+  ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([
     Node baseElement,
     int maxLength,
-    // TODO: Implement a full interop for this type if consumer usage warrants it
-    /*prettyFormat.OptionsReceived*/ Object options,
+    PrettyDomOptions options,
   ]) =>
       _jsRenderResult.debug(baseElement, maxLength, options);
 
