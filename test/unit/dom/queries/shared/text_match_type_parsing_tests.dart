@@ -139,14 +139,6 @@ void testTextMatchTypes<E extends Element>(
           'snapshotPatternForFailureMatcher must be specified when valueThatShouldCauseFailure is not a String and the failureMatcher argument is not set.');
     }
 
-    Matcher getFailureMatcher(String _snapshotPatternForFailureMatcher) {
-      return queryName.startsWith('query')
-          // queryBy* queries should return null / an empty list in a failure scenario
-          ? getExpectedMatcherForFailedQuery(queryName)
-          // getBy* / findBy* queries should throw in a failure scenario
-          : failureMatcher ?? toThrowErrorMatchingInlineSnapshotPattern(_snapshotPatternForFailureMatcher);
-    }
-
     test('$queryName query', () async {
       String queryFnString;
       final queryFn = queryGetter();
@@ -190,10 +182,13 @@ void testTextMatchTypes<E extends Element>(
       }
 
       if (queryName.startsWith('query')) {
-        expect(getQueryResult(), getFailureMatcher(snapshotPatternForFailureMatcher),
+        // queryBy* queries should return null / an empty list in a failure scenario
+        expect(getQueryResult(), getExpectedMatcherForFailedQuery(queryName),
             reason: '\nCalling the following query should not have returned any elements:\n\n$queryFnString');
       } else {
-        expect(() => getQueryResult(), getFailureMatcher(snapshotPatternForFailureMatcher),
+        // getBy* / findBy* queries should throw in a failure scenario
+        expect(() => getQueryResult(),
+            failureMatcher ?? toThrowErrorMatchingInlineSnapshotPattern(snapshotPatternForFailureMatcher),
             reason: '\nCalling the following query should have thrown:\n\n$queryFnString');
       }
     }, timeout: asyncQueryTestTimeout);
