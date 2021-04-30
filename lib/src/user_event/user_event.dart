@@ -95,6 +95,8 @@ class UserEvent {
     );
   }
 
+  // todo add keyboard util
+
   /// TODO finish this description
   ///
   /// Note that [type] will click the element before typing. To disable this,
@@ -304,6 +306,20 @@ class UserEvent {
       selectElement,
       values,
       _jsifyEventData(clickInit),
+    );
+  }
+
+  /// Fires a tab event changing the document.activeElement in the same way the browser does.
+  ///
+  /// Options:
+  /// * [shift] (default `false`): can be true or false to invert tab direction.
+  /// * [focusTrap] (default document): a container element to restrict the tabbing within.
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#tabshift-focustrap>.
+  static void tab({bool shift, Element focusTrap}) {
+    final options = {'shift': shift, 'focusTrap': focusTrap};
+    return JsBackedMap.fromJs(_userEvent)['tab'](
+      JsBackedMap.from(options).jsObject,
     );
   }
 }
