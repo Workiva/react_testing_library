@@ -16,6 +16,7 @@
 
 import 'dart:html';
 
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -33,7 +34,11 @@ main() {
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-        final els = testAsyncQuery ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
+        final els = testAsyncQuery
+            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+            // ignore: unnecessary_cast
+            ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+            : elsForQuerying;
         final _renderResult = rtl.render(els);
         final queries = rtl.within(_renderResult.container);
         return ScopedQueriesTestWrapper(queries, _renderResult);

@@ -53,12 +53,15 @@ mixin ByAltTextQueries on IQueries {
   E getByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
           () => _jsGetByAltText(
-              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
@@ -81,14 +84,15 @@ mixin ByAltTextQueries on IQueries {
   List<E> getAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByAltText(getContainerForScope(), TextMatch.toJs(text),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByAltText(
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single [ImageElement], [InputElement] or [AreaElement] with the given [text] as the value of
@@ -110,10 +114,13 @@ mixin ByAltTextQueries on IQueries {
   E queryByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByAltText(
-          getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
   /// the `alt` attribute, defaulting to an [exact] match.
@@ -134,12 +141,13 @@ mixin ByAltTextQueries on IQueries {
   List<E> queryAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByAltText(
-              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single [ImageElement], [InputElement] or [AreaElement] value with the given [text]
   /// as the value of the `alt` attribute, defaulting to an [exact] match after waiting `1000ms`
@@ -171,12 +179,12 @@ mixin ByAltTextQueries on IQueries {
   Future<E> findByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByAltText for consistency with our
     // need to use it on the analogous `findAllByAltText` query.
@@ -225,12 +233,12 @@ mixin ByAltTextQueries on IQueries {
   Future<List<E>> findAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByAltText because of the inability
     // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)

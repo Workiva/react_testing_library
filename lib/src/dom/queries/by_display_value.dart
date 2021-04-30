@@ -51,12 +51,15 @@ mixin ByDisplayValueQueries on IQueries {
   E getByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
           () => _jsGetByDisplayValue(
-              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+                getContainerForScope(),
+                TextMatch.toJs(value),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
@@ -79,16 +82,15 @@ mixin ByDisplayValueQueries on IQueries {
   List<E> getAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
           () => _jsGetAllByDisplayValue(
-                  getContainerForScope(),
-                  TextMatch.toJs(value),
-                  buildMatcherOptions(
-                      exact: exact, normalizer: normalizer)) // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+                getContainerForScope(),
+                TextMatch.toJs(value),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single [InputElement], [TextAreaElement] or [SelectElement] that has the matching [value] displayed,
@@ -110,10 +112,13 @@ mixin ByDisplayValueQueries on IQueries {
   E queryByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByDisplayValue(
-          getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(value),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
   /// defaulting to an [exact] match.
@@ -134,12 +139,13 @@ mixin ByDisplayValueQueries on IQueries {
   List<E> queryAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByDisplayValue(
-              getContainerForScope(), TextMatch.toJs(value), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(value),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single [InputElement], [TextAreaElement] or [SelectElement] that has the matching [value] displayed,
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
@@ -170,12 +176,12 @@ mixin ByDisplayValueQueries on IQueries {
   Future<E> findByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByDisplayValue for consistency with our
     // need to use it on the analogous `findAllByDisplayValue` query.
@@ -223,12 +229,12 @@ mixin ByDisplayValueQueries on IQueries {
   Future<List<E>> findAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByDisplayValue because of the inability
     // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)

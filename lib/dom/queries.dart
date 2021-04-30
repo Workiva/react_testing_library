@@ -19,6 +19,7 @@ library rtl.dom.queries;
 
 export '../src/dom/async/types.dart' show MutationObserverOptions;
 export '../src/dom/matches/get_default_normalizer.dart' show getDefaultNormalizer;
+export '../src/dom/matches/types.dart' show NormalizerFn, NormalizerOptions;
 export '../src/dom/screen.dart' show screen;
 export '../src/dom/within.dart' show within, WithinQueries;
 // ignore: directives_ordering

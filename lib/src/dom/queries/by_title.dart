@@ -53,12 +53,15 @@ mixin ByTitleQueries on IQueries {
   E getByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
           () => _jsGetByTitle(
-              getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+                getContainerForScope(),
+                TextMatch.toJs(title),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
@@ -81,14 +84,15 @@ mixin ByTitleQueries on IQueries {
   List<E> getAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTitle(getContainerForScope(), TextMatch.toJs(title),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByTitle(
+                getContainerForScope(),
+                TextMatch.toJs(title),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [title] as the value of the `title` attribute,
@@ -110,10 +114,13 @@ mixin ByTitleQueries on IQueries {
   E queryByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByTitle(
-          getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(title),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match.
@@ -134,12 +141,13 @@ mixin ByTitleQueries on IQueries {
   List<E> queryAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByTitle(
-              getContainerForScope(), TextMatch.toJs(title), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(title),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
@@ -170,12 +178,12 @@ mixin ByTitleQueries on IQueries {
   Future<E> findByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByTitle for consistency with our
     // need to use it on the analogous `findAllByTitle` query.
@@ -223,12 +231,12 @@ mixin ByTitleQueries on IQueries {
   Future<List<E>> findAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTitle because of the inability
     // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)

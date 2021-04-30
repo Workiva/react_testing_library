@@ -62,7 +62,7 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
         {},
         react.button({'type': 'button'}, _uniqueName),
       ),
-    );
+    ) as ReactElement;
   }
 
   renderMultipleElsMatchingQuery ??= false;
@@ -72,7 +72,7 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
       {},
       renderEls(uniqueName),
       renderEls('2$uniqueName'),
-    );
+    ) as ReactElement;
   }
 
   return renderEls(uniqueName);
@@ -81,9 +81,9 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
 final DelayedRenderOf = react.registerFunctionComponent(_DelayedRenderOf, displayName: 'DelayedRenderOf');
 
 _DelayedRenderOf(Map props) {
-  final Duration delay = props['delay'] ?? asyncQueryTimeout;
-  void Function() onDidRenderAfterDelay = props['onDidRenderAfterDelay'];
-  final shouldRenderUpdatedChildren = useState(delay.inMilliseconds == 0 ? true : false);
+  final Duration delay = props['delay'] as Duration ?? asyncQueryTimeout;
+  final onDidRenderAfterDelay = props['onDidRenderAfterDelay'] as void Function();
+  final shouldRenderUpdatedChildren = useState(delay == Duration.zero);
 
   useEffect(() {
     final timer = Timer(delay, () {
@@ -97,7 +97,7 @@ _DelayedRenderOf(Map props) {
     if (shouldRenderUpdatedChildren.value) {
       onDidRenderAfterDelay?.call();
     }
-  }, [shouldRenderUpdatedChildren.value]);
+  }, [shouldRenderUpdatedChildren.value, onDidRenderAfterDelay]);
 
   dynamic _renderChildren() {
     if (!shouldRenderUpdatedChildren.value) return props['children'];

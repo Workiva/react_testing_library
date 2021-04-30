@@ -23,6 +23,7 @@ import 'dart:html' show DocumentFragment, Element, Node;
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
+import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:test/test.dart' show addTearDown;
 
@@ -33,7 +34,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// a query function scoped within the [container] that was rendered into.
 ///
 /// By default, the [container] will be removed from the DOM and [RenderResult.unmount] will be called
-/// along with an optional [autoTearDownCallback] in the `tearDown` of any test that calls this
+/// along with an optional [onDidTearDown] in the `tearDown` of any test that calls this
 /// function unless [autoTearDown] is set to false.
 ///
 /// Optionally, you can specify:
@@ -42,44 +43,48 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// This must be a [Element] that exists in the DOM at the time that `render` is called.
 /// * __[wrapper]__, which will be wrapped around the [ui] - which is
 /// especially useful when testing components that need a context provider of some kind.
+/// This should be an OverReact `UiFactory` or a [ReactComponentFactoryProxy].
 ///
 /// > See: <https://testing-library.com/docs/react-testing-library/api#render>
 RenderResult render(
   ReactElement ui, {
   Node container,
-  Element baseElement,
+  Node baseElement,
   bool hydrate = false,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
   /*UiFactory || ReactComponentFactoryProxy*/ wrapper,
   bool autoTearDown = true,
-  Function() autoTearDownCallback,
+  void Function() onDidTearDown,
 }) {
   final renderOptions = RenderOptions()..hydrate = hydrate;
   if (container != null) renderOptions.container = container;
   if (baseElement != null) renderOptions.baseElement = baseElement;
   if (wrapper != null) {
     if (wrapper is ReactComponentFactoryProxy) {
-      ui = wrapper({}, ui);
+      renderOptions.wrapper = wrapper.type;
     } else {
       // Its probably a UiFactory
       try {
-        ui = wrapper()(ui);
+        renderOptions.wrapper = wrapper().componentFactory.type;
       } catch (err) {
-        throw ArgumentError('wrapper must be a ReactComponentFactoryProxy or UiFactory');
+        throw ArgumentError.value(wrapper, 'wrapper', 'wrapper must be a ReactComponentFactoryProxy or UiFactory');
       }
     }
+  }
+  if (!autoTearDown && onDidTearDown != null) {
+    throw ArgumentError('onDidTearDown cannot be set when autoTearDown is false.');
   }
 
   final jsResult = _render(ui, renderOptions);
 
-  addTearDown(() {
-    if (autoTearDown) {
+  if (autoTearDown) {
+    addTearDown(() {
       jsResult.unmount();
       jsResult.container?.remove();
-      autoTearDownCallback?.call();
-    }
-  });
+      onDidTearDown?.call();
+    });
+  }
 
   return RenderResult._(jsResult, ui);
 }
@@ -96,14 +101,14 @@ class RenderResult extends ScopedQueries {
 
   final JsRenderResult _jsRenderResult;
 
-  /// The rendered VDOM instance that was passed to [render] as the first argument.
+  /// The rendered VDOM instance ([ReactElement]) that was passed to [render] as the first argument.
   ReactElement get renderedElement => _renderedElement;
   ReactElement _renderedElement;
 
   /// The containing DOM node of your rendered [ReactElement] _(via [render])_.
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#container-1>
-  Element get container => _jsRenderResult.container;
+  Node get container => _jsRenderResult.container;
 
   /// The containing DOM node where your [ReactElement] is rendered in the [container].
   ///
@@ -113,16 +118,17 @@ class RenderResult extends ScopedQueries {
   /// e.g. when you want to snapshot test your portal component which renders its HTML directly in the body.
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#baseelement-1>
-  Element get baseElement => _jsRenderResult.baseElement;
+  Node get baseElement => _jsRenderResult.baseElement;
 
   /// A shortcut for `console.log(prettyDOM(baseElement))`.
   ///
+  /// > __NOTE: It's recommended to use `screen.debug` instead.__
+  ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([
-    Element baseElement,
+    Node baseElement,
     int maxLength,
-    // TODO: Implement a full interop for this type if consumer usage warrants it
-    /*prettyFormat.OptionsReceived*/ Object options,
+    PrettyDomOptions options,
   ]) =>
       _jsRenderResult.debug(baseElement, maxLength, options);
 
@@ -158,4 +164,4 @@ class RenderResult extends ScopedQueries {
 ///   dependency on `over_react` - but both libraries are fully supported.
 /// {@endtemplate}
 @JS('rtl.render')
-external JsRenderResult _render(ReactElement ui, RenderOptions options);
+external JsRenderResult _render(/*ReactElement*/ dynamic ui, RenderOptions options);

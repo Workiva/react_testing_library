@@ -133,8 +133,8 @@ class MatcherOptions {
   /// See the [JS `TextMatch` Normalization docs](https://testing-library.com/docs/queries/about#normalization)
   /// for more details and examples.
   /// {@endtemplate}
-  external NormalizerFn Function(NormalizerOptions) get normalizer;
-  external set normalizer(NormalizerFn Function(NormalizerOptions) value);
+  external NormalizerFn Function([NormalizerOptions]) get normalizer;
+  external set normalizer(NormalizerFn Function([NormalizerOptions]) value);
 
   /// {@template MatcherOptionsSelectorArgDescription}
   /// ### Selector
@@ -166,14 +166,22 @@ class MatcherOptions {
   external String get _errorMessage; // ignore: unused_element
 }
 
+/// Options to be passed into a custom [NormalizerFn].
 @JS()
 @anonymous
 class NormalizerOptions {
+  /// Whether leading / trailing whitespace will be trimmed.
   external bool get trim;
+
+  /// Whether leading / trailing whitespace should be trimmed.
   external set trim(bool value);
 
+  /// Whether multiple spaces will be collapsed into a single space.
   external bool get collapseWhitespace;
+
+  /// Whether multiple spaces should be collapsed into a single space.
   external set collapseWhitespace(bool value);
 }
 
+/// The function signature for a custom `normalizer` argument in a query.
 typedef NormalizerFn = String Function(String);

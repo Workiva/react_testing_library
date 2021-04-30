@@ -50,7 +50,7 @@ E getByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getByAltText(text, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -79,7 +79,7 @@ List<E> getAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getAllByAltText(text, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -107,7 +107,7 @@ E queryByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryByAltText(text, exact: exact, normalizer: normalizer);
 
@@ -134,7 +134,7 @@ List<E> queryAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryAllByAltText(text, exact: exact, normalizer: normalizer);
 
@@ -173,7 +173,7 @@ Future<E> findByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -224,7 +224,7 @@ Future<List<E>> findAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -268,7 +268,7 @@ E getByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getByDisplayValue<E>(value, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -297,7 +297,7 @@ List<E> getAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getAllByDisplayValue<E>(value, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -325,7 +325,7 @@ E queryByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryByDisplayValue<E>(value, exact: exact, normalizer: normalizer);
 
@@ -352,7 +352,7 @@ List<E> queryAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryAllByDisplayValue<E>(value, exact: exact, normalizer: normalizer);
 
@@ -390,7 +390,7 @@ Future<E> findByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -440,7 +440,7 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -485,7 +485,7 @@ E getByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   String errorMessage,
 }) =>
@@ -517,7 +517,7 @@ List<E> getAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   String errorMessage,
 }) =>
@@ -548,7 +548,7 @@ E queryByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
 }) =>
     within(container).queryByLabelText<E>(text, exact: exact, normalizer: normalizer, selector: selector);
@@ -577,7 +577,7 @@ List<E> queryAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
 }) =>
     within(container).queryAllByLabelText<E>(text, exact: exact, normalizer: normalizer, selector: selector);
@@ -617,7 +617,7 @@ Future<E> findByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   String errorMessage,
   Duration timeout,
@@ -670,7 +670,7 @@ Future<List<E>> findAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   String errorMessage,
   Duration timeout,
@@ -716,7 +716,7 @@ E getByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getByPlaceholderText<E>(text, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -745,7 +745,7 @@ List<E> getAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container)
@@ -774,7 +774,7 @@ E queryByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryByPlaceholderText<E>(text, exact: exact, normalizer: normalizer);
 
@@ -801,7 +801,7 @@ List<E> queryAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryAllByPlaceholderText<E>(text, exact: exact, normalizer: normalizer);
 
@@ -839,7 +839,7 @@ Future<E> findByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -889,7 +889,7 @@ Future<List<E>> findAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -940,7 +940,7 @@ E getByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
@@ -995,7 +995,7 @@ List<E> getAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
@@ -1049,7 +1049,7 @@ E queryByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
   bool selected,
@@ -1102,7 +1102,7 @@ List<E> queryAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
   bool selected,
@@ -1167,7 +1167,7 @@ Future<E> findByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
@@ -1242,7 +1242,7 @@ Future<List<E>> findAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
@@ -1308,7 +1308,7 @@ E getByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getByTestId<E>(testId, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -1343,7 +1343,7 @@ List<E> getAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getAllByTestId<E>(testId, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -1377,7 +1377,7 @@ E queryByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryByTestId<E>(testId, exact: exact, normalizer: normalizer);
 
@@ -1410,7 +1410,7 @@ List<E> queryAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryAllByTestId<E>(testId, exact: exact, normalizer: normalizer);
 
@@ -1454,7 +1454,7 @@ Future<E> findByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -1510,7 +1510,7 @@ Future<List<E>> findAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -1555,7 +1555,7 @@ E getByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   /*String|bool*/ ignore = 'script',
   String errorMessage,
@@ -1588,7 +1588,7 @@ List<E> getAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   /*String|bool*/ ignore = 'script',
   String errorMessage,
@@ -1620,7 +1620,7 @@ E queryByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   /*String|bool*/ ignore = 'script',
 }) =>
@@ -1650,7 +1650,7 @@ List<E> queryAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   /*String|bool*/ ignore = 'script',
 }) =>
@@ -1692,7 +1692,7 @@ Future<E> findByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   /*String|bool*/ ignore = 'script',
   String errorMessage,
@@ -1748,7 +1748,7 @@ Future<List<E>> findAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
   /*String|bool*/ ignore = 'script',
   String errorMessage,
@@ -1796,7 +1796,7 @@ E getByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getByTitle<E>(title, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -1825,7 +1825,7 @@ List<E> getAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
 }) =>
     within(container).getAllByTitle<E>(title, exact: exact, normalizer: normalizer, errorMessage: errorMessage);
@@ -1853,7 +1853,7 @@ E queryByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryByTitle<E>(title, exact: exact, normalizer: normalizer);
 
@@ -1880,7 +1880,7 @@ List<E> queryAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
 }) =>
     within(container).queryAllByTitle<E>(title, exact: exact, normalizer: normalizer);
 
@@ -1918,7 +1918,7 @@ Future<E> findByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,
@@ -1968,7 +1968,7 @@ Future<List<E>> findAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function(NormalizerOptions) normalizer,
+  NormalizerFn Function([NormalizerOptions]) normalizer,
   String errorMessage,
   Duration timeout,
   Duration interval,

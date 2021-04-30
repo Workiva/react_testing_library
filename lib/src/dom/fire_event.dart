@@ -75,8 +75,8 @@ bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
     throw ArgumentError.value(eventName, 'eventName');
   }
 
-  final bool Function(Element, [/*JsObject*/ dynamic]) jsFireEventByNameFn =
-      JsBackedMap.fromJs(_fireEventObj)[eventName];
+  final jsFireEventByNameFn =
+      JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [/*JsObject*/ dynamic]);
 
   if (eventProperties == null) {
     return jsFireEventByNameFn(element);

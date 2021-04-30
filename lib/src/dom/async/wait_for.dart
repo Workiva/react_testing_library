@@ -19,7 +19,7 @@
 library react_testing_library.src.dom.async.wait_for;
 
 import 'dart:async';
-import 'dart:html' show Element, MutationObserver, Node, document;
+import 'dart:html' show MutationObserver, Node, document;
 
 import 'package:js/js.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
@@ -27,8 +27,7 @@ import 'package:test/test.dart';
 
 import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/config/configure.dart' show getConfig;
-import 'package:react_testing_library/src/util/error_message_utils.dart'
-    show TestingLibraryAsyncTimeout, TestingLibraryElementError;
+import 'package:react_testing_library/src/util/error_message_utils.dart' show TestingLibraryElementError;
 export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationObserverOptions;
 
 /// Calls the provided [expectation] on a given [interval] and/or when the [container] DOM changes,
@@ -95,7 +94,7 @@ Future<T> waitFor<T>(
     if (lastError != null) {
       error = lastError;
     } else {
-      error = TestingLibraryAsyncTimeout('Timed out in waitFor after ${timeout.inMilliseconds}ms.');
+      error = TimeoutException('Timed out in waitFor after ${timeout.inMilliseconds}ms.');
     }
     onDone(onTimeout(error), null);
   }
@@ -165,7 +164,7 @@ Future<T> waitFor<T>(
 ///
 /// {@category Async}
 Future<void> waitForElementToBeRemoved(
-  Element Function() callback, {
+  Node Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
@@ -192,7 +191,7 @@ Future<void> waitForElementToBeRemoved(
     interval: interval,
     onTimeout: onTimeout ??
         (error) {
-          return TestingLibraryAsyncTimeout(
+          return TimeoutException(
               'The element returned from the callback was still present in the container after ${timeout.inMilliseconds}ms:\n\n'
               '${prettyDOM(container)}');
         },
@@ -219,7 +218,7 @@ Future<void> waitForElementToBeRemoved(
 ///
 /// {@category Async}
 Future<void> waitForElementsToBeRemoved(
-  List<Element> Function() callback, {
+  List<Node> Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),

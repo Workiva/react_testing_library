@@ -53,12 +53,15 @@ mixin ByPlaceholderTextQueries on IQueries {
   E getByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
           () => _jsGetByPlaceholderText(
-              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer)),
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [text] as the value of the `placeholder` attribute,
@@ -81,14 +84,15 @@ mixin ByPlaceholderTextQueries on IQueries {
   List<E> getAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByPlaceholderText(getContainerForScope(), TextMatch.toJs(text),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByPlaceholderText(
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [text] as the value of the `placeholder` attribute,
@@ -110,10 +114,13 @@ mixin ByPlaceholderTextQueries on IQueries {
   E queryByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByPlaceholderText(
-          getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of elements with the given [text] as the value of the `placeholder` attribute,
   /// defaulting to an [exact] match.
@@ -134,12 +141,13 @@ mixin ByPlaceholderTextQueries on IQueries {
   List<E> queryAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByPlaceholderText(
-              getContainerForScope(), TextMatch.toJs(text), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [text] as the value of the `placeholder` attribute,
   /// defaulting to an [exact] match after waiting `1000ms` (or the specified [timeout] duration).
@@ -170,12 +178,12 @@ mixin ByPlaceholderTextQueries on IQueries {
   Future<E> findByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByPlaceholderText for consistency with our
     // need to use it on the analogous `findAllByPlaceholderText` query.
@@ -223,12 +231,12 @@ mixin ByPlaceholderTextQueries on IQueries {
   Future<List<E>> findAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByPlaceholderText because of the inability
     // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)

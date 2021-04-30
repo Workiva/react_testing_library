@@ -54,14 +54,17 @@ mixin ByTextQueries on IQueries {
   E getByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetByText(getContainerForScope(), TextMatch.toJs(text),
-              buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore)),
+          () => _jsGetByText(
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
@@ -79,20 +82,23 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetAllByText(getContainerForScope(), TextMatch.toJs(text),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByText(
+                getContainerForScope(),
+                TextMatch.toJs(text),
+                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [text] content, defaulting to an [exact] match.
@@ -110,15 +116,20 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   E queryByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryByText(getContainerForScope(), TextMatch.toJs(text),
-          buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore));
+      _jsQueryByText(
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+      ) as E;
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
   ///
@@ -135,17 +146,20 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   List<E> queryAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
-      _jsQueryAllByText(getContainerForScope(), TextMatch.toJs(text),
-              buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+      _jsQueryAllByText(
+        getContainerForScope(),
+        TextMatch.toJs(text),
+        buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [text] content, defaulting to an [exact] match after
   /// waiting 1000ms (or the provided [timeout] duration).
@@ -165,6 +179,8 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
@@ -176,14 +192,14 @@ mixin ByTextQueries on IQueries {
   Future<E> findByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByText for consistency with our
     // need to use it on the analogous `findAllByText` query.
@@ -222,6 +238,8 @@ mixin ByTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
+  /// {@macro MatcherOptionsSelectorArgDescription}
+  /// {@macro MatcherOptionsIgnoreArgDescription}
   /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
@@ -233,14 +251,14 @@ mixin ByTextQueries on IQueries {
   Future<List<E>> findAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByText because of the inability
     // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)

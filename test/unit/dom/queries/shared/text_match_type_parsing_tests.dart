@@ -17,12 +17,13 @@
 import 'dart:html';
 
 import 'package:meta/meta.dart';
+import 'package:react_testing_library/react_testing_library.dart'
+    show NormalizerFn, NormalizerOptions, TestingLibraryElementError, getDefaultNormalizer;
+import 'package:react_testing_library/src/dom/matches/types.dart' show TextMatch;
 import 'package:test/test.dart';
 
-import 'package:react_testing_library/src/dom/matches/types.dart' show TextMatch;
-import 'package:react_testing_library/src/util/error_message_utils.dart';
-
 import '../../../util/constants.dart';
+import '../../../util/enums.dart';
 import '../../../util/matchers.dart';
 import '../../../util/rendering.dart';
 
@@ -54,8 +55,8 @@ String getStringThatFuzzyMatches(String exactValue) => exactValue.substring(2);
 /// If the query does not support `MatcherOptions.exact`, set [textMatchArgSupportsFuzzyMatching] to `false`.
 @isTestGroup
 void testTextMatchTypes<E extends Element>(
-  String queryTypeName, {
-  @required String textMatchArgName,
+  QueryType queryType, {
+  @required TextMatchArgName textMatchArgName,
   @required String queryShouldMatchOn,
   @required String Function() getExpectedPrettyDom,
   Map<String, Function Function({bool renderMultipleElsMatchingQuery})> scopedQueryQueriesByName = const {},
@@ -64,7 +65,7 @@ void testTextMatchTypes<E extends Element>(
   Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelQueryQueriesByName = const {},
   Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelGetQueriesByName = const {},
   Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelFindQueriesByName = const {},
-  Element Function() getContainerForTopLevelQueries,
+  Node Function() getContainerForTopLevelQueries,
   bool textMatchArgSupportsFuzzyMatching = true,
   String failureSnapshotPattern,
 }) {
@@ -102,7 +103,7 @@ void testTextMatchTypes<E extends Element>(
     // When running only a single test, if the query is an async one,
     // RenderResult.container will not be accurate when called - so `expectedPrettyDom` will be null.
     final expectedPrettyDom = getExpectedPrettyDom();
-    final stringPrettyDomMatcher = expectedPrettyDom != null ? endsWith(expectedPrettyDom) : null;
+    final stringPrettyDomMatcher = expectedPrettyDom != null ? contains(expectedPrettyDom) : null;
     return toThrowErrorMatchingInlineSnapshot(containsMatcher, stringPrettyDomMatcher);
   }
 
@@ -138,32 +139,24 @@ void testTextMatchTypes<E extends Element>(
           'snapshotPatternForFailureMatcher must be specified when valueThatShouldCauseFailure is not a String and the failureMatcher argument is not set.');
     }
 
-    Matcher getFailureMatcher(String _snapshotPatternForFailureMatcher) {
-      return queryName.startsWith('query')
-          // queryBy* queries should return null / an empty list in a failure scenario
-          ? getExpectedMatcherForFailedQuery(queryName)
-          // getBy* / findBy* queries should throw in a failure scenario
-          : failureMatcher ?? toThrowErrorMatchingInlineSnapshotPattern(_snapshotPatternForFailureMatcher);
-    }
-
     test('$queryName query', () async {
       String queryFnString;
       final queryFn = queryGetter();
       final container = getContainerForTopLevelQueries?.call();
       dynamic Function() getQueryResult;
 
-      if (queryTypeName != 'Role') {
+      if (queryType != QueryType.Role) {
         getQueryResult = () => containerArgRequired
             ? queryFn(container, valueThatShouldCauseFailure, exact: exact)
             : queryFn(valueThatShouldCauseFailure, exact: exact);
         queryFnString = '$queryName($valueThatShouldCauseFailure, exact: $exact)';
       } else {
-        if (textMatchArgName == 'name') {
+        if (textMatchArgName == TextMatchArgName.name) {
           getQueryResult = () => containerArgRequired
               ? queryFn(container, validRoleInDom, name: valueThatShouldCauseFailure, exact: exact)
               : queryFn(validRoleInDom, name: valueThatShouldCauseFailure, exact: exact);
           queryFnString = '$queryName($validRoleInDom, name: $valueThatShouldCauseFailure, exact: $exact)';
-        } else if (textMatchArgName == 'role') {
+        } else if (textMatchArgName == TextMatchArgName.role) {
           // The ByRole queries return slightly different error messages if the value passed
           // for the role argument is not a valid role at all, so we'll split out the tests here
           // to test both cases:
@@ -189,10 +182,13 @@ void testTextMatchTypes<E extends Element>(
       }
 
       if (queryName.startsWith('query')) {
-        expect(getQueryResult(), getFailureMatcher(snapshotPatternForFailureMatcher),
+        // queryBy* queries should return null / an empty list in a failure scenario
+        expect(getQueryResult(), getExpectedMatcherForFailedQuery(queryName),
             reason: '\nCalling the following query should not have returned any elements:\n\n$queryFnString');
       } else {
-        expect(() async => await getQueryResult(), getFailureMatcher(snapshotPatternForFailureMatcher),
+        // getBy* / findBy* queries should throw in a failure scenario
+        expect(() => getQueryResult(),
+            failureMatcher ?? toThrowErrorMatchingInlineSnapshotPattern(snapshotPatternForFailureMatcher),
             reason: '\nCalling the following query should have thrown:\n\n$queryFnString');
       }
     }, timeout: asyncQueryTestTimeout);
@@ -204,28 +200,40 @@ void testTextMatchTypes<E extends Element>(
     Function Function({bool renderMultipleElsMatchingQuery}) queryGetter, {
     @required T valueThatShouldCauseSuccess,
     bool exact = true,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool containerArgRequired = false,
   }) {
     String queryFnString;
     Function queryFn;
-    Element container;
+    Node container;
     dynamic Function() getQueryResult;
 
     void sharedSetup({bool renderMultipleElsMatchingQuery = false}) {
       queryFn = queryGetter(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
       container = getContainerForTopLevelQueries?.call();
-      if (queryTypeName != 'Role') {
+      if (queryType != QueryType.Role) {
         getQueryResult = () => containerArgRequired
-            ? queryFn(container, valueThatShouldCauseSuccess, exact: exact)
-            : queryFn(valueThatShouldCauseSuccess, exact: exact);
+            ? queryFn(container, valueThatShouldCauseSuccess, exact: exact, normalizer: normalizer)
+            : queryFn(valueThatShouldCauseSuccess, exact: exact, normalizer: normalizer);
         queryFnString = '$queryName($valueThatShouldCauseSuccess, exact: $exact)';
       } else {
-        if (textMatchArgName == 'name') {
+        if (textMatchArgName == TextMatchArgName.name) {
           getQueryResult = () => containerArgRequired
-              ? queryFn(container, validRoleInDom, name: valueThatShouldCauseSuccess, exact: exact)
-              : queryFn(validRoleInDom, name: valueThatShouldCauseSuccess, exact: exact);
+              ? queryFn(
+                  container,
+                  validRoleInDom,
+                  name: valueThatShouldCauseSuccess,
+                  exact: exact,
+                  normalizer: normalizer,
+                )
+              : queryFn(
+                  validRoleInDom,
+                  name: valueThatShouldCauseSuccess,
+                  exact: exact,
+                  normalizer: normalizer,
+                );
           queryFnString = '$queryName($validRoleInDom, name: $valueThatShouldCauseSuccess, exact: $exact)';
-        } else if (textMatchArgName == 'role') {
+        } else if (textMatchArgName == TextMatchArgName.role) {
           dynamic roleValueThatShouldCauseSuccess;
           if (valueThatShouldCauseSuccess is String) {
             roleValueThatShouldCauseSuccess = validRoleInDom;
@@ -236,8 +244,8 @@ void testTextMatchTypes<E extends Element>(
           }
 
           getQueryResult = () => containerArgRequired
-              ? queryFn(container, roleValueThatShouldCauseSuccess, exact: exact)
-              : queryFn(roleValueThatShouldCauseSuccess, exact: exact);
+              ? queryFn(container, roleValueThatShouldCauseSuccess, exact: exact, normalizer: normalizer)
+              : queryFn(roleValueThatShouldCauseSuccess, exact: exact, normalizer: normalizer);
           queryFnString = '$queryName($roleValueThatShouldCauseSuccess, exact: $exact)';
         }
       }
@@ -272,11 +280,11 @@ void testTextMatchTypes<E extends Element>(
         } else {
           test('unless only a single element is expected', () async {
             expect(
-                () async => await getQueryResult(),
+                () => getQueryResult(),
                 throwsA(allOf(
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains('Here are the matching elements')),
-                  hasToStringValue(endsWith(getExpectedPrettyDom())),
+                  hasToStringValue(contains(getExpectedPrettyDom())),
                 )),
                 reason:
                     '\nCalling the following query should have thrown as a result of more than one matching element being found:\n\n$queryFnString');
@@ -344,7 +352,26 @@ void testTextMatchTypes<E extends Element>(
       }
 
       group('and normalizer is customized', () {
-        // TODO
+        group('returning the matching element(s) from the', () {
+          scopedQueriesByName.forEach((queryName, queryGetter) {
+            textMatchShouldSucceedFor(
+              queryName,
+              queryGetter,
+              valueThatShouldCauseSuccess: queryShouldMatchOn,
+              normalizer: getDefaultNormalizer(),
+            );
+          });
+
+          topLevelQueriesByName.forEach((queryName, queryGetter) {
+            textMatchShouldSucceedFor(
+              queryName,
+              queryGetter,
+              valueThatShouldCauseSuccess: queryShouldMatchOn,
+              normalizer: getDefaultNormalizer(),
+              containerArgRequired: true,
+            );
+          });
+        });
       });
 
       group('and errorMessage is customized when a failure is expected for the', () {
@@ -357,13 +384,13 @@ void testTextMatchTypes<E extends Element>(
           test('$queryName query', () async {
             final queryFn = queryGetter();
 
-            if (queryTypeName == 'Role') {
-              if (textMatchArgName == 'role') {
+            if (queryType == QueryType.Role) {
+              if (textMatchArgName == TextMatchArgName.role) {
                 expect(
-                    () async => await queryFn(validRoleNotInDom, errorMessage: 'This is custom'),
+                    () => queryFn(validRoleNotInDom, errorMessage: 'This is custom'),
                     throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                         hasToStringValue(contains('This is custom')))));
-              } else if (textMatchArgName == 'name') {
+              } else if (textMatchArgName == TextMatchArgName.name) {
                 expect(
                     () async =>
                         await queryFn(validRoleInDom, name: queryShouldNotMatchOn, errorMessage: 'This is custom'),
@@ -372,7 +399,7 @@ void testTextMatchTypes<E extends Element>(
               }
             } else {
               expect(
-                  () async => await queryFn(queryShouldNotMatchOn, errorMessage: 'This is custom'),
+                  () => queryFn(queryShouldNotMatchOn, errorMessage: 'This is custom'),
                   throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                       hasToStringValue(contains('This is custom')))));
             }
@@ -384,22 +411,22 @@ void testTextMatchTypes<E extends Element>(
             final queryFn = queryGetter();
             final container = getContainerForTopLevelQueries();
 
-            if (queryTypeName == 'Role') {
-              if (textMatchArgName == 'role') {
+            if (queryType == QueryType.Role) {
+              if (textMatchArgName == TextMatchArgName.role) {
                 expect(
-                    () async => await queryFn(container, validRoleNotInDom, errorMessage: 'This is custom'),
+                    () => queryFn(container, validRoleNotInDom, errorMessage: 'This is custom'),
                     throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                         hasToStringValue(contains('This is custom')))));
-              } else if (textMatchArgName == 'name') {
+              } else if (textMatchArgName == TextMatchArgName.name) {
                 expect(
-                    () async => await queryFn(container, validRoleInDom,
-                        name: queryShouldNotMatchOn, errorMessage: 'This is custom'),
+                    () =>
+                        queryFn(container, validRoleInDom, name: queryShouldNotMatchOn, errorMessage: 'This is custom'),
                     throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                         hasToStringValue(contains('This is custom')))));
               }
             } else {
               expect(
-                  () async => await queryFn(container, queryShouldNotMatchOn, errorMessage: 'This is custom'),
+                  () => queryFn(container, queryShouldNotMatchOn, errorMessage: 'This is custom'),
                   throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
                       hasToStringValue(contains('This is custom')))));
             }

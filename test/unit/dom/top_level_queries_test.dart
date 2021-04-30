@@ -16,10 +16,12 @@
 
 import 'dart:html';
 
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
+import '../util/enums.dart';
 import '../util/init.dart';
 import '../util/matchers.dart';
 import '../util/rendering.dart';
@@ -82,7 +84,7 @@ main() {
 
     group('contains queries that can be scoped to the specified container', () {
       const scopeName = 'top level';
-      Element container;
+      Node container;
       String expectedPrettyDom;
 
       tearDown(() {
@@ -96,7 +98,11 @@ main() {
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-        final els = testAsyncQuery ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
+        final els = testAsyncQuery
+            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+            // ignore: unnecessary_cast
+            ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+            : elsForQuerying;
         final renderResult = rtl.render(els);
         container = renderResult.container;
         expectedPrettyDom = rtl.prettyDOM(container);
@@ -124,8 +130,8 @@ main() {
       }
 
       testTextMatchTypes(
-        'AltText',
-        textMatchArgName: 'text',
+        QueryType.AltText,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
@@ -151,8 +157,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'DisplayValue',
-        textMatchArgName: 'value',
+        QueryType.DisplayValue,
+        textMatchArgName: TextMatchArgName.value,
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
@@ -179,8 +185,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'LabelText',
-        textMatchArgName: 'text',
+        QueryType.LabelText,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
@@ -206,8 +212,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'PlaceholderText',
-        textMatchArgName: 'text',
+        QueryType.PlaceholderText,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
@@ -238,8 +244,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'Role',
-        textMatchArgName: 'role',
+        QueryType.Role,
+        textMatchArgName: TextMatchArgName.role,
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
@@ -266,8 +272,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'Role',
-        textMatchArgName: 'name',
+        QueryType.Role,
+        textMatchArgName: TextMatchArgName.name,
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
@@ -294,8 +300,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'TestId',
-        textMatchArgName: 'testId',
+        QueryType.TestId,
+        textMatchArgName: TextMatchArgName.testId,
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
@@ -321,8 +327,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'Text',
-        textMatchArgName: 'text',
+        QueryType.Text,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: '$scopeName single byText match',
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
@@ -348,8 +354,8 @@ main() {
       );
 
       testTextMatchTypes(
-        'Title',
-        textMatchArgName: 'title',
+        QueryType.Title,
+        textMatchArgName: TextMatchArgName.title,
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {

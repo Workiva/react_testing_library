@@ -25,13 +25,15 @@ import 'package:test/test.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart' show prettyDOM;
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 
+import '../../../util/enums.dart';
 import '../../../util/init.dart';
 import '../../../util/matchers.dart';
 import '../../../util/rendering.dart';
 import 'text_match_type_parsing_tests.dart';
 
 class ScopedQueriesTestWrapper {
-  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult renderResult]) : renderResult = renderResult ?? queries;
+  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult renderResult])
+      : renderResult = renderResult ?? queries as rtl.RenderResult;
 
   final ScopedQueries queries;
   final rtl.RenderResult renderResult;
@@ -139,8 +141,8 @@ void hasQueriesScopedTo(
 
     group('', () {
       testTextMatchTypes(
-        'AltText',
-        textMatchArgName: 'text',
+        QueryType.AltText,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
           'queryByAltText': ({bool renderMultipleElsMatchingQuery}) =>
@@ -167,8 +169,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'DisplayValue',
-        textMatchArgName: 'value',
+        QueryType.DisplayValue,
+        textMatchArgName: TextMatchArgName.value,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
           'queryByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
@@ -196,8 +198,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'LabelText',
-        textMatchArgName: 'text',
+        QueryType.LabelText,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
           'queryByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
@@ -224,8 +226,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'PlaceholderText',
-        textMatchArgName: 'text',
+        QueryType.PlaceholderText,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
           'queryByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
@@ -255,8 +257,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'Role',
-        textMatchArgName: 'role',
+        QueryType.Role,
+        textMatchArgName: TextMatchArgName.role,
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
@@ -284,8 +286,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'Role',
-        textMatchArgName: 'name',
+        QueryType.Role,
+        textMatchArgName: TextMatchArgName.name,
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
@@ -313,8 +315,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'TestId',
-        textMatchArgName: 'testId',
+        QueryType.TestId,
+        textMatchArgName: TextMatchArgName.testId,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
           'queryByTestId': ({bool renderMultipleElsMatchingQuery}) =>
@@ -341,8 +343,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'Text',
-        textMatchArgName: 'text',
+        QueryType.Text,
+        textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: '$scopeName single byText match',
         scopedQueryQueriesByName: {
           'queryByText': ({bool renderMultipleElsMatchingQuery}) =>
@@ -369,8 +371,8 @@ void hasQueriesScopedTo(
       );
 
       testTextMatchTypes(
-        'Title',
-        textMatchArgName: 'title',
+        QueryType.Title,
+        textMatchArgName: TextMatchArgName.title,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
           'queryByTitle': ({bool renderMultipleElsMatchingQuery}) =>
@@ -400,6 +402,7 @@ void hasQueriesScopedTo(
     test('limiting the scope of the query as expected', () {
       final outOfScopeElement = DivElement()..text = 'out-of-scope';
       document.body.append(outOfScopeElement);
+      addTearDown(outOfScopeElement.remove);
 
       queries = renderAndGetQueries();
       if (queries.getContainerForScope() != document.body) {
@@ -409,8 +412,6 @@ void hasQueriesScopedTo(
         expect(queries.queryByText('out-of-scope'), isNotNull,
             reason: 'The screen query should return elements that are found within the document.');
       }
-
-      outOfScopeElement.remove();
     });
   });
 }

@@ -63,7 +63,7 @@ mixin ByTestIdQueries on IQueries {
   E getByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -71,7 +71,7 @@ mixin ByTestIdQueries on IQueries {
                 getContainerForScope(),
                 TextMatch.toJs(testId),
                 buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
@@ -100,14 +100,15 @@ mixin ByTestIdQueries on IQueries {
   List<E> getAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTestId(getContainerForScope(), TextMatch.toJs(testId),
-                  buildMatcherOptions(exact: exact, normalizer: normalizer))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+          () => _jsGetAllByTestId(
+                getContainerForScope(),
+                TextMatch.toJs(testId),
+                buildMatcherOptions(exact: exact, normalizer: normalizer),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
@@ -135,10 +136,13 @@ mixin ByTestIdQueries on IQueries {
   E queryByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByTestId(
-          getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer));
+        getContainerForScope(),
+        TextMatch.toJs(testId),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E;
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -165,12 +169,13 @@ mixin ByTestIdQueries on IQueries {
   List<E> queryAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByTestId(
-              getContainerForScope(), TextMatch.toJs(testId), buildMatcherOptions(exact: exact, normalizer: normalizer))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(testId),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
@@ -207,12 +212,12 @@ mixin ByTestIdQueries on IQueries {
   Future<E> findByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByTestId for consistency with our
     // need to use it on the analogous `findAllByTestId` query.
@@ -266,12 +271,12 @@ mixin ByTestIdQueries on IQueries {
   Future<List<E>> findAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTestId because of the inability
     // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)

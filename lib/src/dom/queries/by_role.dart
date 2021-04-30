@@ -38,7 +38,7 @@ mixin ByRoleQueries on IQueries {
   @protected
   ByRoleOptions buildByRoleOptions({
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -90,7 +90,7 @@ mixin ByRoleQueries on IQueries {
   E getByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -103,9 +103,9 @@ mixin ByRoleQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetByRole(
-              getContainerForScope(),
-              TextMatch.toJs(role),
-              buildByRoleOptions(
+                getContainerForScope(),
+                TextMatch.toJs(role),
+                buildByRoleOptions(
                   exact: exact,
                   normalizer: normalizer,
                   hidden: hidden,
@@ -115,7 +115,9 @@ mixin ByRoleQueries on IQueries {
                   pressed: pressed,
                   expanded: expanded,
                   queryFallbacks: queryFallbacks,
-                  level: level)),
+                  level: level,
+                ),
+              ) as E,
           errorMessage: errorMessage);
 
   /// Returns a list of elements with the given [role] value, defaulting to an [exact] match.
@@ -145,7 +147,7 @@ mixin ByRoleQueries on IQueries {
   List<E> getAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -158,21 +160,21 @@ mixin ByRoleQueries on IQueries {
   }) =>
       withErrorInterop(
           () => _jsGetAllByRole(
-                  getContainerForScope(),
-                  TextMatch.toJs(role),
-                  buildByRoleOptions(
-                      exact: exact,
-                      normalizer: normalizer,
-                      hidden: hidden,
-                      name: name,
-                      selected: selected,
-                      checked: checked,
-                      pressed: pressed,
-                      expanded: expanded,
-                      queryFallbacks: queryFallbacks,
-                      level: level))
-              // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-              .cast<E>(),
+                getContainerForScope(),
+                TextMatch.toJs(role),
+                buildByRoleOptions(
+                  exact: exact,
+                  normalizer: normalizer,
+                  hidden: hidden,
+                  name: name,
+                  selected: selected,
+                  checked: checked,
+                  pressed: pressed,
+                  expanded: expanded,
+                  queryFallbacks: queryFallbacks,
+                  level: level,
+                ),
+              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
           errorMessage: errorMessage);
 
   /// Returns a single element with the given [role] value, defaulting to an [exact] match.
@@ -201,7 +203,7 @@ mixin ByRoleQueries on IQueries {
   E queryByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -212,19 +214,21 @@ mixin ByRoleQueries on IQueries {
     int level,
   }) =>
       _jsQueryByRole(
-          getContainerForScope(),
-          TextMatch.toJs(role),
-          buildByRoleOptions(
-              exact: exact,
-              normalizer: normalizer,
-              hidden: hidden,
-              name: name,
-              selected: selected,
-              checked: checked,
-              pressed: pressed,
-              expanded: expanded,
-              queryFallbacks: queryFallbacks,
-              level: level));
+        getContainerForScope(),
+        TextMatch.toJs(role),
+        buildByRoleOptions(
+          exact: exact,
+          normalizer: normalizer,
+          hidden: hidden,
+          name: name,
+          selected: selected,
+          checked: checked,
+          pressed: pressed,
+          expanded: expanded,
+          queryFallbacks: queryFallbacks,
+          level: level,
+        ),
+      ) as E;
 
   /// Returns a list of elements with the given [role] value, defaulting to an [exact] match.
   ///
@@ -253,7 +257,7 @@ mixin ByRoleQueries on IQueries {
   List<E> queryAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -264,21 +268,21 @@ mixin ByRoleQueries on IQueries {
     int level,
   }) =>
       _jsQueryAllByRole(
-              getContainerForScope(),
-              TextMatch.toJs(role),
-              buildByRoleOptions(
-                  exact: exact,
-                  normalizer: normalizer,
-                  hidden: hidden,
-                  name: name,
-                  selected: selected,
-                  checked: checked,
-                  pressed: pressed,
-                  expanded: expanded,
-                  queryFallbacks: queryFallbacks,
-                  level: level))
-          // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          .cast<E>();
+        getContainerForScope(),
+        TextMatch.toJs(role),
+        buildByRoleOptions(
+          exact: exact,
+          normalizer: normalizer,
+          hidden: hidden,
+          name: name,
+          selected: selected,
+          checked: checked,
+          pressed: pressed,
+          expanded: expanded,
+          queryFallbacks: queryFallbacks,
+          level: level,
+        ),
+      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
   /// Returns a future with a single element value with the given [role] value, defaulting to an [exact] match after
   /// waiting 1000ms (or the provided [timeout] duration).
@@ -318,7 +322,7 @@ mixin ByRoleQueries on IQueries {
   Future<E> findByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -331,7 +335,7 @@ mixin ByRoleQueries on IQueries {
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByRole because of some weirdness with
     // the wrong error message being displayed when the role is found, but the name arg is specified and it isn't found in the DOM.
@@ -396,7 +400,7 @@ mixin ByRoleQueries on IQueries {
   Future<List<E>> findAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -409,7 +413,7 @@ mixin ByRoleQueries on IQueries {
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByRole because of the inability
     // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676),
@@ -477,8 +481,8 @@ class ByRoleOptions {
   external bool get exact;
   external set exact(bool value);
 
-  external NormalizerFn Function(NormalizerOptions) get normalizer;
-  external set normalizer(NormalizerFn Function(NormalizerOptions) value);
+  external NormalizerFn Function([NormalizerOptions]) get normalizer;
+  external set normalizer(NormalizerFn Function([NormalizerOptions]) value);
 
   /// {@template byRoleOptionsName}
   /// You can also query the returned element(s) by their [accessible name](https://www.w3.org/TR/accname-1.1/)
