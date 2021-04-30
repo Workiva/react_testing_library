@@ -339,7 +339,7 @@ void hasQueriesScopedTo(
                   .findAllByTestId,
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
-        failureSnapshotPattern: 'an element by: [data-test-id="$valueNotFoundPlaceholder"]',
+        failureSnapshotPattern: 'an element by: [data-test-id="$valueNotFoundPlaceholder"',
       );
 
       testTextMatchTypes(

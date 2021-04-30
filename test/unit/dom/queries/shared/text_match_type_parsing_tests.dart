@@ -104,7 +104,8 @@ void testTextMatchTypes<E extends Element>(
     // RenderResult.container will not be accurate when called - so `expectedPrettyDom` will be null.
     final expectedPrettyDom = getExpectedPrettyDom();
     final stringPrettyDomMatcher = expectedPrettyDom != null ? contains(expectedPrettyDom) : null;
-    return toThrowErrorMatchingInlineSnapshot(containsMatcher, stringPrettyDomMatcher);
+    return toThrowErrorMatchingInlineSnapshot(
+        containsMatcher, stringPrettyDomMatcher, isNot(contains('return dart.dcall')));
   }
 
   Matcher getExpectedMatcherForFailedQuery(String queryName) {

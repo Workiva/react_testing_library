@@ -63,6 +63,20 @@ abstract class TextMatch {
     return value;
   }
 
+  /// Returns a function to be used as the value of `JsConfig.getElementError` that ensures the user does
+  /// not see the portion of the [originalMessage] that obfuscates the `TextMatch` argument value they provided
+  /// when a query failure occurs in a unit test.
+  ///
+  /// In other words, it ensures that a user never sees a failure message of the form:
+  ///
+  /// ```
+  /// TestingLibraryElementError: Unable to find an element with the <some_attribute_name>: function(...args) {
+  ///   return dart.dcall(f, args);
+  /// }
+  /// ```
+  ///
+  /// And instead, they see the [newValue] provided - which should contain a more helpful message that includes
+  /// the value they provided as the `TextMatch` argument.
   static Object Function(Object originalMessage, Element container) _replaceDartInteropFunctionStringWith(
       Object newValue) {
     final dartInteropFunctionValueRegex = RegExp(r'([\"`]*)(function[\s\S]+})([\"`]*)(.*)([\s\S]+)*', multiLine: true);
@@ -71,18 +85,19 @@ abstract class TextMatch {
       var newMessage = originalMessage.toString().replaceAllMapped(dartInteropFunctionValueRegex, (match) {
         final optionalOpeningQuoteOrBacktick = match.group(1);
         final optionalClosingQuoteOrBacktick = match.group(3);
-        final restOfMessageBeforePrettyDomOrAccessibleRolesPrintout = match.group(4);
         final newValueLines = newValue.toString().split('\n');
-        // Split out the first line of the new message so we can add
-        // the `restOfMessageBeforePrettyDomOrAccessibleRolesPrintout` after it before any optional newlines are added
-        final newValueFirstLine = newValueLines.first;
-        final newValueRestOfLines = newValueLines..removeAt(0);
-        var returnValue =
-            '$newValueFirstLine$restOfMessageBeforePrettyDomOrAccessibleRolesPrintout${newValueRestOfLines.join('\n')}';
+        var restOfMessageBeforePrettyDomOrAccessibleRolesPrintout = match.group(4);
+        if (newValueLines.length > 1) {
+          // Prevent the first sentence after the multiline function signature from starting with "  . ".
+          restOfMessageBeforePrettyDomOrAccessibleRolesPrintout =
+              restOfMessageBeforePrettyDomOrAccessibleRolesPrintout.replaceFirst(RegExp(r'^\s*\.*\s*'), '');
+        }
+        var returnValue = '${newValueLines.join('\n')}$restOfMessageBeforePrettyDomOrAccessibleRolesPrintout';
         if (optionalOpeningQuoteOrBacktick.isNotEmpty || optionalClosingQuoteOrBacktick.isNotEmpty) {
-          // Restore quotes around the first line of the new value if they were previously found around
-          // the `function...` portion of the original message.
-          returnValue = returnValue.replaceFirst(newValueFirstLine, '"$newValueFirstLine"');
+          // Restore quotes around the function/regexp portion of the new value if they were previously found around
+          // the `function...` dart interop portion of the original message.
+          returnValue = returnValue.replaceAllMapped(
+              RegExp(r'((Closure.*(?=\n)|RegExp.*\/(?=(\.|\n)*)))'), (match) => '"${match.group(1)}"');
         }
         return returnValue;
       });

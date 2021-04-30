@@ -14,8 +14,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:react_testing_library/src/dom/matches/types.dart' show TextMatch;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
+
+import 'string_trimming.dart';
 
 class _HasToStringValue extends CustomMatcher {
   _HasToStringValue(matcher) : super('Object with toString() value', 'toString()', matcher);
@@ -68,5 +71,40 @@ Matcher buildContainsPatternUsing(String templatePattern, String expectedValueTh
         'The buildContainsPatternUsing matcher should only be used if the first argument contains `valueNotFoundPlaceholder`');
   }
 
-  return contains(templatePattern.replaceAll(valueNotFoundPlaceholder, expectedValueThatWasNotFound));
+  if (expectedValueThatWasNotFound == TextMatch.functionValueErrorMessage &&
+      templatePattern.contains('"$valueNotFoundPlaceholder"')) {
+    return contains(templatePattern.replaceAll('"$valueNotFoundPlaceholder"', expectedValueThatWasNotFound));
+  } else {
+    return contains(templatePattern.replaceAll(valueNotFoundPlaceholder, expectedValueThatWasNotFound));
+  }
+}
+
+Matcher containsMultilineString(String expected) => _ContainsMultilineString(expected);
+
+class _ContainsMultilineString extends Matcher {
+  final String _expected;
+
+  _ContainsMultilineString(String expected) : _expected = expected.trimEachLine();
+
+  @override
+  bool matches(item, Map matchState) {
+    var expected = _expected;
+    if (item is String) {
+      return item.trimEachLine().contains(expected);
+    }
+
+    return false;
+  }
+
+  @override
+  Description describe(Description description) => description.add('contains ').addDescriptionOf(_expected);
+
+  @override
+  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is String) {
+      return super.describeMismatch(item, mismatchDescription, matchState, verbose);
+    } else {
+      return mismatchDescription.add('is not a string');
+    }
+  }
 }
