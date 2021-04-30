@@ -17,10 +17,10 @@
 import 'dart:html';
 
 import 'package:meta/meta.dart';
-import 'package:test/test.dart';
-
+import 'package:react_testing_library/react_testing_library.dart'
+    show NormalizerFn, NormalizerOptions, TestingLibraryElementError, getDefaultNormalizer;
 import 'package:react_testing_library/src/dom/matches/types.dart' show TextMatch;
-import 'package:react_testing_library/src/util/error_message_utils.dart';
+import 'package:test/test.dart';
 
 import '../../../util/constants.dart';
 import '../../../util/enums.dart';
@@ -200,6 +200,7 @@ void testTextMatchTypes<E extends Element>(
     Function Function({bool renderMultipleElsMatchingQuery}) queryGetter, {
     @required T valueThatShouldCauseSuccess,
     bool exact = true,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool containerArgRequired = false,
   }) {
     String queryFnString;
@@ -212,14 +213,25 @@ void testTextMatchTypes<E extends Element>(
       container = getContainerForTopLevelQueries?.call();
       if (queryType != QueryType.Role) {
         getQueryResult = () => containerArgRequired
-            ? queryFn(container, valueThatShouldCauseSuccess, exact: exact)
-            : queryFn(valueThatShouldCauseSuccess, exact: exact);
+            ? queryFn(container, valueThatShouldCauseSuccess, exact: exact, normalizer: normalizer)
+            : queryFn(valueThatShouldCauseSuccess, exact: exact, normalizer: normalizer);
         queryFnString = '$queryName($valueThatShouldCauseSuccess, exact: $exact)';
       } else {
         if (textMatchArgName == TextMatchArgName.name) {
           getQueryResult = () => containerArgRequired
-              ? queryFn(container, validRoleInDom, name: valueThatShouldCauseSuccess, exact: exact)
-              : queryFn(validRoleInDom, name: valueThatShouldCauseSuccess, exact: exact);
+              ? queryFn(
+                  container,
+                  validRoleInDom,
+                  name: valueThatShouldCauseSuccess,
+                  exact: exact,
+                  normalizer: normalizer,
+                )
+              : queryFn(
+                  validRoleInDom,
+                  name: valueThatShouldCauseSuccess,
+                  exact: exact,
+                  normalizer: normalizer,
+                );
           queryFnString = '$queryName($validRoleInDom, name: $valueThatShouldCauseSuccess, exact: $exact)';
         } else if (textMatchArgName == TextMatchArgName.role) {
           dynamic roleValueThatShouldCauseSuccess;
@@ -232,8 +244,8 @@ void testTextMatchTypes<E extends Element>(
           }
 
           getQueryResult = () => containerArgRequired
-              ? queryFn(container, roleValueThatShouldCauseSuccess, exact: exact)
-              : queryFn(roleValueThatShouldCauseSuccess, exact: exact);
+              ? queryFn(container, roleValueThatShouldCauseSuccess, exact: exact, normalizer: normalizer)
+              : queryFn(roleValueThatShouldCauseSuccess, exact: exact, normalizer: normalizer);
           queryFnString = '$queryName($roleValueThatShouldCauseSuccess, exact: $exact)';
         }
       }
@@ -340,7 +352,26 @@ void testTextMatchTypes<E extends Element>(
       }
 
       group('and normalizer is customized', () {
-        // TODO: Create standalone tests for this for each query type since a shared test will be too convoluted here
+        group('returning the matching element(s) from the', () {
+          scopedQueriesByName.forEach((queryName, queryGetter) {
+            textMatchShouldSucceedFor(
+              queryName,
+              queryGetter,
+              valueThatShouldCauseSuccess: queryShouldMatchOn,
+              normalizer: getDefaultNormalizer(),
+            );
+          });
+
+          topLevelQueriesByName.forEach((queryName, queryGetter) {
+            textMatchShouldSucceedFor(
+              queryName,
+              queryGetter,
+              valueThatShouldCauseSuccess: queryShouldMatchOn,
+              normalizer: getDefaultNormalizer(),
+              containerArgRequired: true,
+            );
+          });
+        });
       });
 
       group('and errorMessage is customized when a failure is expected for the', () {

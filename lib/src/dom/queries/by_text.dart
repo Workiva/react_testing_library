@@ -54,7 +54,7 @@ mixin ByTextQueries on IQueries {
   E getByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
@@ -88,7 +88,7 @@ mixin ByTextQueries on IQueries {
   List<E> getAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
@@ -121,7 +121,7 @@ mixin ByTextQueries on IQueries {
   E queryByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
@@ -151,7 +151,7 @@ mixin ByTextQueries on IQueries {
   List<E> queryAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
@@ -192,7 +192,7 @@ mixin ByTextQueries on IQueries {
   Future<E> findByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
@@ -251,7 +251,7 @@ mixin ByTextQueries on IQueries {
   Future<List<E>> findAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',

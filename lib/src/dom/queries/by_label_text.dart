@@ -54,7 +54,7 @@ mixin ByLabelTextQueries on IQueries {
   E getByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     String errorMessage,
   }) =>
@@ -87,7 +87,7 @@ mixin ByLabelTextQueries on IQueries {
   List<E> getAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     String errorMessage,
   }) =>
@@ -119,7 +119,7 @@ mixin ByLabelTextQueries on IQueries {
   E queryByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
   }) =>
       _jsQueryByLabelText(
@@ -148,7 +148,7 @@ mixin ByLabelTextQueries on IQueries {
   List<E> queryAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
   }) =>
       _jsQueryAllByLabelText(
@@ -187,7 +187,7 @@ mixin ByLabelTextQueries on IQueries {
   Future<E> findByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     String errorMessage,
     Duration timeout,
@@ -243,7 +243,7 @@ mixin ByLabelTextQueries on IQueries {
   Future<List<E>> findAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     String errorMessage,
     Duration timeout,

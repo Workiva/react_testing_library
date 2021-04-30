@@ -51,7 +51,7 @@ mixin ByDisplayValueQueries on IQueries {
   E getByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -82,7 +82,7 @@ mixin ByDisplayValueQueries on IQueries {
   List<E> getAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -112,7 +112,7 @@ mixin ByDisplayValueQueries on IQueries {
   E queryByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByDisplayValue(
         getContainerForScope(),
@@ -139,7 +139,7 @@ mixin ByDisplayValueQueries on IQueries {
   List<E> queryAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByDisplayValue(
         getContainerForScope(),
@@ -176,7 +176,7 @@ mixin ByDisplayValueQueries on IQueries {
   Future<E> findByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
@@ -229,7 +229,7 @@ mixin ByDisplayValueQueries on IQueries {
   Future<List<E>> findAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,

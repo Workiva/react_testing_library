@@ -53,7 +53,7 @@ mixin ByAltTextQueries on IQueries {
   E getByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -84,7 +84,7 @@ mixin ByAltTextQueries on IQueries {
   List<E> getAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -114,7 +114,7 @@ mixin ByAltTextQueries on IQueries {
   E queryByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByAltText(
         getContainerForScope(),
@@ -141,7 +141,7 @@ mixin ByAltTextQueries on IQueries {
   List<E> queryAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByAltText(
         getContainerForScope(),
@@ -179,7 +179,7 @@ mixin ByAltTextQueries on IQueries {
   Future<E> findByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
@@ -233,7 +233,7 @@ mixin ByAltTextQueries on IQueries {
   Future<List<E>> findAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,

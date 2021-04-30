@@ -22,15 +22,15 @@ import 'package:js/js.dart';
 import 'package:react_testing_library/src/dom/matches/types.dart';
 
 /// The default "normalizer" used to normalize the string query value provided
-/// to a query by [trim]ming whitespace from the start and end of text, and collapsing
-/// multiple adjacent whitespace characters into a single space ([collapseWhitespace]).
+/// to a query by trimming whitespace from the start and end of text, and collapsing
+/// multiple adjacent whitespace characters into a single space.
 ///
 /// > See: <https://testing-library.com/docs/queries/about#normalization>
-NormalizerFn getDefaultNormalizer({bool trim = true, bool collapseWhitespace = true}) {
+NormalizerFn Function([NormalizerOptions]) getDefaultNormalizer([NormalizerOptions options]) {
   return _jsGetDefaultNormalizer(NormalizerOptions()
-    ..trim = trim
-    ..collapseWhitespace = collapseWhitespace);
+    ..trim = options?.trim ?? true
+    ..collapseWhitespace = options?.collapseWhitespace ?? true);
 }
 
 @JS('rtl.getDefaultNormalizer')
-external NormalizerFn _jsGetDefaultNormalizer(NormalizerOptions options);
+external NormalizerFn Function([NormalizerOptions]) _jsGetDefaultNormalizer([NormalizerOptions options]);

@@ -38,7 +38,7 @@ mixin ByRoleQueries on IQueries {
   @protected
   ByRoleOptions buildByRoleOptions({
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -90,7 +90,7 @@ mixin ByRoleQueries on IQueries {
   E getByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -147,7 +147,7 @@ mixin ByRoleQueries on IQueries {
   List<E> getAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -203,7 +203,7 @@ mixin ByRoleQueries on IQueries {
   E queryByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -257,7 +257,7 @@ mixin ByRoleQueries on IQueries {
   List<E> queryAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -322,7 +322,7 @@ mixin ByRoleQueries on IQueries {
   Future<E> findByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -400,7 +400,7 @@ mixin ByRoleQueries on IQueries {
   Future<List<E>> findAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
@@ -481,8 +481,8 @@ class ByRoleOptions {
   external bool get exact;
   external set exact(bool value);
 
-  external NormalizerFn Function(NormalizerOptions) get normalizer;
-  external set normalizer(NormalizerFn Function(NormalizerOptions) value);
+  external NormalizerFn Function([NormalizerOptions]) get normalizer;
+  external set normalizer(NormalizerFn Function([NormalizerOptions]) value);
 
   /// {@template byRoleOptionsName}
   /// You can also query the returned element(s) by their [accessible name](https://www.w3.org/TR/accname-1.1/)

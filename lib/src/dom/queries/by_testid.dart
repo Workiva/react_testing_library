@@ -63,7 +63,7 @@ mixin ByTestIdQueries on IQueries {
   E getByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -100,7 +100,7 @@ mixin ByTestIdQueries on IQueries {
   List<E> getAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -136,7 +136,7 @@ mixin ByTestIdQueries on IQueries {
   E queryByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByTestId(
         getContainerForScope(),
@@ -169,7 +169,7 @@ mixin ByTestIdQueries on IQueries {
   List<E> queryAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByTestId(
         getContainerForScope(),
@@ -212,7 +212,7 @@ mixin ByTestIdQueries on IQueries {
   Future<E> findByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
@@ -271,7 +271,7 @@ mixin ByTestIdQueries on IQueries {
   Future<List<E>> findAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,

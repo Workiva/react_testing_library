@@ -31,7 +31,7 @@ abstract class IQueries {
   @protected
   MatcherOptions buildMatcherOptions({
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) {

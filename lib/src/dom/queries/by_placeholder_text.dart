@@ -53,7 +53,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   E getByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -84,7 +84,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   List<E> getAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -114,7 +114,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   E queryByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByPlaceholderText(
         getContainerForScope(),
@@ -141,7 +141,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   List<E> queryAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByPlaceholderText(
         getContainerForScope(),
@@ -178,7 +178,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   Future<E> findByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
@@ -231,7 +231,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   Future<List<E>> findAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,

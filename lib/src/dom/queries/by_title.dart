@@ -53,7 +53,7 @@ mixin ByTitleQueries on IQueries {
   E getByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -84,7 +84,7 @@ mixin ByTitleQueries on IQueries {
   List<E> getAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
   }) =>
       withErrorInterop(
@@ -114,7 +114,7 @@ mixin ByTitleQueries on IQueries {
   E queryByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryByTitle(
         getContainerForScope(),
@@ -141,7 +141,7 @@ mixin ByTitleQueries on IQueries {
   List<E> queryAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
   }) =>
       _jsQueryAllByTitle(
         getContainerForScope(),
@@ -178,7 +178,7 @@ mixin ByTitleQueries on IQueries {
   Future<E> findByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
@@ -231,7 +231,7 @@ mixin ByTitleQueries on IQueries {
   Future<List<E>> findAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function(NormalizerOptions) normalizer,
+    NormalizerFn Function([NormalizerOptions]) normalizer,
     String errorMessage,
     Duration timeout,
     Duration interval,
