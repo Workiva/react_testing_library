@@ -82,12 +82,13 @@ class _IsDisabled extends Matcher {
   }
 
   bool isElementThatCanBeDisabled(item, Map matchState) =>
-      item != null && matchState['isElement'] && matchState['canBeDisabled'];
+      item != null && matchState['isElement'] as bool && matchState['canBeDisabled'] as bool;
 
   bool isElementDisabled(item, Map matchState) {
+    if (!isElementThatCanBeDisabled(item, matchState)) return false;
     final formAncestor = (item as Element).closest('form');
     if (formAncestor != null && (formAncestor as FormElement).hasAttribute('disabled')) return true;
-    return item.disabled;
+    return item.disabled as bool;
   }
 
   void setMatchState(item, Map matchState) {

@@ -96,7 +96,7 @@ class _HasStyles extends CustomMatcher {
   featureValueOf(item) {
     Element element;
     try {
-      element = item;
+      element = item as Element;
     } catch (_) {
       // If its not an element, the mismatch description will say so.
       return null;
@@ -136,7 +136,7 @@ class _HasStyles extends CustomMatcher {
         styleMap[propertyName] = value.replaceAll(';', '');
       });
     } else if (styles is Map) {
-      styleMap = styles;
+      styleMap = styles.cast<String, dynamic>();
     } else {
       throw ArgumentError.value(styles, 'styles', 'Must be a String or a Map');
     }
@@ -161,7 +161,7 @@ class _HasStyles extends CustomMatcher {
     });
 
     if (normalizedValue is String) {
-      normalizedValue = num.tryParse(normalizedValue) ?? normalizedValue;
+      normalizedValue = num.tryParse(normalizedValue as String) ?? normalizedValue;
     }
 
     return normalizedValue;
