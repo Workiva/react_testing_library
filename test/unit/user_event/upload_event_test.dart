@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -46,17 +47,17 @@ main() {
             'id': 'file-uploader',
             'type': 'file',
             'onClick': (react.SyntheticMouseEvent e) {
-              clickEventCalls.add(e.nativeEvent);
+              clickEventCalls.add(e.nativeEvent as MouseEvent);
             },
             'onChange': (react.SyntheticFormEvent e) {
-              changeEventCalls.add(e.nativeEvent);
+              changeEventCalls.add(e.nativeEvent as Event);
             },
             'multiple': isMultiple,
             'accept': '.png,.jpeg',
           }),
         ]);
 
-        final renderedResult = rtl.render(elementToRender);
+        final renderedResult = rtl.render(elementToRender as ReactElement);
         input = renderedResult.getByLabelText('Upload file:');
         label = renderedResult.getByText('Upload file:');
         expect(input.files, hasLength(0), reason: 'sanity check');

@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
 import 'package:test/test.dart';
@@ -42,7 +43,7 @@ main() {
           calls.add(
               '${input.selectionStart} ${input.selectionEnd} ${event.key} ${input.value}');
         },
-      }));
+      }) as ReactElement);
 
       input = rtl.screen.getByRole('textbox');
       // expect(textbox, hasValue(''), reason: 'sanity check');

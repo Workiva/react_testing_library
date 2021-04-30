@@ -30,12 +30,12 @@ dynamic _jsifyEventData(Map eventData) =>
     jsifyAndAllowInterop(eventData ?? const {});
 
 // Converts a JsMap FileList to a List<File>.
-List<File> _unjsifyFileList(dynamic fileList) {
+List<File> _unjsifyFileList(List<File> fileList) {
   if (fileList is! JsMap) return fileList;
   final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
   final convertedFiles = <File>[];
-  for (int i = 0; i < jsFileList['length']; i++) {
-    convertedFiles.add(jsFileList['item'](i));
+  for (int i = 0; i < (jsFileList['length'] as int); i++) {
+    convertedFiles.add(jsFileList['item'](i) as File);
   }
   return convertedFiles;
 }
@@ -325,4 +325,4 @@ class UserEvent {
 }
 
 @JS('rtl.userEvent')
-external get _userEvent;
+external JsMap get _userEvent;

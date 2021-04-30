@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -34,14 +35,14 @@ main() {
           renderedResult = rtl.render(react.select({
             'id': 'root',
             'onClick': (react.SyntheticMouseEvent event) {
-              calls.add(event.nativeEvent);
+              calls.add(event.nativeEvent as MouseEvent);
             },
             'multiple': isMultiSelect,
           }, [
             react.option({'value': '1'}, 'A'),
             react.option({'value': '2'}, 'B'),
             react.option({'value': '3'}, 'C'),
-          ]));
+          ]) as ReactElement);
 
           select =
               renderedResult.getByRole(isMultiSelect ? 'listbox' : 'combobox');
@@ -120,14 +121,14 @@ main() {
         renderedResult = rtl.render(react.select({
           'id': 'root',
           'onClick': (react.SyntheticMouseEvent event) {
-            calls.add(event.nativeEvent);
+            calls.add(event.nativeEvent as MouseEvent);
           },
           'multiple': true,
         }, [
           react.option({'value': '1', 'selected': true}, 'A'),
           react.option({'value': '2', 'selected': true}, 'B'),
           react.option({'value': '3', 'selected': true}, 'C'),
-        ]));
+        ]) as ReactElement);
 
         select = renderedResult.getByRole('listbox');
 

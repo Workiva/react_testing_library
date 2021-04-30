@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
@@ -26,7 +27,7 @@ main() {
     test('on an InputElement', () {
       final renderedResult = rtl.render(react.input({
         'defaultValue': 'Hello, World!',
-      }));
+      }) as ReactElement);
       final input = renderedResult.getByRole('textbox') as InputElement;
       rtl.UserEvent.clear(input);
       expect(input, hasValue(''));
@@ -35,7 +36,7 @@ main() {
     test('on an TextAreaElement', () {
       final renderedResult = rtl.render(react.textarea({
         'defaultValue': 'Hello, World!',
-      }));
+      }) as ReactElement);
       final textarea = renderedResult.getByRole('textbox') as TextAreaElement;
       expect(textarea, hasValue('Hello, World!'), reason: 'sanity check');
       rtl.UserEvent.clear(textarea);

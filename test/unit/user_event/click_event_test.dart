@@ -17,6 +17,7 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -33,13 +34,13 @@ main() {
       final elementToRender = react.button({
         'id': 'root',
         'onClick': (react.SyntheticMouseEvent event) {
-          calls.add(event.nativeEvent);
+          calls.add(event.nativeEvent as MouseEvent);
         },
         // Count mouseover events to find out how many hover events occur.
         'onMouseOver': (_) => hoverEventCount++,
       }, 'oh hai');
 
-      renderedResult = rtl.render(elementToRender);
+      renderedResult = rtl.render(elementToRender as ReactElement);
     });
 
     group('UserEvent.click', () {
