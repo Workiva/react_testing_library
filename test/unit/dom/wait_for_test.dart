@@ -38,6 +38,8 @@ main() {
     group('waitFor()', () {
       setUp(() {
         renderResult =
+            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+            // ignore: unnecessary_cast
             rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}) as ReactElement);
         rootElement = renderResult.getByTestId('delayed-render-of-root');
       });
@@ -135,6 +137,8 @@ main() {
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
 
+        // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+        // ignore: unnecessary_cast
         renderResult = rtl.render(DelayedRenderOf(
           {
             'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
@@ -214,6 +218,8 @@ main() {
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
 
+        // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+        // ignore: unnecessary_cast
         renderResult = rtl.render(DelayedRenderOf(
           {
             'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),

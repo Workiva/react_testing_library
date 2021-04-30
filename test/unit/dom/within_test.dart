@@ -35,6 +35,8 @@ main() {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
         final els = testAsyncQuery
+            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+            // ignore: unnecessary_cast
             ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
             : elsForQuerying;
         final _renderResult = rtl.render(els);
