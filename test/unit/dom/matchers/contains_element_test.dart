@@ -21,10 +21,10 @@ import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show containsElement;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
-import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
+import '../../util/over_react_stubs.dart';
 
 main() {
   group('containsElement matcher', () {
