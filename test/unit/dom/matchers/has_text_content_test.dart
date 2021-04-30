@@ -17,6 +17,7 @@
 import 'dart:html' show Element;
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasTextContent;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -30,8 +31,8 @@ main() {
     Element rootElement;
 
     setUp(() {
-      final renderedResult =
-          render(react.span({defaultTestIdKey: 'root'}, 'The quick brown fox jumps over the (lazy)    dog'));
+      final renderedResult = render(
+          react.span({defaultTestIdKey: 'root'}, 'The quick brown fox jumps over the (lazy)    dog') as ReactElement);
       rootElement = renderedResult.getByTestId('root');
     });
 

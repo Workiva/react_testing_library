@@ -78,12 +78,12 @@ class _ContainsElement extends Matcher {
   bool matches(ancestor, Map matchState) {
     matchState['ancestorIsElement'] = ancestor is Element;
 
-    return matchState['ancestorIsElement'] && (ancestor as Element).contains(descendant);
+    return matchState['ancestorIsElement'] as bool && (ancestor as Element).contains(descendant);
   }
 
   @override
   Description describeMismatch(ancestor, Description mismatchDescription, Map matchState, bool verbose) {
-    if (!matchState['ancestorIsElement']) {
+    if (!(matchState['ancestorIsElement'] as bool)) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }
 

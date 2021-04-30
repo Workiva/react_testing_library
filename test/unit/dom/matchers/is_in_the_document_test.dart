@@ -17,6 +17,7 @@
 import 'dart:html' show DivElement;
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -28,7 +29,7 @@ import '../../util/matchers.dart';
 main() {
   group('isInTheDocument matcher', () {
     test('passes when provided an element found in the document', () {
-      final renderResult = render(react.span({defaultTestIdKey: 'empty'}));
+      final renderResult = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
       shouldPass(renderResult.getByTestId('empty'), isInTheDocument);
     });
 

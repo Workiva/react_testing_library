@@ -93,7 +93,7 @@ class _IsChecked extends Matcher {
   }
 
   bool isElementThatCanBeChecked(item, Map matchState) =>
-      item != null && matchState['isElement'] && matchState['canBeChecked'];
+      item != null && matchState['isElement'] as bool && matchState['canBeChecked'] as bool;
 
   bool isElementChecked(Element item, Map matchState) {
     if (item is InputElement) {
@@ -126,7 +126,7 @@ class _IsChecked extends Matcher {
 
     if (!isElementThatCanBeChecked(item, matchState)) return false;
 
-    return isElementChecked(item, matchState);
+    return isElementChecked(item as Element, matchState);
   }
 
   @override

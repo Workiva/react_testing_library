@@ -17,6 +17,7 @@
 import 'dart:html' show DivElement;
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show containsElement;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -28,8 +29,8 @@ import '../../util/matchers.dart';
 main() {
   group('containsElement matcher', () {
     test('passes when provided an ancestor with a matching descendant', () {
-      final renderResult =
-          render(react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})));
+      final renderResult = render(
+          react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})) as ReactElement);
       shouldPass(renderResult.getByTestId('ancestor'), containsElement(renderResult.getByTestId('descendant')));
     });
 
@@ -39,8 +40,8 @@ main() {
       });
 
       test('the matched item does not have a matching descendant', () {
-        final renderResult =
-            render(react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})));
+        final renderResult = render(
+            react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})) as ReactElement);
         final ancestor = renderResult.getByTestId('ancestor');
         final descendant = renderResult.getByTestId('descendant');
         shouldFail(descendant, containsElement(ancestor), contains('Which: does not contain $ancestor.'));

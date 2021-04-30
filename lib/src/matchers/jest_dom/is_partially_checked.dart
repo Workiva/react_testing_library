@@ -79,9 +79,11 @@ class _IsPartiallyChecked extends Matcher {
   }
 
   bool isElementThatCanBePartiallyChecked(item, Map matchState) =>
-      item != null && matchState['isElement'] && matchState['canBePartiallyChecked'];
+      item != null && matchState['isElement'] as bool && matchState['canBePartiallyChecked'] as bool;
 
-  bool isElementPartiallyChecked(Element item, Map matchState) {
+  bool isElementPartiallyChecked(item, Map matchState) {
+    if (item is! Element) return false;
+
     if (item is InputElement) {
       final type = item.getAttribute('type');
       if (type == 'checkbox') {
@@ -89,9 +91,9 @@ class _IsPartiallyChecked extends Matcher {
       }
     }
 
-    final role = item.getAttribute('role');
+    final role = (item as Element).getAttribute('role');
     if (role == 'checkbox') {
-      final ariaPartiallyCheckedValue = item.getAttribute('aria-checked');
+      final ariaPartiallyCheckedValue = (item as Element).getAttribute('aria-checked');
       return ariaPartiallyCheckedValue == 'mixed';
     }
 

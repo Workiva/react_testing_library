@@ -109,7 +109,7 @@ class _HasValue extends CustomMatcher {
   @override
   bool matches(item, Map matchState) {
     final itemValue = featureValueOf(item);
-    if (expectedValue == null) return itemValue == null || itemValue.isEmpty;
+    if (expectedValue == null) return itemValue == null || itemValue.isEmpty == true;
 
     return super.matches(item, matchState);
   }
@@ -118,7 +118,7 @@ class _HasValue extends CustomMatcher {
   dynamic featureValueOf(item) {
     Element element;
     try {
-      element = item;
+      element = item as Element;
     } catch (_) {
       // If its not an element, the mismatch description will say so.
       return null;

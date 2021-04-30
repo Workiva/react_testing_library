@@ -76,7 +76,8 @@ class _IsInTheDocument extends Matcher {
 
   @override
   bool matches(item, Map matchState) {
-    return item != null && document.documentElement.contains(item);
+    if (item is! Element) return false;
+    return item != null && document.documentElement.contains(item as Element);
   }
 
   @override
