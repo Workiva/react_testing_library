@@ -175,7 +175,7 @@ class _ClassNameMatcher extends Matcher {
     } else if (classNames is String) {
       classes = _splitSpaceDelimitedString(classNames);
     } else {
-      throw ArgumentError.value(classNames, 'Must be a list of classNames or a className string', 'classNames');
+      throw ArgumentError.value(classNames, 'classNames', 'Must be a list of classNames or a className string');
     }
 
     return classes;
@@ -192,7 +192,7 @@ class _ClassNameMatcher extends Matcher {
     } else if (className is AnimatedString) {
       castClassName = className.baseVal;
     } else {
-      throw ArgumentError.value(className, 'Must be a string type');
+      throw ArgumentError.value(className, 'className', 'Must be a string type');
     }
 
     Iterable actualClasses = getClassIterable(castClassName);
@@ -233,9 +233,9 @@ class _ClassNameMatcher extends Matcher {
 
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
-    Set missingClasses = matchState['missingClasses'];
-    Set unwantedClasses = matchState['unwantedClasses'];
-    List extraneousClasses = matchState['extraneousClasses'];
+    final missingClasses = matchState['missingClasses'] as Set;
+    final unwantedClasses = matchState['unwantedClasses'] as Set;
+    final extraneousClasses = matchState['extraneousClasses'] as List;
 
     List<String> descriptionParts = [];
     if (allowExtraneous) {

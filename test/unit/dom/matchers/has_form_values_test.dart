@@ -18,7 +18,7 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactDomComponentFactoryProxy;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasFormValues;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -28,7 +28,7 @@ import 'package:test/test.dart';
 import '../../util/matchers.dart';
 
 class _FormElemDefinition {
-  final ReactDomComponentFactoryProxy formElem;
+  final /*ReactDomComponentFactoryProxy*/ dynamic formElem;
   final Map<String, dynamic> props;
   dynamic children;
 
@@ -38,7 +38,9 @@ class _FormElemDefinition {
 main() {
   group('hasFormValues matcher', () {
     const rootElemTestId = 'root-of-test-form';
-    RenderResult renderFormWithValues(ReactDomComponentFactoryProxy rootElem, List<_FormElemDefinition> els) {
+    RenderResult renderFormWithValues(
+        /*ReactDomComponentFactoryProxy*/ dynamic rootElem,
+        List<_FormElemDefinition> els) {
       assert(rootElem == react.form || rootElem == react.fieldset);
 
       final vDom = rootElem(
@@ -51,7 +53,7 @@ main() {
 
           return definition.formElem(props, definition.children);
         }),
-      );
+      ) as ReactElement;
 
       return render(vDom);
     }

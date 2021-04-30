@@ -15,6 +15,7 @@
 // limitations under the License.
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show isChecked;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -30,7 +31,7 @@ main() {
         final renderResult = render(react.input({
           'type': 'checkbox',
           'checked': true,
-        }));
+        }) as ReactElement);
         shouldPass(renderResult.getByRole('checkbox'), isChecked);
       });
 
@@ -38,7 +39,7 @@ main() {
         final renderResult = render(react.div({
           'role': 'checkbox',
           'aria-checked': 'true',
-        }));
+        }) as ReactElement);
         shouldPass(renderResult.getByRole('checkbox'), isChecked);
       });
 
@@ -47,7 +48,7 @@ main() {
           'type': 'radio',
           'name': 'something',
           'checked': true,
-        }));
+        }) as ReactElement);
         shouldPass(renderResult.getByRole('radio'), isChecked);
       });
 
@@ -55,7 +56,7 @@ main() {
         final renderResult = render(react.div({
           'role': 'radio',
           'aria-checked': 'true',
-        }));
+        }) as ReactElement);
         shouldPass(renderResult.getByRole('radio'), isChecked);
       });
 
@@ -63,7 +64,7 @@ main() {
         final renderResult = render(react.div({
           'role': 'switch',
           'aria-checked': 'true',
-        }));
+        }) as ReactElement);
         shouldPass(renderResult.getByRole('switch'), isChecked);
       });
     });
@@ -75,7 +76,7 @@ main() {
 
       group('the matched item is not a type of element that can be checked', () {
         test('', () {
-          final renderResult = render(react.div({defaultTestIdKey: 'div'}));
+          final renderResult = render(react.div({defaultTestIdKey: 'div'}) as ReactElement);
           final divNode = renderResult.getByTestId('div');
           shouldFail(divNode, isChecked, contains('Which: is not a type of HTML Element that can be checked.'));
         });
@@ -85,7 +86,7 @@ main() {
         final renderResult = render(react.input({
           'type': 'checkbox',
           'checked': false,
-        }));
+        }) as ReactElement);
         shouldFail(renderResult.getByRole('checkbox'), isChecked, contains('Which: is not checked.'));
       });
     });

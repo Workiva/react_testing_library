@@ -98,7 +98,7 @@ class _HasFormValues extends CustomMatcher {
   featureValueOf(item) {
     Element formElement;
     try {
-      formElement = item;
+      formElement = item as Element;
     } catch (_) {
       // If its not an element, the mismatch description will say so.
       return null;
@@ -133,8 +133,10 @@ class _HasFormValues extends CustomMatcher {
               break;
             case 'radio':
               final allRadiosWithName = formElement.querySelectorAll('input[type="radio"][name="$childElementName"]');
-              RadioButtonInputElement selectedRadioElement = allRadiosWithName
-                  .singleWhere((radioEl) => (radioEl as RadioButtonInputElement).checked, orElse: () => null);
+              final selectedRadioElement = allRadiosWithName.singleWhere(
+                (radioEl) => (radioEl as RadioButtonInputElement).checked,
+                orElse: () => null,
+              ) as RadioButtonInputElement;
               actualNamesAndValues[elementNameToTest] = selectedRadioElement?.value;
               break;
             default:
@@ -158,13 +160,13 @@ class _HasFormValues extends CustomMatcher {
 
     var extraDescription = '';
 
-    if (getItemFormElementsToTest(item).isEmpty) {
+    if (getItemFormElementsToTest(item as Element).isEmpty) {
       extraDescription = '\n\nNo elements were found with names matching ${valuesMap.keys}.';
     }
 
     return super.describeMismatch(item, mismatchDescription, matchState, verbose).add(extraDescription).add(
         '\n\nThe DOM at time of failure is shown below:\n------------------------------------------\n' +
-            prettyDOM(item));
+            prettyDOM(item as Element));
   }
 }
 
@@ -180,5 +182,5 @@ JsObject _getJsFormOrFieldSet(Element form) => JsObject.fromBrowserObject(form);
 /// Wraps the [HTMLFormElement.elements](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements) property.
 List<Element> getFormElements(Element form) {
   assert(form is FormElement || form is FieldSetElement);
-  return convertToArray<Element>(_getJsFormOrFieldSet(form)['elements']);
+  return convertToArray<Element>(_getJsFormOrFieldSet(form)['elements'] as JsObject);
 }

@@ -16,6 +16,7 @@
 
 import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasDisplayValue, hasValue;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -44,7 +45,7 @@ void sharedHasValueTests(String description,
             'type': 'text',
             'name': 'firstName',
             'value': 'John',
-          }));
+          }) as ReactElement);
         });
 
         test('exact match', () {
@@ -66,7 +67,7 @@ void sharedHasValueTests(String description,
           renderedResult = render(react.textarea({
             'name': 'comment',
             'value': 'I am here to say something nice about you',
-          }));
+          }) as ReactElement);
         });
 
         test('exact match', () {
@@ -84,7 +85,7 @@ void sharedHasValueTests(String description,
             'type': 'number',
             'name': 'age',
             'value': 35,
-          }));
+          }) as ReactElement);
         });
 
         test('exact match', () {
@@ -109,7 +110,7 @@ void sharedHasValueTests(String description,
                   'value': 'business',
                   'selected': true,
                 }, 'business description'),
-              ));
+              ) as ReactElement);
 
               if (matcherFn == hasValue) {
                 shouldPass(renderedResult.getByRole('combobox'), matcherFn('business'));
@@ -127,7 +128,7 @@ void sharedHasValueTests(String description,
                 react.option({
                   'value': 'business',
                 }, 'business description'),
-              ));
+              ) as ReactElement);
 
               if (matcherFn == hasValue) {
                 shouldPass(
@@ -158,7 +159,7 @@ void sharedHasValueTests(String description,
                 'value': 'business',
                 'disabled': true,
               }, 'business'),
-            ));
+            ) as ReactElement);
 
             shouldPass(renderedResult.getByRole('combobox'), matcherFn());
           });
@@ -183,7 +184,7 @@ void sharedHasValueTests(String description,
                   'value': 'pineapple',
                   'disabled': true,
                 }, 'Processed Sweetened Pineapple'),
-              ));
+              ) as ReactElement);
             });
 
             test('exact match', () {
@@ -232,7 +233,7 @@ void sharedHasValueTests(String description,
                   'value': 'pineapple',
                   'disabled': true,
                 }, 'Processed Sweetened Pineapple'),
-              ));
+              ) as ReactElement);
             });
 
             test('exact match', () {
@@ -271,7 +272,7 @@ void sharedHasValueTests(String description,
                 'value': 'pineapple',
                 'disabled': true,
               }, 'pineapple description'),
-            ));
+            ) as ReactElement);
 
             shouldPass(renderedResult.getByRole('listbox'), matcherFn());
           });
@@ -290,7 +291,7 @@ void sharedHasValueTests(String description,
             'type': 'checkbox',
             'name': 'business-in-front',
             'checked': true,
-          }));
+          }) as ReactElement);
 
           shouldFail(
               renderedResult.getByRole('checkbox'),
@@ -303,7 +304,7 @@ void sharedHasValueTests(String description,
           renderedResult = render(react.div({
             'role': 'checkbox',
             'aria-checked': 'true',
-          }));
+          }) as ReactElement);
 
           shouldFail(
               renderedResult.getByRole('checkbox'),
@@ -317,7 +318,7 @@ void sharedHasValueTests(String description,
             'type': 'radio',
             'name': 'business-in-front',
             'checked': true,
-          }));
+          }) as ReactElement);
 
           shouldFail(
               renderedResult.getByRole('radio'),
@@ -330,7 +331,7 @@ void sharedHasValueTests(String description,
           renderedResult = render(react.div({
             'role': 'radio',
             'aria-checked': 'true',
-          }));
+          }) as ReactElement);
 
           shouldFail(
               renderedResult.getByRole('radio'),
@@ -346,7 +347,7 @@ void sharedHasValueTests(String description,
             'type': 'text',
             'name': 'firstName',
             'value': 'John',
-          }));
+          }) as ReactElement);
 
           shouldFail(
             renderedResult.getByRole('textbox'),
@@ -362,7 +363,7 @@ void sharedHasValueTests(String description,
           renderedResult = render(react.textarea({
             'name': 'comments',
             'value': 'I have nothing nice to say',
-          }));
+          }) as ReactElement);
 
           shouldFail(
             renderedResult.getByRole('textbox'),
@@ -379,7 +380,7 @@ void sharedHasValueTests(String description,
             'type': 'number',
             'name': 'age',
             'value': 35,
-          }));
+          }) as ReactElement);
 
           shouldFail(
             renderedResult.getByRole('spinbutton'),
@@ -404,7 +405,7 @@ void sharedHasValueTests(String description,
                 'value': 'business',
                 'selected': true,
               }, 'business description'),
-            ));
+            ) as ReactElement);
 
             if (matcherFn == hasValue) {
               shouldFail(
@@ -445,7 +446,7 @@ void sharedHasValueTests(String description,
                 'value': 'pineapple',
                 'disabled': true,
               }, 'Processed Sweetened Pineapple'),
-            ));
+            ) as ReactElement);
 
             if (matcherFn == hasValue) {
               shouldFail(

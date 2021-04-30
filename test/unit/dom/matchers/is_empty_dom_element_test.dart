@@ -15,6 +15,7 @@
 // limitations under the License.
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show isEmptyDomElement;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -27,7 +28,7 @@ main() {
   group('isEmptyDomElement matcher', () {
     group('passes when provided a valid Element', () {
       test('that has no children', () {
-        final renderResult = render(react.span({defaultTestIdKey: 'empty'}));
+        final renderResult = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
         shouldPass(renderResult.getByTestId('empty'), isEmptyDomElement);
       });
     });
@@ -38,14 +39,14 @@ main() {
       });
 
       test('the matched item has empty children', () {
-        final renderResult =
-            render(react.span({defaultTestIdKey: 'not-empty'}, react.span({defaultTestIdKey: 'empty'})));
+        final renderResult = render(
+            react.span({defaultTestIdKey: 'not-empty'}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
         shouldFail(
             renderResult.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
       });
 
       test('the matched item has text children', () {
-        final renderResult = render(react.span({defaultTestIdKey: 'not-empty'}, 'oh hai'));
+        final renderResult = render(react.span({defaultTestIdKey: 'not-empty'}, 'oh hai') as ReactElement);
         shouldFail(
             renderResult.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
       });

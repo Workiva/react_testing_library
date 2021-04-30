@@ -79,7 +79,7 @@ class _IsFocused extends Matcher {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
-    if (!document.documentElement.contains(item)) {
+    if (!document.documentElement.contains(item as Element)) {
       return mismatchDescription
         ..add('is not attached to the document, and thus cannot be focused.')
         ..add(' If testing with React, you should use the `render` utility function '
