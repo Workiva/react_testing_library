@@ -229,6 +229,7 @@ class UserEvent {
   /// To upload a single file, use [upload].
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#uploadelement-file--clickinit-changeinit->.
+  /// todo potentially simplify this into one upload function that accepts a list of files
   static void uploadMultiple(
     /*InputElement | LabelElement*/ Element element,
     List<File> files, {
@@ -341,6 +342,32 @@ class UserEvent {
   static void unhover(Element element, {Map eventInit}) {
     return JsBackedMap.fromJs(_userEvent)['unhover'](
         element, _jsifyEventData(eventInit));
+  }
+
+  /// Simulates pasting [text] into [element].
+  ///
+  /// Use [eventInit] to initialize the clipboard event.
+  ///
+  /// todo add description of selection start and end options
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#pasteelement-text-eventinit-options>.
+  static void paste(
+    Element element,
+    String text, {
+    Map eventInit,
+    int initialSelectionStart,
+    int initialSelectionEnd,
+  }) {
+    final options = {
+      'initialSelectionStart': initialSelectionStart,
+      'initialSelectionEnd': initialSelectionEnd,
+    };
+    return JsBackedMap.fromJs(_userEvent)['paste'](
+      element,
+      text,
+      _jsifyEventData(eventInit),
+      JsBackedMap.from(options).jsObject,
+    );
   }
 }
 
