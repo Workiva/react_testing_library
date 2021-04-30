@@ -14,20 +14,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-@JS()
-library react_testing_library.src.util.over_react_stubs;
-
-import 'package:js/js.dart';
-import 'package:react/react_client.dart';
-import 'package:react/react_client/js_interop_helpers.dart' show jsifyAndAllowInterop;
-import 'package:react/react_client/react_interop.dart' show ReactDartComponentVersion;
-
 // Currently, we don't want to add a dependency on over_react for this library
 // so that we don't have an analyzer dependency, and can support broader
 // version ranges of the Dart SDK.
 //
 // There are, however, a few things that we want to use that only over_react exports.
 // So we'll stub those in here for now.
+//
+// TODO: Remove these, and add a dev dependency on over_react when a Dart 2.12.x-compatible release is published.
+@JS()
+library react_testing_library.test.unit.util.over_react_stubs;
+
+import 'package:js/js.dart';
+import 'package:react/react_client.dart';
+import 'package:react/react_client/js_interop_helpers.dart' show jsifyAndAllowInterop;
+import 'package:react/react_client/react_interop.dart' show ReactDartComponentVersion;
+
 const defaultTestIdKey = 'data-test-id';
 
 @JS('React.cloneElement')

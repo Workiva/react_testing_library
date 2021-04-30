@@ -20,7 +20,8 @@ import 'package:react/hooks.dart';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show chainRefs;
 import 'package:react/react_dom.dart' as react_dom;
-import 'package:react_testing_library/src/util/over_react_stubs.dart' show defaultTestIdKey;
+
+import 'over_react_stubs.dart' show defaultTestIdKey;
 
 const nodeWithShadowRootDefaultTestId = 'shadowRootHost';
 

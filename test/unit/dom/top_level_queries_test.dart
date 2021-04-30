@@ -18,12 +18,12 @@ import 'dart:html';
 
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
 import '../util/enums.dart';
 import '../util/init.dart';
 import '../util/matchers.dart';
+import '../util/over_react_stubs.dart';
 import '../util/rendering.dart';
 import 'queries/shared/text_match_type_parsing_tests.dart' show testTextMatchTypes;
 

@@ -17,10 +17,10 @@
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/dom/config/configure.dart';
 import 'package:react_testing_library/src/util/error_message_utils.dart';
-import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
 import '../util/matchers.dart';
+import '../util/over_react_stubs.dart';
 
 main() {
   group('getConfig()', () {

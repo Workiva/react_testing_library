@@ -19,9 +19,9 @@ import 'dart:async';
 import 'package:react/hooks.dart' show useEffect, useState;
 import 'package:react/react.dart' as react;
 import 'package:react/react_client/react_interop.dart' show ReactElement;
-import 'package:react_testing_library/src/util/over_react_stubs.dart';
 
 import 'constants.dart';
+import 'over_react_stubs.dart';
 import 'shadow_dom.dart';
 
 const validRoleInDom = 'button';
