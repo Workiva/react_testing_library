@@ -50,22 +50,20 @@ mixin ByTextQueries on IQueries {
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsIgnoreArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   E getByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetByText(
-                getContainerForScope(),
-                TextMatch.toJs(text),
-                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
-              ) as E,
-          errorMessage: errorMessage);
+        () => _jsGetByText(
+          getContainerForScope(),
+          TextMatch.toJs(text),
+          buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+        ) as E,
+      );
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
   ///
@@ -84,22 +82,20 @@ mixin ByTextQueries on IQueries {
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsIgnoreArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
   }) =>
       withErrorInterop(
-          () => _jsGetAllByText(
-                getContainerForScope(),
-                TextMatch.toJs(text),
-                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
-              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          errorMessage: errorMessage);
+        () => _jsGetAllByText(
+          getContainerForScope(),
+          TextMatch.toJs(text),
+          buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a single element with the given [text] content, defaulting to an [exact] match.
   ///
@@ -181,7 +177,6 @@ mixin ByTextQueries on IQueries {
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsIgnoreArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -193,7 +188,6 @@ mixin ByTextQueries on IQueries {
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
     Duration timeout,
@@ -210,7 +204,6 @@ mixin ByTextQueries on IQueries {
         normalizer: normalizer,
         selector: selector,
         ignore: ignore,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,
@@ -240,7 +233,6 @@ mixin ByTextQueries on IQueries {
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsIgnoreArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -252,7 +244,6 @@ mixin ByTextQueries on IQueries {
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     String selector,
     /*String|bool*/ ignore = 'script',
     Duration timeout,
@@ -270,7 +261,6 @@ mixin ByTextQueries on IQueries {
         normalizer: normalizer,
         selector: selector,
         ignore: ignore,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,

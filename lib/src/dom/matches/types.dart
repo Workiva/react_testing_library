@@ -171,14 +171,6 @@ class MatcherOptions {
   /// {@endtemplate}
   external /*String|bool*/ get ignore;
   external set ignore(/*String|bool*/ value);
-
-  /// {@template MatcherOptionsErrorMessage}
-  /// ### Error Message
-  ///
-  /// Use the `errorMessage` argument to customize error messages displayed when
-  /// tests using the query fail.
-  /// {@endtemplate}
-  external String get _errorMessage; // ignore: unused_element
 }
 
 /// Options to be passed into a custom [NormalizerFn].

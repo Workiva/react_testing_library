@@ -79,7 +79,6 @@ mixin ByRoleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   /// {@macro byRoleOptionsHidden}
   /// {@macro byRoleOptionsSelected}
   /// {@macro byRoleOptionsChecked}
@@ -91,7 +90,6 @@ mixin ByRoleQueries on IQueries {
     /*TextMatch*/ dynamic role, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -102,23 +100,23 @@ mixin ByRoleQueries on IQueries {
     int level,
   }) =>
       withErrorInterop(
-          () => _jsGetByRole(
-                getContainerForScope(),
-                TextMatch.toJs(role),
-                buildByRoleOptions(
-                  exact: exact,
-                  normalizer: normalizer,
-                  hidden: hidden,
-                  name: name,
-                  selected: selected,
-                  checked: checked,
-                  pressed: pressed,
-                  expanded: expanded,
-                  queryFallbacks: queryFallbacks,
-                  level: level,
-                ),
-              ) as E,
-          errorMessage: errorMessage);
+        () => _jsGetByRole(
+          getContainerForScope(),
+          TextMatch.toJs(role),
+          buildByRoleOptions(
+            exact: exact,
+            normalizer: normalizer,
+            hidden: hidden,
+            name: name,
+            selected: selected,
+            checked: checked,
+            pressed: pressed,
+            expanded: expanded,
+            queryFallbacks: queryFallbacks,
+            level: level,
+          ),
+        ) as E,
+      );
 
   /// Returns a list of elements with the given [role] value, defaulting to an [exact] match.
   ///
@@ -136,7 +134,6 @@ mixin ByRoleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   /// {@macro byRoleOptionsHidden}
   /// {@macro byRoleOptionsSelected}
   /// {@macro byRoleOptionsChecked}
@@ -148,7 +145,6 @@ mixin ByRoleQueries on IQueries {
     /*TextMatch*/ dynamic role, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -159,23 +155,23 @@ mixin ByRoleQueries on IQueries {
     int level,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByRole(
-                getContainerForScope(),
-                TextMatch.toJs(role),
-                buildByRoleOptions(
-                  exact: exact,
-                  normalizer: normalizer,
-                  hidden: hidden,
-                  name: name,
-                  selected: selected,
-                  checked: checked,
-                  pressed: pressed,
-                  expanded: expanded,
-                  queryFallbacks: queryFallbacks,
-                  level: level,
-                ),
-              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          errorMessage: errorMessage);
+        () => _jsGetAllByRole(
+          getContainerForScope(),
+          TextMatch.toJs(role),
+          buildByRoleOptions(
+            exact: exact,
+            normalizer: normalizer,
+            hidden: hidden,
+            name: name,
+            selected: selected,
+            checked: checked,
+            pressed: pressed,
+            expanded: expanded,
+            queryFallbacks: queryFallbacks,
+            level: level,
+          ),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a single element with the given [role] value, defaulting to an [exact] match.
   ///
@@ -304,7 +300,6 @@ mixin ByRoleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   /// {@macro byRoleOptionsHidden}
   /// {@macro byRoleOptionsSelected}
   /// {@macro byRoleOptionsChecked}
@@ -323,7 +318,6 @@ mixin ByRoleQueries on IQueries {
     /*TextMatch*/ dynamic role, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -344,7 +338,6 @@ mixin ByRoleQueries on IQueries {
         role,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
         hidden: hidden,
         name: name,
         selected: selected,
@@ -382,7 +375,6 @@ mixin ByRoleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   /// {@macro byRoleOptionsHidden}
   /// {@macro byRoleOptionsSelected}
   /// {@macro byRoleOptionsChecked}
@@ -401,7 +393,6 @@ mixin ByRoleQueries on IQueries {
     /*TextMatch*/ dynamic role, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
     bool selected,
@@ -424,7 +415,6 @@ mixin ByRoleQueries on IQueries {
         role,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
         hidden: hidden,
         name: name,
         selected: selected,
