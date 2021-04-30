@@ -313,7 +313,7 @@ class UserEvent {
   ///
   /// Options:
   /// * [shift] (default `false`): can be true or false to invert tab direction.
-  /// * [focusTrap] (default document): a container element to restrict the tabbing within.
+  /// * [focusTrap] (default [document.body]): a container element to restrict the tabbing within.
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#tabshift-focustrap>.
   static void tab({bool shift, Element focusTrap}) {
@@ -321,6 +321,26 @@ class UserEvent {
     return JsBackedMap.fromJs(_userEvent)['tab'](
       JsBackedMap.from(options).jsObject,
     );
+  }
+
+  /// Hovers over [element].
+  ///
+  /// Use [eventInit] to initialize the `onMouseOver` event.
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#hoverelement>.
+  static void hover(Element element, {Map eventInit}) {
+    return JsBackedMap.fromJs(_userEvent)['hover'](
+        element, _jsifyEventData(eventInit));
+  }
+
+  /// Unhovers out of [element].
+  ///
+  /// Use [eventInit] to initialize the `onMouseOut` event.
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#unhoverelement>.
+  static void unhover(Element element, {Map eventInit}) {
+    return JsBackedMap.fromJs(_userEvent)['unhover'](
+        element, _jsifyEventData(eventInit));
   }
 }
 
