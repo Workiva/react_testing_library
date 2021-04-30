@@ -18,6 +18,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -36,7 +37,8 @@ main() {
 
     group('waitFor()', () {
       setUp(() {
-        renderResult = rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}));
+        renderResult =
+            rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}) as ReactElement);
         rootElement = renderResult.getByTestId('delayed-render-of-root');
       });
 
@@ -142,7 +144,7 @@ main() {
             react.div({}, 'willBeRemoved'),
             elementsForQuerying('waitForElementToBeRemoved'),
           ),
-        ));
+        ) as ReactElement);
         elementThatWillBeRemovedAfterDelay = renderResult.getByText('willBeRemoved');
         elementInDomButOutsideContainer = document.body.append(DivElement()
           ..id = 'notInScope'
@@ -223,7 +225,7 @@ main() {
             react.div({}, 'willNotBeRemoved'),
             elementsForQuerying('waitForElementToBeRemoved'),
           ),
-        ));
+        ) as ReactElement);
         elementThatWillBeRemovedAfterDelay = renderResult.getByText('willBeRemoved');
         anotherElementThatWillBeRemovedAfterDelay = renderResult.getByText('willAlsoBeRemoved');
         elementThatWillNotBeRemovedAfterDelay = renderResult.getByText('willNotBeRemoved');

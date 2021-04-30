@@ -16,6 +16,7 @@
 
 import 'dart:html';
 
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
@@ -97,7 +98,9 @@ main() {
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-        final els = testAsyncQuery ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
+        final els = testAsyncQuery
+            ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+            : elsForQuerying;
         final renderResult = rtl.render(els);
         container = renderResult.container;
         expectedPrettyDom = rtl.prettyDOM(container);

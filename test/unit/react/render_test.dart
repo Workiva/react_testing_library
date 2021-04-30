@@ -48,7 +48,9 @@ main() {
         }) {
           final elsForQuerying =
               elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-          final els = testAsyncQuery ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
+          final els = testAsyncQuery
+              ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+              : elsForQuerying;
           return ScopedQueriesTestWrapper(rtl.render(els));
         });
       });
