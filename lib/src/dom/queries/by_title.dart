@@ -179,8 +179,8 @@ mixin ByTitleQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByTitle for consistency with our
-    // need to use it on the analogous `findAllByTitle` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTitle` instead of an
+    // interop like `_jsFindByTitle` to give consumers better async stack traces.
     return waitFor(
       () => getByTitle<E>(
         title,
@@ -229,9 +229,8 @@ mixin ByTitleQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTitle because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByTitle` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTitle` instead of an
+    // interop like `_jsFindAllByTitle` to give consumers better async stack traces.
     return waitFor(
       () => getAllByTitle<E>(
         title,

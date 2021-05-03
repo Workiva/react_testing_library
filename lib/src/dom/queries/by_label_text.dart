@@ -189,8 +189,8 @@ mixin ByLabelTextQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByLabelText for consistency with our
-    // need to use it on the analogous `findAllByLabelText` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByLabelText` instead of an
+    // interop like `_jsFindByLabelText` to give consumers better async stack traces.
     return waitFor(
       () => getByLabelText<E>(
         text,
@@ -242,9 +242,8 @@ mixin ByLabelTextQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByLabelText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByLabelText` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByAltText` instead of an
+    // interop like `_jsFindAllByAltText` to give consumers better async stack traces.
     return waitFor(
       () => getAllByLabelText<E>(
         text,

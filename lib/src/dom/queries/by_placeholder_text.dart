@@ -179,8 +179,8 @@ mixin ByPlaceholderTextQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByPlaceholderText for consistency with our
-    // need to use it on the analogous `findAllByPlaceholderText` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByPlaceholderText` instead of an
+    // interop like `_jsFindByPlaceholderText` to give consumers better async stack traces.
     return waitFor(
       () => getByPlaceholderText<E>(
         text,
@@ -229,9 +229,8 @@ mixin ByPlaceholderTextQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByPlaceholderText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByPlaceholderText` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByPlaceholderText` instead of an
+    // interop like `_jsFindAllByPlaceholderText` to give consumers better async stack traces.
     return waitFor(
       () => getAllByPlaceholderText<E>(
         text,

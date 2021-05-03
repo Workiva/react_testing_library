@@ -213,8 +213,8 @@ mixin ByTestIdQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByTestId for consistency with our
-    // need to use it on the analogous `findAllByTestId` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTestId` instead of an
+    // interop like `_jsFindByTestId` to give consumers better async stack traces.
     return waitFor(
       () => getByTestId<E>(
         testId,
@@ -269,9 +269,8 @@ mixin ByTestIdQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTestId because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByTestId` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTestId` instead of an
+    // interop like `_jsFindAllByTestId` to give consumers better async stack traces.
     return waitFor(
       () => getAllByTestId<E>(
         testId,

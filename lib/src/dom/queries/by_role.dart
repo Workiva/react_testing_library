@@ -331,8 +331,8 @@ mixin ByRoleQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByRole because of some weirdness with
-    // the wrong error message being displayed when the role is found, but the name arg is specified and it isn't found in the DOM.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByRole` instead of an
+    // interop like `_jsFindByRole` to give consumers better async stack traces.
     return waitFor(
       () => getByRole<E>(
         role,
@@ -406,10 +406,8 @@ mixin ByRoleQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByRole because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676),
-    // and some weirdness with the wrong error message being displayed when the role is found, but the name arg is
-    // specified and it isn't found in the DOM.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByRole` instead of an
+    // interop like `_jsFindAllByRole` to give consumers better async stack traces.
     return waitFor(
       () => getAllByRole<E>(
         role,

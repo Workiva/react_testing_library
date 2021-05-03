@@ -177,8 +177,8 @@ mixin ByDisplayValueQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByDisplayValue for consistency with our
-    // need to use it on the analogous `findAllByDisplayValue` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByDisplayValue` instead of an
+    // interop like `_jsFindByDisplayValue` to give consumers better async stack traces.
     return waitFor(
       () => getByDisplayValue(
         value,
@@ -227,9 +227,8 @@ mixin ByDisplayValueQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByDisplayValue because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByDisplayValue` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByDisplayValue` instead of an
+    // interop like `_jsFindAllByDisplayValue` to give consumers better async stack traces.
     return waitFor(
       () => getAllByDisplayValue<E>(
         value,

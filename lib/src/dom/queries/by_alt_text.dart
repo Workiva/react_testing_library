@@ -180,8 +180,8 @@ mixin ByAltTextQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByAltText for consistency with our
-    // need to use it on the analogous `findAllByAltText` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByAltText` instead of an
+    // interop like `_jsFindByAltText` to give consumers better async stack traces.
     return waitFor(
       () => getByAltText(
         text,
@@ -231,9 +231,8 @@ mixin ByAltTextQueries on IQueries {
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByAltText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByAltText` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByAltText` instead of an
+    // interop like `_jsFindAllByAltText` to give consumers better async stack traces.
     return waitFor(
       () => getAllByAltText(
         text,
