@@ -135,7 +135,7 @@ class UserEvent {
     }
 
     JsBackedMap.fromJs(_userEvent)['type'](
-      element,
+      element as InputElement,
       text,
       JsBackedMap.from(options).jsObject,
     );
@@ -169,6 +169,16 @@ class UserEvent {
       text,
       JsBackedMap.from(options).jsObject,
     ));
+  }
+
+  /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
+  static dynamic keyboard(String text, {dynamic keyboardState}) {
+    // todo https://github.com/testing-library/user-event/blob/master/src/keyboard/types.ts
+    final options = keyboardState != null ? {'keyboardState': keyboardState} : {};
+    return JsBackedMap.fromJs(_userEvent)['keyboard'](
+      text,
+      JsBackedMap.from(options).jsObject,
+    );
   }
 
   /// Uploads [file] to [element].

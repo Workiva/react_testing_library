@@ -37,12 +37,26 @@ main() {
       rtl.render(react.input({
         'id': 'root',
         'onClick': (_) => clickEventCount++,
-        'onKeyUp': (react.SyntheticKeyboardEvent e) => keyUpCalls.add(e.key),
-        'onKeyDown': (react.SyntheticKeyboardEvent e) {
-          final event = e.nativeEvent as KeyboardEvent;
-          calls.add(
-              '${input.selectionStart} ${input.selectionEnd} ${event.key} ${input.value}');
+        'onKeyUp': (react.SyntheticKeyboardEvent e) {
+          keyUpCalls.add(e.key);
+          calls.add('input[value="${input.value}"] - keyUp: ${input.selectionStart} ${input.selectionEnd} ${e.key} ${e.keyCode}');
         },
+        'onKeyDown': (react.SyntheticKeyboardEvent e) {
+          calls.add('input[value="${input.value}"] - keyDown: ${input.selectionStart} ${input.selectionEnd} ${e.key} ${e.keyCode}');
+        },
+        'onKeyDownCapture': (react.SyntheticKeyboardEvent e) {
+          calls.add('input[value="${input.value}"] - keyDownCapture: ${input.selectionStart} ${input.selectionEnd} ${e.key} ${e.keyCode}');
+        },
+        'onKeyUpCapture': (react.SyntheticKeyboardEvent e) {
+          calls.add('input[value="${input.value}"] - keyUpCapture: ${input.selectionStart} ${input.selectionEnd} ${e.key} ${e.keyCode}');
+        },
+        'onInput': (react.SyntheticKeyboardEvent e) {
+          calls.add('input[value="${input.value}"] - input: ${input.selectionStart} ${input.selectionEnd}');
+        },
+        'onKeyPress': (react.SyntheticKeyboardEvent e) {
+          calls.add('input[value="${input.value}"] - keyPress: ${input.selectionStart} ${input.selectionEnd} ${e.key} ${e.keyCode}');
+        },
+        'defaultValue': 'This is a bad example',
       }) as ReactElement);
 
       input = rtl.screen.getByRole('textbox');
@@ -60,57 +74,57 @@ main() {
         // expect((calls.first as MouseEvent).ctrlKey, isTrue);
       }
 
-      test('', () {
-        rtl.UserEvent.type(input, 'oh hai');
-        expect(input, hasValue('oh hai'));
-        _verifyTypeEvent();
-      });
-
-      test('skipClick', () {
-        // Manually focus the element since click will be skipped.
-        input.focus();
-        rtl.UserEvent.type(input, 'oh hai', skipClick: true);
-        expect(input, hasValue('oh hai'));
-        _verifyTypeEvent(skipClick: true);
-      });
-
-      group('skipAutoClose:', () {
-        test('false (default)', () {
-          rtl.UserEvent.type(input, 'oh {ctrl}hai');
-          expect(
-            input,
-            hasValue('oh '),
-            reason:
-                'ctrl modifier key stops input from receiving the remaining characters',
-          );
-          expect(
-            keyUpCalls.last,
-            equals('Control'),
-            reason:
-                'ctrl modifier key will be closed at the end of the type event',
-          );
-
-          _verifyTypeEvent();
-        });
-
-        test('true', () {
-          rtl.UserEvent.type(input, 'oh {ctrl}hai', skipAutoClose: true);
-          expect(
-            input,
-            hasValue('oh '),
-            reason:
-                'ctrl modifier key stops input from receiving the remaining characters',
-          );
-          expect(
-            keyUpCalls.last,
-            equals('i'),
-            reason:
-                'ctrl modifier key will be closed at the end of the type event',
-          );
-
-          _verifyTypeEvent();
-        });
-      });
+      // test('', () {
+      //   rtl.UserEvent.type(input, 'oh hai');
+      //   expect(input, hasValue('oh hai'));
+      //   _verifyTypeEvent();
+      // });
+      //
+      // test('skipClick', () {
+      //   // Manually focus the element since click will be skipped.
+      //   input.focus();
+      //   rtl.UserEvent.type(input, 'oh hai', skipClick: true);
+      //   expect(input, hasValue('oh hai'));
+      //   _verifyTypeEvent(skipClick: true);
+      // });
+      //
+      // group('skipAutoClose:', () {
+      //   test('false (default)', () {
+      //     rtl.UserEvent.type(input, 'oh {ctrl}hai');
+      //     expect(
+      //       input,
+      //       hasValue('oh '),
+      //       reason:
+      //       'ctrl modifier key stops input from receiving the remaining characters',
+      //     );
+      //     expect(
+      //       keyUpCalls.last,
+      //       equals('Control'),
+      //       reason:
+      //       'ctrl modifier key will be closed at the end of the type event',
+      //     );
+      //
+      //     _verifyTypeEvent();
+      //   });
+      //
+      //   test('true', () {
+      //     rtl.UserEvent.type(input, 'oh {ctrl}hai', skipAutoClose: true);
+      //     expect(
+      //       input,
+      //       hasValue('oh '),
+      //       reason:
+      //       'ctrl modifier key stops input from receiving the remaining characters',
+      //     );
+      //     expect(
+      //       keyUpCalls.last,
+      //       equals('i'),
+      //       reason:
+      //       'ctrl modifier key will be closed at the end of the type event',
+      //     );
+      //
+      //     _verifyTypeEvent();
+      //   });
+      // });
 
       group('initialSelectionStart and initialSelectionEnd', () {
         // test('when they are the same number', () {
@@ -129,19 +143,24 @@ main() {
         // });
 
         // todo get setSelectionRange to work with type
-        // test('when some text is selected', () {
-        //   rtl.UserEvent.type(input, 'this is a bad example');
-        //   // Sanity check.
-        //   expect(input, hasValue('this is a bad example'));
-        //   print('${input.selectionStart} ${input.selectionEnd}');
-        //   input.setSelectionRange(10, 13);
-        //   print(input.selectionDirection);
-        //   print('${input.selectionStart} ${input.selectionEnd}');
-        //   rtl.UserEvent.type(input, 'good');
-        //   expect(calls, true);
-        //   print('${input.selectionStart} ${input.selectionEnd}');
-        //   expect(input, hasValue('this is a good example'));
-        // });
+        test('when some text is selected', () {
+          // Sanity check.
+          expect(input, hasValue('This is a bad example'));
+          input.focus();
+          print('${input.selectionStart} ${input.selectionEnd}');
+          input.setSelectionRange(10, 13);
+          print(input.selectionDirection);
+          print('${input.selectionStart} ${input.selectionEnd}');
+          rtl.UserEvent.type(input, 'good');
+
+          // rtl.fireEventByName('keyUp', input, {'key': 'g', 'code': '103', 'keyCode': '103', 'altKey': false,
+          //   'ctrlKey': false,
+          //   'metaKey': false,
+          //   'shiftKey': false,});
+          print(calls.join('\n'));
+          print('${input.selectionStart} ${input.selectionEnd}');
+          expect(input, hasValue('This is a good example'));
+        });
       });
     });
 
