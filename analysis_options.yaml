@@ -1,0 +1,10 @@
+include: package:pedantic/analysis_options.1.8.0.yaml
+
+analyzer:
+  errors:
+    unused_import: warning
+    duplicate_import: warning
+    missing_required_param: error
+    must_call_super: error
+  strong-mode:
+    implicit-casts: false

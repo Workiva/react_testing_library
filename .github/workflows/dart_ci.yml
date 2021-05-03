@@ -1,0 +1,84 @@
+name: Dart CI
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'test_consume_*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: [stable, dev]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Print Dart SDK version
+        run: dart --version
+
+      - name: Use pubspec.next deps
+        run: rm -rf pubspec.yaml && mv pubspec.next.yaml pubspec.yaml
+
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+
+      - name: Check formatting
+        run: dart format . -l 120 --set-exit-if-changed
+
+      - name: Analyze project source
+        run: dart analyze
+
+      - name: Run tests (DDC)
+        run: dart run build_runner test
+
+      - name: Run tests (dart2js)
+        run: dart run build_runner test -r
+
+      - name: Generate Dartdoc
+        run: pub global activate dartdoc && dartdoc --show-undocumented-categories
+        if: ${{ matrix.sdk == 'stable' }}
+
+      - name: Archive Dartdoc Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dartdoc
+          path: doc/api/
+        if: ${{ matrix.sdk == 'stable' }}
+
+  build_legacy:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: [ 2.7.2 ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Print Dart SDK version
+        run: dart --version
+
+      - id: install
+        name: Install dependencies
+        run: pub get
+
+      - name: Analyze project source
+        run: dartanalyzer .
+
+      - name: Run tests (DDC)
+        run: pub run build_runner test
+
+      - name: Run tests (dart2js)
+        run: pub run build_runner test -r
