@@ -97,7 +97,8 @@ class _ContainsMultilineString extends Matcher {
   }
 
   @override
-  Description describe(Description description) => description.add('contains ').addDescriptionOf(_expected);
+  Description describe(Description description) =>
+      description.add('contains a multi-line string (ignoring whitespace) ').addDescriptionOf(_expected);
 
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
