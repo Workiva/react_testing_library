@@ -126,12 +126,13 @@ class UserEvent {
   /// calling `element.setSelectionRange(0, 0)`.
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
+  // TODO: figure out why this does not work as expected with selection range https://jira.atl.workiva.net/browse/CPLAT-14155
   static void type(
     Element element,
     String text, {
     bool skipClick = false,
     bool skipAutoClose = false,
-    // The follow two options currently do not work as expected. Their only use is to
+    // The follow two options currently do not work as expected.
     int initialSelectionStart,
     int initialSelectionEnd,
   }) {

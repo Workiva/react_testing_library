@@ -28,7 +28,6 @@ main() {
       int clickEventCount;
       InputElement input;
       List<String> keyUpCalls;
-      List<String> calls;
 
       void _verifyTypeEvent({
         bool skipClick = false,
@@ -41,7 +40,6 @@ main() {
         setUp(() {
           clickEventCount = 0;
           keyUpCalls = [];
-          calls = [];
 
           rtl.render(react.input({
             'id': 'root',
@@ -111,7 +109,6 @@ main() {
         setUp(() {
           clickEventCount = 0;
           keyUpCalls = [];
-          calls = [];
 
           rtl.render(react.input({
             'id': 'root',
