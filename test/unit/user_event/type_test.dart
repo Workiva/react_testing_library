@@ -14,10 +14,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:developer';
 import 'dart:html';
 
-import 'package:react/hooks.dart';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
@@ -134,7 +132,7 @@ main() {
           _verifyTypeEvent();
         });
 
-        // TODO: uncomment these tests when <insert ticket number here> is complete.
+        // TODO: uncomment these tests when https://jira.atl.workiva.net/browse/CPLAT-14155 is fixed.
         // test('with setSelectionRange', () {
         //   input.setSelectionRange(10, 13);
         //   rtl.UserEvent.type(input, 'good');

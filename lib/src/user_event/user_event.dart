@@ -95,14 +95,11 @@ class UserEvent {
     );
   }
 
-  // todo add keyboard util
-
-  /// TODO finish this description
+  /// Writes [text] inside an input or textarea [element].
   ///
   /// Note that [type] will click the element before typing. To disable this,
   /// set the [skipClick] option to true. When skipping the click you must
   /// manually focus [element] using `element.focus()`.
-  ///
   ///
   /// > A note about modifiers: Modifier keys ({shift}, {ctrl}, {alt}, {meta})
   /// will activate their corresponding event modifiers for the duration of type
@@ -114,12 +111,27 @@ class UserEvent {
   /// not be simulated as different operating systems function differently in
   /// this regard.
   ///
+  /// ### With Selection Range
+  ///
+  /// > Note: [type] does not currently work as expected with selection range.
+  /// > This will be resolved when CPLAT-14155 is fixed.
+  ///
+  /// If [element] already contains a value, [type] will begin typing at the end
+  /// of the existing value by default. To override this behavior and set the
+  /// selection range to something else, call [element.setSelectionRange] before
+  /// calling [type].
+  ///
+  /// In order to set the initial selection range to zero, you must also set
+  /// [initialSelectionStart] and [initialSelectionEnd] to zero along with
+  /// calling `element.setSelectionRange(0, 0)`.
+  ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
   static void type(
     Element element,
     String text, {
     bool skipClick = false,
     bool skipAutoClose = false,
+    // The follow two options currently do not work as expected. Their only use is to
     int initialSelectionStart,
     int initialSelectionEnd,
   }) {
@@ -128,19 +140,22 @@ class UserEvent {
       'skipAutoClose': skipAutoClose,
     };
     if (initialSelectionStart != null) {
-      options.putIfAbsent('initialSelectionStart', () => initialSelectionStart);
+      options.addEntries(
+          [MapEntry('initialSelectionStart', initialSelectionStart)]);
     }
     if (initialSelectionEnd != null) {
-      options.putIfAbsent('initialSelectionEnd', () => initialSelectionEnd);
+      options
+          .addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
     }
 
     JsBackedMap.fromJs(_userEvent)['type'](
-      element as InputElement,
+      element,
       text,
       JsBackedMap.from(options).jsObject,
     );
   }
 
+  // todo add doc comment
   static Future<void> typeWithDelay(
     Element element,
     String text,
@@ -157,12 +172,14 @@ class UserEvent {
       'skipClick': skipClick,
       'skipAutoClose': skipAutoClose,
     };
-    // if(initialSelectionStart != null) {
-    //   options.putIfAbsent('initialSelectionStart', () => initialSelectionStart);
-    // }
-    // if(initialSelectionEnd != null) {
-    //   options.putIfAbsent('initialSelectionEnd', () => initialSelectionEnd);
-    // }
+    if (initialSelectionStart != null) {
+      options.addEntries(
+          [MapEntry('initialSelectionStart', initialSelectionStart)]);
+    }
+    if (initialSelectionEnd != null) {
+      options
+          .addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
+    }
 
     await promiseToFuture(JsBackedMap.fromJs(_userEvent)['type'](
       element,
@@ -174,7 +191,8 @@ class UserEvent {
   /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
   static dynamic keyboard(String text, {dynamic keyboardState}) {
     // todo https://github.com/testing-library/user-event/blob/master/src/keyboard/types.ts
-    final options = keyboardState != null ? {'keyboardState': keyboardState} : {};
+    final options =
+        keyboardState != null ? {'keyboardState': keyboardState} : {};
     return JsBackedMap.fromJs(_userEvent)['keyboard'](
       text,
       JsBackedMap.from(options).jsObject,
