@@ -85,11 +85,13 @@ main() {
           rtl.UserEvent.keyboard('[ShiftRight>]');
           rtl.UserEvent.keyboard('F[/ShiftRight]');
           expect(input, hasValue('F'));
-          expect(calls, equals([
-            'keyDown: Shift {shift}',
-            'keyDown: F', // Does not have shift pressed because previous state does not persist.
-            'keyUp: F',
-          ]));
+          expect(
+              calls,
+              equals([
+                'keyDown: Shift {shift}',
+                'keyDown: F', // Does not have shift pressed because previous state does not persist.
+                'keyUp: F',
+              ]));
         });
 
         test('two keyboard events back to back with setting state', () {
@@ -97,12 +99,14 @@ main() {
           final state = rtl.UserEvent.keyboard('[ShiftRight>]');
           rtl.UserEvent.keyboard('F[/ShiftRight]', keyboardState: state);
           expect(input, hasValue('F'));
-          expect(calls, equals([
-            'keyDown: Shift {shift}',
-            'keyDown: F {shift}', // Has shift pressed because keyboardState is set.
-            'keyUp: F {shift}',
-            'keyUp: Shift',
-          ]));
+          expect(
+              calls,
+              equals([
+                'keyDown: Shift {shift}',
+                'keyDown: F {shift}', // Has shift pressed because keyboardState is set.
+                'keyUp: F {shift}',
+                'keyUp: Shift',
+              ]));
         });
       });
     });

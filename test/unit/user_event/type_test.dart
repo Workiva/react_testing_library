@@ -25,18 +25,18 @@ import 'package:test/test.dart';
 
 main() {
   group('User type events:', () {
+    int clickEventCount;
+    InputElement input;
+    List<String> keyUpCalls;
+
+    void _verifyTypeEvent({
+      bool skipClick = false,
+    }) {
+      // Verify click event.
+      expect(clickEventCount, equals(skipClick ? 0 : 1));
+    }
+
     group('UserEvent.type', () {
-      int clickEventCount;
-      InputElement input;
-      List<String> keyUpCalls;
-
-      void _verifyTypeEvent({
-        bool skipClick = false,
-      }) {
-        // Verify click event.
-        expect(clickEventCount, equals(skipClick ? 0 : 1));
-      }
-
       group('', () {
         setUp(() {
           clickEventCount = 0;
@@ -153,15 +153,35 @@ main() {
     });
 
     group('UserEvent.typeWithDelay', () {
-      int clickEventCount;
-      InputElement input;
-      List<String> keyUpCalls;
-
-      void _verifyTypeEvent({
+      Future<void> _verifyTypeWithDelay(
+        String text,
+        int delay, {
         bool skipClick = false,
-      }) {
-        // Verify click event.
-        expect(clickEventCount, equals(skipClick ? 0 : 1));
+        bool skipAutoClose = false,
+        int charsTyped,
+      }) async {
+        charsTyped ??= text.length;
+        final timer = Stopwatch();
+        timer.start();
+        await rtl.UserEvent.typeWithDelay(
+          input,
+          text,
+          Duration(milliseconds: delay),
+          skipClick: skipClick,
+          skipAutoClose: skipAutoClose,
+        );
+        timer.stop();
+        expect(
+          timer.elapsedMilliseconds,
+          greaterThan((charsTyped - 1) * delay),
+          reason:
+              'there should be a ${delay} ms delay between each letter typed',
+        );
+        expect(
+          timer.elapsedMilliseconds,
+          lessThan((charsTyped - 1) * (delay + 10)),
+          reason: 'it should take less time than a delay of ${delay + 10} ms',
+        );
       }
 
       group('', () {
@@ -181,35 +201,117 @@ main() {
         });
 
         test('with a short delay', () async {
-          final text = 'hello world!';
-          final timer = Stopwatch();
-          timer.start();
-          await rtl.UserEvent.typeWithDelay(input, text, 10);
-          timer.stop();
+          await _verifyTypeWithDelay('hello world!', 10);
           expect(input, hasValue('hello world!'));
-          expect(timer.elapsedMilliseconds, greaterThan((text.length - 1)*10), reason: 'there should be a 10 ms delay between each letter typed',);
-          expect(timer.elapsedMilliseconds, lessThan((text.length - 1)*20), reason: 'it should take less time than a delay of 20 ms',);
+          _verifyTypeEvent();
         });
 
         test('with a longer delay', () async {
-          final text = 'hello world!';
-          final timer = Stopwatch();
-          timer.start();
-          await rtl.UserEvent.typeWithDelay(input, text, 500);
-          timer.stop();
+          await _verifyTypeWithDelay('hello world!', 500);
           expect(input, hasValue('hello world!'));
-          expect(timer.elapsedMilliseconds, greaterThan((text.length - 1)*500), reason: 'there should be a 500 ms delay between each letter typed',);
-          expect(timer.elapsedMilliseconds, lessThan((text.length - 1)*550), reason: 'it should take less time than a delay of 550 ms',);
+          _verifyTypeEvent();
+        });
+
+        test('skipClick', () async {
+          // Manually focus the element since click will be skipped.
+          input.focus();
+          await _verifyTypeWithDelay('hello world!', 50, skipClick: true);
+          expect(input, hasValue('hello world!'));
+          _verifyTypeEvent(skipClick: true);
+        });
+
+        group('skipAutoClose:', () {
+          test('false (default)', () async {
+            // Specify the number of characters that will be typed since it's
+            // different than the length of the text.
+            await _verifyTypeWithDelay('oh {ctrl}hai', 50, charsTyped: 7);
+            expect(
+              input,
+              hasValue('oh '),
+              reason:
+                  'ctrl modifier key stops input from receiving the remaining characters',
+            );
+            expect(
+              keyUpCalls.last,
+              equals('Control'),
+              reason:
+                  'ctrl modifier key will be closed at the end of the type event',
+            );
+
+            _verifyTypeEvent();
+          });
+
+          test('true', () async {
+            // Specify the number of characters that will be typed since it's
+            // different than the length of the text.
+            await _verifyTypeWithDelay(
+              'oh {ctrl}hai',
+              50,
+              charsTyped: 7,
+              skipAutoClose: true,
+            );
+            expect(
+              input,
+              hasValue('oh '),
+              reason:
+                  'ctrl modifier key stops input from receiving the remaining characters',
+            );
+            expect(
+              keyUpCalls.last,
+              equals('i'),
+              reason:
+                  'ctrl modifier key will be closed at the end of the type event',
+            );
+
+            _verifyTypeEvent();
+          });
         });
       });
-    });
 
-    // TODO: fix [rtl.UserEvent.typeWithDelay] because longer strings take way longer than 1 millisecond per letter
-    // group('UserEvent.typeWithDelay', () {
-    //   test('', () async {
-    //     await rtl.UserEvent.typeWithDelay(textbox, 'hi', 1);
-    //     await rtl.waitFor(() => expect(textbox, hasValue('hi')));
-    //   });
-    // });
+      group('with default value in the input', () {
+        setUp(() {
+          clickEventCount = 0;
+          keyUpCalls = [];
+
+          rtl.render(react.input({
+            'id': 'root',
+            'onClick': (_) => clickEventCount++,
+            'onKeyUp': (react.SyntheticKeyboardEvent e) =>
+                keyUpCalls.add(e.key),
+            'defaultValue': 'this is a bad example',
+          }) as ReactElement);
+
+          input = rtl.screen.getByRole('textbox');
+          expect(input, hasValue('this is a bad example'),
+              reason: 'sanity check');
+        });
+
+        test('', () async {
+          await _verifyTypeWithDelay('good', 50);
+          expect(input, hasValue('this is a bad examplegood'));
+          _verifyTypeEvent();
+        });
+
+        // TODO: uncomment these tests when https://jira.atl.workiva.net/browse/CPLAT-14155 is fixed.
+        // test('with setSelectionRange', () async {
+        //   input.setSelectionRange(10, 13);
+        //   await _verifyTypeWithDelay('good', 50);
+        //   expect(input, hasValue('this is a good example'));
+        //   _verifyTypeEvent();
+        // });
+        //
+        // test('with setSelectionRange set to zero', () async {
+        //   input.setSelectionRange(0, 0);
+        //   await _verifyTypeWithDelay(
+        //     'good',
+        //     50,
+        //     // initialSelectionStart: 0,
+        //     // initialSelectionEnd: 0,
+        //   );
+        //   expect(input, hasValue('goodthis is a bad example'));
+        //   _verifyTypeEvent();
+        // });
+      });
+    });
   });
 }

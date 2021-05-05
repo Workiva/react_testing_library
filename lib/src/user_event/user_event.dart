@@ -97,6 +97,8 @@ class UserEvent {
 
   /// Writes [text] inside an input or textarea [element].
   ///
+  /// To add a delay between each character typed, use [UserEvent.typeWithDelay].
+  ///
   /// Note that [type] will click the element before typing. To disable this,
   /// set the [skipClick] option to true. When skipping the click you must
   /// manually focus [element] using `element.focus()`.
@@ -156,20 +158,52 @@ class UserEvent {
     );
   }
 
-  // todo add doc comment
+  /// Writes [text] inside an input or textarea [element] with a [delay] between
+  /// each character typed.
+  ///
+  /// Use [UserEvent.type] for no [delay].
+  ///
+  /// Note that [type] will click the element before typing. To disable this,
+  /// set the [skipClick] option to true. When skipping the click you must
+  /// manually focus [element] using `element.focus()`.
+  ///
+  /// > A note about modifiers: Modifier keys ({shift}, {ctrl}, {alt}, {meta})
+  /// will activate their corresponding event modifiers for the duration of type
+  /// command or until they are closed (via {/shift}, {/ctrl}, etc.). If they
+  /// are not closed explicitly, then key up events will be fired to close them
+  /// automatically (to disable this, set the [skipAutoClose] option to true).
+  ///
+  /// > Also note that behavior that happens with modifier key combinations will
+  /// not be simulated as different operating systems function differently in
+  /// this regard.
+  ///
+  /// ### With Selection Range
+  ///
+  /// > Note: [type] does not currently work as expected with selection range.
+  /// > This will be resolved when CPLAT-14155 is fixed.
+  ///
+  /// If [element] already contains a value, [type] will begin typing at the end
+  /// of the existing value by default. To override this behavior and set the
+  /// selection range to something else, call [element.setSelectionRange] before
+  /// calling [type].
+  ///
+  /// In order to set the initial selection range to zero, you must also set
+  /// [initialSelectionStart] and [initialSelectionEnd] to zero along with
+  /// calling `element.setSelectionRange(0, 0)`.
+  ///
+  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
+  // TODO: figure out why this does not work as expected with selection range https://jira.atl.workiva.net/browse/CPLAT-14155
   static Future<void> typeWithDelay(
     Element element,
     String text,
-    // todo possibly change type to Duration
-    int delay, {
+    Duration delay, {
     bool skipClick = false,
     bool skipAutoClose = false,
     dynamic initialSelectionStart,
     dynamic initialSelectionEnd,
   }) async {
-    // todo add arg check to make sure delay is greater than 0
     final options = {
-      'delay': delay,
+      'delay': delay.inMilliseconds,
       'skipClick': skipClick,
       'skipAutoClose': skipAutoClose,
     };

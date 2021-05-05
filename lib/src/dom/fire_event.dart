@@ -30,9 +30,7 @@ import '../user_event/user_event.dart';
 /// > **NOTE:**
 /// >
 /// > Most projects have a few use cases for [fireEvent], but the majority of the time you should
-///   probably use `@testing-library/user-event`.
-/// >
-/// > TODO: Link to the user event interop provided by this library once implemented (CPLAT-13506)
+///   probably use [UserEvent] utilities instead.
 ///
 /// > Related: [fireEventByName]
 ///
