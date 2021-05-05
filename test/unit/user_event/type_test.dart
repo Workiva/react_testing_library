@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
@@ -148,6 +149,58 @@ main() {
         //   expect(input, hasValue('goodthis is a bad example'));
         //   _verifyTypeEvent();
         // });
+      });
+    });
+
+    group('UserEvent.typeWithDelay', () {
+      int clickEventCount;
+      InputElement input;
+      List<String> keyUpCalls;
+
+      void _verifyTypeEvent({
+        bool skipClick = false,
+      }) {
+        // Verify click event.
+        expect(clickEventCount, equals(skipClick ? 0 : 1));
+      }
+
+      group('', () {
+        setUp(() {
+          clickEventCount = 0;
+          keyUpCalls = [];
+
+          rtl.render(react.input({
+            'id': 'root',
+            'onClick': (_) => clickEventCount++,
+            'onKeyUp': (react.SyntheticKeyboardEvent e) =>
+                keyUpCalls.add(e.key),
+          }) as ReactElement);
+
+          input = rtl.screen.getByRole('textbox');
+          expect(input, hasValue(''), reason: 'sanity check');
+        });
+
+        test('with a short delay', () async {
+          final text = 'hello world!';
+          final timer = Stopwatch();
+          timer.start();
+          await rtl.UserEvent.typeWithDelay(input, text, 10);
+          timer.stop();
+          expect(input, hasValue('hello world!'));
+          expect(timer.elapsedMilliseconds, greaterThan((text.length - 1)*10), reason: 'there should be a 10 ms delay between each letter typed',);
+          expect(timer.elapsedMilliseconds, lessThan((text.length - 1)*20), reason: 'it should take less time than a delay of 20 ms',);
+        });
+
+        test('with a longer delay', () async {
+          final text = 'hello world!';
+          final timer = Stopwatch();
+          timer.start();
+          await rtl.UserEvent.typeWithDelay(input, text, 500);
+          timer.stop();
+          expect(input, hasValue('hello world!'));
+          expect(timer.elapsedMilliseconds, greaterThan((text.length - 1)*500), reason: 'there should be a 500 ms delay between each letter typed',);
+          expect(timer.elapsedMilliseconds, lessThan((text.length - 1)*550), reason: 'it should take less time than a delay of 550 ms',);
+        });
       });
     });
 
