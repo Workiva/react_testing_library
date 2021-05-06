@@ -32,9 +32,9 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// ### Examples
 ///
 /// ```html
-/// &lt;button style="display: block; background-color: red">
+/// <button style="display: block; background-color: red">
 ///   Delete
-/// &lt;/button>
+/// </button>
 /// ```
 ///
 /// ```dart

@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// ### Examples
 ///
 /// ```html
-/// &lt;span data-test-id="not-empty">&lt;span data-test-id="empty">&lt;/span>&lt;/span>
+/// <span data-test-id="not-empty"><span data-test-id="empty"></span></span>
 /// ```
 ///
 /// ```dart

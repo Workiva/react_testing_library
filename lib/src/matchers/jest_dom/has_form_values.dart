@@ -35,13 +35,13 @@ import 'package:react_testing_library/src/util/js_utils.dart';
 /// ### Examples
 ///
 /// ```html
-/// &lt;form data-test-id="login-form">
-///   &lt;input type="text" name="username" value="jane.doe" />
-///   &lt;input type="number" name="age" value="35" />
-///   &lt;input type="password" name="password" value="12345678" />
-///   &lt;input type="checkbox" name="rememberMe" checked />
-///   &lt;button type="submit">Sign in&lt;/button>
-/// &lt;/form>
+/// <form data-test-id="login-form">
+///   <input type="text" name="username" value="jane.doe" />
+///   <input type="number" name="age" value="35" />
+///   <input type="password" name="password" value="12345678" />
+///   <input type="checkbox" name="rememberMe" checked />
+///   <button type="submit">Sign in</button>
+/// </form>
 /// ```
 ///
 /// ```dart

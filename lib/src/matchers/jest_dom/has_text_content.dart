@@ -34,7 +34,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// ### Examples
 ///
 /// ```html
-/// &lt;button>Text Content&lt;/button>
+/// <button>Text Content</button>
 /// ```
 ///
 /// ```dart

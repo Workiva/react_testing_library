@@ -41,14 +41,14 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// ### Examples
 ///
 /// ```html
-/// &lt;button aria-label="Close" aria-describedby="description-close">
+/// <button aria-label="Close" aria-describedby="description-close">
 ///   &times;
-/// &lt;/button>
-/// &lt;div id="description-close">
+/// </button>
+/// <div id="description-close">
 ///   Closing will discard any changes
-/// &lt;/div>
+/// </div>
 ///
-/// &lt;button>Delete&lt;/button>
+/// <button>Delete</button>
 /// ```
 ///
 /// ```dart

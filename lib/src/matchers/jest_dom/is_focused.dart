@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// ### Examples
 ///
 /// ```html
-/// &lt;input type="text" name="username" value="jane.doe" />
+/// <input type="text" name="username" value="jane.doe" />
 /// ```
 ///
 /// ```dart

@@ -30,7 +30,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// ### Examples
 /// ```html
-/// &lt;button class="btn extra btn-danger">Delete&lt;/button>
+/// <button class="btn extra btn-danger">Delete</button>
 /// ```
 ///
 /// ```dart
@@ -74,7 +74,7 @@ Matcher hasClasses(dynamic classes) => _ElementClassNameMatcher(_ClassNameMatche
 ///
 /// ### Examples
 /// ```html
-/// &lt;button class="btn extra btn-danger">Delete&lt;/button>
+/// <button class="btn extra btn-danger">Delete</button>
 /// ```
 ///
 /// ```dart
@@ -116,7 +116,7 @@ Matcher hasExactClasses(dynamic classes) =>
 ///
 /// ### Examples
 /// ```html
-/// &lt;button class="btn extra btn-danger">Delete&lt;/button>
+/// <button class="btn extra btn-danger">Delete</button>
 /// ```
 ///
 /// ```dart

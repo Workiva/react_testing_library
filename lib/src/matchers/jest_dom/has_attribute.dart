@@ -29,7 +29,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// ### Examples
 ///
 /// ```html
-/// &lt;button type="submit" aria-label="Submit the form">ok&lt;/button>
+/// <button type="submit" aria-label="Submit the form">ok</button>
 /// ```
 ///
 /// ```dart

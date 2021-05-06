@@ -35,16 +35,16 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 /// ### Examples
 ///
 /// ```html
-/// &lt;form>
-///   &lt;input type="text" name="username" value="jane.doe" />
-///   &lt;input type="number" name="age" value="35" />
-///   &lt;input type="text" name="occupation" />
-///   &lt;select multiple name="options">
-///     &lt;option value="first">First Value&lt;/option>
-///     &lt;option value="second" selected>Second Value&lt;/option>
-///     &lt;option value="third" selected>Third Value&lt;/option>
-///   &lt;/select>
-/// &lt;/form>
+/// <form>
+///   <input type="text" name="username" value="jane.doe" />
+///   <input type="number" name="age" value="35" />
+///   <input type="text" name="occupation" />
+///   <select multiple name="options">
+///     <option value="first">First Value</option>
+///     <option value="second" selected>Second Value</option>
+///     <option value="third" selected>Third Value</option>
+///   </select>
+/// </form>
 /// ```
 ///
 /// ```dart
