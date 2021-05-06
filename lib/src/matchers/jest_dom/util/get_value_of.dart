@@ -32,11 +32,9 @@ dynamic getValueOf(Element element, {dynamic Function(OptionElement option) getO
         throw ArgumentError('getValueOf() does not support checkbox / radio inputs.');
       case 'number':
         return num.tryParse(element.value);
-        break;
       case 'text':
       default:
         return element.value;
-        break;
     }
   } else if (element is SelectElement) {
     getOptionValue ??= (option) => option.value;
