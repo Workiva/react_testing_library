@@ -63,104 +63,66 @@ main() {
 
     group('passes', () {
       group('when checking a single property', () {
-        group('set using an inline style', () {
-          test('matched to a string', () {
-            shouldPass(renderedResult.getByRole('button'), hasStyles('background-color: red'));
-            shouldPass(renderedResult.getByRole('button'), hasStyles('color: #cc0000'));
-            shouldPass(renderedResult.getByRole('button'), hasStyles('border-color: rgba(0, 0, 0, .5)'));
-          });
-
-          test('matched to a Map', () {
-            shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': '2'}),
-                reason: 'string values that can be converted to nums should match their num equivalent');
-            shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': 2}),
-                reason: 'num values should match their string equivalent');
-          });
+        test('set using an inline style', () {
+          shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': '2'}),
+              reason: 'string values that can be converted to nums should match their num equivalent');
+          shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': 2}),
+              reason: 'num values should match their string equivalent');
         });
 
-        group('set using an external stylesheet', () {
-          test('matched to a string', () {
-            shouldPass(renderedResult.getByRole('button'), hasStyles('font-size: 27px'));
-            shouldPass(renderedResult.getByRole('button'), hasStyles('content: "this is the title"'));
-          });
-
-          test('matched to a Map', () {
-            shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': '2'}),
-                reason: 'string values that can be converted to nums should match their num equivalent');
-            shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': 2}),
-                reason: 'num values should match their string equivalent');
-            shouldPass(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}),
-                reason: 'num values should match their string equivalent');
-          });
+        test('set using an external stylesheet', () {
+          shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': '2'}),
+              reason: 'string values that can be converted to nums should match their num equivalent');
+          shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': 2}),
+              reason: 'num values should match their string equivalent');
+          shouldPass(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}),
+              reason: 'num values should match their string equivalent');
         });
       });
 
       group('when checking multiple properties', () {
-        group('set using an inline style', () {
-          test('matched to a string', () {
-            shouldPass(renderedResult.getByRole('button'), hasStyles('''
-              background-color: red;
-              color: #cc0000;
-              border-color: rgba(0, 0, 0, .5);
-              display: block;
-              z-index: 2;
-            '''));
-          });
-
-          test('matched to a Map', () {
-            shouldPass(
-                renderedResult.getByRole('button'),
-                hasStyles({
-                  'background-color': 'red',
-                  'color': '#cc0000',
-                  'border-color': 'rgba(0,0,0,0.5)',
-                  'display': 'block',
-                  'z-index': '2',
-                }),
-                reason: 'string values that can be converted to nums should match their num equivalent');
-            shouldPass(
-                renderedResult.getByRole('button'),
-                hasStyles({
-                  'z-index': 2,
-                }),
-                reason: 'num values should match their string equivalent');
-          });
+        test('set using an inline style', () {
+          shouldPass(
+              renderedResult.getByRole('button'),
+              hasStyles({
+                'background-color': 'red',
+                'color': '#cc0000',
+                'border-color': 'rgba(0,0,0,0.5)',
+                'display': 'block',
+                'z-index': '2',
+              }),
+              reason: 'string values that can be converted to nums should match their num equivalent');
+          shouldPass(
+              renderedResult.getByRole('button'),
+              hasStyles({
+                'z-index': 2,
+              }),
+              reason: 'num values should match their string equivalent');
         });
 
-        group('set using an external stylesheet', () {
-          test('matched to a string', () {
-            shouldPass(renderedResult.getByRole('button'), hasStyles('''
-              font-size: 27px;
-              font-weight: bold;
-              flex-grow: 2;
-              content: "this is the title";
-            '''));
-          });
-
-          test('matched to a Map', () {
-            shouldPass(
-                renderedResult.getByRole('button'),
-                hasStyles({
-                  'font-size': '27px',
-                  'font-weight': 'bold',
-                  'flex-grow': '2',
-                  'content': '"this is the title"',
-                }),
-                reason: 'string values that can be converted to nums should match their num equivalent');
-            shouldPass(
-                renderedResult.getByRole('button'),
-                hasStyles({
-                  'flex-grow': 2,
-                }),
-                reason: 'num values should match their string equivalent');
-          });
+        test('set using an external stylesheet', () {
+          shouldPass(
+              renderedResult.getByRole('button'),
+              hasStyles({
+                'font-size': '27px',
+                'font-weight': 'bold',
+                'flex-grow': '2',
+                'content': '"this is the title"',
+              }),
+              reason: 'string values that can be converted to nums should match their num equivalent');
+          shouldPass(
+              renderedResult.getByRole('button'),
+              hasStyles({
+                'flex-grow': 2,
+              }),
+              reason: 'num values should match their string equivalent');
         });
       });
     });
 
     group('provides a useful failure message when', () {
       test('the first argument of `expect()` is not a valid HTML Element', () {
-        shouldFail('Not an HTML Element', hasStyles('background-color: red'),
+        shouldFail('Not an HTML Element', hasStyles({'backgroundColor': 'red'}),
             contains('Which: $notAnElementMismatchDescription'));
       });
 
@@ -168,7 +130,7 @@ main() {
         test('and the expected value is a string', () {
           shouldFail(
               renderedResult.getByRole('button'),
-              hasStyles('display: inline'),
+              hasStyles({'display': 'inline'}),
               allOf(
                 contains('Expected: A element with styles {\'display\': \'inline\'}'),
                 contains('Which: has styles with value {\'display\': \'block\'}'),
