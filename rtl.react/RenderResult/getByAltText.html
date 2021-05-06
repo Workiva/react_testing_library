@@ -571,7 +571,7 @@
   </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/queries/by_alt_text.dart#L81"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/queries/by_alt_text.dart#L80"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">getByAltText&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;</span> method </h1></div>
 
     <section class="multi-line-signature">
@@ -644,7 +644,12 @@ main() {
   });
 }
 </code></pre>
-<p>{@macro RenderSupportsReactAndOverReactCallout}</p>
+<blockquote>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
+  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
+  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
+</blockquote>
     </section>
     
     <section class="summary source-code" id="source">
