@@ -116,13 +116,10 @@ class _HasValue extends CustomMatcher {
 
   @override
   dynamic featureValueOf(item) {
-    Element element;
-    try {
-      element = item as Element;
-    } catch (_) {
-      // If its not an element, the mismatch description will say so.
-      return null;
-    }
+    // If it's not a Element, the mismatch description will say so.
+    if (item is! Element) return null;
+
+    final element = item as Element;
 
     if (element is InputElement) {
       final type = element.getAttribute('type');

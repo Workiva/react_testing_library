@@ -94,13 +94,10 @@ class _HasStyles extends CustomMatcher {
 
   @override
   featureValueOf(item) {
-    Element element;
-    try {
-      element = item as Element;
-    } catch (_) {
-      // If its not an element, the mismatch description will say so.
-      return null;
-    }
+    // If it's not a Element, the mismatch description will say so.
+    if (item is! Element) return null;
+
+    final element = item as Element;
 
     final allComputedStyles = element.getComputedStyle();
     final stylesToCompare = <String, dynamic>{};
