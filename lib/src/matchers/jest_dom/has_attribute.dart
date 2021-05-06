@@ -61,35 +61,31 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
-Matcher hasAttribute(String attribute, [dynamic valueOrMatcher]) => _ElementAttributeMatcher(attribute, valueOrMatcher);
+Matcher hasAttribute(String attribute, [dynamic valueOrMatcher = isNotNull]) =>
+    _ElementAttributeMatcher(attribute, valueOrMatcher);
 
 class _ElementAttributeMatcher extends CustomMatcher {
   final String _attributeName;
+  final dynamic _valueOrMatcher;
 
-  _ElementAttributeMatcher(String attribute, dynamic valueOrMatcher)
-      : _attributeName = attribute,
-        super(
-          'Element with "$attribute" attribute value of',
-          '"$attribute" attribute',
-          valueOrMatcher == null ? isNotNull : valueOrMatcher,
+  _ElementAttributeMatcher(this._attributeName, this._valueOrMatcher)
+      : super(
+          'Element with "$_attributeName" attribute value of',
+          '"$_attributeName" attribute',
+          _valueOrMatcher,
         );
 
   @override
   featureValueOf(item) {
-    try {
-      return (item as Element).getAttribute(_attributeName);
-    } catch (_) {
-      // If its not an element, the mismatch description will say so.
-    }
-
-    return null;
+    // If its not an element, the mismatch description will say so.
+    return item is Element ? item.getAttribute(_attributeName) : null;
   }
 
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
-    } else if ((item as Element).getAttribute(_attributeName) == null) {
+    } else if (_valueOrMatcher != null && (item as Element).getAttribute(_attributeName) == null) {
       return mismatchDescription..add('does not have an "$_attributeName" attribute.');
     }
 
