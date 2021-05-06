@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -137,14 +138,14 @@
 with a valid <code>aria-checked</code> attribute of "true" or "false".</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tobechecked">jest-dom's <code>toBeChecked</code> matcher</a>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;div&gt;
-  &amp;lt;input type="checkbox" name="pepperoni" checked /&gt;
-  &amp;lt;input type="checkbox" name="pineapple" /&gt;
-  &amp;lt;div role="checkbox" aria-checked="true"&gt;Red Sauce&amp;lt;/div&gt;
-  &amp;lt;div role="checkbox" aria-checked="false"&gt;White Sauce&amp;lt;/div&gt;
-  &amp;lt;div role="switch" aria-checked="true"&gt;Mozzarella&amp;lt;/div&gt;
-  &amp;lt;div role="switch" aria-checked="false"&gt;Cheddar&amp;lt;/div&gt;
-&amp;lt;/div&gt;
+<pre class="language-html"><code class="language-html">&lt;div&gt;
+  &lt;input type="checkbox" name="pepperoni" checked /&gt;
+  &lt;input type="checkbox" name="pineapple" /&gt;
+  &lt;div role="checkbox" aria-checked="true"&gt;Red Sauce&lt;/div&gt;
+  &lt;div role="checkbox" aria-checked="false"&gt;White Sauce&lt;/div&gt;
+  &lt;div role="switch" aria-checked="true"&gt;Mozzarella&lt;/div&gt;
+  &lt;div role="switch" aria-checked="false"&gt;Cheddar&lt;/div&gt;
+&lt;/div&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show isChecked;

@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -139,7 +140,7 @@ with no additional or duplicated classes like the <a href="../matchers/hasClasse
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tohaveclass">jest-dom's <code>toHaveClass</code> matcher</a>
 when the <code>exact</code> option is set to <code>true</code>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;button class="btn extra btn-danger"&gt;Delete&amp;lt;/button&gt;
+<pre class="language-html"><code class="language-html">&lt;button class="btn extra btn-danger"&gt;Delete&lt;/button&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasExactClasses;

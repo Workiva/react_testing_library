@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -137,7 +138,7 @@
 <p><code>classes</code> can be a String of space-separated CSS classes, or an <a href="https://api.dart.dev/stable/2.12.4/dart-core/Iterable-class.html">Iterable</a> of String CSS classes.</p>
 <p>Similar to using <code>.not.hasClasses(classes)</code> in the jest-dom JS API.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;button class="btn extra btn-danger"&gt;Delete&amp;lt;/button&gt;
+<pre class="language-html"><code class="language-html">&lt;button class="btn extra btn-danger"&gt;Delete&lt;/button&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show excludesClasses;

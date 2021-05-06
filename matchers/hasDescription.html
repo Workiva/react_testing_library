@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -146,14 +147,14 @@ will join the referenced elements’ text content separated by a space.</p>
 construct a <code>RegExp</code> with <code>caseSensitive</code> set to true.</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tohavedescription">jest-dom's <code>toHaveDescription</code> matcher</a>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;button aria-label="Close" aria-describedby="description-close"&gt;
+<pre class="language-html"><code class="language-html">&lt;button aria-label="Close" aria-describedby="description-close"&gt;
   &amp;times;
-&amp;lt;/button&gt;
-&amp;lt;div id="description-close"&gt;
+&lt;/button&gt;
+&lt;div id="description-close"&gt;
   Closing will discard any changes
-&amp;lt;/div&gt;
+&lt;/div&gt;
 
-&amp;lt;button&gt;Delete&amp;lt;/button&gt;
+&lt;button&gt;Delete&lt;/button&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasDescription;

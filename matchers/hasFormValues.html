@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -140,13 +141,13 @@ on the type of form control. For instance, <code>&lt;input&gt;</code> elements h
 elements do not. <a href="https://github.com/testing-library/jest-dom#tohaveformvalues">Here's a list of all cases covered</a></p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tohaveformvalues">jest-dom's <code>toHaveFormValues</code> matcher</a>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;form data-test-id="login-form"&gt;
-  &amp;lt;input type="text" name="username" value="jane.doe" /&gt;
-  &amp;lt;input type="number" name="age" value="35" /&gt;
-  &amp;lt;input type="password" name="password" value="12345678" /&gt;
-  &amp;lt;input type="checkbox" name="rememberMe" checked /&gt;
-  &amp;lt;button type="submit"&gt;Sign in&amp;lt;/button&gt;
-&amp;lt;/form&gt;
+<pre class="language-html"><code class="language-html">&lt;form data-test-id="login-form"&gt;
+  &lt;input type="text" name="username" value="jane.doe" /&gt;
+  &lt;input type="number" name="age" value="35" /&gt;
+  &lt;input type="password" name="password" value="12345678" /&gt;
+  &lt;input type="checkbox" name="rememberMe" checked /&gt;
+  &lt;button type="submit"&gt;Sign in&lt;/button&gt;
+&lt;/form&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasFormValues;

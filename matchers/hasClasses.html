@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -139,7 +140,7 @@
 However, instead of the JS <code>.not.toHaveClass()</code> pattern, you should use <a href="../matchers/excludesClasses.html">excludesClasses</a>, and instead of
 using the <code>{exact: true}</code> option as you do in JS, you should use <a href="../matchers/hasExactClasses.html">hasExactClasses</a>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;button class="btn extra btn-danger"&gt;Delete&amp;lt;/button&gt;
+<pre class="language-html"><code class="language-html">&lt;button class="btn extra btn-danger"&gt;Delete&lt;/button&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasClasses;

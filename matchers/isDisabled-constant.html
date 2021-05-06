@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -137,11 +138,11 @@
 is specified, or the element is a descendant of a <a href="https://api.dart.dev/stable/2.12.4/dart-html/FormElement-class.html">FormElement</a> with a <code>disabled</code> attribute.</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tobedisabled">jest-dom's <code>toBeDisabled</code> matcher</a>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;div&gt;
-  &amp;lt;button type="submit" disabled&gt;submit&amp;lt;/button&gt;
-  &amp;lt;fieldset disabled&gt;&amp;lt;input type="text" name="username" value="jane.doe" /&gt;&amp;lt;/fieldset&gt;
-  &amp;lt;a href="..." disabled&gt;link&amp;lt;/a&gt;
-&amp;lt;/div&gt;
+<pre class="language-html"><code class="language-html">&lt;div&gt;
+  &lt;button type="submit" disabled&gt;submit&lt;/button&gt;
+  &lt;fieldset disabled&gt;&lt;input type="text" name="username" value="jane.doe" /&gt;&lt;/fieldset&gt;
+  &lt;a href="..." disabled&gt;link&lt;/a&gt;
+&lt;/div&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show isDisabled;

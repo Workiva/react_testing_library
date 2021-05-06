@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -137,16 +138,16 @@
 with a valid <code>aria-checked</code> attribute value.</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tobepartiallychecked">jest-dom's <code>toBePartiallyChecked</code> matcher</a>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;input type="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" /&gt;
-&amp;lt;input type="checkbox" checked data-test-id="input-checkbox-checked" /&gt;
-&amp;lt;input type="checkbox" data-test-id="input-checkbox-unchecked" /&gt;
-&amp;lt;div role="checkbox" aria-checked="true" data-test-id="aria-checkbox-checked" /&gt;
-&amp;lt;div
+<pre class="language-html"><code class="language-html">&lt;input type="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" /&gt;
+&lt;input type="checkbox" checked data-test-id="input-checkbox-checked" /&gt;
+&lt;input type="checkbox" data-test-id="input-checkbox-unchecked" /&gt;
+&lt;div role="checkbox" aria-checked="true" data-test-id="aria-checkbox-checked" /&gt;
+&lt;div
   role="checkbox"
   aria-checked="false"
   data-test-id="aria-checkbox-unchecked"
 /&gt;
-&amp;lt;input type="checkbox" data-test-id="input-checkbox-indeterminate" indeterminate /&gt;
+&lt;input type="checkbox" data-test-id="input-checkbox-indeterminate" indeterminate /&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react_testing_library/matchers.dart' show isPartiallyChecked;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;

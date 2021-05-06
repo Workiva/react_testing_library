@@ -16,6 +16,7 @@
   <link rel="icon" href="../static-assets/favicon.png">
 
   <style>
+    @import url("https://pub.dev/static/css/github-markdown.css");
     .sidebar-offcanvas-right:empty {
         display: none;
     }
@@ -140,16 +141,16 @@ matched only using <a href="../matchers/isChecked-constant.html">isChecked</a> o
 <p>For all other form elements, the value is matched using the same algorithm as <a href="../matchers/hasFormValues.html">hasFormValues</a> does.</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tohavevalue">jest-dom's <code>toHaveValue</code> matcher</a>.</p>
 <h3 id="examples">Examples</h3>
-<pre class="language-html"><code class="language-html">&amp;lt;form&gt;
-  &amp;lt;input type="text" name="username" value="jane.doe" /&gt;
-  &amp;lt;input type="number" name="age" value="35" /&gt;
-  &amp;lt;input type="text" name="occupation" /&gt;
-  &amp;lt;select multiple name="options"&gt;
-    &amp;lt;option value="first"&gt;First Value&amp;lt;/option&gt;
-    &amp;lt;option value="second" selected&gt;Second Value&amp;lt;/option&gt;
-    &amp;lt;option value="third" selected&gt;Third Value&amp;lt;/option&gt;
-  &amp;lt;/select&gt;
-&amp;lt;/form&gt;
+<pre class="language-html"><code class="language-html">&lt;form&gt;
+  &lt;input type="text" name="username" value="jane.doe" /&gt;
+  &lt;input type="number" name="age" value="35" /&gt;
+  &lt;input type="text" name="occupation" /&gt;
+  &lt;select multiple name="options"&gt;
+    &lt;option value="first"&gt;First Value&lt;/option&gt;
+    &lt;option value="second" selected&gt;Second Value&lt;/option&gt;
+    &lt;option value="third" selected&gt;Third Value&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/form&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasValue;
