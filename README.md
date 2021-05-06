@@ -120,9 +120,13 @@ _test/unit/some_unit_test.html_
 
 ### 5. Write test(s) for your component(s)!
 
+Using the rendering / querying utilities from the `react_testing_library.dart` entrypoint, and optionally, the 
+`Matcher`s from the `matchers.dart` entrypoint, you can now render react components to the DOM and query within 
+the rendered content to get the element(s) you want to test!
+
 > The example below is extremely simplistic for the purposes of demonstration. We will have more thorough examples documented soon!
 
-<!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13500) -->
+<!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) -->
 
 _lib/src/components/greeting.dart_
 ```dart
@@ -153,7 +157,10 @@ _test/unit/components/greeting_test.dart_
 import 'dart:html';
 
 import 'package:test/test.dart';
-import 'package:react_testing_library/react_testing_library' as rtl;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/matchers.dart';
+
+import 'some_path_to/greeting.dart';
 
 main() {
   group('Greeting', () {
@@ -178,17 +185,17 @@ main() {
         
         test('with a child <h1> with a text value equal to props.heading', () {
           final h1Element = rtl.within(headerElement).getByRole('heading', level: 1); 
-          expect(h1Element.text, 'Hello There!');
+          expect(h1Element, hasTextContent('Hello There!'));
         });
         
         test('with a child <h2> with a text value equal to props.subHeading', () {
           final h2Element = rtl.within(headerElement).getByRole('heading', level: 2); 
-          expect(h2Element.text, 'Welcome to the unit testing party.');
+          expect(h2Element, hasTextContent('Welcome to the unit testing party.'));
         });
         
         test('with a child <a> with an href equal to props.getStartedRoute', () {
-          final anchorElement = rtl.within(headerElement).getByRole<AnchorElement>('link'); 
-          expect(anchorElement.href, '/start/partying');
+          final anchorElement = rtl.within(headerElement).getByRole('link'); 
+          expect(anchorElement, hasAttribute('href', '/start/partying'));
         });
       });
     });
