@@ -52,7 +52,7 @@ main() {
             () => containsElement(null),
             throwsA(allOf(
               isA<ArgumentError>(),
-              hasToStringValue(contains('descendant must be a non-null Element')),
+              hasToStringValue(contains('Invalid argument(s) (descendant): Must not be null')),
             )));
       });
     });
