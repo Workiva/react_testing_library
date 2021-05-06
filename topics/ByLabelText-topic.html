@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="ByLabelText Topic docs, for the Dart programming language.">
+  <title>ByLabelText Topic - Dart API</title>
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  <style>
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+</style>
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">react_testing_library</a></li>
+    <li class="self-crumb">ByLabelText Topic</li>
+  </ol>
+  <div class="self-name">ByLabelText</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">react_testing_library</a></li>
+      <li class="self-crumb">ByLabelText Topic</li>
+    </ol>
+    
+    <h5><span class="package-name">react_testing_library</span> <span class="package-kind">package</span></h5>
+    <ol>
+          <li class="section-title">Topics</li>
+            <li><a href="../topics/Async-topic.html">Async</a></li>
+            <li><a href="../topics/ByAltText-topic.html">ByAltText</a></li>
+            <li><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></li>
+            <li><a href="../topics/ByLabelText-topic.html">ByLabelText</a></li>
+            <li><a href="../topics/ByPlaceholderText-topic.html">ByPlaceholderText</a></li>
+            <li><a href="../topics/ByRole-topic.html">ByRole</a></li>
+            <li><a href="../topics/ByTestId-topic.html">ByTestId</a></li>
+            <li><a href="../topics/ByText-topic.html">ByText</a></li>
+            <li><a href="../topics/ByTitle-topic.html">ByTitle</a></li>
+            <li><a href="../topics/Matchers-topic.html">Matchers</a></li>
+            <li><a href="../topics/Queries-topic.html">Queries</a></li>
+          <li class="section-title">Libraries</li>
+          <li class="section-subtitle">Dom</li>
+            <li class="section-subitem"><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.configure/rtl.dom.configure-library.html">rtl.dom.configure</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.queries/rtl.dom.queries-library.html">rtl.dom.queries</a></li>
+          <li class="section-subtitle">Matchers</li>
+            <li class="section-subitem"><a href="../matchers/matchers-library.html">matchers</a></li>
+          <li class="section-subtitle">React</li>
+            <li class="section-subitem"><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <h1><span class="kind-category">ByLabelText</span> Topic</h1>
+      <section class="desc markdown">
+        <blockquote>
+<p>getByLabelText, queryByLabelText, getAllByLabelText, queryAllByLabelText, findByLabelText, findAllByLabelText</p>
+</blockquote>
+      </section>
+      
+
+
+
+
+
+      <section class="summary offset-anchor" id="functions">
+        <h2>Functions</h2>
+
+        <dl class="callables">
+            <dt id="findAllByLabelText" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/findAllByLabelText.html">findAllByLabelText</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findAllByLabelText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findAllByLabelText-param-text"><span class="type-annotation">dynamic</span> <span class="parameter-name">text</span>, </span><span class="parameter" id="findAllByLabelText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findAllByLabelText-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findAllByLabelText-param-selector"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">selector</span>, </span><span class="parameter" id="findAllByLabelText-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findAllByLabelText-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findAllByLabelText-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findAllByLabelText-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>&gt;</span></span>
+              </span>
+                              <span class="category async cp-0 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
+                  <span class="category bylabeltext cp-3 linked" title="This is part of the ByLabelText Topic."><a href="../topics/ByLabelText-topic.html">ByLabelText</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a list of elements that are associated with a <a href="https://api.dart.dev/stable/2.12.4/dart-html/LabelElement-class.html">LabelElement</a> with the given <code>text</code>,
+defaulting to an <code>exact</code> match after waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findAllByLabelText.html">[...]</a>
+                          
+</dd>
+            <dt id="findByLabelText" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/findByLabelText.html">findByLabelText</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findByLabelText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findByLabelText-param-text"><span class="type-annotation">dynamic</span> <span class="parameter-name">text</span>, </span><span class="parameter" id="findByLabelText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findByLabelText-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findByLabelText-param-selector"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">selector</span>, </span><span class="parameter" id="findByLabelText-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findByLabelText-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findByLabelText-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findByLabelText-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+              </span>
+                              <span class="category async cp-0 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
+                  <span class="category bylabeltext cp-3 linked" title="This is part of the ByLabelText Topic."><a href="../topics/ByLabelText-topic.html">ByLabelText</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a future with a single element that is associated with a <a href="https://api.dart.dev/stable/2.12.4/dart-html/LabelElement-class.html">LabelElement</a> with the given <code>text</code>,
+defaulting to an <code>exact</code> match after waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findByLabelText.html">[...]</a>
+                          
+</dd>
+            <dt id="getAllByLabelText" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/getAllByLabelText.html">getAllByLabelText</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getAllByLabelText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getAllByLabelText-param-text"><span class="type-annotation">dynamic</span> <span class="parameter-name">text</span>, </span><span class="parameter" id="getAllByLabelText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getAllByLabelText-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="getAllByLabelText-param-selector"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">selector</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+              </span>
+                              <span class="category bylabeltext cp-3 linked" title="This is part of the ByLabelText Topic."><a href="../topics/ByLabelText-topic.html">ByLabelText</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a list of elements that are associated with a <a href="https://api.dart.dev/stable/2.12.4/dart-html/LabelElement-class.html">LabelElement</a> with the given <code>text</code>,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getAllByLabelText.html">[...]</a>
+                          
+</dd>
+            <dt id="getByLabelText" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/getByLabelText.html">getByLabelText</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getByLabelText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getByLabelText-param-text"><span class="type-annotation">dynamic</span> <span class="parameter-name">text</span>, </span><span class="parameter" id="getByLabelText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getByLabelText-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="getByLabelText-param-selector"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">selector</span>}</span>)
+                <span class="returntype parameter">&#8594; E</span>
+              </span>
+                              <span class="category bylabeltext cp-3 linked" title="This is part of the ByLabelText Topic."><a href="../topics/ByLabelText-topic.html">ByLabelText</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a single element that is associated with a <a href="https://api.dart.dev/stable/2.12.4/dart-html/LabelElement-class.html">LabelElement</a> with the given <code>text</code>,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getByLabelText.html">[...]</a>
+                          
+</dd>
+            <dt id="queryAllByLabelText" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/queryAllByLabelText.html">queryAllByLabelText</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryAllByLabelText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryAllByLabelText-param-text"><span class="type-annotation">dynamic</span> <span class="parameter-name">text</span>, </span><span class="parameter" id="queryAllByLabelText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryAllByLabelText-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="queryAllByLabelText-param-selector"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">selector</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+              </span>
+                              <span class="category bylabeltext cp-3 linked" title="This is part of the ByLabelText Topic."><a href="../topics/ByLabelText-topic.html">ByLabelText</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a list of elements that are associated with a <a href="https://api.dart.dev/stable/2.12.4/dart-html/LabelElement-class.html">LabelElement</a> with the given <code>text</code>,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryAllByLabelText.html">[...]</a>
+                          
+</dd>
+            <dt id="queryByLabelText" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/queryByLabelText.html">queryByLabelText</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryByLabelText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryByLabelText-param-text"><span class="type-annotation">dynamic</span> <span class="parameter-name">text</span>, </span><span class="parameter" id="queryByLabelText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryByLabelText-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="queryByLabelText-param-selector"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">selector</span>}</span>)
+                <span class="returntype parameter">&#8594; E</span>
+              </span>
+                              <span class="category bylabeltext cp-3 linked" title="This is part of the ByLabelText Topic."><a href="../topics/ByLabelText-topic.html">ByLabelText</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a single element that is associated with a <a href="https://api.dart.dev/stable/2.12.4/dart-html/LabelElement-class.html">LabelElement</a> with the given <code>text</code>,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryByLabelText.html">[...]</a>
+                          
+</dd>
+        </dl>
+      </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>ByLabelText Topic</h5>
+    <ol>
+    
+    
+    
+    
+    
+      <li class="section-title"><a href="../topics/ByLabelText-topic.html#functions">Functions</a></li>
+      <li><a href="../rtl.dom.queries/findAllByLabelText.html">findAllByLabelText</a></li>
+      <li><a href="../rtl.dom.queries/findByLabelText.html">findByLabelText</a></li>
+      <li><a href="../rtl.dom.queries/getAllByLabelText.html">getAllByLabelText</a></li>
+      <li><a href="../rtl.dom.queries/getByLabelText.html">getByLabelText</a></li>
+      <li><a href="../rtl.dom.queries/queryAllByLabelText.html">queryAllByLabelText</a></li>
+      <li><a href="../rtl.dom.queries/queryByLabelText.html">queryByLabelText</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/sidebar-offcanvas-right-->
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      0.1.0-nullsafety.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>

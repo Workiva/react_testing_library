@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="matchers library API docs, for the Dart programming language.">
+  <title>matchers library - Dart API</title>
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  <style>
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+</style>
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">react_testing_library</a></li>
+    <li class="self-crumb">matchers library</li>
+  </ol>
+  <div class="self-name">matchers</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">react_testing_library</a></li>
+      <li class="self-crumb">matchers library</li>
+    </ol>
+    
+    <h5><span class="package-name">react_testing_library</span> <span class="package-kind">package</span></h5>
+    <ol>
+          <li class="section-title">Topics</li>
+            <li><a href="../topics/Async-topic.html">Async</a></li>
+            <li><a href="../topics/ByAltText-topic.html">ByAltText</a></li>
+            <li><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></li>
+            <li><a href="../topics/ByLabelText-topic.html">ByLabelText</a></li>
+            <li><a href="../topics/ByPlaceholderText-topic.html">ByPlaceholderText</a></li>
+            <li><a href="../topics/ByRole-topic.html">ByRole</a></li>
+            <li><a href="../topics/ByTestId-topic.html">ByTestId</a></li>
+            <li><a href="../topics/ByText-topic.html">ByText</a></li>
+            <li><a href="../topics/ByTitle-topic.html">ByTitle</a></li>
+            <li><a href="../topics/Matchers-topic.html">Matchers</a></li>
+            <li><a href="../topics/Queries-topic.html">Queries</a></li>
+          <li class="section-title">Libraries</li>
+          <li class="section-subtitle">Dom</li>
+            <li class="section-subitem"><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.configure/rtl.dom.configure-library.html">rtl.dom.configure</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.queries/rtl.dom.queries-library.html">rtl.dom.queries</a></li>
+          <li class="section-subtitle">Matchers</li>
+            <li class="section-subitem"><a href="../matchers/matchers-library.html">matchers</a></li>
+          <li class="section-subtitle">React</li>
+            <li class="section-subitem"><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/matchers.dart#L24"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-library">matchers</span> library      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+</h1></div>
+
+    <section class="desc markdown">
+      <p>A collection of Dart <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a>s to use when unit testing React components using the <code>react_testing_library</code>.</p>
+<p>Includes all the <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a>s found in the
+<a href="https://testing-library.com/docs/ecosystem-jest-dom">JS <code>jest-dom</code> package</a>, which is an integral part of
+the testing-library's ecosystem.</p>
+    </section>
+    
+
+
+
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+
+      <dl class="properties">
+        <dt id="isChecked" class="constant">
+          <span class="name "><a href="../matchers/isChecked-constant.html">isChecked</a></span>
+          <span class="signature">&#8594; const <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether the given element is <code>checked</code>. <a href="../matchers/isChecked-constant.html">[...]</a>
+                  
+  <div>
+            <span class="signature"><code>_IsChecked()</code></span>
+          </div>
+        </dd>
+        <dt id="isDisabled" class="constant">
+          <span class="name "><a href="../matchers/isDisabled-constant.html">isDisabled</a></span>
+          <span class="signature">&#8594; const <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to assert whether an element is disabled from the user's perspective. <a href="../matchers/isDisabled-constant.html">[...]</a>
+                  
+  <div>
+            <span class="signature"><code>_IsDisabled()</code></span>
+          </div>
+        </dd>
+        <dt id="isEmptyDomElement" class="constant">
+          <span class="name "><a href="../matchers/isEmptyDomElement-constant.html">isEmptyDomElement</a></span>
+          <span class="signature">&#8594; const <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to assert whether an element has content or not. <a href="../matchers/isEmptyDomElement-constant.html">[...]</a>
+                  
+  <div>
+            <span class="signature"><code>_IsEmptyDomElement()</code></span>
+          </div>
+        </dd>
+        <dt id="isEnabled" class="constant">
+          <span class="name "><a href="../matchers/isEnabled-constant.html">isEnabled</a></span>
+          <span class="signature">&#8594; const <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether an element is not disabled from the user's perspective. <a href="../matchers/isEnabled-constant.html">[...]</a>
+                  
+  <div>
+            <span class="signature"><code>_IsEnabled()</code></span>
+          </div>
+        </dd>
+        <dt id="isFocused" class="constant">
+          <span class="name "><a href="../matchers/isFocused-constant.html">isFocused</a></span>
+          <span class="signature">&#8594; const <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to assert whether an element has focus or not. <a href="../matchers/isFocused-constant.html">[...]</a>
+                  
+  <div>
+            <span class="signature"><code>_IsFocused()</code></span>
+          </div>
+        </dd>
+        <dt id="isInTheDocument" class="constant">
+          <span class="name "><a href="../matchers/isInTheDocument-constant.html">isInTheDocument</a></span>
+          <span class="signature">&#8594; const <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to assert whether an element is present in the <a href="https://api.dart.dev/stable/2.12.4/dart-html/document.html">document</a> or not. <a href="../matchers/isInTheDocument-constant.html">[...]</a>
+                  
+  <div>
+            <span class="signature"><code>_IsInTheDocument()</code></span>
+          </div>
+        </dd>
+        <dt id="isPartiallyChecked" class="constant">
+          <span class="name "><a href="../matchers/isPartiallyChecked-constant.html">isPartiallyChecked</a></span>
+          <span class="signature">&#8594; const <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether the given element is partially <code>checked</code> <em>a.k.a <code>indeterminate</code></em>. <a href="../matchers/isPartiallyChecked-constant.html">[...]</a>
+                  
+  <div>
+            <span class="signature"><code>_IsPartiallyChecked()</code></span>
+          </div>
+        </dd>
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
+
+      <dl class="callables">
+        <dt id="containsElement" class="callable">
+          <span class="name"><a href="../matchers/containsElement.html">containsElement</a></span><span class="signature">(<wbr><span class="parameter" id="containsElement-param-descendant"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">descendant</span></span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to assert whether an element contains another element as a descendant or not. <a href="../matchers/containsElement.html">[...]</a>
+                  
+</dd>
+        <dt id="excludesClasses" class="callable">
+          <span class="name"><a href="../matchers/excludesClasses.html">excludesClasses</a></span><span class="signature">(<wbr><span class="parameter" id="excludesClasses-param-classes"><span class="type-annotation">dynamic</span> <span class="parameter-name">classes</span></span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether an <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a> does not have certain <code>classes</code> within its HTML <code>class</code> attribute. <a href="../matchers/excludesClasses.html">[...]</a>
+                  
+</dd>
+        <dt id="hasAttribute" class="callable">
+          <span class="name"><a href="../matchers/hasAttribute.html">hasAttribute</a></span><span class="signature">(<wbr><span class="parameter" id="hasAttribute-param-attribute"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">attribute</span>, </span><span class="parameter" id="hasAttribute-param-valueOrMatcher">[<span class="type-annotation">dynamic</span> <span class="parameter-name">valueOrMatcher</span>]</span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether an element has an <code>attribute</code> that matches the provided <code>valueOrMatcher</code> or not. <a href="../matchers/hasAttribute.html">[...]</a>
+                  
+</dd>
+        <dt id="hasClasses" class="callable">
+          <span class="name"><a href="../matchers/hasClasses.html">hasClasses</a></span><span class="signature">(<wbr><span class="parameter" id="hasClasses-param-classes"><span class="type-annotation">dynamic</span> <span class="parameter-name">classes</span></span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether an <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute. <a href="../matchers/hasClasses.html">[...]</a>
+                  
+</dd>
+        <dt id="hasDescription" class="callable">
+          <span class="name"><a href="../matchers/hasDescription.html">hasDescription</a></span><span class="signature">(<wbr><span class="parameter" id="hasDescription-param-expectedDescription">[<span class="type-annotation">dynamic</span> <span class="parameter-name">expectedDescription</span>, </span><span class="parameter" id="hasDescription-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether the given element has a description or not. <a href="../matchers/hasDescription.html">[...]</a>
+                  
+</dd>
+        <dt id="hasDisplayValue" class="callable">
+          <span class="name"><a href="../matchers/hasDisplayValue.html">hasDisplayValue</a></span><span class="signature">(<wbr><span class="parameter" id="hasDisplayValue-param-value">[<span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>]</span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether the given form element has the specified displayed value
+<em>(the one the end user will see)</em>. <a href="../matchers/hasDisplayValue.html">[...]</a>
+                  
+</dd>
+        <dt id="hasExactClasses" class="callable">
+          <span class="name"><a href="../matchers/hasExactClasses.html">hasExactClasses</a></span><span class="signature">(<wbr><span class="parameter" id="hasExactClasses-param-classes"><span class="type-annotation">dynamic</span> <span class="parameter-name">classes</span></span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether an <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute,
+with no additional or duplicated classes like the <a href="../matchers/hasClasses.html">hasClasses</a> matcher allows. <a href="../matchers/hasExactClasses.html">[...]</a>
+                  
+</dd>
+        <dt id="hasFormValues" class="callable">
+          <span class="name"><a href="../matchers/hasFormValues.html">hasFormValues</a></span><span class="signature">(<wbr><span class="parameter" id="hasFormValues-param-valuesMap"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">valuesMap</span></span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check if a <a href="https://api.dart.dev/stable/2.12.4/dart-html/FormElement-class.html">FormElement</a> or <a href="https://api.dart.dev/stable/2.12.4/dart-html/FieldSetElement-class.html">FieldSetElement</a> contains form controls for each given name
+in the provided <code>valuesMap</code> with the corresponding value. <a href="../matchers/hasFormValues.html">[...]</a>
+                  
+</dd>
+        <dt id="hasStyles" class="callable">
+          <span class="name"><a href="../matchers/hasStyles.html">hasStyles</a></span><span class="signature">(<wbr><span class="parameter" id="hasStyles-param-styles"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">styles</span></span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check if a certain element has some specific CSS property value(s) applied. <a href="../matchers/hasStyles.html">[...]</a>
+                  
+</dd>
+        <dt id="hasTextContent" class="callable">
+          <span class="name"><a href="../matchers/hasTextContent.html">hasTextContent</a></span><span class="signature">(<wbr><span class="parameter" id="hasTextContent-param-expected">[<span class="type-annotation">dynamic</span> <span class="parameter-name">expected</span>, </span><span class="parameter" id="hasTextContent-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether an element has the <code>expected</code> text content or not. <a href="../matchers/hasTextContent.html">[...]</a>
+                  
+</dd>
+        <dt id="hasValue" class="callable">
+          <span class="name"><a href="../matchers/hasValue.html">hasValue</a></span><span class="signature">(<wbr><span class="parameter" id="hasValue-param-value">[<span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>]</span>)
+            <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
+          </span>
+                      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+          </dt>
+        <dd>
+          Allows you to check whether the given form element has the specified <code>value</code>. <a href="../matchers/hasValue.html">[...]</a>
+                  
+</dd>
+      </dl>
+    </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>matchers library</h5>
+    <ol>
+
+
+
+  <li class="section-title"><a href="../matchers/matchers-library.html#constants">Constants</a></li>
+  <li><a href="../matchers/isChecked-constant.html">isChecked</a></li>
+  <li><a href="../matchers/isDisabled-constant.html">isDisabled</a></li>
+  <li><a href="../matchers/isEmptyDomElement-constant.html">isEmptyDomElement</a></li>
+  <li><a href="../matchers/isEnabled-constant.html">isEnabled</a></li>
+  <li><a href="../matchers/isFocused-constant.html">isFocused</a></li>
+  <li><a href="../matchers/isInTheDocument-constant.html">isInTheDocument</a></li>
+  <li><a href="../matchers/isPartiallyChecked-constant.html">isPartiallyChecked</a></li>
+
+
+  <li class="section-title"><a href="../matchers/matchers-library.html#functions">Functions</a></li>
+  <li><a href="../matchers/containsElement.html">containsElement</a></li>
+  <li><a href="../matchers/excludesClasses.html">excludesClasses</a></li>
+  <li><a href="../matchers/hasAttribute.html">hasAttribute</a></li>
+  <li><a href="../matchers/hasClasses.html">hasClasses</a></li>
+  <li><a href="../matchers/hasDescription.html">hasDescription</a></li>
+  <li><a href="../matchers/hasDisplayValue.html">hasDisplayValue</a></li>
+  <li><a href="../matchers/hasExactClasses.html">hasExactClasses</a></li>
+  <li><a href="../matchers/hasFormValues.html">hasFormValues</a></li>
+  <li><a href="../matchers/hasStyles.html">hasStyles</a></li>
+  <li><a href="../matchers/hasTextContent.html">hasTextContent</a></li>
+  <li><a href="../matchers/hasValue.html">hasValue</a></li>
+
+
+
+</ol>
+
+  </div><!--/sidebar-offcanvas-right-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      0.1.0-nullsafety.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>

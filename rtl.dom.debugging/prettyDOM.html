@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the prettyDOM function from the rtl.dom.debugging library, for the Dart programming language.">
+  <title>prettyDOM function - rtl.dom.debugging library - Dart API</title>
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  <style>
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+</style>
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">react_testing_library</a></li>
+    <li><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
+    <li class="self-crumb">prettyDOM function</li>
+  </ol>
+  <div class="self-name">prettyDOM</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">react_testing_library</a></li>
+      <li><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
+      <li class="self-crumb">prettyDOM function</li>
+    </ol>
+    
+    <h5>rtl.dom.debugging library</h5>
+    <ol>
+
+
+
+
+
+  <li class="section-title"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html#functions">Functions</a></li>
+  <li><a href="../rtl.dom.debugging/prettyDOM.html">prettyDOM</a></li>
+
+
+
+  <li class="section-title"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html#exceptions">Exceptions</a></li>
+  <li><a href="../rtl.dom.debugging/TestingLibraryElementError-class.html">TestingLibraryElementError</a></li>
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/pretty_dom.dart#L56"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">prettyDOM</span> function  </h1></div>
+
+    <section class="multi-line-signature">
+        <span class="returntype"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span>
+                <span class="name ">prettyDOM</span>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="prettyDOM-param-node"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">node</span>, </span></li>
+<li><span class="parameter" id="prettyDOM-param-maxLength">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">maxLength</span>, </span></li>
+<li><span class="parameter" id="prettyDOM-param-indent"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">indent</span>, </span></li>
+<li><span class="parameter" id="prettyDOM-param-maxDepth"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">maxDepth</span>, </span></li>
+<li><span class="parameter" id="prettyDOM-param-min"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">min</span>}</span></li>
+</ol>)
+    </section>
+    <section class="desc markdown">
+      <p>Returns a readable representation of the DOM tree of the given <code>node</code>.</p>
+<p>This can be helpful when debugging tests:</p>
+<pre class="language-dart"><code class="language-dart">import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('', () {
+    final renderedResult = rtl.render(someReactVDom);
+    print(rtl.prettyDOM(renderedResult.container));
+  });
+}
+</code></pre>
+<h2 id="options">Options</h2>
+<p><code>prettyDOM</code> is built atop <a href="https://github.com/facebook/jest/tree/master/packages/pretty-format">Jest's <code>prettyFormat</code> function</a>,
+which has many options that are only relevant when formatting JavaScript code, not HTML. Because of this,
+the options exposed here are a subset of the <a href="https://github.com/facebook/jest/tree/master/packages/pretty-format#usage-with-options"><code>prettyFormat</code> options</a>.</p>
+<h3 id="maxlength">maxLength</h3>
+<p>An optional argument to limit the size of the resulting string output, for cases when it becomes too large.</p>
+<h3 id="indent">indent</h3>
+<p>The number of spaces in each level of indentation, defaulting to <code>2</code>.</p>
+<h3 id="maxdepth">maxDepth</h3>
+<p>The number of nested levels to print in the DOM tree.</p>
+<h3 id="min">min</h3>
+<p>Whether to minimize added space: no indentation nor line breaks. Defaults to <code>false</code>.</p>
+<blockquote>
+<p><strong>At this time, formatting plugins and syntax highlighting are not supported.</strong></p>
+</blockquote>
+<blockquote>
+<p>See the <a href="https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom">JS <code>prettyDOM</code> docs</a> for more details and examples.</p>
+</blockquote>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">String prettyDOM(
+  Node node, {
+  int maxLength,
+  int indent,
+  int maxDepth,
+  bool min,
+}) {
+  final options = PrettyDomOptions();
+  if (indent != null) options.indent = indent;
+  if (maxDepth != null) options.maxDepth = maxDepth;
+  if (min != null) options.min = min;
+
+  return _jsPrettyDOM(node, maxLength, options);
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      0.1.0-nullsafety.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>

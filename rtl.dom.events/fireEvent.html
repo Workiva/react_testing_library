@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the fireEvent function from the rtl.dom.events library, for the Dart programming language.">
+  <title>fireEvent function - rtl.dom.events library - Dart API</title>
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  <style>
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+</style>
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">react_testing_library</a></li>
+    <li><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
+    <li class="self-crumb">fireEvent function</li>
+  </ol>
+  <div class="self-name">fireEvent</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">react_testing_library</a></li>
+      <li><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
+      <li class="self-crumb">fireEvent function</li>
+    </ol>
+    
+    <h5>rtl.dom.events library</h5>
+    <ol>
+
+
+
+
+
+  <li class="section-title"><a href="../rtl.dom.events/rtl.dom.events-library.html#functions">Functions</a></li>
+  <li><a href="../rtl.dom.events/fireEvent.html">fireEvent</a></li>
+  <li><a href="../rtl.dom.events/fireEventByName.html">fireEventByName</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/fire_event.dart#L39"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">fireEvent</span> function  </h1></div>
+
+    <section class="multi-line-signature">
+        <div>
+          <ol class="annotation-list">
+            <li>@<a href="https://pub.dev/documentation/js/0.6.3/js/JS-class.html">JS</a>(&#39;rtl.fireEvent&#39;)</li>
+          </ol>
+        </div>
+        <span class="returntype"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span>
+                <span class="name ">fireEvent</span>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="fireEvent-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span></li>
+<li><span class="parameter" id="fireEvent-param-event"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Event-class.html">Event</a></span> <span class="parameter-name">event</span></span></li>
+</ol>)
+    </section>
+    <section class="desc markdown">
+      <p>Fires a DOM <code>event</code> on the provided <code>element</code>.</p>
+<blockquote>
+<p><strong>NOTE:</strong></p>
+<p>Most projects have a few use cases for <a href="../rtl.dom.events/fireEvent.html">fireEvent</a>, but the majority of the time you should
+  probably use <code>@testing-library/user-event</code>.</p>
+<p>TODO: Link to the user event interop provided by this library once implemented (CPLAT-13506)</p>
+</blockquote>
+<blockquote>
+<p>Related: <a href="../rtl.dom.events/fireEventByName.html">fireEventByName</a></p>
+</blockquote>
+<blockquote>
+<p>See: <a href="https://testing-library.com/docs/dom-testing-library/api-events/#fireevent">testing-library.com/docs/dom-testing-library/api-events/#fireevent</a></p>
+</blockquote>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">@JS(&#39;rtl.fireEvent&#39;)
+external bool fireEvent(
+  Element element,
+  Event event,
+);</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      0.1.0-nullsafety.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>

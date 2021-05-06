@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the render function from the rtl.react library, for the Dart programming language.">
+  <title>render function - rtl.react library - Dart API</title>
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  <style>
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+</style>
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">react_testing_library</a></li>
+    <li><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+    <li class="self-crumb">render function</li>
+  </ol>
+  <div class="self-name">render</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">react_testing_library</a></li>
+      <li><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+      <li class="self-crumb">render function</li>
+    </ol>
+    
+    <h5>rtl.react library</h5>
+    <ol>
+  <li class="section-title"><a href="../rtl.react/rtl.react-library.html#classes">Classes</a></li>
+  <li><a href="../rtl.react/RenderResult-class.html">RenderResult</a></li>
+
+
+
+
+
+  <li class="section-title"><a href="../rtl.react/rtl.react-library.html#functions">Functions</a></li>
+  <li><a href="../rtl.react/render.html">render</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/react/render/render.dart#L49"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">render</span> function  </h1></div>
+
+    <section class="multi-line-signature">
+        <span class="returntype"><a href="../rtl.react/RenderResult-class.html">RenderResult</a></span>
+                <span class="name ">render</span>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="render-param-ui"><span class="type-annotation">ReactElement</span> <span class="parameter-name">ui</span>, </span></li>
+<li><span class="parameter" id="render-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<li><span class="parameter" id="render-param-baseElement"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">baseElement</span>, </span></li>
+<li><span class="parameter" id="render-param-hydrate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hydrate</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="render-param-wrapper"><span class="type-annotation">dynamic</span> <span class="parameter-name">wrapper</span>, </span></li>
+<li><span class="parameter" id="render-param-autoTearDown"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">autoTearDown</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="render-param-onDidTearDown"><span class="type-annotation">void</span> <span class="parameter-name">onDidTearDown</span>(<ol class="parameter-list"></ol>
+)}</span></li>
+</ol>)
+    </section>
+    <section class="desc markdown">
+      <p>Renders the <code>ui</code> element into the DOM, returning a <a href="../rtl.react/RenderResult-class.html">RenderResult</a> API that can be used
+to do things like <a href="../rtl.react/RenderResult/rerender.html">RenderResult.rerender</a> with different props, or to call
+a query function scoped within the <code>container</code> that was rendered into.</p>
+<p>By default, the <code>container</code> will be removed from the DOM and <a href="../rtl.react/RenderResult/unmount.html">RenderResult.unmount</a> will be called
+along with an optional <code>onDidTearDown</code> in the <code>tearDown</code> of any test that calls this
+function unless <code>autoTearDown</code> is set to false.</p>
+<p>Optionally, you can specify:</p>
+<ul>
+<li><strong><code>container</code></strong>, which will be the mount point of the React tree.
+This must be a <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a> that exists in the DOM at the time that <code>render</code> is called.</li>
+<li><strong><code>wrapper</code></strong>, which will be wrapped around the <code>ui</code> - which is
+especially useful when testing components that need a context provider of some kind.
+This should be an OverReact <code>UiFactory</code> or a <code>ReactComponentFactoryProxy</code>.</li>
+</ul>
+<blockquote>
+<p>See: <a href="https://testing-library.com/docs/react-testing-library/api#render">testing-library.com/docs/react-testing-library/api#render</a></p>
+</blockquote>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">RenderResult render(
+  ReactElement ui, {
+  Node container,
+  Node baseElement,
+  bool hydrate = false,
+  &#47;&#47; TODO: Implement if CPLAT-13502 is deemed necessary
+  &#47;&#47; Map&lt;String, Query&gt; queries,
+  &#47;*UiFactory || ReactComponentFactoryProxy*&#47; wrapper,
+  bool autoTearDown = true,
+  void Function() onDidTearDown,
+}) {
+  final renderOptions = RenderOptions()..hydrate = hydrate;
+  if (container != null) renderOptions.container = container;
+  if (baseElement != null) renderOptions.baseElement = baseElement;
+  if (wrapper != null) {
+    if (wrapper is ReactComponentFactoryProxy) {
+      renderOptions.wrapper = wrapper.type;
+    } else {
+      &#47;&#47; Its probably a UiFactory
+      try {
+        renderOptions.wrapper = wrapper().componentFactory.type;
+      } catch (err) {
+        throw ArgumentError.value(wrapper, &#39;wrapper&#39;, &#39;wrapper must be a ReactComponentFactoryProxy or UiFactory&#39;);
+      }
+    }
+  }
+  if (!autoTearDown &amp;&amp; onDidTearDown != null) {
+    throw ArgumentError(&#39;onDidTearDown cannot be set when autoTearDown is false.&#39;);
+  }
+
+  final jsResult = _render(ui, renderOptions);
+
+  if (autoTearDown) {
+    addTearDown(() {
+      jsResult.unmount();
+      jsResult.container?.remove();
+      onDidTearDown?.call();
+    });
+  }
+
+  return RenderResult._(jsResult, ui);
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      0.1.0-nullsafety.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>

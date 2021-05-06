@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="ByRole Topic docs, for the Dart programming language.">
+  <title>ByRole Topic - Dart API</title>
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  <style>
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+</style>
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">react_testing_library</a></li>
+    <li class="self-crumb">ByRole Topic</li>
+  </ol>
+  <div class="self-name">ByRole</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">react_testing_library</a></li>
+      <li class="self-crumb">ByRole Topic</li>
+    </ol>
+    
+    <h5><span class="package-name">react_testing_library</span> <span class="package-kind">package</span></h5>
+    <ol>
+          <li class="section-title">Topics</li>
+            <li><a href="../topics/Async-topic.html">Async</a></li>
+            <li><a href="../topics/ByAltText-topic.html">ByAltText</a></li>
+            <li><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></li>
+            <li><a href="../topics/ByLabelText-topic.html">ByLabelText</a></li>
+            <li><a href="../topics/ByPlaceholderText-topic.html">ByPlaceholderText</a></li>
+            <li><a href="../topics/ByRole-topic.html">ByRole</a></li>
+            <li><a href="../topics/ByTestId-topic.html">ByTestId</a></li>
+            <li><a href="../topics/ByText-topic.html">ByText</a></li>
+            <li><a href="../topics/ByTitle-topic.html">ByTitle</a></li>
+            <li><a href="../topics/Matchers-topic.html">Matchers</a></li>
+            <li><a href="../topics/Queries-topic.html">Queries</a></li>
+          <li class="section-title">Libraries</li>
+          <li class="section-subtitle">Dom</li>
+            <li class="section-subitem"><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.configure/rtl.dom.configure-library.html">rtl.dom.configure</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
+            <li class="section-subitem"><a href="../rtl.dom.queries/rtl.dom.queries-library.html">rtl.dom.queries</a></li>
+          <li class="section-subtitle">Matchers</li>
+            <li class="section-subitem"><a href="../matchers/matchers-library.html">matchers</a></li>
+          <li class="section-subtitle">React</li>
+            <li class="section-subitem"><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+    </ol>
+  </div>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <h1><span class="kind-category">ByRole</span> Topic</h1>
+      <section class="desc markdown">
+        <blockquote>
+<p>getByRole, queryByRole, getAllByRole, queryAllByRole, findByRole, findAllByRole</p>
+</blockquote>
+      </section>
+      
+
+
+
+
+
+      <section class="summary offset-anchor" id="functions">
+        <h2>Functions</h2>
+
+        <dl class="callables">
+            <dt id="findAllByRole" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/findAllByRole.html">findAllByRole</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findAllByRole-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findAllByRole-param-role"><span class="type-annotation">dynamic</span> <span class="parameter-name">role</span>, </span><span class="parameter" id="findAllByRole-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findAllByRole-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findAllByRole-param-hidden"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>, </span><span class="parameter" id="findAllByRole-param-name"><span class="type-annotation">dynamic</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="findAllByRole-param-selected"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">selected</span>, </span><span class="parameter" id="findAllByRole-param-checked"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">checked</span>, </span><span class="parameter" id="findAllByRole-param-pressed"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">pressed</span>, </span><span class="parameter" id="findAllByRole-param-expanded"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">expanded</span>, </span><span class="parameter" id="findAllByRole-param-queryFallbacks"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">queryFallbacks</span> = <span class="default-value">false</span>, </span><span class="parameter" id="findAllByRole-param-level"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">level</span>, </span><span class="parameter" id="findAllByRole-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findAllByRole-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findAllByRole-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findAllByRole-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>&gt;</span></span>
+              </span>
+                              <span class="category async cp-0 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
+                  <span class="category byrole cp-5 linked" title="This is part of the ByRole Topic."><a href="../topics/ByRole-topic.html">ByRole</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a list of elements with the given <code>role</code> value, defaulting to an <code>exact</code> match after
+waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findAllByRole.html">[...]</a>
+                          
+</dd>
+            <dt id="findByRole" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/findByRole.html">findByRole</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findByRole-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findByRole-param-role"><span class="type-annotation">dynamic</span> <span class="parameter-name">role</span>, </span><span class="parameter" id="findByRole-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findByRole-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findByRole-param-hidden"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>, </span><span class="parameter" id="findByRole-param-name"><span class="type-annotation">dynamic</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="findByRole-param-selected"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">selected</span>, </span><span class="parameter" id="findByRole-param-checked"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">checked</span>, </span><span class="parameter" id="findByRole-param-pressed"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">pressed</span>, </span><span class="parameter" id="findByRole-param-expanded"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">expanded</span>, </span><span class="parameter" id="findByRole-param-queryFallbacks"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">queryFallbacks</span> = <span class="default-value">false</span>, </span><span class="parameter" id="findByRole-param-level"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">level</span>, </span><span class="parameter" id="findByRole-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findByRole-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findByRole-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findByRole-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+              </span>
+                              <span class="category async cp-0 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
+                  <span class="category byrole cp-5 linked" title="This is part of the ByRole Topic."><a href="../topics/ByRole-topic.html">ByRole</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a future with a single element value with the given <code>role</code> value, defaulting to an <code>exact</code> match after
+waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findByRole.html">[...]</a>
+                          
+</dd>
+            <dt id="getAllByRole" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/getAllByRole.html">getAllByRole</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getAllByRole-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getAllByRole-param-role"><span class="type-annotation">dynamic</span> <span class="parameter-name">role</span>, </span><span class="parameter" id="getAllByRole-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getAllByRole-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="getAllByRole-param-hidden"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>, </span><span class="parameter" id="getAllByRole-param-name"><span class="type-annotation">dynamic</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getAllByRole-param-selected"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">selected</span>, </span><span class="parameter" id="getAllByRole-param-checked"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">checked</span>, </span><span class="parameter" id="getAllByRole-param-pressed"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">pressed</span>, </span><span class="parameter" id="getAllByRole-param-expanded"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">expanded</span>, </span><span class="parameter" id="getAllByRole-param-queryFallbacks"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">queryFallbacks</span> = <span class="default-value">false</span>, </span><span class="parameter" id="getAllByRole-param-level"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">level</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+              </span>
+                              <span class="category byrole cp-5 linked" title="This is part of the ByRole Topic."><a href="../topics/ByRole-topic.html">ByRole</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a list of elements with the given <code>role</code> value, defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getAllByRole.html">[...]</a>
+                          
+</dd>
+            <dt id="getByRole" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/getByRole.html">getByRole</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getByRole-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getByRole-param-role"><span class="type-annotation">dynamic</span> <span class="parameter-name">role</span>, </span><span class="parameter" id="getByRole-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getByRole-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="getByRole-param-hidden"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>, </span><span class="parameter" id="getByRole-param-name"><span class="type-annotation">dynamic</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getByRole-param-selected"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">selected</span>, </span><span class="parameter" id="getByRole-param-checked"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">checked</span>, </span><span class="parameter" id="getByRole-param-pressed"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">pressed</span>, </span><span class="parameter" id="getByRole-param-expanded"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">expanded</span>, </span><span class="parameter" id="getByRole-param-queryFallbacks"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">queryFallbacks</span> = <span class="default-value">false</span>, </span><span class="parameter" id="getByRole-param-level"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">level</span>}</span>)
+                <span class="returntype parameter">&#8594; E</span>
+              </span>
+                              <span class="category byrole cp-5 linked" title="This is part of the ByRole Topic."><a href="../topics/ByRole-topic.html">ByRole</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a single element with the given <code>role</code> value, defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getByRole.html">[...]</a>
+                          
+</dd>
+            <dt id="queryAllByRole" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/queryAllByRole.html">queryAllByRole</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryAllByRole-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryAllByRole-param-role"><span class="type-annotation">dynamic</span> <span class="parameter-name">role</span>, </span><span class="parameter" id="queryAllByRole-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryAllByRole-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="queryAllByRole-param-hidden"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>, </span><span class="parameter" id="queryAllByRole-param-name"><span class="type-annotation">dynamic</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="queryAllByRole-param-selected"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">selected</span>, </span><span class="parameter" id="queryAllByRole-param-checked"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">checked</span>, </span><span class="parameter" id="queryAllByRole-param-pressed"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">pressed</span>, </span><span class="parameter" id="queryAllByRole-param-expanded"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">expanded</span>, </span><span class="parameter" id="queryAllByRole-param-queryFallbacks"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">queryFallbacks</span> = <span class="default-value">false</span>, </span><span class="parameter" id="queryAllByRole-param-level"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">level</span>}</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+              </span>
+                              <span class="category byrole cp-5 linked" title="This is part of the ByRole Topic."><a href="../topics/ByRole-topic.html">ByRole</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a list of elements with the given <code>role</code> value, defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryAllByRole.html">[...]</a>
+                          
+</dd>
+            <dt id="queryByRole" class="callable">
+              <span class="name"><a href="../rtl.dom.queries/queryByRole.html">queryByRole</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryByRole-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryByRole-param-role"><span class="type-annotation">dynamic</span> <span class="parameter-name">role</span>, </span><span class="parameter" id="queryByRole-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryByRole-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="queryByRole-param-hidden"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>, </span><span class="parameter" id="queryByRole-param-name"><span class="type-annotation">dynamic</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="queryByRole-param-selected"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">selected</span>, </span><span class="parameter" id="queryByRole-param-checked"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">checked</span>, </span><span class="parameter" id="queryByRole-param-pressed"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">pressed</span>, </span><span class="parameter" id="queryByRole-param-expanded"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">expanded</span>, </span><span class="parameter" id="queryByRole-param-queryFallbacks"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">queryFallbacks</span> = <span class="default-value">false</span>, </span><span class="parameter" id="queryByRole-param-level"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">level</span>}</span>)
+                <span class="returntype parameter">&#8594; E</span>
+              </span>
+                              <span class="category byrole cp-5 linked" title="This is part of the ByRole Topic."><a href="../topics/ByRole-topic.html">ByRole</a></span>
+                  <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+              </dt>
+            <dd>
+              Returns a single element with the given <code>role</code> value, defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryByRole.html">[...]</a>
+                          
+</dd>
+        </dl>
+      </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>ByRole Topic</h5>
+    <ol>
+    
+    
+    
+    
+    
+      <li class="section-title"><a href="../topics/ByRole-topic.html#functions">Functions</a></li>
+      <li><a href="../rtl.dom.queries/findAllByRole.html">findAllByRole</a></li>
+      <li><a href="../rtl.dom.queries/findByRole.html">findByRole</a></li>
+      <li><a href="../rtl.dom.queries/getAllByRole.html">getAllByRole</a></li>
+      <li><a href="../rtl.dom.queries/getByRole.html">getByRole</a></li>
+      <li><a href="../rtl.dom.queries/queryAllByRole.html">queryAllByRole</a></li>
+      <li><a href="../rtl.dom.queries/queryByRole.html">queryByRole</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/sidebar-offcanvas-right-->
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      0.1.0-nullsafety.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>
