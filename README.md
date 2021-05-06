@@ -2,7 +2,8 @@
 
 A library to use when authoring unit tests for [React Dart] or [OverReact] UI components that mimics the API of the JS [dom-testing-library] / [react-testing-library] packages.
 
-[![Dart CI](https://github.com/Workiva/react_testing_library/workflows/Dart%20CI/badge.svg?branch=master)](https://github.com/Workiva/react_testing_library/actions?query=workflow%3A%22Dart+CI%22+branch%3Amaster)
+[![Dart CI](https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml/badge.svg?branch=master)](https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml)
+[![API Documentation](https://img.shields.io/static/v1?label=API&message=Documentation&color=informational)](https://workiva.github.io/react_testing_library)
 
 
 ## Guiding Principles
