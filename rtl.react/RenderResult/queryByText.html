@@ -643,7 +643,7 @@ but if your content is in an inline script file, then the script tag could be re
   bool exact = true,
   NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
-  &#47;*String|bool*&#47; ignore = &#39;script&#39;,
+  &#47;*String|bool*&#47; dynamic ignore = &#39;script&#39;,
 }) =&gt;
     _jsQueryByText(
       getContainerForScope(),

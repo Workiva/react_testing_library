@@ -523,14 +523,14 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/has_styles.dart#L85"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/has_styles.dart#L80"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">hasStyles</span> function      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
 </h1></div>
 
     <section class="multi-line-signature">
         <span class="returntype"><a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
                 <span class="name ">hasStyles</span>
-(<wbr><ol class="parameter-list"><li><span class="parameter" id="hasStyles-param-styles"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">styles</span></span></li>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="hasStyles-param-styles"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">styles</span></span></li>
 </ol>)
     </section>
     <section class="desc markdown">
@@ -563,7 +563,6 @@ main() {
     final button = result.getByRole('button', name: 'Delete');
 
     // Use the `hasStyles` matcher as the second argument of `expect()`
-    expect(button, hasStyles('display: block'));
     expect(button, hasStyles({'display': 'block'}));
     expect(button, hasStyles('''
       background-color: red;
@@ -573,10 +572,6 @@ main() {
       'backgroundColor': 'red',
       'display': 'block',
     }));
-    expect(button, isNot(hasStyles('''
-      background-color: blue;
-      display: block;
-    ''')));
     expect(button, isNot(hasStyles({
       'backgroundColor': 'blue',
       'display': 'block',
@@ -594,7 +589,7 @@ main() {
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
-      <pre class="language-dart"><code class="language-dart">Matcher hasStyles(Object styles) =&gt; _HasStyles(styles);</code></pre>
+      <pre class="language-dart"><code class="language-dart">Matcher hasStyles(Map&lt;String, dynamic&gt; styles) =&gt; _HasStyles(styles);</code></pre>
     </section>
 
   </div> <!-- /.main-content -->

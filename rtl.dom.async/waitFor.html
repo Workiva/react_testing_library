@@ -591,6 +591,7 @@ it will re-run the callback.</p>
     }
   }
 
+  &#47;&#47; ignore: prefer_void_to_null
   FutureOr&lt;Null&gt; handleTimeout() {
     &#47;*Error*&#47; dynamic error;
     if (lastError != null) {
@@ -614,9 +615,7 @@ it will re-run the callback.</p>
         resultPending = true;
         await (result as Future).then((resolvedValue) {
           onDone(null, resolvedValue as T);
-        }, onError: (error) {
-          onDone(error);
-        }).timeout(timeout, onTimeout: handleTimeout);
+        }, onError: onDone).timeout(timeout, onTimeout: handleTimeout);
       } else {
         onDone(null, result);
       }
@@ -630,15 +629,15 @@ it will re-run the callback.</p>
   overallTimeoutTimer = Timer(timeout, handleTimeout);
 
   intervalTimer = Timer.periodic(interval, checkCallback);
-  observer = MutationObserver((_, __) =&gt; checkCallback());
-  observer.observe(
-    container,
-    childList: mutationObserverOptions.childList,
-    attributes: mutationObserverOptions.attributes,
-    characterData: mutationObserverOptions.characterData,
-    subtree: mutationObserverOptions.subtree,
-    attributeFilter: mutationObserverOptions.attributeFilter,
-  );
+  observer = MutationObserver((_, __) =&gt; checkCallback())
+    ..observe(
+      container,
+      childList: mutationObserverOptions.childList,
+      attributes: mutationObserverOptions.attributes,
+      characterData: mutationObserverOptions.characterData,
+      subtree: mutationObserverOptions.subtree,
+      attributeFilter: mutationObserverOptions.attributeFilter,
+    );
   await checkCallback();
 
   return doneCompleter.future;

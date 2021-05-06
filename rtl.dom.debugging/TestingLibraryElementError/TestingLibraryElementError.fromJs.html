@@ -522,7 +522,7 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/util/error_message_utils.dart#L59"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/util/error_message_utils.dart#L57"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-constructor">TestingLibraryElementError.fromJs</span> constructor </h1></div>
 
     <section class="multi-line-signature">
@@ -535,7 +535,7 @@
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
-      <pre class="language-dart"><code class="language-dart">factory TestingLibraryElementError.fromJs(&#47;*JsError*&#47; jsError, [StackTrace jsStackTrace]) {
+      <pre class="language-dart"><code class="language-dart">factory TestingLibraryElementError.fromJs(&#47;*JsError*&#47; dynamic jsError, [StackTrace jsStackTrace]) {
   final stack = jsError is JsError ? jsStackTrace ?? StackTrace.fromString(jsError.stack) : null;
   return TestingLibraryElementError(jsError.toString(), stack);
 }</code></pre>
