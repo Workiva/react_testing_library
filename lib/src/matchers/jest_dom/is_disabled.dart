@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBeDisabled` matcher](https://github.com/testing-library/jest-dom#tobedisabled).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <div>

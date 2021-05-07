@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/dom/matches/get_default_normalizer.dar
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 
 /// {@template TextMatchArgDescription}
-/// can be either a `String`, regex, or a function which returns `true` for a match and `false` for a mismatch.
+/// The `text` argument can be set to a `String`, `RegExp`, or a `Function` which returns `true` for a match and `false` for a mismatch.
 ///
 /// See the [JS `TextMatch` docs](https://testing-library.com/docs/queries/about#textmatch) for more details
 /// and examples.
@@ -114,22 +114,19 @@ abstract class TextMatch {
 @anonymous
 class MatcherOptions {
   /// {@template MatcherOptionsExactArgDescription}
-  /// ### Precision
+  /// ### [exact]
   ///
-  /// Queries also accept arguments that affect the precision of string matching:
-  ///
-  /// - `exact`: Defaults to `true`; matches full strings, case-sensitive. When `false`, matches substrings
-  /// and is not case-sensitive. It has no effect on regex or function arguments. In most cases using a
-  /// regex instead of a string gives you more control over fuzzy matching and should be preferred over `exact: false`.
-  /// - `normalizer`: An optional function which overrides normalization behavior. See the Normalization section below.
-  ///
-  /// See the [JS `TextMatch` precision docs](https://testing-library.com/docs/queries/about#precision) for more details and examples.
+  /// Defaults to `true`; matches full strings, case-sensitive. When `false`, matches substrings and is
+  /// not case-sensitive. It has no effect on regex or function arguments. In most cases using a regex
+  /// instead of a string gives you more control over fuzzy matching and should be preferred over `exact: false`.
   /// {@endtemplate}
   external bool get exact;
   external set exact(bool value);
 
   /// {@template MatcherOptionsNormalizerArgDescription}
-  /// ### Normalization
+  /// ### [normalizer]
+  ///
+  /// An optional function which overrides normalization behavior.
   ///
   /// Before running any matching logic against text in the DOM, DOM Testing Library automatically
   /// normalizes that text. By default, normalization consists of trimming whitespace from the start
@@ -139,20 +136,19 @@ class MatcherOptions {
   /// _(e.g. to remove Unicode control characters)_, you can provide a [normalizer] function.
   /// This function will be given a string and is expected to return a normalized version of that string.
   ///
-  /// > __Note__
-  /// >
-  /// > Specifying a value for [normalizer] replaces the built-in normalization, but you can call
+  /// > **NOTE:** Specifying a value for [normalizer] replaces the built-in normalization, but you can call
   /// > [getDefaultNormalizer] to obtain a built-in normalizer, either to adjust that normalization
   /// > or to call it from your own normalizer.
   ///
-  /// See the [JS `TextMatch` Normalization docs](https://testing-library.com/docs/queries/about#normalization)
+  /// See the [JS `TextMatch` precision](https://testing-library.com/docs/queries/about#precision) and
+  /// [JS `TextMatch` normalization](https://testing-library.com/docs/queries/about#normalization) docs
   /// for more details and examples.
   /// {@endtemplate}
   external NormalizerFn Function([NormalizerOptions]) get normalizer;
   external set normalizer(NormalizerFn Function([NormalizerOptions]) value);
 
   /// {@template MatcherOptionsSelectorArgDescription}
-  /// ### Selector
+  /// ### [selector]
   ///
   /// Set `selector` to a CSS selector that will narrow the scope of the existing query to
   /// only match element(s) that match the selector.
@@ -161,6 +157,8 @@ class MatcherOptions {
   external set selector(String value);
 
   /// {@template MatcherOptionsIgnoreArgDescription}
+  /// ### [ignore]
+  ///
   /// The ignore option accepts a query selector.
   ///
   /// If the node.matches returns true for that selector, the node will be ignored.

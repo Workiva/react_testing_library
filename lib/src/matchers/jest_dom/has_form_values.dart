@@ -32,7 +32,7 @@ import 'package:react_testing_library/src/util/js_utils.dart';
 ///
 /// Similar to [jest-dom's `toHaveFormValues` matcher](https://github.com/testing-library/jest-dom#tohaveformvalues).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <form data-test-id="login-form">
@@ -174,8 +174,6 @@ JsObject _getJsFormOrFieldSet(Element form) => JsObject.fromBrowserObject(form);
 /// Returns a [List] of all of the form control [Element]s contained in a given [form].
 ///
 /// Does not include `<input type="image">` controls.
-///
-/// __NOTE: Currently does not include Web Skin Dart custom components like `DropdownSelect`.__
 ///
 /// Wraps the [HTMLFormElement.elements](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements) property.
 List<Element> getFormElements(Element form) {

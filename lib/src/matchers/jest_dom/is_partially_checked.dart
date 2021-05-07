@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBePartiallyChecked` matcher](https://github.com/testing-library/jest-dom#tobepartiallychecked).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <input type="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" />

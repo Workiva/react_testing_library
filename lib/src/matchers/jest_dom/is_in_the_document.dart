@@ -30,7 +30,7 @@ import 'contains_element.dart' show containsElement;
 /// > The element must be added to the document to be found by [isInTheDocument].
 /// > If you desire to search in a detached element please use: [containsElement]
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <div>

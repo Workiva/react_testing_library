@@ -23,7 +23,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBeEmptyDOMElement` matcher](https://github.com/testing-library/jest-dom#tobeemptydomelement).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <span data-test-id="not-empty"><span data-test-id="empty"></span></span>

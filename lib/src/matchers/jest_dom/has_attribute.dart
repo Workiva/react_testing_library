@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toHaveAttribute` matcher](https://github.com/testing-library/jest-dom#tohaveattribute).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <button type="submit" aria-label="Submit the form">ok</button>

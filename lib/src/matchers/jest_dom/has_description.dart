@@ -38,7 +38,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 ///
 /// Similar to [jest-dom's `toHaveDescription` matcher](https://github.com/testing-library/jest-dom#tohavedescription).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <button aria-label="Close" aria-describedby="description-close">

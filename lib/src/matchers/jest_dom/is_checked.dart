@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBeChecked` matcher](https://github.com/testing-library/jest-dom#tobechecked).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <div>

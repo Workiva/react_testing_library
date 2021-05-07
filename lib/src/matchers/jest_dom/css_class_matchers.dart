@@ -28,7 +28,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// However, instead of the JS `.not.toHaveClass()` pattern, you should use [excludesClasses], and instead of
 /// using the `{exact: true}` option as you do in JS, you should use [hasExactClasses].
 ///
-/// ### Examples
+/// ## Examples
 /// ```html
 /// <button class="btn extra btn-danger">Delete</button>
 /// ```
@@ -72,7 +72,7 @@ Matcher hasClasses(dynamic classes) => _ElementClassNameMatcher(_ClassNameMatche
 /// Similar to [jest-dom's `toHaveClass` matcher](https://github.com/testing-library/jest-dom#tohaveclass)
 /// when the `exact` option is set to `true`.
 ///
-/// ### Examples
+/// ## Examples
 /// ```html
 /// <button class="btn extra btn-danger">Delete</button>
 /// ```
@@ -114,7 +114,7 @@ Matcher hasExactClasses(dynamic classes) =>
 ///
 /// Similar to using `.not.hasClasses(classes)` in the jest-dom JS API.
 ///
-/// ### Examples
+/// ## Examples
 /// ```html
 /// <button class="btn extra btn-danger">Delete</button>
 /// ```

@@ -43,7 +43,7 @@ import 'package:js/js.dart';
 /// which has many options that are only relevant when formatting JavaScript code, not HTML. Because of this,
 /// the options exposed here are a subset of the [`prettyFormat` options](https://github.com/facebook/jest/tree/master/packages/pretty-format#usage-with-options).
 ///
-/// ### maxLength
+/// ### [maxLength]
 /// An optional argument to limit the size of the resulting string output, for cases when it becomes too large.
 ///
 /// {@macro prettyDomOptionsIndent}
@@ -52,7 +52,7 @@ import 'package:js/js.dart';
 ///
 /// > **At this time, formatting plugins and syntax highlighting are not supported.**
 ///
-/// > See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom) for more details and examples.
+/// See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom) for more details and examples.
 String prettyDOM(
   Node node, {
   int maxLength,
@@ -81,21 +81,21 @@ external String _jsPrettyDOM([
 @anonymous
 class PrettyDomOptions {
   /// {@template prettyDomOptionsIndent}
-  /// ### indent
+  /// ### [indent]
   /// The number of spaces in each level of indentation, defaulting to `2`.
   /// {@endtemplate}
   external int get indent;
   external set indent(int value);
 
   /// {@template prettyDomOptionsMaxDepth}
-  /// ### maxDepth
+  /// ### [maxDepth]
   /// The number of nested levels to print in the DOM tree.
   /// {@endtemplate}
   external int get maxDepth;
   external set maxDepth(int value);
 
   /// {@template prettyDomOptionsMin}
-  /// ### min
+  /// ### [min]
   /// Whether to minimize added space: no indentation nor line breaks. Defaults to `false`.
   /// {@endtemplate}
   external bool get min;

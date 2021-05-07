@@ -32,7 +32,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///
 /// Similar to [jest-dom's `toHaveValue` matcher](https://github.com/testing-library/jest-dom#tohavevalue).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <form>

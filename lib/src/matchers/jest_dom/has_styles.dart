@@ -29,7 +29,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toHaveStyle` matcher](https://github.com/testing-library/jest-dom#tohavestyle).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
 /// <button style="display: block; background-color: red">
