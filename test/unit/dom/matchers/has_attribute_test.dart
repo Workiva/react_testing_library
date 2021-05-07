@@ -93,6 +93,18 @@ main() {
         );
       });
 
+      test('the element has the attribute set to a value that does not match', () {
+        testElement.setAttribute('index', '-1');
+        shouldFail(
+          testElement,
+          hasAttribute('index', isNot('-1')),
+          allOf(
+            contains('Expected: Element with "index" attribute value of not \'-1\''),
+            contains('Which: has "index" attribute with value \'-1\''),
+          ),
+        );
+      });
+
       test('the element has the attribute set to a non-null value, but the user expects it to be null', () {
         testElement.setAttribute('index', '-1');
         shouldFail(
