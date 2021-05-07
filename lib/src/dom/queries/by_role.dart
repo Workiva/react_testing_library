@@ -73,6 +73,41 @@ mixin ByRoleQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
   ///
+  /// {@template ByRoleExample}
+  /// ## Example
+  ///
+  /// > The example below demonstrates the usage of the `getByRole` query. However, the example
+  /// is also relevant for `getAllByRole`, `queryByRole`, `queryAllByRole`, `findByRole`
+  /// and `findAllByRole`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <button onClick="...">Ok</button>
+  /// <button onClick="...">Cancel</button>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(react.div({},
+  ///       react.button({'onClick': (_) { /*...*/ }, 'Ok'),
+  ///       react.button({'onClick': (_) { /*...*/ }, 'Cancel'),
+  ///     ));
+  ///
+  ///     final okButtonElement = result.getByRole('button', name: 'Ok');
+  ///     final cancelButtonElement = result.getByRole('button', name: 'Cancel');
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [role]
@@ -127,6 +162,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [getByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -183,6 +221,9 @@ mixin ByRoleQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
   ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [role]
@@ -236,6 +277,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [queryByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -293,6 +337,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [findAllByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -368,6 +415,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [findByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///

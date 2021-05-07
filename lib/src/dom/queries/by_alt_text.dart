@@ -43,6 +43,38 @@ mixin ByAltTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
   ///
+  /// {@template ByAltTextExample}
+  /// ## Example
+  ///
+  /// > The example below demonstrates the usage of the `getByAltText` query. However, the example
+  /// is also relevant for `getAllByAltText`, `queryByAltText`, `queryAllByAltText`, `findByAltText`
+  /// and `findAllByAltText`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <img alt="Incredibles 2 Poster" src="/incredibles-2.png" />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(
+  ///       react.img({'alt': 'Incredibles 2 Poster', 'src': '/incredibles-2.png'}),
+  ///     );
+  ///
+  ///     final el = result.getByAltText(RegExp(r'incredibles.*? poster'));
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -71,6 +103,9 @@ mixin ByAltTextQueries on IQueries {
   /// > Related: [getByAltText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
+  ///
+  /// {@macro ByAltTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -101,6 +136,9 @@ mixin ByAltTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
   ///
+  /// {@macro ByAltTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -127,6 +165,9 @@ mixin ByAltTextQueries on IQueries {
   /// > Related: [queryByAltText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
+  ///
+  /// {@macro ByAltTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -157,6 +198,9 @@ mixin ByAltTextQueries on IQueries {
   /// > Related: [findAllByAltText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
+  ///
+  /// {@macro ByAltTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -208,6 +252,9 @@ mixin ByAltTextQueries on IQueries {
   /// > Related: [findByAltText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
+  ///
+  /// {@macro ByAltTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///

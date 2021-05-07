@@ -43,6 +43,41 @@ mixin ByPlaceholderTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
   ///
+  /// {@template ByPlaceholderTextExample}
+  /// ## Example
+  ///
+  /// > The examples below demonstrates the usage of the `getByDisplayValue` query. However, the example
+  /// is also relevant for `getAllByPlaceholderText`, `queryByPlaceholderText`, `queryAllByPlaceholderText`, `findByPlaceholderText`
+  /// and `findAllByPlaceholderText`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <input type="text" placeholder="Username" />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(
+  ///       react.input({
+  ///         'type': 'text',
+  ///         'placeholder': 'Username',
+  ///       }),
+  ///     );
+  ///
+  ///     final inputNode = result.getByPlaceholderText('Username');
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -71,6 +106,9 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// > Related: [getByPlaceholderText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+  ///
+  /// {@macro ByPlaceholderTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -101,6 +139,9 @@ mixin ByPlaceholderTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
   ///
+  /// {@macro ByPlaceholderTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -127,6 +168,9 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// > Related: [queryByPlaceholderText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+  ///
+  /// {@macro ByPlaceholderTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -156,6 +200,9 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// > Related: [findAllByPlaceholderText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+  ///
+  /// {@macro ByPlaceholderTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -206,6 +253,9 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// > Related: [findByPlaceholderText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+  ///
+  /// {@macro ByPlaceholderTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///

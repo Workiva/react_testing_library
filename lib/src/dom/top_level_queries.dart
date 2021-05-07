@@ -36,6 +36,9 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
 ///
+/// {@macro ByAltTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[text]__
@@ -62,6 +65,9 @@ E getByAltText<E extends Element>(
 /// > Related: [getByAltText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
+///
+/// {@macro ByAltTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -90,6 +96,9 @@ List<E> getAllByAltText<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
 ///
+/// {@macro ByAltTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[text]__
@@ -116,6 +125,9 @@ E queryByAltText<E extends Element>(
 /// > Related: [queryByAltText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
+///
+/// {@macro ByAltTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -146,6 +158,9 @@ List<E> queryAllByAltText<E extends Element>(
 /// > Related: [findAllByAltText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
+///
+/// {@macro ByAltTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -194,6 +209,9 @@ Future<E> findByAltText<E extends Element>(
 /// > Related: [findByAltText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
+///
+/// {@macro ByAltTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -244,6 +262,9 @@ Future<List<E>> findAllByAltText<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
 ///
+/// {@macro ByDisplayValueExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[value]__
@@ -270,6 +291,9 @@ E getByDisplayValue<E extends Element>(
 /// > Related: [getByDisplayValue]
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+///
+/// {@macro ByDisplayValueExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -298,6 +322,9 @@ List<E> getAllByDisplayValue<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
 ///
+/// {@macro ByDisplayValueExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[value]__
@@ -324,6 +351,9 @@ E queryByDisplayValue<E extends Element>(
 /// > Related: [queryByDisplayValue]
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+///
+/// {@macro ByDisplayValueExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -353,6 +383,9 @@ List<E> queryAllByDisplayValue<E extends Element>(
 /// > Related: [findAllByDisplayValue]
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+///
+/// {@macro ByDisplayValueExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -400,6 +433,9 @@ Future<E> findByDisplayValue<E extends Element>(
 /// > Related: [findByDisplayValue]
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+///
+/// {@macro ByDisplayValueExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -450,6 +486,9 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
 ///
+/// {@macro ByLabelTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[text]__
@@ -478,6 +517,9 @@ E getByLabelText<E extends Element>(
 /// > Related: [getByLabelText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+///
+/// {@macro ByLabelTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -508,6 +550,9 @@ List<E> getAllByLabelText<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
 ///
+/// {@macro ByLabelTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[text]__
@@ -536,6 +581,9 @@ E queryByLabelText<E extends Element>(
 /// > Related: [queryByLabelText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+///
+/// {@macro ByLabelTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -567,6 +615,9 @@ List<E> queryAllByLabelText<E extends Element>(
 /// > Related: [findAllByLabelText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+///
+/// {@macro ByLabelTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -617,6 +668,9 @@ Future<E> findByLabelText<E extends Element>(
 /// > Related: [findByLabelText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+///
+/// {@macro ByLabelTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -670,6 +724,9 @@ Future<List<E>> findAllByLabelText<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
 ///
+/// {@macro ByPlaceholderTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[text]__
@@ -696,6 +753,9 @@ E getByPlaceholderText<E extends Element>(
 /// > Related: [getByPlaceholderText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+///
+/// {@macro ByPlaceholderTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -724,6 +784,9 @@ List<E> getAllByPlaceholderText<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
 ///
+/// {@macro ByPlaceholderTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[text]__
@@ -750,6 +813,9 @@ E queryByPlaceholderText<E extends Element>(
 /// > Related: [queryByPlaceholderText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+///
+/// {@macro ByPlaceholderTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -779,6 +845,9 @@ List<E> queryAllByPlaceholderText<E extends Element>(
 /// > Related: [findAllByPlaceholderText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+///
+/// {@macro ByPlaceholderTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -826,6 +895,9 @@ Future<E> findByPlaceholderText<E extends Element>(
 /// > Related: [findByPlaceholderText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
+///
+/// {@macro ByPlaceholderTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -875,6 +947,9 @@ Future<List<E>> findAllByPlaceholderText<E extends Element>(
 /// > Related: [getAllByRole]
 ///
 /// > See: <https://testing-library.com/docs/queries/byrole/>
+///
+/// {@macro ByRoleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -928,6 +1003,9 @@ E getByRole<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/byrole/>
 ///
+/// {@macro ByRoleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[role]__
@@ -979,6 +1057,9 @@ List<E> getAllByRole<E extends Element>(
 /// > Related: [queryAllByRole]
 ///
 /// > See: <https://testing-library.com/docs/queries/byrole/>
+///
+/// {@macro ByRoleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1032,6 +1113,9 @@ E queryByRole<E extends Element>(
 /// > Related: [queryByRole]
 ///
 /// > See: <https://testing-library.com/docs/queries/byrole/>
+///
+/// {@macro ByRoleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1088,6 +1172,9 @@ List<E> queryAllByRole<E extends Element>(
 /// > Related: [findAllByRole]
 ///
 /// > See: <https://testing-library.com/docs/queries/byrole/>
+///
+/// {@macro ByRoleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1161,6 +1248,9 @@ Future<E> findByRole<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/byrole/>
 ///
+/// {@macro ByRoleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// __[role]__
@@ -1226,7 +1316,7 @@ Future<List<E>> findAllByRole<E extends Element>(
 /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
 ///
-/// {@macro EnableTestModeCallout}
+/// {@macro ByTestIdCaveatsCallout}
 ///
 /// Throws if no element is found within the provided [container].
 /// Use [queryByTestId] if a RTE is not expected.
@@ -1235,9 +1325,8 @@ Future<List<E>> findAllByRole<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
-/// ## Priority
-/// `getByTestId` should be used as a last resort only when a more accessible query is not an option.
-/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+/// {@macro ByTestIdExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1259,7 +1348,7 @@ E getByTestId<E extends Element>(
 /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
 ///
-/// {@macro EnableTestModeCallout}
+/// {@macro ByTestIdCaveatsCallout}
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByTestId] if a RTE is not expected.
@@ -1268,9 +1357,8 @@ E getByTestId<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
-/// ## Priority
-/// `getAllByTestId` should be used as a last resort only when a more accessible query is not an option.
-/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+/// {@macro ByTestIdExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1292,7 +1380,7 @@ List<E> getAllByTestId<E extends Element>(
 /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
 ///
-/// {@macro EnableTestModeCallout}
+/// {@macro ByTestIdCaveatsCallout}
 ///
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByTestId] if a RTE is expected.
@@ -1301,9 +1389,8 @@ List<E> getAllByTestId<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
-/// ## Priority
-/// `queryByTestId` should be used as a last resort only when a more accessible query is not an option.
-/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+/// {@macro ByTestIdExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1325,7 +1412,7 @@ E queryByTestId<E extends Element>(
 /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
 /// defaulting to an [exact] match.
 ///
-/// {@macro EnableTestModeCallout}
+/// {@macro ByTestIdCaveatsCallout}
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByTestId] if a RTE is expected.
@@ -1334,9 +1421,8 @@ E queryByTestId<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
-/// ## Priority
-/// `queryAllByTestId` should be used as a last resort only when a more accessible query is not an option.
-/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+/// {@macro ByTestIdExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1361,7 +1447,7 @@ List<E> queryAllByTestId<E extends Element>(
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
 /// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
 ///
-/// {@macro EnableTestModeCallout}
+/// {@macro ByTestIdCaveatsCallout}
 ///
 /// Throws if exactly one element is not found within the provided [container].
 ///
@@ -1369,9 +1455,8 @@ List<E> queryAllByTestId<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
-/// ## Priority
-/// `findByTestId` should be used as a last resort only when a more accessible query is not an option.
-/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+/// {@macro ByTestIdExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1414,7 +1499,7 @@ Future<E> findByTestId<E extends Element>(
 /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
 /// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
 ///
-/// {@macro EnableTestModeCallout}
+/// {@macro ByTestIdCaveatsCallout}
 ///
 /// Throws if no elements are found within the provided [container].
 ///
@@ -1422,9 +1507,8 @@ Future<E> findByTestId<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytestid/>
 ///
-/// ## Priority
-/// `findAllByTestId` should be used as a last resort only when a more accessible query is not an option.
-/// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+/// {@macro ByTestIdExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1474,6 +1558,9 @@ Future<List<E>> findAllByTestId<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
 ///
+/// {@macro ByTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// ### [text]
@@ -1503,6 +1590,9 @@ E getByText<E extends Element>(
 /// > Related: [getByText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
+///
+/// {@macro ByTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1534,6 +1624,9 @@ List<E> getAllByText<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
 ///
+/// {@macro ByTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// ### [text]
@@ -1563,6 +1656,9 @@ E queryByText<E extends Element>(
 /// > Related: [queryByText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
+///
+/// {@macro ByTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1596,6 +1692,9 @@ List<E> queryAllByText<E extends Element>(
 /// > Related: [findAllByText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
+///
+/// {@macro ByTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1649,6 +1748,9 @@ Future<E> findByText<E extends Element>(
 /// > Related: [findByText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
+///
+/// {@macro ByTextExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1705,6 +1807,9 @@ Future<List<E>> findAllByText<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
 ///
+/// {@macro ByTitleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// ### [title]
@@ -1731,6 +1836,9 @@ E getByTitle<E extends Element>(
 /// > Related: [getByTitle]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
+///
+/// {@macro ByTitleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1759,6 +1867,9 @@ List<E> getAllByTitle<E extends Element>(
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
 ///
+/// {@macro ByTitleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
 /// ## Options
 ///
 /// ### [title]
@@ -1785,6 +1896,9 @@ E queryByTitle<E extends Element>(
 /// > Related: [queryByTitle]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
+///
+/// {@macro ByTitleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1814,6 +1928,9 @@ List<E> queryAllByTitle<E extends Element>(
 /// > Related: [findAllByTitle]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
+///
+/// {@macro ByTitleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///
@@ -1861,6 +1978,9 @@ Future<E> findByTitle<E extends Element>(
 /// > Related: [findByTitle]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
+///
+/// {@macro ByTitleExample}
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// ## Options
 ///

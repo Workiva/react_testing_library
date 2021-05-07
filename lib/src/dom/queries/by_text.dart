@@ -42,6 +42,38 @@ mixin ByTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
+  /// {@template ByTextExample}
+  /// ## Example
+  ///
+  /// > The example below demonstrates the usage of the `getByText` query. However, the example
+  /// is also relevant for `getAllByText`, `queryByText`, `queryAllByText`, `findByText`
+  /// and `findAllByText`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <a href="/about">About ℹ️</a>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(
+  ///       react.a({'href': '/about'}, 'About ℹ️'),
+  ///     );
+  ///
+  ///     final aboutAnchorNode = result.getByText(RegExp(r'^About'));
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -73,6 +105,9 @@ mixin ByTextQueries on IQueries {
   /// > Related: [getByText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytext/>
+  ///
+  /// {@macro ByTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -106,6 +141,9 @@ mixin ByTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytext/>
   ///
+  /// {@macro ByTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -135,6 +173,9 @@ mixin ByTextQueries on IQueries {
   /// > Related: [queryByText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytext/>
+  ///
+  /// {@macro ByTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -168,6 +209,9 @@ mixin ByTextQueries on IQueries {
   /// > Related: [findAllByText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytext/>
+  ///
+  /// {@macro ByTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -224,6 +268,9 @@ mixin ByTextQueries on IQueries {
   /// > Related: [findByText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytext/>
+  ///
+  /// {@macro ByTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///

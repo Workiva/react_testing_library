@@ -43,6 +43,50 @@ mixin ByTitleQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
   ///
+  /// {@template ByTitleExample}
+  /// ## Example
+  ///
+  /// > The examples below demonstrates the usage of the `getByTitle` query. However, the example
+  /// is also relevant for `getAllByTitle`, `queryByTitle`, `queryAllByTitle`, `findByTitle`
+  /// and `findAllByTitle`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <span title="Delete" id="2"></span>
+  /// <svg>
+  ///   <title>Close</title>
+  ///   <!-- ... -->
+  /// </svg>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(react.div({},
+  ///       react.span({
+  ///         'title': 'Delete',
+  ///         'id': '2',
+  ///       }),
+  ///       react.svg({},
+  ///         react.title({}, 'Close'),
+  ///         /* ... */
+  ///       ),
+  ///     ));
+  ///
+  ///     final deleteElement = result.getByTitle('Delete');
+  ///     final closeElement = result.getByTitle('Close');
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [title]
@@ -71,6 +115,9 @@ mixin ByTitleQueries on IQueries {
   /// > Related: [getByTitle]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
+  ///
+  /// {@macro ByTitleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -101,6 +148,9 @@ mixin ByTitleQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
   ///
+  /// {@macro ByTitleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [title]
@@ -127,6 +177,9 @@ mixin ByTitleQueries on IQueries {
   /// > Related: [queryByTitle]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
+  ///
+  /// {@macro ByTitleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -156,6 +209,9 @@ mixin ByTitleQueries on IQueries {
   /// > Related: [findAllByTitle]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
+  ///
+  /// {@macro ByTitleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -206,6 +262,9 @@ mixin ByTitleQueries on IQueries {
   /// > Related: [findByTitle]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
+  ///
+  /// {@macro ByTitleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///

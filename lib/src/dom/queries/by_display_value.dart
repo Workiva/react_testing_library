@@ -41,6 +41,63 @@ mixin ByDisplayValueQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
   ///
+  /// {@template ByDisplayValueExample}
+  /// ## Example
+  ///
+  /// > The examples below demonstrates the usage of the `getByDisplayValue` query. However, the example
+  /// is also relevant for `getAllByDisplayValue`, `queryByDisplayValue`, `queryAllByDisplayValue`, `findByDisplayValue`
+  /// and `findAllByDisplayValue`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <input type="text" name="lastName" value="Norris" />
+  /// <textarea name="message">Hello World</textarea>
+  /// <select name="usStates">
+  ///   <option value="">State</option>
+  ///   <option value="AL">Alabama</option>
+  ///   <option selected value="AK">Alaska</option>
+  ///   <option value="AZ">Arizona</option>
+  /// </select>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(react.div({},
+  ///       react.input({
+  ///         'type': 'text',
+  ///         'name': 'lastName',
+  ///         'defaultValue': 'Norris',
+  ///       }),
+  ///       react.textarea({
+  ///         'name': 'message',
+  ///         'defaultValue': 'Hello World',
+  ///       }),
+  ///       react.select({'name': 'usStates'},
+  ///         react.option({'value': ''}, 'State'),
+  ///         react.option({'value': 'AL'}, 'Alabama'),
+  ///         react.option({'value': 'AK', 'selected': true}, 'Alaska'),
+  ///         react.option({'value': 'AZ'}, 'Arizona'),
+  ///       ),
+  ///     ));
+  ///
+  ///     final lastNameInput = result.getByDisplayValue('Norris');
+  ///     final messageTextArea = result.getByDisplayValue('Hello World');
+  ///     // In the case of a `<select>`, this will search for a `<select>`
+  ///     // whose selected `<option>` matches the given `TextMatch`.
+  ///     final selectElement = result.getByDisplayValue('Alaska');
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [value]
@@ -69,6 +126,9 @@ mixin ByDisplayValueQueries on IQueries {
   /// > Related: [getByDisplayValue]
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+  ///
+  /// {@macro ByDisplayValueExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -99,6 +159,9 @@ mixin ByDisplayValueQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
   ///
+  /// {@macro ByDisplayValueExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [value]
@@ -125,6 +188,9 @@ mixin ByDisplayValueQueries on IQueries {
   /// > Related: [queryByDisplayValue]
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+  ///
+  /// {@macro ByDisplayValueExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -154,6 +220,9 @@ mixin ByDisplayValueQueries on IQueries {
   /// > Related: [findAllByDisplayValue]
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+  ///
+  /// {@macro ByDisplayValueExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -204,6 +273,9 @@ mixin ByDisplayValueQueries on IQueries {
   /// > Related: [findByDisplayValue]
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
+  ///
+  /// {@macro ByDisplayValueExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
