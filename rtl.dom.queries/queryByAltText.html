@@ -470,6 +470,26 @@
         padding-top: 0;
         margin-top: -2em;
     }
+
+    /* Add language info to code blocks */
+    .markdown pre[class*="language-"] {
+        position: relative;
+    }
+
+    .markdown pre[class*="language-"]::after {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 .3em .1em .4em;
+        border-bottom-left-radius: 3px;
+        background: #ddd; /* Match border color */
+        color: #555;
+    }
+
+    .markdown pre.language-html::after { content: 'HTML'; }
+    .markdown pre.language-dart::after { content: 'DART'; }
+    .markdown pre.language-js::after { content: 'JS'; }
 </style>
 
 </head>
@@ -580,7 +600,7 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L105"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L111"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">queryByAltText&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;</span> function      <span class="category byalttext cp-1 linked" title="This is part of the ByAltText Topic."><a href="../topics/ByAltText-topic.html">ByAltText</a></span>
     <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
 </h1></div>
@@ -606,6 +626,36 @@ Use <a href="../rtl.dom.queries/getByAltText.html">getByAltText</a> if a RTE is 
 </blockquote>
 <blockquote>
 <p>See: <a href="https://testing-library.com/docs/queries/byalttext/">testing-library.com/docs/queries/byalttext/</a></p>
+</blockquote>
+<h2 id="example">Example</h2>
+<blockquote>
+<p>The example below demonstrates the usage of the <code>getByAltText</code> query. However, the example
+is also relevant for <code>getAllByAltText</code>, <code>queryByAltText</code>, <code>queryAllByAltText</code>, <code>findByAltText</code>
+and <code>findAllByAltText</code>.</p>
+<p>Read more about the different <a href="https://testing-library.com/docs/queries/about#types-of-queries">types of queries</a> to gain more clarity on which one suits your use-cases best.</p>
+</blockquote>
+<pre class="language-html"><code class="language-html">&lt;img alt="Incredibles 2 Poster" src="/incredibles-2.png" /&gt;
+</code></pre>
+<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('', () {
+    // Render the DOM shown in the example snippet above
+    final result = rtl.render(
+      react.img({'alt': 'Incredibles 2 Poster', 'src': '/incredibles-2.png'}),
+    );
+
+    final el = result.getByAltText(RegExp(r'incredibles.*? poster'));
+  });
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
+  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
+  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
 </blockquote>
 <h2 id="options">Options</h2>
 <p><strong><code>text</code></strong>

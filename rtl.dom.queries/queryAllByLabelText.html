@@ -470,6 +470,26 @@
         padding-top: 0;
         margin-top: -2em;
     }
+
+    /* Add language info to code blocks */
+    .markdown pre[class*="language-"] {
+        position: relative;
+    }
+
+    .markdown pre[class*="language-"]::after {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 .3em .1em .4em;
+        border-bottom-left-radius: 3px;
+        background: #ddd; /* Match border color */
+        color: #555;
+    }
+
+    .markdown pre.language-html::after { content: 'HTML'; }
+    .markdown pre.language-dart::after { content: 'DART'; }
+    .markdown pre.language-js::after { content: 'JS'; }
 </style>
 
 </head>
@@ -580,7 +600,7 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L553"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L598"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">queryAllByLabelText&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;</span> function      <span class="category bylabeltext cp-3 linked" title="This is part of the ByLabelText Topic."><a href="../topics/ByLabelText-topic.html">ByLabelText</a></span>
     <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
 </h1></div>
@@ -607,6 +627,61 @@ Use <a href="../rtl.dom.queries/getAllByLabelText.html">getAllByLabelText</a> if
 </blockquote>
 <blockquote>
 <p>See: <a href="https://testing-library.com/docs/queries/bylabeltext/">testing-library.com/docs/queries/bylabeltext/</a></p>
+</blockquote>
+<h2 id="example">Example</h2>
+<blockquote>
+<p>The examples below demonstrates the usage of the <code>getByDisplayValue</code> query. However, the example
+is also relevant for <code>getAllByLabelText</code>, <code>queryByLabelText</code>, <code>queryAllByLabelText</code>, <code>findByLabelText</code>
+and <code>findAllByLabelText</code>.</p>
+<p>Read more about the different <a href="https://testing-library.com/docs/queries/about#types-of-queries">types of queries</a> to gain more clarity on which one suits your use-cases best.</p>
+</blockquote>
+<p>The example below will find the input node for the following DOM structures:</p>
+<pre class="language-html"><code class="language-html">// for/htmlFor relationship between label and form element id
+&lt;label for="username-input"&gt;Username&lt;/label&gt;
+&lt;input id="username-input" /&gt;
+
+// The aria-labelledby attribute with form elements
+&lt;label id="username-label"&gt;Username&lt;/label&gt;
+&lt;input aria-labelledby="username-label" /&gt;
+
+// Wrapper labels
+&lt;label&gt;Username &lt;input /&gt;&lt;/label&gt;
+
+// Wrapper labels where the label text is in another child element
+&lt;label&gt;
+  &lt;span&gt;Username&lt;/span&gt;
+  &lt;input /&gt;
+&lt;/label&gt;
+
+// aria-label attributes
+// Take care because this is not a label that users can see on the page,
+// so the purpose of your input must be obvious to visual users.
+&lt;input aria-label="username" /&gt;
+</code></pre>
+<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('', () {
+    // Render some of the DOM shown in the example snippet above
+    final result = rtl.render(react.div({},
+      react.label({'htmlFor': 'username-input'}, 'Username'),
+      react.input({
+        'type': 'text',
+        'id': 'username-input',
+      }),
+    ));
+
+    final inputNode = result.getByLabelText('Username');
+  });
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
+  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
+  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
 </blockquote>
 <h2 id="options">Options</h2>
 <p><strong><code>text</code></strong>

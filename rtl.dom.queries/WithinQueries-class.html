@@ -470,6 +470,26 @@
         padding-top: 0;
         margin-top: -2em;
     }
+
+    /* Add language info to code blocks */
+    .markdown pre[class*="language-"] {
+        position: relative;
+    }
+
+    .markdown pre[class*="language-"]::after {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 .3em .1em .4em;
+        border-bottom-left-radius: 3px;
+        background: #ddd; /* Match border color */
+        color: #555;
+    }
+
+    .markdown pre.language-html::after { content: 'HTML'; }
+    .markdown pre.language-dart::after { content: 'DART'; }
+    .markdown pre.language-js::after { content: 'JS'; }
 </style>
 
 </head>
