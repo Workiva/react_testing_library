@@ -37,7 +37,7 @@ dev_dependencies:
   build_runner: ^1.7.1
   build_test: ">=0.10.9 <3.0.0"
   build_web_compilers: ^2.9.0
-  react_testing_library: ^1.0.0-alpha.0
+  react_testing_library: ^1.0.0
   test: ^1.14.4
   # This is not technically required, 
   # but makes the HTML portion of your test bootstrapping much easier!
