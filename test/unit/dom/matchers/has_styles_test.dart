@@ -75,8 +75,7 @@ main() {
               reason: 'string values that can be converted to nums should match their num equivalent');
           shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': 2}),
               reason: 'num values should match their string equivalent');
-          shouldPass(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}),
-              reason: 'num values should match their string equivalent');
+          shouldPass(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}));
         });
       });
 
