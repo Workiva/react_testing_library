@@ -51,8 +51,7 @@ main() {
         ]);
       });
 
-      renderedResult =
-          rtl.render(react.div({}, [HoverTestComponent({})]) as ReactElement);
+      renderedResult = rtl.render(react.div({}, [HoverTestComponent({})]) as ReactElement);
       // Sanity check.
       expect(renderedResult.queryByText('Hello!'), isNull);
     });

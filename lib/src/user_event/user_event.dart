@@ -26,8 +26,7 @@ import 'package:react/react_client/js_interop_helpers.dart';
 
 import '../dom/fire_event.dart';
 
-dynamic _jsifyEventData(Map eventData) =>
-    jsifyAndAllowInterop(eventData ?? const {});
+dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData ?? const {});
 
 // Converts a JsMap FileList to a List<File>.
 List<File> _unjsifyFileList(List<File> fileList) {
@@ -144,12 +143,10 @@ class UserEvent {
       'skipAutoClose': skipAutoClose,
     };
     if (initialSelectionStart != null) {
-      options.addEntries(
-          [MapEntry('initialSelectionStart', initialSelectionStart)]);
+      options.addEntries([MapEntry('initialSelectionStart', initialSelectionStart)]);
     }
     if (initialSelectionEnd != null) {
-      options
-          .addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
+      options.addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
     }
 
     JsBackedMap.fromJs(_userEvent)['type'](
@@ -210,12 +207,10 @@ class UserEvent {
       'skipAutoClose': skipAutoClose,
     };
     if (initialSelectionStart != null) {
-      options.addEntries(
-          [MapEntry('initialSelectionStart', initialSelectionStart)]);
+      options.addEntries([MapEntry('initialSelectionStart', initialSelectionStart)]);
     }
     if (initialSelectionEnd != null) {
-      options
-          .addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
+      options.addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
     }
 
     await promiseToFuture(JsBackedMap.fromJs(_userEvent)['type'](
@@ -228,8 +223,7 @@ class UserEvent {
   /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
   static dynamic keyboard(String text, {dynamic keyboardState}) {
     // todo https://github.com/testing-library/user-event/blob/master/src/keyboard/types.ts
-    final options =
-        keyboardState != null ? {'keyboardState': keyboardState} : {};
+    final options = keyboardState != null ? {'keyboardState': keyboardState} : {};
     return JsBackedMap.fromJs(_userEvent)['keyboard'](
       text,
       JsBackedMap.from(options).jsObject,
@@ -270,8 +264,7 @@ class UserEvent {
     );
 
     if (element is LabelElement && element.control is InputElement) {
-      (element.control as InputElement).files =
-          _unjsifyFileList((element.control as InputElement).files);
+      (element.control as InputElement).files = _unjsifyFileList((element.control as InputElement).files);
     } else if (element is InputElement) {
       element.files = _unjsifyFileList(element.files);
     }
@@ -350,8 +343,7 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#hoverelement>.
   static void hover(Element element, {Map eventInit}) {
-    return JsBackedMap.fromJs(_userEvent)['hover'](
-        element, _jsifyEventData(eventInit));
+    return JsBackedMap.fromJs(_userEvent)['hover'](element, _jsifyEventData(eventInit));
   }
 
   /// Unhovers out of [element].
@@ -360,8 +352,7 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#unhoverelement>.
   static void unhover(Element element, {Map eventInit}) {
-    return JsBackedMap.fromJs(_userEvent)['unhover'](
-        element, _jsifyEventData(eventInit));
+    return JsBackedMap.fromJs(_userEvent)['unhover'](element, _jsifyEventData(eventInit));
   }
 
   /// Simulates pasting [text] into [element].

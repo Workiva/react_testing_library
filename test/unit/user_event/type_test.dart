@@ -150,14 +150,12 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
         expect(
           element,
           hasValue('oh '),
-          reason:
-              'ctrl modifier key stops input from receiving the remaining characters',
+          reason: 'ctrl modifier key stops input from receiving the remaining characters',
         );
         expect(
           keyUpCalls.last,
           equals('Control'),
-          reason:
-              'ctrl modifier key will be closed at the end of the type event',
+          reason: 'ctrl modifier key will be closed at the end of the type event',
         );
 
         _verifyTypeEvent();
@@ -179,14 +177,12 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
         expect(
           element,
           hasValue('oh '),
-          reason:
-              'ctrl modifier key stops input from receiving the remaining characters',
+          reason: 'ctrl modifier key stops input from receiving the remaining characters',
         );
         expect(
           keyUpCalls.last,
           equals('i'),
-          reason:
-              'ctrl modifier key will be closed at the end of the type event',
+          reason: 'ctrl modifier key will be closed at the end of the type event',
         );
 
         _verifyTypeEvent();
@@ -216,17 +212,14 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       }) as ReactElement);
 
       element = renderedResult.getByRole('textbox');
-      expect(element, hasValue('this is a bad example'),
-          reason: 'sanity check');
+      expect(element, hasValue('this is a bad example'), reason: 'sanity check');
     });
 
     // Typing in a non-empty <textarea> does not currently work as expected due to a bug in the user-event library.
     // TODO: Remove this check when https://github.com/testing-library/user-event/issues/677 is fixed.
-    if(!isTextArea) {
+    if (!isTextArea) {
       test('', () async {
-        hasDelay
-            ? await _verifyTypeWithDelay('good', 50)
-            : UserEvent.type(element, 'good');
+        hasDelay ? await _verifyTypeWithDelay('good', 50) : UserEvent.type(element, 'good');
         expect(element, hasValue('this is a bad examplegood'));
         _verifyTypeEvent();
       });

@@ -37,8 +37,7 @@ main() {
       setUp(() {
         final elementToRender = react.input({
           'onKeyDown': (react.SyntheticKeyboardEvent event) {
-            calls.add(
-                'keyDown: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
+            calls.add('keyDown: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
           },
           'onKeyUp': (react.SyntheticKeyboardEvent event) {
             calls.add('keyUp: ${event.key}${event.shiftKey ? ' {shift}' : ''}');

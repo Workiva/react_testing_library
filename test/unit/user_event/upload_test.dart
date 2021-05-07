@@ -128,8 +128,7 @@ main() {
       test('when input element is disabled', () {
         input.disabled = true;
         UserEvent.upload(input, files);
-        expect(input.files, hasLength(0),
-            reason: 'files not added on disabled element');
+        expect(input.files, hasLength(0), reason: 'files not added on disabled element');
       });
     }
 
