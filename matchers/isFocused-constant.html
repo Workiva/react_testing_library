@@ -451,6 +451,25 @@
     .multi-line-signature .parameter {
         white-space: pre-wrap;
     }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
 </style>
 
 </head>
@@ -535,7 +554,7 @@
         <section class="desc markdown">
           <p>Allows you to assert whether an element has focus or not.</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tohavefocus">jest-dom's <code>toHaveFocus</code> matcher</a>.</p>
-<h3 id="examples">Examples</h3>
+<h2 id="examples">Examples</h2>
 <pre class="language-html"><code class="language-html">&lt;input type="text" name="username" value="jane.doe" /&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;

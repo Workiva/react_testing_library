@@ -451,6 +451,25 @@
     .multi-line-signature .parameter {
         white-space: pre-wrap;
     }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
 </style>
 
 </head>
@@ -507,7 +526,7 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/async/wait_for.dart#L219"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/async/wait_for.dart#L223"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">waitForElementsToBeRemoved</span> function      <span class="category async cp-0 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
 </h1></div>
 
@@ -529,16 +548,16 @@
 <h2 id="options">Options</h2>
 <h3 id="container">container</h3>
 <p>An ancestor DOM node of the elements you return from <code>callback</code>.
-This node will have a <a href="https://api.dart.dev/stable/2.12.4/dart-html/MutationObserver-class.html">MutationObserver</a> attached to it.
-Defaults to <code>document.body</code>.</p>
-<h3 id="timeout">timeout</h3>
+This node will have a <a href="https://api.dart.dev/stable/2.12.4/dart-html/MutationObserver-class.html">MutationObserver</a> attached to it.</p>
+<p>Defaults to <code>document.body</code>.</p>
+<h3 id="timeout"><code>timeout</code></h3>
 <p>How long to wait for the node to appear in the DOM before throwing a <code>TestFailure</code>, defaulting to <code>1000ms</code>.</p>
-<h3 id="interval">interval</h3>
+<h3 id="interval"><code>interval</code></h3>
 <p>How often the callback is called, defaulting to <code>50ms</code>.</p>
-<h3 id="ontimeout">onTimeout</h3>
+<h3 id="ontimeout"><code>onTimeout</code></h3>
 <p>Is called if the <code>timeout</code> duration passes before the node is found in the DOM, and
 can be used to customize a <code>TestFailure</code> message.</p>
-<h3 id="mutationobserveroptions">mutationObserverOptions</h3>
+<h3 id="mutationobserveroptions"><code>mutationObserverOptions</code></h3>
 <p>The default values are:</p>
 <pre class="language-dart"><code>{subtree: true, childList: true, attributes: true, characterData: true}
 </code></pre>

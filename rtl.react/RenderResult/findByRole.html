@@ -451,6 +451,25 @@
     .multi-line-signature .parameter {
         white-space: pre-wrap;
     }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
 </style>
 
 </head>
@@ -617,19 +636,15 @@ with the same role are present on the rendered content.</p>
 </blockquote>
 <h2 id="options">Options</h2>
 <h3 id="role"><code>role</code></h3>
-<p>can be either a <code>String</code>, regex, or a function which returns <code>true</code> for a match and <code>false</code> for a mismatch.</p>
+<p>The <code>text</code> argument can be set to a <code>String</code>, <code>RegExp</code>, or a <code>Function</code> which returns <code>true</code> for a match and <code>false</code> for a mismatch.</p>
 <p>See the <a href="https://testing-library.com/docs/queries/about#textmatch">JS <code>TextMatch</code> docs</a> for more details
 and examples.</p>
-<h3 id="precision">Precision</h3>
-<p>Queries also accept arguments that affect the precision of string matching:</p>
-<ul>
-<li><code>exact</code>: Defaults to <code>true</code>; matches full strings, case-sensitive. When <code>false</code>, matches substrings
-and is not case-sensitive. It has no effect on regex or function arguments. In most cases using a
-regex instead of a string gives you more control over fuzzy matching and should be preferred over <code>exact: false</code>.</li>
-<li><code>normalizer</code>: An optional function which overrides normalization behavior. See the Normalization section below.</li>
-</ul>
-<p>See the <a href="https://testing-library.com/docs/queries/about#precision">JS <code>TextMatch</code> precision docs</a> for more details and examples.</p>
-<h3 id="normalization">Normalization</h3>
+<h3 id="exact"><code>exact</code></h3>
+<p>Defaults to <code>true</code>; matches full strings, case-sensitive. When <code>false</code>, matches substrings and is
+not case-sensitive. It has no effect on regex or function arguments. In most cases using a regex
+instead of a string gives you more control over fuzzy matching and should be preferred over <code>exact: false</code>.</p>
+<h3 id="normalizer"><code>normalizer</code></h3>
+<p>An optional function which overrides normalization behavior.</p>
 <p>Before running any matching logic against text in the DOM, DOM Testing Library automatically
 normalizes that text. By default, normalization consists of trimming whitespace from the start
 and end of text, and collapsing multiple adjacent whitespace characters into a single space.</p>
@@ -637,43 +652,43 @@ and end of text, and collapsing multiple adjacent whitespace characters into a s
 <em>(e.g. to remove Unicode control characters)</em>, you can provide a <code>normalizer</code> function.
 This function will be given a string and is expected to return a normalized version of that string.</p>
 <blockquote>
-<p><strong>Note</strong></p>
-<p>Specifying a value for <code>normalizer</code> replaces the built-in normalization, but you can call
+<p><strong>NOTE:</strong> Specifying a value for <code>normalizer</code> replaces the built-in normalization, but you can call
 <a href="../../rtl.dom.queries/getDefaultNormalizer.html">getDefaultNormalizer</a> to obtain a built-in normalizer, either to adjust that normalization
 or to call it from your own normalizer.</p>
 </blockquote>
-<p>See the <a href="https://testing-library.com/docs/queries/about#normalization">JS <code>TextMatch</code> Normalization docs</a>
+<p>See the <a href="https://testing-library.com/docs/queries/about#precision">JS <code>TextMatch</code> precision</a> and
+<a href="https://testing-library.com/docs/queries/about#normalization">JS <code>TextMatch</code> normalization</a> docs
 for more details and examples.</p>
-<h3 id="hidden">hidden</h3>
+<h3 id="hidden"><code>hidden</code></h3>
 <p>If you set <code>hidden</code> to true, elements that are normally excluded from the accessibility tree are
 considered for the query as well.</p>
 <p>The default behavior follows <a href="https://www.w3.org/TR/wai-aria-1.2/#tree_exclusion">www.w3.org/TR/wai-aria-1.2/#tree_exclusion</a> with the exception of
 <code>role="none"</code> and <code>role="presentation"</code> which are considered in the query in any case.</p>
 <p>See: <a href="https://testing-library.com/docs/queries/byrole#hidden">testing-library.com/docs/queries/byrole#hidden</a> for more details and examples.</p>
-<h3 id="selected">selected</h3>
+<h3 id="selected"><code>selected</code></h3>
 <p>You can filter the returned elements by their selected state by setting <code>selected: true</code> or <code>selected: false</code>.</p>
 <p>To learn more about the selected state and which elements can have this state see
 <a href="https://www.w3.org/TR/wai-aria-1.2/#aria-selected">ARIA <code>aria-selected</code></a>.</p>
 <p>See: <a href="https://testing-library.com/docs/queries/byrole#selected">testing-library.com/docs/queries/byrole#selected</a> for more details and examples.</p>
-<h3 id="checked">checked</h3>
+<h3 id="checked"><code>checked</code></h3>
 <p>You can filter the returned elements by their checked state by setting <code>checked: true</code> or <code>checked: false</code>.</p>
 <p>See: <a href="https://testing-library.com/docs/queries/byrole#checked">testing-library.com/docs/queries/byrole#checked</a> for more details and examples.</p>
-<h3 id="pressed">pressed</h3>
+<h3 id="pressed"><code>pressed</code></h3>
 <p>Buttons can have a pressed state. You can filter the returned elements by their pressed state by
 setting <code>pressed: true</code> or <code>pressed: false</code>.</p>
 <p>To learn more about the pressed state see <a href="https://www.w3.org/TR/wai-aria-1.2/#aria-pressed">ARIA <code>aria-pressed</code></a>.</p>
 <p>See: <a href="https://testing-library.com/docs/queries/byrole#pressed">testing-library.com/docs/queries/byrole#pressed</a> for more details and examples.</p>
-<h3 id="expanded">expanded</h3>
+<h3 id="expanded"><code>expanded</code></h3>
 <p>You can filter the returned elements by their expanded state by setting <code>expanded: true</code> or <code>expanded: false</code>.</p>
 <p>To learn more about the expanded state and which elements can have this state see
 <a href="https://www.w3.org/TR/wai-aria-1.2/#aria-expanded">ARIA <code>aria-expanded</code></a>.</p>
 <p>See: <a href="https://testing-library.com/docs/queries/byrole#expanded">testing-library.com/docs/queries/byrole#expanded</a> for more details and examples.</p>
-<h3 id="queryfallbacks">queryFallbacks</h3>
+<h3 id="queryfallbacks"><code>queryFallbacks</code></h3>
 <p>By default, it's assumed that the first role of each element is supported,
 so only the first role can be queried. If you need to query an element by
 any of its fallback roles instead, you can use <code>queryFallbacks: true</code>.</p>
 <p>See: <a href="https://testing-library.com/docs/queries/byrole#queryfallbacks">testing-library.com/docs/queries/byrole#queryfallbacks</a> for more details and examples.</p>
-<h3 id="level">level</h3>
+<h3 id="level"><code>level</code></h3>
 <p>An element with the <code>heading</code> role can be queried by any heading level <code>getByRole('heading')</code>
 or by a specific heading level using the <code>level</code> option <code>getByRole('heading', level: 2)</code>.</p>
 <p>The level option queries the element(s) with the <code>heading</code> role matching the indicated level
@@ -682,14 +697,14 @@ determined by the semantic HTML heading elements <code>&lt;h1&gt;</code>-<code>&
 <a href="https://www.w3.org/TR/wai-aria-1.2/#aria-level">ARIA <code>aria-level</code></a>.</p>
 <p>See: <a href="https://testing-library.com/docs/queries/byrole#level">testing-library.com/docs/queries/byrole#level</a> for more details and examples.</p>
 <h2 id="async-options">Async Options</h2>
-<h3 id="timeout">timeout</h3>
+<h3 id="timeout"><code>timeout</code></h3>
 <p>How long to wait for the node to appear in the DOM before throwing a <code>TestFailure</code>, defaulting to <code>1000ms</code>.</p>
-<h3 id="interval">interval</h3>
+<h3 id="interval"><code>interval</code></h3>
 <p>How often the callback is called, defaulting to <code>50ms</code>.</p>
-<h3 id="ontimeout">onTimeout</h3>
+<h3 id="ontimeout"><code>onTimeout</code></h3>
 <p>Is called if the <code>timeout</code> duration passes before the node is found in the DOM, and
 can be used to customize a <code>TestFailure</code> message.</p>
-<h3 id="mutationobserveroptions">mutationObserverOptions</h3>
+<h3 id="mutationobserveroptions"><code>mutationObserverOptions</code></h3>
 <p>The default values are:</p>
 <pre class="language-dart"><code>{subtree: true, childList: true, attributes: true, characterData: true}
 </code></pre>

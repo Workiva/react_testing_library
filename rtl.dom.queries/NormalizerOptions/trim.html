@@ -451,6 +451,25 @@
     .multi-line-signature .parameter {
         white-space: pre-wrap;
     }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
 </style>
 
 </head>
@@ -520,7 +539,7 @@
   </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/matches/types.dart#L181"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/matches/types.dart#L179"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-property">trim</span> property </h1></div>
 
 

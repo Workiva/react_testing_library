@@ -451,6 +451,25 @@
     .multi-line-signature .parameter {
         white-space: pre-wrap;
     }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
 </style>
 
 </head>
@@ -539,7 +558,7 @@
 <p>The matcher works with styles applied to an element via an "inline" <code>style</code> attribute value, or
 external stylesheets that apply the style(s) via CSS selector(s).</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tohavestyle">jest-dom's <code>toHaveStyle</code> matcher</a>.</p>
-<h3 id="examples">Examples</h3>
+<h2 id="examples">Examples</h2>
 <pre class="language-html"><code class="language-html">&lt;button style="display: block; background-color: red"&gt;
   Delete
 &lt;/button&gt;

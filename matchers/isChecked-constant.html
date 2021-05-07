@@ -451,6 +451,25 @@
     .multi-line-signature .parameter {
         white-space: pre-wrap;
     }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
 </style>
 
 </head>
@@ -537,7 +556,7 @@
 <p>It accepts an <code>input</code> of type <code>checkbox</code> or <code>radio</code> and elements with a <code>role</code> of <code>checkbox</code>, <code>radio</code> or <code>switch</code>
 with a valid <code>aria-checked</code> attribute of "true" or "false".</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tobechecked">jest-dom's <code>toBeChecked</code> matcher</a>.</p>
-<h3 id="examples">Examples</h3>
+<h2 id="examples">Examples</h2>
 <pre class="language-html"><code class="language-html">&lt;div&gt;
   &lt;input type="checkbox" name="pepperoni" checked /&gt;
   &lt;input type="checkbox" name="pineapple" /&gt;

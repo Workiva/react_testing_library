@@ -451,6 +451,25 @@
     .multi-line-signature .parameter {
         white-space: pre-wrap;
     }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
 </style>
 
 </head>
@@ -537,20 +556,18 @@ main() {
 <p><code>prettyDOM</code> is built atop <a href="https://github.com/facebook/jest/tree/master/packages/pretty-format">Jest's <code>prettyFormat</code> function</a>,
 which has many options that are only relevant when formatting JavaScript code, not HTML. Because of this,
 the options exposed here are a subset of the <a href="https://github.com/facebook/jest/tree/master/packages/pretty-format#usage-with-options"><code>prettyFormat</code> options</a>.</p>
-<h3 id="maxlength">maxLength</h3>
+<h3 id="maxlength"><code>maxLength</code></h3>
 <p>An optional argument to limit the size of the resulting string output, for cases when it becomes too large.</p>
-<h3 id="indent">indent</h3>
+<h3 id="indent"><code>indent</code></h3>
 <p>The number of spaces in each level of indentation, defaulting to <code>2</code>.</p>
-<h3 id="maxdepth">maxDepth</h3>
+<h3 id="maxdepth"><code>maxDepth</code></h3>
 <p>The number of nested levels to print in the DOM tree.</p>
-<h3 id="min">min</h3>
+<h3 id="min"><code>min</code></h3>
 <p>Whether to minimize added space: no indentation nor line breaks. Defaults to <code>false</code>.</p>
 <blockquote>
 <p><strong>At this time, formatting plugins and syntax highlighting are not supported.</strong></p>
 </blockquote>
-<blockquote>
 <p>See the <a href="https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom">JS <code>prettyDOM</code> docs</a> for more details and examples.</p>
-</blockquote>
     </section>
     
     <section class="summary source-code" id="source">
