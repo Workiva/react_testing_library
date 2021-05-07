@@ -25,6 +25,11 @@ import 'contains_element.dart' show containsElement;
 ///
 /// Similar to [jest-dom's `toBeInTheDocument` matcher](https://github.com/testing-library/jest-dom#tobeinthedocument).
 ///
+/// > **Note:** This matcher does not find detached elements.
+/// >
+/// > The element must be added to the document to be found by [isInTheDocument].
+/// > If you desire to search in a detached element please use: [containsElement]
+///
 /// ### Examples
 ///
 /// ```html
@@ -57,11 +62,7 @@ import 'contains_element.dart' show containsElement;
 ///   });
 /// }
 /// ```
-///
-/// > **Note:** This matcher does not find detached elements.
-/// >
-/// > The element must be added to the document to be found by [isInTheDocument].
-/// > If you desire to search in a detached element please use: [containsElement]
+/// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
 const Matcher isInTheDocument = _IsInTheDocument();
