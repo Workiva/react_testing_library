@@ -20,6 +20,7 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -29,7 +30,7 @@ main() {
         'defaultValue': 'Hello, World!',
       }) as ReactElement);
       final input = renderedResult.getByRole('textbox') as InputElement;
-      rtl.UserEvent.clear(input);
+      UserEvent.clear(input);
       expect(input, hasValue(''));
     });
 
@@ -39,7 +40,7 @@ main() {
       }) as ReactElement);
       final textarea = renderedResult.getByRole('textbox') as TextAreaElement;
       expect(textarea, hasValue('Hello, World!'), reason: 'sanity check');
-      rtl.UserEvent.clear(textarea);
+      UserEvent.clear(textarea);
       expect(textarea, hasValue(''));
     });
   });

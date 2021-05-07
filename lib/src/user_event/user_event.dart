@@ -234,53 +234,11 @@ class UserEvent {
     );
   }
 
-  /// Uploads [file] to [element].
-  ///
-  /// [element] must be an [InputElement] with a `type` attribute of "file" or a
-  /// [LabelElement] for a file [InputElement].
-  ///
-  /// Use [clickInit] and [changeInit] to initialize the click and change events
-  /// that occur as a part of the upload.
-  ///
-  /// By default, the `accept` attribute on [element] will be ignored when
-  /// [upload]ing files. Set [applyAccept] to true to allow `accept` to filter
-  /// files.
-  ///
-  /// To upload multiple files, use [uploadMultiple].
-  ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#uploadelement-file--clickinit-changeinit->.
-  static dynamic upload(
-    /*InputElement | LabelElement*/ Element element,
-    File file, {
-    Map clickInit,
-    Map changeInit,
-    bool applyAccept = false,
-  }) {
-    final init = {
-      'clickInit': _jsifyEventData(clickInit),
-      'changeInit': _jsifyEventData(changeInit),
-    };
-    final options = {'applyAccept': applyAccept};
-    JsBackedMap.fromJs(_userEvent)['upload'](
-      element,
-      file,
-      JsBackedMap.from(init).jsObject,
-      JsBackedMap.from(options).jsObject,
-    );
-
-    if (element is LabelElement && element.control is InputElement) {
-      (element.control as InputElement).files =
-          _unjsifyFileList((element.control as InputElement).files);
-    } else if (element is InputElement) {
-      element.files = _unjsifyFileList(element.files);
-    }
-  }
-
   /// Uploads [files] to [element].
   ///
-  /// [element] must be an [InputElement] with `type` attribute of "file" and
-  /// `multiple` attribute of `true` or a [LabelElement] for a multiple file
-  /// [InputElement].
+  /// [element] must be an [InputElement] with a `type` attribute of "file" or a
+  /// [LabelElement] for a file [InputElement]. When uploading multiple files,
+  /// make sure that [element]'s `multiple` attribute is set to `true`.
   ///
   /// Use [clickInit] and [changeInit] to initialize the click and change events
   /// that occur as a part of the upload.
@@ -289,11 +247,8 @@ class UserEvent {
   /// [upload]ing files. Set [applyAccept] to true to allow `accept` to filter
   /// files.
   ///
-  /// To upload a single file, use [upload].
-  ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#uploadelement-file--clickinit-changeinit->.
-  /// todo potentially simplify this into one upload function that accepts a list of files
-  static void uploadMultiple(
+  static void upload(
     /*InputElement | LabelElement*/ Element element,
     List<File> files, {
     Map clickInit,

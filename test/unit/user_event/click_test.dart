@@ -19,6 +19,7 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -65,12 +66,12 @@ main() {
       }
 
       test('', () {
-        rtl.UserEvent.click(renderedResult.getByRole('button'));
+        UserEvent.click(renderedResult.getByRole('button'));
         _verifyClickEvent();
       });
 
       test('eventInit', () {
-        rtl.UserEvent.click(
+        UserEvent.click(
           renderedResult.getByRole('button'),
           eventInit: {'shiftKey': true},
         );
@@ -78,7 +79,7 @@ main() {
       });
 
       test('skipHover', () {
-        rtl.UserEvent.click(
+        UserEvent.click(
           renderedResult.getByRole('button'),
           skipHover: true,
         );
@@ -87,7 +88,7 @@ main() {
 
       test('clickCount', () {
         final clickCount = 5;
-        rtl.UserEvent.click(
+        UserEvent.click(
           renderedResult.getByRole('button'),
           clickCount: clickCount,
         );
@@ -115,12 +116,12 @@ main() {
       }
 
       test('', () {
-        rtl.UserEvent.dblClick(renderedResult.getByRole('button'));
+        UserEvent.dblClick(renderedResult.getByRole('button'));
         _verifyDblClickEvent();
       });
 
       test('eventInit', () {
-        rtl.UserEvent.dblClick(
+        UserEvent.dblClick(
           renderedResult.getByRole('button'),
           eventInit: {'shiftKey': true},
         );

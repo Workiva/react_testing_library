@@ -19,25 +19,24 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
-  group('User upload events:', () {
+  group('UserEvent.upload', () {
     void _uploadTestHelper({bool isMultiple = false}) {
       List<MouseEvent> clickEventCalls;
       List<Event> changeEventCalls;
       InputElement input;
       LabelElement label;
-      File file;
       List<File> files;
 
       setUp(() {
-        file = File([], 'file1.mp3');
-        files = [
+        files = isMultiple ? [
           File([], 'file1.mp3'),
           File([], 'file2.png'),
           File([], 'file3.jpeg'),
-        ];
+        ] : [File([], 'file1.mp3')];
         clickEventCalls = [];
         changeEventCalls = [];
 
@@ -99,68 +98,44 @@ main() {
         }
       }
 
-      void _callUpload({
-        Map clickInit,
-        Map changeInit,
-        bool applyAccept = false,
-      }) {
-        isMultiple
-            ? rtl.UserEvent.uploadMultiple(
-                input,
-                files,
-                clickInit: clickInit,
-                changeInit: changeInit,
-                applyAccept: applyAccept,
-              )
-            : rtl.UserEvent.upload(
-                input,
-                file,
-                clickInit: clickInit,
-                changeInit: changeInit,
-                applyAccept: applyAccept,
-              );
-      }
-
       test('', () {
-        _callUpload();
+        UserEvent.upload(input, files);
         _verifyUploadEvent();
       });
 
       test('clickInit', () {
-        _callUpload(clickInit: {'shiftKey': true});
+        UserEvent.upload(input, files, clickInit: {'shiftKey': true});
         _verifyUploadEvent(hasClickInit: true);
       });
 
       test('changeInit', () {
-        _callUpload(changeInit: {'cancelable': true});
+        UserEvent.upload(input, files, changeInit: {'cancelable': true});
         _verifyUploadEvent(hasChangeInit: true);
       });
 
       test('applyAccept', () {
-        _callUpload(applyAccept: true);
+        UserEvent.upload(input, files, applyAccept: true);
         _verifyUploadEvent(applyAccept: true);
       });
 
       test('when element is a LabelElement', () {
-        isMultiple
-            ? rtl.UserEvent.uploadMultiple(label, files)
-            : rtl.UserEvent.upload(label, file);
+        UserEvent.upload(label, files);
         _verifyUploadEvent();
       });
 
       test('when input element is disabled', () {
         input.disabled = true;
-        _callUpload();
+        UserEvent.upload(input, files);
         expect(input.files, hasLength(0),
             reason: 'files not added on disabled element');
       });
     }
 
-    group('UserEvent.upload', () {
+    group('on single file input', () {
       _uploadTestHelper();
     });
 
-    group('UserEvent.uploadMultiple', () {
+    group('on multiple file input', () {
       _uploadTestHelper(isMultiple: true);
     });
   });

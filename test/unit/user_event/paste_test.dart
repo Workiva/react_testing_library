@@ -20,6 +20,7 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -56,14 +57,14 @@ main() {
       });
 
       test('', () {
-        rtl.UserEvent.paste(input, 'hello');
+        UserEvent.paste(input, 'hello');
         expect(input, hasValue('hello'));
         _verifyPasteEvent();
       });
 
       test('eventInit', () {
         // todo add test for clipboard data
-        rtl.UserEvent.paste(input, 'hello', eventInit: {'cancelable': false});
+        UserEvent.paste(input, 'hello', eventInit: {'cancelable': false});
         expect(input, hasValue('hello'));
         _verifyPasteEvent(hasEventInit: true);
       });
@@ -84,21 +85,26 @@ main() {
       });
 
       test('', () {
-        rtl.UserEvent.paste(input, 'good');
+        UserEvent.paste(input, 'good');
         expect(input, hasValue('this is a bad examplegood'));
         _verifyPasteEvent();
       });
 
       test('with setSelectionRange', () {
         input.setSelectionRange(10, 13);
-        rtl.UserEvent.paste(input, 'good');
+        UserEvent.paste(input, 'good');
         expect(input, hasValue('this is a good example'));
         _verifyPasteEvent();
       });
 
       test('with setSelectionRange set to zero', () {
         input.setSelectionRange(0, 0);
-        rtl.UserEvent.paste(input, 'good');
+        UserEvent.paste(
+          input,
+          'good',
+          initialSelectionStart: 0,
+          initialSelectionEnd: 0,
+        );
         expect(input, hasValue('goodthis is a bad example'));
         _verifyPasteEvent();
       });

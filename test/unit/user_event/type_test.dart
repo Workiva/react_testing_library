@@ -21,13 +21,19 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
+
+import '../util/enums.dart';
+
+// todo add tests for textarea
 
 main() {
   group('User type events:', () {
     int clickEventCount;
     InputElement input;
     List<String> keyUpCalls;
+    rtl.RenderResult renderedResult;
 
     void _verifyTypeEvent({
       bool skipClick = false,
@@ -42,19 +48,19 @@ main() {
           clickEventCount = 0;
           keyUpCalls = [];
 
-          rtl.render(react.input({
+          renderedResult = rtl.render(react.input({
             'id': 'root',
             'onClick': (_) => clickEventCount++,
             'onKeyUp': (react.SyntheticKeyboardEvent e) =>
                 keyUpCalls.add(e.key),
           }) as ReactElement);
 
-          input = rtl.screen.getByRole('textbox');
+          input = renderedResult.getByRole('textbox');
           expect(input, hasValue(''), reason: 'sanity check');
         });
 
         test('', () {
-          rtl.UserEvent.type(input, 'oh hai');
+          UserEvent.type(input, 'oh hai');
           expect(input, hasValue('oh hai'));
           _verifyTypeEvent();
         });
@@ -62,14 +68,14 @@ main() {
         test('skipClick', () {
           // Manually focus the element since click will be skipped.
           input.focus();
-          rtl.UserEvent.type(input, 'oh hai', skipClick: true);
+          UserEvent.type(input, 'oh hai', skipClick: true);
           expect(input, hasValue('oh hai'));
           _verifyTypeEvent(skipClick: true);
         });
 
         group('skipAutoClose:', () {
           test('false (default)', () {
-            rtl.UserEvent.type(input, 'oh {ctrl}hai');
+            UserEvent.type(input, 'oh {ctrl}hai');
             expect(
               input,
               hasValue('oh '),
@@ -87,7 +93,7 @@ main() {
           });
 
           test('true', () {
-            rtl.UserEvent.type(input, 'oh {ctrl}hai', skipAutoClose: true);
+            UserEvent.type(input, 'oh {ctrl}hai', skipAutoClose: true);
             expect(
               input,
               hasValue('oh '),
@@ -111,7 +117,7 @@ main() {
           clickEventCount = 0;
           keyUpCalls = [];
 
-          rtl.render(react.input({
+          renderedResult = rtl.render(react.input({
             'id': 'root',
             'onClick': (_) => clickEventCount++,
             'onKeyUp': (react.SyntheticKeyboardEvent e) =>
@@ -119,36 +125,36 @@ main() {
             'defaultValue': 'this is a bad example',
           }) as ReactElement);
 
-          input = rtl.screen.getByRole('textbox');
+          input = renderedResult.getByRole('textbox');
           expect(input, hasValue('this is a bad example'),
               reason: 'sanity check');
         });
 
         test('', () {
-          rtl.UserEvent.type(input, 'good');
+          UserEvent.type(input, 'good');
           expect(input, hasValue('this is a bad examplegood'));
           _verifyTypeEvent();
         });
 
         // TODO: uncomment these tests when https://jira.atl.workiva.net/browse/CPLAT-14155 is fixed.
-        // test('with setSelectionRange', () {
-        //   input.setSelectionRange(10, 13);
-        //   rtl.UserEvent.type(input, 'good');
-        //   expect(input, hasValue('this is a good example'));
-        //   _verifyTypeEvent();
-        // });
-        //
-        // test('with setSelectionRange set to zero', () {
-        //   input.setSelectionRange(0, 0);
-        //   rtl.UserEvent.type(
-        //     input,
-        //     'good',
-        //     initialSelectionStart: 0,
-        //     initialSelectionEnd: 0,
-        //   );
-        //   expect(input, hasValue('goodthis is a bad example'));
-        //   _verifyTypeEvent();
-        // });
+        test('with setSelectionRange', () {
+          input.setSelectionRange(10, 13);
+          UserEvent.type(input, 'good');
+          expect(input, hasValue('this is a good example'));
+          _verifyTypeEvent();
+        });
+
+        test('with setSelectionRange set to zero', () {
+          input.setSelectionRange(0, 0);
+          UserEvent.type(
+            input,
+            'good',
+            initialSelectionStart: 0,
+            initialSelectionEnd: 0,
+          );
+          expect(input, hasValue('goodthis is a bad example'));
+          _verifyTypeEvent();
+        });
       });
     });
 
@@ -158,17 +164,21 @@ main() {
         int delay, {
         bool skipClick = false,
         bool skipAutoClose = false,
+        int initialSelectionStart,
+        int initialSelectionEnd,
         int charsTyped,
       }) async {
         charsTyped ??= text.length;
         final timer = Stopwatch();
         timer.start();
-        await rtl.UserEvent.typeWithDelay(
+        await UserEvent.typeWithDelay(
           input,
           text,
           Duration(milliseconds: delay),
           skipClick: skipClick,
           skipAutoClose: skipAutoClose,
+          initialSelectionStart: initialSelectionStart,
+          initialSelectionEnd: initialSelectionEnd,
         );
         timer.stop();
         expect(
@@ -189,14 +199,14 @@ main() {
           clickEventCount = 0;
           keyUpCalls = [];
 
-          rtl.render(react.input({
+          renderedResult = rtl.render(react.input({
             'id': 'root',
             'onClick': (_) => clickEventCount++,
             'onKeyUp': (react.SyntheticKeyboardEvent e) =>
                 keyUpCalls.add(e.key),
           }) as ReactElement);
 
-          input = rtl.screen.getByRole('textbox');
+          input = renderedResult.getByRole('textbox');
           expect(input, hasValue(''), reason: 'sanity check');
         });
 
@@ -273,7 +283,7 @@ main() {
           clickEventCount = 0;
           keyUpCalls = [];
 
-          rtl.render(react.input({
+          renderedResult = rtl.render(react.input({
             'id': 'root',
             'onClick': (_) => clickEventCount++,
             'onKeyUp': (react.SyntheticKeyboardEvent e) =>
@@ -281,7 +291,7 @@ main() {
             'defaultValue': 'this is a bad example',
           }) as ReactElement);
 
-          input = rtl.screen.getByRole('textbox');
+          input = renderedResult.getByRole('textbox');
           expect(input, hasValue('this is a bad example'),
               reason: 'sanity check');
         });
@@ -293,24 +303,24 @@ main() {
         });
 
         // TODO: uncomment these tests when https://jira.atl.workiva.net/browse/CPLAT-14155 is fixed.
-        // test('with setSelectionRange', () async {
-        //   input.setSelectionRange(10, 13);
-        //   await _verifyTypeWithDelay('good', 50);
-        //   expect(input, hasValue('this is a good example'));
-        //   _verifyTypeEvent();
-        // });
-        //
-        // test('with setSelectionRange set to zero', () async {
-        //   input.setSelectionRange(0, 0);
-        //   await _verifyTypeWithDelay(
-        //     'good',
-        //     50,
-        //     // initialSelectionStart: 0,
-        //     // initialSelectionEnd: 0,
-        //   );
-        //   expect(input, hasValue('goodthis is a bad example'));
-        //   _verifyTypeEvent();
-        // });
+        test('with setSelectionRange', () async {
+          input.setSelectionRange(10, 13);
+          await _verifyTypeWithDelay('good', 50);
+          expect(input, hasValue('this is a good example'));
+          _verifyTypeEvent();
+        });
+
+        test('with setSelectionRange set to zero', () async {
+          input.setSelectionRange(0, 0);
+          await _verifyTypeWithDelay(
+            'good',
+            50,
+            initialSelectionStart: 0,
+            initialSelectionEnd: 0,
+          );
+          expect(input, hasValue('goodthis is a bad example'));
+          _verifyTypeEvent();
+        });
       });
     });
   });

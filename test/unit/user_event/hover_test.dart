@@ -21,6 +21,7 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -65,20 +66,20 @@ main() {
     }
 
     test('', () {
-      rtl.UserEvent.hover(renderedResult.getByRole('button'));
+      UserEvent.hover(renderedResult.getByRole('button'));
       expect(renderedResult.getByText('Hello!'), isInTheDocument);
-      rtl.UserEvent.unhover(renderedResult.getByRole('button'));
+      UserEvent.unhover(renderedResult.getByRole('button'));
       expect(renderedResult.queryByText('Hello!'), isNull);
       _verifyHoverEvent();
     });
 
     test('eventInit', () {
-      rtl.UserEvent.hover(
+      UserEvent.hover(
         renderedResult.getByRole('button'),
         eventInit: {'shiftKey': true},
       );
       expect(renderedResult.getByText('Hello!'), isInTheDocument);
-      rtl.UserEvent.unhover(
+      UserEvent.unhover(
         renderedResult.getByRole('button'),
         eventInit: {'shiftKey': true},
       );

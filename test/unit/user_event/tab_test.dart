@@ -20,6 +20,7 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -46,19 +47,19 @@ main() {
     test('', () {
       expect(document.body, isFocused);
 
-      rtl.UserEvent.tab();
+      UserEvent.tab();
 
       expect(inputs.first, isFocused);
 
-      rtl.UserEvent.tab();
+      UserEvent.tab();
 
       expect(inputs[1], isFocused);
 
-      rtl.UserEvent.tab();
+      UserEvent.tab();
 
       expect(inputs[2], isFocused);
 
-      rtl.UserEvent.tab();
+      UserEvent.tab();
 
       // Cycle goes back to the body element.
       expect(document.body, isFocused);
@@ -67,20 +68,20 @@ main() {
     test('shift', () {
       expect(document.body, isFocused);
 
-      rtl.UserEvent.tab(shift: true);
+      UserEvent.tab(shift: true);
 
       // Tab direction goes backwards.
       expect(inputs[2], isFocused);
 
-      rtl.UserEvent.tab(shift: true);
+      UserEvent.tab(shift: true);
 
       expect(inputs[1], isFocused);
 
-      rtl.UserEvent.tab(shift: true);
+      UserEvent.tab(shift: true);
 
       expect(inputs.first, isFocused);
 
-      rtl.UserEvent.tab(shift: true);
+      UserEvent.tab(shift: true);
 
       // Cycle goes back to the body element.
       expect(document.body, isFocused);
@@ -90,16 +91,16 @@ main() {
       final container = renderedResult.getByTestId('container');
       expect(document.body, isFocused);
 
-      rtl.UserEvent.tab(focusTrap: container);
+      UserEvent.tab(focusTrap: container);
 
       // Focused element is the first inside the container.
       expect(inputs[1], isFocused);
 
-      rtl.UserEvent.tab(focusTrap: container);
+      UserEvent.tab(focusTrap: container);
 
       expect(inputs[2], isFocused);
 
-      rtl.UserEvent.tab(focusTrap: container);
+      UserEvent.tab(focusTrap: container);
 
       // Cycle goes back to first element in container.
       expect(inputs[1], isFocused);

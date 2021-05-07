@@ -19,6 +19,7 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -76,13 +77,12 @@ main() {
         }
 
         test('listing values', () {
-          rtl.UserEvent.selectOptions(
-              select, isMultiSelect ? ['1', '3'] : ['3']);
+          UserEvent.selectOptions(select, isMultiSelect ? ['1', '3'] : ['3']);
           _verifySelectEvent();
         });
 
         test('listing elements', () {
-          rtl.UserEvent.selectOptions(
+          UserEvent.selectOptions(
             select,
             isMultiSelect
                 ? [renderedResult.getByText('A'), renderedResult.getByText('C')]
@@ -92,7 +92,7 @@ main() {
         });
 
         test('clickInit', () {
-          rtl.UserEvent.selectOptions(
+          UserEvent.selectOptions(
             select,
             isMultiSelect ? ['1', '3'] : ['3'],
             clickInit: {'shiftKey': true},
@@ -157,12 +157,12 @@ main() {
       }
 
       test('listing values', () {
-        rtl.UserEvent.deselectOptions(select, ['1', '3']);
+        UserEvent.deselectOptions(select, ['1', '3']);
         _verifyDeselectEvent();
       });
 
       test('listing elements', () {
-        rtl.UserEvent.deselectOptions(
+        UserEvent.deselectOptions(
           select,
           [renderedResult.getByText('A'), renderedResult.getByText('C')],
         );
@@ -170,7 +170,7 @@ main() {
       });
 
       test('clickInit', () {
-        rtl.UserEvent.deselectOptions(
+        UserEvent.deselectOptions(
           select,
           ['1', '3'],
           clickInit: {'shiftKey': true},

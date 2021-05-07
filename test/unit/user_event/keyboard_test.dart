@@ -20,6 +20,7 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -51,39 +52,39 @@ main() {
 
       test('', () {
         input.focus();
-        rtl.UserEvent.keyboard('hello');
+        UserEvent.keyboard('hello');
         expect(input, hasValue('hello'));
       });
 
       test('brackets as escape characters', () {
         input.focus();
-        rtl.UserEvent.keyboard('{{a[[');
+        UserEvent.keyboard('{{a[[');
         expect(input, hasValue('{a['));
       });
 
       test('KeyboardEvent.key', () {
         input.focus();
-        rtl.UserEvent.keyboard('{Shift}{f}{o}{o}');
+        UserEvent.keyboard('{Shift}{f}{o}{o}');
         expect(input, hasValue('foo'));
       });
 
       test('KeyboardEvent.code', () {
         input.focus();
-        rtl.UserEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]');
+        UserEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]');
         expect(input, hasValue('foo'));
       });
 
       test('KeyboardEvent.key', () {
         input.focus();
-        rtl.UserEvent.keyboard('{Shift}{f}{o}{o}');
+        UserEvent.keyboard('{Shift}{f}{o}{o}');
         expect(input, hasValue('foo'));
       });
 
       group('KeyboardState', () {
         test('two keyboard events back to back without setting state', () {
           input.focus();
-          rtl.UserEvent.keyboard('[ShiftRight>]');
-          rtl.UserEvent.keyboard('F[/ShiftRight]');
+          UserEvent.keyboard('[ShiftRight>]');
+          UserEvent.keyboard('F[/ShiftRight]');
           expect(input, hasValue('F'));
           expect(
               calls,
@@ -96,8 +97,8 @@ main() {
 
         test('two keyboard events back to back with setting state', () {
           input.focus();
-          final state = rtl.UserEvent.keyboard('[ShiftRight>]');
-          rtl.UserEvent.keyboard('F[/ShiftRight]', keyboardState: state);
+          final state = UserEvent.keyboard('[ShiftRight>]');
+          UserEvent.keyboard('F[/ShiftRight]', keyboardState: state);
           expect(input, hasValue('F'));
           expect(
               calls,
