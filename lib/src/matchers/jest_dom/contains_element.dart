@@ -64,9 +64,7 @@ class _ContainsElement extends Matcher {
   final Element descendant;
 
   _ContainsElement(this.descendant) {
-    if (descendant == null) {
-      throw ArgumentError('descendant must be a non-null Element');
-    }
+    ArgumentError.checkNotNull(descendant, 'descendant');
   }
 
   @override

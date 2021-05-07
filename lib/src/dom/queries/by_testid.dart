@@ -59,20 +59,18 @@ mixin ByTestIdQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   E getByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByTestId(
-                getContainerForScope(),
-                TextMatch.toJs(testId),
-                buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ) as E,
-          errorMessage: errorMessage);
+        () => _jsGetByTestId(
+          getContainerForScope(),
+          TextMatch.toJs(testId),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ) as E,
+      );
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -96,20 +94,18 @@ mixin ByTestIdQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTestId(
-                getContainerForScope(),
-                TextMatch.toJs(testId),
-                buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          errorMessage: errorMessage);
+        () => _jsGetAllByTestId(
+          getContainerForScope(),
+          TextMatch.toJs(testId),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -201,7 +197,6 @@ mixin ByTestIdQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -213,20 +208,18 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByTestId for consistency with our
-    // need to use it on the analogous `findAllByTestId` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTestId` instead of an
+    // interop like `_jsFindByTestId` to give consumers better async stack traces.
     return waitFor(
       () => getByTestId<E>(
         testId,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,
@@ -260,7 +253,6 @@ mixin ByTestIdQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -272,21 +264,18 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTestId because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByTestId` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTestId` instead of an
+    // interop like `_jsFindAllByTestId` to give consumers better async stack traces.
     return waitFor(
       () => getAllByTestId<E>(
         testId,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,

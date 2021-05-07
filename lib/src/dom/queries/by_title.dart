@@ -49,20 +49,18 @@ mixin ByTitleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   E getByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByTitle(
-                getContainerForScope(),
-                TextMatch.toJs(title),
-                buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ) as E,
-          errorMessage: errorMessage);
+        () => _jsGetByTitle(
+          getContainerForScope(),
+          TextMatch.toJs(title),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ) as E,
+      );
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match.
@@ -80,20 +78,18 @@ mixin ByTitleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByTitle(
-                getContainerForScope(),
-                TextMatch.toJs(title),
-                buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          errorMessage: errorMessage);
+        () => _jsGetAllByTitle(
+          getContainerForScope(),
+          TextMatch.toJs(title),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a single element with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match.
@@ -167,7 +163,6 @@ mixin ByTitleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -179,20 +174,18 @@ mixin ByTitleQueries on IQueries {
     /*TextMatch*/ dynamic title, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByTitle for consistency with our
-    // need to use it on the analogous `findAllByTitle` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTitle` instead of an
+    // interop like `_jsFindByTitle` to give consumers better async stack traces.
     return waitFor(
       () => getByTitle<E>(
         title,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,
@@ -220,7 +213,6 @@ mixin ByTitleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -232,21 +224,18 @@ mixin ByTitleQueries on IQueries {
     /*TextMatch*/ dynamic title, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByTitle because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByTitle` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTitle` instead of an
+    // interop like `_jsFindAllByTitle` to give consumers better async stack traces.
     return waitFor(
       () => getAllByTitle<E>(
         title,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,

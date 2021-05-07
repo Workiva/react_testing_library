@@ -50,21 +50,19 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   E getByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByLabelText(
-                getContainerForScope(),
-                TextMatch.toJs(text),
-                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector),
-              ) as E,
-          errorMessage: errorMessage);
+        () => _jsGetByLabelText(
+          getContainerForScope(),
+          TextMatch.toJs(text),
+          buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector),
+        ) as E,
+      );
 
   /// Returns a list of elements that are associated with a [LabelElement] with the given [text],
   /// defaulting to an [exact] match.
@@ -83,21 +81,19 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByLabelText(
-                getContainerForScope(),
-                TextMatch.toJs(text),
-                buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector),
-              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          errorMessage: errorMessage);
+        () => _jsGetAllByLabelText(
+          getContainerForScope(),
+          TextMatch.toJs(text),
+          buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a single element that is associated with a [LabelElement] with the given [text],
   /// defaulting to an [exact] match.
@@ -176,7 +172,6 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -189,21 +184,19 @@ mixin ByLabelTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByLabelText for consistency with our
-    // need to use it on the analogous `findAllByLabelText` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByLabelText` instead of an
+    // interop like `_jsFindByLabelText` to give consumers better async stack traces.
     return waitFor(
       () => getByLabelText<E>(
         text,
         exact: exact,
         normalizer: normalizer,
         selector: selector,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,
@@ -232,7 +225,6 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -245,22 +237,19 @@ mixin ByLabelTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByLabelText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByLabelText` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByAltText` instead of an
+    // interop like `_jsFindAllByAltText` to give consumers better async stack traces.
     return waitFor(
       () => getAllByLabelText<E>(
         text,
         exact: exact,
         normalizer: normalizer,
         selector: selector,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,

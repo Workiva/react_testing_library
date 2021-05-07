@@ -75,10 +75,11 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///
 ///     // Use the `hasValue` matcher as the second argument of `expect()`
 ///     expect(textInput, hasValue('jane.doe'));
+///     expect(textInput, hasValue(startsWith('jane.')));
 ///     expect(numberInput, hasValue(35));
 ///     expect(emptyInput, isNot(hasValue()));
 ///     expect(selectInput, hasValue(['second', 'third']));
-///     expect(selectInput, hasValue(['first']));
+///     expect(selectInput, isNot(hasValue(['first'])));
 ///   });
 /// }
 /// ```
@@ -116,13 +117,10 @@ class _HasValue extends CustomMatcher {
 
   @override
   dynamic featureValueOf(item) {
-    Element element;
-    try {
-      element = item as Element;
-    } catch (_) {
-      // If its not an element, the mismatch description will say so.
-      return null;
-    }
+    // If it's not a Element, the mismatch description will say so.
+    if (item is! Element) return null;
+
+    final element = item as Element;
 
     if (element is InputElement) {
       final type = element.getAttribute('type');

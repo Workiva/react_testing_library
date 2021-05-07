@@ -30,8 +30,7 @@ void setEphemeralElementErrorMessage(
     {StackTrace jsStackTrace}) {
   TestingLibraryElementError buildCustomDartGetElementError(Object originalMessage, Element container) {
     return TestingLibraryElementError.fromJs(
-        buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container),
-        jsStackTrace: jsStackTrace);
+        buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container), jsStackTrace);
   }
 
   configure(getElementError: buildCustomDartGetElementError);
@@ -41,12 +40,12 @@ void setEphemeralElementErrorMessage(
 /// preserving the stack trace of the error thrown from JS by throwing a [TestingLibraryElementError].
 ///
 /// Optionally, a [errorMessage] can be provided to customize the error message.
-T withErrorInterop<T>(T Function() getJsQueryResult, {String errorMessage}) {
+T withErrorInterop<T>(T Function() getJsQueryResult) {
   try {
     return getJsQueryResult();
   } catch (e, st) {
     if (e is JsError && e.name == 'TestingLibraryElementError') {
-      throw TestingLibraryElementError.fromJs(e, jsStackTrace: st, errorMessage: errorMessage);
+      throw TestingLibraryElementError.fromJs(e, st);
     } else {
       rethrow;
     }
@@ -57,10 +56,9 @@ T withErrorInterop<T>(T Function() getJsQueryResult, {String errorMessage}) {
 class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
-  factory TestingLibraryElementError.fromJs(/*JsError*/ jsError, {StackTrace jsStackTrace, String errorMessage}) {
-    final message = errorMessage == null ? jsError.toString() : '$jsError\n\n$errorMessage';
+  factory TestingLibraryElementError.fromJs(/*JsError*/ jsError, [StackTrace jsStackTrace]) {
     final stack = jsError is JsError ? jsStackTrace ?? StackTrace.fromString(jsError.stack) : null;
-    return TestingLibraryElementError(message, stack);
+    return TestingLibraryElementError(jsError.toString(), stack);
   }
 
   final String message;

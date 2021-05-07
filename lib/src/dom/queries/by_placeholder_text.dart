@@ -49,20 +49,18 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   E getByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetByPlaceholderText(
-                getContainerForScope(),
-                TextMatch.toJs(text),
-                buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ) as E,
-          errorMessage: errorMessage);
+        () => _jsGetByPlaceholderText(
+          getContainerForScope(),
+          TextMatch.toJs(text),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ) as E,
+      );
 
   /// Returns a list of elements with the given [text] as the value of the `placeholder` attribute,
   /// defaulting to an [exact] match.
@@ -80,20 +78,18 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   List<E> getAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
   }) =>
       withErrorInterop(
-          () => _jsGetAllByPlaceholderText(
-                getContainerForScope(),
-                TextMatch.toJs(text),
-                buildMatcherOptions(exact: exact, normalizer: normalizer),
-              ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-          errorMessage: errorMessage);
+        () => _jsGetAllByPlaceholderText(
+          getContainerForScope(),
+          TextMatch.toJs(text),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a single element with the given [text] as the value of the `placeholder` attribute,
   /// defaulting to an [exact] match.
@@ -167,7 +163,6 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -179,20 +174,18 @@ mixin ByPlaceholderTextQueries on IQueries {
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindByPlaceholderText for consistency with our
-    // need to use it on the analogous `findAllByPlaceholderText` query.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getByPlaceholderText` instead of an
+    // interop like `_jsFindByPlaceholderText` to give consumers better async stack traces.
     return waitFor(
       () => getByPlaceholderText<E>(
         text,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,
@@ -220,7 +213,6 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  /// {@macro MatcherOptionsErrorMessage}
   ///
   /// ## Async Options
   ///
@@ -232,21 +224,18 @@ mixin ByPlaceholderTextQueries on IQueries {
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    String errorMessage,
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
     MutationObserverOptions mutationObserverOptions,
   }) {
-    // NOTE: Using our own Dart waitFor as a wrapper instead of calling _jsFindAllByPlaceholderText because of the inability
-    // to call `.cast<E>` on the list before returning to consumers (https://github.com/dart-lang/sdk/issues/37676)
-    // like we can/must on the `getAllByPlaceholderText` return value.
+    // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByPlaceholderText` instead of an
+    // interop like `_jsFindAllByPlaceholderText` to give consumers better async stack traces.
     return waitFor(
       () => getAllByPlaceholderText<E>(
         text,
         exact: exact,
         normalizer: normalizer,
-        errorMessage: errorMessage,
       ),
       container: getContainerForScope(),
       timeout: timeout,

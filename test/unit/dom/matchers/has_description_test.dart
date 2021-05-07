@@ -57,7 +57,7 @@ main() {
         closeButtonElement = renderedResult.getByRole('button', name: 'Close');
       });
 
-      group('passes when an is provided a', () {
+      group('passes when provided with a', () {
         group('String that is an exact match of the element description', () {
           test('when normalizeWhitespace = true (default)', () {
             shouldPass(closeButtonElement, hasDescription('Closing will discard any changes'));
@@ -86,7 +86,7 @@ main() {
         buttonElementWithMultipleDescriptions = renderedResult.getByRole('button', name: 'Has Multiple Descriptions');
       });
 
-      group('passes when an is provided a', () {
+      group('passes when provided with a', () {
         group('String that is an exact match of the element descriptions', () {
           test('when normalizeWhitespace = true (default)', () {
             shouldPass(buttonElementWithMultipleDescriptions,

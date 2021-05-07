@@ -57,7 +57,6 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     final button = result.getByRole('button', name: 'Delete');
 ///
 ///     // Use the `hasStyles` matcher as the second argument of `expect()`
-///     expect(button, hasStyles('display: block'));
 ///     expect(button, hasStyles({'display': 'block'}));
 ///     expect(button, hasStyles('''
 ///       background-color: red;
@@ -67,10 +66,6 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///       'backgroundColor': 'red',
 ///       'display': 'block',
 ///     }));
-///     expect(button, isNot(hasStyles('''
-///       background-color: blue;
-///       display: block;
-///     ''')));
 ///     expect(button, isNot(hasStyles({
 ///       'backgroundColor': 'blue',
 ///       'display': 'block',
@@ -82,35 +77,31 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
-Matcher hasStyles(Object styles) => _HasStyles(styles);
+Matcher hasStyles(Map<String, dynamic> styles) => _HasStyles(styles);
 
 class _HasStyles extends CustomMatcher {
-  final Object expectedStyles;
-  final Map<String, dynamic> expectedStylesAsMap;
+  Map<String, dynamic> _expectedStyles;
 
-  _HasStyles(this.expectedStyles)
-      : expectedStylesAsMap = _convertStylesToMap(expectedStyles),
-        super('A element with styles', 'styles', _convertStylesToMap(expectedStyles));
+  _HasStyles(Map<String, dynamic> expectedStyles)
+      : _expectedStyles = _normalizeMapValues(expectedStyles),
+        super('A element with styles', 'styles', _normalizeMapValues(expectedStyles));
 
   @override
   featureValueOf(item) {
-    Element element;
-    try {
-      element = item as Element;
-    } catch (_) {
-      // If its not an element, the mismatch description will say so.
-      return null;
-    }
+    // If it's not a Element, the mismatch description will say so.
+    if (item is! Element) return null;
+
+    final element = item as Element;
 
     final allComputedStyles = element.getComputedStyle();
     final stylesToCompare = <String, dynamic>{};
     final invalidPropertyNames =
-        expectedStylesAsMap.keys.where((propertyName) => !allComputedStyles.supportsProperty(propertyName));
+        _expectedStyles.keys.where((propertyName) => !allComputedStyles.supportsProperty(propertyName));
     if (invalidPropertyNames.isNotEmpty) {
       throw ArgumentError.value(invalidPropertyNames, 'style',
           'One or more property names is not supported by the browser you are testing in.');
     }
-    expectedStylesAsMap.keys.forEach((stylePropertyToCheck) {
+    _expectedStyles.keys.forEach((stylePropertyToCheck) {
       final actualValue = allComputedStyles.getPropertyValue(stylePropertyToCheck);
       stylesToCompare[stylePropertyToCheck] = normalizeValue(stylePropertyToCheck, actualValue);
     });
@@ -126,22 +117,9 @@ class _HasStyles extends CustomMatcher {
     return super.describeMismatch(item, mismatchDescription, matchState, verbose);
   }
 
-  static Map<String, dynamic> _convertStylesToMap(Object styles) {
-    var styleMap = <String, dynamic>{};
-    if (styles is String) {
-      RegExp(r'\b(.+):\s*(.+)\b((\W){0,1})').allMatches(styles).forEach((match) {
-        final propertyName = match.group(1);
-        final closingParenWithinValue = match.group(3);
-        final value = closingParenWithinValue.isNotEmpty ? '${match.group(2)}$closingParenWithinValue' : match.group(2);
-        styleMap[propertyName] = value.replaceAll(';', '');
-      });
-    } else if (styles is Map) {
-      styleMap = styles.cast<String, dynamic>();
-    } else {
-      throw ArgumentError.value(styles, 'styles', 'Must be a String or a Map');
-    }
-
-    return styleMap.map((propertyName, value) => MapEntry(propertyName, normalizeValue(propertyName, value)));
+  static Map<String, dynamic> _normalizeMapValues(Map<String, dynamic> styleMap) {
+    return styleMap
+        .map((propertyName, value) => MapEntry(_camelToDashCase(propertyName), normalizeValue(propertyName, value)));
   }
 
   /// Perform various normalization tasks on the provided [value].
@@ -182,4 +160,8 @@ class _HasStyles extends CustomMatcher {
 
     return possibleColorValue;
   }
+}
+
+String _camelToDashCase(String camel) {
+  return camel.replaceAllMapped(RegExp(r'[A-Z]'), (match) => '-${match[0].toLowerCase()}');
 }

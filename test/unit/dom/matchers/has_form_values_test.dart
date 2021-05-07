@@ -22,10 +22,10 @@ import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasFormValues;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
-import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
+import '../../util/over_react_stubs.dart';
 
 class _FormElemDefinition {
   final /*ReactDomComponentFactoryProxy*/ dynamic formElem;

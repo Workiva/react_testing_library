@@ -14,8 +14,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:react_testing_library/src/dom/matches/types.dart' show TextMatch;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
+
+import 'string_trimming.dart';
 
 class _HasToStringValue extends CustomMatcher {
   _HasToStringValue(matcher) : super('Object with toString() value', 'toString()', matcher);
@@ -68,7 +71,76 @@ Matcher buildContainsPatternUsing(String templatePattern, String expectedValueTh
         'The buildContainsPatternUsing matcher should only be used if the first argument contains `valueNotFoundPlaceholder`');
   }
 
-  return contains(templatePattern.replaceAll(valueNotFoundPlaceholder, expectedValueThatWasNotFound));
+  if (expectedValueThatWasNotFound == TextMatch.functionValueErrorMessage &&
+      templatePattern.contains('"$valueNotFoundPlaceholder"')) {
+    return contains(templatePattern.replaceAll('"$valueNotFoundPlaceholder"', expectedValueThatWasNotFound));
+  } else {
+    return contains(templatePattern.replaceAll(valueNotFoundPlaceholder, expectedValueThatWasNotFound));
+  }
+}
+
+Matcher containsMultilineString(String expected) => _ContainsMultilineString(expected);
+
+class _ContainsMultilineString extends Matcher {
+  final String _expected;
+
+  _ContainsMultilineString(String expected) : _expected = expected.trimEachLine();
+
+  @override
+  bool matches(item, Map matchState) {
+    var expected = _expected;
+    if (item is String) {
+      return item.trimEachLine().contains(expected);
+    }
+
+    return false;
+  }
+
+  @override
+  Description describe(Description description) =>
+      description.add('contains a multi-line string (ignoring whitespace) ').addDescriptionOf(_expected);
+
+  @override
+  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+    if (item is String) {
+      return super.describeMismatch(item, mismatchDescription, matchState, verbose);
+    } else {
+      return mismatchDescription.add('is not a string');
+    }
+  }
+}
+
+/// Utility for asserting that [matcher] will fail on [value].
+///
+/// Copyright (c) 2012, the Dart project authors.
+void shouldFail(value, Matcher matcher, expected, {bool useDoubleQuotes = false}) {
+  var failed = false;
+  try {
+    expect(value, matcher);
+  } on TestFailure catch (err) {
+    failed = true;
+
+    var _errorString = err.message;
+
+    if (expected is String) {
+      expect(_errorString, equalsIgnoringWhitespace(expected));
+    } else {
+      var escapedErrorString = _errorString.replaceAll(RegExp(r'[\s\n]+'), ' ');
+      if (useDoubleQuotes) {
+        escapedErrorString = escapedErrorString.replaceAll("\'", '"');
+      }
+      expect(escapedErrorString, expected);
+    }
+  }
+
+  expect(failed, isTrue, reason: 'Expected to fail.');
+}
+
+/// Utility for asserting that [matcher] will pass on [value].
+///
+/// Copyright (c) 2012, the Dart project authors.
+void shouldPass(value, Matcher matcher, {String reason}) {
+  expect(value, matcher, reason: reason);
 }
 
 /// Utility for asserting that [matcher] will fail on [value].

@@ -19,7 +19,6 @@ import 'dart:html';
 
 import 'package:meta/meta.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:test/test.dart';
 
 import 'package:react_testing_library/src/dom/pretty_dom.dart' show prettyDOM;
@@ -28,6 +27,7 @@ import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQu
 import '../../../util/enums.dart';
 import '../../../util/init.dart';
 import '../../../util/matchers.dart';
+import '../../../util/over_react_stubs.dart';
 import '../../../util/rendering.dart';
 import 'text_match_type_parsing_tests.dart';
 
@@ -339,7 +339,7 @@ void hasQueriesScopedTo(
                   .findAllByTestId,
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
-        failureSnapshotPattern: 'an element by: [data-test-id="$valueNotFoundPlaceholder"]',
+        failureSnapshotPattern: 'an element by: [data-test-id="$valueNotFoundPlaceholder"',
       );
 
       testTextMatchTypes(

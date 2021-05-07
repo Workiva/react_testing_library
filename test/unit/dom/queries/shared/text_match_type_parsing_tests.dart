@@ -18,7 +18,7 @@ import 'dart:html';
 
 import 'package:meta/meta.dart';
 import 'package:react_testing_library/react_testing_library.dart'
-    show NormalizerFn, NormalizerOptions, TestingLibraryElementError, getDefaultNormalizer;
+    show NormalizerFn, NormalizerOptions, getDefaultNormalizer;
 import 'package:react_testing_library/src/dom/matches/types.dart' show TextMatch;
 import 'package:test/test.dart';
 
@@ -104,7 +104,8 @@ void testTextMatchTypes<E extends Element>(
     // RenderResult.container will not be accurate when called - so `expectedPrettyDom` will be null.
     final expectedPrettyDom = getExpectedPrettyDom();
     final stringPrettyDomMatcher = expectedPrettyDom != null ? contains(expectedPrettyDom) : null;
-    return toThrowErrorMatchingInlineSnapshot(containsMatcher, stringPrettyDomMatcher);
+    return toThrowErrorMatchingInlineSnapshot(
+        containsMatcher, stringPrettyDomMatcher, isNot(contains('return dart.dcall')));
   }
 
   Matcher getExpectedMatcherForFailedQuery(String queryName) {
@@ -371,66 +372,6 @@ void testTextMatchTypes<E extends Element>(
               containerArgRequired: true,
             );
           });
-        });
-      });
-
-      group('and errorMessage is customized when a failure is expected for the', () {
-        final scopedQueriesByNameThatShouldThrow = scopedQueriesByName
-          ..removeWhere((key, value) => key.startsWith('query'));
-        final topLevelQueriesByNameThatShouldThrow = topLevelQueriesByName
-          ..removeWhere((key, value) => key.startsWith('query'));
-
-        scopedQueriesByNameThatShouldThrow.forEach((queryName, queryGetter) {
-          test('$queryName query', () async {
-            final queryFn = queryGetter();
-
-            if (queryType == QueryType.Role) {
-              if (textMatchArgName == TextMatchArgName.role) {
-                expect(
-                    () => queryFn(validRoleNotInDom, errorMessage: 'This is custom'),
-                    throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
-                        hasToStringValue(contains('This is custom')))));
-              } else if (textMatchArgName == TextMatchArgName.name) {
-                expect(
-                    () async =>
-                        await queryFn(validRoleInDom, name: queryShouldNotMatchOn, errorMessage: 'This is custom'),
-                    throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
-                        hasToStringValue(contains('This is custom')))));
-              }
-            } else {
-              expect(
-                  () => queryFn(queryShouldNotMatchOn, errorMessage: 'This is custom'),
-                  throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
-                      hasToStringValue(contains('This is custom')))));
-            }
-          }, timeout: asyncQueryTestTimeout);
-        });
-
-        topLevelQueriesByNameThatShouldThrow.forEach((queryName, queryGetter) {
-          test('$queryName query', () async {
-            final queryFn = queryGetter();
-            final container = getContainerForTopLevelQueries();
-
-            if (queryType == QueryType.Role) {
-              if (textMatchArgName == TextMatchArgName.role) {
-                expect(
-                    () => queryFn(container, validRoleNotInDom, errorMessage: 'This is custom'),
-                    throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
-                        hasToStringValue(contains('This is custom')))));
-              } else if (textMatchArgName == TextMatchArgName.name) {
-                expect(
-                    () =>
-                        queryFn(container, validRoleInDom, name: queryShouldNotMatchOn, errorMessage: 'This is custom'),
-                    throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
-                        hasToStringValue(contains('This is custom')))));
-              }
-            } else {
-              expect(
-                  () => queryFn(container, queryShouldNotMatchOn, errorMessage: 'This is custom'),
-                  throwsA(allOf(isA<TestingLibraryElementError>(), hasToStringValue(contains('</div>')),
-                      hasToStringValue(contains('This is custom')))));
-            }
-          }, timeout: asyncQueryTestTimeout);
         });
       });
     });

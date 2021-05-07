@@ -24,12 +24,7 @@ mixin ElementTextContentMatcherMixin on CustomMatcher {
     if (item is! Element) return null;
     if (!normalizeWhitespace) return (item as Element).text;
 
-    // NOTE: I'm not sure why the jest-dom implementations of the `toHaveTextContent` matcher
-    // only replaces `&nbsp;` when `normalizeWhitespace` is false, but IMO - it should normalize
-    // all forms of spaces if the user says they want the whitespace "normalized".
-    //
-    // See: <https://github.com/testing-library/jest-dom/blob/master/src/to-have-text-content.js#L10-L12>
-    return (item as Element).text.replaceAll(RegExp(r'\s+'), ' ').replaceAll(RegExp('\u00a0+'), ' ');
+    return (item as Element).text.replaceAll(RegExp(r'\s+'), ' ');
   }
 
   /// Returns a normalized [String] or [Matcher] based on the provided [userExpectedTextContent]
