@@ -115,8 +115,9 @@ class UserEvent {
   ///
   /// ### With Selection Range
   ///
-  /// > Note: [type] does not currently work as expected with selection range.
-  /// > This will be resolved when CPLAT-14155 is fixed.
+  /// > Note: [type] does not currently work as expected with selection range due
+  /// > to [a bug](https://github.com/testing-library/user-event/issues/677) in
+  /// > the user-event package.
   ///
   /// If [element] already contains a value, [type] will begin typing at the end
   /// of the existing value by default. To override this behavior and set the
@@ -179,8 +180,9 @@ class UserEvent {
   ///
   /// ### With Selection Range
   ///
-  /// > Note: [type] does not currently work as expected with selection range.
-  /// > This will be resolved when CPLAT-14155 is fixed.
+  /// > Note: [typeWithDelay] does not currently work as expected with selection range due
+  /// > to [a bug](https://github.com/testing-library/user-event/issues/677) in
+  /// > the user-event package.
   ///
   /// If [element] already contains a value, [type] will begin typing at the end
   /// of the existing value by default. To override this behavior and set the

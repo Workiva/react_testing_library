@@ -24,304 +24,244 @@ import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-import '../util/enums.dart';
-
-// todo add tests for textarea
-
 main() {
-  group('User type events:', () {
-    int clickEventCount;
-    InputElement input;
-    List<String> keyUpCalls;
-    rtl.RenderResult renderedResult;
+  group('UserEvent.type', () {
+    group('in InputElement', () {
+      _typeTestHelper();
+    });
 
-    void _verifyTypeEvent({
-      bool skipClick = false,
-    }) {
-      // Verify click event.
-      expect(clickEventCount, equals(skipClick ? 0 : 1));
+    group('in TextAreaElement', () {
+      _typeTestHelper(isTextArea: true);
+    });
+  });
+
+  group('UserEvent.typeWithDelay', () {
+    group('in InputElement', () {
+      _typeTestHelper(hasDelay: true);
+    });
+
+    group('in TextAreaElement', () {
+      _typeTestHelper(hasDelay: true, isTextArea: true);
+    });
+  });
+}
+
+void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
+  int clickEventCount;
+  Element element;
+  List<String> keyUpCalls;
+  rtl.RenderResult renderedResult;
+
+  void _verifyTypeEvent({
+    bool skipClick = false,
+  }) {
+    // Verify click event.
+    expect(clickEventCount, equals(skipClick ? 0 : 1));
+  }
+
+  Future<void> _verifyTypeWithDelay(
+    String text,
+    int delay, {
+    bool skipClick = false,
+    bool skipAutoClose = false,
+    int initialSelectionStart,
+    int initialSelectionEnd,
+    int charsTyped,
+  }) async {
+    charsTyped ??= text.length;
+    final timer = Stopwatch();
+    timer.start();
+    await UserEvent.typeWithDelay(
+      element,
+      text,
+      Duration(milliseconds: delay),
+      skipClick: skipClick,
+      skipAutoClose: skipAutoClose,
+      initialSelectionStart: initialSelectionStart,
+      initialSelectionEnd: initialSelectionEnd,
+    );
+    timer.stop();
+    expect(
+      timer.elapsedMilliseconds,
+      greaterThan((charsTyped - 1) * delay),
+      reason: 'there should be a ${delay} ms delay between each letter typed',
+    );
+    expect(
+      timer.elapsedMilliseconds,
+      lessThan((charsTyped - 1) * (delay + 10)),
+      reason: 'it should take less time than a delay of ${delay + 10} ms',
+    );
+  }
+
+  group('', () {
+    setUp(() {
+      clickEventCount = 0;
+      keyUpCalls = [];
+
+      renderedResult = rtl.render((isTextArea ? react.textarea : react.input)({
+        'id': 'root',
+        'onClick': (_) => clickEventCount++,
+        'onKeyUp': (react.SyntheticKeyboardEvent e) => keyUpCalls.add(e.key),
+      }) as ReactElement);
+
+      element = renderedResult.getByRole('textbox');
+      expect(element, hasValue(''), reason: 'sanity check');
+    });
+
+    if (hasDelay) {
+      test('with a short delay', () async {
+        await _verifyTypeWithDelay('hello world!', 10);
+        expect(element, hasValue('hello world!'));
+        _verifyTypeEvent();
+      });
+
+      test('with a longer delay', () async {
+        await _verifyTypeWithDelay('hello world!', 500);
+        expect(element, hasValue('hello world!'));
+        _verifyTypeEvent();
+      });
+    } else {
+      test('', () {
+        UserEvent.type(element, 'oh hai');
+        expect(element, hasValue('oh hai'));
+        _verifyTypeEvent();
+      });
     }
 
-    group('UserEvent.type', () {
-      group('', () {
-        setUp(() {
-          clickEventCount = 0;
-          keyUpCalls = [];
-
-          renderedResult = rtl.render(react.input({
-            'id': 'root',
-            'onClick': (_) => clickEventCount++,
-            'onKeyUp': (react.SyntheticKeyboardEvent e) =>
-                keyUpCalls.add(e.key),
-          }) as ReactElement);
-
-          input = renderedResult.getByRole('textbox');
-          expect(input, hasValue(''), reason: 'sanity check');
-        });
-
-        test('', () {
-          UserEvent.type(input, 'oh hai');
-          expect(input, hasValue('oh hai'));
-          _verifyTypeEvent();
-        });
-
-        test('skipClick', () {
-          // Manually focus the element since click will be skipped.
-          input.focus();
-          UserEvent.type(input, 'oh hai', skipClick: true);
-          expect(input, hasValue('oh hai'));
-          _verifyTypeEvent(skipClick: true);
-        });
-
-        group('skipAutoClose:', () {
-          test('false (default)', () {
-            UserEvent.type(input, 'oh {ctrl}hai');
-            expect(
-              input,
-              hasValue('oh '),
-              reason:
-                  'ctrl modifier key stops input from receiving the remaining characters',
-            );
-            expect(
-              keyUpCalls.last,
-              equals('Control'),
-              reason:
-                  'ctrl modifier key will be closed at the end of the type event',
-            );
-
-            _verifyTypeEvent();
-          });
-
-          test('true', () {
-            UserEvent.type(input, 'oh {ctrl}hai', skipAutoClose: true);
-            expect(
-              input,
-              hasValue('oh '),
-              reason:
-                  'ctrl modifier key stops input from receiving the remaining characters',
-            );
-            expect(
-              keyUpCalls.last,
-              equals('i'),
-              reason:
-                  'ctrl modifier key will be closed at the end of the type event',
-            );
-
-            _verifyTypeEvent();
-          });
-        });
-      });
-
-      group('with default value in the input', () {
-        setUp(() {
-          clickEventCount = 0;
-          keyUpCalls = [];
-
-          renderedResult = rtl.render(react.input({
-            'id': 'root',
-            'onClick': (_) => clickEventCount++,
-            'onKeyUp': (react.SyntheticKeyboardEvent e) =>
-                keyUpCalls.add(e.key),
-            'defaultValue': 'this is a bad example',
-          }) as ReactElement);
-
-          input = renderedResult.getByRole('textbox');
-          expect(input, hasValue('this is a bad example'),
-              reason: 'sanity check');
-        });
-
-        test('', () {
-          UserEvent.type(input, 'good');
-          expect(input, hasValue('this is a bad examplegood'));
-          _verifyTypeEvent();
-        });
-
-        // TODO: uncomment these tests when https://jira.atl.workiva.net/browse/CPLAT-14155 is fixed.
-        test('with setSelectionRange', () {
-          input.setSelectionRange(10, 13);
-          UserEvent.type(input, 'good');
-          expect(input, hasValue('this is a good example'));
-          _verifyTypeEvent();
-        });
-
-        test('with setSelectionRange set to zero', () {
-          input.setSelectionRange(0, 0);
-          UserEvent.type(
-            input,
-            'good',
-            initialSelectionStart: 0,
-            initialSelectionEnd: 0,
-          );
-          expect(input, hasValue('goodthis is a bad example'));
-          _verifyTypeEvent();
-        });
-      });
+    test('skipClick', () async {
+      // Manually focus the element since click will be skipped.
+      element.focus();
+      hasDelay
+          ? await _verifyTypeWithDelay('hello world!', 50, skipClick: true)
+          : UserEvent.type(element, 'hello world!', skipClick: true);
+      expect(element, hasValue('hello world!'));
+      _verifyTypeEvent(skipClick: true);
     });
 
-    group('UserEvent.typeWithDelay', () {
-      Future<void> _verifyTypeWithDelay(
-        String text,
-        int delay, {
-        bool skipClick = false,
-        bool skipAutoClose = false,
-        int initialSelectionStart,
-        int initialSelectionEnd,
-        int charsTyped,
-      }) async {
-        charsTyped ??= text.length;
-        final timer = Stopwatch();
-        timer.start();
-        await UserEvent.typeWithDelay(
-          input,
-          text,
-          Duration(milliseconds: delay),
-          skipClick: skipClick,
-          skipAutoClose: skipAutoClose,
-          initialSelectionStart: initialSelectionStart,
-          initialSelectionEnd: initialSelectionEnd,
-        );
-        timer.stop();
+    group('skipAutoClose:', () {
+      test('false (default)', () async {
+        if (hasDelay) {
+          // Specify the number of characters that will be typed since it's
+          // different than the length of the text.
+          await _verifyTypeWithDelay('oh {ctrl}hai', 50, charsTyped: 7);
+        } else {
+          UserEvent.type(element, 'oh {ctrl}hai');
+        }
         expect(
-          timer.elapsedMilliseconds,
-          greaterThan((charsTyped - 1) * delay),
+          element,
+          hasValue('oh '),
           reason:
-              'there should be a ${delay} ms delay between each letter typed',
+              'ctrl modifier key stops input from receiving the remaining characters',
         );
         expect(
-          timer.elapsedMilliseconds,
-          lessThan((charsTyped - 1) * (delay + 10)),
-          reason: 'it should take less time than a delay of ${delay + 10} ms',
+          keyUpCalls.last,
+          equals('Control'),
+          reason:
+              'ctrl modifier key will be closed at the end of the type event',
         );
-      }
 
-      group('', () {
-        setUp(() {
-          clickEventCount = 0;
-          keyUpCalls = [];
-
-          renderedResult = rtl.render(react.input({
-            'id': 'root',
-            'onClick': (_) => clickEventCount++,
-            'onKeyUp': (react.SyntheticKeyboardEvent e) =>
-                keyUpCalls.add(e.key),
-          }) as ReactElement);
-
-          input = renderedResult.getByRole('textbox');
-          expect(input, hasValue(''), reason: 'sanity check');
-        });
-
-        test('with a short delay', () async {
-          await _verifyTypeWithDelay('hello world!', 10);
-          expect(input, hasValue('hello world!'));
-          _verifyTypeEvent();
-        });
-
-        test('with a longer delay', () async {
-          await _verifyTypeWithDelay('hello world!', 500);
-          expect(input, hasValue('hello world!'));
-          _verifyTypeEvent();
-        });
-
-        test('skipClick', () async {
-          // Manually focus the element since click will be skipped.
-          input.focus();
-          await _verifyTypeWithDelay('hello world!', 50, skipClick: true);
-          expect(input, hasValue('hello world!'));
-          _verifyTypeEvent(skipClick: true);
-        });
-
-        group('skipAutoClose:', () {
-          test('false (default)', () async {
-            // Specify the number of characters that will be typed since it's
-            // different than the length of the text.
-            await _verifyTypeWithDelay('oh {ctrl}hai', 50, charsTyped: 7);
-            expect(
-              input,
-              hasValue('oh '),
-              reason:
-                  'ctrl modifier key stops input from receiving the remaining characters',
-            );
-            expect(
-              keyUpCalls.last,
-              equals('Control'),
-              reason:
-                  'ctrl modifier key will be closed at the end of the type event',
-            );
-
-            _verifyTypeEvent();
-          });
-
-          test('true', () async {
-            // Specify the number of characters that will be typed since it's
-            // different than the length of the text.
-            await _verifyTypeWithDelay(
-              'oh {ctrl}hai',
-              50,
-              charsTyped: 7,
-              skipAutoClose: true,
-            );
-            expect(
-              input,
-              hasValue('oh '),
-              reason:
-                  'ctrl modifier key stops input from receiving the remaining characters',
-            );
-            expect(
-              keyUpCalls.last,
-              equals('i'),
-              reason:
-                  'ctrl modifier key will be closed at the end of the type event',
-            );
-
-            _verifyTypeEvent();
-          });
-        });
+        _verifyTypeEvent();
       });
 
-      group('with default value in the input', () {
-        setUp(() {
-          clickEventCount = 0;
-          keyUpCalls = [];
-
-          renderedResult = rtl.render(react.input({
-            'id': 'root',
-            'onClick': (_) => clickEventCount++,
-            'onKeyUp': (react.SyntheticKeyboardEvent e) =>
-                keyUpCalls.add(e.key),
-            'defaultValue': 'this is a bad example',
-          }) as ReactElement);
-
-          input = renderedResult.getByRole('textbox');
-          expect(input, hasValue('this is a bad example'),
-              reason: 'sanity check');
-        });
-
-        test('', () async {
-          await _verifyTypeWithDelay('good', 50);
-          expect(input, hasValue('this is a bad examplegood'));
-          _verifyTypeEvent();
-        });
-
-        // TODO: uncomment these tests when https://jira.atl.workiva.net/browse/CPLAT-14155 is fixed.
-        test('with setSelectionRange', () async {
-          input.setSelectionRange(10, 13);
-          await _verifyTypeWithDelay('good', 50);
-          expect(input, hasValue('this is a good example'));
-          _verifyTypeEvent();
-        });
-
-        test('with setSelectionRange set to zero', () async {
-          input.setSelectionRange(0, 0);
+      test('true', () async {
+        if (hasDelay) {
+          // Specify the number of characters that will be typed since it's
+          // different than the length of the text.
           await _verifyTypeWithDelay(
-            'good',
+            'oh {ctrl}hai',
             50,
-            initialSelectionStart: 0,
-            initialSelectionEnd: 0,
+            charsTyped: 7,
+            skipAutoClose: true,
           );
-          expect(input, hasValue('goodthis is a bad example'));
-          _verifyTypeEvent();
-        });
+        } else {
+          UserEvent.type(element, 'oh {ctrl}hai', skipAutoClose: true);
+        }
+        expect(
+          element,
+          hasValue('oh '),
+          reason:
+              'ctrl modifier key stops input from receiving the remaining characters',
+        );
+        expect(
+          keyUpCalls.last,
+          equals('i'),
+          reason:
+              'ctrl modifier key will be closed at the end of the type event',
+        );
+
+        _verifyTypeEvent();
       });
     });
+  });
+
+  group('with default value in the input', () {
+    // ignore: unused_element
+    void _setSelectionRangeOnElement(int start, int end) {
+      if (element is InputElement) {
+        (element as InputElement).setSelectionRange(start, end);
+      } else if (element is TextAreaElement) {
+        (element as TextAreaElement).setSelectionRange(start, end);
+      }
+    }
+
+    setUp(() {
+      clickEventCount = 0;
+      keyUpCalls = [];
+
+      renderedResult = rtl.render((isTextArea ? react.textarea : react.input)({
+        'id': 'root',
+        'onClick': (_) => clickEventCount++,
+        'onKeyUp': (react.SyntheticKeyboardEvent e) => keyUpCalls.add(e.key),
+        'defaultValue': 'this is a bad example',
+      }) as ReactElement);
+
+      element = renderedResult.getByRole('textbox');
+      expect(element, hasValue('this is a bad example'),
+          reason: 'sanity check');
+    });
+
+    // Typing in a non-empty <textarea> does not currently work as expected due to a bug in the user-event library.
+    // TODO: Remove this check when https://github.com/testing-library/user-event/issues/677 is fixed.
+    if(!isTextArea) {
+      test('', () async {
+        hasDelay
+            ? await _verifyTypeWithDelay('good', 50)
+            : UserEvent.type(element, 'good');
+        expect(element, hasValue('this is a bad examplegood'));
+        _verifyTypeEvent();
+      });
+    }
+
+    // Typing with a selection range does not currently work as expected due to a bug in the user-event library.
+    // TODO: Uncomment these tests when https://github.com/testing-library/user-event/issues/677 is fixed.
+    // test('with setSelectionRange', () async {
+    //   _setSelectionRangeOnElement(10, 13);
+    //   hasDelay
+    //       ? await _verifyTypeWithDelay('good', 50)
+    //       : UserEvent.type(element, 'good');
+    //   expect(element, hasValue('this is a good example'));
+    //   _verifyTypeEvent();
+    // });
+    //
+    // test('with setSelectionRange set to zero', () async {
+    //   _setSelectionRangeOnElement(0, 0);
+    //   if (hasDelay) {
+    //     await _verifyTypeWithDelay(
+    //       'good',
+    //       50,
+    //       initialSelectionStart: 0,
+    //       initialSelectionEnd: 0,
+    //     );
+    //   } else {
+    //     UserEvent.type(
+    //       element,
+    //       'good',
+    //       initialSelectionStart: 0,
+    //       initialSelectionEnd: 0,
+    //     );
+    //   }
+    //   expect(element, hasValue('goodthis is a bad example'));
+    //   _verifyTypeEvent();
+    // });
   });
 }

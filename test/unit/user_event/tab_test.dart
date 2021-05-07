@@ -20,6 +20,7 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/src/util/over_react_stubs.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
@@ -32,7 +33,7 @@ main() {
       final elementToRender = react.div({}, [
         react.input({}),
         react.div({
-          'data-test-id': 'container'
+          defaultTestIdKey: 'container'
         }, [
           react.input({}),
           react.input({}),

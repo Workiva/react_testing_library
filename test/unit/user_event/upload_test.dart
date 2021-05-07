@@ -32,11 +32,13 @@ main() {
       List<File> files;
 
       setUp(() {
-        files = isMultiple ? [
-          File([], 'file1.mp3'),
-          File([], 'file2.png'),
-          File([], 'file3.jpeg'),
-        ] : [File([], 'file1.mp3')];
+        files = isMultiple
+            ? [
+                File([], 'file1.mp3'),
+                File([], 'file2.png'),
+                File([], 'file3.jpeg'),
+              ]
+            : [File([], 'file1.mp3')];
         clickEventCalls = [];
         changeEventCalls = [];
 
