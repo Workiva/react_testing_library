@@ -571,7 +571,8 @@
 </ol>
 <p>The function signatures for the queries are identical no matter which place you call them from with the exception of the "top level" query functions - which require that a container be specified as the first argument as shown in the examples below.</p>
 <h4 id="examples">Examples</h4>
-<pre class="language-dart"><code class="language-dart">import 'package:react_testing_library/react_testing_library.dart' as rtl;
+<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 main() {
@@ -624,6 +625,10 @@ main() {
   });
 }
 </code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct dependency on <code>over_react</code> - but both libraries are fully supported.</p>
+</blockquote>
       </section>
       
 
