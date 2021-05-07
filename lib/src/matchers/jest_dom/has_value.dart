@@ -78,7 +78,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///     expect(numberInput, hasValue(35));
 ///     expect(emptyInput, isNot(hasValue()));
 ///     expect(selectInput, hasValue(['second', 'third']));
-///     expect(selectInput, hasValue(['first']));
+///     expect(selectInput, isNot(hasValue(['first'])));
 ///   });
 /// }
 /// ```
