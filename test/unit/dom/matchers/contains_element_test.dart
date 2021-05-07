@@ -28,9 +28,22 @@ import '../../util/over_react_stubs.dart';
 
 main() {
   group('containsElement matcher', () {
+    test('passes when provided an ancestor with a matching direct descendant', () {
+      final renderResult = render(react.span(
+        {defaultTestIdKey: 'ancestor'},
+        react.span({defaultTestIdKey: 'direct-descendant'}),
+      ) as ReactElement);
+      shouldPass(renderResult.getByTestId('ancestor'), containsElement(renderResult.getByTestId('direct-descendant')));
+    });
+
     test('passes when provided an ancestor with a matching descendant', () {
-      final renderResult = render(
-          react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})) as ReactElement);
+      final renderResult = render(react.span(
+        {defaultTestIdKey: 'ancestor'},
+        react.span(
+          {defaultTestIdKey: 'direct-descendant'},
+          react.span({defaultTestIdKey: 'descendant'}),
+        ),
+      ) as ReactElement);
       shouldPass(renderResult.getByTestId('ancestor'), containsElement(renderResult.getByTestId('descendant')));
     });
 
