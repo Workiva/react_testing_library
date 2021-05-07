@@ -75,6 +75,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///
 ///     // Use the `hasValue` matcher as the second argument of `expect()`
 ///     expect(textInput, hasValue('jane.doe'));
+///     expect(textInput, hasValue(startsWith('jane.')));
 ///     expect(numberInput, hasValue(35));
 ///     expect(emptyInput, isNot(hasValue()));
 ///     expect(selectInput, hasValue(['second', 'third']));
