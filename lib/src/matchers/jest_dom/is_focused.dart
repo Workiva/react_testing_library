@@ -41,7 +41,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     final result = rtl.render(react.input({'type': 'text', 'name': 'username'}));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final input = result.getByTestId('element-to-focus');
+///     final input = result.getByRole('textbox');
 ///
 ///     // Use the `isFocused` matcher as the second argument of `expect()`
 ///     input.focus();
