@@ -50,7 +50,7 @@ import 'contains_element.dart' show containsElement;
 ///       react.svg({'data-test-id': 'svg-element'}),
 ///     ));
 ///
-///     // Use the `containsElement` matcher as the second argument of `expect()`
+///     // Use the `isInTheDocument` matcher as the second argument of `expect()`
 ///     expect(result.getByTestId('html-element'), isInTheDocument);
 ///     expect(result.getByTestId('svg-element'), isInTheDocument);
 ///     expect(result.queryByTestId('does-not-exist'), isNot(isInTheDocument));
