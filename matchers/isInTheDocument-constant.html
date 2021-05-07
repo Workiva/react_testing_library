@@ -562,7 +562,7 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/is_in_the_document.dart#L67"><i class="material-icons">description</i></a></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/is_in_the_document.dart#L68"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-top-level-property">isInTheDocument</span> top-level constant      <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
 </h1></div>
 
@@ -574,6 +574,11 @@
         <section class="desc markdown">
           <p>Allows you to assert whether an element is present in the <a href="https://api.dart.dev/stable/2.12.4/dart-html/document.html">document</a> or not.</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tobeinthedocument">jest-dom's <code>toBeInTheDocument</code> matcher</a>.</p>
+<blockquote>
+<p><strong>Note:</strong> This matcher does not find detached elements.</p>
+<p>The element must be added to the document to be found by <a href="../matchers/isInTheDocument-constant.html">isInTheDocument</a>.
+If you desire to search in a detached element please use: <a href="../matchers/containsElement.html">containsElement</a></p>
+</blockquote>
 <h2 id="examples">Examples</h2>
 <pre class="language-html"><code class="language-html">&lt;div&gt;
   &lt;span data-test-id="html-element"&gt;&lt;span&gt;Html Element&lt;/span&gt;&lt;/span&gt;
@@ -590,12 +595,12 @@ main() {
     // Render the DOM shown in the example snippet above
     final result = rtl.render(react.div({},
       react.span({'data-test-id': 'html-element'},
-        'Html Element',
+        react.span({}, 'Html Element'),
       ),
       react.svg({'data-test-id': 'svg-element'}),
     ));
 
-    // Use the `containsElement` matcher as the second argument of `expect()`
+    // Use the `isInTheDocument` matcher as the second argument of `expect()`
     expect(result.getByTestId('html-element'), isInTheDocument);
     expect(result.getByTestId('svg-element'), isInTheDocument);
     expect(result.queryByTestId('does-not-exist'), isNot(isInTheDocument));
@@ -603,9 +608,10 @@ main() {
 }
 </code></pre>
 <blockquote>
-<p><strong>Note:</strong> This matcher does not find detached elements.</p>
-<p>The element must be added to the document to be found by <a href="../matchers/isInTheDocument-constant.html">isInTheDocument</a>.
-If you desire to search in a detached element please use: <a href="../matchers/containsElement.html">containsElement</a></p>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
+  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
+  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
 </blockquote>
 <p>{@category Matchers}</p>
         </section>
