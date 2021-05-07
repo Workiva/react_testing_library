@@ -76,6 +76,8 @@ main() {
           shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': 2}),
               reason: 'num values should match their string equivalent');
           shouldPass(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}));
+          shouldPass(renderedResult.getByRole('button'), hasStyles({'flexGrow': '2'}),
+              reason: 'camelCase property names should work');
         });
       });
 

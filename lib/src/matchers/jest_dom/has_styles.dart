@@ -118,7 +118,8 @@ class _HasStyles extends CustomMatcher {
   }
 
   static Map<String, dynamic> _normalizeMapValues(Map<String, dynamic> styleMap) {
-    return styleMap.map((propertyName, value) => MapEntry(propertyName, normalizeValue(propertyName, value)));
+    return styleMap
+        .map((propertyName, value) => MapEntry(_camelToDashCase(propertyName), normalizeValue(propertyName, value)));
   }
 
   /// Perform various normalization tasks on the provided [value].
@@ -159,4 +160,8 @@ class _HasStyles extends CustomMatcher {
 
     return possibleColorValue;
   }
+}
+
+String _camelToDashCase(String camel) {
+  return camel.replaceAllMapped(RegExp(r'[A-Z]'), (match) => '-${match[0].toLowerCase()}');
 }
