@@ -45,7 +45,7 @@ import 'contains_element.dart' show containsElement;
 ///     // Render the DOM shown in the example snippet above
 ///     final result = rtl.render(react.div({},
 ///       react.span({'data-test-id': 'html-element'},
-///         'Html Element',
+///         react.span({}, 'Html Element'),
 ///       ),
 ///       react.svg({'data-test-id': 'svg-element'}),
 ///     ));
