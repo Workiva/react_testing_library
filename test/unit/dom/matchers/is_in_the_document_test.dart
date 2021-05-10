@@ -35,7 +35,8 @@ main() {
     });
 
     test('passes when provided an element found in a ShadowRoot within the document', () {
-      final renderResult = render(ShadowNested({}, react.span({defaultTestIdKey: 'empty'})));
+      // ignore: unnecessary_cast
+      final renderResult = render(ShadowNested({}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
       final nodeWithShadowRoot = renderResult.getByTestId(nodeWithShadowRootDefaultTestId);
       shouldPass(within(nodeWithShadowRoot.shadowRoot).getByTestId('empty'), isInTheDocument);
     });
