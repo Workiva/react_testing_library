@@ -58,10 +58,6 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 ///     // Use the `hasStyles` matcher as the second argument of `expect()`
 ///     expect(button, hasStyles({'display': 'block'}));
-///     expect(button, hasStyles('''
-///       background-color: red;
-///       display: block;
-///     '''));
 ///     expect(button, hasStyles({
 ///       'backgroundColor': 'red',
 ///       'display': 'block',
