@@ -95,7 +95,7 @@ class _HasFormValues extends CustomMatcher {
       getFormElements(formElement).where((el) => valuesMap.containsKey(el.getAttribute('name')));
 
   @override
-  featureValueOf(item) {
+  dynamic featureValueOf(dynamic item) {
     // If it's not a FormElement, the mismatch description will say so.
     if (item is! Element) return null;
 
@@ -150,7 +150,7 @@ class _HasFormValues extends CustomMatcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }
@@ -162,6 +162,7 @@ class _HasFormValues extends CustomMatcher {
     }
 
     return super.describeMismatch(item, mismatchDescription, matchState, verbose).add(extraDescription).add(
+        // ignore: prefer_interpolation_to_compose_strings
         '\n\nThe DOM at time of failure is shown below:\n------------------------------------------\n' +
             prettyDOM(item as Element));
   }

@@ -24,11 +24,11 @@ class _HasToStringValue extends CustomMatcher {
   _HasToStringValue(matcher) : super('Object with toString() value', 'toString()', matcher);
 
   @override
-  featureValueOf(Object item) => item.toString();
+  dynamic featureValueOf(Object item) => item.toString();
 }
 
 /// Returns a matcher that matches an object whose `toString` value matches [value].
-Matcher hasToStringValue(value) => _HasToStringValue(value);
+Matcher hasToStringValue(dynamic value) => _HasToStringValue(value);
 
 Matcher toThrowErrorMatchingInlineSnapshot(
   Matcher stringSnapshotMatcher,
@@ -87,10 +87,9 @@ class _ContainsMultilineString extends Matcher {
   _ContainsMultilineString(String expected) : _expected = expected.trimEachLine();
 
   @override
-  bool matches(item, Map matchState) {
-    var expected = _expected;
+  bool matches(dynamic item, Map matchState) {
     if (item is String) {
-      return item.trimEachLine().contains(expected);
+      return item.trimEachLine().contains(_expected);
     }
 
     return false;
@@ -101,7 +100,7 @@ class _ContainsMultilineString extends Matcher {
       description.add('contains a multi-line string (ignoring whitespace) ').addDescriptionOf(_expected);
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is String) {
       return super.describeMismatch(item, mismatchDescription, matchState, verbose);
     } else {
@@ -113,14 +112,14 @@ class _ContainsMultilineString extends Matcher {
 /// Utility for asserting that [matcher] will fail on [value].
 ///
 /// Copyright (c) 2012, the Dart project authors.
-void shouldFail(value, Matcher matcher, expected, {bool useDoubleQuotes = false}) {
+void shouldFail(dynamic value, Matcher matcher, dynamic expected, {bool useDoubleQuotes = false}) {
   var failed = false;
   try {
     expect(value, matcher);
   } on TestFailure catch (err) {
     failed = true;
 
-    var _errorString = err.message;
+    final _errorString = err.message;
 
     if (expected is String) {
       expect(_errorString, equalsIgnoringWhitespace(expected));
@@ -139,6 +138,6 @@ void shouldFail(value, Matcher matcher, expected, {bool useDoubleQuotes = false}
 /// Utility for asserting that [matcher] will pass on [value].
 ///
 /// Copyright (c) 2012, the Dart project authors.
-void shouldPass(value, Matcher matcher, {String reason}) {
+void shouldPass(dynamic value, Matcher matcher, {String reason}) {
   expect(value, matcher, reason: reason);
 }

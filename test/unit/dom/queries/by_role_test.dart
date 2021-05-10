@@ -26,7 +26,7 @@ import '../../util/init.dart';
 import '../../util/matchers.dart';
 
 // NOTE: All other tests for the ByRole queries are covered by the `testTextMatchTypes()` shared tests.
-main() {
+void main() {
   group('', () {
     initConfigForInternalTesting();
 
@@ -761,7 +761,7 @@ main() {
   });
 }
 
-renderButton({bool pressed = false, bool expanded = false}) {
+ReactElement renderButton({bool pressed = false, bool expanded = false}) {
   return react.button(
     {
       'type': 'button',
@@ -769,17 +769,17 @@ renderButton({bool pressed = false, bool expanded = false}) {
       'aria-expanded': expanded,
     },
     'Click me',
-  );
+  ) as ReactElement;
 }
 
-renderDialog() {
+ReactElement renderDialog() {
   return react.div(
     {'role': 'dialog'},
     'Read me',
-  );
+  ) as ReactElement;
 }
 
-renderTab({bool selected = false}) {
+ReactElement renderTab({bool selected = false}) {
   return react.button(
     {
       'type': 'button',
@@ -787,10 +787,10 @@ renderTab({bool selected = false}) {
       'aria-selected': selected,
     },
     'Select me',
-  );
+  ) as ReactElement;
 }
 
-renderCheckbox({bool checked = false}) {
+ReactElement renderCheckbox({bool checked = false}) {
   return react.button(
     {
       'type': 'button',
@@ -798,10 +798,10 @@ renderCheckbox({bool checked = false}) {
       'aria-checked': checked,
     },
     'Check me out',
-  );
+  ) as ReactElement;
 }
 
-renderCheckboxWithSwitchAsFallback({bool checked = false}) {
+ReactElement renderCheckboxWithSwitchAsFallback({bool checked = false}) {
   return react.button(
     {
       'type': 'button',
@@ -809,5 +809,5 @@ renderCheckboxWithSwitchAsFallback({bool checked = false}) {
       'aria-checked': checked,
     },
     'Check me out',
-  );
+  ) as ReactElement;
 }

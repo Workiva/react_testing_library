@@ -20,7 +20,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/dom/within.dart' show WithinQueries;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('screen', () {
     test('aliases within(document.body)', () {
       final queries = rtl.screen;

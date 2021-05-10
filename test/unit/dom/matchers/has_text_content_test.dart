@@ -26,7 +26,7 @@ import 'package:test/test.dart';
 import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
 
-main() {
+void main() {
   group('hasTextContent matcher', () {
     Element rootElement;
 

@@ -434,32 +434,28 @@ mixin ByRoleQueries on IQueries {
 @JS('rtl.getByRole')
 external Element _jsGetByRole(
   Node container,
-  /*TextMatch*/
-  role, [
+  /*TextMatch*/ dynamic role, [
   ByRoleOptions options,
 ]);
 
 @JS('rtl.getAllByRole')
 external List< /*Element*/ dynamic> _jsGetAllByRole(
   Node container,
-  /*TextMatch*/
-  role, [
+  /*TextMatch*/ dynamic role, [
   ByRoleOptions options,
 ]);
 
 @JS('rtl.queryByRole')
 external Element _jsQueryByRole(
   Node container,
-  /*TextMatch*/
-  role, [
+  /*TextMatch*/ dynamic role, [
   ByRoleOptions options,
 ]);
 
 @JS('rtl.queryAllByRole')
 external List< /*Element*/ dynamic> _jsQueryAllByRole(
   Node container,
-  /*TextMatch*/
-  role, [
+  /*TextMatch*/ dynamic role, [
   ByRoleOptions options,
 ]);
 

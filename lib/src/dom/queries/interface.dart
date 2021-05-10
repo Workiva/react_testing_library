@@ -22,7 +22,7 @@ import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/matches/types.dart';
 
 /// An interface shared by all the individual query type mixins.
-abstract class IQueries {
+mixin IQueries {
   /// @nodoc
   @protected
   Node Function() get getContainerForScope;
@@ -33,7 +33,7 @@ abstract class IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    /*String|bool*/ ignore = 'script',
+    /*String|bool*/ dynamic ignore = 'script',
   }) {
     final matcherOptions = MatcherOptions()..exact = exact;
     if (normalizer != null) matcherOptions.normalizer = allowInterop(normalizer);

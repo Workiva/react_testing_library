@@ -62,7 +62,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
-Matcher hasClasses(classes) => _ElementClassNameMatcher(_ClassNameMatcher.expected(classes));
+Matcher hasClasses(dynamic classes) => _ElementClassNameMatcher(_ClassNameMatcher.expected(classes));
 
 /// Allows you to check whether an [Element] has certain [classes] within its HTML `class` attribute,
 /// with no additional or duplicated classes like the [hasClasses] matcher allows.
@@ -105,7 +105,7 @@ Matcher hasClasses(classes) => _ElementClassNameMatcher(_ClassNameMatcher.expect
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
-Matcher hasExactClasses(classes) =>
+Matcher hasExactClasses(dynamic classes) =>
     _ElementClassNameMatcher(_ClassNameMatcher.expected(classes, allowExtraneous: false));
 
 /// Allows you to check whether an [Element] does not have certain [classes] within its HTML `class` attribute.
@@ -147,7 +147,7 @@ Matcher hasExactClasses(classes) =>
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
-Matcher excludesClasses(classes) => _ElementClassNameMatcher(_ClassNameMatcher.unexpected(classes));
+Matcher excludesClasses(dynamic classes) => _ElementClassNameMatcher(_ClassNameMatcher.unexpected(classes));
 
 /// Match a list of class names on a component.
 class _ClassNameMatcher extends Matcher {
@@ -182,7 +182,7 @@ class _ClassNameMatcher extends Matcher {
   }
 
   @override
-  bool matches(className, Map matchState) {
+  bool matches(dynamic className, Map matchState) {
     // There's a bug in DDC where, though the docs say `className` should
     // return `String`, it will return `AnimatedString` for `SvgElement`s. See
     // https://github.com/dart-lang/sdk/issues/36200.
@@ -195,13 +195,13 @@ class _ClassNameMatcher extends Matcher {
       throw ArgumentError.value(className, 'className', 'Must be a string type');
     }
 
-    Iterable actualClasses = getClassIterable(castClassName);
-    Set missingClasses = expectedClasses.difference(actualClasses.toSet());
-    Set unwantedClasses = unexpectedClasses.intersection(actualClasses.toSet());
+    final actualClasses = getClassIterable(castClassName);
+    final missingClasses = expectedClasses.difference(actualClasses.toSet());
+    final unwantedClasses = unexpectedClasses.intersection(actualClasses.toSet());
 
     // Calculate extraneous classes with Lists instead of Sets, to catch duplicates in actualClasses.
-    List expectedClassList = expectedClasses.toList();
-    List extraneousClasses = actualClasses.where((className) => !expectedClassList.remove(className)).toList();
+    final expectedClassList = expectedClasses.toList();
+    final extraneousClasses = actualClasses.where((className) => !expectedClassList.remove(className)).toList();
 
     matchState.addAll(
         {'missingClasses': missingClasses, 'unwantedClasses': unwantedClasses, 'extraneousClasses': extraneousClasses});
@@ -215,7 +215,7 @@ class _ClassNameMatcher extends Matcher {
 
   @override
   Description describe(Description description) {
-    List<String> descriptionParts = [];
+    final descriptionParts = <String>[];
     if (allowExtraneous) {
       if (expectedClasses.isNotEmpty) {
         descriptionParts.add('has the classes: $expectedClasses');
@@ -232,12 +232,12 @@ class _ClassNameMatcher extends Matcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     final missingClasses = matchState['missingClasses'] as Set;
     final unwantedClasses = matchState['unwantedClasses'] as Set;
     final extraneousClasses = matchState['extraneousClasses'] as List;
 
-    List<String> descriptionParts = [];
+    final descriptionParts = <String>[];
     if (allowExtraneous) {
       if (unwantedClasses.isNotEmpty) {
         descriptionParts.add('has unwanted classes: $unwantedClasses');
@@ -261,10 +261,10 @@ class _ClassNameMatcher extends Matcher {
 class _ElementClassNameMatcher extends CustomMatcher {
   _ElementClassNameMatcher(matcher) : super('Element that', 'className', matcher);
   @override
-  featureValueOf(covariant Element actual) => actual.className;
+  dynamic featureValueOf(covariant Element actual) => actual.className;
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }
@@ -283,10 +283,10 @@ class _ElementClassNameMatcher extends CustomMatcher {
 ///
 ///     splitSpaceDelimitedString('   foo bar     baz') // ['foo', 'bar', 'baz']
 List<String> _splitSpaceDelimitedString(String string) {
-  const int SPACE = 32; // ' '.codeUnits.first;
+  const SPACE = 32; // ' '.codeUnits.first;
 
-  List<String> strings = [];
-  int start = 0;
+  final strings = <String>[];
+  var start = 0;
 
   while (start != string.length) {
     while (string.codeUnitAt(start) == SPACE) {
@@ -296,7 +296,7 @@ List<String> _splitSpaceDelimitedString(String string) {
       }
     }
 
-    int end = start;
+    var end = start;
     while (string.codeUnitAt(end) != SPACE) {
       end++;
       if (end == string.length) {

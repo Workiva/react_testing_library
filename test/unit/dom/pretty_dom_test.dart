@@ -21,7 +21,7 @@ import 'package:react/react_client.dart' show ReactElement, Ref;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('prettyDOM', () {
     group('returns a formatted string of the HTML produced by the node provided', () {
       Ref<DivElement> vDomRootRef;

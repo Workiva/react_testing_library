@@ -22,12 +22,12 @@ import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 
-main() {
+void main() {
   group('isFocused matcher:', () {
     group('attached node:', () {
-      List<Element> allAttachedNodes = [];
+      final allAttachedNodes = <Element>[];
       Element makeAttachedNode() {
-        var node = DivElement()..tabIndex = 1;
+        final node = DivElement()..tabIndex = 1;
         document.body.append(node);
 
         allAttachedNodes.add(node);
@@ -42,7 +42,7 @@ main() {
       });
 
       tearDown(() {
-        for (var node in allAttachedNodes) {
+        for (final node in allAttachedNodes) {
           node.remove();
         }
         allAttachedNodes.clear();
@@ -58,8 +58,7 @@ main() {
       });
 
       test('fails when the node is not focused, but another node is instead', () {
-        var otherNode = makeAttachedNode();
-        otherNode.focus();
+        final otherNode = makeAttachedNode()..focus();
 
         shouldFail(attachedNode, isFocused, contains('Which: is not focused; the currently focused element is '));
 
@@ -69,7 +68,7 @@ main() {
 
     group('provides a useful failure message when', () {
       test('the node is not attached to the DOM, and thus cannot be focused', () {
-        var detachedNode = DivElement();
+        final detachedNode = DivElement();
         shouldFail(
             detachedNode,
             isFocused,

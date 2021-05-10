@@ -89,6 +89,7 @@ Future<T> waitFor<T>(
     }
   }
 
+  // ignore: prefer_void_to_null
   FutureOr<Null> handleTimeout() {
     /*Error*/ dynamic error;
     if (lastError != null) {
@@ -112,9 +113,7 @@ Future<T> waitFor<T>(
         resultPending = true;
         await (result as Future).then((resolvedValue) {
           onDone(null, resolvedValue as T);
-        }, onError: (error) {
-          onDone(error);
-        }).timeout(timeout, onTimeout: handleTimeout);
+        }, onError: onDone).timeout(timeout, onTimeout: handleTimeout);
       } else {
         onDone(null, result);
       }
@@ -128,15 +127,15 @@ Future<T> waitFor<T>(
   overallTimeoutTimer = Timer(timeout, handleTimeout);
 
   intervalTimer = Timer.periodic(interval, checkCallback);
-  observer = MutationObserver((_, __) => checkCallback());
-  observer.observe(
-    container,
-    childList: mutationObserverOptions.childList,
-    attributes: mutationObserverOptions.attributes,
-    characterData: mutationObserverOptions.characterData,
-    subtree: mutationObserverOptions.subtree,
-    attributeFilter: mutationObserverOptions.attributeFilter,
-  );
+  observer = MutationObserver((_, __) => checkCallback())
+    ..observe(
+      container,
+      childList: mutationObserverOptions.childList,
+      attributes: mutationObserverOptions.attributes,
+      characterData: mutationObserverOptions.characterData,
+      subtree: mutationObserverOptions.subtree,
+      attributeFilter: mutationObserverOptions.attributeFilter,
+    );
   await checkCallback();
 
   return doneCompleter.future;
@@ -173,7 +172,7 @@ Future<void> waitForElementToBeRemoved(
 }) async {
   container ??= document.body;
 
-  final el = await callback();
+  final el = callback();
   if (el == null) {
     throw TestingLibraryElementError('The callback must return a non-null Element.');
   }
@@ -232,7 +231,7 @@ Future<void> waitForElementsToBeRemoved(
     throw TestingLibraryElementError('The callback must return one or more non-null Elements.');
   }
 
-  for (var el in els) {
+  for (final el in els) {
     if (!container.contains(el)) {
       throw TestingLibraryElementError(
           'One of the elements returned from the callback was not present in the container at the time waitForElementsToBeRemoved() was called:\n\n'

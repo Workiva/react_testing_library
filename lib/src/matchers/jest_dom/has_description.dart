@@ -87,6 +87,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
+// ignore: avoid_positional_boolean_parameters
 Matcher hasDescription([dynamic expectedDescription, bool normalizeWhitespace = true]) =>
     _HasDescription(expectedDescription, normalizeWhitespace: normalizeWhitespace);
 
@@ -103,7 +104,7 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
         );
 
   @override
-  featureValueOf(item) {
+  dynamic featureValueOf(dynamic item) {
     final elementsWithDescriptions = _elementsThatDescribe(item);
 
     if (elementsWithDescriptions?.isEmpty ?? true) return null;
@@ -114,7 +115,7 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     } else if (_idsOfElementsThatDescribe(item) == null) {
