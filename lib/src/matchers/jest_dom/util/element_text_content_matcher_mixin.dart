@@ -20,7 +20,7 @@ import 'package:matcher/matcher.dart';
 
 /// A mixin with utilities for matchers that match [Element] text content.
 mixin ElementTextContentMatcherMixin on CustomMatcher {
-  String getNormalizedTextContentOf(dynamic item, {bool normalizeWhitespace = true}) {
+  static String getNormalizedTextContentOf(dynamic item, {bool normalizeWhitespace = true}) {
     if (item is! Element) return null;
     if (!normalizeWhitespace) return (item as Element).text;
 

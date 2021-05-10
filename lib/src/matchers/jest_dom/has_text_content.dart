@@ -80,7 +80,8 @@ class _HasTextContent extends CustomMatcher with ElementTextContentMatcherMixin 
         );
 
   @override
-  featureValueOf(item) => getNormalizedTextContentOf(item, normalizeWhitespace: normalizeWhitespace);
+  featureValueOf(item) =>
+      ElementTextContentMatcherMixin.getNormalizedTextContentOf(item, normalizeWhitespace: normalizeWhitespace);
 
   @override
   Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {

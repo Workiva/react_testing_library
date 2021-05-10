@@ -108,7 +108,8 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
 
     if (elementsWithDescriptions?.isEmpty ?? true) return null;
     return elementsWithDescriptions
-        .map((el) => getNormalizedTextContentOf(el, normalizeWhitespace: normalizeWhitespace))
+        .map((el) =>
+            ElementTextContentMatcherMixin.getNormalizedTextContentOf(el, normalizeWhitespace: normalizeWhitespace))
         .join(' ');
   }
 
