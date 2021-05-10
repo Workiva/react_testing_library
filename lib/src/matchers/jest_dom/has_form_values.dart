@@ -99,11 +99,11 @@ class _HasFormValues extends CustomMatcher {
     // If it's not a FormElement, the mismatch description will say so.
     if (item is! FormElement) return null;
 
-    final formElement = item as FormElement;
+    final element = item as FormElement;
 
     final actualNamesAndValues = <String, dynamic>{};
     valuesMap.forEach((elementNameToTest, value) {
-      getItemFormElementsToTest(formElement).forEach((childElement) {
+      getItemFormElementsToTest(element).forEach((childElement) {
         final childElementName = childElement.getAttribute('name');
         if (childElementName != elementNameToTest) return;
         if (actualNamesAndValues.containsKey(childElementName)) {
@@ -118,7 +118,7 @@ class _HasFormValues extends CustomMatcher {
           switch (type) {
             case 'checkbox':
               final allCheckboxesWithName =
-                  formElement.querySelectorAll('input[type="checkbox"][name="$childElementName"]');
+                  element.querySelectorAll('input[type="checkbox"][name="$childElementName"]');
               if (allCheckboxesWithName.length == 1) {
                 actualNamesAndValues[elementNameToTest] = childElement.checked;
               } else {
@@ -129,7 +129,7 @@ class _HasFormValues extends CustomMatcher {
               }
               break;
             case 'radio':
-              final allRadiosWithName = formElement.querySelectorAll('input[type="radio"][name="$childElementName"]');
+              final allRadiosWithName = element.querySelectorAll('input[type="radio"][name="$childElementName"]');
               final selectedRadioElement = allRadiosWithName.singleWhere(
                 (radioEl) => (radioEl as RadioButtonInputElement).checked,
                 orElse: () => null,
