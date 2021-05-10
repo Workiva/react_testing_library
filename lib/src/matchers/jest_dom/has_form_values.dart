@@ -97,9 +97,9 @@ class _HasFormValues extends CustomMatcher {
   @override
   featureValueOf(item) {
     // If it's not a FormElement, the mismatch description will say so.
-    if (item is! FormElement) return null;
+    if (item is! Element) return null;
 
-    final element = item as FormElement;
+    final element = item as Element;
 
     final actualNamesAndValues = <String, dynamic>{};
     valuesMap.forEach((elementNameToTest, value) {
