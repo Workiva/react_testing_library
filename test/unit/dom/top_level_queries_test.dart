@@ -27,7 +27,7 @@ import '../util/over_react_stubs.dart';
 import '../util/rendering.dart';
 import 'queries/shared/text_match_type_parsing_tests.dart' show testTextMatchTypes;
 
-main() {
+void main() {
   group('top level API', () {
     initConfigForInternalTesting();
 
@@ -135,21 +135,21 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByAltText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByAltText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByAltText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryAllByAltText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByAltText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByAltText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByAltText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByAltText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByAltText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByAltText,
+          'findByAltText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByAltText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByAltText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByAltText,
+          'findAllByAltText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByAltText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
@@ -162,22 +162,21 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByDisplayValue, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByDisplayValue': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(
-              rtl.queryAllByDisplayValue,
+          'queryAllByDisplayValue': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.queryAllByDisplayValue,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByDisplayValue, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByDisplayValue, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByDisplayValue': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByDisplayValue,
+          'findByDisplayValue': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByDisplayValue,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByDisplayValue': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByDisplayValue,
+          'findAllByDisplayValue': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByDisplayValue,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
@@ -190,21 +189,21 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByLabelText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByLabelText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByLabelText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryAllByLabelText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByLabelText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByLabelText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByLabelText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByLabelText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByLabelText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByLabelText,
+          'findByLabelText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByLabelText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByLabelText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByLabelText,
+          'findAllByLabelText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByLabelText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
@@ -217,24 +216,22 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(
-              rtl.queryByPlaceholderText,
+          'queryByPlaceholderText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.queryByPlaceholderText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(
+          'queryAllByPlaceholderText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(
               rtl.queryAllByPlaceholderText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByPlaceholderText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByPlaceholderText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(
-              rtl.getAllByPlaceholderText,
+          'getAllByPlaceholderText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.getAllByPlaceholderText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByPlaceholderText,
+          'findByPlaceholderText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByPlaceholderText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(
+          'findAllByPlaceholderText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(
               rtl.findAllByPlaceholderText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery,
               testAsyncQuery: true),
@@ -250,21 +247,21 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryAllByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByRole': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByRole,
+          'findByRole': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByRole,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByRole': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByRole,
+          'findAllByRole': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByRole,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
@@ -278,21 +275,21 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryAllByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByRole': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByRole,
+          'findByRole': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByRole,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByRole': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByRole,
+          'findAllByRole': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByRole,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
@@ -305,21 +302,21 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByTestId': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByTestId, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByTestId': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryAllByTestId, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByTestId': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByTestId, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByTestId': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByTestId, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByTestId': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByTestId,
+          'findByTestId': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByTestId,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByTestId': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByTestId,
+          'findAllByTestId': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByTestId,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
@@ -332,21 +329,21 @@ main() {
         queryShouldMatchOn: '$scopeName single byText match',
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryAllByText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByText,
+          'findByText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByText': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByText,
+          'findAllByText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,
@@ -359,21 +356,21 @@ main() {
         queryShouldMatchOn: scopeName,
         getContainerForTopLevelQueries: () => container,
         topLevelQueryQueriesByName: {
-          'queryByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByTitle': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByTitle, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'queryAllByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByTitle': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryAllByTitle, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelGetQueriesByName: {
-          'getByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByTitle': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getByTitle, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
-          'getAllByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByTitle': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.getAllByTitle, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
         },
         topLevelFindQueriesByName: {
-          'findByTitle': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByTitle,
+          'findByTitle': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findByTitle,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
-          'findAllByTitle': ({bool renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByTitle,
+          'findAllByTitle': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByTitle,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
         getExpectedPrettyDom: () => expectedPrettyDom,

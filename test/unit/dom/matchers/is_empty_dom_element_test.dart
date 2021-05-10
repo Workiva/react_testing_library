@@ -24,7 +24,7 @@ import 'package:test/test.dart';
 import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
 
-main() {
+void main() {
   group('isEmptyDomElement matcher', () {
     group('passes when provided a valid Element', () {
       test('that has no children', () {

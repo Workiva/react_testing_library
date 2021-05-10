@@ -23,7 +23,7 @@ import 'package:test/test.dart';
 
 import '../util/matchers.dart';
 
-main() {
+void main() {
   group('', () {
     List<Event> calls;
     rtl.RenderResult renderedResult;
@@ -32,8 +32,8 @@ main() {
       calls = [];
       final elementToRender = react.button({
         'id': 'root',
-        'onClick': (react.SyntheticMouseEvent event) {
-          calls.add(event.nativeEvent as Event);
+        'onClick': (event) {
+          calls.add((event as react.SyntheticMouseEvent).nativeEvent as Event);
         }
       }, 'oh hai') as ReactElement;
       renderedResult = rtl.render(elementToRender);

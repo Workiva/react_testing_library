@@ -76,14 +76,14 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 Matcher hasStyles(Map<String, dynamic> styles) => _HasStyles(styles);
 
 class _HasStyles extends CustomMatcher {
-  Map<String, dynamic> _expectedStyles;
+  final Map<String, dynamic> _expectedStyles;
 
   _HasStyles(Map<String, dynamic> expectedStyles)
       : _expectedStyles = _normalizeMapValues(expectedStyles),
         super('A element with styles', 'styles', _normalizeMapValues(expectedStyles));
 
   @override
-  featureValueOf(item) {
+  dynamic featureValueOf(dynamic item) {
     // If it's not a Element, the mismatch description will say so.
     if (item is! Element) return null;
 
@@ -97,15 +97,15 @@ class _HasStyles extends CustomMatcher {
       throw ArgumentError.value(invalidPropertyNames, 'style',
           'One or more property names is not supported by the browser you are testing in.');
     }
-    _expectedStyles.keys.forEach((stylePropertyToCheck) {
+    for (final stylePropertyToCheck in _expectedStyles.keys) {
       final actualValue = allComputedStyles.getPropertyValue(stylePropertyToCheck);
       stylesToCompare[stylePropertyToCheck] = normalizeValue(stylePropertyToCheck, actualValue);
-    });
+    }
     return stylesToCompare;
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }

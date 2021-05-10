@@ -28,7 +28,7 @@ import '../util/init.dart';
 import '../util/matchers.dart';
 import '../util/rendering.dart';
 
-main() {
+void main() {
   group('', () {
     initConfigForInternalTesting();
 
@@ -131,8 +131,8 @@ main() {
     group('waitForElementToBeRemoved()', () {
       Node elementThatWillBeRemovedAfterDelay;
       Node elementInDomButOutsideContainer;
-      Duration delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
-      Duration shortTimeout = asyncQueryTimeout ~/ 4;
+      final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
+      final shortTimeout = asyncQueryTimeout ~/ 4;
 
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
@@ -212,8 +212,8 @@ main() {
       Node elementThatWillNotBeRemovedAfterDelay;
       Node elementInDomButOutsideContainer;
       Node anotherElementInDomButOutsideContainer;
-      Duration delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
-      Duration shortTimeout = asyncQueryTimeout ~/ 4;
+      final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
+      final shortTimeout = asyncQueryTimeout ~/ 4;
 
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');

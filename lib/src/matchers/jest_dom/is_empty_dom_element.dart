@@ -65,7 +65,7 @@ class _IsEmptyDomElement extends Matcher {
   }
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     matchState['isElement'] = item is Element;
     if (item == null || item is! Element) return false;
 
@@ -73,7 +73,7 @@ class _IsEmptyDomElement extends Matcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] == false) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }

@@ -247,31 +247,27 @@ mixin ByDisplayValueQueries on IQueries {
 @JS('rtl.getByDisplayValue')
 external Element _jsGetByDisplayValue(
   Node container,
-  /*TextMatch*/
-  value, [
+  /*TextMatch*/ dynamic value, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByDisplayValue')
 external List< /*Element*/ dynamic> _jsGetAllByDisplayValue(
   Node container,
-  /*TextMatch*/
-  value, [
+  /*TextMatch*/ dynamic value, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryByDisplayValue')
 external Element _jsQueryByDisplayValue(
   Node container,
-  /*TextMatch*/
-  value, [
+  /*TextMatch*/ dynamic value, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByDisplayValue')
 external List< /*Element*/ dynamic> _jsQueryAllByDisplayValue(
   Node container,
-  /*TextMatch*/
-  value, [
+  /*TextMatch*/ dynamic value, [
   MatcherOptions options,
 ]);

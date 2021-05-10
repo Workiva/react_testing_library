@@ -47,7 +47,7 @@ external ReactElement _cloneElement(element, [props, children]);
 ReactElement cloneElement(ReactElement element, [Map props, Iterable children]) {
   if (element == null) throw ArgumentError.notNull('element');
 
-  var propsChangeset = preparePropsChangeset(element, props, children);
+  final propsChangeset = preparePropsChangeset(element, props, children);
 
   if (children != null) {
     return _cloneElement(element, propsChangeset, children);

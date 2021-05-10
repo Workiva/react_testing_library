@@ -81,17 +81,17 @@ class _IsDisabled extends Matcher {
     return description..add('An element that is disabled from the user\'s perspective');
   }
 
-  bool isElementThatCanBeDisabled(item, Map matchState) =>
+  bool isElementThatCanBeDisabled(dynamic item, Map matchState) =>
       item != null && matchState['isElement'] as bool && matchState['canBeDisabled'] as bool;
 
-  bool isElementDisabled(item, Map matchState) {
+  bool isElementDisabled(dynamic item, Map matchState) {
     if (!isElementThatCanBeDisabled(item, matchState)) return false;
     final formAncestor = (item as Element).closest('form');
     if (formAncestor != null && (formAncestor as FormElement).hasAttribute('disabled')) return true;
     return item.disabled as bool;
   }
 
-  void setMatchState(item, Map matchState) {
+  void setMatchState(dynamic item, Map matchState) {
     matchState['isElement'] = item is Element;
     matchState['canBeDisabled'] = item is ButtonElement ||
         item is InputElement ||
@@ -106,7 +106,7 @@ class _IsDisabled extends Matcher {
   String get defaultMismatchDescription => 'is not disabled.';
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     setMatchState(item, matchState);
 
     if (!isElementThatCanBeDisabled(item, matchState)) return false;
@@ -115,7 +115,7 @@ class _IsDisabled extends Matcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] != true) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     } else if (matchState['canBeDisabled'] != true) {
@@ -135,7 +135,7 @@ class _IsEnabled extends _IsDisabled {
   }
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     setMatchState(item, matchState);
     if (!isElementThatCanBeDisabled(item, matchState)) return false;
     return !isElementDisabled(item, matchState);

@@ -22,7 +22,7 @@ import 'package:test/test.dart';
 import '../util/matchers.dart';
 import '../util/over_react_stubs.dart';
 
-main() {
+void main() {
   group('getConfig()', () {
     group('returns the current configuration object', () {
       test('with the expected fields exposed', () {

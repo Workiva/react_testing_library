@@ -25,11 +25,12 @@ import 'over_react_stubs.dart' show defaultTestIdKey;
 
 const nodeWithShadowRootDefaultTestId = 'shadowRootHost';
 
+// ignore: type_annotate_public_apis
 final ShadowNested = react.forwardRef2((props, ref) {
   final divRef = useRef<DivElement>();
 
   useEffect(() {
-    var shadowRootFirstChild = DivElement()
+    final shadowRootFirstChild = DivElement()
       ..dataset['test-id'] = props['shadowRootFirstChildTestId'] as String ?? 'shadowRootFirstChild';
     divRef.current.attachShadow({'mode': 'open'}).append(shadowRootFirstChild);
     react_dom.render(react.Fragment({}, props['children']), shadowRootFirstChild);

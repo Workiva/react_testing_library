@@ -67,14 +67,14 @@ class _IsFocused extends Matcher {
   }
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     matchState['activeElement'] = document.activeElement;
 
     return item != null && item == document.activeElement;
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }

@@ -26,7 +26,7 @@ import 'package:test/test.dart';
 import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
 
-main() {
+void main() {
   group('isDisabled matcher', () {
     group('passes when provided a valid Element that can be disabled', () {
       test('is disabled', () {

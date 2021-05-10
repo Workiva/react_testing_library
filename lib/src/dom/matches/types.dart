@@ -44,8 +44,8 @@ abstract class TextMatch {
 
       // Set the value to a function to be called on the JS side, and do the actual
       // regex matching using a Dart regex within that interop'd function call.
-      RegExp regExp = value;
-      final dartValue = (String content, Element _) => regExp.hasMatch(content);
+      final regExp = value;
+      bool dartValue(String content, Element _) => regExp.hasMatch(content);
       return allowInterop(dartValue);
     } else if (value is Function) {
       // Display the nicest string representation of the Dart function that we can as the value that
@@ -64,7 +64,7 @@ abstract class TextMatch {
   }
 
   /// Returns a function to be used as the value of `JsConfig.getElementError` that ensures the user does
-  /// not see the portion of the [originalMessage] that obfuscates the `TextMatch` argument value they provided
+  /// not see the portion of the `originalMessage` that obfuscates the `TextMatch` argument value they provided
   /// when a query failure occurs in a unit test.
   ///
   /// In other words, it ensures that a user never sees a failure message of the form:
@@ -82,7 +82,7 @@ abstract class TextMatch {
     final dartInteropFunctionValueRegex = RegExp(r'([\"`]*)(function[\s\S]+})([\"`]*)(.*)([\s\S]+)*', multiLine: true);
 
     return (originalMessage, container) {
-      var newMessage = originalMessage.toString().replaceAllMapped(dartInteropFunctionValueRegex, (match) {
+      final newMessage = originalMessage.toString().replaceAllMapped(dartInteropFunctionValueRegex, (match) {
         final optionalOpeningQuoteOrBacktick = match.group(1);
         final optionalClosingQuoteOrBacktick = match.group(3);
         final newValueLines = newValue.toString().split('\n');
@@ -169,8 +169,8 @@ class MatcherOptions {
   ///
   /// If you'd rather disable this behavior, set ignore to false.
   /// {@endtemplate}
-  external /*String|bool*/ get ignore;
-  external set ignore(/*String|bool*/ value);
+  external /*String|bool*/ dynamic get ignore;
+  external set ignore(/*String|bool*/ dynamic value);
 }
 
 /// Options to be passed into a custom [NormalizerFn].
