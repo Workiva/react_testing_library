@@ -109,3 +109,36 @@ class _ContainsMultilineString extends Matcher {
     }
   }
 }
+
+/// Utility for asserting that [matcher] will fail on [value].
+///
+/// Copyright (c) 2012, the Dart project authors.
+void shouldFail(value, Matcher matcher, expected, {bool useDoubleQuotes = false}) {
+  var failed = false;
+  try {
+    expect(value, matcher);
+  } on TestFailure catch (err) {
+    failed = true;
+
+    var _errorString = err.message;
+
+    if (expected is String) {
+      expect(_errorString, equalsIgnoringWhitespace(expected));
+    } else {
+      var escapedErrorString = _errorString.replaceAll(RegExp(r'[\s\n]+'), ' ');
+      if (useDoubleQuotes) {
+        escapedErrorString = escapedErrorString.replaceAll("\'", '"');
+      }
+      expect(escapedErrorString, expected);
+    }
+  }
+
+  expect(failed, isTrue, reason: 'Expected to fail.');
+}
+
+/// Utility for asserting that [matcher] will pass on [value].
+///
+/// Copyright (c) 2012, the Dart project authors.
+void shouldPass(value, Matcher matcher, {String reason}) {
+  expect(value, matcher, reason: reason);
+}
