@@ -82,7 +82,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
     timer.stop();
     expect(
       timer.elapsedMilliseconds,
-      greaterThan((charsTyped - 1) * delay),
+      greaterThanOrEqualTo((charsTyped - 1) * delay),
       reason: 'there should be a $delay ms delay between each letter typed',
     );
   }

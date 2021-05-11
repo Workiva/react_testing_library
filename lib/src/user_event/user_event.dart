@@ -40,8 +40,6 @@ List<File> _unjsifyFileList(List<File> fileList) {
   return convertedFiles;
 }
 
-// todo possibly add tests for the arg type errors these could throw (if not add type checks here)
-
 // todo add examples to doc comments and create dartdoc pages
 
 /// Test utilities that provide more advanced simulation of browser interactions
@@ -129,7 +127,6 @@ class UserEvent {
   /// calling `element.setSelectionRange(0, 0)`.
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
-  // TODO: figure out why this does not work as expected with selection range https://jira.atl.workiva.net/browse/CPLAT-14155
   static void type(
     Element element,
     String text, {
@@ -192,7 +189,6 @@ class UserEvent {
   /// calling `element.setSelectionRange(0, 0)`.
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
-  // TODO: figure out why this does not work as expected with selection range https://jira.atl.workiva.net/browse/CPLAT-14155
   static Future<void> typeWithDelay(
     Element element,
     String text,
@@ -221,14 +217,161 @@ class UserEvent {
     ));
   }
 
+  /// Simulates the keyboard events described by [text].
+  ///
+  /// This is similar to [UserEvent.type] but without any clicking or changing the selection range.
+  ///
+  /// To add a delay between each keystroke, use [UserEvent.keyboardWithDelay].
+  ///
+  /// Keystrokes can be described:
+  ///
+  /// * Per printable character
+  /// ```
+  ///   UserEvent.keyboard('foo') // translates to: f, o, o
+  /// ```
+  /// The brackets `{` and `[` are used as special characters and can be
+  /// referenced by doubling them.
+  /// ```
+  /// UserEvent.keyboard('{{a[[') // translates to: {, a, [
+  /// ```
+  /// * Per [KeyboardEvent.key] (only supports alphanumeric values of key)
+  /// ```
+  /// userEvent.keyboard('{Shift}{f}{o}{o}') // translates to: Shift, f, o, o
+  /// ```
+  /// This does not keep any key pressed. So Shift will be lifted before pressing f.
+  /// * Per [KeyboardEvent.code]
+  /// ```
+  /// userEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]') // translates to: Shift, f, o, o
+  /// ```
+  /// * Per legacy [UserEvent.type] modifier/specialChar
+  /// The modifiers like {shift} (note the lowercase) will automatically be kept
+  /// pressed. You can cancel this behavior by adding a / to the end of the descriptor.
+  /// ```
+  /// userEvent.keyboard('{shift}{ctrl/}a{/shift}') // translates to: Shift(down), Control(down+up), a, Shift(up)
+  /// ```
+  /// Keys can be kept pressed by adding a `>` to the end of the descriptor - and lifted by adding a `/` to the beginning of the descriptor:
+  /// ```
+  /// userEvent.keyboard('{Shift>}A{/Shift}') // translates to: Shift(down), A, Shift(up)
+  /// ```
+  ///
+  /// ## Options
+  ///
+  /// ### [keyboardState]
+  /// [keyboard] returns a keyboard state that can be used to continue keyboard operations.
+  ///
+  /// ```
+  /// final keyboardState = UserEvent.keyboard('[ControlLeft>]') // keydown [ControlLeft]
+  /// // ... inspect some changes ...
+  /// UserEvent.keyboard('a', {keyboardState: keyboardState}) // press [KeyA] with active ctrlKey modifier
+  /// ```
+  ///
+  /// ### [keyboardMap]
+  /// The mapping of key to code is performed by a [default key map](https://github.com/testing-library/user-event/blob/master/src/keyboard/keyMap.ts)
+  /// portraying a "default" US-keyboard. You can provide your own local keyboard mapping per option.
+  /// ```
+  /// userEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
+  /// ```
+  ///
+  /// ### [autoModify]
+  /// Future versions might try to interpolate the modifiers needed to reach a printable key on the keyboard. E.g. Automatically pressing {Shift} when CapsLock is not active and A is referenced. If you don't wish this behavior, you can pass autoModify: false when using userEvent.keyboard in your code.
+  ///
   /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
-  static dynamic keyboard(String text, {dynamic keyboardState}) {
-    // todo https://github.com/testing-library/user-event/blob/master/src/keyboard/types.ts
-    final options = keyboardState != null ? {'keyboardState': keyboardState} : {};
+  static dynamic keyboard(String text, {dynamic keyboardState, bool autoModify = false, List<Map> keyboardMap,}) {
+    final options = <String, dynamic>{'autoModify': autoModify,};
+    if (keyboardState != null) {
+      options.addEntries([MapEntry('keyboardState', keyboardState)]);
+    }
+    if (keyboardMap != null) {
+      final convertedKeyboardMap = [];
+      for(final element in keyboardMap) {
+        convertedKeyboardMap.add(JsBackedMap.from(element).jsObject);
+      }
+      options.addEntries([MapEntry('keyboardMap', convertedKeyboardMap)]);
+    }
     return JsBackedMap.fromJs(_userEvent)['keyboard'](
       text,
       JsBackedMap.from(options).jsObject,
     );
+  }
+
+  /// Simulates the keyboard events described by [text] with a [delay] between each keystroke.
+  ///
+  /// This is similar to [UserEvent.type] but without any clicking or changing the selection range.
+  ///
+  /// Use [UserEvent.keyboard] for no [delay].
+  ///
+  /// Keystrokes can be described:
+  ///
+  /// * Per printable character
+  /// ```
+  ///   UserEvent.keyboard('foo') // translates to: f, o, o
+  /// ```
+  /// The brackets `{` and `[` are used as special characters and can be
+  /// referenced by doubling them.
+  /// ```
+  /// UserEvent.keyboard('{{a[[') // translates to: {, a, [
+  /// ```
+  /// * Per [KeyboardEvent.key] (only supports alphanumeric values of key)
+  /// ```
+  /// userEvent.keyboard('{Shift}{f}{o}{o}') // translates to: Shift, f, o, o
+  /// ```
+  /// This does not keep any key pressed. So Shift will be lifted before pressing f.
+  /// * Per [KeyboardEvent.code]
+  /// ```
+  /// userEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]') // translates to: Shift, f, o, o
+  /// ```
+  /// * Per legacy [UserEvent.type] modifier/specialChar
+  /// The modifiers like {shift} (note the lowercase) will automatically be kept
+  /// pressed. You can cancel this behavior by adding a / to the end of the descriptor.
+  /// ```
+  /// userEvent.keyboard('{shift}{ctrl/}a{/shift}') // translates to: Shift(down), Control(down+up), a, Shift(up)
+  /// ```
+  /// Keys can be kept pressed by adding a `>` to the end of the descriptor - and lifted by adding a `/` to the beginning of the descriptor:
+  /// ```
+  /// userEvent.keyboard('{Shift>}A{/Shift}') // translates to: Shift(down), A, Shift(up)
+  /// ```
+  ///
+  /// ## Options
+  ///
+  /// ### [keyboardState]
+  /// [keyboard] returns a keyboard state that can be used to continue keyboard operations.
+  ///
+  /// ```
+  /// final keyboardState = UserEvent.keyboard('[ControlLeft>]') // keydown [ControlLeft]
+  /// // ... inspect some changes ...
+  /// UserEvent.keyboard('a', {keyboardState: keyboardState}) // press [KeyA] with active ctrlKey modifier
+  /// ```
+  ///
+  /// ### [keyboardMap]
+  /// The mapping of key to code is performed by a [default key map](https://github.com/testing-library/user-event/blob/master/src/keyboard/keyMap.ts)
+  /// portraying a "default" US-keyboard. You can provide your own local keyboard mapping per option.
+  /// ```
+  /// userEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
+  /// ```
+  ///
+  /// ### [autoModify]
+  /// Future versions might try to interpolate the modifiers needed to reach a
+  /// printable key on the keyboard. E.g. Automatically pressing {Shift} when
+  /// CapsLock is not active and A is referenced. If you don't wish this behavior,
+  /// set [autoModify] to `false` (this is `false` by default).
+  ///
+  /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
+  static dynamic keyboardWithDelay(String text, Duration delay, {dynamic keyboardState, bool autoModify = false, List<Map> keyboardMap,}) async {
+    final options = {'delay': delay.inMilliseconds, 'autoModify': autoModify,};
+    if (keyboardState != null) {
+      options.addEntries([MapEntry('keyboardState', keyboardState)]);
+    }
+    if (keyboardMap != null) {
+      final convertedKeyboardMap = [];
+      for(final element in keyboardMap) {
+        convertedKeyboardMap.add(JsBackedMap.from(element).jsObject);
+      }
+      options.addEntries([MapEntry('keyboardMap', convertedKeyboardMap)]);
+    }
+    return await promiseToFuture(JsBackedMap.fromJs(_userEvent)['keyboard'](
+      text,
+      JsBackedMap.from(options).jsObject,
+    ));
   }
 
   /// Uploads [files] to [element].
@@ -277,8 +420,8 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#clearelement>.
   static void clear(Element element) {
-    // todo delete this workaround when I figure out why typing {selectall} doesn't work in dart
-    // https://codesandbox.io/s/user-event-clear-thivp?file=/src/__tests__/index.js
+    // Clear does not currently work as expected due to a bug in the user-event library.
+    // TODO: Delete the following workaround when https://github.com/testing-library/user-event/issues/677 is fixed.
     if (element is InputElement) {
       element.setSelectionRange(0, element.value.length);
     } else if (element is TextAreaElement) {
@@ -360,7 +503,16 @@ class UserEvent {
   ///
   /// Use [eventInit] to initialize the clipboard event.
   ///
-  /// todo add description of selection start and end options
+  /// ### With Selection Range
+  ///
+  /// If [element] already contains a value, [text] will be pasted at the end
+  /// of the existing value by default. To override this behavior and set the
+  /// selection range to something else, call [InputElement.setSelectionRange] before
+  /// calling [paste].
+  ///
+  /// In order to set the initial selection range to zero, you must also set
+  /// [initialSelectionStart] and [initialSelectionEnd] to zero along with
+  /// calling `element.setSelectionRange(0, 0)`.
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#pasteelement-text-eventinit-options>.
   static void paste(

@@ -24,93 +24,154 @@ import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('UserEvent.keyboard', () {
-    List<String> calls;
-    rtl.RenderResult renderedResult;
-    InputElement input;
+  group('UserEvent.keyboard', _keyboardTestHelper);
+
+  group('UserEvent.keyboardWithDelay', () {
+    _keyboardTestHelper(hasDelay: true);
+  });
+}
+
+void _keyboardTestHelper({bool hasDelay = false}) {
+  List<String> calls;
+  rtl.RenderResult renderedResult;
+  InputElement input;
+
+  setUp(() {
+    calls = [];
+  });
+
+  Future<dynamic> _verifyKeyboardWithDelay(
+      String text,
+      int delay, {
+        dynamic keyboardState,
+        List<Map> keyboardMap,
+        int charsTyped,
+      }) async {
+    charsTyped ??= text.length;
+    final timer = Stopwatch();
+    // ignore: cascade_invocations
+    timer.start();
+    final returnValue = await UserEvent.keyboardWithDelay(
+      text,
+      Duration(milliseconds: delay),
+      keyboardState: keyboardState,
+      keyboardMap: keyboardMap,
+    );
+    timer.stop();
+    expect(
+      timer.elapsedMilliseconds,
+      greaterThanOrEqualTo((charsTyped - 1) * delay),
+      reason: 'there should be a $delay ms delay between each char typed',
+    );
+    return returnValue;
+  }
 
     setUp(() {
-      calls = [];
+      final elementToRender = react.input({
+        'onKeyDown': (e) {
+          final event = e as react.SyntheticKeyboardEvent;
+          calls.add('keyDown: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
+        },
+        'onKeyUp': (e) {
+          final event = e as react.SyntheticKeyboardEvent;
+          calls.add('keyUp: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
+        },
+      });
+
+      renderedResult = rtl.render(elementToRender as ReactElement);
+      input = renderedResult.getByRole('textbox');
+      expect(input, hasValue(''));
     });
 
-    group('', () {
-      setUp(() {
-        final elementToRender = react.input({
-          'onKeyDown': (e) {
-            final event = e as react.SyntheticKeyboardEvent;
-            calls.add('keyDown: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
-          },
-          'onKeyUp': (e) {
-            final event = e as react.SyntheticKeyboardEvent;
-            calls.add('keyUp: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
-          },
-        });
+  if (hasDelay) {
+    test('with a short delay', () async {
+      input.focus();
+      await _verifyKeyboardWithDelay('hello world!', 10);
+      expect(input, hasValue('hello world!'));
+    });
 
-        renderedResult = rtl.render(elementToRender as ReactElement);
-        input = renderedResult.getByRole('textbox');
-        expect(input, hasValue(''));
-      });
+    test('with a longer delay', () async {
+      input.focus();
+      await _verifyKeyboardWithDelay('hello world!', 500);
+      expect(input, hasValue('hello world!'));
+    });
+  } else {
+    test('', () {
+      input.focus();
+      UserEvent.keyboard('oh hai');
+      expect(input, hasValue('oh hai'));
+    });
+  }
 
-      test('', () {
+    test('brackets as escape characters', () async {
+      const text = '{{a[[';
+      input.focus();
+      hasDelay ? await _verifyKeyboardWithDelay(text, 50, charsTyped: 3) : UserEvent.keyboard(text);
+      expect(input, hasValue('{a['));
+    });
+
+    test('KeyboardEvent.key', () async {
+      const text = '{Shift}{f}{o}{o}';
+      input.focus();
+      hasDelay ? await _verifyKeyboardWithDelay(text, 50, charsTyped: 4) : UserEvent.keyboard(text);
+      expect(input, hasValue('foo'));
+    });
+
+    test('KeyboardEvent.code', () async {
+      const text = '[ShiftLeft][KeyF][KeyO][KeyO]';
+      input.focus();
+      hasDelay ? await _verifyKeyboardWithDelay(text, 50, charsTyped: 4) : UserEvent.keyboard(text);
+      expect(input, hasValue('foo'));
+    });
+
+    test('KeyboardEvent.key', () async {
+      const text = '{Shift}{f}{o}{o}';
+      input.focus();
+      hasDelay ? await _verifyKeyboardWithDelay(text, 50, charsTyped: 4) : UserEvent.keyboard(text);
+      expect(input, hasValue('foo'));
+    });
+
+    group('KeyboardState', () {
+      const text1 = '[ShiftRight>]';
+      const text2 = 'F[/ShiftRight]';
+
+      test('two keyboard events back to back without setting state', () async {
         input.focus();
-        UserEvent.keyboard('hello');
-        expect(input, hasValue('hello'));
+        hasDelay ? await _verifyKeyboardWithDelay(text1, 50, charsTyped: 1) : UserEvent.keyboard(text1);
+        hasDelay ? await _verifyKeyboardWithDelay(text2, 50, charsTyped: 2) : UserEvent.keyboard(text2);
+        expect(input, hasValue('F'));
+        expect(
+            calls,
+            equals([
+              'keyDown: Shift {shift}',
+              'keyDown: F', // Does not have shift pressed because previous state does not persist.
+              'keyUp: F',
+            ]));
       });
 
-      test('brackets as escape characters', () {
+      test('two keyboard events back to back with setting state', () async {
         input.focus();
-        UserEvent.keyboard('{{a[[');
-        expect(input, hasValue('{a['));
-      });
-
-      test('KeyboardEvent.key', () {
-        input.focus();
-        UserEvent.keyboard('{Shift}{f}{o}{o}');
-        expect(input, hasValue('foo'));
-      });
-
-      test('KeyboardEvent.code', () {
-        input.focus();
-        UserEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]');
-        expect(input, hasValue('foo'));
-      });
-
-      test('KeyboardEvent.key', () {
-        input.focus();
-        UserEvent.keyboard('{Shift}{f}{o}{o}');
-        expect(input, hasValue('foo'));
-      });
-
-      group('KeyboardState', () {
-        test('two keyboard events back to back without setting state', () {
-          input.focus();
-          UserEvent.keyboard('[ShiftRight>]');
-          UserEvent.keyboard('F[/ShiftRight]');
-          expect(input, hasValue('F'));
-          expect(
-              calls,
-              equals([
-                'keyDown: Shift {shift}',
-                'keyDown: F', // Does not have shift pressed because previous state does not persist.
-                'keyUp: F',
-              ]));
-        });
-
-        test('two keyboard events back to back with setting state', () {
-          input.focus();
-          final state = UserEvent.keyboard('[ShiftRight>]');
-          UserEvent.keyboard('F[/ShiftRight]', keyboardState: state);
-          expect(input, hasValue('F'));
-          expect(
-              calls,
-              equals([
-                'keyDown: Shift {shift}',
-                'keyDown: F {shift}', // Has shift pressed because keyboardState is set.
-                'keyUp: F {shift}',
-                'keyUp: Shift',
-              ]));
-        });
+        final state = hasDelay ? await _verifyKeyboardWithDelay(text1, 50, charsTyped: 1) : UserEvent.keyboard(text1);
+        hasDelay ? await _verifyKeyboardWithDelay(text2, 50, keyboardState: state, charsTyped: 2) : UserEvent.keyboard(text2, keyboardState: state);
+        expect(input, hasValue('F'));
+        expect(
+            calls,
+            equals([
+              'keyDown: Shift {shift}',
+              'keyDown: F {shift}', // Has shift pressed because keyboardState is set.
+              'keyUp: F {shift}',
+              'keyUp: Shift',
+            ]));
       });
     });
+
+  test('keyboardMap', () async {
+    const text = '[KeyA]';
+    final keyboardMap = [
+      {'code': 'KeyA', 'key': 'z'},
+    ];
+    input.focus();
+    hasDelay ? await _verifyKeyboardWithDelay(text, 50, keyboardMap: keyboardMap, charsTyped: 1) : UserEvent.keyboard(text, keyboardMap: keyboardMap);
+    expect(input, hasValue('z'));
   });
 }
