@@ -67,7 +67,9 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
     int charsTyped,
   }) async {
     charsTyped ??= text.length;
-    final timer = Stopwatch()..start();
+    final timer = Stopwatch();
+    // ignore: cascade_invocations
+    timer.start();
     await UserEvent.typeWithDelay(
       element,
       text,
