@@ -24,7 +24,7 @@ import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 
-main() {
+void main() {
   sharedHasValueTests('hasValue matcher', matcherFn: hasValue);
   sharedHasValueTests('hasDisplayValue matcher', matcherFn: hasDisplayValue, valueDescription: 'display value');
 }

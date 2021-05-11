@@ -22,7 +22,7 @@ import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 
-main() {
+void main() {
   group('isPartiallyChecked matcher', () {
     group('passes when provided a valid Element that can be partially checked - is partially checked:', () {
       test('CheckboxInputElement', () {

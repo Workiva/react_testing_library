@@ -25,7 +25,7 @@ import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 
-main() {
+void main() {
   group('hasDescription matcher', () {
     RenderResult renderedResult;
 

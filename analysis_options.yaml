@@ -1,4 +1,4 @@
-include: package:pedantic/analysis_options.1.8.0.yaml
+include: package:workiva_analysis_options/v1.recommended.yaml
 
 analyzer:
   errors:

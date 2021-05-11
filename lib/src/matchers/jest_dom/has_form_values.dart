@@ -95,15 +95,15 @@ class _HasFormValues extends CustomMatcher {
       getFormElements(formElement).where((el) => valuesMap.containsKey(el.getAttribute('name')));
 
   @override
-  featureValueOf(item) {
+  dynamic featureValueOf(dynamic item) {
     // If it's not a FormElement, the mismatch description will say so.
-    if (item is! FormElement) return null;
+    if (item is! Element) return null;
 
-    final formElement = item as FormElement;
+    final element = item as Element;
 
     final actualNamesAndValues = <String, dynamic>{};
     valuesMap.forEach((elementNameToTest, value) {
-      getItemFormElementsToTest(formElement).forEach((childElement) {
+      getItemFormElementsToTest(element).forEach((childElement) {
         final childElementName = childElement.getAttribute('name');
         if (childElementName != elementNameToTest) return;
         if (actualNamesAndValues.containsKey(childElementName)) {
@@ -118,7 +118,7 @@ class _HasFormValues extends CustomMatcher {
           switch (type) {
             case 'checkbox':
               final allCheckboxesWithName =
-                  formElement.querySelectorAll('input[type="checkbox"][name="$childElementName"]');
+                  element.querySelectorAll('input[type="checkbox"][name="$childElementName"]');
               if (allCheckboxesWithName.length == 1) {
                 actualNamesAndValues[elementNameToTest] = childElement.checked;
               } else {
@@ -129,7 +129,7 @@ class _HasFormValues extends CustomMatcher {
               }
               break;
             case 'radio':
-              final allRadiosWithName = formElement.querySelectorAll('input[type="radio"][name="$childElementName"]');
+              final allRadiosWithName = element.querySelectorAll('input[type="radio"][name="$childElementName"]');
               final selectedRadioElement = allRadiosWithName.singleWhere(
                 (radioEl) => (radioEl as RadioButtonInputElement).checked,
                 orElse: () => null,
@@ -150,7 +150,7 @@ class _HasFormValues extends CustomMatcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }
@@ -162,6 +162,7 @@ class _HasFormValues extends CustomMatcher {
     }
 
     return super.describeMismatch(item, mismatchDescription, matchState, verbose).add(extraDescription).add(
+        // ignore: prefer_interpolation_to_compose_strings
         '\n\nThe DOM at time of failure is shown below:\n------------------------------------------\n' +
             prettyDOM(item as Element));
   }

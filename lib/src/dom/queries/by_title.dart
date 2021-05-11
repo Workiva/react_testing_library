@@ -249,31 +249,27 @@ mixin ByTitleQueries on IQueries {
 @JS('rtl.getByTitle')
 external Element _jsGetByTitle(
   Node container,
-  /*TextMatch*/
-  title, [
+  /*TextMatch*/ dynamic title, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByTitle')
 external List< /*Element*/ dynamic> _jsGetAllByTitle(
   Node container,
-  /*TextMatch*/
-  title, [
+  /*TextMatch*/ dynamic title, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryByTitle')
 external Element _jsQueryByTitle(
   Node container,
-  /*TextMatch*/
-  title, [
+  /*TextMatch*/ dynamic title, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByTitle')
 external List< /*Element*/ dynamic> _jsQueryAllByTitle(
   Node container,
-  /*TextMatch*/
-  title, [
+  /*TextMatch*/ dynamic title, [
   MatcherOptions options,
 ]);

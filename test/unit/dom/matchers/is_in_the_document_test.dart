@@ -19,18 +19,26 @@ import 'dart:html' show DivElement;
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show isInTheDocument;
-import 'package:react_testing_library/react_testing_library.dart' show render;
+import 'package:react_testing_library/react_testing_library.dart' show render, within;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
+import '../../util/shadow_dom.dart';
 
-main() {
+void main() {
   group('isInTheDocument matcher', () {
     test('passes when provided an element found in the document', () {
       final renderResult = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
       shouldPass(renderResult.getByTestId('empty'), isInTheDocument);
+    });
+
+    test('passes when provided an element found in a ShadowRoot within the document', () {
+      // ignore: unnecessary_cast
+      final renderResult = render(ShadowNested({}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
+      final nodeWithShadowRoot = renderResult.getByTestId(nodeWithShadowRootDefaultTestId);
+      shouldPass(within(nodeWithShadowRoot.shadowRoot).getByTestId('empty'), isInTheDocument);
     });
 
     group('provides a useful failure message when', () {

@@ -78,10 +78,10 @@ class _IsPartiallyChecked extends Matcher {
     return description..add('An element that is partially checked');
   }
 
-  bool isElementThatCanBePartiallyChecked(item, Map matchState) =>
+  bool isElementThatCanBePartiallyChecked(dynamic item, Map matchState) =>
       item != null && matchState['isElement'] as bool && matchState['canBePartiallyChecked'] as bool;
 
-  bool isElementPartiallyChecked(item, Map matchState) {
+  bool isElementPartiallyChecked(dynamic item, Map matchState) {
     if (item is! Element) return false;
 
     if (item is InputElement) {
@@ -100,7 +100,7 @@ class _IsPartiallyChecked extends Matcher {
     return false;
   }
 
-  void setMatchState(item, Map matchState) {
+  void setMatchState(dynamic item, Map matchState) {
     matchState['isElement'] = item is Element;
     matchState['canBePartiallyChecked'] = (item is InputElement && item.getAttribute('type') == 'checkbox') ||
         (item is Element && item.getAttribute('role') == 'checkbox');
@@ -109,7 +109,7 @@ class _IsPartiallyChecked extends Matcher {
   String get defaultMismatchDescription => 'is not partially checked.';
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     setMatchState(item, matchState);
 
     if (!isElementThatCanBePartiallyChecked(item, matchState)) return false;
@@ -118,7 +118,7 @@ class _IsPartiallyChecked extends Matcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] != true) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     } else if (matchState['canBePartiallyChecked'] != true) {

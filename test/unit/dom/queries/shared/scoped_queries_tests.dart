@@ -145,22 +145,22 @@ void hasQueriesScopedTo(
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByAltText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByAltText,
-          'queryAllByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByAltText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryAllByAltText,
         },
         scopedGetQueriesByName: {
-          'getByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByAltText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByAltText,
-          'getAllByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByAltText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByAltText,
         },
         scopedFindQueriesByName: {
-          'findByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByAltText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByAltText,
-          'findAllByAltText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByAltText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByAltText,
         },
@@ -173,23 +173,23 @@ void hasQueriesScopedTo(
         textMatchArgName: TextMatchArgName.value,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByDisplayValue,
-          'queryAllByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .queryAllByDisplayValue,
         },
         scopedGetQueriesByName: {
-          'getByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByDisplayValue,
-          'getAllByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByDisplayValue,
         },
         scopedFindQueriesByName: {
-          'findByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByDisplayValue,
-          'findAllByDisplayValue': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByDisplayValue,
         },
@@ -202,22 +202,22 @@ void hasQueriesScopedTo(
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByLabelText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByLabelText,
-          'queryAllByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByLabelText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryAllByLabelText,
         },
         scopedGetQueriesByName: {
-          'getByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByLabelText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByLabelText,
-          'getAllByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByLabelText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByLabelText,
         },
         scopedFindQueriesByName: {
-          'findByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByLabelText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByLabelText,
-          'findAllByLabelText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByLabelText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByLabelText,
         },
@@ -230,25 +230,25 @@ void hasQueriesScopedTo(
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByPlaceholderText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .queryByPlaceholderText,
-          'queryAllByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByPlaceholderText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .queryAllByPlaceholderText,
         },
         scopedGetQueriesByName: {
-          'getByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByPlaceholderText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByPlaceholderText,
-          'getAllByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByPlaceholderText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .getAllByPlaceholderText,
         },
         scopedFindQueriesByName: {
-          'findByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByPlaceholderText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByPlaceholderText,
-          'findAllByPlaceholderText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByPlaceholderText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByPlaceholderText,
         },
@@ -262,22 +262,22 @@ void hasQueriesScopedTo(
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByRole,
-          'queryAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryAllByRole,
         },
         scopedGetQueriesByName: {
-          'getByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByRole,
-          'getAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByRole,
         },
         scopedFindQueriesByName: {
-          'findByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByRole,
-          'findAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByRole,
         },
@@ -291,22 +291,22 @@ void hasQueriesScopedTo(
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByRole,
-          'queryAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryAllByRole,
         },
         scopedGetQueriesByName: {
-          'getByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByRole,
-          'getAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByRole,
         },
         scopedFindQueriesByName: {
-          'findByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByRole,
-          'findAllByRole': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByRole': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByRole,
         },
@@ -319,22 +319,22 @@ void hasQueriesScopedTo(
         textMatchArgName: TextMatchArgName.testId,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByTestId': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByTestId,
-          'queryAllByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByTestId': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryAllByTestId,
         },
         scopedGetQueriesByName: {
-          'getByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByTestId': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByTestId,
-          'getAllByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByTestId': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByTestId,
         },
         scopedFindQueriesByName: {
-          'findByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByTestId': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByTestId,
-          'findAllByTestId': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByTestId': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByTestId,
         },
@@ -347,22 +347,22 @@ void hasQueriesScopedTo(
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: '$scopeName single byText match',
         scopedQueryQueriesByName: {
-          'queryByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByText,
-          'queryAllByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryAllByText,
         },
         scopedGetQueriesByName: {
-          'getByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByText,
-          'getAllByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByText,
         },
         scopedFindQueriesByName: {
-          'findByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByText,
-          'findAllByText': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByText': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByText,
         },
@@ -375,22 +375,22 @@ void hasQueriesScopedTo(
         textMatchArgName: TextMatchArgName.title,
         queryShouldMatchOn: scopeName,
         scopedQueryQueriesByName: {
-          'queryByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryByTitle': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryByTitle,
-          'queryAllByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'queryAllByTitle': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).queryAllByTitle,
         },
         scopedGetQueriesByName: {
-          'getByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'getByTitle': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getByTitle,
-          'getAllByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'getAllByTitle': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery).getAllByTitle,
         },
         scopedFindQueriesByName: {
-          'findByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'findByTitle': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findByTitle,
-          'findAllByTitle': ({bool renderMultipleElsMatchingQuery}) =>
+          'findAllByTitle': ({renderMultipleElsMatchingQuery}) =>
               renderAndGetQueries(testAsyncQuery: true, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
                   .findAllByTitle,
         },

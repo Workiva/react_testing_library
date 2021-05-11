@@ -78,10 +78,11 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
   return renderEls(uniqueName);
 }
 
+// ignore: type_annotate_public_apis
 final DelayedRenderOf = react.registerFunctionComponent(_DelayedRenderOf, displayName: 'DelayedRenderOf');
 
 _DelayedRenderOf(Map props) {
-  final Duration delay = props['delay'] as Duration ?? asyncQueryTimeout;
+  final delay = props['delay'] as Duration ?? asyncQueryTimeout;
   final onDidRenderAfterDelay = props['onDidRenderAfterDelay'] as void Function();
   final shouldRenderUpdatedChildren = useState(delay == Duration.zero);
 

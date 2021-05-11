@@ -17,4 +17,5 @@
 import 'package:test/test.dart' show Timeout;
 
 const asyncQueryTimeout = Duration(milliseconds: 200);
+// ignore: type_annotate_public_apis
 final asyncQueryTestTimeout = Timeout(asyncQueryTimeout * 2);

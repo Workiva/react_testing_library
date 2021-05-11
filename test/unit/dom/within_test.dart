@@ -24,13 +24,13 @@ import '../dom/queries/shared/scoped_queries_tests.dart';
 import '../util/rendering.dart';
 import '../util/shadow_dom.dart';
 
-main() {
+void main() {
   group('within(<container>)', () {
     group('returns an object with queries scoped to', () {
       hasQueriesScopedTo('<container>', (
         scopeName, {
-        bool testAsyncQuery = false,
-        bool renderMultipleElsMatchingQuery,
+        testAsyncQuery = false,
+        renderMultipleElsMatchingQuery,
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);

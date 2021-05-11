@@ -55,7 +55,7 @@ mixin ByTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    /*String|bool*/ ignore = 'script',
+    /*String|bool*/ dynamic ignore = 'script',
   }) =>
       withErrorInterop(
         () => _jsGetByText(
@@ -87,7 +87,7 @@ mixin ByTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    /*String|bool*/ ignore = 'script',
+    /*String|bool*/ dynamic ignore = 'script',
   }) =>
       withErrorInterop(
         () => _jsGetAllByText(
@@ -119,7 +119,7 @@ mixin ByTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    /*String|bool*/ ignore = 'script',
+    /*String|bool*/ dynamic ignore = 'script',
   }) =>
       _jsQueryByText(
         getContainerForScope(),
@@ -149,7 +149,7 @@ mixin ByTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    /*String|bool*/ ignore = 'script',
+    /*String|bool*/ dynamic ignore = 'script',
   }) =>
       _jsQueryAllByText(
         getContainerForScope(),
@@ -189,7 +189,7 @@ mixin ByTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    /*String|bool*/ ignore = 'script',
+    /*String|bool*/ dynamic ignore = 'script',
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
@@ -245,7 +245,7 @@ mixin ByTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
     String selector,
-    /*String|bool*/ ignore = 'script',
+    /*String|bool*/ dynamic ignore = 'script',
     Duration timeout,
     Duration interval,
     QueryTimeoutFn onTimeout,
@@ -273,31 +273,27 @@ mixin ByTextQueries on IQueries {
 @JS('rtl.getByText')
 external Element _jsGetByText(
   Node container,
-  /*TextMatch*/
-  text, [
+  /*TextMatch*/ dynamic text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.getAllByText')
 external List< /*Element*/ dynamic> _jsGetAllByText(
   Node container,
-  /*TextMatch*/
-  text, [
+  /*TextMatch*/ dynamic text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryByText')
 external Element _jsQueryByText(
   Node container,
-  /*TextMatch*/
-  text, [
+  /*TextMatch*/ dynamic text, [
   MatcherOptions options,
 ]);
 
 @JS('rtl.queryAllByText')
 external List< /*Element*/ dynamic> _jsQueryAllByText(
   Node container,
-  /*TextMatch*/
-  text, [
+  /*TextMatch*/ dynamic text, [
   MatcherOptions options,
 ]);

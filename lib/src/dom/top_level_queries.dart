@@ -1491,7 +1491,7 @@ E getByText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
-  /*String|bool*/ ignore = 'script',
+  /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).getByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
 
@@ -1521,7 +1521,7 @@ List<E> getAllByText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
-  /*String|bool*/ ignore = 'script',
+  /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).getAllByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
 
@@ -1551,7 +1551,7 @@ E queryByText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
-  /*String|bool*/ ignore = 'script',
+  /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).queryByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
 
@@ -1581,7 +1581,7 @@ List<E> queryAllByText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
-  /*String|bool*/ ignore = 'script',
+  /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).queryAllByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
 
@@ -1622,7 +1622,7 @@ Future<E> findByText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
-  /*String|bool*/ ignore = 'script',
+  /*String|bool*/ dynamic ignore = 'script',
   Duration timeout,
   Duration interval,
   QueryTimeoutFn onTimeout,
@@ -1675,7 +1675,7 @@ Future<List<E>> findAllByText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions]) normalizer,
   String selector,
-  /*String|bool*/ ignore = 'script',
+  /*String|bool*/ dynamic ignore = 'script',
   Duration timeout,
   Duration interval,
   QueryTimeoutFn onTimeout,

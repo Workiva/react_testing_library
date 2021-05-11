@@ -24,9 +24,9 @@ import 'package:test/test.dart';
 import '../dom/queries/shared/scoped_queries_tests.dart';
 import '../util/rendering.dart';
 
-main() {
+void main() {
   group('render', () {
-    List<String> calls = [];
+    final calls = <String>[];
 
     group('returns a RenderResult', () {
       test('', () {
@@ -43,8 +43,8 @@ main() {
       group('that contains queries scoped to', () {
         hasQueriesScopedTo('RenderResult.container', (
           scopeName, {
-          bool testAsyncQuery = false,
-          bool renderMultipleElsMatchingQuery,
+          testAsyncQuery = false,
+          renderMultipleElsMatchingQuery,
         }) {
           final elsForQuerying =
               elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);

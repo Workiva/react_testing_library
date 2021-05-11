@@ -76,13 +76,13 @@ class _IsInTheDocument extends Matcher {
   }
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     if (item is! Element) return false;
-    return item != null && document.documentElement.contains(item as Element);
+    return item != null && (item as Element).ownerDocument == (item as Element).getRootNode({'composed': true});
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }
