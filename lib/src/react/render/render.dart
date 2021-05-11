@@ -53,7 +53,7 @@ RenderResult render(
   bool hydrate = false,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
-  /*UiFactory || ReactComponentFactoryProxy*/ wrapper,
+  /*UiFactory || ReactComponentFactoryProxy*/ dynamic wrapper,
   bool autoTearDown = true,
   void Function() onDidTearDown,
 }) {

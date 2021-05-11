@@ -35,7 +35,7 @@ class _FormElemDefinition {
   _FormElemDefinition(this.formElem, [this.props = const {}, this.children]);
 }
 
-main() {
+void main() {
   group('hasFormValues matcher', () {
     const rootElemTestId = 'root-of-test-form';
     RenderResult renderFormWithValues(

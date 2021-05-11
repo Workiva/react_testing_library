@@ -24,4 +24,5 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 /// > See: <https://testing-library.com/docs/queries/about/#screen>
 ///
 /// {@category Queries}
+// ignore: type_annotate_public_apis
 final screen = within(document.body);

@@ -64,6 +64,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// {@category Matchers}
+// ignore: avoid_positional_boolean_parameters
 Matcher hasTextContent([dynamic expected, bool normalizeWhitespace = true]) =>
     _HasTextContent(expected, normalizeWhitespace: normalizeWhitespace);
 
@@ -80,11 +81,11 @@ class _HasTextContent extends CustomMatcher with ElementTextContentMatcherMixin 
         );
 
   @override
-  featureValueOf(item) =>
+  dynamic featureValueOf(dynamic item) =>
       ElementTextContentMatcherMixin.getNormalizedTextContentOf(item, normalizeWhitespace: normalizeWhitespace);
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }

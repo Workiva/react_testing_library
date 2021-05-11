@@ -38,8 +38,6 @@ void setEphemeralElementErrorMessage(
 
 /// Catches any potential `JsError`s thrown by JS query function by calling [getJsQueryResult],
 /// preserving the stack trace of the error thrown from JS by throwing a [TestingLibraryElementError].
-///
-/// Optionally, a [errorMessage] can be provided to customize the error message.
 T withErrorInterop<T>(T Function() getJsQueryResult) {
   try {
     return getJsQueryResult();
@@ -56,7 +54,7 @@ T withErrorInterop<T>(T Function() getJsQueryResult) {
 class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
-  factory TestingLibraryElementError.fromJs(/*JsError*/ jsError, [StackTrace jsStackTrace]) {
+  factory TestingLibraryElementError.fromJs(/*JsError*/ dynamic jsError, [StackTrace jsStackTrace]) {
     final stack = jsError is JsError ? jsStackTrace ?? StackTrace.fromString(jsError.stack) : null;
     return TestingLibraryElementError(jsError.toString(), stack);
   }

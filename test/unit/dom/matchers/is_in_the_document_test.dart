@@ -27,7 +27,7 @@ import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
 import '../../util/shadow_dom.dart';
 
-main() {
+void main() {
   group('isInTheDocument matcher', () {
     test('passes when provided an element found in the document', () {
       final renderResult = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);

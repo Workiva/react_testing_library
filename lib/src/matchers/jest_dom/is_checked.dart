@@ -92,7 +92,7 @@ class _IsChecked extends Matcher {
     return description..add('An element that is checked');
   }
 
-  bool isElementThatCanBeChecked(item, Map matchState) =>
+  bool isElementThatCanBeChecked(dynamic item, Map matchState) =>
       item != null && matchState['isElement'] as bool && matchState['canBeChecked'] as bool;
 
   bool isElementChecked(Element item, Map matchState) {
@@ -112,7 +112,7 @@ class _IsChecked extends Matcher {
     return false;
   }
 
-  void setMatchState(item, Map matchState) {
+  void setMatchState(dynamic item, Map matchState) {
     matchState['isElement'] = item is Element;
     matchState['canBeChecked'] = (item is InputElement && _validTypes.contains(item.getAttribute('type'))) ||
         (item is Element && _validRoles.contains(item.getAttribute('role')));
@@ -121,7 +121,7 @@ class _IsChecked extends Matcher {
   String get defaultMismatchDescription => 'is not checked.';
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     setMatchState(item, matchState);
 
     if (!isElementThatCanBeChecked(item, matchState)) return false;
@@ -130,7 +130,7 @@ class _IsChecked extends Matcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (matchState['isElement'] != true) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     } else if (matchState['canBeChecked'] != true) {

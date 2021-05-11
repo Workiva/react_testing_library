@@ -169,7 +169,7 @@ void testTextMatchTypes<E extends Element>(
             roleValueThatShouldCauseFailure = validRoleNotInDom;
             snapshotPatternForFailureMatcher = validRoleNotInDom;
           } else if (valueThatShouldCauseFailure is RegExp) {
-            roleValueThatShouldCauseFailure = RegExp("^$validRoleNotInDom\$");
+            roleValueThatShouldCauseFailure = RegExp('^$validRoleNotInDom\$');
             snapshotPatternForFailureMatcher = 'RegExp/^$validRoleNotInDom\$/';
           } else if (valueThatShouldCauseFailure is Function) {
             roleValueThatShouldCauseFailure = (content, el) => content == validRoleNotInDom;
@@ -239,7 +239,7 @@ void testTextMatchTypes<E extends Element>(
           if (valueThatShouldCauseSuccess is String) {
             roleValueThatShouldCauseSuccess = validRoleInDom;
           } else if (valueThatShouldCauseSuccess is RegExp) {
-            roleValueThatShouldCauseSuccess = RegExp("^$validRoleInDom\$");
+            roleValueThatShouldCauseSuccess = RegExp('^$validRoleInDom\$');
           } else if (valueThatShouldCauseSuccess is Function) {
             roleValueThatShouldCauseSuccess = (content, el) => content == validRoleInDom;
           }
@@ -297,7 +297,7 @@ void testTextMatchTypes<E extends Element>(
 
   group('when the $textMatchArgName argument is a', () {
     group('String (TextMatch.toJs),', () {
-      String fuzzyValue = getStringThatFuzzyMatches(queryShouldMatchOn);
+      final fuzzyValue = getStringThatFuzzyMatches(queryShouldMatchOn);
 
       group('and exact = true (default),', () {
         group('and a failure/null or empty return value is expected for the', () {
@@ -397,12 +397,12 @@ void testTextMatchTypes<E extends Element>(
       group('returning the matching element(s) from the', () {
         scopedQueriesByName.forEach((queryName, queryGetter) {
           textMatchShouldSucceedFor(queryName, queryGetter,
-              valueThatShouldCauseSuccess: RegExp("^$queryShouldMatchOn\$"));
+              valueThatShouldCauseSuccess: RegExp('^$queryShouldMatchOn\$'));
         });
 
         topLevelQueriesByName.forEach((queryName, queryGetter) {
           textMatchShouldSucceedFor(queryName, queryGetter,
-              valueThatShouldCauseSuccess: RegExp("^$queryShouldMatchOn\$"), containerArgRequired: true);
+              valueThatShouldCauseSuccess: RegExp('^$queryShouldMatchOn\$'), containerArgRequired: true);
         });
       });
     });

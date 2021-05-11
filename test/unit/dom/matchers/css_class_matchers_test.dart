@@ -22,7 +22,7 @@ import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 
-main() {
+void main() {
   group('', () {
     Element testElement;
 
@@ -101,8 +101,7 @@ main() {
         });
 
         test('the element has the exact classes and is an SvgElement', () {
-          testElement = Element.svg();
-          testElement.className = 'class1 class2';
+          testElement = Element.svg()..className = 'class1 class2';
           shouldPass(testElement, hasExactClasses(['class1', 'class2']));
         });
       });

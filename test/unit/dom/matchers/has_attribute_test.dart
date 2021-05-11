@@ -22,7 +22,7 @@ import 'package:test/test.dart';
 
 import '../../util/matchers.dart';
 
-main() {
+void main() {
   group('hasAttribute matcher', () {
     DivElement testElement;
 

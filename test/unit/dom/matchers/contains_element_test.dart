@@ -26,7 +26,7 @@ import 'package:test/test.dart';
 import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
 
-main() {
+void main() {
   group('containsElement matcher', () {
     test('passes when provided an ancestor with a matching direct descendant', () {
       final renderResult = render(react.span(

@@ -76,13 +76,13 @@ class _ElementAttributeMatcher extends CustomMatcher {
         );
 
   @override
-  featureValueOf(item) {
+  dynamic featureValueOf(dynamic item) {
     // If its not an element, the mismatch description will say so.
     return item is Element ? item.getAttribute(_attributeName) : null;
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     } else if (_valueOrMatcher != null && (item as Element).getAttribute(_attributeName) == null) {

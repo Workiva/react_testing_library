@@ -108,7 +108,7 @@ class _HasValue extends CustomMatcher {
             expectedValue);
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(dynamic item, Map matchState) {
     final itemValue = featureValueOf(item);
     if (expectedValue == null) return itemValue == null || itemValue.isEmpty == true;
 
@@ -116,7 +116,7 @@ class _HasValue extends CustomMatcher {
   }
 
   @override
-  dynamic featureValueOf(item) {
+  dynamic featureValueOf(dynamic item) {
     // If it's not a Element, the mismatch description will say so.
     if (item is! Element) return null;
 
@@ -133,7 +133,7 @@ class _HasValue extends CustomMatcher {
   }
 
   @override
-  Description describeMismatch(item, Description mismatchDescription, Map matchState, bool verbose) {
+  Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
     } else if (itemIsCheckboxOrRadioInput(item)) {
@@ -145,7 +145,7 @@ class _HasValue extends CustomMatcher {
     return super.describeMismatch(item, mismatchDescription, matchState, verbose);
   }
 
-  bool itemIsCheckboxOrRadioInput(item) {
+  bool itemIsCheckboxOrRadioInput(dynamic item) {
     if (item is InputElement) {
       final type = item.getAttribute('type');
       return type == 'checkbox' || type == 'radio';

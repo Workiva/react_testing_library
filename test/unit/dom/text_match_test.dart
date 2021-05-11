@@ -1,4 +1,5 @@
 // @dart = 2.7
+// ignore_for_file: prefer_interpolation_to_compose_strings
 
 // Copyright 2021 Workiva Inc.
 //
@@ -22,7 +23,7 @@ import 'package:test/test.dart';
 import '../util/matchers.dart';
 import '../util/over_react_stubs.dart';
 
-main() {
+void main() {
   group('TextMatch.toJs()', () {
     group('De-obfuscates / replaces the Dart interop function signature string within the failure message for a', () {
       const dart2JsFunctionSignatureStr = "Closure 'textMatchQueryFn_closure'";

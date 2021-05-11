@@ -26,7 +26,7 @@ import '../../util/init.dart';
 import '../../util/matchers.dart';
 
 // NOTE: All other tests for the ByText queries are covered by the `testTextMatchTypes()` shared tests.
-main() {
+void main() {
   group('', () {
     initConfigForInternalTesting();
 

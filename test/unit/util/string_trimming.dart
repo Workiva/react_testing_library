@@ -16,7 +16,7 @@
 
 extension MultilineStringHelpers on String {
   String trimEachLine() {
-    final lines = this.split('\n');
+    final lines = split('\n');
     return lines.map((line) => line.trim()).join('\n');
   }
 }
