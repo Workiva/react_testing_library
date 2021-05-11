@@ -22,7 +22,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('User click events:', () {
     List<Event> calls;
     int hoverEventCount;
@@ -34,8 +34,8 @@ main() {
 
       final elementToRender = react.button({
         'id': 'root',
-        'onClick': (react.SyntheticMouseEvent event) {
-          calls.add(event.nativeEvent as MouseEvent);
+        'onClick': (event) {
+          calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
         },
         // Count mouseover events to find out how many hover events occur.
         'onMouseOver': (_) => hoverEventCount++,
@@ -87,7 +87,7 @@ main() {
       });
 
       test('clickCount', () {
-        final clickCount = 5;
+        const clickCount = 5;
         UserEvent.click(
           renderedResult.getByRole('button'),
           clickCount: clickCount,
@@ -100,12 +100,12 @@ main() {
       void _verifyDblClickEvent({bool hasEventInit = false}) {
         // Sanity check.
         expect(calls, hasLength(2));
-        calls.forEach((event) {
+        for (final event in calls) {
           expect(event, isA<MouseEvent>());
 
           // Verify initial MouseEvent.
           expect((event as MouseEvent).shiftKey, hasEventInit);
-        });
+        }
 
         // Verify click count was incremented twice.
         expect((calls.first as MouseEvent).detail, equals(1));

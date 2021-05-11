@@ -23,7 +23,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('UserEvent.keyboard', () {
     List<String> calls;
     rtl.RenderResult renderedResult;
@@ -36,10 +36,12 @@ main() {
     group('', () {
       setUp(() {
         final elementToRender = react.input({
-          'onKeyDown': (react.SyntheticKeyboardEvent event) {
+          'onKeyDown': (e) {
+            final event = e as react.SyntheticKeyboardEvent;
             calls.add('keyDown: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
           },
-          'onKeyUp': (react.SyntheticKeyboardEvent event) {
+          'onKeyUp': (e) {
+            final event = e as react.SyntheticKeyboardEvent;
             calls.add('keyUp: ${event.key}${event.shiftKey ? ' {shift}' : ''}');
           },
         });

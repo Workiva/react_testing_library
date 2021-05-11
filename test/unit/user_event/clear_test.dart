@@ -23,7 +23,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('UserEvent.clear', () {
     test('on an InputElement', () {
       final renderedResult = rtl.render(react.input({

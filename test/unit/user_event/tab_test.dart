@@ -25,7 +25,7 @@ import 'package:test/test.dart';
 
 import '../util/over_react_stubs.dart';
 
-main() {
+void main() {
   group('User click events:', () {
     rtl.RenderResult renderedResult;
     List<InputElement> inputs;

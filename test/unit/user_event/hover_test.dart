@@ -24,7 +24,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('UserEvent.hover and UserEvent.unhover', () {
     List<MouseEvent> calls;
     rtl.RenderResult renderedResult;
@@ -32,22 +32,22 @@ main() {
     setUp(() {
       calls = [];
 
-      final HoverTestComponent = react.registerFunctionComponent((Map props) {
+      final HoverTestComponent = react.registerFunctionComponent((props) {
         final isShown = useState(false);
         return react.div({}, [
           react.button({
-            'onMouseOver': (react.SyntheticMouseEvent e) {
+            'onMouseOver': (e) {
               isShown.set(true);
-              calls.add(e.nativeEvent as MouseEvent);
+              calls.add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
             },
-            'onMouseOut': (react.SyntheticMouseEvent e) {
+            'onMouseOut': (e) {
               isShown.set(false);
-              calls.add(e.nativeEvent as MouseEvent);
+              calls.add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
             }
           }, [
             'Hover over me!'
           ]),
-          isShown.value ? react.span({}, ['Hello!']) : null,
+          if (isShown.value) react.span({}, ['Hello!']) else null,
         ]);
       });
 
@@ -61,7 +61,9 @@ main() {
     }) {
       // Verify mouse events.
       expect(calls, hasLength(2));
-      calls.forEach((call) => expect(call.shiftKey, hasEventInit));
+      for (final event in calls) {
+        expect(event.shiftKey, hasEventInit);
+      }
     }
 
     test('', () {

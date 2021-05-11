@@ -22,7 +22,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('UserEvent.upload', () {
     void _uploadTestHelper({bool isMultiple = false}) {
       List<MouseEvent> clickEventCalls;
@@ -47,11 +47,11 @@ main() {
           react.input({
             'id': 'file-uploader',
             'type': 'file',
-            'onClick': (react.SyntheticMouseEvent e) {
-              clickEventCalls.add(e.nativeEvent as MouseEvent);
+            'onClick': (e) {
+              clickEventCalls.add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
             },
-            'onChange': (react.SyntheticFormEvent e) {
-              changeEventCalls.add(e.nativeEvent as Event);
+            'onChange': (e) {
+              changeEventCalls.add((e as react.SyntheticFormEvent).nativeEvent as Event);
             },
             'multiple': isMultiple,
             'accept': '.png,.jpeg',
@@ -132,9 +132,7 @@ main() {
       });
     }
 
-    group('on single file input', () {
-      _uploadTestHelper();
-    });
+    group('on single file input', _uploadTestHelper);
 
     group('on multiple file input', () {
       _uploadTestHelper(isMultiple: true);

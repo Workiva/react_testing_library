@@ -33,7 +33,7 @@ List<File> _unjsifyFileList(List<File> fileList) {
   if (fileList is! JsMap) return fileList;
   final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
   final convertedFiles = <File>[];
-  for (int i = 0; i < (jsFileList['length'] as int); i++) {
+  for (var i = 0; i < (jsFileList['length'] as int); i++) {
     convertedFiles.add(jsFileList['item'](i) as File);
   }
   return convertedFiles;
@@ -70,7 +70,7 @@ class UserEvent {
     int clickCount = 0,
   }) {
     final options = {'skipHover': skipHover, 'clickCount': clickCount};
-    return JsBackedMap.fromJs(_userEvent)['click'](
+    JsBackedMap.fromJs(_userEvent)['click'](
       element,
       _jsifyEventData(eventInit),
       JsBackedMap.from(options).jsObject,
@@ -88,7 +88,7 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#dblclickelement-eventinit-options>.
   static void dblClick(Element element, {Map eventInit}) {
-    return JsBackedMap.fromJs(_userEvent)['dblClick'](
+    JsBackedMap.fromJs(_userEvent)['dblClick'](
       element,
       _jsifyEventData(eventInit),
     );
@@ -120,7 +120,7 @@ class UserEvent {
   ///
   /// If [element] already contains a value, [type] will begin typing at the end
   /// of the existing value by default. To override this behavior and set the
-  /// selection range to something else, call [element.setSelectionRange] before
+  /// selection range to something else, call [InputElement.setSelectionRange] before
   /// calling [type].
   ///
   /// In order to set the initial selection range to zero, you must also set
@@ -183,7 +183,7 @@ class UserEvent {
   ///
   /// If [element] already contains a value, [type] will begin typing at the end
   /// of the existing value by default. To override this behavior and set the
-  /// selection range to something else, call [element.setSelectionRange] before
+  /// selection range to something else, call [InputElement.setSelectionRange] before
   /// calling [type].
   ///
   /// In order to set the initial selection range to zero, you must also set
@@ -308,12 +308,12 @@ class UserEvent {
   ///
   /// [selectElement] must have the `multiple` attribute set to `true`.
   ///
-  /// [options] can either be a list of values or [OptionElement]s.
+  /// [values] can either be a list of values or [OptionElement]s.
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#deselectoptionselement-values>.
   static void deselectOptions(
     SelectElement selectElement,
-    List<dynamic> values, {
+    List values, {
     Map clickInit,
   }) {
     JsBackedMap.fromJs(_userEvent)['deselectOptions'](
@@ -327,12 +327,12 @@ class UserEvent {
   ///
   /// Options:
   /// * [shift] (default `false`): can be true or false to invert tab direction.
-  /// * [focusTrap] (default [document.body]): a container element to restrict the tabbing within.
+  /// * [focusTrap] (default [HtmlDocument.body]): a container element to restrict the tabbing within.
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#tabshift-focustrap>.
   static void tab({bool shift, Element focusTrap}) {
     final options = {'shift': shift, 'focusTrap': focusTrap};
-    return JsBackedMap.fromJs(_userEvent)['tab'](
+    JsBackedMap.fromJs(_userEvent)['tab'](
       JsBackedMap.from(options).jsObject,
     );
   }
@@ -343,7 +343,7 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#hoverelement>.
   static void hover(Element element, {Map eventInit}) {
-    return JsBackedMap.fromJs(_userEvent)['hover'](element, _jsifyEventData(eventInit));
+    JsBackedMap.fromJs(_userEvent)['hover'](element, _jsifyEventData(eventInit));
   }
 
   /// Unhovers out of [element].
@@ -352,7 +352,7 @@ class UserEvent {
   ///
   /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#unhoverelement>.
   static void unhover(Element element, {Map eventInit}) {
-    return JsBackedMap.fromJs(_userEvent)['unhover'](element, _jsifyEventData(eventInit));
+    JsBackedMap.fromJs(_userEvent)['unhover'](element, _jsifyEventData(eventInit));
   }
 
   /// Simulates pasting [text] into [element].
@@ -373,7 +373,7 @@ class UserEvent {
       'initialSelectionStart': initialSelectionStart,
       'initialSelectionEnd': initialSelectionEnd,
     };
-    return JsBackedMap.fromJs(_userEvent)['paste'](
+    JsBackedMap.fromJs(_userEvent)['paste'](
       element,
       text,
       _jsifyEventData(eventInit),

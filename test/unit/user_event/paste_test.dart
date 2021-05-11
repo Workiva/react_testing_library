@@ -23,7 +23,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('UserEvent.paste', () {
     List<ClipboardEvent> calls;
     rtl.RenderResult renderedResult;
@@ -35,7 +35,11 @@ main() {
 
     void _verifyPasteEvent({
       bool hasEventInit = false,
+      // TODO: If this is intended to be used, remove the ignore comment below.
+      // ignore: unused_element
       bool skipHover = false,
+      // TODO: If this is intended to be used, remove the ignore comment below.
+      // ignore: unused_element
       int clickCount = 0,
     }) {
       // Verify initial clipboard event.
@@ -46,8 +50,8 @@ main() {
     group('', () {
       setUp(() {
         final elementToRender = react.input({
-          'onPaste': (react.SyntheticClipboardEvent event) {
-            calls.add(event.nativeEvent as ClipboardEvent);
+          'onPaste': (event) {
+            calls.add((event as react.SyntheticClipboardEvent).nativeEvent as ClipboardEvent);
           },
         });
 
@@ -73,8 +77,8 @@ main() {
     group('with default value in the input', () {
       setUp(() {
         final elementToRender = react.input({
-          'onPaste': (react.SyntheticClipboardEvent event) {
-            calls.add(event.nativeEvent as ClipboardEvent);
+          'onPaste': (event) {
+            calls.add((event as react.SyntheticClipboardEvent).nativeEvent as ClipboardEvent);
           },
           'defaultValue': 'this is a bad example',
         });

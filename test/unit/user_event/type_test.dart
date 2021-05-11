@@ -24,11 +24,9 @@ import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('UserEvent.type', () {
-    group('in InputElement', () {
-      _typeTestHelper();
-    });
+    group('in InputElement', _typeTestHelper);
 
     group('in TextAreaElement', () {
       _typeTestHelper(isTextArea: true);
@@ -69,8 +67,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
     int charsTyped,
   }) async {
     charsTyped ??= text.length;
-    final timer = Stopwatch();
-    timer.start();
+    final timer = Stopwatch()..start();
     await UserEvent.typeWithDelay(
       element,
       text,
@@ -84,7 +81,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
     expect(
       timer.elapsedMilliseconds,
       greaterThan((charsTyped - 1) * delay),
-      reason: 'there should be a ${delay} ms delay between each letter typed',
+      reason: 'there should be a $delay ms delay between each letter typed',
     );
     expect(
       timer.elapsedMilliseconds,
@@ -101,7 +98,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       renderedResult = rtl.render((isTextArea ? react.textarea : react.input)({
         'id': 'root',
         'onClick': (_) => clickEventCount++,
-        'onKeyUp': (react.SyntheticKeyboardEvent e) => keyUpCalls.add(e.key),
+        'onKeyUp': (e) => keyUpCalls.add((e as react.SyntheticKeyboardEvent).key),
       }) as ReactElement);
 
       element = renderedResult.getByRole('textbox');
@@ -207,7 +204,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       renderedResult = rtl.render((isTextArea ? react.textarea : react.input)({
         'id': 'root',
         'onClick': (_) => clickEventCount++,
-        'onKeyUp': (react.SyntheticKeyboardEvent e) => keyUpCalls.add(e.key),
+        'onKeyUp': (e) => keyUpCalls.add((e as react.SyntheticKeyboardEvent).key),
         'defaultValue': 'this is a bad example',
       }) as ReactElement);
 

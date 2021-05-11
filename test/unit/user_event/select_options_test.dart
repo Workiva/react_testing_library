@@ -22,7 +22,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('User select/deselect events:', () {
     group('UserEvent.selectOptions', () {
       void _selectOptionsTestHelper({bool isMultiSelect = false}) {
@@ -35,8 +35,8 @@ main() {
 
           renderedResult = rtl.render(react.select({
             'id': 'root',
-            'onClick': (react.SyntheticMouseEvent event) {
-              calls.add(event.nativeEvent as MouseEvent);
+            'onClick': (event) {
+              calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
             },
             'multiple': isMultiSelect,
           }, [
@@ -66,7 +66,9 @@ main() {
 
           // Verify click event.
           expect(calls, hasLength(2));
-          calls.forEach((call) => expect(call.shiftKey, hasClickInit));
+          for (final event in calls) {
+            expect(event.shiftKey, hasClickInit);
+          }
         }
 
         test('listing values', () {
@@ -94,9 +96,7 @@ main() {
         });
       }
 
-      group('single select', () {
-        _selectOptionsTestHelper();
-      });
+      group('single select', _selectOptionsTestHelper);
 
       group('multi-select', () {
         _selectOptionsTestHelper(isMultiSelect: true);
@@ -113,8 +113,8 @@ main() {
 
         renderedResult = rtl.render(react.select({
           'id': 'root',
-          'onClick': (react.SyntheticMouseEvent event) {
-            calls.add(event.nativeEvent as MouseEvent);
+          'onClick': (event) {
+            calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
           },
           'multiple': true,
         }, [
@@ -140,7 +140,9 @@ main() {
 
         // Verify click event.
         expect(calls, hasLength(2));
-        calls.forEach((call) => expect(call.shiftKey, hasClickInit));
+        for (final event in calls) {
+          expect(event.shiftKey, hasClickInit);
+        }
       }
 
       test('listing values', () {
