@@ -276,14 +276,21 @@ class UserEvent {
   /// Future versions might try to interpolate the modifiers needed to reach a printable key on the keyboard. E.g. Automatically pressing {Shift} when CapsLock is not active and A is referenced. If you don't wish this behavior, you can pass autoModify: false when using userEvent.keyboard in your code.
   ///
   /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
-  static dynamic keyboard(String text, {dynamic keyboardState, bool autoModify = false, List<Map> keyboardMap,}) {
-    final options = <String, dynamic>{'autoModify': autoModify,};
+  static dynamic keyboard(
+    String text, {
+    dynamic keyboardState,
+    bool autoModify = false,
+    List<Map> keyboardMap,
+  }) {
+    final options = <String, dynamic>{
+      'autoModify': autoModify,
+    };
     if (keyboardState != null) {
       options.addEntries([MapEntry('keyboardState', keyboardState)]);
     }
     if (keyboardMap != null) {
       final convertedKeyboardMap = [];
-      for(final element in keyboardMap) {
+      for (final element in keyboardMap) {
         convertedKeyboardMap.add(JsBackedMap.from(element).jsObject);
       }
       options.addEntries([MapEntry('keyboardMap', convertedKeyboardMap)]);
@@ -356,14 +363,23 @@ class UserEvent {
   /// set [autoModify] to `false` (this is `false` by default).
   ///
   /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
-  static dynamic keyboardWithDelay(String text, Duration delay, {dynamic keyboardState, bool autoModify = false, List<Map> keyboardMap,}) async {
-    final options = {'delay': delay.inMilliseconds, 'autoModify': autoModify,};
+  static dynamic keyboardWithDelay(
+    String text,
+    Duration delay, {
+    dynamic keyboardState,
+    bool autoModify = false,
+    List<Map> keyboardMap,
+  }) async {
+    final options = {
+      'delay': delay.inMilliseconds,
+      'autoModify': autoModify,
+    };
     if (keyboardState != null) {
       options.addEntries([MapEntry('keyboardState', keyboardState)]);
     }
     if (keyboardMap != null) {
       final convertedKeyboardMap = [];
-      for(final element in keyboardMap) {
+      for (final element in keyboardMap) {
         convertedKeyboardMap.add(JsBackedMap.from(element).jsObject);
       }
       options.addEntries([MapEntry('keyboardMap', convertedKeyboardMap)]);

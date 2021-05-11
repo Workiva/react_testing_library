@@ -32,12 +32,13 @@ void main() {
     TextAreaElement textArea;
 
     setUp(() {
-      rtl.render(react.div({}, [react.input({
-        'defaultValue': 'oh hai',
-      }),
+      rtl.render(react.div({}, [
+        react.input({
+          'defaultValue': 'oh hai',
+        }),
         react.textarea({
-        'defaultValue': 'hello\n\nthere!',
-      }),
+          'defaultValue': 'hello\n\nthere!',
+        }),
       ]) as ReactElement);
 
       input = rtl.screen.getAllByRole('textbox').first as InputElement;
