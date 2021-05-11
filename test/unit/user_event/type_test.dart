@@ -85,11 +85,6 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       greaterThan((charsTyped - 1) * delay),
       reason: 'there should be a $delay ms delay between each letter typed',
     );
-    expect(
-      timer.elapsedMilliseconds,
-      lessThan((charsTyped - 1) * (delay + 10)),
-      reason: 'it should take less time than a delay of ${delay + 10} ms',
-    );
   }
 
   group('', () {
