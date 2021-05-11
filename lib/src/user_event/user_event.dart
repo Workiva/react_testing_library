@@ -30,7 +30,8 @@ dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData ?? cons
 
 // Converts a JsMap FileList to a List<File>.
 List<File> _unjsifyFileList(List<File> fileList) {
-  if (fileList is! JsMap) return fileList;
+  if (fileList is FileList) return fileList;
+
   final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
   final convertedFiles = <File>[];
   for (var i = 0; i < (jsFileList['length'] as int); i++) {
