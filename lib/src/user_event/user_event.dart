@@ -363,13 +363,13 @@ class UserEvent {
   /// set [autoModify] to `false` (this is `false` by default).
   ///
   /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
-  static dynamic keyboardWithDelay(
+  static Future<dynamic> keyboardWithDelay(
     String text,
     Duration delay, {
     dynamic keyboardState,
     bool autoModify = false,
     List<Map> keyboardMap,
-  }) async {
+  }) {
     final options = {
       'delay': delay.inMilliseconds,
       'autoModify': autoModify,
@@ -384,7 +384,7 @@ class UserEvent {
       }
       options.addEntries([MapEntry('keyboardMap', convertedKeyboardMap)]);
     }
-    return await promiseToFuture(JsBackedMap.fromJs(_userEvent)['keyboard'](
+    return promiseToFuture(JsBackedMap.fromJs(_userEvent)['keyboard'](
       text,
       JsBackedMap.from(options).jsObject,
     ));
