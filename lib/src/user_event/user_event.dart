@@ -27,20 +27,6 @@ import 'package:react/react_client/js_interop_helpers.dart';
 import '../dom/fire_event.dart';
 import 'special_chars.dart';
 
-dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData ?? const {});
-
-// Converts a JsMap FileList to a List<File>.
-List<File> _unjsifyFileList(List<File> fileList) {
-  if (fileList is FileList) return fileList;
-
-  final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
-  final convertedFiles = <File>[];
-  for (var i = 0; i < (jsFileList['length'] as int); i++) {
-    convertedFiles.add(jsFileList['item'](i) as File);
-  }
-  return convertedFiles;
-}
-
 /// Test utilities that provide more advanced simulation of browser interactions
 /// than the built-in [fireEvent] method.
 class UserEvent {
@@ -628,7 +614,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('Single file input', () async {
+  ///   test('Single file input', () {
   ///     final file = File([], 'file1.mp3');
   ///
   ///     // Render the DOM shown in the example snippet above.
@@ -648,7 +634,7 @@ class UserEvent {
   ///     expect(input.files.single.name, 'file1.mp3');
   ///   });
   ///
-  ///   test('Multiple file input', () async {
+  ///   test('Multiple file input', () {
   ///     final files = [
   ///       File([], 'file1.mp3'),
   ///       File([], 'file2.jpeg'),
@@ -726,7 +712,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('', () async {
+  ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
   ///     final result = rtl.render(react.input({
   ///       'defaultValue': 'Hello, World!',
@@ -784,7 +770,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('', () async {
+  ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
   ///     final result = rtl.render(react.select(
   ///       {'multiple': true},
@@ -862,7 +848,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('', () async {
+  ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
   ///     final result = rtl.render(react.select(
   ///       {'multiple': true},
@@ -942,7 +928,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('', () async {
+  ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
   ///     final result = rtl.render(react.div({}, [
   ///       react.input({}),
@@ -1030,7 +1016,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('', () async {
+  ///   test('', () {
   ///     final HoverButton = react.registerFunctionComponent((props) {
   ///       final isShown = useState(false);
   ///       return react.div({}, [
@@ -1096,7 +1082,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('', () async {
+  ///   test('', () {
   ///     final HoverButton = react.registerFunctionComponent((props) {
   ///       final isShown = useState(false);
   ///       return react.div({}, [
@@ -1174,7 +1160,7 @@ class UserEvent {
   /// import 'package:test/test.dart';
   ///
   /// void main() {
-  ///   test('', () async {
+  ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
   ///     final result = rtl.render(react.input({'defaultValue': 'This is a bad example'}));
   ///
@@ -1217,3 +1203,17 @@ class UserEvent {
 
 @JS('rtl.userEvent')
 external JsMap get _userEvent;
+
+dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData ?? const {});
+
+// Converts a JsMap FileList to a List<File>.
+List<File> _unjsifyFileList(List<File> fileList) {
+  if (fileList is FileList) return fileList;
+
+  final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
+  final convertedFiles = <File>[];
+  for (var i = 0; i < (jsFileList['length'] as int); i++) {
+    convertedFiles.add(jsFileList['item'](i) as File);
+  }
+  return convertedFiles;
+}
