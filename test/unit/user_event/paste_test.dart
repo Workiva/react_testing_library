@@ -33,15 +33,7 @@ void main() {
       calls = [];
     });
 
-    void _verifyPasteEvent({
-      bool hasEventInit = false,
-      // TODO: If this is intended to be used, remove the ignore comment below.
-      // ignore: unused_element
-      bool skipHover = false,
-      // TODO: If this is intended to be used, remove the ignore comment below.
-      // ignore: unused_element
-      int clickCount = 0,
-    }) {
+    void _verifyPasteEvent({bool hasEventInit = false}) {
       // Verify initial clipboard event.
       expect(calls, hasLength(1));
       expect(calls.single.cancelable, !hasEventInit);
@@ -67,7 +59,6 @@ void main() {
       });
 
       test('eventInit', () {
-        // todo add test for clipboard data
         UserEvent.paste(input, 'hello', eventInit: {'cancelable': false});
         expect(input, hasValue('hello'));
         _verifyPasteEvent(hasEventInit: true);

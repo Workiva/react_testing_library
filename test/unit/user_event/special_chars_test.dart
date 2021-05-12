@@ -24,64 +24,90 @@ import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 void main() {
-  // TODO: add tests for arrowdown, arrowup, and esc
   // The arrowLeft, arrowRight, enter, end, and selectAll special chars do not currently work as expected due to a bug in the user-event library.
-  // TODO: Uncomment those tests when https://github.com/testing-library/user-event/issues/677 is fixed.
+  // TODO: Uncomment the commented portions of those tests when https://github.com/testing-library/user-event/issues/677 is fixed.
   group('SpecialChars', () {
     InputElement input;
     TextAreaElement textArea;
+    rtl.RenderResult result;
+    List<String> keyDownCalls;
 
     setUp(() {
-      rtl.render(react.div({}, [
+      keyDownCalls = [];
+      result = rtl.render(react.div({}, [
         react.input({
           'defaultValue': 'oh hai',
+          'onKeyDown': (e) => keyDownCalls.add((e as react.SyntheticKeyboardEvent).key),
         }),
         react.textarea({
           'defaultValue': 'hello\n\nthere!',
+          'onKeyDown': (e) => keyDownCalls.add((e as react.SyntheticKeyboardEvent).key),
         }),
       ]) as ReactElement);
 
-      input = rtl.screen.getAllByRole('textbox').first as InputElement;
-      textArea = rtl.screen.getAllByRole('textbox')[1] as TextAreaElement;
+      input = result.getAllByRole('textbox').first as InputElement;
+      textArea = result.getAllByRole('textbox')[1] as TextAreaElement;
       expect(input, hasValue('oh hai'), reason: 'sanity check');
       expect(textArea, hasValue('hello\n\nthere!'), reason: 'sanity check');
     });
 
-    // test('SpecialChars.arrowLeft', () {
-    //   UserEvent.type(input, '${SpecialChars.arrowLeft}${SpecialChars.arrowLeft}!!');
-    //   expect(input, hasValue('oh h!!ai'));
-    // });
+    test('SpecialChars.arrowLeft', () {
+      UserEvent.type(input, '${SpecialChars.arrowLeft}${SpecialChars.arrowLeft}!!');
+      expect(keyDownCalls, contains('ArrowLeft'));
+      // expect(input, hasValue('oh h!!ai'));
+    });
 
-    // test('SpecialChars.arrowRight', () {
-    //   UserEvent.type(input, '${SpecialChars.arrowLeft}${SpecialChars.arrowLeft}${SpecialChars.arrowRight}!!');
-    //   expect(input, hasValue('oh ha!!i'));
-    // });
+    test('SpecialChars.arrowRight', () {
+      UserEvent.type(input, '${SpecialChars.arrowLeft}${SpecialChars.arrowLeft}${SpecialChars.arrowRight}!!');
+      expect(keyDownCalls, contains('ArrowRight'));
+      // expect(input, hasValue('oh ha!!i'));
+    });
 
-    // test('SpecialChars.enter', () {
-    //   UserEvent.type(textArea, '${SpecialChars.enter}!!');
-    //   expect(textArea, hasValue('hello\n\nthere!\n!!'));
-    // });
+    test('SpecialChars.arrowUp', () {
+      UserEvent.type(input, SpecialChars.arrowUp);
+      expect(keyDownCalls, contains('ArrowUp'));
+    });
+
+    test('SpecialChars.arrowDown', () {
+      UserEvent.type(input, SpecialChars.arrowDown);
+      expect(keyDownCalls, contains('ArrowDown'));
+    });
+
+    test('SpecialChars.enter', () {
+      UserEvent.type(textArea, '${SpecialChars.enter}!!');
+      expect(keyDownCalls, contains('Enter'));
+      // expect(textArea, hasValue('hello\n\nthere!\n!!'));
+    });
+
+    test('SpecialChars.escape', () {
+      UserEvent.type(textArea, '${SpecialChars.escape}!!');
+      expect(keyDownCalls, contains('Escape'));
+    });
 
     test('SpecialChars.delete', () {
       input.setSelectionRange(1, 1);
       UserEvent.type(input, '${SpecialChars.delete}');
+      expect(keyDownCalls, contains('Delete'));
       expect(input, hasValue('o hai'));
     });
 
     test('SpecialChars.backspace', () {
       UserEvent.type(input, '${SpecialChars.backspace}!!');
+      expect(keyDownCalls, contains('Backspace'));
       expect(input, hasValue('oh ha!!'));
     });
 
     test('SpecialChars.home', () {
       UserEvent.type(input, '${SpecialChars.home}!!');
+      expect(keyDownCalls, contains('Home'));
       expect(input, hasValue('!!oh hai'));
     });
 
-    // test('SpecialChars.end', () {
-    //   UserEvent.type(input, '${SpecialChars.home}#${SpecialChars.end}!!');
-    //   expect(input, hasValue('#oh hai!!'));
-    // });
+    test('SpecialChars.end', () {
+      UserEvent.type(input, '${SpecialChars.home}#${SpecialChars.end}!!');
+      expect(keyDownCalls, contains('End'));
+      // expect(input, hasValue('#oh hai!!'));
+    });
 
     // test('SpecialChars.selectAll', () {
     //   UserEvent.type(input, '${SpecialChars.selectAll}!!');

@@ -41,8 +41,6 @@ List<File> _unjsifyFileList(List<File> fileList) {
   return convertedFiles;
 }
 
-// todo add examples to doc comments and create dartdoc pages
-
 /// Test utilities that provide more advanced simulation of browser interactions
 /// than the built-in [fireEvent] method.
 class UserEvent {
