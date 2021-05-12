@@ -294,9 +294,11 @@ class UserEvent {
     );
   }
 
-  // todo add warning about delays
   /// Writes [text] inside an input or textarea [element] with a [delay] between
   /// each character typed.
+  ///
+  /// __WARNING__: When using [typeWithDelay], [element] must be allowed to keep focus or the test
+  /// will fail. When running tests concurrently, do not use [typeWithDelay], instead use [UserEvent.type].
   ///
   /// > Use [UserEvent.type] for no [delay].
   ///
@@ -412,11 +414,11 @@ class UserEvent {
 
   /// Simulates the keyboard events described by [text].
   ///
-  /// > See: <https://github.com/testing-library/user-event#keyboardtext-options>
-  ///
   /// This is similar to [UserEvent.type] but without any clicking or changing the selection range.
   ///
   /// > To add a delay between each keystroke, use [UserEvent.keyboardWithDelay].
+  ///
+  /// > See: <https://github.com/testing-library/user-event#keyboardtext-options>
   ///
   /// Keystrokes can be described:
   ///
@@ -476,12 +478,6 @@ class UserEvent {
   /// printable key on the keyboard. E.g. Automatically pressing {Shift} when
   /// CapsLock is not active and A is referenced. If you don't wish this behavior,
   /// set [autoModify] to `false` (this is `false` by default).
-  ///
-  /// ## Example
-  ///
-  ///
-  ///
-  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserEvent}
   static dynamic keyboard(
@@ -511,9 +507,14 @@ class UserEvent {
 
   /// Simulates the keyboard events described by [text] with a [delay] between each keystroke.
   ///
-  /// This is similar to [UserEvent.type] but without any clicking or changing the selection range.
+  /// This is similar to [UserEvent.typeWithDelay] but without any clicking or changing the selection range.
   ///
-  /// Use [UserEvent.keyboard] for no [delay].
+  /// __WARNING__: When using [keyboardWithDelay], the element being typed in must be allowed to keep focus or the test
+  /// will fail. When running tests concurrently, do not use [keyboardWithDelay], instead use [UserEvent.keyboard].
+  ///
+  /// > Use [UserEvent.keyboard] for no [delay].
+  ///
+  /// > See: <https://github.com/testing-library/user-event#keyboardtext-options>
   ///
   /// Keystrokes can be described:
   ///
@@ -549,6 +550,7 @@ class UserEvent {
   /// ## Options
   ///
   /// ### [keyboardState]
+  ///
   /// [keyboard] returns a keyboard state that can be used to continue keyboard operations.
   ///
   /// ```
@@ -558,19 +560,22 @@ class UserEvent {
   /// ```
   ///
   /// ### [keyboardMap]
+  ///
   /// The mapping of key to code is performed by a [default key map](https://github.com/testing-library/user-event/blob/master/src/keyboard/keyMap.ts)
   /// portraying a "default" US-keyboard. You can provide your own local keyboard mapping per option.
+  ///
   /// ```
   /// userEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
   /// ```
   ///
   /// ### [autoModify]
+  ///
   /// Future versions might try to interpolate the modifiers needed to reach a
   /// printable key on the keyboard. E.g. Automatically pressing {Shift} when
   /// CapsLock is not active and A is referenced. If you don't wish this behavior,
   /// set [autoModify] to `false` (this is `false` by default).
   ///
-  /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
+  /// {@category UserEvent}
   static Future<dynamic> keyboardWithDelay(
     String text,
     Duration delay, {
@@ -604,14 +609,87 @@ class UserEvent {
   /// [LabelElement] for a file [InputElement]. When uploading multiple files,
   /// make sure that [element]'s `multiple` attribute is set to `true`.
   ///
+  /// See: <https://testing-library.com/docs/ecosystem-user-event/#uploadelement-file--clickinit-changeinit->
+  ///
+  /// ## Options
+  ///
+  /// ### [clickInit] and [changeInit]
+  ///
   /// Use [clickInit] and [changeInit] to initialize the click and change events
   /// that occur as a part of the upload.
+  ///
+  /// ### [applyAccept]
   ///
   /// By default, the `accept` attribute on [element] will be ignored when
   /// [upload]ing files. Set [applyAccept] to true to allow `accept` to filter
   /// files.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#uploadelement-file--clickinit-changeinit->.
+  /// ## Example
+  ///
+  /// ```html
+  /// <input data-test-id="single-input" type="file" accept=".png,.jpeg" />
+  /// <input data-test-id="multi-input" type="file" accept=".png,.jpeg" multiple />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('Single file input', () async {
+  ///     final file = File([], 'file1.mp3');
+  ///
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.input({
+  ///       'data-test-id': 'single-input',
+  ///       'type': 'file',
+  ///       'accept': '.png,.jpeg',
+  ///     }));
+  ///
+  ///     // Use react_testing_library queries to store references to the nodes.
+  ///     final input = result.getByTestId('single-input') as InputElement;
+  ///
+  ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
+  ///     UserEvent.upload(input, [file]);
+  ///
+  ///     // Verify the value of the input.
+  ///     expect(input.files.single.name, 'file1.mp3');
+  ///   });
+  ///
+  ///   test('Multiple file input', () async {
+  ///     final files = [
+  ///       File([], 'file1.mp3'),
+  ///       File([], 'file2.jpeg'),
+  ///       File([], 'file3.png'),
+  ///     ];
+  ///
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.input({
+  ///       'data-test-id': 'multi-input',
+  ///       'type': 'file',
+  ///       'multiple': true,
+  ///       'accept': '.png,.jpeg',
+  ///     }));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final input = result.getByTestId('multi-input') as InputElement;
+  ///
+  ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
+  ///     UserEvent.upload(input, files, applyAccept: true);
+  ///
+  ///     // Verify the value of the input.
+  ///     expect(input.files, hasLength(2));
+  ///     expect(input.files.first.name, 'file2.jpeg');
+  ///     expect(input.files[1].name, 'file3.png');
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void upload(
     /*InputElement | LabelElement*/ Element element,
     List<File> files, {
@@ -642,7 +720,44 @@ class UserEvent {
   ///
   /// [element] can be an [InputElement] or [TextAreaElement].
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#clearelement>.
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#clearelement>
+  ///
+  /// ## Example
+  ///
+  /// ```html
+  /// <input defaultValue="Hello, World!" />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.input({
+  ///       'defaultValue': 'Hello, World!',
+  ///     }));
+  ///
+  ///     // Use react_testing_library queries to store references to the nodes.
+  ///     final input = result.getByRole('textbox');
+  ///     expect(input, hasValue('Hello, World!'), reason: 'sanity check');
+  ///
+  ///     // Use `UserEvent.clear` to simulate a user deleting the contents of the input.
+  ///     UserEvent.clear(input);
+  ///
+  ///     // Use the `hasValue` matcher to verify the value of the input.
+  ///     expect(input, hasValue(''));
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void clear(Element element) {
     // Clear does not currently work as expected due to a bug in the user-event library.
     // TODO: Delete the following workaround when https://github.com/testing-library/user-event/issues/677 is fixed.
@@ -659,7 +774,66 @@ class UserEvent {
   ///
   /// [values] can either be a list of values or [OptionElement]s.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#selectoptionselement-values>.
+  /// > Related: [UserEvent.deselectOptions]
+  ///
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#selectoptionselement-values>
+  ///
+  /// ## Options
+  ///
+  /// ### [clickInit]
+  ///
+  /// Use [clickInit] the click events that occur as a part of the selection.
+  ///
+  /// ## Example
+  ///
+  /// ```html
+  /// <select multiple>
+  ///   <option value="topping1">Cheese</option>
+  ///   <option value="topping2">Pineapple</option>
+  ///   <option value="topping3">Olives</option>
+  ///   <option value="topping4">Pepperoni</option>
+  ///   <option value="topping5">Bacon</option>
+  /// </select>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.select(
+  ///       {'multiple': true},
+  ///       [
+  ///         react.option({'value': 'topping1'}, 'Cheese'),
+  ///         react.option({'value': 'topping2'}, 'Pineapple'),
+  ///         react.option({'value': 'topping3'}, 'Olives'),
+  ///         react.option({'value': 'topping4'}, 'Pepperoni'),
+  ///         react.option({'value': 'topping5'}, 'Bacon'),
+  ///       ],
+  ///     ));
+  ///
+  ///     // Use react_testing_library queries to store references to the nodes.
+  ///     final select = result.getByRole('listbox') as SelectElement;
+  ///
+  ///     // Use `UserEvent.selectOptions` to simulate a user selecting options from a list.
+  ///     UserEvent.selectOptions(select, ['topping1']);
+  ///     UserEvent.selectOptions(select, [result.getByText('Olives'), result.getByText('Bacon')]);
+  ///
+  ///     // Use the `hasValue` matcher to verify the value of the select.
+  ///     expect(select, hasValue(['topping1', 'topping3', 'topping5']));
+  ///     expect(select, isNot(hasValue(['topping2', 'topping4'])));
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void selectOptions(
     SelectElement selectElement,
     List<dynamic> values, {
@@ -678,7 +852,66 @@ class UserEvent {
   ///
   /// [values] can either be a list of values or [OptionElement]s.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#deselectoptionselement-values>.
+  /// > Related: [UserEvent.selectOptions]
+  ///
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#deselectoptionselement-values>
+  ///
+  /// ## Options
+  ///
+  /// ### [clickInit]
+  ///
+  /// Use [clickInit] the click events that occur as a part of the selection.
+  ///
+  /// ## Example:
+  ///
+  /// ```html
+  /// <select multiple>
+  ///   <option value="topping1" selected>Cheese</option>
+  ///   <option value="topping2" selected>Pineapple</option>
+  ///   <option value="topping3">Olives</option>
+  ///   <option value="topping4">Pepperoni</option>
+  ///   <option value="topping5" selected>Bacon</option>
+  /// </select>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.select(
+  ///       {'multiple': true},
+  ///       [
+  ///         react.option({'value': 'topping1', 'selected': true}, 'Cheese'),
+  ///         react.option({'value': 'topping2', 'selected': true}, 'Pineapple'),
+  ///         react.option({'value': 'topping3'}, 'Olives'),
+  ///         react.option({'value': 'topping4'}, 'Ham'),
+  ///         react.option({'value': 'topping5', 'selected': true}, 'Bacon'),
+  ///       ],
+  ///     ));
+  ///
+  ///     // Use react_testing_library queries to store references to the nodes.
+  ///     final select = result.getByRole('listbox') as SelectElement;
+  ///
+  ///     // Use `UserEvent.deselectOptions` to simulate a user deselecting options from a list.
+  ///     UserEvent.deselectOptions(select, ['topping5']);
+  ///     UserEvent.deselectOptions(select, [result.getByText('Pineapple')]);
+  ///
+  ///     // Use the `hasValue` matcher to verify the value of the select.
+  ///     expect(select, hasValue(['topping1']));
+  ///     expect(select, isNot(hasValue(['topping2', 'topping3', 'topping4', 'topping5'])));
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void deselectOptions(
     SelectElement selectElement,
     List values, {
@@ -693,11 +926,94 @@ class UserEvent {
 
   /// Fires a tab event changing the document.activeElement in the same way the browser does.
   ///
-  /// Options:
-  /// * [shift] (default `false`): can be true or false to invert tab direction.
-  /// * [focusTrap] (default [HtmlDocument.body]): a container element to restrict the tabbing within.
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#tabshift-focustrap>
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#tabshift-focustrap>.
+  /// ## Options
+  ///
+  /// ### [shift]
+  ///
+  /// Default: `false`
+  ///
+  /// Set [shift] to `true` to invert the tab direction.
+  ///
+  /// ### [focusTrap]
+  ///
+  /// Default: [HtmlDocument.body]
+  ///
+  /// Set [focusTrap] to restrict the tabbing within a certain container.
+  ///
+  /// ## Example
+  ///
+  /// ```html
+  /// <div>
+  ///   <input />
+  ///   <div data-test-id="container">
+  ///     <input />
+  ///     <input />
+  ///   </div>
+  /// </div>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isFocused;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.div({}, [
+  ///       react.input({}),
+  ///       react.div({
+  ///         'data-test-id': 'container'
+  ///       }, [
+  ///         react.input({}),
+  ///         react.input({}),
+  ///       ]),
+  ///     ]));
+  ///
+  ///     // Use react_testing_library queries to store references to the nodes.
+  ///     final inputs = result.getAllByRole('textbox');
+  ///     final container = result.getByTestId('container');
+  ///
+  ///     // Use `isFocused` matcher to verify the currently focused element.
+  ///     expect(document.body, isFocused);
+  ///
+  ///     UserEvent.tab();
+  ///
+  ///     expect(inputs.first, isFocused);
+  ///
+  ///     UserEvent.tab();
+  ///
+  ///     expect(inputs[1], isFocused);
+  ///
+  ///     UserEvent.tab();
+  ///
+  ///     expect(inputs[2], isFocused);
+  ///
+  ///     UserEvent.tab();
+  ///
+  ///     // Cycle goes back to the body element.
+  ///     expect(document.body, isFocused);
+  ///
+  ///     UserEvent.tab(shift: true);
+  ///
+  ///     // Shifts the focus backwards.
+  ///     expect(inputs[2], isFocused);
+  ///
+  ///     UserEvent.tab(focusTrap: container);
+  ///
+  ///     // Cycles focus within the container.
+  ///     expect(inputs[1], isFocused);
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void tab({bool shift, Element focusTrap}) {
     final options = {'shift': shift, 'focusTrap': focusTrap};
     JsBackedMap.fromJs(_userEvent)['tab'](
@@ -707,27 +1023,153 @@ class UserEvent {
 
   /// Hovers over [element].
   ///
+  /// > Related: [UserEvent.unhover]
+  ///
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#hoverelement>
+  ///
+  /// ## Options
+  ///
+  /// ### [eventInit]
+  ///
   /// Use [eventInit] to initialize the `onMouseOver` event.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#hoverelement>.
+  /// ## Example
+  ///
+  /// ```html
+  /// <div>
+  ///   <button>Hover over me!</button>
+  /// </div>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/hooks.dart';
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     final HoverButton = react.registerFunctionComponent((props) {
+  ///       final isShown = useState(false);
+  ///       return react.div({}, [
+  ///         react.button({
+  ///           'onMouseOver': (_) => isShown.set(true),
+  ///           'onMouseOut': (_) => isShown.set(false)
+  ///         }, [
+  ///           'Hover over me!'
+  ///         ]),
+  ///         if (isShown.value) react.span({}, ['Hello!']) else null,
+  ///       ]);
+  ///     });
+  ///
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(HoverButton({}));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final button = result.getByRole('button');
+  ///     expect(result.queryByText('Hello!'), isNull, reason: 'sanity check');
+  ///
+  ///     // Use `UserEvent.hover` to simulate a user mousing over a button.
+  ///     UserEvent.hover(button);
+  ///
+  ///     // Use `isInTheDocument` matcher to verify that the new element is present.
+  ///     expect(result.getByText('Hello!'), isInTheDocument);
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void hover(Element element, {Map eventInit}) {
     JsBackedMap.fromJs(_userEvent)['hover'](element, _jsifyEventData(eventInit));
   }
 
   /// Unhovers out of [element].
   ///
+  /// > Related: [UserEvent.hover]
+  ///
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event#unhoverelement>
+  ///
+  /// ## Options
+  ///
+  /// ### [eventInit]
+  ///
   /// Use [eventInit] to initialize the `onMouseOut` event.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#unhoverelement>.
+  /// ## Example
+  ///
+  /// ```html
+  /// <div>
+  ///   <button>Hover over me!</button>
+  /// </div>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/hooks.dart';
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     final HoverButton = react.registerFunctionComponent((props) {
+  ///       final isShown = useState(false);
+  ///       return react.div({}, [
+  ///         react.button({
+  ///           'onMouseOver': (_) => isShown.set(true),
+  ///           'onMouseOut': (_) => isShown.set(false)
+  ///         }, [
+  ///           'Hover over me!'
+  ///         ]),
+  ///         if (isShown.value) react.span({}, ['Hello!']) else null,
+  ///       ]);
+  ///     });
+  ///
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(HoverButton({}));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final button = result.getByRole('button');
+  ///     expect(result.queryByText('Hello!'), isNull, reason: 'sanity check');
+  ///
+  ///     // Use `UserEvent.hover` to simulate a user mousing over a button.
+  ///     UserEvent.hover(button);
+  ///
+  ///     // Use `isInTheDocument` matcher to verify that the new element is present.
+  ///     expect(result.getByText('Hello!'), isInTheDocument);
+  ///
+  ///     // Use `UserEvent.unhover` to simulate a user unhovering a button.
+  ///     UserEvent.unhover(button);
+  ///
+  ///     // Verify that the new element is no longer present in the document.
+  ///     expect(result.queryByText('Hello!'), isNull);
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category Matchers}
   static void unhover(Element element, {Map eventInit}) {
     JsBackedMap.fromJs(_userEvent)['unhover'](element, _jsifyEventData(eventInit));
   }
 
   /// Simulates pasting [text] into [element].
   ///
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event#pasteelement-text-eventinit-options>
+  ///
+  /// ## Options
+  ///
+  /// ### [eventInit]
+  ///
   /// Use [eventInit] to initialize the clipboard event.
   ///
-  /// ### With Selection Range
+  /// ## With Selection Range
   ///
   /// If [element] already contains a value, [text] will be pasted at the end
   /// of the existing value by default. To override this behavior and set the
@@ -738,7 +1180,41 @@ class UserEvent {
   /// [initialSelectionStart] and [initialSelectionEnd] to zero along with
   /// calling `element.setSelectionRange(0, 0)`.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event#pasteelement-text-eventinit-options>.
+  /// ## Example
+  ///
+  /// ```html
+  /// <input defaultValue="This is a bad example" />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.input({'defaultValue': 'This is a bad example'}));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final input = result.getByRole('textbox') as InputElement;
+  ///
+  ///     input.setSelectionRange(10, 13);
+  ///
+  ///     // Use `UserEvent.paste` to simulate a user pasting text into an input.
+  ///     UserEvent.paste(input, 'good');
+  ///
+  ///     // Use `hasValue` matcher to verify the value of the input.
+  ///     expect(input, hasValue('This is a good example'));
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category Matchers}
   static void paste(
     Element element,
     String text, {

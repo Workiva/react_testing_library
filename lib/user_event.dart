@@ -19,7 +19,7 @@
 ///
 /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/>.
 /// {@category UserEvent}
-library rtl.user_event;
+library user_event;
 
 export 'src/user_event/special_chars.dart';
 export 'src/user_event/user_event.dart';
