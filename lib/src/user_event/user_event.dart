@@ -205,10 +205,6 @@ class UserEvent {
   ///
   /// ## With Selection Range
   ///
-  /// > Note: [type] does not currently work as expected with selection range due
-  /// > to [a bug](https://github.com/testing-library/user-event/issues/677) in
-  /// > the user-event package.
-  ///
   /// If [element] already contains a value, [type] will begin typing at the end
   /// of the existing value by default. To override this behavior and set the
   /// selection range to something else, call [InputElement.setSelectionRange] before
@@ -321,10 +317,6 @@ class UserEvent {
   /// this regard.
   ///
   /// ## With Selection Range
-  ///
-  /// > Note: [typeWithDelay] does not currently work as expected with selection range due
-  /// > to [a bug](https://github.com/testing-library/user-event/issues/677) in
-  /// > the user-event package.
   ///
   /// If [element] already contains a value, [typeWithDelay] will begin typing at the end
   /// of the existing value by default. To override this behavior and set the
@@ -756,17 +748,7 @@ class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserEvent}
-  static void clear(Element element) {
-    // Clear does not currently work as expected due to a bug in the user-event library.
-    // TODO: Delete the following workaround when https://github.com/testing-library/user-event/issues/677 is fixed.
-    if (element is InputElement) {
-      element.setSelectionRange(0, element.value.length);
-    } else if (element is TextAreaElement) {
-      element.setSelectionRange(0, element.value.length);
-    }
-    // end workaround
-    JsBackedMap.fromJs(_userEvent)['clear'](element);
-  }
+  static void clear(Element element) => JsBackedMap.fromJs(_userEvent)['clear'](element);
 
   /// Selects the specified [values] of [selectElement].
   ///

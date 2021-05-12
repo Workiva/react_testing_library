@@ -24,8 +24,6 @@ import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 void main() {
-  // The arrowLeft, arrowRight, enter, end, and selectAll special chars do not currently work as expected due to a bug in the user-event library.
-  // TODO: Uncomment the commented portions of those tests when https://github.com/testing-library/user-event/issues/677 is fixed.
   group('SpecialChars', () {
     InputElement input;
     TextAreaElement textArea;
@@ -54,13 +52,13 @@ void main() {
     test('SpecialChars.arrowLeft', () {
       UserEvent.type(input, '${SpecialChars.arrowLeft}${SpecialChars.arrowLeft}!!');
       expect(keyDownCalls, contains('ArrowLeft'));
-      // expect(input, hasValue('oh h!!ai'));
+      expect(input, hasValue('oh h!!ai'));
     });
 
     test('SpecialChars.arrowRight', () {
       UserEvent.type(input, '${SpecialChars.arrowLeft}${SpecialChars.arrowLeft}${SpecialChars.arrowRight}!!');
       expect(keyDownCalls, contains('ArrowRight'));
-      // expect(input, hasValue('oh ha!!i'));
+      expect(input, hasValue('oh ha!!i'));
     });
 
     test('SpecialChars.arrowUp', () {
@@ -76,7 +74,7 @@ void main() {
     test('SpecialChars.enter', () {
       UserEvent.type(textArea, '${SpecialChars.enter}!!');
       expect(keyDownCalls, contains('Enter'));
-      // expect(textArea, hasValue('hello\n\nthere!\n!!'));
+      expect(textArea, hasValue('hello\n\nthere!\n!!'));
     });
 
     test('SpecialChars.escape', () {
@@ -106,13 +104,13 @@ void main() {
     test('SpecialChars.end', () {
       UserEvent.type(input, '${SpecialChars.home}#${SpecialChars.end}!!');
       expect(keyDownCalls, contains('End'));
-      // expect(input, hasValue('#oh hai!!'));
+      expect(input, hasValue('#oh hai!!'));
     });
 
-    // test('SpecialChars.selectAll', () {
-    //   UserEvent.type(input, '${SpecialChars.selectAll}!!');
-    //   expect(input, hasValue('!!'));
-    // });
+    test('SpecialChars.selectAll', () {
+      UserEvent.type(input, '${SpecialChars.selectAll}!!');
+      expect(input, hasValue('!!'));
+    });
 
     test('SpecialChars.space', () {
       UserEvent.type(input, '${SpecialChars.space}!!');

@@ -215,47 +215,39 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       expect(element, hasValue('this is a bad example'), reason: 'sanity check');
     });
 
-    // Typing in a non-empty <textarea> does not currently work as expected due to a bug in the user-event library.
-    // TODO: Remove this check when https://github.com/testing-library/user-event/issues/677 is fixed.
-    if (!isTextArea) {
-      test('', () async {
-        hasDelay ? await _verifyTypeWithDelay('good', 50) : UserEvent.type(element, 'good');
-        expect(element, hasValue('this is a bad examplegood'));
-        _verifyTypeEvent();
-      });
-    }
+    test('', () async {
+      hasDelay ? await _verifyTypeWithDelay('good', 50) : UserEvent.type(element, 'good');
+      expect(element, hasValue('this is a bad examplegood'));
+      _verifyTypeEvent();
+    });
 
-    // Typing with a selection range does not currently work as expected due to a bug in the user-event library.
-    // TODO: Uncomment these tests when https://github.com/testing-library/user-event/issues/677 is fixed.
-    // test('with setSelectionRange', () async {
-    //   _setSelectionRangeOnElement(10, 13);
-    //   hasDelay
-    //       ? await _verifyTypeWithDelay('good', 50)
-    //       : UserEvent.type(element, 'good');
-    //   expect(element, hasValue('this is a good example'));
-    //   _verifyTypeEvent();
-    // });
-    //
-    // test('with setSelectionRange set to zero', () async {
-    //   _setSelectionRangeOnElement(0, 0);
-    //   if (hasDelay) {
-    //     await _verifyTypeWithDelay(
-    //       'good',
-    //       50,
-    //       initialSelectionStart: 0,
-    //       initialSelectionEnd: 0,
-    //     );
-    //   } else {
-    //     UserEvent.type(
-    //       element,
-    //       'good',
-    //       initialSelectionStart: 0,
-    //       initialSelectionEnd: 0,
-    //     );
-    //   }
-    //   expect(element, hasValue('goodthis is a bad example'));
-    //   _verifyTypeEvent();
-    // });
+    test('with setSelectionRange', () async {
+      _setSelectionRangeOnElement(10, 13);
+      hasDelay ? await _verifyTypeWithDelay('good', 50) : UserEvent.type(element, 'good');
+      expect(element, hasValue('this is a good example'));
+      _verifyTypeEvent();
+    });
+
+    test('with setSelectionRange set to zero', () async {
+      _setSelectionRangeOnElement(0, 0);
+      if (hasDelay) {
+        await _verifyTypeWithDelay(
+          'good',
+          50,
+          initialSelectionStart: 0,
+          initialSelectionEnd: 0,
+        );
+      } else {
+        UserEvent.type(
+          element,
+          'good',
+          initialSelectionStart: 0,
+          initialSelectionEnd: 0,
+        );
+      }
+      expect(element, hasValue('goodthis is a bad example'));
+      _verifyTypeEvent();
+    });
   });
 }
 
