@@ -27,7 +27,7 @@ void main() {
     void _uploadTestHelper({bool isMultiple = false}) {
       List<MouseEvent> clickEventCalls;
       List<Event> changeEventCalls;
-      InputElement input;
+      FileUploadInputElement input;
       LabelElement label;
       List<File> files;
 

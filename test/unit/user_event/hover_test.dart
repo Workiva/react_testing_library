@@ -69,6 +69,7 @@ void main() {
     test('', () {
       UserEvent.hover(renderedResult.getByRole('button'));
       expect(renderedResult.getByText('Hello!'), isInTheDocument);
+
       UserEvent.unhover(renderedResult.getByRole('button'));
       expect(renderedResult.queryByText('Hello!'), isNull);
       _verifyHoverEvent();
@@ -80,6 +81,7 @@ void main() {
         eventInit: {'shiftKey': true},
       );
       expect(renderedResult.getByText('Hello!'), isInTheDocument);
+
       UserEvent.unhover(
         renderedResult.getByRole('button'),
         eventInit: {'shiftKey': true},

@@ -120,7 +120,7 @@ class UserEvent {
   ///
   /// ## Example
   ///
-  /// ```html
+  /// ```jsx
   /// <input type="checkbox" onChange={() => clickCount++} />
   /// ```
   ///
@@ -157,7 +157,7 @@ class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category Matchers}
+  /// {@category UserEvent}
   static void dblClick(Element element, {Map eventInit}) {
     JsBackedMap.fromJs(_userEvent)['dblClick'](
       element,
@@ -210,7 +210,7 @@ class UserEvent {
   ///
   /// ```html
   /// <div>
-  ///   <label htmlFor="input">Type here:</label>
+  ///   <label for="input">Type here:</label>
   ///   <input id="input" />
   /// </div>
   /// ```
@@ -323,7 +323,7 @@ class UserEvent {
   ///
   /// ```html
   /// <div>
-  ///   <label htmlFor="input">Type here:</label>
+  ///   <label for="input">Type here:</label>
   ///   <input id="input" />
   /// </div>
   /// ```
@@ -581,8 +581,8 @@ class UserEvent {
 
   /// Uploads [files] to [element].
   ///
-  /// [element] must be an [InputElement] with a `type` attribute of "file" or a
-  /// [LabelElement] for a file [InputElement]. When uploading multiple files,
+  /// [element] must be a [FileUploadInputElement] or a [LabelElement] for a
+  /// [FileUploadInputElement]. When uploading multiple files,
   /// make sure that [element]'s `multiple` attribute is set to `true`.
   ///
   /// See: <https://testing-library.com/docs/ecosystem-user-event/#uploadelement-file--clickinit-changeinit->
@@ -625,7 +625,7 @@ class UserEvent {
   ///     }));
   ///
   ///     // Use react_testing_library queries to store references to the nodes.
-  ///     final input = result.getByTestId('single-input') as InputElement;
+  ///     final input = result.getByTestId('single-input') as FileUploadInputElement;
   ///
   ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
   ///     UserEvent.upload(input, [file]);
@@ -650,7 +650,7 @@ class UserEvent {
   ///     }));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final input = result.getByTestId('multi-input') as InputElement;
+  ///     final input = result.getByTestId('multi-input') as FileUploadInputElement;
   ///
   ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
   ///     UserEvent.upload(input, files, applyAccept: true);
@@ -685,9 +685,10 @@ class UserEvent {
       JsBackedMap.from(options).jsObject,
     );
 
-    if (element is LabelElement && element.control is InputElement) {
-      (element.control as InputElement).files = _unjsifyFileList((element.control as InputElement).files);
-    } else if (element is InputElement) {
+    if (element is LabelElement && element.control is FileUploadInputElement) {
+      (element.control as FileUploadInputElement).files =
+          _unjsifyFileList((element.control as FileUploadInputElement).files);
+    } else if (element is FileUploadInputElement) {
       element.files = _unjsifyFileList(element.files);
     }
   }
@@ -701,7 +702,7 @@ class UserEvent {
   /// ## Example
   ///
   /// ```html
-  /// <input defaultValue="Hello, World!" />
+  /// <input value="Hello, World!" />
   /// ```
   ///
   /// ```dart
@@ -948,30 +949,23 @@ class UserEvent {
   ///     expect(document.body, isFocused);
   ///
   ///     UserEvent.tab();
-  ///
   ///     expect(inputs.first, isFocused);
   ///
   ///     UserEvent.tab();
-  ///
   ///     expect(inputs[1], isFocused);
   ///
   ///     UserEvent.tab();
-  ///
   ///     expect(inputs[2], isFocused);
   ///
   ///     UserEvent.tab();
-  ///
-  ///     // Cycle goes back to the body element.
-  ///     expect(document.body, isFocused);
-  ///
-  ///     UserEvent.tab(shift: true);
+  ///     expect(document.body, isFocused, reason: 'Cycle goes back to the body element.');
   ///
   ///     // Shifts the focus backwards.
+  ///     UserEvent.tab(shift: true);
   ///     expect(inputs[2], isFocused);
   ///
-  ///     UserEvent.tab(focusTrap: container);
-  ///
   ///     // Cycles focus within the container.
+  ///     UserEvent.tab(focusTrap: container);
   ///     expect(inputs[1], isFocused);
   ///   });
   /// }
@@ -980,7 +974,7 @@ class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserEvent}
-  static void tab({bool shift, Element focusTrap}) {
+  static void tab({bool shift = false, Element focusTrap}) {
     final options = {'shift': shift, 'focusTrap': focusTrap};
     JsBackedMap.fromJs(_userEvent)['tab'](
       JsBackedMap.from(options).jsObject,
@@ -1120,7 +1114,7 @@ class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category Matchers}
+  /// {@category UserEvent}
   static void unhover(Element element, {Map eventInit}) {
     JsBackedMap.fromJs(_userEvent)['unhover'](element, _jsifyEventData(eventInit));
   }
@@ -1149,7 +1143,7 @@ class UserEvent {
   /// ## Example
   ///
   /// ```html
-  /// <input defaultValue="This is a bad example" />
+  /// <input value="This is a bad example" />
   /// ```
   ///
   /// ```dart
@@ -1180,7 +1174,7 @@ class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category Matchers}
+  /// {@category UserEvent}
   static void paste(
     Element element,
     String text, {

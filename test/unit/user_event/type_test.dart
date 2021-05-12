@@ -41,13 +41,19 @@ void main() {
     group('in TextAreaElement', () {
       _typeTestHelper(hasDelay: true, isTextArea: true);
     });
-  }, retry: 5);
+  },
+      // Retry delay tests because focus could have been taken away from the
+      // element being typed on as a result of tests being run concurrently.
+      retry: 5);
 
   group('UserEvent.keyboard', _keyboardTestHelper);
 
   group('UserEvent.keyboardWithDelay', () {
     _keyboardTestHelper(hasDelay: true);
-  }, retry: 5);
+  },
+      // Retry delay tests because focus could have been taken away from the
+      // element being typed on as a result of tests being run concurrently.
+      retry: 5);
 }
 
 void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
