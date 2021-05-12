@@ -269,12 +269,12 @@ void _keyboardTestHelper({bool hasDelay = false}) {
   });
 
   Future<dynamic> _verifyKeyboardWithDelay(
-      String text,
-      int delay, {
-        dynamic keyboardState,
-        List<Map> keyboardMap,
-        int charsTyped,
-      }) async {
+    String text,
+    int delay, {
+    dynamic keyboardState,
+    List<Map> keyboardMap,
+    int charsTyped,
+  }) async {
     charsTyped ??= text.length;
     final timer = Stopwatch();
     // ignore: cascade_invocations

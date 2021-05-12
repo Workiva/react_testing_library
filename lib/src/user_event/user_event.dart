@@ -25,6 +25,7 @@ import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 
 import '../dom/fire_event.dart';
+import 'special_chars.dart';
 
 dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData ?? const {});
 
@@ -48,8 +49,11 @@ class UserEvent {
   /// Clicks [element], depending on what [element] is it can have different
   /// side effects.
   ///
-  /// Note that [click] will trigger hover events before clicking. To disable
-  /// this, set [skipHover] to `true`.
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#clickelement-eventinit-options>
+  ///
+  /// ## Options
+  ///
+  /// ### [eventInit]
   ///
   /// Use [eventInit] to set options on the initial [MouseEvent]. For example,
   ///
@@ -57,11 +61,50 @@ class UserEvent {
   /// UserEvent.click(element, eventInit: {'shiftKey': true});
   /// ```
   ///
+  /// ### [skipHover]
+  ///
+  /// [click] will trigger hover events before clicking. To disable this, set
+  /// [skipHover] to `true`.
+  ///
+  /// ### [clickCount]
+  ///
   /// Use [clickCount] to update the initial click count. See documentation on
   /// [UIEvent.detail](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/detail)
   /// for more information.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#clickelement-eventinit-options>.
+  /// ## Example
+  ///
+  /// ```html
+  /// <input type="checkbox" />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isChecked;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.input({'type': 'checkbox'}));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final checkbox = result.getByRole('checkbox');
+  ///
+  ///     // Use `UserEvent.click` to simulate a user clicking the checkbox.
+  ///     UserEvent.click(checkbox);
+  ///
+  ///     // Use `isChecked` matcher to verify that the checkbox was clicked.
+  ///     expect(checkbox, isChecked);
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void click(
     Element element, {
     Map eventInit,
@@ -79,13 +122,58 @@ class UserEvent {
   /// Clicks [element] twice, depending on what [element] is it can have
   /// different side effects.
   ///
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#dblclickelement-eventinit-options>
+  ///
+  /// ## Options
+  ///
+  /// ### [eventInit]
+  ///
   /// Use [eventInit] to set options on the initial [MouseEvent]. For example,
   ///
   /// ```dart
   /// UserEvent.dblClick(element, eventInit: {'shiftKey': true});
   /// ```
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#dblclickelement-eventinit-options>.
+  /// ## Example
+  ///
+  /// ```html
+  /// <input type="checkbox" onChange={() => clickCount++} />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isChecked;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () {
+  ///     var clickCount = 0;
+  ///
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.input({
+  ///       'type': 'checkbox',
+  ///       'onChange': (_) => clickCount++,
+  ///     }));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final checkbox = result.getByRole('checkbox');
+  ///
+  ///     // Use `UserEvent.dblClick` to simulate a user double clicking the checkbox.
+  ///     UserEvent.dblClick(checkbox);
+  ///
+  ///     expect(clickCount, equals(2));
+  ///
+  ///     // Use `isChecked` matcher to verify that the checkbox is no longer checked.
+  ///     expect(checkbox, isNot(isChecked));
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category Matchers}
   static void dblClick(Element element, {Map eventInit}) {
     JsBackedMap.fromJs(_userEvent)['dblClick'](
       element,
@@ -95,23 +183,29 @@ class UserEvent {
 
   /// Writes [text] inside an input or textarea [element].
   ///
-  /// To add a delay between each character typed, use [UserEvent.typeWithDelay].
+  /// > To add a delay between each character typed, use [UserEvent.typeWithDelay].
   ///
-  /// Note that [type] will click the element before typing. To disable this,
-  /// set the [skipClick] option to true. When skipping the click you must
-  /// manually focus [element] using `element.focus()`.
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>
   ///
-  /// > A note about modifiers: Modifier keys ({shift}, {ctrl}, {alt}, {meta})
-  /// will activate their corresponding event modifiers for the duration of type
-  /// command or until they are closed (via {/shift}, {/ctrl}, etc.). If they
-  /// are not closed explicitly, then key up events will be fired to close them
-  /// automatically (to disable this, set the [skipAutoClose] option to true).
+  /// ## Options
   ///
-  /// > Also note that behavior that happens with modifier key combinations will
+  /// ### [skipClick]
+  ///
+  /// [type] will click the element before typing. To disable this, set the [skipClick]
+  /// option to true. When skipping the click you must manually focus [element] using `element.focus()`.
+  ///
+  /// ### [skipAutoClose]
+  ///
+  /// Modifier keys ({shift}, {ctrl}, {alt}, {meta}) will activate their corresponding
+  /// event modifiers for the duration of type command or until they are closed (via {/shift}, {/ctrl}, etc.).
+  /// If they are not closed explicitly, then key up events will be fired to close them
+  /// automatically. To disable this, set the [skipAutoClose] option to true.
+  ///
+  /// > Note that behavior that happens with modifier key combinations will
   /// not be simulated as different operating systems function differently in
   /// this regard.
   ///
-  /// ### With Selection Range
+  /// ## With Selection Range
   ///
   /// > Note: [type] does not currently work as expected with selection range due
   /// > to [a bug](https://github.com/testing-library/user-event/issues/677) in
@@ -126,7 +220,53 @@ class UserEvent {
   /// [initialSelectionStart] and [initialSelectionEnd] to zero along with
   /// calling `element.setSelectionRange(0, 0)`.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
+  /// ## Special Characters
+  ///
+  /// [Supported special characters](https://testing-library.com/docs/ecosystem-user-event/#special-characters)
+  /// can be used in [text] to modify the behavior of [type]. Common characters are also
+  /// exposed via [SpecialChars].
+  ///
+  /// ## Example
+  ///
+  /// ```html
+  /// <div>
+  ///   <label htmlFor="input">Type here:</label>
+  ///   <input id="input" />
+  /// </div>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.div({}, [
+  ///       react.label({
+  ///         'htmlFor': 'input',
+  ///       }, 'Type here:'),
+  ///       react.input({'id': 'input'})
+  ///     ]));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final input = result.getByLabelText('Type here:');
+  ///
+  ///     // Use `UserEvent.type` to simulate a user typing in the input.
+  ///     UserEvent.type(input, 'Hello, World!');
+  ///
+  ///     // Use `hasValue` matcher to verify the value of input.
+  ///     expect(input, hasValue('Hello, World!'));
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static void type(
     Element element,
     String text, {
@@ -154,41 +294,94 @@ class UserEvent {
     );
   }
 
+  // todo add warning about delays
   /// Writes [text] inside an input or textarea [element] with a [delay] between
   /// each character typed.
   ///
-  /// Use [UserEvent.type] for no [delay].
+  /// > Use [UserEvent.type] for no [delay].
   ///
-  /// Note that [type] will click the element before typing. To disable this,
-  /// set the [skipClick] option to true. When skipping the click you must
-  /// manually focus [element] using `element.focus()`.
+  /// > See: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>
   ///
-  /// > A note about modifiers: Modifier keys ({shift}, {ctrl}, {alt}, {meta})
-  /// will activate their corresponding event modifiers for the duration of type
-  /// command or until they are closed (via {/shift}, {/ctrl}, etc.). If they
-  /// are not closed explicitly, then key up events will be fired to close them
-  /// automatically (to disable this, set the [skipAutoClose] option to true).
+  /// ## Options
   ///
-  /// > Also note that behavior that happens with modifier key combinations will
+  /// ### [skipClick]
+  ///
+  /// [typeWithDelay] will click the element before typing. To disable this, set the [skipClick]
+  /// option to true. When skipping the click you must manually focus [element] using `element.focus()`.
+  ///
+  /// ### [skipAutoClose]
+  ///
+  /// Modifier keys ({shift}, {ctrl}, {alt}, {meta}) will activate their corresponding
+  /// event modifiers for the duration of type command or until they are closed (via {/shift}, {/ctrl}, etc.).
+  /// If they are not closed explicitly, then key up events will be fired to close them
+  /// automatically. To disable this, set the [skipAutoClose] option to true.
+  ///
+  /// > Note that behavior that happens with modifier key combinations will
   /// not be simulated as different operating systems function differently in
   /// this regard.
   ///
-  /// ### With Selection Range
+  /// ## With Selection Range
   ///
   /// > Note: [typeWithDelay] does not currently work as expected with selection range due
   /// > to [a bug](https://github.com/testing-library/user-event/issues/677) in
   /// > the user-event package.
   ///
-  /// If [element] already contains a value, [type] will begin typing at the end
+  /// If [element] already contains a value, [typeWithDelay] will begin typing at the end
   /// of the existing value by default. To override this behavior and set the
   /// selection range to something else, call [InputElement.setSelectionRange] before
-  /// calling [type].
+  /// calling [typeWithDelay].
   ///
   /// In order to set the initial selection range to zero, you must also set
   /// [initialSelectionStart] and [initialSelectionEnd] to zero along with
   /// calling `element.setSelectionRange(0, 0)`.
   ///
-  /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options>.
+  /// ## Special Characters
+  ///
+  /// [Supported special characters](https://testing-library.com/docs/ecosystem-user-event/#special-characters)
+  /// can be used in [text] to modify the behavior of [typeWithDelay]. Common characters are also
+  /// exposed via [SpecialChars].
+  ///
+  /// ## Example
+  ///
+  /// ```html
+  /// <div>
+  ///   <label htmlFor="input">Type here:</label>
+  ///   <input id="input" />
+  /// </div>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
+  /// import 'package:test/test.dart';
+  ///
+  /// void main() {
+  ///   test('', () async {
+  ///     // Render the DOM shown in the example snippet above.
+  ///     final result = rtl.render(react.div({}, [
+  ///       react.label({
+  ///         'htmlFor': 'input',
+  ///       }, 'Type here:'),
+  ///       react.input({'id': 'input'})
+  ///     ]));
+  ///
+  ///     // Use react_testing_library queries to store references to the node.
+  ///     final input = result.getByLabelText('Type here:');
+  ///
+  ///     // Use `UserEvent.type` to simulate a user typing in the input.
+  ///     await UserEvent.typeWithDelay(input, 'Hello, World!', Duration(milliseconds: 500));
+  ///
+  ///     // Use `hasValue` matcher to verify the value of input.
+  ///     expect(input, hasValue('Hello, World!'));
+  ///   });
+  /// }
+  /// ```
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static Future<void> typeWithDelay(
     Element element,
     String text,
@@ -219,9 +412,11 @@ class UserEvent {
 
   /// Simulates the keyboard events described by [text].
   ///
+  /// > See: <https://github.com/testing-library/user-event#keyboardtext-options>
+  ///
   /// This is similar to [UserEvent.type] but without any clicking or changing the selection range.
   ///
-  /// To add a delay between each keystroke, use [UserEvent.keyboardWithDelay].
+  /// > To add a delay between each keystroke, use [UserEvent.keyboardWithDelay].
   ///
   /// Keystrokes can be described:
   ///
@@ -257,6 +452,7 @@ class UserEvent {
   /// ## Options
   ///
   /// ### [keyboardState]
+  ///
   /// [keyboard] returns a keyboard state that can be used to continue keyboard operations.
   ///
   /// ```
@@ -266,16 +462,28 @@ class UserEvent {
   /// ```
   ///
   /// ### [keyboardMap]
+  ///
   /// The mapping of key to code is performed by a [default key map](https://github.com/testing-library/user-event/blob/master/src/keyboard/keyMap.ts)
   /// portraying a "default" US-keyboard. You can provide your own local keyboard mapping per option.
+  ///
   /// ```
   /// userEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
   /// ```
   ///
   /// ### [autoModify]
-  /// Future versions might try to interpolate the modifiers needed to reach a printable key on the keyboard. E.g. Automatically pressing {Shift} when CapsLock is not active and A is referenced. If you don't wish this behavior, you can pass autoModify: false when using userEvent.keyboard in your code.
   ///
-  /// Learn more: <https://github.com/testing-library/user-event#keyboardtext-options>.
+  /// Future versions might try to interpolate the modifiers needed to reach a
+  /// printable key on the keyboard. E.g. Automatically pressing {Shift} when
+  /// CapsLock is not active and A is referenced. If you don't wish this behavior,
+  /// set [autoModify] to `false` (this is `false` by default).
+  ///
+  /// ## Example
+  ///
+  ///
+  ///
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
+  /// {@category UserEvent}
   static dynamic keyboard(
     String text, {
     dynamic keyboardState,
