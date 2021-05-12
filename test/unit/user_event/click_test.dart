@@ -17,28 +17,116 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react_testing_library/matchers.dart' show hasValue;
+import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('', () async {
-    // Render the DOM shown in the example snippet above.
-    final result = rtl.render(react.div({}, [
-      react.label({
-        'htmlFor': 'input',
-      }, 'Type here:'),
-      react.input({'id': 'input'})
-    ]));
+  group('User click events:', () {
+    List<Event> calls;
+    int hoverEventCount;
+    rtl.RenderResult renderedResult;
 
-    // Use react_testing_library queries to store references to the node.
-    final input = result.getByLabelText('Type here:');
+    setUp(() {
+      calls = [];
+      hoverEventCount = 0;
 
-    // Use `UserEvent.type` to simulate a user typing in the input.
-    await UserEvent.typeWithDelay(input, 'Hello, World!', Duration(milliseconds: 500));
+      final elementToRender = react.button({
+        'id': 'root',
+        'onClick': (event) {
+          calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
+        },
+        // Count mouseover events to find out how many hover events occur.
+        'onMouseOver': (_) => hoverEventCount++,
+      }, 'oh hai');
 
-    // Use `hasValue` matcher to verify the value of input.
-    expect(input, hasValue('Hello, World!'));
+      renderedResult = rtl.render(elementToRender as ReactElement);
+    });
+
+    group('UserEvent.click', () {
+      void _verifyClickEvent({
+        bool hasEventInit = false,
+        bool skipHover = false,
+        int clickCount = 0,
+      }) {
+        // Sanity check.
+        expect(calls, hasLength(1));
+        expect(calls.single, isA<MouseEvent>());
+        final event = calls.single as MouseEvent;
+
+        // Verify initial MouseEvent.
+        expect(event.shiftKey, hasEventInit);
+
+        // Verify hover event.
+        expect(hoverEventCount, equals(skipHover ? 0 : 1));
+
+        // Verify click count was incremented.
+        expect(event.detail, equals(clickCount + 1));
+      }
+
+      test('', () {
+        UserEvent.click(renderedResult.getByRole('button'));
+        _verifyClickEvent();
+      });
+
+      test('eventInit', () {
+        UserEvent.click(
+          renderedResult.getByRole('button'),
+          eventInit: {'shiftKey': true},
+        );
+        _verifyClickEvent(hasEventInit: true);
+      });
+
+      test('skipHover', () {
+        UserEvent.click(
+          renderedResult.getByRole('button'),
+          skipHover: true,
+        );
+        _verifyClickEvent(skipHover: true);
+      });
+
+      test('clickCount', () {
+        const clickCount = 5;
+        UserEvent.click(
+          renderedResult.getByRole('button'),
+          clickCount: clickCount,
+        );
+        _verifyClickEvent(clickCount: clickCount);
+      });
+    });
+
+    group('UserEvent.dblClick', () {
+      void _verifyDblClickEvent({bool hasEventInit = false}) {
+        // Sanity check.
+        expect(calls, hasLength(2));
+        for (final event in calls) {
+          expect(event, isA<MouseEvent>());
+
+          // Verify initial MouseEvent.
+          expect((event as MouseEvent).shiftKey, hasEventInit);
+        }
+
+        // Verify click count was incremented twice.
+        expect((calls.first as MouseEvent).detail, equals(1));
+        expect((calls[1] as MouseEvent).detail, equals(2));
+
+        // Verify hover event only happens once.
+        expect(hoverEventCount, equals(1));
+      }
+
+      test('', () {
+        UserEvent.dblClick(renderedResult.getByRole('button'));
+        _verifyDblClickEvent();
+      });
+
+      test('eventInit', () {
+        UserEvent.dblClick(
+          renderedResult.getByRole('button'),
+          eventInit: {'shiftKey': true},
+        );
+        _verifyDblClickEvent(hasEventInit: true);
+      });
+    });
   });
 }
