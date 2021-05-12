@@ -135,7 +135,8 @@ void main() {
         group('unless autoTearDown is false', () {
           rtl.RenderResult renderedResult;
 
-          tearDownAll(() {
+          tearDown(() {
+            expect(document.body.children.contains(renderedResult.container), isTrue);
             renderedResult.unmount();
             renderedResult.container.remove();
             customContainer = null;
@@ -145,10 +146,6 @@ void main() {
             customContainer = document.body.append(DivElement()..id = 'custom-container');
             renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement,
                 container: customContainer, autoTearDown: false);
-          });
-
-          test('', () {
-            expect(document.body.children.contains(renderedResult.container), isTrue);
           });
         });
       });
