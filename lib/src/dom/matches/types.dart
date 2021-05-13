@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/dom/matches/get_default_normalizer.dar
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 
 /// {@template TextMatchArgDescription}
-/// The `text` argument can be set to a `String`, `RegExp`, or a `Function` which returns `true` for a match and `false` for a mismatch.
+/// This argument can be set to a `String`, `RegExp`, or a `Function` which returns `true` for a match and `false` for a mismatch.
 ///
 /// See the [JS `TextMatch` docs](https://testing-library.com/docs/queries/about#textmatch) for more details
 /// and examples.
