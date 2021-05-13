@@ -203,6 +203,15 @@ main() {
 > [Read more about how queries are scoped to both the `renderResult` and return value of `within()`in the above example][queries] 
 
 
+## Dart / JS API Parity
+
+The `react_testing_library` Dart package strives to maintain API parity with the analogous JS `testing-library` packages within reason. However, there are certain differences that are either unavoidable, or intentional for the purposes of building Dart APIs that are easy to use and reason about.
+
+Read more about Dart / JS API Parity for the following API categories:
+
+* [Queries][queries]
+* [Rendering][render]
+
 
 [React Dart]: https://pub.dev/packages/react
 [OverReact]: https://pub.dev/packages/over_react
