@@ -8,7 +8,7 @@
 
 ## Introduction
 
-The libraries in this package helps you to test Dart UI components in a user-centric way. 
+The libraries in this package help you to test Dart UI components in a user-centric way. 
 
 > [The more your tests resemble the way your software is used, the more confidence they can give you.][testing-library-intro]
 
