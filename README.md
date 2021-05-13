@@ -16,11 +16,9 @@ To paint the full picture of how / why to use this library, **please read the JS
 
 ## How Does It Work?
 
-Rather than dealing with OverReact `UiComponent` instances, or VDom `ReactElement`s, your tests will work with actual DOM nodes. The utilities this library provides facilitate **querying the DOM in the same way the user would.** Finding form elements by their label text *(just like a user would)*, finding links and buttons from their text *(like a user would)*. It also exposes a recommended way to find elements by an HTML `data-test-id` attribute value as an "escape hatch" for elements where the text content and label do not make sense or is not practical.
+Rather than dealing with [OverReact] `UiComponent` instances, or React VDom `ReactElement`s, your tests will work with actual DOM nodes. The utilities this library provides facilitate **querying the DOM in the same way the user would.** Finding form elements by their label text *(just like a user would)*, finding links and buttons from their text *(like a user would)*. It also exposes a recommended way to find elements by an HTML `data-test-id` attribute value as an "escape hatch" for elements where the text content and label do not make sense or is not practical.
 
 **This library encourages your Dart web applications to be more accessible** and allows you to get your tests closer to using your components the way a user will, which allows your tests to give you more confidence that your application will work when a real user uses it.
-
-[__READ MORE__][react-testing-library]
 
 
 ## Getting Started
@@ -57,7 +55,7 @@ targets:
           - test/**.browser_test.dart
 ```
 
-> The configuration above is a minimum recommendation only. [Read more about configuring a Dart build][dart_build_config]; to learn more / ensure your configuration meets your needs.
+> The configuration above is a minimum recommendation only. [Read more about configuring a Dart build][dart_build_config] to learn more / ensure your configuration meets your needs.
 
 
 ### 3. Configure `dart_test.yaml` to run your tests
@@ -121,9 +119,7 @@ _test/unit/some_unit_test.html_
 
 ### 5. Write test(s) for your component(s)!
 
-Using the rendering / querying utilities from the `react_testing_library.dart` entrypoint, and optionally, the 
-`Matcher`s from the `matchers.dart` entrypoint, you can now render react components to the DOM and query within 
-the rendered content to get the element(s) you want to test!
+Using the [render] function, you can now generate DOM using React components and [query][queries] within that DOM to get the element(s) you want to test! Convenient [DOM `Matcher`s][matchers] are also available to make it easy to write high-quality `expect`ations about the DOM nodes in your tests.
 
 > The example below is extremely simplistic for the purposes of demonstration. We will have more thorough examples documented soon!
 
@@ -204,6 +200,8 @@ main() {
 }
 ```
 
+> [Read more about how queries are scoped to both the `renderResult` and return value of `within()`in the above example][queries] 
+
 
 
 [React Dart]: https://pub.dev/packages/react
@@ -216,3 +214,6 @@ main() {
 [dart_test_lib]: https://pub.dev/packages/test
 [dart_test_config]: https://github.com/dart-lang/test/blob/master/pkgs/test/doc/configuration.md
 [dart_build_config]: https://pub.dev/packages/build_config
+[render]: https://workiva.github.io/react_testing_library/rtl.react/render.html
+[queries]: https://workiva.github.io/react_testing_library/topics/Queries-topic.html
+[matchers]: https://workiva.github.io/react_testing_library/topics/Matchers-topic.html
