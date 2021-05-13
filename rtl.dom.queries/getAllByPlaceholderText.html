@@ -490,6 +490,32 @@
     .markdown pre.language-html::after { content: 'HTML'; }
     .markdown pre.language-dart::after { content: 'DART'; }
     .markdown pre.language-js::after { content: 'JS'; }
+    .markdown pre.language-yaml::after { content: 'YAML'; }
+
+    .markdown figure {
+        margin: 30px 0 0 0;
+        position: relative;
+    }
+
+    .markdown figure > figcaption {
+        position: absolute;
+        top: -20px;
+        left: 4px;
+        height: 20px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        font-size: .7em;
+        font-family: 'Roboto Mono', Menlo, monospace;
+        background-color: #ddd;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .markdown figcaption + pre[class*="language-"]::after {
+        /* If a figcaption is being used to label the code, omit the ::after label */
+        display: none;
+    }
 </style>
 
 </head>

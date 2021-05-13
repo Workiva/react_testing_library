@@ -491,6 +491,32 @@
     .markdown pre.language-html::after { content: 'HTML'; }
     .markdown pre.language-dart::after { content: 'DART'; }
     .markdown pre.language-js::after { content: 'JS'; }
+    .markdown pre.language-yaml::after { content: 'YAML'; }
+
+    .markdown figure {
+        margin: 30px 0 0 0;
+        position: relative;
+    }
+
+    .markdown figure > figcaption {
+        position: absolute;
+        top: -20px;
+        left: 4px;
+        height: 20px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        font-size: .7em;
+        font-family: 'Roboto Mono', Menlo, monospace;
+        background-color: #ddd;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .markdown figcaption + pre[class*="language-"]::after {
+        /* If a figcaption is being used to label the code, omit the ::after label */
+        display: none;
+    }
 </style>
 
 </head>
@@ -572,6 +598,7 @@
 <p>Before using this library, you should familiarize yourself with <a href="https://dart.dev/overview">Dart</a>, <a href="https://pub.dev/packages/test">Dart's <code>test</code> library</a>, <a href="https://reactjs.org/">ReactJS</a> and <a href="https://pub.dev/packages/over_react">OverReact</a> first.</p>
 </blockquote>
 <h3 id="1-add-the-necessary-dependencies-to-your-project">1. Add the necessary dependencies to your project</h3><figure>
+<figcaption>pubspec.yaml</figcaption>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
   over_react: ^4.0.0
 
@@ -584,9 +611,9 @@ dev_dependencies:
   # This is not technically required, 
   # but makes the HTML portion of your test bootstrapping much easier!
   test_html_builder: ^1.0.0 
-</code></pre><figcaption>pubspec.yaml</figcaption>
-</figure>
-<h3 id="2-configure-buildyaml-to-generate-test-outputs">2. Configure <code>build.yaml</code> to generate test outputs</h3>
+</code></pre></figure>
+<h3 id="2-configure-buildyaml-to-generate-test-outputs">2. Configure <code>build.yaml</code> to generate test outputs</h3><figure>
+<figcaption>build.yaml</figcaption>
 <pre class="language-yaml"><code class="language-yaml">targets:
   $default:
     builders:
@@ -594,18 +621,19 @@ dev_dependencies:
         # These are globs for the entrypoints you want to compile.
         generate_for:
           - test/**.browser_test.dart
-</code></pre>
+</code></pre></figure>
 <blockquote>
 <p>The configuration above is a minimum recommendation only. <a href="https://pub.dev/packages/build_config">Read more about configuring a Dart build</a> to learn more / ensure your configuration meets your needs.</p>
 </blockquote>
 <h3 id="3-configure-dart_testyaml-to-run-your-tests">3. Configure <code>dart_test.yaml</code> to run your tests</h3>
-<p>Create <code>dart_test.yaml</code> in the root of your project.</p>
+<p>Create <code>dart_test.yaml</code> in the root of your project.</p><figure>
+<figcaption>dart_test.yaml</figcaption>
 <pre class="language-yaml"><code class="language-yaml">platforms:
   - chrome
 
 paths:
   - test/unit/
-</code></pre>
+</code></pre></figure>
 <blockquote>
 <p>The configuration above is a minimum recommendation only. <a href="https://github.com/dart-lang/test/blob/master/pkgs/test/doc/configuration.md">Read more about configuring Dart tests</a>, or about <a href="https://pub.dev/packages/test">Dart's <code>test</code> library</a> to learn more / ensure your configuration meets your needs.</p>
 </blockquote>
@@ -614,8 +642,8 @@ paths:
 <p><em>NOTE: The names of the files below are recommendations only, and are not essential to a functional setup.</em></p>
 </blockquote>
 <h4 id="using-test_html_builder-recommended">Using test_html_builder (recommended)</h4>
-<p>We <em>strongly</em> recommend using the <a href="https://pub.dev/packages/test_html_builder">test_html_builder</a> library to create a template that will be used to load each <code>.dart.js</code> test file.</p>
-<p><em>test/unit/rtl_unit_test_template.html</em></p>
+<p>We <em>strongly</em> recommend using the <a href="https://pub.dev/packages/test_html_builder">test_html_builder</a> library to create a template that will be used to load each <code>.dart.js</code> test file.</p><figure>
+<figcaption>test/unit/rtl_unit_test_template.html</figcaption>
 <pre class="language-html"><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
@@ -627,11 +655,11 @@ paths:
       {test}
   &lt;/head&gt;
 &lt;/html&gt;
-</code></pre>
+</code></pre></figure>
 <p><strong>Use the template <code>.html</code> file above and follow the <a href="https://pub.dev/packages/test_html_builder">test_html_builder</a> library instructions for wiring it up!</strong></p>
 <h4 id="adding--committing-your-own-html-files">Adding / committing your own HTML file(s)</h4>
-<p>If for some reason you do not wish to use the <a href="https://pub.dev/packages/test_html_builder">test_html_builder</a> library to generate the necessary <code>.html</code> file(s), you must create one for each analogous <code>*_test.dart</code> file in which you are using <code>react_testing_library</code> as shown below. Note that you will have to have one <code>.html</code> file for each <code>.dart</code> file containing your unit tests.</p>
-<p><em>test/unit/some_unit_test.html</em></p>
+<p>If for some reason you do not wish to use the <a href="https://pub.dev/packages/test_html_builder">test_html_builder</a> library to generate the necessary <code>.html</code> file(s), you must create one for each analogous <code>*_test.dart</code> file in which you are using <code>react_testing_library</code> as shown below. Note that you will have to have one <code>.html</code> file for each <code>.dart</code> file containing your unit tests.</p><figure>
+<figcaption>test/unit/some_unit_test.html</figcaption>
 <pre class="language-html"><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
@@ -644,11 +672,11 @@ paths:
       &lt;script src="packages/test/dart.js"&gt;&lt;/script&gt;
   &lt;/head&gt;
 &lt;/html&gt;
-</code></pre>
+</code></pre></figure>
 <h3 id="5-write-tests-for-your-components">5. Write test(s) for your component(s)!</h3>
 <p>Using the <a href="https://workiva.github.io/react_testing_library/rtl.react/render.html">render</a> function, you can now generate DOM using React components and <a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">query</a> within that DOM to get the element(s) you want to test!</p>
-<p>Then, you can use the <a href="https://workiva.github.io/react_testing_library/topics/Matchers-topic.html"><code>Matcher</code>s</a> from the <code>matchers.dart</code> entrypoint to perform assertions on that DOM, and the events and user events entrypoints or whatever to interact with the DOM.</p><!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) -->
-<p><em>lib/src/components/greeting.dart</em></p>
+<p>Then, you can use the <a href="https://workiva.github.io/react_testing_library/topics/Matchers-topic.html"><code>Matcher</code>s</a> from the <code>matchers.dart</code> entrypoint to perform assertions on that DOM, and the events and user events entrypoints or whatever to interact with the DOM.</p><!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) --><figure>
+<figcaption>lib/src/components/greeting.dart</figcaption>
 <pre class="language-dart"><code class="language-dart">import 'package:over_react/over_react.dart';
 
 part 'greeting.over_react.g.dart';
@@ -669,15 +697,15 @@ UiFactory&lt;GreetingProps&gt; Greeting = uiFunction(
   },
   _$GreetingConfig, // ignore: undefined_identifier
 );
-</code></pre>
-<p><em>test/unit/components/greeting_test.dart</em></p>
+</code></pre></figure><figure>
+<figcaption>test/unit/components/greeting_test.dart</figcaption>
 <pre class="language-dart"><code class="language-dart">import 'dart:html';
 
 import 'package:test/test.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
 
-import 'some_path_to/greeting.dart';
+import 'package:your_package/src/components/greeting.dart';
 
 main() {
   group('Greeting', () {
@@ -718,7 +746,7 @@ main() {
     });
   });
 }
-</code></pre>
+</code></pre></figure>
 <blockquote>
 <p><a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">Read more about how queries are scoped to both the <code>renderResult</code> and return value of <code>within()</code>in the above example</a></p>
 </blockquote>

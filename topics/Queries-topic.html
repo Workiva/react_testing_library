@@ -490,6 +490,32 @@
     .markdown pre.language-html::after { content: 'HTML'; }
     .markdown pre.language-dart::after { content: 'DART'; }
     .markdown pre.language-js::after { content: 'JS'; }
+    .markdown pre.language-yaml::after { content: 'YAML'; }
+
+    .markdown figure {
+        margin: 30px 0 0 0;
+        position: relative;
+    }
+
+    .markdown figure > figcaption {
+        position: absolute;
+        top: -20px;
+        left: 4px;
+        height: 20px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        font-size: .7em;
+        font-family: 'Roboto Mono', Menlo, monospace;
+        background-color: #ddd;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .markdown figcaption + pre[class*="language-"]::after {
+        /* If a figcaption is being used to label the code, omit the ::after label */
+        display: none;
+    }
 </style>
 
 </head>
@@ -570,7 +596,8 @@
 </li>
 </ol>
 <p>The function signatures for the queries are identical no matter which place you call them from with the exception of the "top level" query functions - which require that a container be specified as the first argument as shown in the examples below.</p>
-<h4 id="examples">Examples</h4>
+<h4 id="examples">Examples</h4><figure>
+<figcaption>test/unit/example_test.dart</figcaption>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
@@ -624,7 +651,7 @@ main() {
         rtl.within(someElementWhereYouExpectTheDialog).getByRole('dialog');
   });
 }
-</code></pre>
+</code></pre></figure>
 <blockquote>
 <p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
 <p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct dependency on <code>over_react</code> - but both libraries are fully supported.</p>
