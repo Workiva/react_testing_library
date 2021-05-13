@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.react.render.render;
 
-import 'dart:html' show DocumentFragment, Element, Node;
+import 'dart:html' show DocumentFragment, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
