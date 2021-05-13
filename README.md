@@ -1,17 +1,18 @@
-# React (Dart) Testing Library
+# Testing Library for Dart
 
-A library to use when authoring unit tests for [React Dart] or [OverReact] UI components that mimics the API of the JS [dom-testing-library] / [react-testing-library] packages.
+[Dart] bindings for the JS [dom-testing-library] and [react-testing-library] packages, which provide simple and complete DOM/React testing utilities that encourage good testing practices.
 
 [![Dart CI](https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml/badge.svg?branch=master)](https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml)
 [![API Documentation](https://img.shields.io/static/v1?label=API&message=Documentation&color=informational)](https://workiva.github.io/react_testing_library)
 
 
-## Guiding Principles
+## Introduction
 
-> [The more your tests resemble the way your software is used, the more confidence they can give you.][Guiding Principles]
+The libraries in this package helps you to test Dart UI components in a user-centric way. 
 
-This seemingly simple, yet incredibly powerful idea is what inspired us to create a Dart API for the JS [dom-testing-library] / [react-testing-library] packages!
+> [The more your tests resemble the way your software is used, the more confidence they can give you.][testing-library-intro]
 
+To paint the full picture of how / why to use this library, **please read the JS Testing Library [Introduction][testing-library-intro], [Guiding Principles](https://testing-library.com/docs/guiding-principles) and [FAQs](https://testing-library.com/docs/dom-testing-library/faq).**
 
 ## How Does It Work?
 
@@ -209,8 +210,9 @@ main() {
 [OverReact]: https://pub.dev/packages/over_react
 [dom-testing-library]: https://testing-library.com/docs/dom-testing-library/intro
 [react-testing-library]: https://testing-library.com/docs/react-testing-library/intro
-[Guiding Principles]: https://testing-library.com/docs/guiding-principles/
+[testing-library-intro]: https://testing-library.com/docs/
 [test_html_builder]: https://pub.dev/packages/test_html_builder
+[Dart]: https://dart.dev/
 [dart_test_lib]: https://pub.dev/packages/test
 [dart_test_config]: https://github.com/dart-lang/test/blob/master/pkgs/test/doc/configuration.md
 [dart_build_config]: https://pub.dev/packages/build_config
