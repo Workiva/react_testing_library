@@ -27,7 +27,9 @@ Rather than dealing with [OverReact] `UiComponent` instances, or React VDom `Rea
 
 ### 1. Add the necessary dependencies to your project
 
-_Pubspec.yaml_
+<figure>
+<figcaption>pubspec.yaml</figcaption>
+
 ```yaml
 dependencies:
   over_react: ^4.0.0
@@ -42,8 +44,12 @@ dev_dependencies:
   # but makes the HTML portion of your test bootstrapping much easier!
   test_html_builder: ^1.0.0 
 ```
+</figure>
 
 ### 2. Configure `build.yaml` to generate test outputs
+
+<figure>
+<figcaption>build.yaml</figcaption>
 
 ```yaml
 targets:
@@ -54,6 +60,7 @@ targets:
         generate_for:
           - test/**.browser_test.dart
 ```
+</figure>
 
 > The configuration above is a minimum recommendation only. [Read more about configuring a Dart build][dart_build_config] to learn more / ensure your configuration meets your needs.
 
@@ -62,6 +69,9 @@ targets:
 
 Create `dart_test.yaml` in the root of your project. 
 
+<figure>
+<figcaption>dart_test.yaml</figcaption>
+
 ```yaml
 platforms:
   - chrome
@@ -69,6 +79,7 @@ platforms:
 paths:
   - test/unit/
 ```
+</figure>
 
 > The configuration above is a minimum recommendation only. [Read more about configuring Dart tests][dart_test_config], or about [Dart's `test` library][dart_test_lib] to learn more / ensure your configuration meets your needs.
 
@@ -80,7 +91,9 @@ paths:
 #### Using test_html_builder (recommended)
 We *strongly* recommend using the [test_html_builder] library to create a template that will be used to load each `.dart.js` test file.
 
-_test/unit/rtl_unit_test_template.html_
+<figure>
+<figcaption>test/unit/rtl_unit_test_template.html</figcaption>
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -94,13 +107,16 @@ _test/unit/rtl_unit_test_template.html_
   </head>
 </html>
 ```
+</figure>
 
 **Use the template `.html` file above and follow the [test_html_builder] library instructions for wiring it up!**
 
 #### Adding / committing your own HTML file(s) 
 If for some reason you do not wish to use the [test_html_builder] library to generate the necessary `.html` file(s), you must create one for each analogous `*_test.dart` file in which you are using `react_testing_library` as shown below. Note that you will have to have one `.html` file for each `.dart` file containing your unit tests.
 
-_test/unit/some_unit_test.html_
+<figure>
+<figcaption>test/unit/some_unit_test.html</figcaption>
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -115,7 +131,7 @@ _test/unit/some_unit_test.html_
   </head>
 </html>
 ```
-
+</figure>
 
 ### 5. Write test(s) for your component(s)!
 
@@ -125,7 +141,9 @@ Then, you can use the [`Matcher`s][matchers] from the `matchers.dart` entrypoint
 
 <!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) -->
 
-_lib/src/components/greeting.dart_
+<figure>
+<figcaption>lib/src/components/greeting.dart</figcaption>
+
 ```dart
 import 'package:over_react/over_react.dart';
 
@@ -148,8 +166,11 @@ UiFactory<GreetingProps> Greeting = uiFunction(
   _$GreetingConfig, // ignore: undefined_identifier
 );
 ```
+</figure>
 
-_test/unit/components/greeting_test.dart_
+<figure>
+<figcaption>test/unit/components/greeting_test.dart</figcaption>
+
 ```dart
 import 'dart:html';
 
@@ -157,7 +178,7 @@ import 'package:test/test.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
 
-import 'some_path_to/greeting.dart';
+import 'package:your_package/src/components/greeting.dart';
 
 main() {
   group('Greeting', () {
@@ -199,6 +220,7 @@ main() {
   });
 }
 ```
+</figure>
 
 > [Read more about how queries are scoped to both the `renderResult` and return value of `within()`in the above example][queries] 
 
