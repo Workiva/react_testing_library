@@ -16,12 +16,15 @@
 
 library react_testing_library.src.user_event.special_chars;
 
+import 'package:meta/meta.dart';
+
 import 'user_event.dart';
 
 /// A handful of special characters used in [UserEvent.type].
 ///
 /// > See: <https://testing-library.com/docs/ecosystem-user-event/#specialchars>
-class SpecialChars {
+@sealed
+abstract class SpecialChars {
   static const String arrowLeft = '{arrowleft}';
   static const String arrowRight = '{arrowright}';
   static const String arrowDown = '{arrowdown}';

@@ -96,10 +96,10 @@ class UserEvent {
     int clickCount = 0,
   }) {
     final options = {'skipHover': skipHover, 'clickCount': clickCount};
-    JsBackedMap.fromJs(_userEvent)['click'](
+    getProperty(_userEvent, 'click')(
       element,
       _jsifyEventData(eventInit),
-      JsBackedMap.from(options).jsObject,
+      jsifyAndAllowInterop(options),
     );
   }
 
@@ -159,7 +159,7 @@ class UserEvent {
   ///
   /// {@category UserEvent}
   static void dblClick(Element element, {Map eventInit}) {
-    JsBackedMap.fromJs(_userEvent)['dblClick'](
+    getProperty(_userEvent, 'dblClick')(
       element,
       _jsifyEventData(eventInit),
     );
@@ -256,21 +256,17 @@ class UserEvent {
     int initialSelectionStart,
     int initialSelectionEnd,
   }) {
-    final options = <String, dynamic>{
+    final options = {
       'skipClick': skipClick,
       'skipAutoClose': skipAutoClose,
+      if (initialSelectionStart != null) 'initialSelectionStart': initialSelectionStart,
+      if (initialSelectionEnd != null) 'initialSelectionEnd': initialSelectionEnd,
     };
-    if (initialSelectionStart != null) {
-      options.addEntries([MapEntry('initialSelectionStart', initialSelectionStart)]);
-    }
-    if (initialSelectionEnd != null) {
-      options.addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
-    }
 
-    JsBackedMap.fromJs(_userEvent)['type'](
+    getProperty(_userEvent, 'type')(
       element,
       text,
-      JsBackedMap.from(options).jsObject,
+      jsifyAndAllowInterop(options),
     );
   }
 
@@ -373,18 +369,14 @@ class UserEvent {
       'delay': delay.inMilliseconds,
       'skipClick': skipClick,
       'skipAutoClose': skipAutoClose,
+      if (initialSelectionStart != null) 'initialSelectionStart': initialSelectionStart,
+      if (initialSelectionEnd != null) 'initialSelectionEnd': initialSelectionEnd,
     };
-    if (initialSelectionStart != null) {
-      options.addEntries([MapEntry('initialSelectionStart', initialSelectionStart)]);
-    }
-    if (initialSelectionEnd != null) {
-      options.addEntries([MapEntry('initialSelectionEnd', initialSelectionEnd)]);
-    }
 
-    await promiseToFuture(JsBackedMap.fromJs(_userEvent)['type'](
+    await promiseToFuture(getProperty(_userEvent, 'type')(
       element,
       text,
-      JsBackedMap.from(options).jsObject,
+      jsifyAndAllowInterop(options),
     ));
   }
 
@@ -409,22 +401,22 @@ class UserEvent {
   /// ```
   /// * Per [KeyboardEvent.key] (only supports alphanumeric values of key)
   /// ```
-  /// userEvent.keyboard('{Shift}{f}{o}{o}') // translates to: Shift, f, o, o
+  /// UserEvent.keyboard('{Shift}{f}{o}{o}') // translates to: Shift, f, o, o
   /// ```
   /// This does not keep any key pressed. So Shift will be lifted before pressing f.
   /// * Per [KeyboardEvent.code]
   /// ```
-  /// userEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]') // translates to: Shift, f, o, o
+  /// UserEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]') // translates to: Shift, f, o, o
   /// ```
   /// * Per legacy [UserEvent.type] modifier/specialChar
   /// The modifiers like {shift} (note the lowercase) will automatically be kept
   /// pressed. You can cancel this behavior by adding a / to the end of the descriptor.
   /// ```
-  /// userEvent.keyboard('{shift}{ctrl/}a{/shift}') // translates to: Shift(down), Control(down+up), a, Shift(up)
+  /// UserEvent.keyboard('{shift}{ctrl/}a{/shift}') // translates to: Shift(down), Control(down+up), a, Shift(up)
   /// ```
   /// Keys can be kept pressed by adding a `>` to the end of the descriptor - and lifted by adding a `/` to the beginning of the descriptor:
   /// ```
-  /// userEvent.keyboard('{Shift>}A{/Shift}') // translates to: Shift(down), A, Shift(up)
+  /// UserEvent.keyboard('{Shift>}A{/Shift}') // translates to: Shift(down), A, Shift(up)
   /// ```
   ///
   /// ## Options
@@ -445,7 +437,7 @@ class UserEvent {
   /// portraying a "default" US-keyboard. You can provide your own local keyboard mapping per option.
   ///
   /// ```
-  /// userEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
+  /// UserEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
   /// ```
   ///
   /// ### [autoModify]
@@ -456,29 +448,21 @@ class UserEvent {
   /// set [autoModify] to `false` (this is `false` by default).
   ///
   /// {@category UserEvent}
-  static dynamic keyboard(
+  static KeyboardState keyboard(
     String text, {
-    dynamic keyboardState,
+    KeyboardState keyboardState,
     bool autoModify = false,
     List<Map> keyboardMap,
   }) {
-    final options = <String, dynamic>{
+    final options = {
       'autoModify': autoModify,
+      if (keyboardState != null) 'keyboardState': keyboardState,
+      if (keyboardMap != null) 'keyboardMap': keyboardMap,
     };
-    if (keyboardState != null) {
-      options.addEntries([MapEntry('keyboardState', keyboardState)]);
-    }
-    if (keyboardMap != null) {
-      final convertedKeyboardMap = [];
-      for (final element in keyboardMap) {
-        convertedKeyboardMap.add(JsBackedMap.from(element).jsObject);
-      }
-      options.addEntries([MapEntry('keyboardMap', convertedKeyboardMap)]);
-    }
-    return JsBackedMap.fromJs(_userEvent)['keyboard'](
+    return getProperty(_userEvent, 'keyboard')(
       text,
-      JsBackedMap.from(options).jsObject,
-    );
+      jsifyAndAllowInterop(options),
+    ) as KeyboardState;
   }
 
   /// Simulates the keyboard events described by [text] with a [delay] between each keystroke.
@@ -505,22 +489,22 @@ class UserEvent {
   /// ```
   /// * Per [KeyboardEvent.key] (only supports alphanumeric values of key)
   /// ```
-  /// userEvent.keyboard('{Shift}{f}{o}{o}') // translates to: Shift, f, o, o
+  /// UserEvent.keyboard('{Shift}{f}{o}{o}') // translates to: Shift, f, o, o
   /// ```
   /// This does not keep any key pressed. So Shift will be lifted before pressing f.
   /// * Per [KeyboardEvent.code]
   /// ```
-  /// userEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]') // translates to: Shift, f, o, o
+  /// UserEvent.keyboard('[ShiftLeft][KeyF][KeyO][KeyO]') // translates to: Shift, f, o, o
   /// ```
   /// * Per legacy [UserEvent.type] modifier/specialChar
   /// The modifiers like {shift} (note the lowercase) will automatically be kept
   /// pressed. You can cancel this behavior by adding a / to the end of the descriptor.
   /// ```
-  /// userEvent.keyboard('{shift}{ctrl/}a{/shift}') // translates to: Shift(down), Control(down+up), a, Shift(up)
+  /// UserEvent.keyboard('{shift}{ctrl/}a{/shift}') // translates to: Shift(down), Control(down+up), a, Shift(up)
   /// ```
   /// Keys can be kept pressed by adding a `>` to the end of the descriptor - and lifted by adding a `/` to the beginning of the descriptor:
   /// ```
-  /// userEvent.keyboard('{Shift>}A{/Shift}') // translates to: Shift(down), A, Shift(up)
+  /// UserEvent.keyboard('{Shift>}A{/Shift}') // translates to: Shift(down), A, Shift(up)
   /// ```
   ///
   /// ## Options
@@ -541,7 +525,7 @@ class UserEvent {
   /// portraying a "default" US-keyboard. You can provide your own local keyboard mapping per option.
   ///
   /// ```
-  /// userEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
+  /// UserEvent.keyboard('?', {keyboardMap: myOwnLocaleKeyboardMap})
   /// ```
   ///
   /// ### [autoModify]
@@ -552,30 +536,22 @@ class UserEvent {
   /// set [autoModify] to `false` (this is `false` by default).
   ///
   /// {@category UserEvent}
-  static Future<dynamic> keyboardWithDelay(
+  static Future<KeyboardState> keyboardWithDelay(
     String text,
     Duration delay, {
-    dynamic keyboardState,
+    KeyboardState keyboardState,
     bool autoModify = false,
     List<Map> keyboardMap,
   }) {
     final options = {
       'delay': delay.inMilliseconds,
       'autoModify': autoModify,
+      if (keyboardState != null) 'keyboardState': keyboardState,
+      if (keyboardMap != null) 'keyboardMap': keyboardMap,
     };
-    if (keyboardState != null) {
-      options.addEntries([MapEntry('keyboardState', keyboardState)]);
-    }
-    if (keyboardMap != null) {
-      final convertedKeyboardMap = [];
-      for (final element in keyboardMap) {
-        convertedKeyboardMap.add(JsBackedMap.from(element).jsObject);
-      }
-      options.addEntries([MapEntry('keyboardMap', convertedKeyboardMap)]);
-    }
-    return promiseToFuture(JsBackedMap.fromJs(_userEvent)['keyboard'](
+    return promiseToFuture(getProperty(_userEvent, 'keyboard')(
       text,
-      JsBackedMap.from(options).jsObject,
+      jsifyAndAllowInterop(options),
     ));
   }
 
@@ -678,13 +654,15 @@ class UserEvent {
       'changeInit': _jsifyEventData(changeInit),
     };
     final options = {'applyAccept': applyAccept};
-    JsBackedMap.fromJs(_userEvent)['upload'](
+    getProperty(_userEvent, 'upload')(
       element,
       files,
-      JsBackedMap.from(init).jsObject,
-      JsBackedMap.from(options).jsObject,
+      _jsifyEventData(init),
+      jsifyAndAllowInterop(options),
     );
 
+    // Convert the `element.files` because the JS `upload` sets it equal to a
+    // map with with an `item` method to access files.
     if (element is LabelElement && element.control is FileUploadInputElement) {
       (element.control as FileUploadInputElement).files =
           _unjsifyFileList((element.control as FileUploadInputElement).files);
@@ -735,7 +713,7 @@ class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserEvent}
-  static void clear(Element element) => JsBackedMap.fromJs(_userEvent)['clear'](element);
+  static void clear(Element element) => getProperty(_userEvent, 'clear')(element);
 
   /// Selects the specified [values] of [selectElement].
   ///
@@ -749,7 +727,7 @@ class UserEvent {
   ///
   /// ### [clickInit]
   ///
-  /// Use [clickInit] the click events that occur as a part of the selection.
+  /// Use [clickInit] to initialize the click events that occur as a part of the selection.
   ///
   /// ## Example
   ///
@@ -806,7 +784,7 @@ class UserEvent {
     List<dynamic> values, {
     Map clickInit,
   }) {
-    JsBackedMap.fromJs(_userEvent)['selectOptions'](
+    getProperty(_userEvent, 'selectOptions')(
       selectElement,
       values,
       _jsifyEventData(clickInit),
@@ -827,7 +805,7 @@ class UserEvent {
   ///
   /// ### [clickInit]
   ///
-  /// Use [clickInit] the click events that occur as a part of the selection.
+  /// Use [clickInit] to initialize the click events that occur as a part of the selection.
   ///
   /// ## Example:
   ///
@@ -884,7 +862,7 @@ class UserEvent {
     List values, {
     Map clickInit,
   }) {
-    JsBackedMap.fromJs(_userEvent)['deselectOptions'](
+    getProperty(_userEvent, 'deselectOptions')(
       selectElement,
       values,
       _jsifyEventData(clickInit),
@@ -976,8 +954,8 @@ class UserEvent {
   /// {@category UserEvent}
   static void tab({bool shift = false, Element focusTrap}) {
     final options = {'shift': shift, 'focusTrap': focusTrap};
-    JsBackedMap.fromJs(_userEvent)['tab'](
-      JsBackedMap.from(options).jsObject,
+    getProperty(_userEvent, 'tab')(
+      jsifyAndAllowInterop(options),
     );
   }
 
@@ -1044,7 +1022,7 @@ class UserEvent {
   ///
   /// {@category UserEvent}
   static void hover(Element element, {Map eventInit}) {
-    JsBackedMap.fromJs(_userEvent)['hover'](element, _jsifyEventData(eventInit));
+    getProperty(_userEvent, 'hover')(element, _jsifyEventData(eventInit));
   }
 
   /// Unhovers out of [element].
@@ -1116,7 +1094,7 @@ class UserEvent {
   ///
   /// {@category UserEvent}
   static void unhover(Element element, {Map eventInit}) {
-    JsBackedMap.fromJs(_userEvent)['unhover'](element, _jsifyEventData(eventInit));
+    getProperty(_userEvent, 'unhover')(element, _jsifyEventData(eventInit));
   }
 
   /// Simulates pasting [text] into [element].
@@ -1183,20 +1161,28 @@ class UserEvent {
     int initialSelectionEnd,
   }) {
     final options = {
-      'initialSelectionStart': initialSelectionStart,
-      'initialSelectionEnd': initialSelectionEnd,
+      if (initialSelectionStart != null) 'initialSelectionStart': initialSelectionStart,
+      if (initialSelectionEnd != null) 'initialSelectionEnd': initialSelectionEnd,
     };
-    JsBackedMap.fromJs(_userEvent)['paste'](
+    getProperty(_userEvent, 'paste')(
       element,
       text,
       _jsifyEventData(eventInit),
-      JsBackedMap.from(options).jsObject,
+      jsifyAndAllowInterop(options),
     );
   }
 }
 
 @JS('rtl.userEvent')
 external JsMap get _userEvent;
+
+/// An opaque object returned from keyboard-related user event methods
+/// that can be used to continue keyboard operations via the `keyboardState` argument.
+@JS()
+@anonymous
+class KeyboardState {
+  external factory KeyboardState._();
+}
 
 dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData ?? const {});
 

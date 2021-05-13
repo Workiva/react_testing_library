@@ -280,7 +280,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
     final returnValue = await UserEvent.keyboardWithDelay(
       text,
       Duration(milliseconds: delay),
-      keyboardState: keyboardState,
+      keyboardState: keyboardState as KeyboardState,
       keyboardMap: keyboardMap,
     );
     timer.stop();
@@ -380,7 +380,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
       final state = hasDelay ? await _verifyKeyboardWithDelay(text1, 50, charsTyped: 1) : UserEvent.keyboard(text1);
       hasDelay
           ? await _verifyKeyboardWithDelay(text2, 50, keyboardState: state, charsTyped: 2)
-          : UserEvent.keyboard(text2, keyboardState: state);
+          : UserEvent.keyboard(text2, keyboardState: state as KeyboardState);
       expect(input, hasValue('F'));
       expect(
           calls,
