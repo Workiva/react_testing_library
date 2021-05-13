@@ -119,9 +119,9 @@ _test/unit/some_unit_test.html_
 
 ### 5. Write test(s) for your component(s)!
 
-Using the [render] function, you can now generate DOM using React components and [query][queries] within that DOM to get the element(s) you want to test! Convenient [DOM `Matcher`s][matchers] are also available to make it easy to write high-quality `expect`ations about the DOM nodes in your tests.
+Using the [render] function, you can now generate DOM using React components and [query][queries] within that DOM to get the element(s) you want to test! 
 
-> The example below is extremely simplistic for the purposes of demonstration. We will have more thorough examples documented soon!
+Then, you can use the [`Matcher`s][matchers] from the `matchers.dart` entrypoint to perform assertions on that DOM, and the events and user events entrypoints or whatever to interact with the DOM.
 
 <!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) -->
 
