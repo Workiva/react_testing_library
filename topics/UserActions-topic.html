@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="rtl.dom.configure library API docs, for the Dart programming language.">
-  <title>rtl.dom.configure library - Dart API</title>
+  <meta name="description" content="UserActions Topic docs, for the Dart programming language.">
+  <title>UserActions Topic - Dart API</title>
 
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -529,9 +529,9 @@
   <button id="sidenav-left-toggle" type="button">&nbsp;</button>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">react_testing_library</a></li>
-    <li class="self-crumb">rtl.dom.configure library</li>
+    <li class="self-crumb">UserActions Topic</li>
   </ol>
-  <div class="self-name">rtl.dom.configure</div>
+  <div class="self-name">UserActions</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -548,7 +548,7 @@
     
     <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
       <li><a href="../index.html">react_testing_library</a></li>
-      <li class="self-crumb">rtl.dom.configure library</li>
+      <li class="self-crumb">UserActions Topic</li>
     </ol>
     
     <h5><span class="package-name">react_testing_library</span> <span class="package-kind">package</span></h5>
@@ -583,64 +583,112 @@
   </div>
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/dom/configure.dart#L18"><i class="material-icons">description</i></a></div>
-<h1><span class="kind-library">rtl.dom.configure</span> library      <span class="category dom cp-9" title="This is part of the Dom Topic.">Dom</span>
-</h1></div>
+      <h1><span class="kind-category">UserActions</span> Topic</h1>
+      <section class="desc markdown">
+        <h2 id="firing-events">Firing Events</h2>
+<blockquote>
+<p><strong>NOTE:</strong></p>
+<p>Most projects have a few use cases for <a href="https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html"><code>fireEvent</code></a>, but the majority of the time you should probably use <a href="https://workiva.github.io/react_testing_library/user_event/UserEvent-class.html#static-methods"><code>UserEvent</code> methods</a>.</p>
+</blockquote>
+<h3 id="interactions-vs-events">Interactions vs. events</h3>
+<p>Based on the <a href="https://testing-library.com/docs/guiding-principles">Guiding Principles</a>, your test should resemble how users interact with your code (component, page, etc.) as much as possible. With this in mind, you should know that <a href="https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html"><code>fireEvent</code></a> isn't exactly how the user interacts with your application, but it's close enough for most scenarios.</p>
+<p>Consider <a href="https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html">fireEvent</a> when providing it a <code>MouseEvent('click')</code> event - it creates a click event and dispatches that event on the given DOM node. This works properly for most situations when you simply want to test what happens when your element is clicked, but when the user actually clicks your element in the browser, these are the events that are typically fired (in order):</p>
+<ul>
+<li><code>mouseOver</code></li>
+<li><code>mouseMove</code></li>
+<li><code>mouseDown</code></li>
+<li><code>element.focus()</code> <em>(if that <code>element</code> is focusable)</em></li>
+<li><code>mouseUp</code></li>
+<li><code>click</code></li>
+</ul>
+<p>And then, if that <code>element</code> happens to be a child of a <code>&lt;label&gt;</code>, then it will also move focus to the form control that the label is labeling. So even though all you really are trying to test is the click handler, by simply using <code>fireEvent</code> you're missing out on several other potentially important events the user is firing along the way.</p>
+<p>Again, most of the time this isn't critical for your tests, and the trade-off of simply using <code>fireEvent</code> is sometimes worth it.</p>
+      </section>
+      
+        <section class="summary offset-anchor" id="libraries">
+        <h2>Libraries</h2>
 
-    
+        <dl>
+            <dt id="user_event">
+              <span class="name"><a href="../user_event/user_event-library.html">user_event</a></span>                 <span class="category useractions cp-13 linked" title="This is part of the UserActions Topic."><a href="../topics/UserActions-topic.html">UserActions</a></span>
+            
+            </dt>
+            <dd>
+              A library that provides more advanced simulation of browser interactions
+than the built-in fireEvent method. <a href="../user_event/user_event-library.html">[...]</a>
+            </dd>
+        </dl>
+        </section>
+
+        <section class="summary offset-anchor" id="classes">
+        <h2>Classes</h2>
+
+        <dl>
+            <dt id="UserEvent">
+              <span class="name "><a href="../user_event/UserEvent-class.html">UserEvent</a></span>                 <span class="category useractions cp-13 linked" title="This is part of the UserActions Topic."><a href="../topics/UserActions-topic.html">UserActions</a></span>
+            
+            </dt>
+            <dd>
+              Test <a href="#static-methods">utility methods</a> that provide more advanced simulation of browser interactions
+than the <a href="../rtl.dom.events/fireEvent.html">fireEvent</a> function. <a href="../user_event/UserEvent-class.html">[...]</a>
+            </dd>
+        </dl>
+      </section>
 
 
 
 
+      <section class="summary offset-anchor" id="functions">
+        <h2>Functions</h2>
 
-    <section class="summary offset-anchor" id="functions">
-      <h2>Functions</h2>
-
-      <dl class="callables">
-        <dt id="configure" class="callable">
-          <span class="name"><a href="../rtl.dom.configure/configure.html">configure</a></span><span class="signature">(<wbr><span class="parameter" id="configure-param-testIdAttribute">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">testIdAttribute</span>, </span><span class="parameter" id="configure-param-asyncUtilTimeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">asyncUtilTimeout</span>, </span><span class="parameter" id="configure-param-computedStyleSupportsPseudoElements"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">computedStyleSupportsPseudoElements</span>, </span><span class="parameter" id="configure-param-defaultHidden"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">defaultHidden</span>, </span><span class="parameter" id="configure-param-showOriginalStackTrace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">showOriginalStackTrace</span>, </span><span class="parameter" id="configure-param-throwSuggestions"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">throwSuggestions</span>, </span><span class="parameter" id="configure-param-getElementError"><span class="type-annotation"><a href="../rtl.dom.debugging/TestingLibraryElementError-class.html">TestingLibraryElementError</a></span> <span class="parameter-name">getElementError</span>(<span class="parameter" id="param-message"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">message</span>, </span><span class="parameter" id="param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">container</span></span>)}</span>)
-            <span class="returntype parameter">&#8594; void</span>
-          </span>
-                  </dt>
-        <dd>
-          Configuration for the react-testing-library. <a href="../rtl.dom.configure/configure.html">[...]</a>
-                  
+        <dl class="callables">
+            <dt id="fireEvent" class="callable">
+              <span class="name"><a href="../rtl.dom.events/fireEvent.html">fireEvent</a></span><span class="signature">(<wbr><span class="parameter" id="fireEvent-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span><span class="parameter" id="fireEvent-param-event"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Event-class.html">Event</a></span> <span class="parameter-name">event</span></span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span>
+              </span>
+                              <span class="category useractions cp-13 linked" title="This is part of the UserActions Topic."><a href="../topics/UserActions-topic.html">UserActions</a></span>
+              </dt>
+            <dd>
+              Fires a DOM <code>event</code> on the provided <code>element</code>. <a href="../rtl.dom.events/fireEvent.html">[...]</a>
+                          <div class="features">@<a href="https://pub.dev/documentation/js/0.6.3/js/JS-class.html">JS</a>(&#39;rtl.fireEvent&#39;)</div>
 </dd>
-        <dt id="getConfig" class="callable">
-          <span class="name"><a href="../rtl.dom.configure/getConfig.html">getConfig</a></span><span class="signature">(<wbr>)
-            <span class="returntype parameter">&#8594; JsConfig</span>
-          </span>
-                  </dt>
-        <dd>
-          Returns the configuration options being used by react-testing-library. <a href="../rtl.dom.configure/getConfig.html">[...]</a>
-                  <div class="features">@<a href="https://pub.dev/documentation/js/0.6.3/js/JS-class.html">JS</a>(&#39;rtl.getConfig&#39;)</div>
+            <dt id="fireEventByName" class="callable">
+              <span class="name"><a href="../rtl.dom.events/fireEventByName.html">fireEventByName</a></span><span class="signature">(<wbr><span class="parameter" id="fireEventByName-param-eventName"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">eventName</span>, </span><span class="parameter" id="fireEventByName-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span><span class="parameter" id="fireEventByName-param-eventProperties">[<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">eventProperties</span>]</span>)
+                <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span>
+              </span>
+                              <span class="category useractions cp-13 linked" title="This is part of the UserActions Topic."><a href="../topics/UserActions-topic.html">UserActions</a></span>
+              </dt>
+            <dd>
+              Fires a DOM <a href="https://api.dart.dev/stable/2.12.4/dart-html/Event-class.html">Event</a> using the <code>eventName</code> on the provided <code>element</code>. <a href="../rtl.dom.events/fireEventByName.html">[...]</a>
+                          
 </dd>
-      </dl>
-    </section>
+        </dl>
+      </section>
 
 
 
 
   </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-    <h5>rtl.dom.configure library</h5>
+    <h5>UserActions Topic</h5>
     <ol>
-
-
-
-
-
-  <li class="section-title"><a href="../rtl.dom.configure/rtl.dom.configure-library.html#functions">Functions</a></li>
-  <li><a href="../rtl.dom.configure/configure.html">configure</a></li>
-  <li><a href="../rtl.dom.configure/getConfig.html">getConfig</a></li>
-
-
-
-</ol>
-
+      <li class="section-title"><a href="../topics/UserActions-topic.html#libraries">Libraries</a></li>
+      <li><a href="../user_event/user_event-library.html">user_event</a></li>
+    
+    
+      <li class="section-title"><a href="../topics/UserActions-topic.html#classes">Classes</a></li>
+      <li><a href="../user_event/UserEvent-class.html">UserEvent</a></li>
+    
+    
+    
+      <li class="section-title"><a href="../topics/UserActions-topic.html#functions">Functions</a></li>
+      <li><a href="../rtl.dom.events/fireEvent.html">fireEvent</a></li>
+      <li><a href="../rtl.dom.events/fireEventByName.html">fireEventByName</a></li>
+    
+    
+    
+    </ol>
   </div><!--/sidebar-offcanvas-right-->
-
 </main>
 
 <footer>

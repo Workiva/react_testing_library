@@ -571,8 +571,9 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/fire_event.dart#L71"><i class="material-icons">description</i></a></div>
-<h1><span class="kind-function">fireEventByName</span> function  </h1></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/fire_event.dart#L113"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">fireEventByName</span> function      <span class="category useractions cp-13 linked" title="This is part of the UserActions Topic."><a href="../topics/UserActions-topic.html">UserActions</a></span>
+</h1></div>
 
     <section class="multi-line-signature">
         <span class="returntype"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span>
@@ -583,7 +584,17 @@
 </ol>)
     </section>
     <section class="desc markdown">
-      <p>Since Dart doesn't support anonymous objects that can act as both a Map and a function
+      <p>Fires a DOM <a href="https://api.dart.dev/stable/2.12.4/dart-html/Event-class.html">Event</a> using the <code>eventName</code> on the provided <code>element</code>.</p>
+<p>The <code>eventName</code> must be one of the keys found in the
+JS <a href="https://github.com/testing-library/dom-testing-library/blob/master/src/event-map.js"><code>eventMap</code></a>.</p>
+<blockquote>
+<p><strong>NOTE:</strong></p>
+<p>Most projects have a few use cases for <a href="../rtl.dom.events/fireEventByName.html">fireEventByName</a>, but the majority of the time you should
+  probably use <a href="../user_event/UserEvent-class.html">UserEvent</a> utility methods instead.</p>
+<p>Read more about <a href="https://workiva.github.io/react_testing_library/topics/UserActions-topic.html#interactions-vs-events">interactions vs. events</a></p>
+</blockquote>
+<h3 id="dart--js-api-parity">Dart / JS API Parity</h3>
+<p>Since Dart doesn't support anonymous objects that can act as both a Map and a function
 like the JS <code>fireEvent</code> can, this function acts as a proxy for:</p>
 <pre class="language-js"><code class="language-js">// JS API
 fireEvent.click(someElement, {'button': 2});
@@ -592,16 +603,7 @@ fireEvent.click(someElement, {'button': 2});
 <pre class="language-dart"><code class="language-dart">// Dart API
 fireEventByName('click', someElement, {'button': 2});
 </code></pre>
-<p>The <code>eventName</code> must be one of the keys found in the
-JS <a href="https://github.com/testing-library/dom-testing-library/blob/master/src/event-map.js"><code>eventMap</code></a></p>
-<blockquote>
-<p><strong>NOTE:</strong></p>
-<p>Most projects have a few use cases for <a href="../rtl.dom.events/fireEventByName.html">fireEventByName</a>, but the majority of the time you should
-  probably use <a href="../user_event/UserEvent-class.html">UserEvent</a> utilities instead.</p>
-</blockquote>
-<blockquote>
 <p>See: <a href="https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname">testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname</a></p>
-</blockquote>
     </section>
     
     <section class="summary source-code" id="source">

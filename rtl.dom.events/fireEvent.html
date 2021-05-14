@@ -571,8 +571,9 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-main-content" class="main-content">
-      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/fire_event.dart#L39"><i class="material-icons">description</i></a></div>
-<h1><span class="kind-function">fireEvent</span> function  </h1></div>
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/fire_event.dart#L73"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">fireEvent</span> function      <span class="category useractions cp-13 linked" title="This is part of the UserActions Topic."><a href="../topics/UserActions-topic.html">UserActions</a></span>
+</h1></div>
 
     <section class="multi-line-signature">
         <div>
@@ -591,14 +592,40 @@
 <blockquote>
 <p><strong>NOTE:</strong></p>
 <p>Most projects have a few use cases for <a href="../rtl.dom.events/fireEvent.html">fireEvent</a>, but the majority of the time you should
-  probably use <a href="../user_event/UserEvent-class.html">UserEvent</a> utilities instead.</p>
+  probably use <a href="../user_event/UserEvent-class.html">UserEvent</a> utility methods instead.</p>
+<p>Read more about <a href="https://workiva.github.io/react_testing_library/topics/UserActions-topic.html#interactions-vs-events">interactions vs. events</a></p>
 </blockquote>
+<h2 id="example">Example</h2>
+<pre class="language-html"><code class="language-html">&lt;button&gt;Submit&lt;/button&gt;
+</code></pre>
+<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+void main() {
+  test('', () {
+    // Render the DOM shown in the example snippet above.
+    final result = rtl.render(react.button({}, 'Submit'));
+
+    // Use react_testing_library queries to store a reference to the node.
+    final button = result.getByRole('button');
+
+    // Use `fireEvent` to create a click event, and emit it on the node.
+    rtl.fireEvent(
+      getByText(container, 'Submit'),
+      MouseEvent('click'),
+    );
+  });
+}
+</code></pre>
 <blockquote>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
+  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
+  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
+</blockquote>
 <p>Related: <a href="../rtl.dom.events/fireEventByName.html">fireEventByName</a></p>
-</blockquote>
-<blockquote>
 <p>See: <a href="https://testing-library.com/docs/dom-testing-library/api-events/#fireevent">testing-library.com/docs/dom-testing-library/api-events/#fireevent</a></p>
-</blockquote>
     </section>
     
     <section class="summary source-code" id="source">
