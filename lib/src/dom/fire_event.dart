@@ -30,11 +30,45 @@ import '../user_event/user_event.dart';
 /// > **NOTE:**
 /// >
 /// > Most projects have a few use cases for [fireEvent], but the majority of the time you should
-///   probably use [UserEvent] utilities instead.
+///   probably use [UserEvent] utility methods instead.
+/// >
+/// > Read more about [interactions vs. events](https://workiva.github.io/react_testing_library/topics/UserActions-topic.html#interactions-vs-events)
 ///
-/// > Related: [fireEventByName]
+/// ## Example
 ///
-/// > See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireevent>
+/// ```html
+/// <button>Submit</button>
+/// ```
+///
+/// ```dart
+/// import 'package:react/react.dart' as react;
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// import 'package:test/test.dart';
+///
+/// void main() {
+///   test('', () {
+///     // Render the DOM shown in the example snippet above.
+///     final result = rtl.render(react.button({}, 'Submit'));
+///
+///     // Use react_testing_library queries to store a reference to the node.
+///     final button = result.getByRole('button');
+///
+///     // Use `fireEvent` to create a click event, and emit it on the node.
+///     rtl.fireEvent(
+///       getByText(container, 'Submit'),
+///       MouseEvent('click'),
+///     );
+///   });
+/// }
+/// ```
+///
+/// {@macro RenderSupportsReactAndOverReactCallout}
+///
+/// Related: [fireEventByName]
+///
+/// See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireevent>
+///
+/// {@category UserActions}
 @JS('rtl.fireEvent')
 external bool fireEvent(
   Element element,
@@ -44,6 +78,20 @@ external bool fireEvent(
 @JS('rtl.fireEventObj')
 external JsMap get _fireEventObj;
 
+/// Fires a DOM [Event] using the [eventName] on the provided [element].
+///
+/// The [eventName] must be one of the keys found in the
+/// JS [`eventMap`](https://github.com/testing-library/dom-testing-library/blob/master/src/event-map.js).
+///
+/// > **NOTE:**
+/// >
+/// > Most projects have a few use cases for [fireEventByName], but the majority of the time you should
+///   probably use [UserEvent] utility methods instead.
+/// >
+/// > Read more about [interactions vs. events](https://workiva.github.io/react_testing_library/topics/UserActions-topic.html#interactions-vs-events)
+///
+/// ### Dart / JS API Parity
+///
 /// Since Dart doesn't support anonymous objects that can act as both a Map and a function
 /// like the JS `fireEvent` can, this function acts as a proxy for:
 ///
@@ -59,15 +107,9 @@ external JsMap get _fireEventObj;
 /// fireEventByName('click', someElement, {'button': 2});
 /// ```
 ///
-/// The [eventName] must be one of the keys found in the
-/// JS [`eventMap`](https://github.com/testing-library/dom-testing-library/blob/master/src/event-map.js)
+/// See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 ///
-/// > **NOTE:**
-/// >
-/// > Most projects have a few use cases for [fireEventByName], but the majority of the time you should
-///   probably use [UserEvent] utilities instead.
-///
-/// > See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
+/// {@category UserActions}
 bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
   if (!JsBackedMap.fromJs(_jsEventMap).keys.contains(eventName)) {
     throw ArgumentError.value(eventName, 'eventName');
