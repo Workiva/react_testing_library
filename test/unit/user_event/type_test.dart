@@ -266,7 +266,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
     calls = [];
   });
 
-  Future<dynamic> _verifyKeyboardWithDelay(
+  Future<KeyboardState> _verifyKeyboardWithDelay(
     String text,
     int delay, {
     KeyboardState keyboardState,
@@ -380,7 +380,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
       final state = hasDelay ? await _verifyKeyboardWithDelay(text1, 50, charsTyped: 1) : UserEvent.keyboard(text1);
       hasDelay
           ? await _verifyKeyboardWithDelay(text2, 50, keyboardState: state, charsTyped: 2)
-          : UserEvent.keyboard(text2, keyboardState: state as KeyboardState);
+          : UserEvent.keyboard(text2, keyboardState: state);
       expect(input, hasValue('F'));
       expect(
           calls,
