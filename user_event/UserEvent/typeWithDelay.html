@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the typeWithDelay method from the UserEvent class, for the Dart programming language.">
+  <title>typeWithDelay method - UserEvent class - user_event library - Dart API</title>
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../../static-assets/github.css">
+  <link rel="stylesheet" href="../../static-assets/styles.css">
+  <link rel="icon" href="../../static-assets/favicon.png">
+
+  <style id="gh_markdown">
+    /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
+  .markdown {
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+
+  .markdown::before {
+    display: table;
+    content: "";
+  }
+
+  .markdown::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+
+  .markdown>*:first-child {
+    margin-top: 0 !important;
+  }
+
+  .markdown>*:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .markdown a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .markdown .absent {
+    color: #cb2431;
+  }
+
+  .markdown .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+  }
+
+  .markdown .anchor:focus {
+    outline: none;
+  }
+
+  .markdown p,
+  .markdown blockquote,
+  .markdown ul,
+  .markdown ol,
+  .markdown dl,
+  .markdown table,
+  .markdown pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .markdown hr {
+    height: .25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+  }
+
+  .markdown blockquote {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+  }
+
+  .markdown blockquote>:first-child {
+    margin-top: 0;
+  }
+
+  .markdown blockquote>:last-child {
+    margin-bottom: 0;
+  }
+
+  .markdown kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 10px;
+    color: #444d56;
+    vertical-align: middle;
+    background-color: #fafbfc;
+    border: solid 1px #c6cbd1;
+    border-bottom-color: #959da5;
+    border-radius: 3px;
+    box-shadow: inset 0 -1px 0 #959da5;
+  }
+
+  .markdown h1,
+  .markdown h2,
+  .markdown h3,
+  .markdown h4,
+  .markdown h5,
+  .markdown h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .markdown h1 tt,
+  .markdown h1 code,
+  .markdown h2 tt,
+  .markdown h2 code,
+  .markdown h3 tt,
+  .markdown h3 code,
+  .markdown h4 tt,
+  .markdown h4 code,
+  .markdown h5 tt,
+  .markdown h5 code,
+  .markdown h6 tt,
+  .markdown h6 code {
+    font-size: inherit;
+  }
+
+  .markdown h1 {
+    padding-bottom: 0.3em;
+    font-size: 2em;
+    border-bottom: 1px solid #eaecef;
+  }
+
+  .markdown h2 {
+    padding-bottom: 0.3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #eaecef;
+  }
+
+  .markdown h3 {
+    font-size: 1.25em;
+  }
+
+  .markdown h4 {
+    font-size: 1em;
+  }
+
+  .markdown h5 {
+    font-size: 0.875em;
+  }
+
+  .markdown h6 {
+    font-size: 0.85em;
+    color: #6a737d;
+  }
+
+  .markdown ul,
+  .markdown ol {
+    padding-left: 2em;
+  }
+
+  .markdown ul.no-list,
+  .markdown ol.no-list {
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .markdown ul ul,
+  .markdown ul ol,
+  .markdown ol ol,
+  .markdown ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .markdown li {
+    word-wrap: break-all;
+  }
+
+  .markdown li>p {
+    margin-top: 16px;
+  }
+
+  .markdown li+li {
+    margin-top: .25em;
+  }
+
+  .markdown dl {
+    padding: 0;
+  }
+
+  .markdown dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .markdown dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+
+  .markdown table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .markdown table th {
+    font-weight: 600;
+  }
+
+  .markdown table th,
+  .markdown table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+  }
+
+  .markdown table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+  }
+
+  .markdown table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+  }
+
+  .markdown table img {
+    background-color: transparent;
+  }
+
+  .markdown img {
+    max-width: 100%;
+    box-sizing: content-box;
+    background-color: #fff;
+  }
+
+  .markdown img[align=right] {
+    padding-left: 20px;
+  }
+
+  .markdown img[align=left] {
+    padding-right: 20px;
+  }
+
+  .markdown .emoji {
+    max-width: none;
+    vertical-align: text-top;
+    background-color: transparent;
+  }
+
+  .markdown span.frame {
+    display: block;
+    overflow: hidden;
+  }
+
+  .markdown span.frame>span {
+    display: block;
+    float: left;
+    width: auto;
+    padding: 7px;
+    margin: 13px 0 0;
+    overflow: hidden;
+    border: 1px solid #dfe2e5;
+  }
+
+  .markdown span.frame span img {
+    display: block;
+    float: left;
+  }
+
+  .markdown span.frame span span {
+    display: block;
+    padding: 5px 0 0;
+    clear: both;
+    color: #24292e;
+  }
+
+  .markdown span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+
+  .markdown span.align-center>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .markdown span.align-center span img {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .markdown span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+
+  .markdown span.align-right>span {
+    display: block;
+    margin: 13px 0 0;
+    overflow: hidden;
+    text-align: right;
+  }
+
+  .markdown span.align-right span img {
+    margin: 0;
+    text-align: right;
+  }
+
+  .markdown span.float-left {
+    display: block;
+    float: left;
+    margin-right: 13px;
+    overflow: hidden;
+  }
+
+  .markdown span.float-left span {
+    margin: 13px 0 0;
+  }
+
+  .markdown span.float-right {
+    display: block;
+    float: right;
+    margin-left: 13px;
+    overflow: hidden;
+  }
+
+  .markdown span.float-right>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: right;
+  }
+
+  .markdown code,
+  .markdown tt {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27,31,35,0.05);
+    border-radius: 3px;
+  }
+
+  .markdown code br,
+  .markdown tt br {
+    display: none;
+  }
+
+  .markdown del code {
+    text-decoration: inherit;
+  }
+
+  .markdown pre {
+    word-wrap: normal;
+  }
+
+  .markdown pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  .markdown .highlight {
+    margin-bottom: 16px;
+  }
+
+  .markdown .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+
+  .markdown .highlight pre,
+  .markdown pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+  }
+
+  .markdown pre code,
+  .markdown pre tt {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+</style>
+<style id="rtl_docs_custom">
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
+
+    /* Add language info to code blocks */
+    .markdown pre[class*="language-"] {
+        position: relative;
+    }
+
+    .markdown pre[class*="language-"]::after {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 .3em .1em .4em;
+        border-bottom-left-radius: 3px;
+        background: #ddd; /* Match border color */
+        color: #555;
+    }
+
+    .markdown pre.language-html::after { content: 'HTML'; }
+    .markdown pre.language-dart::after { content: 'DART'; }
+    .markdown pre.language-js::after { content: 'JS'; }
+    .markdown pre.language-yaml::after { content: 'YAML'; }
+
+    .markdown figure {
+        margin: 30px 0 0 0;
+        position: relative;
+    }
+
+    .markdown figure > figcaption {
+        position: absolute;
+        top: -20px;
+        left: 4px;
+        height: 20px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        font-size: .7em;
+        font-family: 'Roboto Mono', Menlo, monospace;
+        background-color: #ddd;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .markdown figcaption + pre[class*="language-"]::after {
+        /* If a figcaption is being used to label the code, omit the ::after label */
+        display: none;
+    }
+</style>
+
+</head>
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">react_testing_library</a></li>
+    <li><a href="../../user_event/user_event-library.html">user_event</a></li>
+    <li><a href="../../user_event/UserEvent-class.html">UserEvent</a></li>
+    <li class="self-crumb">typeWithDelay method</li>
+  </ol>
+  <div class="self-name">typeWithDelay</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../../index.html">react_testing_library</a></li>
+      <li><a href="../../user_event/user_event-library.html">user_event</a></li>
+      <li><a href="../../user_event/UserEvent-class.html">UserEvent</a></li>
+      <li class="self-crumb">typeWithDelay method</li>
+    </ol>
+    
+    <h5>UserEvent class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../user_event/UserEvent-class.html#constructors">Constructors</a></li>
+    <li><a href="../../user_event/UserEvent/UserEvent.html">UserEvent</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../user_event/UserEvent-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+    <li class="section-title"><a href="../../user_event/UserEvent-class.html#static-methods">Static methods</a></li>
+    <li><a href="../../user_event/UserEvent/clear.html">clear</a></li>
+    <li><a href="../../user_event/UserEvent/click.html">click</a></li>
+    <li><a href="../../user_event/UserEvent/dblClick.html">dblClick</a></li>
+    <li><a href="../../user_event/UserEvent/deselectOptions.html">deselectOptions</a></li>
+    <li><a href="../../user_event/UserEvent/hover.html">hover</a></li>
+    <li><a href="../../user_event/UserEvent/keyboard.html">keyboard</a></li>
+    <li><a href="../../user_event/UserEvent/keyboardWithDelay.html">keyboardWithDelay</a></li>
+    <li><a href="../../user_event/UserEvent/paste.html">paste</a></li>
+    <li><a href="../../user_event/UserEvent/selectOptions.html">selectOptions</a></li>
+    <li><a href="../../user_event/UserEvent/tab.html">tab</a></li>
+    <li><a href="../../user_event/UserEvent/type.html">type</a></li>
+    <li><a href="../../user_event/UserEvent/typeWithDelay.html">typeWithDelay</a></li>
+    <li><a href="../../user_event/UserEvent/unhover.html">unhover</a></li>
+    <li><a href="../../user_event/UserEvent/upload.html">upload</a></li>
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L361"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-method">typeWithDelay</span> method </h1></div>
+
+    <section class="multi-line-signature">
+      <span class="returntype"><a href="https://api.dart.dev/stable/2.12.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+            <span class="name ">typeWithDelay</span>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="typeWithDelay-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span></li>
+<li><span class="parameter" id="typeWithDelay-param-text"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span>, </span></li>
+<li><span class="parameter" id="typeWithDelay-param-delay"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">delay</span>, </span></li>
+<li><span class="parameter" id="typeWithDelay-param-skipClick">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">skipClick</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="typeWithDelay-param-skipAutoClose"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.12.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">skipAutoClose</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="typeWithDelay-param-initialSelectionStart"><span class="type-annotation">dynamic</span> <span class="parameter-name">initialSelectionStart</span>, </span></li>
+<li><span class="parameter" id="typeWithDelay-param-initialSelectionEnd"><span class="type-annotation">dynamic</span> <span class="parameter-name">initialSelectionEnd</span>}</span></li>
+</ol>)
+      
+    </section>
+    <section class="desc markdown">
+      <p>Writes <code>text</code> inside an input or textarea <code>element</code> with a <code>delay</code> between
+each character typed.</p>
+<p><strong>WARNING</strong>: When using <a href="../../user_event/UserEvent/typeWithDelay.html">typeWithDelay</a>, <code>element</code> must be allowed to keep focus or the test
+will fail. When running tests concurrently, do not use <a href="../../user_event/UserEvent/typeWithDelay.html">typeWithDelay</a>, instead use <a href="../../user_event/UserEvent/type.html">UserEvent.type</a>.</p>
+<blockquote>
+<p>Use <a href="../../user_event/UserEvent/type.html">UserEvent.type</a> for no <code>delay</code>.</p>
+</blockquote>
+<blockquote>
+<p>See: <a href="https://testing-library.com/docs/ecosystem-user-event/#typeelement-text-options">testing-library.com/docs/ecosystem-user-event/#typeelement-text-options</a></p>
+</blockquote>
+<h2 id="options">Options</h2>
+<h3 id="skipclick"><code>skipClick</code></h3>
+<p><a href="../../user_event/UserEvent/typeWithDelay.html">typeWithDelay</a> will click the element before typing. To disable this, set the <code>skipClick</code>
+option to true. When skipping the click you must manually focus <code>element</code> using <code>element.focus()</code>.</p>
+<h3 id="skipautoclose"><code>skipAutoClose</code></h3>
+<p>Modifier keys ({shift}, {ctrl}, {alt}, {meta}) will activate their corresponding
+event modifiers for the duration of type command or until they are closed (via {/shift}, {/ctrl}, etc.).
+If they are not closed explicitly, then key up events will be fired to close them
+automatically. To disable this, set the <code>skipAutoClose</code> option to true.</p>
+<blockquote>
+<p>Note that behavior that happens with modifier key combinations will
+not be simulated as different operating systems function differently in
+this regard.</p>
+</blockquote>
+<h2 id="with-selection-range">With Selection Range</h2>
+<p>If <code>element</code> already contains a value, <a href="../../user_event/UserEvent/typeWithDelay.html">typeWithDelay</a> will begin typing at the end
+of the existing value by default. To override this behavior and set the
+selection range to something else, call <a href="https://api.dart.dev/stable/2.12.4/dart-html/InputElement/setSelectionRange.html">InputElement.setSelectionRange</a> before
+calling <a href="../../user_event/UserEvent/typeWithDelay.html">typeWithDelay</a>.</p>
+<p>In order to set the initial selection range to zero, you must also set
+<code>initialSelectionStart</code> and <code>initialSelectionEnd</code> to zero along with
+calling <code>element.setSelectionRange(0, 0)</code>.</p>
+<h2 id="special-characters">Special Characters</h2>
+<p><a href="https://testing-library.com/docs/ecosystem-user-event/#special-characters">Supported special characters</a>
+can be used in <code>text</code> to modify the behavior of <a href="../../user_event/UserEvent/typeWithDelay.html">typeWithDelay</a>. Common characters are also
+exposed via <a href="../../user_event/SpecialChars-class.html">SpecialChars</a>.</p>
+<h2 id="example">Example</h2>
+<pre class="language-html"><code class="language-html">&lt;div&gt;
+  &lt;label for="input"&gt;Type here:&lt;/label&gt;
+  &lt;input id="input" /&gt;
+&lt;/div&gt;
+</code></pre>
+<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/matchers.dart' show hasValue;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+void main() {
+  test('', () async {
+    // Render the DOM shown in the example snippet above.
+    final result = rtl.render(react.div({}, [
+      react.label({
+        'htmlFor': 'input',
+      }, 'Type here:'),
+      react.input({'id': 'input'})
+    ]));
+
+    // Use react_testing_library queries to store references to the node.
+    final input = result.getByLabelText('Type here:');
+
+    // Use `UserEvent.type` to simulate a user typing in the input.
+    await UserEvent.typeWithDelay(input, 'Hello, World!', Duration(milliseconds: 500));
+
+    // Use `hasValue` matcher to verify the value of input.
+    expect(input, hasValue('Hello, World!'));
+  });
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
+  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
+  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
+</blockquote>
+<p>{@category UserEvent}</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; typeWithDelay(
+  Element element,
+  String text,
+  Duration delay, {
+  bool skipClick = false,
+  bool skipAutoClose = false,
+  dynamic initialSelectionStart,
+  dynamic initialSelectionEnd,
+}) async {
+  final options = {
+    &#39;delay&#39;: delay.inMilliseconds,
+    &#39;skipClick&#39;: skipClick,
+    &#39;skipAutoClose&#39;: skipAutoClose,
+    if (initialSelectionStart != null) &#39;initialSelectionStart&#39;: initialSelectionStart,
+    if (initialSelectionEnd != null) &#39;initialSelectionEnd&#39;: initialSelectionEnd,
+  };
+
+  await promiseToFuture(getProperty(_userEvent, &#39;type&#39;)(
+    element,
+    text,
+    jsifyAndAllowInterop(options),
+  ));
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      0.1.0-nullsafety.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../../static-assets/typeahead.bundle.min.js"></script>
+<script src="../../static-assets/highlight.pack.js"></script>
+<script src="../../static-assets/script.js"></script>
+
+
+</body>
+
+</html>
