@@ -21,6 +21,7 @@ import 'dart:html';
 import 'dart:js_util';
 
 import 'package:js/js.dart';
+import 'package:meta/meta.dart';
 import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 
@@ -29,7 +30,8 @@ import 'special_chars.dart';
 
 /// Test utilities that provide more advanced simulation of browser interactions
 /// than the built-in [fireEvent] method.
-class UserEvent {
+@sealed
+abstract class UserEvent {
   /// Clicks [element], depending on what [element] is it can have different
   /// side effects.
   ///
