@@ -8,6 +8,9 @@ dartdoc:
       markdown: doc/async_methods.md
     "Matchers":
       markdown: doc/matchers.md
+    "UserActions":
+      markdown: doc/user_actions.md
+      name: "User Actions"
     "Queries":
       markdown: doc/about_queries.md
     "ByAltText":

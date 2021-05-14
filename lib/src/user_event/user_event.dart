@@ -90,7 +90,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void click(
     Element element, {
     Map eventInit,
@@ -159,7 +159,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void dblClick(Element element, {Map eventInit}) {
     getProperty(_userEvent, 'dblClick')(
       element,
@@ -248,7 +248,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void type(
     Element element,
     String text, {
@@ -357,7 +357,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static Future<void> typeWithDelay(
     Element element,
     String text,
@@ -449,7 +449,7 @@ abstract class UserEvent {
   /// CapsLock is not active and A is referenced. If you don't wish this behavior,
   /// set [autoModify] to `false` (this is `false` by default).
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static KeyboardState keyboard(
     String text, {
     KeyboardState keyboardState,
@@ -537,7 +537,7 @@ abstract class UserEvent {
   /// CapsLock is not active and A is referenced. If you don't wish this behavior,
   /// set [autoModify] to `false` (this is `false` by default).
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static Future<KeyboardState> keyboardWithDelay(
     String text,
     Duration delay, {
@@ -643,7 +643,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void upload(
     /*InputElement | LabelElement*/ Element element,
     List<File> files, {
@@ -714,7 +714,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void clear(Element element) => getProperty(_userEvent, 'clear')(element);
 
   /// Selects the specified [values] of [selectElement].
@@ -780,7 +780,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void selectOptions(
     SelectElement selectElement,
     List<dynamic> values, {
@@ -858,7 +858,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void deselectOptions(
     SelectElement selectElement,
     List values, {
@@ -953,7 +953,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void tab({bool shift = false, Element focusTrap}) {
     final options = {'shift': shift, 'focusTrap': focusTrap};
     getProperty(_userEvent, 'tab')(
@@ -1022,7 +1022,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void hover(Element element, {Map eventInit}) {
     getProperty(_userEvent, 'hover')(element, _jsifyEventData(eventInit));
   }
@@ -1094,7 +1094,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void unhover(Element element, {Map eventInit}) {
     getProperty(_userEvent, 'unhover')(element, _jsifyEventData(eventInit));
   }
@@ -1154,7 +1154,7 @@ abstract class UserEvent {
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
-  /// {@category UserEvent}
+  /// {@category UserActions}
   static void paste(
     Element element,
     String text, {

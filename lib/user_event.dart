@@ -18,7 +18,7 @@
 /// than the built-in fireEvent method.
 ///
 /// Learn more: <https://testing-library.com/docs/ecosystem-user-event/>.
-/// {@category UserEvent}
+/// {@category UserActions}
 library user_event;
 
 export 'src/user_event/special_chars.dart';
