@@ -269,7 +269,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
   Future<dynamic> _verifyKeyboardWithDelay(
     String text,
     int delay, {
-    dynamic keyboardState,
+    KeyboardState keyboardState,
     List<Map> keyboardMap,
     int charsTyped,
   }) async {
@@ -280,7 +280,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
     final returnValue = await UserEvent.keyboardWithDelay(
       text,
       Duration(milliseconds: delay),
-      keyboardState: keyboardState as KeyboardState,
+      keyboardState: keyboardState,
       keyboardMap: keyboardMap,
     );
     timer.stop();
