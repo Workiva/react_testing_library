@@ -28,8 +28,12 @@ import 'package:react/react_client/js_interop_helpers.dart';
 import '../dom/fire_event.dart';
 import 'special_chars.dart';
 
-/// Test utilities that provide more advanced simulation of browser interactions
-/// than the built-in [fireEvent] method.
+/// Test [utility methods](#static-methods) that provide more advanced simulation of browser interactions
+/// than the [fireEvent] function.
+///
+/// > See: <https://testing-library.com/docs/ecosystem-user-event>
+///
+/// {@category UserActions}
 @sealed
 abstract class UserEvent {
   /// Clicks [element], depending on what [element] is it can have different
