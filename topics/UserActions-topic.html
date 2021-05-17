@@ -602,7 +602,7 @@
 <li><code>click</code></li>
 </ul>
 <p>And then, if that <code>element</code> happens to be a child of a <code>&lt;label&gt;</code>, then it will also move focus to the form control that the label is labeling. So even though all you really are trying to test is the click handler, by simply using <code>fireEvent</code> you're missing out on several other potentially important events the user is firing along the way.</p>
-<p>Again, most of the time this isn't critical for your tests, and the trade-off of simply using <code>fireEvent</code> is sometimes worth it.</p>
+<p>Again, most of the time this isn't critical for your tests, and the trade-off of simply using <code>fireEvent</code> is sometimes worth it. However, <strong>if you want your test to actually simulate everything that happens when a real user clicks a real element in the browser - you should use <a href="https://workiva.github.io/react_testing_library/user_event/UserEvent-class.html#static-methods"><code>UserEvent</code> methods</a>.</strong></p>
       </section>
       
         <section class="summary offset-anchor" id="libraries">
