@@ -41,7 +41,7 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -71,7 +71,7 @@ E getByAltText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -101,7 +101,7 @@ List<E> getAllByAltText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -131,7 +131,7 @@ E queryByAltText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -164,7 +164,7 @@ List<E> queryAllByAltText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -215,7 +215,7 @@ Future<E> findByAltText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -267,7 +267,7 @@ Future<List<E>> findAllByAltText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[value]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -297,7 +297,7 @@ E getByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[value]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -327,7 +327,7 @@ List<E> getAllByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[value]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -357,7 +357,7 @@ E queryByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[value]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -389,7 +389,7 @@ List<E> queryAllByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[value]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -439,7 +439,7 @@ Future<E> findByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[value]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -491,7 +491,7 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -523,7 +523,7 @@ E getByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -555,7 +555,7 @@ List<E> getAllByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -587,7 +587,7 @@ E queryByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -621,7 +621,7 @@ List<E> queryAllByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -674,7 +674,7 @@ Future<E> findByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -729,7 +729,7 @@ Future<List<E>> findAllByLabelText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -759,7 +759,7 @@ E getByPlaceholderText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -789,7 +789,7 @@ List<E> getAllByPlaceholderText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -819,7 +819,7 @@ E queryByPlaceholderText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -851,7 +851,7 @@ List<E> queryAllByPlaceholderText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -901,7 +901,7 @@ Future<E> findByPlaceholderText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[text]__
+/// ### [text]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -953,7 +953,7 @@ Future<List<E>> findAllByPlaceholderText<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[role]__
+/// ### [role]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1008,7 +1008,7 @@ E getByRole<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[role]__
+/// ### [role]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1063,7 +1063,7 @@ List<E> getAllByRole<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[role]__
+/// ### [role]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1119,7 +1119,7 @@ E queryByRole<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[role]__
+/// ### [role]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1178,7 +1178,7 @@ List<E> queryAllByRole<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[role]__
+/// ### [role]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1253,7 +1253,7 @@ Future<E> findByRole<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[role]__
+/// ### [role]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1330,7 +1330,7 @@ Future<List<E>> findAllByRole<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[testId]__
+/// ### [testId]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1362,7 +1362,7 @@ E getByTestId<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[testId]__
+/// ### [testId]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1394,7 +1394,7 @@ List<E> getAllByTestId<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[testId]__
+/// ### [testId]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1426,7 +1426,7 @@ E queryByTestId<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[testId]__
+/// ### [testId]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1460,7 +1460,7 @@ List<E> queryAllByTestId<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[testId]__
+/// ### [testId]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -1512,7 +1512,7 @@ Future<E> findByTestId<E extends Element>(
 ///
 /// ## Options
 ///
-/// __[testId]__
+/// ### [testId]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
