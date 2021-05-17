@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - 'master'
-      - 'test_consume_*'
-      - 'CPLAT-13500_mvp-docs' # TODO: Remove before merging initial doc deploy branch
   pull_request:
     branches:
       - '*'
