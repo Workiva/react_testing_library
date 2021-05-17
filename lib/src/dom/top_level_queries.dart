@@ -267,7 +267,7 @@ Future<List<E>> findAllByAltText<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [text]
+/// ### [value]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -297,7 +297,7 @@ E getByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [text]
+/// ### [value]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -327,7 +327,7 @@ List<E> getAllByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [text]
+/// ### [value]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -357,7 +357,7 @@ E queryByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [text]
+/// ### [value]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -389,7 +389,7 @@ List<E> queryAllByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [text]
+/// ### [value]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
@@ -439,7 +439,7 @@ Future<E> findByDisplayValue<E extends Element>(
 ///
 /// ## Options
 ///
-/// ### [text]
+/// ### [value]
 /// {@macro TextMatchArgDescription}
 /// {@macro MatcherOptionsExactArgDescription}
 /// {@macro MatcherOptionsNormalizerArgDescription}
