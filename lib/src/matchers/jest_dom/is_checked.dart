@@ -26,17 +26,17 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBeChecked` matcher](https://github.com/testing-library/jest-dom#tobechecked).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
-/// &lt;div>
-///   &lt;input type="checkbox" name="pepperoni" checked />
-///   &lt;input type="checkbox" name="pineapple" />
-///   &lt;div role="checkbox" aria-checked="true">Red Sauce&lt;/div>
-///   &lt;div role="checkbox" aria-checked="false">White Sauce&lt;/div>
-///   &lt;div role="switch" aria-checked="true">Mozzarella&lt;/div>
-///   &lt;div role="switch" aria-checked="false">Cheddar&lt;/div>
-/// &lt;/div>
+/// <div>
+///   <input type="checkbox" name="pepperoni" checked />
+///   <input type="checkbox" name="pineapple" />
+///   <div role="checkbox" aria-checked="true">Red Sauce</div>
+///   <div role="checkbox" aria-checked="false">White Sauce</div>
+///   <div role="switch" aria-checked="true">Mozzarella</div>
+///   <div role="switch" aria-checked="false">Cheddar</div>
+/// </div>
 /// ```
 ///
 /// ```dart

@@ -14,7 +14,11 @@ The function signatures for the queries are identical no matter which place you 
 
 #### Examples
 
+<figure>
+<figcaption>test/unit/example_test.dart</figcaption>
+
 ```dart
+import 'package:react/react.dart' as react;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -68,3 +72,8 @@ main() {
   });
 }
 ```
+</figure>
+
+> __NOTE:__ `render()` supports React vDom elements / custom components created using either the [react](https://pub.dev/packages/react) or [over_react](https://pub.dev/packages/over_react) packages.
+>
+> The examples shown here use the `react` package since the `react_testing_library` does not have a direct dependency on `over_react` - but both libraries are fully supported.

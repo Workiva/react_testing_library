@@ -26,14 +26,14 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBeDisabled` matcher](https://github.com/testing-library/jest-dom#tobedisabled).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
-/// &lt;div>
-///   &lt;button type="submit" disabled>submit&lt;/button>
-///   &lt;fieldset disabled>&lt;input type="text" name="username" value="jane.doe" />&lt;/fieldset>
-///   &lt;a href="..." disabled>link&lt;/a>
-/// &lt;/div>
+/// <div>
+///   <button type="submit" disabled>submit</button>
+///   <fieldset disabled><input type="text" name="username" value="jane.doe" /></fieldset>
+///   <a href="..." disabled>link</a>
+/// </div>
 /// ```
 ///
 /// ```dart

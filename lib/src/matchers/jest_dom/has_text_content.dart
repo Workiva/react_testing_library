@@ -31,10 +31,10 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 ///
 /// Similar to [jest-dom's `toHaveTextContent` matcher](https://github.com/testing-library/jest-dom#tohavetextcontent).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
-/// &lt;button>Text Content&lt;/button>
+/// <button>Text Content</button>
 /// ```
 ///
 /// ```dart

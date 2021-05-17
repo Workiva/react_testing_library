@@ -73,6 +73,41 @@ mixin ByRoleQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
   ///
+  /// {@template ByRoleExample}
+  /// ## Example
+  ///
+  /// > The example below demonstrates the usage of the `getByRole` query. However, the example
+  /// is also relevant for `getAllByRole`, `queryByRole`, `queryAllByRole`, `findByRole`
+  /// and `findAllByRole`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <button onClick="...">Ok</button>
+  /// <button onClick="...">Cancel</button>
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(react.div({},
+  ///       react.button({'onClick': (_) { /*...*/ }, 'Ok'),
+  ///       react.button({'onClick': (_) { /*...*/ }, 'Cancel'),
+  ///     ));
+  ///
+  ///     final okButtonElement = result.getByRole('button', name: 'Ok');
+  ///     final cancelButtonElement = result.getByRole('button', name: 'Cancel');
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [role]
@@ -127,6 +162,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [getByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -183,6 +221,9 @@ mixin ByRoleQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
   ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [role]
@@ -236,6 +277,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [queryByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -293,6 +337,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [findAllByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -368,6 +415,9 @@ mixin ByRoleQueries on IQueries {
   /// > Related: [findByRole]
   ///
   /// > See: <https://testing-library.com/docs/queries/byrole/>
+  ///
+  /// {@macro ByRoleExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -482,7 +532,7 @@ class ByRoleOptions {
   external set name(/*TextMatch*/ dynamic value);
 
   /// {@template byRoleOptionsHidden}
-  /// ### hidden
+  /// ### [hidden]
   /// If you set `hidden` to true, elements that are normally excluded from the accessibility tree are
   /// considered for the query as well.
   ///
@@ -495,7 +545,7 @@ class ByRoleOptions {
   external set hidden(bool value);
 
   /// {@template byRoleOptionsSelected}
-  /// ### selected
+  /// ### [selected]
   /// You can filter the returned elements by their selected state by setting `selected: true` or `selected: false`.
   ///
   /// To learn more about the selected state and which elements can have this state see
@@ -507,7 +557,7 @@ class ByRoleOptions {
   external set selected(bool value);
 
   /// {@template byRoleOptionsChecked}
-  /// ### checked
+  /// ### [checked]
   /// You can filter the returned elements by their checked state by setting `checked: true` or `checked: false`.
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#checked> for more details and examples.
@@ -516,7 +566,7 @@ class ByRoleOptions {
   external set checked(bool value);
 
   /// {@template byRoleOptionsPressed}
-  /// ### pressed
+  /// ### [pressed]
   /// Buttons can have a pressed state. You can filter the returned elements by their pressed state by
   /// setting `pressed: true` or `pressed: false`.
   ///
@@ -528,7 +578,7 @@ class ByRoleOptions {
   external set pressed(bool value);
 
   /// {@template byRoleOptionsExpanded}
-  /// ### expanded
+  /// ### [expanded]
   /// You can filter the returned elements by their expanded state by setting `expanded: true` or `expanded: false`.
   ///
   /// To learn more about the expanded state and which elements can have this state see
@@ -540,7 +590,7 @@ class ByRoleOptions {
   external set expanded(bool value);
 
   /// {@template byRoleOptionsQueryFallbacks}
-  /// ### queryFallbacks
+  /// ### [queryFallbacks]
   /// By default, it's assumed that the first role of each element is supported,
   /// so only the first role can be queried. If you need to query an element by
   /// any of its fallback roles instead, you can use `queryFallbacks: true`.
@@ -551,7 +601,7 @@ class ByRoleOptions {
   external set queryFallbacks(bool value);
 
   /// {@template byRoleOptionsLevel}
-  /// ### level
+  /// ### [level]
   /// An element with the `heading` role can be queried by any heading level `getByRole('heading')`
   /// or by a specific heading level using the `level` option `getByRole('heading', level: 2)`.
   ///

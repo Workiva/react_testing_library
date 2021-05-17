@@ -42,9 +42,11 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 ///
 /// ## Options
 ///
-/// ### container
+/// ### [container]
 ///
-/// The DOM node to attach the [MutationObserver] to. Defaults to `document.body`.
+/// The DOM node to attach the [MutationObserver] to.
+///
+/// Defaults to `document.body`.
 ///
 /// {@macro sharedWaitForOptionsTimeoutDescription}
 /// {@macro sharedWaitForOptionsIntervalDescription}
@@ -150,10 +152,11 @@ Future<T> waitFor<T>(
 ///
 /// ## Options
 ///
-/// ### container
+/// ### [container]
 ///
 /// An ancestor DOM node of the element you return from [callback].
 /// This node will have a [MutationObserver] attached to it.
+///
 /// Defaults to `document.body`.
 ///
 /// {@macro sharedWaitForOptionsTimeoutDescription}
@@ -208,6 +211,7 @@ Future<void> waitForElementToBeRemoved(
 ///
 /// An ancestor DOM node of the elements you return from [callback].
 /// This node will have a [MutationObserver] attached to it.
+///
 /// Defaults to `document.body`.
 ///
 /// {@macro sharedWaitForOptionsTimeoutDescription}

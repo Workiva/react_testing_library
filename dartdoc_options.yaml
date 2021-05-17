@@ -8,6 +8,9 @@ dartdoc:
       markdown: doc/async_methods.md
     "Matchers":
       markdown: doc/matchers.md
+    "UserActions":
+      markdown: doc/user_actions.md
+      name: "User Actions"
     "Queries":
       markdown: doc/about_queries.md
     "ByAltText":
@@ -28,4 +31,4 @@ dartdoc:
       markdown: doc/queries/by_title.md
   linkToSource:
     root: "."
-    uriTemplate: "https://github.com/Workiva/react_testing_library/blob/1.0.0-alpha.0/%f%#L%l%"
+    uriTemplate: "https://github.com/Workiva/react_testing_library/blob/master/%f%#L%l%"

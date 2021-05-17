@@ -23,10 +23,12 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toContainElement` matcher](https://github.com/testing-library/jest-dom#tocontainelement).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
-/// &lt;span data-test-id="ancestor">&lt;span data-test-id="descendant">&lt;/span>&lt;/span>
+/// <span data-test-id="ancestor">
+///   <span data-test-id="descendant"></span>
+/// </span>
 /// ```
 ///
 /// ```dart

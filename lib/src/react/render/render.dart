@@ -18,7 +18,7 @@
 @JS()
 library react_testing_library.src.react.render.render;
 
-import 'dart:html' show DocumentFragment, Element, Node;
+import 'dart:html' show DocumentFragment, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
@@ -37,15 +37,73 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// along with an optional [onDidTearDown] in the `tearDown` of any test that calls this
 /// function unless [autoTearDown] is set to false.
 ///
-/// Optionally, you can specify:
-///
-/// * __[container]__, which will be the mount point of the React tree.
-/// This must be a [Element] that exists in the DOM at the time that `render` is called.
-/// * __[wrapper]__, which will be wrapped around the [ui] - which is
-/// especially useful when testing components that need a context provider of some kind.
-/// This should be an OverReact `UiFactory` or a [ReactComponentFactoryProxy].
-///
 /// > See: <https://testing-library.com/docs/react-testing-library/api#render>
+///
+/// ## Example
+/// ```dart
+/// import 'dart:html';
+///
+/// import 'package:react/react.dart' as react;
+/// import 'package:test/test.dart';
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// import 'package:react_testing_library/matchers.dart';
+///
+/// main() {
+///   test('', () {
+///     final renderResult = rtl.render(
+///       react.button({}, 'Click Me'),
+///     );
+///
+///     // The renderResult can now be used to query within the DOM!
+///     expect(renderResult.getByRole('button'), hasText('Click Me'));
+///   });
+/// }
+/// ```
+///
+/// ## Options
+///
+/// ### [container]
+/// By default, `render` will create a `<div>` and append that `<div>` to `document.body` and this is where your
+/// React component will be mounted/rendered. If you specify your own [Node] via the [container] option,
+/// it will not be appended to the document.body automatically.
+///
+/// For example: If you are unit testing a `<tbody>` element, it cannot be a child of a `<div>`.
+/// In this case, you can specify a `<table>` as the render [container]:
+/// ```dart
+/// import 'dart:html';
+///
+/// import 'package:react/react.dart' as react;
+/// import 'package:test/test.dart';
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+///
+/// main() {
+///   test('', () {
+///     final tableElem = document.body.append(TableElement());
+///     final renderResult = rtl.render(
+///       react.tbody({}, /*...*/),
+///       container: tableElem,
+///     );
+///   });
+/// }
+/// ```
+///
+/// ### [baseElement]
+/// If the [container] is specified, then [baseElement] defaults to that [Node],
+/// otherwise this defaults to `document.body`. This is used as the base element
+/// for the queries as well as what is printed when you use [RenderResult.debug].
+///
+/// ### [wrapper]
+/// An OverReact `UiFactory` or a [ReactComponentFactoryProxy] which will be wrapped around the [ui].
+/// This is especially useful when testing components that need a context provider of some kind.
+///
+/// ---
+///
+/// > **Custom Queries Not Yet Supported**
+/// >
+/// > The [JS react-testing-library implementation of `render` supports
+/// "custom queries"](https://testing-library.com/docs/react-testing-library/api#queries).
+/// At this time, the Dart API does not support them. If you have a use case for custom queries -
+/// [we would love to hear more about it!](https://github.com/Workiva/react_testing_library/issues/new)
 RenderResult render(
   ReactElement ui, {
   Node container,

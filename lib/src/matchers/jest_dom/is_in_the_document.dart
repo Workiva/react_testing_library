@@ -30,13 +30,13 @@ import 'contains_element.dart' show containsElement;
 /// > The element must be added to the document to be found by [isInTheDocument].
 /// > If you desire to search in a detached element please use: [containsElement]
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
-/// &lt;div>
-///   &lt;span data-test-id="html-element">&lt;span>Html Element&lt;/span>&lt;/span>
-///   &lt;svg data-test-id="svg-element">&lt;/svg>
-/// &lt;/div>
+/// <div>
+///   <span data-test-id="html-element"><span>Html Element</span></span>
+///   <svg data-test-id="svg-element"></svg>
+/// </div>
 /// ```
 ///
 /// ```dart

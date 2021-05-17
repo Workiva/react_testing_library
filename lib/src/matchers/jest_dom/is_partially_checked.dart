@@ -26,19 +26,19 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBePartiallyChecked` matcher](https://github.com/testing-library/jest-dom#tobepartiallychecked).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
-/// &lt;input type="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" />
-/// &lt;input type="checkbox" checked data-test-id="input-checkbox-checked" />
-/// &lt;input type="checkbox" data-test-id="input-checkbox-unchecked" />
-/// &lt;div role="checkbox" aria-checked="true" data-test-id="aria-checkbox-checked" />
-/// &lt;div
+/// <input type="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" />
+/// <input type="checkbox" checked data-test-id="input-checkbox-checked" />
+/// <input type="checkbox" data-test-id="input-checkbox-unchecked" />
+/// <div role="checkbox" aria-checked="true" data-test-id="aria-checkbox-checked" />
+/// <div
 ///   role="checkbox"
 ///   aria-checked="false"
 ///   data-test-id="aria-checkbox-unchecked"
 /// />
-/// &lt;input type="checkbox" data-test-id="input-checkbox-indeterminate" indeterminate />
+/// <input type="checkbox" data-test-id="input-checkbox-indeterminate" indeterminate />
 /// ```
 ///
 /// ```dart

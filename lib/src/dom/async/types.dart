@@ -29,7 +29,7 @@ typedef QueryTimeoutFn = /*Error || TestFailure*/ Object Function(/*Error*/ Obje
 @anonymous
 class SharedJsWaitForOptions {
   /// {@template sharedWaitForOptionsTimeoutDescription}
-  /// ### timeout
+  /// ### [timeout]
   ///
   /// How long to wait for the node to appear in the DOM before throwing a `TestFailure`, defaulting to `1000ms`.
   /// {@endtemplate}
@@ -37,7 +37,7 @@ class SharedJsWaitForOptions {
   external set timeout(int value);
 
   /// {@template sharedWaitForOptionsIntervalDescription}
-  /// ### interval
+  /// ### [interval]
   ///
   /// How often the callback is called, defaulting to `50ms`.
   /// {@endtemplate}
@@ -45,7 +45,7 @@ class SharedJsWaitForOptions {
   external set interval(int value);
 
   /// {@template sharedWaitForOptionsOnTimeoutDescription}
-  /// ### onTimeout
+  /// ### [onTimeout]
   ///
   /// Is called if the `timeout` duration passes before the node is found in the DOM, and
   /// can be used to customize a `TestFailure` message.
@@ -54,7 +54,7 @@ class SharedJsWaitForOptions {
   external set onTimeout(dynamic value);
 
   /// {@template sharedWaitForOptionsMutationObserverDescription}
-  /// ### mutationObserverOptions
+  /// ### [mutationObserverOptions]
   ///
   /// The default values are:
   ///

@@ -23,10 +23,10 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toHaveFocus` matcher](https://github.com/testing-library/jest-dom#tohavefocus).
 ///
-/// ### Examples
+/// ## Examples
 ///
 /// ```html
-/// &lt;input type="text" name="username" value="jane.doe" />
+/// <input type="text" name="username" value="jane.doe" />
 /// ```
 ///
 /// ```dart

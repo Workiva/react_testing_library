@@ -16,8 +16,18 @@
 
 /// https://testing-library.com/docs/queries/bytestid/
 ///
-/// {@template EnableTestModeCallout}
-/// **When using a `*ByTestId` query on an OverReact component, you must call `enableTestMode()` within `main()` of your test(s).**
+/// {@template ByTestIdCaveatsCallout}
+/// ### ByTestId Caveats
+///
+/// **Guiding Principles / Priority**
+/// In the spirit of [the guiding principles](https://testing-library.com/docs/guiding-principles),
+/// it is recommended to use this only [when a more accessible query is not an option](https://testing-library.com/docs/queries/about/#priority).
+/// Using `data-test-id` attributes do not resemble how your software is used and should be avoided if possible.
+/// That said, they are way better than querying based on DOM structure or styling css class names. Learn more
+/// about `data-test-id`s from the blog post [_"Making your UI tests resilient to change"_](https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change).
+///
+/// **Enabling Test Mode**
+/// When using a `*ByTestId` query on an OverReact component, you must call `enableTestMode()` within `main()` of your test(s).
 /// {@endtemplate}
 @JS()
 library react_testing_library.src.dom.queries.by_testid;
@@ -40,7 +50,7 @@ mixin ByTestIdQueries on IQueries {
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
-  /// {@macro EnableTestModeCallout}
+  /// {@macro ByTestIdCaveatsCallout}
   ///
   /// Throws if no element is found.
   /// Use [queryByTestId] if a RTE is not expected.
@@ -49,9 +59,37 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
-  /// ## Priority
-  /// `getByTestId` should be used as a last resort only when a more accessible query is not an option.
-  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  /// {@template ByTestIdExample}
+  /// ## Example
+  ///
+  /// > The example below demonstrates the usage of the `getByTestId` query. However, the example
+  /// is also relevant for `getAllByTestId`, `queryByTestId`, `queryAllByTestId`, `findByTestId`
+  /// and `findAllByTestId`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// ```html
+  /// <div data-test-id="custom-element" />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render the DOM shown in the example snippet above
+  ///     final result = rtl.render(
+  ///       react.div({'data-test-id': 'custom-element'}),
+  ///     );
+  ///
+  ///     final el = result.getByTestId('custom-element');
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -75,7 +113,7 @@ mixin ByTestIdQueries on IQueries {
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
-  /// {@macro EnableTestModeCallout}
+  /// {@macro ByTestIdCaveatsCallout}
   ///
   /// Throws if no elements are found.
   /// Use [queryAllByTestId] if a RTE is not expected.
@@ -84,9 +122,8 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
-  /// ## Priority
-  /// `getAllByTestId` should be used as a last resort only when a more accessible query is not an option.
-  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  /// {@macro ByTestIdExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -110,7 +147,7 @@ mixin ByTestIdQueries on IQueries {
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
-  /// {@macro EnableTestModeCallout}
+  /// {@macro ByTestIdCaveatsCallout}
   ///
   /// Returns `null` if no element is found.
   /// Use [getByTestId] if a RTE is expected.
@@ -119,9 +156,8 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
-  /// ## Priority
-  /// `queryByTestId` should be used as a last resort only when a more accessible query is not an option.
-  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  /// {@macro ByTestIdExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -143,7 +179,7 @@ mixin ByTestIdQueries on IQueries {
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
-  /// {@macro EnableTestModeCallout}
+  /// {@macro ByTestIdCaveatsCallout}
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByTestId] if a RTE is expected.
@@ -152,9 +188,8 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
-  /// ## Priority
-  /// `queryAllByTestId` should be used as a last resort only when a more accessible query is not an option.
-  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  /// {@macro ByTestIdExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -179,7 +214,7 @@ mixin ByTestIdQueries on IQueries {
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
   /// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
   ///
-  /// {@macro EnableTestModeCallout}
+  /// {@macro ByTestIdCaveatsCallout}
   ///
   /// Throws if exactly one element is not found.
   ///
@@ -187,9 +222,8 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
-  /// ## Priority
-  /// `findByTestId` should be used as a last resort only when a more accessible query is not an option.
-  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  /// {@macro ByTestIdExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -235,7 +269,7 @@ mixin ByTestIdQueries on IQueries {
   /// If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
   /// a non-async query like [getByTestId] or [queryByTestId] in a `waitFor` function.
   ///
-  /// {@macro EnableTestModeCallout}
+  /// {@macro ByTestIdCaveatsCallout}
   ///
   /// Throws if no elements are found.
   ///
@@ -243,9 +277,8 @@ mixin ByTestIdQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bytestid/>
   ///
-  /// ## Priority
-  /// `findAllByTestId` should be used as a last resort only when a more accessible query is not an option.
-  /// [Read more about Query Priority](https://testing-library.com/docs/queries/about/#priority)
+  /// {@macro ByTestIdExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///

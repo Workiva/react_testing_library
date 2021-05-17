@@ -43,6 +43,64 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
   ///
+  /// {@template ByLabelTextExample}
+  /// ## Example
+  ///
+  /// > The examples below demonstrate the usage of the `getByDisplayValue` query. However, the example
+  /// is also relevant for `getAllByLabelText`, `queryByLabelText`, `queryAllByLabelText`, `findByLabelText`
+  /// and `findAllByLabelText`.
+  /// >
+  /// > Read more about the different [types of queries](https://testing-library.com/docs/queries/about#types-of-queries) to gain more clarity on which one suits your use-cases best.
+  ///
+  /// The example below will find the input node for the following DOM structures:
+  ///
+  /// ```html
+  /// // for/htmlFor relationship between label and form element id
+  /// <label for="username-input">Username</label>
+  /// <input id="username-input" />
+  ///
+  /// // The aria-labelledby attribute with form elements
+  /// <label id="username-label">Username</label>
+  /// <input aria-labelledby="username-label" />
+  ///
+  /// // Wrapper labels
+  /// <label>Username <input /></label>
+  ///
+  /// // Wrapper labels where the label text is in another child element
+  /// <label>
+  ///   <span>Username</span>
+  ///   <input />
+  /// </label>
+  ///
+  /// // aria-label attributes
+  /// // Take care because this is not a label that users can see on the page,
+  /// // so the purpose of your input must be obvious to visual users.
+  /// <input aria-label="username" />
+  /// ```
+  ///
+  /// ```dart
+  /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:test/test.dart';
+  ///
+  /// main() {
+  ///   test('', () {
+  ///     // Render some of the DOM shown in the example snippet above
+  ///     final result = rtl.render(react.div({},
+  ///       react.label({'htmlFor': 'username-input'}, 'Username'),
+  ///       react.input({
+  ///         'type': 'text',
+  ///         'id': 'username-input',
+  ///       }),
+  ///     ));
+  ///
+  ///     final inputNode = result.getByLabelText('Username');
+  ///   });
+  /// }
+  /// ```
+  /// {@endtemplate}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -73,6 +131,9 @@ mixin ByLabelTextQueries on IQueries {
   /// > Related: [getByLabelText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+  ///
+  /// {@macro ByLabelTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -105,6 +166,9 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
   ///
+  /// {@macro ByLabelTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
+  ///
   /// ## Options
   ///
   /// ### [text]
@@ -133,6 +197,9 @@ mixin ByLabelTextQueries on IQueries {
   /// > Related: [queryByLabelText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+  ///
+  /// {@macro ByLabelTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -164,6 +231,9 @@ mixin ByLabelTextQueries on IQueries {
   /// > Related: [findAllByLabelText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+  ///
+  /// {@macro ByLabelTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
@@ -217,6 +287,9 @@ mixin ByLabelTextQueries on IQueries {
   /// > Related: [findByLabelText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bylabeltext/>
+  ///
+  /// {@macro ByLabelTextExample}
+  /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// ## Options
   ///
