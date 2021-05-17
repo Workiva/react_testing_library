@@ -46,7 +46,7 @@ mixin ByLabelTextQueries on IQueries {
   /// {@template ByLabelTextExample}
   /// ## Example
   ///
-  /// > The examples below demonstrates the usage of the `getByDisplayValue` query. However, the example
+  /// > The examples below demonstrate the usage of the `getByDisplayValue` query. However, the example
   /// is also relevant for `getAllByLabelText`, `queryByLabelText`, `queryAllByLabelText`, `findByLabelText`
   /// and `findAllByLabelText`.
   /// >

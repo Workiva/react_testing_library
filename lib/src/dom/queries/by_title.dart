@@ -46,7 +46,7 @@ mixin ByTitleQueries on IQueries {
   /// {@template ByTitleExample}
   /// ## Example
   ///
-  /// > The examples below demonstrates the usage of the `getByTitle` query. However, the example
+  /// > The examples below demonstrate the usage of the `getByTitle` query. However, the example
   /// is also relevant for `getAllByTitle`, `queryByTitle`, `queryAllByTitle`, `findByTitle`
   /// and `findAllByTitle`.
   /// >

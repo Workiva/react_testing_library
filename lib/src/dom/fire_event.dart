@@ -55,7 +55,7 @@ import '../user_event/user_event.dart';
 ///
 ///     // Use `fireEvent` to create a click event, and emit it on the node.
 ///     rtl.fireEvent(
-///       getByText(container, 'Submit'),
+///       button,
 ///       MouseEvent('click'),
 ///     );
 ///   });
