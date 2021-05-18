@@ -48,10 +48,11 @@ void main() {
 ```
 
 1. Migration Guide for Component Rendering
-1. Migration Guide for Queries
+1. [Migration Guide for Queries][queries-migration-guide]
 1. Migration Guide for Component Interactions
 1. Migration Guide for Expectations
 
 
 [over-react-test]: https://github.com/Workiva/over_react_test
 [implementation-details]: https://kentcdodds.com/blog/testing-implementation-details
+[queries-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
