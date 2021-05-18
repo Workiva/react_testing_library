@@ -21,6 +21,37 @@ gain the simplicity and maintainability offered by React Testing Library.
 
 ## Migration Guides
 
+Migration guides are split into four parts that reflect how a test is set up:
+
+```dart
+import 'package:react/react.dart' as react;
+import 'package:react_testing_library/matchers.dart' show isChecked;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+void main() {
+  test('', () {
+    // [1] Render the component.
+    final result = rtl.render(react.input({'type': 'checkbox'}));
+
+    // [2] Query for relevant nodes to test.
+    final checkbox = result.getByRole('checkbox');
+
+    // [3] Interact with the component.
+    UserEvent.click(checkbox);
+
+    // [4] Verify the expected result.
+    expect(checkbox, isChecked);
+  });
+}
+```
+
+1. Migration Guide for Component Rendering
+1. Migration Guide for Queries
+1. Migration Guide for Component Interactions
+1. Migration Guide for Expectations
+
 
 [over-react-test]: https://github.com/Workiva/over_react_test
 [implementation-details]: https://kentcdodds.com/blog/testing-implementation-details
