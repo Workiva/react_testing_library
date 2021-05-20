@@ -216,31 +216,31 @@ void main() {
 ```diff
 import 'dart:html';
 
-- import 'package:over_react_test/over_react_test.dart';
 + import 'package:react_testing_library/matchers.dart' show isDisabled;
 + import 'package:react_testing_library/react_testing_library.dart' as rtl;
+- import 'package:over_react_test/over_react_test.dart';
 import 'package:test/test.dart';
 import 'package:web_skin_dart/component2/all.dart';
 import 'package:cerebral_ui/src/report_builder/field_properties_module/components/parameter_choices_component.dart';
 
 main() {
   test('Parameter choices component renders text area', () {
++   var renderResult = rtl.render((ParameterChoices()
 -   var instance = render((ParameterChoices()
-+   var instance = rtl.render((ParameterChoices()
       ..isMultiSelect = false
       ..defaultValue = 3
       ..choices = [1, 2, 3]
     )());
 
     // Verify textArea
++   var textArea = renderResult.getByLabelText('List Options') as TextAreaElement;
 -   var choicesProps =
 -       AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'));
-+   var textArea = instance.getByLabelText('List Options') as TextAreaElement;
 -   expect(choicesProps.label, 'List Options');
--   expect(choicesProps.placeholder, 'Add list options (one per line)');
 +   expect(textArea.placeholder, 'Add list options (one per line)');
--   expect(choicesProps.isDisabled, false);
+-   expect(choicesProps.placeholder, 'Add list options (one per line)');
 +   expect(textArea, isNot(isDisabled));
+-   expect(choicesProps.isDisabled, false);
   });
 }
 ```
