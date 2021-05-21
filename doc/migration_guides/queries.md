@@ -7,10 +7,11 @@
     * __[ByRole](#byrole)__
     * __[ByLabelText](#bylabeltext)__
     * __[ByPlaceholderText](#byplaceholdertext)__
+    * __[ByText](#bytext)__
 * __[Examples](#examples)__
     * __[ByRole](#byrole-examples)__
     * __[ByLabelText](#bylabeltext-examples)__
-    * __[ByPlaceholderText](#byplaceholdertext-examples)__
+    * __[ByText](#bytext-examples)__
 
 ## Background
 
@@ -74,7 +75,7 @@ main() {
     });
 }
 ```
-(Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36))
+> Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
 
 The rendered DOM is printed in the error message of failing `ByRole` queries. This is the DOM for the header we are trying to access:
 
@@ -150,7 +151,7 @@ void main() {
   });
 }
 ```
-(Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54))
+> Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54)
 
 The rendered DOM is printed in the error message of failing `ByLabelText` queries. This is the DOM for the input we are trying to access:
 
@@ -207,11 +208,165 @@ void main() {
 
 ### ByPlaceholderText
 
+If a form field does not have a label, use [ByPlaceholderText queries][by-placeholder-text-queries] to find the element.
+
+> Note: This case should be __very__ rare because [a placeholder is not a substitute for a label](https://www.nngroup.com/articles/form-design-placeholders/).
+
+For example, the following test uses `queryByTestId` to access the input element.
+We need to migrate this test to use an RTL query instead.
+
+```dart
+import 'dart:html';
+
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+main() {
+  test('Input without a label', () {
+    final instance = render(Dom.div()(
+      (Dom.input()
+        ..addTestId('test-id')
+        ..placeholder = 'Type here...'
+      )(),
+    ));
+
+    final input = queryByTestId(instance, 'test-id') as InputElement;
+    expect(input.placeholder, 'Type here...');
+  });
+}
+```
+
+The rendered DOM is printed in the error message of failing `ByPlaceholderText` queries. This is the DOM for the input we are trying to access:
+
+```html
+<div>
+    <input
+      data-test-id="test-id"
+      placeholder="Type here..."
+    />
+</div>
+```
+
+Since the input element has no label, we have to use the placeholder text to query for the element using:
+`getByPlaceholderText('Type here...')`, so the resulting RTL test will be:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('Input without a label', () {
+    final renderResult = rtl.render(Dom.div()(
+      (Dom.input()
+        ..addTestId('test-id')
+        ..placeholder = 'Type here...'
+      )(),
+    ));
+
+    var input = renderResult.getByPlaceholderText('Type here...');
+    expect(input, isInTheDocument);
+  });
+}
+```
+
+
+### ByText
+
+[ByText queries][by-text-queries] can be used to find non-interactive elements that have no role, but have text content (like divs, spans, and paragraphs).
+
+For example, the following test uses `getAllByTestId` to access all the div elements containing author names.
+We need to migrate this test to use an RTL query instead.
+
+```dart
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+import 'package:w_history/src/components/cards/history_card_parts/authors.dart';
+
+void main() {
+  test('Author Card Component: Multiple document authors', () {
+    final instance = renderAttachedToDocument((Authors()
+      ..actions = actions
+      ..historyData = historyData
+      ..authorListExpanded = true
+    )());
+
+    final components = getAllByTestId(instance, 'wh.TimeGroupCard.authorName');
+    expect(components, hasLength(3));
+    expect(components[0].innerText, 'name1');
+    expect(components[1].innerText, 'name3');
+    expect(components[2].innerText, 'name4');
+  });
+}
+```
+> Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history/-/blob/test/src/components/cards/history_card_parts/authors_test.dart#L205-206)
+
+The rendered DOM is printed in the error message of failing `ByText` queries. This is the DOM for the divs we are trying to access:
+
+```html
+<div>
+    <div
+      class="w-history-v2__author"
+      data-test-id="wh.TimeGroupCard.authorName"
+    >
+        name1
+    </div>
+    <div
+      class="w-history-v2__author"
+      data-test-id="wh.TimeGroupCard.authorName"
+    >
+        name3
+    </div>
+    <div
+      class="w-history-v2__author"
+      data-test-id="wh.TimeGroupCard.authorName"
+    >
+        name4
+    </div>
+</div>
+```
+
+Since these divs have no role, we have to query by text content using: `getAllByText(RegExp(r'name\d'))`, so the 
+resulting RTL test will be:
+
+```dart
+import 'package:react_testing_library/matchers.dart' show hasTextContent;
+import 'package:test/test.dart';
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:w_history/src/components/cards/history_card_parts/authors.dart';
+
+void main() {
+  test('Author Card Component: Multiple document authors', () {
+    final renderResult = rtl.render((Authors()
+      ..actions = actions
+      ..historyData = historyData
+      ..authorListExpanded = true
+    )());
+
+    final components = renderResult.getAllByText(RegExp(r'name\d'));
+    expect(components, hasLength(3));
+    expect(components[0], hasTextContent('name1'));
+    expect(components[1], hasTextContent('name3'));
+    expect(components[2], hasTextContent('name4'));
+  });
+}
+```
+
+> See [other examples of migrating to `ByText` queries](#bytext-examples).
+
+
+
+
+
 
 ## Examples
 
 ### ByRole Examples
 ### ByLabelText Examples
+
+#### Access the element instead of the props
 
 ```diff
 import 'dart:html';
@@ -232,10 +387,12 @@ main() {
       ..choices = [1, 2, 3]
     )());
 
-    // Verify textArea
+    // Use `getByLabelText` to store a reference to the textarea element.
 +   var textArea = renderResult.getByLabelText('List Options') as TextAreaElement;
 -   var choicesProps =
 -       AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'));
+
+    // Verify textArea
 -   expect(choicesProps.label, 'List Options');
 +   expect(textArea.placeholder, 'Add list options (one per line)');
 -   expect(choicesProps.placeholder, 'Add list options (one per line)');
@@ -244,8 +401,9 @@ main() {
   });
 }
 ```
+> Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21)
 
-### ByPlaceholderText Examples
+### ByText Examples
 
 
 
@@ -253,3 +411,6 @@ main() {
 [query-priority]:[https://testing-library.com/docs/queries/about/#priority]
 [by-role-queries]:[https://testing-library.com/docs/queries/byrole]
 [by-label-text-queries]:[https://testing-library.com/docs/queries/bylabeltext]
+[by-placeholder-text-queries]:[https://testing-library.com/docs/queries/byplaceholdertext]
+[by-text-queries]:[https://testing-library.com/docs/queries/bytext]
+[by-alt-text-queries]:[https://testing-library.com/docs/queries/byalttext]
