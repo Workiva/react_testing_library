@@ -23,9 +23,6 @@ jobs:
       - name: Print Dart SDK version
         run: dart --version
 
-      - name: Use pubspec.next deps
-        run: rm -rf pubspec.yaml && mv pubspec.next.yaml pubspec.yaml
-
       - id: build-docs
         name: Build Docs
         run: pub global activate dartdoc && dartdoc --show-undocumented-categories
