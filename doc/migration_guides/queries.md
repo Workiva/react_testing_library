@@ -8,10 +8,13 @@
     * __[ByLabelText](#bylabeltext)__
     * __[ByPlaceholderText](#byplaceholdertext)__
     * __[ByText](#bytext)__
+    * __[ByAltText](#byalttext)__
+    * __[ByTitle](#bytitle)__
 * __[Examples](#examples)__
     * __[ByRole](#byrole-examples)__
     * __[ByLabelText](#bylabeltext-examples)__
     * __[ByText](#bytext-examples)__
+    * __[ByTitle](#bytitle-examples)__
 
 ## Background
 
@@ -210,7 +213,7 @@ void main() {
 
 If a form field does not have a label, use [ByPlaceholderText queries][by-placeholder-text-queries] to find the element.
 
-> Note: This case should be __very__ rare because [a placeholder is not a substitute for a label](https://www.nngroup.com/articles/form-design-placeholders/).
+> Note: This case should be rare because [a placeholder is not a substitute for a label](https://www.nngroup.com/articles/form-design-placeholders/).
 
 For example, the following test uses `queryByTestId` to access the input element.
 We need to migrate this test to use an RTL query instead.
@@ -357,7 +360,136 @@ void main() {
 > See [other examples of migrating to `ByText` queries](#bytext-examples).
 
 
+### ByAltText
 
+[ByAltText queries][by-alt-text-queries] allow you to search for input, image, or area elements by `alt` text.
+
+> Note: This case should be rare because input, image, and area elements can often be searched for using 
+> [ByRole queries](#byrole) or [ByLabelText queries](#bylabeltext) instead.
+
+For example, the following test uses `queryByTestId` to access the input element.
+We need to migrate this test to use an RTL query instead.
+
+```dart
+import 'dart:html';
+
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+main() {
+  test('Color Input', () {
+    final instance = render(Dom.div()(
+      (Dom.input()
+        ..addTestId('test-id')
+        ..type = 'color'
+        ..alt = 'color input'
+      )(),
+    ));
+
+    var input = queryByTestId(instance, 'test-id') as InputElement;
+    expect(input.alt, 'color input');
+  });
+}
+```
+
+The rendered DOM is printed in the error message of failing `ByAltText` queries. This is the DOM for the input we are trying to access:
+
+```html
+<div>
+    <input
+      alt="color input"
+      data-test-id="test-id"
+      type="color"
+    />
+</div>
+```
+
+Since the color input element has no label, no placeholder, and no role, we have to use the alt text to query for the element using:
+`getByAltText('color input')`, so the resulting RTL test will be:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('Color Input', () {
+    final renderResult = rtl.render(Dom.div()(
+      (Dom.input()
+        ..addTestId('test-id')
+        ..type = 'color'
+        ..alt = 'color input'
+      )(),
+    ));
+
+    var input = renderResult.getByAltText('color input');
+    expect(input, isInTheDocument);
+  });
+}
+```
+
+
+### ByTitle
+
+Use [ByTitle queries][by-title-queries] to query for elements that have a `title` attribute, but not text content or role.
+
+For example, the following test uses `renderAndGetDom` to access the icon element.
+We need to migrate this test to use an RTL query instead.
+
+```dart
+import 'package:over_react_test/over_react_test.dart' as test_util;
+import 'package:shared_ui/src/outline/badges/internal_sheet_badge.dart';
+import 'package:test/test.dart';
+
+void main() {
+  test('Internal Sheet Badge renders badge when internal', () {
+    var badge = test_util.renderAndGetDom((InternalSheetBadge()
+      ..badgeMeta = (InternalSheetBadgeMeta()..isInternal = true)));
+
+    expect(badge, isNotNull);
+    expect(badge.attributes['data-test-id'],
+        equals('dt.Outline.internalSheetBadge'));
+  });
+}
+```
+> Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
+
+The rendered DOM is printed in the error message of failing `ByTitle` queries. This is the DOM for element we are trying to access:
+
+```html
+<i
+  aria-hidden="true"
+  class="icon icon-eye-hide"
+  data-test-id="dt.Outline.internalSheetBadge"
+  style="margin: 0.7rem 0rem;"
+  title="Internal use sheet"
+/>
+```
+
+Since this element does not have a role or text content, we have to query by title using: `getByTitle('Internal use sheet')`, so the
+resulting RTL test will be:
+
+```dart
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:shared_ui/src/outline/badges/internal_sheet_badge.dart';
+import 'package:test/test.dart';
+
+void main() {
+  test('Internal Sheet Badge renders badge when internal', () {
+    var renderResult = rtl.render((InternalSheetBadge()
+      ..badgeMeta = (InternalSheetBadgeMeta()..isInternal = true)
+    )());
+
+    final badge = renderResult.getByTitle('Internal use sheet');
+    expect(badge, isInTheDocument);
+  });
+}
+```
+
+> See [other examples of migrating to `ByTitle` queries](#bytitle-examples).
 
 
 
@@ -404,6 +536,7 @@ main() {
 > Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21)
 
 ### ByText Examples
+### ByTitle Examples
 
 
 
@@ -414,3 +547,4 @@ main() {
 [by-placeholder-text-queries]:[https://testing-library.com/docs/queries/byplaceholdertext]
 [by-text-queries]:[https://testing-library.com/docs/queries/bytext]
 [by-alt-text-queries]:[https://testing-library.com/docs/queries/byalttext]
+[by-title-queries]:[https://testing-library.com/docs/queries/bytitle]
