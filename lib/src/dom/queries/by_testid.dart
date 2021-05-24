@@ -105,7 +105,7 @@ mixin ByTestIdQueries on IQueries {
       withErrorInterop(
         () => _jsGetByTestId(
           getContainerForScope(),
-          TextMatch.toJs(testId),
+          _convertTestIdStringToRegExp(testId, exact: exact),
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ) as E,
       );
@@ -139,7 +139,7 @@ mixin ByTestIdQueries on IQueries {
       withErrorInterop(
         () => _jsGetAllByTestId(
           getContainerForScope(),
-          TextMatch.toJs(testId),
+          _convertTestIdStringToRegExp(testId, exact: exact),
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
       );
@@ -172,7 +172,7 @@ mixin ByTestIdQueries on IQueries {
   }) =>
       _jsQueryByTestId(
         getContainerForScope(),
-        TextMatch.toJs(testId),
+        _convertTestIdStringToRegExp(testId, exact: exact),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
       ) as E;
 
@@ -204,7 +204,7 @@ mixin ByTestIdQueries on IQueries {
   }) =>
       _jsQueryAllByTestId(
         getContainerForScope(),
-        TextMatch.toJs(testId),
+        _convertTestIdStringToRegExp(testId, exact: exact),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
       ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
 
@@ -346,3 +346,13 @@ external List< /*Element*/ dynamic> _jsQueryAllByTestId(
   /*TextMatch*/ dynamic testId, [
   MatcherOptions options,
 ]);
+
+dynamic _convertTestIdStringToRegExp(dynamic testId, { bool exact = true }) {
+  if (testId is! String) return TextMatch.toJs(testId);
+
+  final testIdMatcher = exact
+        ? RegExp('(\\s|^)$testId(\\s|\$)')
+        : RegExp('(.?)$testId(.?)', caseSensitive: false);
+
+  return TextMatch.toJs(testIdMatcher);
+}
