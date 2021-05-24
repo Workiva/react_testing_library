@@ -347,6 +347,10 @@ external List< /*Element*/ dynamic> _jsQueryAllByTestId(
   MatcherOptions options,
 ]);
 
+/// Converts string [testId] values into a `RegExp` that matches whole words within a value that may contain one or
+/// more space-separated words before passing it to the JS library.
+///
+/// Necessary to support multiple test id's on a single element
 dynamic _convertTestIdStringToRegExp(dynamic testId, {bool exact = true}) {
   if (testId is! String) return TextMatch.toJs(testId);
 
