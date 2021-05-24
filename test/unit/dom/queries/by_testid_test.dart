@@ -24,6 +24,7 @@ import 'package:test/test.dart';
 
 import '../../util/init.dart';
 import '../../util/matchers.dart';
+import '../../util/over_react_stubs.dart';
 
 // NOTE: All other tests for the ByText queries are covered by the `testTextMatchTypes()` shared tests.
 void main() {
@@ -61,7 +62,7 @@ void main() {
             () => renderResult.getByTestId('fail'),
             throwsA(allOf(
               isA<TestingLibraryElementError>(),
-              hasToStringValue(contains('Unable to find an element by: [data-test-id="RegExp/(\\s|^)fail(\\s|\$)/"]')),
+              hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
               hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
             )));
       });
