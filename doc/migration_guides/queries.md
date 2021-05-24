@@ -10,11 +10,12 @@
     * __[ByText](#bytext)__
     * __[ByAltText](#byalttext)__
     * __[ByTitle](#bytitle)__
+    * __[ByTestId](#bytestid)__
 * __[Examples](#examples)__
     * __[ByRole](#byrole-examples)__
     * __[ByLabelText](#bylabeltext-examples)__
     * __[ByText](#bytext-examples)__
-    * __[ByTitle](#bytitle-examples)__
+    * __[ByTestId](#bytestid-examples)__
 
 ## Background
 
@@ -45,7 +46,35 @@ For more information, see [documentation on query priority][query-priority].
 
 ## Migration Process
 
-When migrating from `over_react_test` queries to to RTL queries, try to use the [highest priority queries](#priority) 
+// TODO List all queries that should be replaced...
+
+// TODO add additional examples for each
+
+React Testing Library queries will replace all utilities (from `over_react_test` and otherwise) that current tests use
+to access elements, component instances, or props.
+
+These utilities include:
+
+* Element Queries
+    * `getElementsByTagName()`
+    * `getElementsByClassName()`
+    * `findDomNode()`
+    * `querySelector()` / `querySelectorAll()`
+    * `renderAndGetDom()`
+    * `getByTestId()` / `getAllByTestId()`
+    * `queryByTestId()` / `queryAllByTestId()`
+    * `getComponentRootDomByTestId()`
+    * `findRenderedDOMComponentWithClass()`
+* Component Queries
+    * `getDartComponent()`
+    * `renderAndGetComponent()`
+    * `getComponentByTestId()` / `getAllComponentsByTestId()`
+* Props Queries
+    * `getPropsByTestId()`
+    * `getProps()`
+
+
+When migrating from `over_react_test` queries to RTL queries, try to use the [highest priority queries](#priority) 
 first when possible. The following guides are in order of priority.
 
 ### ByRole
@@ -117,6 +146,16 @@ main() {
 ```
 
 > See [other examples of migrating to `ByRole` queries](#byrole-examples).
+
+#### Other Examples
+
+Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L39-40):
+```diff
+- final button = queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalButton);
++ final button = renderResult.getByRole('button', name: SharedModalConstants.okButtonText);
+```
+
+
 
 
 ### ByLabelText
@@ -359,6 +398,14 @@ void main() {
 
 > See [other examples of migrating to `ByText` queries](#bytext-examples).
 
+#### Other Examples
+
+Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
+```diff
+- final description = queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalDescription);
++ final description = renderResult.getByText('You\'ll get an email letting you know when the transition is complete.');
+```
+
 
 ### ByAltText
 
@@ -456,14 +503,14 @@ void main() {
 ```
 > Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
 
-The rendered DOM is printed in the error message of failing `ByTitle` queries. This is the DOM for element we are trying to access:
+The rendered DOM is printed in the error message of failing `ByTitle` queries. This is the DOM for the element we are trying to access:
 
 ```html
 <i
   aria-hidden="true"
   class="icon icon-eye-hide"
   data-test-id="dt.Outline.internalSheetBadge"
-  style="margin: 0.7rem 0rem;"
+  style="margin: 0.7rem 0"
   title="Internal use sheet"
 />
 ```
@@ -492,6 +539,41 @@ void main() {
 > See [other examples of migrating to `ByTitle` queries](#bytitle-examples).
 
 
+### ByTestId
+
+Use [ByTestId queries][by-test-id-queries] to query for elements that have a `title` attribute, but not text content or role.
+
+For example, the following test uses `renderAndGetDom` to access the icon element.
+We need to migrate this test to use an RTL query instead.
+
+```dart
+```
+> Example from [`doc_plat_client`]()
+
+The rendered DOM is printed in the error message of failing `ByTitle` queries. This is the DOM for the element we are trying to access:
+
+```html
+```
+
+Since this element does not have a role or text content, we have to query by title using: `getByTitle('Internal use sheet')`, so the
+resulting RTL test will be:
+
+```dart
+```
+
+> See [other examples of migrating to `ByTestId` queries](#bytestid-examples).
+
+#### Other Examples
+
+Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L34-35):
+```diff
+- final icon = queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalIcon);
++ final icon = renderResult.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon);
+```
+
+
+
+// TODO add migrating component instances
 
 ## Examples
 
@@ -537,6 +619,7 @@ main() {
 
 ### ByText Examples
 ### ByTitle Examples
+### ByTestId Examples
 
 
 
@@ -548,3 +631,4 @@ main() {
 [by-text-queries]:[https://testing-library.com/docs/queries/bytext]
 [by-alt-text-queries]:[https://testing-library.com/docs/queries/byalttext]
 [by-title-queries]:[https://testing-library.com/docs/queries/bytitle]
+[by-test-id-queries]:[https://testing-library.com/docs/queries/bytestid]
