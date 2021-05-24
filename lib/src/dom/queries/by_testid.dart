@@ -347,12 +347,10 @@ external List< /*Element*/ dynamic> _jsQueryAllByTestId(
   MatcherOptions options,
 ]);
 
-dynamic _convertTestIdStringToRegExp(dynamic testId, { bool exact = true }) {
+dynamic _convertTestIdStringToRegExp(dynamic testId, {bool exact = true}) {
   if (testId is! String) return TextMatch.toJs(testId);
 
-  final testIdMatcher = exact
-        ? RegExp('(\\s|^)$testId(\\s|\$)')
-        : RegExp('(.?)$testId(.?)', caseSensitive: false);
+  final testIdMatcher = exact ? RegExp('(\\s|^)$testId(\\s|\$)') : RegExp('(.?)$testId(.?)', caseSensitive: false);
 
   return TextMatch.toJs(testIdMatcher);
 }

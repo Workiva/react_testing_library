@@ -53,19 +53,18 @@ void main() {
         expect(renderResult.getByTestId('testId1'), isA<SpanElement>());
         expect(renderResult.getByTestId('testId2'), isA<SpanElement>());
         expect(renderResult.getByTestId('single'), isA<SpanElement>());
-        expect(
-            renderResult.getByTestId(RegExp('single')), isA<SpanElement>());
+        expect(renderResult.getByTestId(RegExp('single')), isA<SpanElement>());
       });
 
       test('[no match]', () {
-          expect(
-              () => renderResult.getByTestId('fail'),
-              throwsA(allOf(
-                isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [data-test-id="RegExp/(\\s|^)fail(\\s|\$)/"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
-              )));
-        });
+        expect(
+            () => renderResult.getByTestId('fail'),
+            throwsA(allOf(
+              isA<TestingLibraryElementError>(),
+              hasToStringValue(contains('Unable to find an element by: [data-test-id="RegExp/(\\s|^)fail(\\s|\$)/"]')),
+              hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+            )));
+      });
     });
   });
 }
