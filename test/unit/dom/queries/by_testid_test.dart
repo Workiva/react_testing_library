@@ -49,7 +49,7 @@ void main() {
               'data-test-id': 'single',
             }, 'Testing single'),
             react.div({
-              'data-test-id': 'testId3 testId4',
+              'data-test-id': 'testId3 testId_/4',
             }, 'Testing allBy')) as ReactElement);
       });
 
@@ -58,7 +58,7 @@ void main() {
           expect(renderResult.getByTestId('testId1'), isA<SpanElement>());
           expect(renderResult.getByTestId('testId2'), isA<SpanElement>());
           expect(renderResult.getByTestId('testId2-1'), isA<SpanElement>());
-          expect(renderResult.getByTestId('testId4'), isA<DivElement>());
+          expect(renderResult.getByTestId('testId_/4'), isA<DivElement>());
           expect(renderResult.getByTestId('single'), isA<SpanElement>());
           expect(renderResult.getByTestId('estid2', exact: false),
               isA<SpanElement>());
@@ -155,7 +155,7 @@ void main() {
               await renderResult.findByTestId('testId2'), isA<SpanElement>());
           expect(
               await renderResult.findByTestId('testId2-1'), isA<SpanElement>());
-          expect(await renderResult.findByTestId('testId4'), isA<DivElement>());
+          expect(await renderResult.findByTestId('testId_/4'), isA<DivElement>());
           expect(await renderResult.findByTestId('estid2', exact: false),
               isA<SpanElement>());
           expect(await renderResult.findByTestId('single'), isA<SpanElement>());
