@@ -26,7 +26,6 @@ import '../../util/init.dart';
 import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
 
-// NOTE: All other tests for the ByText queries are covered by the `testTextMatchTypes()` shared tests.
 void main() {
   group('', () {
     initConfigForInternalTesting();
@@ -43,28 +42,163 @@ void main() {
         renderResult = rtl.render(react.section(
             {},
             react.span({
-              'data-test-id': 'testId1 testId2',
+              'data-test-id': 'testId1 testId2 testId3',
             }, 'Testing multiple'),
             react.span({
               'data-test-id': 'single',
-            }, 'Testing single')) as ReactElement);
+            }, 'Testing single'),
+            react.div({
+              'data-test-id': 'testId3 testId4',
+            }, 'Testing allBy')) as ReactElement);
       });
 
-      test('[match]', () {
-        expect(renderResult.getByTestId('testId1'), isA<SpanElement>());
-        expect(renderResult.getByTestId('testId2'), isA<SpanElement>());
-        expect(renderResult.getByTestId('single'), isA<SpanElement>());
-        expect(renderResult.getByTestId(RegExp('single')), isA<SpanElement>());
+      group('getByTestId', () {
+        test('[string match]', () {
+          expect(renderResult.getByTestId('testId1'), isA<SpanElement>());
+          expect(renderResult.getByTestId('testId2'), isA<SpanElement>());
+          expect(renderResult.getByTestId('testId4'), isA<DivElement>());
+          expect(renderResult.getByTestId('estid2', exact: false),
+              isA<SpanElement>());
+          expect(renderResult.getByTestId('single'), isA<SpanElement>());
+        });
+
+        test('[regex match]', () {
+          expect(
+              renderResult.getByTestId(RegExp('testId2')), isA<SpanElement>());
+          expect(
+              renderResult.getByTestId(RegExp('single')), isA<SpanElement>());
+        });
+
+        test('[no match]', () {
+          expect(
+              () => renderResult.getByTestId('fail'),
+              throwsA(allOf(
+                isA<TestingLibraryElementError>(),
+                hasToStringValue(contains(
+                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(
+                    contains(rtl.prettyDOM(renderResult.container))),
+              )));
+        });
       });
 
-      test('[no match]', () {
-        expect(
-            () => renderResult.getByTestId('fail'),
-            throwsA(allOf(
-              isA<TestingLibraryElementError>(),
-              hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-              hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
-            )));
+      group('getAllByTestId', () {
+        test('[string match]', () {
+          expect(renderResult.getAllByTestId('testId3'), hasLength(2));
+          expect(renderResult.getAllByTestId('estid3', exact: false),
+              hasLength(2));
+        });
+
+        test('[regex match]', () {
+          expect(renderResult.getAllByTestId(RegExp('testId3')), hasLength(2));
+        });
+
+        test('[no match]', () {
+          expect(
+              () => renderResult.getAllByTestId('fail'),
+              throwsA(allOf(
+                isA<TestingLibraryElementError>(),
+                hasToStringValue(contains(
+                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(
+                    contains(rtl.prettyDOM(renderResult.container))),
+              )));
+        });
+      });
+
+      group('queryByTestId', () {
+        test('[string match]', () {
+          expect(renderResult.queryByTestId('testId1'), isA<SpanElement>());
+          expect(renderResult.queryByTestId('testId2'), isA<SpanElement>());
+          expect(renderResult.queryByTestId('estid2', exact: false),
+              isA<SpanElement>());
+          expect(renderResult.queryByTestId('single'), isA<SpanElement>());
+        });
+
+        test('[regex match]', () {
+          expect(renderResult.queryByTestId(RegExp('testId2')),
+              isA<SpanElement>());
+          expect(
+              renderResult.queryByTestId(RegExp('single')), isA<SpanElement>());
+        });
+
+        test('[no match]', () {
+          expect(renderResult.queryByTestId('fail'), isNull);
+        });
+      });
+
+      group('queryAllByTestId', () {
+        test('[string match]', () {
+          expect(renderResult.queryAllByTestId('testId3'), hasLength(2));
+          expect(renderResult.queryAllByTestId('estid3', exact: false),
+              hasLength(2));
+        });
+
+        test('[regex match]', () {
+          expect(
+              renderResult.queryAllByTestId(RegExp('testId3')), hasLength(2));
+        });
+
+        test('[no match]', () {
+          expect(renderResult.queryAllByTestId('fail'), hasLength(0));
+        });
+      });
+
+      group('findByTestId', () {
+        test('[string match]', () async {
+          expect(
+              await renderResult.findByTestId('testId1'), isA<SpanElement>());
+          expect(
+              await renderResult.findByTestId('testId2'), isA<SpanElement>());
+          expect(await renderResult.findByTestId('testId4'), isA<DivElement>());
+          expect(await renderResult.findByTestId('estid2', exact: false),
+              isA<SpanElement>());
+          expect(await renderResult.findByTestId('single'), isA<SpanElement>());
+        });
+
+        test('[regex match]', () async {
+          expect(await renderResult.findByTestId(RegExp('testId2')),
+              isA<SpanElement>());
+          expect(await renderResult.findByTestId(RegExp('single')),
+              isA<SpanElement>());
+        });
+
+        test('[no match]', () async {
+          expect(
+              () => renderResult.findByTestId('fail'),
+              throwsA(allOf(
+                isA<TestingLibraryElementError>(),
+                hasToStringValue(contains(
+                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(
+                    contains(rtl.prettyDOM(renderResult.container))),
+              )));
+        });
+      });
+
+      group('findAllByTestId', () {
+        test('[string match]', () async {
+          expect(await renderResult.findAllByTestId('testId3'), hasLength(2));
+          expect(await renderResult.findAllByTestId('estid3', exact: false),
+              hasLength(2));
+        });
+
+        test('[regex match]', () async {
+          expect(await renderResult.findAllByTestId(RegExp('testId3')),
+              hasLength(2));
+        });
+
+        test('[no match]', () async {
+          expect(
+              () => renderResult.findAllByTestId('fail'),
+              throwsA(allOf(
+                isA<TestingLibraryElementError>(),
+                hasToStringValue(contains(
+                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(
+                    contains(rtl.prettyDOM(renderResult.container))),
+              )));
+        });
       });
     });
   });
