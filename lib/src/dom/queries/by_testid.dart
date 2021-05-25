@@ -108,7 +108,8 @@ mixin ByTestIdQueries on IQueries {
       return withErrorInterop(
         () => _jsGetByTestId(
           getContainerForScope(),
-          testIdTextMatchValue,
+          TextMatch.toJs(testId),
+          // testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ) as E,
       );
@@ -167,7 +168,8 @@ mixin ByTestIdQueries on IQueries {
       return withErrorInterop(
         () => _jsGetAllByTestId(
           getContainerForScope(),
-          testIdTextMatchValue,
+          TextMatch.toJs(testId),
+          // testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
       );
@@ -227,7 +229,8 @@ mixin ByTestIdQueries on IQueries {
       return withErrorInterop(
         () => _jsQueryByTestId(
           getContainerForScope(),
-          testIdTextMatchValue,
+          TextMatch.toJs(testId),
+          // testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ) as E,
       );
@@ -276,7 +279,8 @@ mixin ByTestIdQueries on IQueries {
       return withErrorInterop(
         () => _jsQueryAllByTestId(
           getContainerForScope(),
-          testIdTextMatchValue,
+          TextMatch.toJs(testId),
+          // testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
       );
