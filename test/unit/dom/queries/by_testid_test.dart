@@ -26,6 +26,7 @@ import '../../util/init.dart';
 import '../../util/matchers.dart';
 import '../../util/over_react_stubs.dart';
 
+// NOTE: All other tests for the ByTestId queries are covered by the `testTextMatchTypes()` shared tests.
 void main() {
   group('', () {
     initConfigForInternalTesting();
