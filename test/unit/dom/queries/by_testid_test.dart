@@ -43,7 +43,7 @@ void main() {
         renderResult = rtl.render(react.section(
             {},
             react.span({
-              'data-test-id': 'testId1 testId2 testId3',
+              'data-test-id': 'testId1 testId2 testId2-1 testId3',
             }, 'Testing multiple'),
             react.span({
               'data-test-id': 'single',
@@ -57,10 +57,11 @@ void main() {
         test('[string match]', () {
           expect(renderResult.getByTestId('testId1'), isA<SpanElement>());
           expect(renderResult.getByTestId('testId2'), isA<SpanElement>());
+          expect(renderResult.getByTestId('testId2-1'), isA<SpanElement>());
           expect(renderResult.getByTestId('testId4'), isA<DivElement>());
+          expect(renderResult.getByTestId('single'), isA<SpanElement>());
           expect(renderResult.getByTestId('estid2', exact: false),
               isA<SpanElement>());
-          expect(renderResult.getByTestId('single'), isA<SpanElement>());
         });
 
         test('[regex match]', () {
@@ -111,6 +112,7 @@ void main() {
         test('[string match]', () {
           expect(renderResult.queryByTestId('testId1'), isA<SpanElement>());
           expect(renderResult.queryByTestId('testId2'), isA<SpanElement>());
+          expect(renderResult.queryByTestId('testId2-1'), isA<SpanElement>());
           expect(renderResult.queryByTestId('estid2', exact: false),
               isA<SpanElement>());
           expect(renderResult.queryByTestId('single'), isA<SpanElement>());
@@ -151,6 +153,8 @@ void main() {
               await renderResult.findByTestId('testId1'), isA<SpanElement>());
           expect(
               await renderResult.findByTestId('testId2'), isA<SpanElement>());
+          expect(
+              await renderResult.findByTestId('testId2-1'), isA<SpanElement>());
           expect(await renderResult.findByTestId('testId4'), isA<DivElement>());
           expect(await renderResult.findByTestId('estid2', exact: false),
               isA<SpanElement>());
