@@ -60,15 +60,12 @@ void main() {
           expect(renderResult.getByTestId('testId2-1'), isA<SpanElement>());
           expect(renderResult.getByTestId('testId_/4'), isA<DivElement>());
           expect(renderResult.getByTestId('single'), isA<SpanElement>());
-          expect(renderResult.getByTestId('estid2', exact: false),
-              isA<SpanElement>());
+          expect(renderResult.getByTestId('estid2', exact: false), isA<SpanElement>());
         });
 
         test('[regex match]', () {
-          expect(
-              renderResult.getByTestId(RegExp('testId2')), isA<SpanElement>());
-          expect(
-              renderResult.getByTestId(RegExp('single')), isA<SpanElement>());
+          expect(renderResult.getByTestId(RegExp('testId2')), isA<SpanElement>());
+          expect(renderResult.getByTestId(RegExp('single')), isA<SpanElement>());
         });
 
         test('[no match]', () {
@@ -76,10 +73,8 @@ void main() {
               () => renderResult.getByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains(
-                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(
-                    contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -87,8 +82,7 @@ void main() {
       group('getAllByTestId', () {
         test('[string match]', () {
           expect(renderResult.getAllByTestId('testId3'), hasLength(2));
-          expect(renderResult.getAllByTestId('estid3', exact: false),
-              hasLength(2));
+          expect(renderResult.getAllByTestId('estid3', exact: false), hasLength(2));
         });
 
         test('[regex match]', () {
@@ -100,10 +94,8 @@ void main() {
               () => renderResult.getAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains(
-                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(
-                    contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -113,16 +105,13 @@ void main() {
           expect(renderResult.queryByTestId('testId1'), isA<SpanElement>());
           expect(renderResult.queryByTestId('testId2'), isA<SpanElement>());
           expect(renderResult.queryByTestId('testId2-1'), isA<SpanElement>());
-          expect(renderResult.queryByTestId('estid2', exact: false),
-              isA<SpanElement>());
+          expect(renderResult.queryByTestId('estid2', exact: false), isA<SpanElement>());
           expect(renderResult.queryByTestId('single'), isA<SpanElement>());
         });
 
         test('[regex match]', () {
-          expect(renderResult.queryByTestId(RegExp('testId2')),
-              isA<SpanElement>());
-          expect(
-              renderResult.queryByTestId(RegExp('single')), isA<SpanElement>());
+          expect(renderResult.queryByTestId(RegExp('testId2')), isA<SpanElement>());
+          expect(renderResult.queryByTestId(RegExp('single')), isA<SpanElement>());
         });
 
         test('[no match]', () {
@@ -133,13 +122,11 @@ void main() {
       group('queryAllByTestId', () {
         test('[string match]', () {
           expect(renderResult.queryAllByTestId('testId3'), hasLength(2));
-          expect(renderResult.queryAllByTestId('estid3', exact: false),
-              hasLength(2));
+          expect(renderResult.queryAllByTestId('estid3', exact: false), hasLength(2));
         });
 
         test('[regex match]', () {
-          expect(
-              renderResult.queryAllByTestId(RegExp('testId3')), hasLength(2));
+          expect(renderResult.queryAllByTestId(RegExp('testId3')), hasLength(2));
         });
 
         test('[no match]', () {
@@ -149,23 +136,17 @@ void main() {
 
       group('findByTestId', () {
         test('[string match]', () async {
-          expect(
-              await renderResult.findByTestId('testId1'), isA<SpanElement>());
-          expect(
-              await renderResult.findByTestId('testId2'), isA<SpanElement>());
-          expect(
-              await renderResult.findByTestId('testId2-1'), isA<SpanElement>());
+          expect(await renderResult.findByTestId('testId1'), isA<SpanElement>());
+          expect(await renderResult.findByTestId('testId2'), isA<SpanElement>());
+          expect(await renderResult.findByTestId('testId2-1'), isA<SpanElement>());
           expect(await renderResult.findByTestId('testId_/4'), isA<DivElement>());
-          expect(await renderResult.findByTestId('estid2', exact: false),
-              isA<SpanElement>());
+          expect(await renderResult.findByTestId('estid2', exact: false), isA<SpanElement>());
           expect(await renderResult.findByTestId('single'), isA<SpanElement>());
         });
 
         test('[regex match]', () async {
-          expect(await renderResult.findByTestId(RegExp('testId2')),
-              isA<SpanElement>());
-          expect(await renderResult.findByTestId(RegExp('single')),
-              isA<SpanElement>());
+          expect(await renderResult.findByTestId(RegExp('testId2')), isA<SpanElement>());
+          expect(await renderResult.findByTestId(RegExp('single')), isA<SpanElement>());
         });
 
         test('[no match]', () async {
@@ -173,10 +154,8 @@ void main() {
               () => renderResult.findByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains(
-                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(
-                    contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });
@@ -184,13 +163,11 @@ void main() {
       group('findAllByTestId', () {
         test('[string match]', () async {
           expect(await renderResult.findAllByTestId('testId3'), hasLength(2));
-          expect(await renderResult.findAllByTestId('estid3', exact: false),
-              hasLength(2));
+          expect(await renderResult.findAllByTestId('estid3', exact: false), hasLength(2));
         });
 
         test('[regex match]', () async {
-          expect(await renderResult.findAllByTestId(RegExp('testId3')),
-              hasLength(2));
+          expect(await renderResult.findAllByTestId(RegExp('testId3')), hasLength(2));
         });
 
         test('[no match]', () async {
@@ -198,10 +175,8 @@ void main() {
               () => renderResult.findAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains(
-                    'Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(
-                    contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
       });

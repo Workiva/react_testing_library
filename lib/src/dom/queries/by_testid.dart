@@ -190,8 +190,7 @@ mixin ByTestIdQueries on IQueries {
         // Throw the original error that was thrown as a result of the string provided since that is how the
         // user authored it so that the failure message displayed to the user doesn't contain a strange regex
         // that they didn't write.
-        throw TestingLibraryElementError.fromJs(
-            errorCaughtUsingStringTestIdValue);
+        throw TestingLibraryElementError.fromJs(errorCaughtUsingStringTestIdValue);
       }
     }
   }
@@ -346,8 +345,7 @@ mixin ByTestIdQueries on IQueries {
       timeout: timeout,
       interval: interval ?? defaultAsyncCallbackCheckInterval,
       onTimeout: onTimeout,
-      mutationObserverOptions:
-          mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
     );
   }
 
@@ -402,8 +400,7 @@ mixin ByTestIdQueries on IQueries {
       timeout: timeout,
       interval: interval ?? defaultAsyncCallbackCheckInterval,
       onTimeout: onTimeout,
-      mutationObserverOptions:
-          mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
     );
   }
 }
@@ -443,9 +440,7 @@ external List< /*Element*/ dynamic> _jsQueryAllByTestId(
 dynamic _convertTestIdStringToRegExp(dynamic testId, {bool exact = true}) {
   if (testId is! String) return TextMatch.toJs(testId);
 
-  final testIdMatcher = exact
-      ? RegExp('(\\s|^)$testId(\\s|\$)')
-      : RegExp('(.?)$testId(.?)', caseSensitive: false);
+  final testIdMatcher = exact ? RegExp('(\\s|^)$testId(\\s|\$)') : RegExp('(.?)$testId(.?)', caseSensitive: false);
 
   return TextMatch.toJs(testIdMatcher);
 }
