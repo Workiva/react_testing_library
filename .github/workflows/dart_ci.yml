@@ -41,12 +41,12 @@ jobs:
 
       - name: Run tests (DDC)
         run: dart run build_runner test -- --chain-stack-traces --file-reporter json:reports/${{ matrix.sdk }}/ddc/test-results.json
-        timeout-minutes: 6
+        timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
         run: dart run build_runner test -r -- --chain-stack-traces --file-reporter json:reports/${{ matrix.sdk }}/dart2js/test-results.json
-        timeout-minutes: 6
+        timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Upload Unit Test Results
@@ -87,10 +87,12 @@ jobs:
 
       - name: Run tests (DDC)
         run: pub run build_runner test -- --file-reporter json:reports/${{ matrix.sdk }}/ddc/test-results.json
+        timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
         run: pub run build_runner test -r -- --file-reporter json:reports/${{ matrix.sdk }}/dart2js/test-results.json
+        timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Upload Unit Test Results
