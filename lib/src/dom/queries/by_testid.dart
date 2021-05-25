@@ -238,7 +238,6 @@ mixin ByTestIdQueries on IQueries {
     // Since queryBy queries don't return errors, let's check for a null result and try using a regex
     // to do a word match within the attribute value in case the element has multiple test ids.
     if (testId is String && jsQueryResult == null) {
-      // T
       return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
     }
 
