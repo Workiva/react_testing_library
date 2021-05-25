@@ -2,7 +2,7 @@ TODO add ToC
 
 ## Testing Components with Interactions
 
-This guide talks about the part of tests that verify a behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](what-patterns-does-this-cover) to see if it, or something close, is listed.
+This guide talks about the part of tests that verify a behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see if it, or something close, is listed.
 
 This guide does not go into detail about React Testing Library (RTL) APIs themselves and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the references below.
 
