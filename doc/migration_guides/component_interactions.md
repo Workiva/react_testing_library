@@ -10,9 +10,9 @@ This guide does not go into detail about React Testing Library (RTL) APIs themse
 
 ### References
 
-The examples here should be declarative enough that knowledge of the RTL APIs being used isn't required. That being said, understanding the philosophy and the options would be beneficial. Below is a list of documentation that is relevant to this aspect of the migration.
+For a high level understanding, examples here should be declarative enough that knowledge of the RTL APIs being used isn't required. That being said, understanding the philosophy and the options would be beneficial. Below is a list of documentation that is relevant to this aspect of the migration.
 
-Both Dart and JS docs are referenced below the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. However, the Dart APIs often link to the JS docs for supplemental information and context.
+Both Dart and JS docs are referenced underneath the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. However, the Dart APIs often link to the JS docs for supplemental information and context.
 
 - [User Actions Philosophy]
 - UserEvent APIs
@@ -40,11 +40,13 @@ The most general categories for the patterns this guide will focus on migrating 
   - Calling `setState` on a component instance
   - Assigning state directly
 
-Besides those broader categories, there are special cases that are related to interactions but are a broader pattern. These are:
+Besides those general categories, there are special cases that are related to interactions but are a broader pattern. These are:
 
 - Async events
 - Verifying Event Order
 - Meta keys
+
+Those will be covered in individual sections after the general categories are covered.
 
 ### Event Simulation
 
@@ -116,7 +118,7 @@ This section is the migragation reference for:
 - Direct method calls
 - Changes via `Element.value`
 
-Another common pattern is using APIs on the instance (whether it is a component Ref or an Element) to change the values in order to verify the UI updates as expected. In general, the approach here is to query for the UI element that is being programmatically changed, and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests that are testing the components declared in the collapseable region.
+Another common pattern is using APIs on the instance (whether it is a component Ref or an Element) to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change, and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests that are interacting with the components declared in the collapseable region.
 
 <details>
   <summary>Component Declaration</summary>
@@ -236,10 +238,10 @@ main() {
 }
 ```
 
-As this test was mostly re-written, a diff did not emphesaize the most signficant change. Most of the changes were how the component were queried ([migration guide for queries](TODO add a link here)). However, for the purposes of this migration guide, the most important change was that we queried for the button and clicked it. Instead of relying on a component's implementation, we verified the UI itself worked as expected.
+As this test was mostly re-written, a diff does not emphesaize the most signficant change. Most of the changes were how the component were queried ([migration guide for queries](TODO add a link here)). However, for the purposes of this migration guide, the most important change was that we queried for the button and clicked it. Instead of relying on a component's implementation, we verified the UI itself worked as expected.
 
 [user actions philosophy]: https://workiva.github.io/react_testing_library/topics/UserActions-topic.html
-[dart userevent]: https://workiva.github.io/react_testing_library/user_event/UserEvent-class.html#static-methods
+[dart userevent]: https://workiva.github.io/react_testing_library/user_event/UserEvent-class.html
 [dart fireevent]: https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html
 [js userevent]: https://testing-library.com/docs/ecosystem-user-event
 [js fireevent]: https://testing-library.com/docs/dom-testing-library/api-events
