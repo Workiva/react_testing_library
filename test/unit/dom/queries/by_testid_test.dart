@@ -24,7 +24,6 @@ import 'package:test/test.dart';
 
 import '../../util/init.dart';
 import '../../util/matchers.dart';
-import '../../util/over_react_stubs.dart';
 
 // NOTE: All other tests for the ByTestId queries are covered by the `testTextMatchTypes()` shared tests.
 void main() {
@@ -54,7 +53,6 @@ void main() {
       group('getByTestId', () {
         test('[string match]', () {
           expect(renderResult.getByTestId('testId-1'), isA<SpanElement>());
-          
         });
 
         test('[regex match]', () {
@@ -69,7 +67,7 @@ void main() {
                 hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
-          });
+        });
 
         test('[no match error]', () {
           expect(
@@ -105,7 +103,6 @@ void main() {
       group('queryByTestId', () {
         test('[string match]', () {
           expect(renderResult.queryByTestId('testId-1'), isA<SpanElement>());
-          
         });
 
         test('[regex match]', () {
@@ -120,7 +117,7 @@ void main() {
                 hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
-          });
+        });
 
         test('[no match]', () {
           expect(renderResult.queryByTestId('fail'), isNull);
@@ -158,7 +155,7 @@ void main() {
                 hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
-          });
+        });
 
         test('[no match]', () async {
           expect(
@@ -192,20 +189,20 @@ void main() {
       });
 
       group('with the "exact: false" argument', () {
-          
         group('getByTestId', () {
           test('[non-exact string match]', () {
             expect(renderResult.getByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () {
-            expect(() => renderResult.getByTestId('estid-2', exact: false),
+            expect(
+                () => renderResult.getByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
-            });
+          });
         });
 
         group('getAllByTestId', () {
@@ -220,13 +217,14 @@ void main() {
           });
 
           test('[non-exact multiple elements error]', () {
-            expect(() => renderResult.queryByTestId('estid-2', exact: false),
+            expect(
+                () => renderResult.queryByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
-            });
+          });
         });
 
         group('queryAllByTestId', () {
@@ -241,13 +239,14 @@ void main() {
           });
 
           test('[non-exact multiple elements error]', () async {
-            expect(() => renderResult.findByTestId('estid-2', exact: false),
+            expect(
+                () => renderResult.findByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
-            });
+          });
         });
 
         group('findAllByTestId', () {
@@ -292,7 +291,7 @@ void main() {
                 hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
-          });
+        });
 
         test('[no match error]', () {
           expect(
@@ -346,7 +345,7 @@ void main() {
                 hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
-          });
+        });
 
         test('[no match]', () {
           expect(renderResult.queryByTestId('fail'), isNull);
@@ -388,7 +387,7 @@ void main() {
                 hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
-          });
+        });
 
         test('[no match]', () async {
           expect(
@@ -426,20 +425,20 @@ void main() {
       });
 
       group('with the "exact: false" argument', () {
-          
         group('getByTestId', () {
           test('[non-exact string match]', () {
             expect(renderResult.getByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () {
-            expect(() => renderResult.getByTestId('estid-2', exact: false),
+            expect(
+                () => renderResult.getByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
-            });
+          });
         });
 
         group('getAllByTestId', () {
@@ -456,13 +455,14 @@ void main() {
           });
 
           test('[non-exact multiple elements error]', () {
-            expect(() => renderResult.queryByTestId('estid-2', exact: false),
+            expect(
+                () => renderResult.queryByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
-            });
+          });
         });
 
         group('queryAllByTestId', () {
@@ -479,13 +479,14 @@ void main() {
           });
 
           test('[non-exact multiple elements error]', () async {
-            expect(() => renderResult.findByTestId('estid-2', exact: false),
+            expect(
+                () => renderResult.findByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
-            });
+          });
         });
 
         group('findAllByTestId', () {

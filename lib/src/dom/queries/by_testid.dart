@@ -40,8 +40,7 @@ import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/async/wait_for.dart';
 import 'package:react_testing_library/src/dom/matches/types.dart';
 import 'package:react_testing_library/src/dom/queries/interface.dart';
-import 'package:react_testing_library/src/util/error_message_utils.dart'
-    show withErrorInterop;
+import 'package:react_testing_library/src/util/error_message_utils.dart' show withErrorInterop;
 
 /// PRIVATE. Do not export from this library.
 ///
@@ -102,14 +101,13 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    }) => withErrorInterop(
-      () => _jsGetByTestId(
-        getContainerForScope(),
-        _convertTestIdStringToRegExp(testId, exact: exact),
-        buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E
-    );
-  
+  }) =>
+      withErrorInterop(() => _jsGetByTestId(
+            getContainerForScope(),
+            _convertTestIdStringToRegExp(testId, exact: exact),
+            buildMatcherOptions(exact: exact, normalizer: normalizer),
+          ) as E);
+
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
@@ -135,13 +133,14 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-    }) =>  withErrorInterop(
-      () => _jsGetAllByTestId(
-        getContainerForScope(),
-        _convertTestIdStringToRegExp(testId, exact: exact),
-        buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-    );
+  }) =>
+      withErrorInterop(
+        () => _jsGetAllByTestId(
+          getContainerForScope(),
+          _convertTestIdStringToRegExp(testId, exact: exact),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -168,13 +167,14 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) => withErrorInterop(
-      () => _jsQueryByTestId(
-        getContainerForScope(),
-        _convertTestIdStringToRegExp(testId, exact: exact),
-        buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E,
-    );
+  }) =>
+      withErrorInterop(
+        () => _jsQueryByTestId(
+          getContainerForScope(),
+          _convertTestIdStringToRegExp(testId, exact: exact),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ) as E,
+      );
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -201,13 +201,14 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) => withErrorInterop(
-      () => _jsQueryAllByTestId(
-        getContainerForScope(),
-        _convertTestIdStringToRegExp(testId, exact: exact),
-        buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-    );
+  }) =>
+      withErrorInterop(
+        () => _jsQueryAllByTestId(
+          getContainerForScope(),
+          _convertTestIdStringToRegExp(testId, exact: exact),
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
