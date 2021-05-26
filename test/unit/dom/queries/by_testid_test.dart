@@ -66,7 +66,7 @@ void main() {
               () => renderResult.getByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
+                hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
           });
@@ -76,7 +76,7 @@ void main() {
               () => renderResult.getByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -96,7 +96,7 @@ void main() {
               () => renderResult.getAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -117,7 +117,7 @@ void main() {
               () => renderResult.queryByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
+                hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
           });
@@ -155,7 +155,7 @@ void main() {
               () => renderResult.findByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
+                hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
           });
@@ -165,7 +165,7 @@ void main() {
               () => renderResult.findByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -185,7 +185,7 @@ void main() {
               () => renderResult.findAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -202,7 +202,7 @@ void main() {
             expect(() => renderResult.getByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
-                  hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
+                  hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
             });
@@ -223,7 +223,7 @@ void main() {
             expect(() => renderResult.queryByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
-                  hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
+                  hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
             });
@@ -244,7 +244,7 @@ void main() {
             expect(() => renderResult.findByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
-                  hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
+                  hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
             });
@@ -289,7 +289,7 @@ void main() {
               () => renderResult.getByTestId('testId-3'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-3"]')),
+                hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
           });
@@ -299,7 +299,7 @@ void main() {
               () => renderResult.getByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -323,7 +323,7 @@ void main() {
               () => renderResult.getAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -343,7 +343,7 @@ void main() {
               () => renderResult.queryByTestId('testId-3'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-3"]')),
+                hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
           });
@@ -385,7 +385,7 @@ void main() {
               () => renderResult.findByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
+                hasToStringValue(contains('Found multiple elements')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
           });
@@ -395,7 +395,7 @@ void main() {
               () => renderResult.findByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -419,7 +419,7 @@ void main() {
               () => renderResult.findAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
+                hasToStringValue(contains('Unable to find an element')),
                 hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
               )));
         });
@@ -436,7 +436,7 @@ void main() {
             expect(() => renderResult.getByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
-                  hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
+                  hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
             });
@@ -459,7 +459,7 @@ void main() {
             expect(() => renderResult.queryByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
-                  hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
+                  hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
             });
@@ -482,7 +482,7 @@ void main() {
             expect(() => renderResult.findByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
-                  hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
+                  hasToStringValue(contains('Found multiple elements')),
                   hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
                 )));
             });

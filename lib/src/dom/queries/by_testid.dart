@@ -41,7 +41,7 @@ import 'package:react_testing_library/src/dom/async/wait_for.dart';
 import 'package:react_testing_library/src/dom/matches/types.dart';
 import 'package:react_testing_library/src/dom/queries/interface.dart';
 import 'package:react_testing_library/src/util/error_message_utils.dart'
-    show TestingLibraryElementError, withErrorInterop;
+    show withErrorInterop;
 
 /// PRIVATE. Do not export from this library.
 ///
@@ -102,40 +102,14 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) {
-    dynamic errorCaughtUsingStringTestIdValue;
-    E jsQuery(dynamic testIdTextMatchValue) {
-      return withErrorInterop(
-        () => _jsGetByTestId(
-          getContainerForScope(),
-          testIdTextMatchValue,
-          buildMatcherOptions(exact: exact, normalizer: normalizer),
-        ) as E,
-      );
-    }
-
-    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
-
-    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
-    // test id value on an element that may have more than one.
-    try {
-      return jsQuery(TextMatch.toJs(testId));
-    } catch (e) {
-      errorCaughtUsingStringTestIdValue = e;
-
-      try {
-        // Try using a regex to do a word match within the attribute value in case the element has multiple test ids.
-        return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
-      } catch (_) {
-        // Even the string converted to regex didn't match, which means the string passed was not found at all.
-        // Throw the original error that was thrown as a result of the string provided since that is how the
-        // user authored it so that the failure message displayed to the user doesn't contain a strange regex
-        // that they didn't write.
-        throw errorCaughtUsingStringTestIdValue;
-      }
-    }
-  }
-
+    }) => withErrorInterop(
+      () => _jsGetByTestId(
+        getContainerForScope(),
+        _convertTestIdStringToRegExp(testId, exact: exact),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E
+    );
+  
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
   ///
@@ -161,39 +135,13 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) {
-    dynamic errorCaughtUsingStringTestIdValue;
-    List<E> jsQuery(dynamic testIdTextMatchValue) {
-      return withErrorInterop(
-        () => _jsGetAllByTestId(
-          getContainerForScope(),
-          testIdTextMatchValue,
-          buildMatcherOptions(exact: exact, normalizer: normalizer),
-        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-      );
-    }
-
-    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
-
-    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
-    // test id value on an element that may have more than one.
-    try {
-      return jsQuery(TextMatch.toJs(testId));
-    } catch (e) {
-      errorCaughtUsingStringTestIdValue = e;
-
-      try {
-        // Try using a regex to do a word match within the attribute value in case the element has multiple test ids.
-        return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
-      } catch (_) {
-        // Even the string converted to regex didn't match, which means the string passed was not found at all.
-        // Throw the original error that was thrown as a result of the string provided since that is how the
-        // user authored it so that the failure message displayed to the user doesn't contain a strange regex
-        // that they didn't write.
-        throw TestingLibraryElementError.fromJs(errorCaughtUsingStringTestIdValue);
-      }
-    }
-  }
+    }) =>  withErrorInterop(
+      () => _jsGetAllByTestId(
+        getContainerForScope(),
+        _convertTestIdStringToRegExp(testId, exact: exact),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+    );
 
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -220,29 +168,13 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) {
-    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
-    // test id value on an element that may have more than one.
-    E jsQuery(dynamic testIdTextMatchValue) {
-      return withErrorInterop(
-        () => _jsQueryByTestId(
-          getContainerForScope(),
-          testIdTextMatchValue,
-          buildMatcherOptions(exact: exact, normalizer: normalizer),
-        ) as E,
-      );
-    }
-
-    final jsQueryResult = jsQuery(TextMatch.toJs(testId));
-
-    // Since queryBy queries don't return errors, let's check for a null result and try using a regex
-    // to do a word match within the attribute value in case the element has multiple test ids.
-    if (testId is String && jsQueryResult == null) {
-      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
-    }
-
-    return jsQueryResult;
-  }
+  }) => withErrorInterop(
+      () => _jsQueryByTestId(
+        getContainerForScope(),
+        _convertTestIdStringToRegExp(testId, exact: exact),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E,
+    );
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -269,29 +201,13 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) {
-    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
-    // test id value on an element that may have more than one.
-    List<E> jsQuery(dynamic testIdTextMatchValue) {
-      return withErrorInterop(
-        () => _jsQueryAllByTestId(
-          getContainerForScope(),
-          testIdTextMatchValue,
-          buildMatcherOptions(exact: exact, normalizer: normalizer),
-        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
-      );
-    }
-
-    final jsQueryResult = jsQuery(TextMatch.toJs(testId));
-
-    // Since queryAllBy queries don't return errors, let's check for a null result and try using a regex
-    // to do a word match within the attribute value in case the element has multiple test ids.
-    if (testId is String && jsQueryResult.isEmpty) {
-      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
-    }
-
-    return jsQueryResult;
-  }
+  }) => withErrorInterop(
+      () => _jsQueryAllByTestId(
+        getContainerForScope(),
+        _convertTestIdStringToRegExp(testId, exact: exact),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+    );
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
