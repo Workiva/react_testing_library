@@ -1,6 +1,6 @@
 TODO add ToC
 
-## Testing Components with Interactions
+# Testing Components with Interactions
 
 This guide talks about the part of tests that verify a behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see if it, or something close, is listed.
 
@@ -8,7 +8,7 @@ This guide does not go into detail about React Testing Library (RTL) APIs themse
 
 > NOTE: this guide defaults to using the `UserEvent` API because most of the time, that should work. However, in more complex environments, it may be necessary to use the `fireEvent` API instead.
 
-### References
+## References
 
 For a high level understanding, examples here should be declarative enough that knowledge of the RTL APIs being used isn't required. That being said, understanding the philosophy and the options would be beneficial. Below is a list of documentation that is relevant to this aspect of the migration.
 
@@ -22,7 +22,7 @@ Both Dart and JS docs are referenced underneath the specific APIs. The Dart vers
   - [Dart fireEvent]
   - [JS fireEvent]
 
-### What Patterns Does This Cover?
+## What Patterns Does This Cover?
 
 The most general categories for the patterns this guide will focus on migrating are:
 
@@ -30,12 +30,11 @@ The most general categories for the patterns this guide will focus on migrating 
   - react_test_utils.Simulate
   - Element.event() (click, focus, blur)
   - `dispatchEvent`
-  - Direct method calls
   - Changes via `Element.value`
 - <u>Using Class APIs</u>
-  - Using a Ref to call component APIs
-  - Grabbing and calling component class methods
+  - Accessing component class methods
   - Calling Component Lifecyle methods
+  - Getting UI to trigger an event on
 - <u>Component State Changes</u>
   - Calling `setState` on a component instance
   - Assigning state directly
@@ -48,11 +47,11 @@ Besides those general categories, there are special cases that are related to in
 
 Those will be covered in individual sections after the general categories are covered.
 
-### Event Simulation
+## Event Simulation
 
 The event simulation category is around migrating away from the pre-existing ways of imitating user interaction via the event simulation methods.
 
-#### Triggering DOM events
+### Triggering DOM events
 
 This section is the migragation reference for tests using:
 
@@ -107,18 +106,31 @@ main() {
 
 Note that the query `getByTestId` also changed to `getByRole`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here). Otherwise, all we needed to do was switch out the imports and use a different API for click!
 
-Sometimes, those events are applied on the window or document instead.
-
-TODO create example of the window being clicked
-
-#### Direct Method Calls
+### Changing the Element's value
 
 This section is the migragation reference for:
 
-- Direct method calls
 - Changes via `Element.value`
 
-Another common pattern is using APIs on the instance (whether it is a component Ref or an Element) to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change, and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests that are interacting with the components declared in the collapseable region.
+Another common case is using the `value` property on an element to update the UI and trigger an `onChange` (or other) listener. That can be re-written like so (with the component being tested in the collapseable region):
+
+TODO EXAMPLE add component
+
+TODO EXAMPLE `Element.value`
+
+## Direct API calls
+
+Tests that rely on direct API calls are those that utilities the component's object instance to trigger a behavior.
+
+### Using a Ref to call component APIs
+
+This section is the migragation reference for using a ref or component instance to access:
+
+- prop callbacks (`componentRef.props.onChange`)
+- class methods that update state (`componentRef.updateValue`)
+- methods that update the UI directly (`.show`, `.toggle`, `.focus`, `.blur`, etc)
+
+Another common pattern is using APIs on the instance (whether it is a component Ref or an Element) to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests demonstrating this.
 
 <details>
   <summary>Component Declaration</summary>
@@ -239,6 +251,57 @@ main() {
 ```
 
 As this test was mostly re-written, a diff does not emphesaize the most signficant change. Most of the changes were how the component were queried ([migration guide for queries](TODO add a link here)). However, for the purposes of this migration guide, the most important change was that we queried for the button and clicked it. Instead of relying on a component's implementation, we verified the UI itself worked as expected.
+
+### Calling Component Lifecycle Methods
+
+This section is the migragation reference for tests that:
+
+- call any compopnent lifecycle event (`shouldComponentUpdate`, `componentWillUncomount`, `componentWillReceiveProps`, etc)
+
+Similar to accessing component methods directly, tests should focus on the affect a process has on the UI rather than the expected output of a component lifecycle event. This can be migrated like so:
+
+TODO EXAMPLE add lifecycle example
+
+### Using APIs to get UI and trigger an event
+
+This section is the migragation reference for tests that call methods to grab UI, such as (but not limited to):
+
+- `getInputDomNode`
+- `getHitareaDOMNode`
+
+These APIs are related to how to query for elements ([see that migration guide here](TODO add migration guide)), but are often
+tightly coupled with triggering events. Consequently, there is an example of how to migrate these APIs below:
+
+## Component State Changes
+
+This section is the migragation reference for tests that update state directly, such as:
+
+- Calling `setState` on a component instance
+- Setting state equal to a new value directly
+
+TODO EXAMPLE add example of setting state directly
+
+## Special Cases
+
+This section is the migragation reference for tests that have more complex interaction requirements, such as:
+
+- Listening for async events
+- Verifying event order
+- Interactions with meta keys
+
+### Listening for Async Events
+
+Tests that listen for async events are close to the same:
+
+TODO EXAMPLE listening for async events
+
+### Verifying Event Order
+
+TODO EXAMPLE verifying event order
+
+### Using Meta Keys
+
+TODO EXAMPLE meta keys
 
 [user actions philosophy]: https://workiva.github.io/react_testing_library/topics/UserActions-topic.html
 [dart userevent]: https://workiva.github.io/react_testing_library/user_event/UserEvent-class.html
