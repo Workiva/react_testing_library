@@ -112,11 +112,108 @@ This section is the migragation reference for:
 
 - Changes via `Element.value`
 
-Another common case is using the `value` property on an element to update the UI and trigger an `onChange` (or other) listener. That can be re-written like so (with the component being tested in the collapseable region):
+Another common case is using the `value` property on an element to update the UI and trigger an `onChange` (or other) listener.
 
-TODO EXAMPLE add component
+<details>
+  <summary>Component Definition</summary>
 
-TODO EXAMPLE `Element.value`
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/text_input.dart';
+
+part 'component_definition.over_react.g.dart';
+
+mixin WrappedInputProps on UiProps {}
+
+UiFactory<WrappedInputProps> WrappedInput = uiForwardRef(
+  (props, ref) {
+    final inputValue = useState('');
+
+    return (Dom.div()(
+      (TextInput()
+        ..ref = ref
+        ..onChange = (e) {
+          props.onChange(e);
+          inputValue.set(e.target.value);
+        }
+      )(),
+      (Dom.div()..addTestId('valueMirror'))(inputValue.value),
+    ));
+  },
+  _$WrappedInputConfig, // ignore: undefined_identifier
+);
+
+```
+
+</details>
+
+The simple example shows a component that has an unconctrolled input and another element that is relying on on the input's `onChange` function to keep it up to date. To test this, we could update the `TextInput`'s value directly and then manually trigger a change, like so:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+test('verify input changes', () {
+  var wasChanged = false;
+  final ref = createRef<TextInputComponent>();
+
+  final renderedInstance = render(Wrapper()(
+    (WrappedInput()
+      ..onChange = ((_) => wasChanged = true)
+      ..ref = ref
+    )(),
+  ));
+
+  final inputElement = ref.current.getInputDomNode();
+  expect(inputElement.value, '');
+
+  inputElement.value = 'a new value';
+  change(inputElement, {'target': inputElement});
+
+  expect(wasChanged, isTrue);
+
+  final valueMirror = getByTestId(renderedInstance, 'valueMirror');
+  final valueMirrorNode = findDomNode(valueMirror);
+
+  expect(valueMirrorNode.innerHtml, 'a new value');
+});
+```
+
+Instead, using React Testing Library, we can grab the element and use `UserEvent` to immitate a user typing!
+
+```dart
+import 'package:over_react/over_react.dart';
+
+import 'package:react_testing_library/react_testing_library.dart';
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+test('closes when the document it clickeds', () {
+  var wasChanged = false;
+  // Note that the `Wrapper` component could be removed!
+  final renderedInstance = render(
+    (WrappedInput()..onChange = ((_) => wasChanged = true))(),
+  );
+
+  final input = getByRole(renderedInstance.container, 'textbox') as InputElement;
+  expect(input.value, '');
+
+  // This is the main change! Note that we're not even
+  // explicitly triggering an `onChange` event. The
+  // `type` API simulates a user typing into an input!
+  UserEvent.type(input, 'a new value');
+  expect(wasChanged, isTrue);
+
+  final mirror = getByText(renderedInstance.container, 'a new value');
+  expect(mirror, isNotNull);
+  expect(mirror, isA<DivElement>());
+});
+```
 
 ## Direct API calls
 
@@ -133,7 +230,7 @@ This section is the migragation reference for using a ref or component instance 
 Another common pattern is using APIs on the instance (whether it is a component Ref or an Element) to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests demonstrating this.
 
 <details>
-  <summary>Component Declaration</summary>
+  <summary>Component Definition</summary>
 
 TODO format / comment / rename this
 
@@ -190,8 +287,7 @@ _$ControlledFormConfig, // ignore: undefined_identifier
 ```
 
 </details>
-
-<br/> This is a classic controlled component example where a parent's state and callbacks are used to update a child's UI. It's a common testing pattern to access the parent's `incrementCount` method to check that the UI can be updated as expected when that API gets called. This is what that test looks like:
+This is a classic controlled component example where a parent's state and callbacks are used to update a child's UI. It's a common testing pattern to access the parent's `incrementCount` method to check that the UI can be updated as expected when that API gets called. This is what that test looks like:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -215,7 +311,7 @@ main() {
 }
 ```
 
-However, this testing strategy does not reflect the user behavior. Instead, we should use the button to check if the state updates correctly, like so:
+However, this testing strategy may not reflect the user behavior. Instead, we should use the button to check if the state updates correctly, like so:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -249,8 +345,6 @@ main() {
   });
 }
 ```
-
-As this test was mostly re-written, a diff does not emphesaize the most signficant change. Most of the changes were how the component were queried ([migration guide for queries](TODO add a link here)). However, for the purposes of this migration guide, the most important change was that we queried for the button and clicked it. Instead of relying on a component's implementation, we verified the UI itself worked as expected.
 
 ### Calling Component Lifecycle Methods
 
