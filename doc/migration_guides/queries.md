@@ -151,11 +151,20 @@ main() {
 
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L39-40):
 ```diff
-- final button = queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalButton);
-+ final button = renderResult.getByRole('button', name: SharedModalConstants.okButtonText);
+- queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalButton)
++ renderResult.getByRole('button', name: SharedModalConstants.okButtonText)
 ```
 
+Examples from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/ss_to_graph/import_table_test.dart#L521-526):
+```diff
+- getAllByTestId(renderResult, 'a.vertexData.headCell')
++ renderResult.getByRole('rowheader', name: 'a')
+```
 
+```diff
+- getAllByTestId(renderResult, 'graph_ui.ImportTable.tableBody.vertexData')
++ renderResult.getAllByRole('cell')
+```
 
 
 ### ByLabelText
@@ -246,6 +255,14 @@ void main() {
 ```
 
 > See [other examples of migrating to `ByLabelText` queries](#bylabeltext-examples).
+
+#### Other Examples
+
+Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
+```diff
+- AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'))
++ renderResult.getByLabelText('List Options')
+```
 
 
 ### ByPlaceholderText
@@ -402,8 +419,14 @@ void main() {
 
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
 ```diff
-- final description = queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalDescription);
-+ final description = renderResult.getByText('You\'ll get an email letting you know when the transition is complete.');
+- queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalDescription)
++ renderResult.getByText('You\'ll get an email letting you know when the transition is complete.')
+```
+
+Example from [`workspaces_components`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/workspaces_components/-/blob/test/unit/workspaces_components/time_ago_test.dart#L34):
+```diff
+- queryByTestId(renderedInstance, TimeAgoTestIds.timeAgo)
++ renderResult.getByText(TimeAgoComponent.formatTimeAgo(nowTimestamp))
 ```
 
 
@@ -567,8 +590,8 @@ resulting RTL test will be:
 
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L34-35):
 ```diff
-- final icon = queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalIcon);
-+ final icon = renderResult.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon);
+- queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalIcon)
++ renderResult.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon)
 ```
 
 
@@ -623,12 +646,12 @@ main() {
 
 
 
-[guiding-principles]:[https://testing-library.com/docs/guiding-principles/]
-[query-priority]:[https://testing-library.com/docs/queries/about/#priority]
-[by-role-queries]:[https://testing-library.com/docs/queries/byrole]
-[by-label-text-queries]:[https://testing-library.com/docs/queries/bylabeltext]
-[by-placeholder-text-queries]:[https://testing-library.com/docs/queries/byplaceholdertext]
-[by-text-queries]:[https://testing-library.com/docs/queries/bytext]
-[by-alt-text-queries]:[https://testing-library.com/docs/queries/byalttext]
-[by-title-queries]:[https://testing-library.com/docs/queries/bytitle]
-[by-test-id-queries]:[https://testing-library.com/docs/queries/bytestid]
+[guiding-principles]: https://testing-library.com/docs/guiding-principles/
+[query-priority]: https://testing-library.com/docs/queries/about/#priority
+[by-role-queries]: https://testing-library.com/docs/queries/byrole
+[by-label-text-queries]: https://testing-library.com/docs/queries/bylabeltext
+[by-placeholder-text-queries]: https://testing-library.com/docs/queries/byplaceholdertext
+[by-text-queries]: https://testing-library.com/docs/queries/bytext
+[by-alt-text-queries]: https://testing-library.com/docs/queries/byalttext
+[by-title-queries]: https://testing-library.com/docs/queries/bytitle
+[by-test-id-queries]: https://testing-library.com/docs/queries/bytestid
