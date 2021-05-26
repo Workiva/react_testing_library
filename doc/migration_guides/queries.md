@@ -11,7 +11,7 @@
     * __[ByAltText](#byalttext)__
     * __[ByTitle](#bytitle)__
     * __[ByTestId](#bytestid)__
-* __[Query for DOM Elements instead of Component or Props](#query-for-dom-elements-instead-of-component-instances-or-props-maps)__
+* __[Migrating from Component/Prop Queries to DOM Element Queries](#migrating-from-componentprop-queries-to-dom-element-queries)__
 
 ## Background
 
@@ -40,7 +40,7 @@ These utilities include:
     
 See [Migrating to RTL Queries](#migrating-to-rtl-queries) section for how to determine which query to migrate to.
 
-See [Query for DOM Elements instead of Component or Props](#query-for-dom-elements-instead-of-component-instances-or-props-maps) section for how to migrate from querying for components/props to DOM elements.
+See [Migrating to DOM Element Queries](#migrating-from-componentprop-queries-to-dom-element-queries) section for how to migrate from querying for components/props to DOM elements.
 
 
 ## Best Practices
@@ -144,8 +144,6 @@ main() {
 }
 ```
 
-> See [other examples of migrating to `ByRole` queries](#byrole-examples).
-
 #### Other Examples
 
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L39-40):
@@ -163,6 +161,12 @@ Examples from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Worki
 ```diff
 - getAllByTestId(renderResult, 'graph_ui.ImportTable.tableBody.vertexData')
 + renderResult.getAllByRole('cell')
+```
+
+Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L44-45):
+```diff
+- findRenderedDOMComponentWithClass(component, 'hitarea')
++ renderResult.getByRole('button')
 ```
 
 
@@ -253,8 +257,6 @@ void main() {
   });
 }
 ```
-
-> See [other examples of migrating to `ByLabelText` queries](#bylabeltext-examples).
 
 #### Other Examples
 
@@ -409,8 +411,6 @@ void main() {
 }
 ```
 
-> See [other examples of migrating to `ByText` queries](#bytext-examples).
-
 #### Other Examples
 
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
@@ -423,6 +423,12 @@ Example from [`workspaces_components`](https://sourcegraph.wk-dev.wdesk.org/gith
 ```diff
 - queryByTestId(renderedInstance, TimeAgoTestIds.timeAgo)
 + renderResult.getByText(TimeAgoComponent.formatTimeAgo(nowTimestamp))
+```
+
+Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/app_infrastructure_1/network_health/network_health_alerts_test.dart#L23):
+```diff
+- queryByTestId(component, 'network-health-offline')
++ renderResult.getByText('You are not connected to the internet.')
 ```
 
 
@@ -555,32 +561,86 @@ void main() {
 }
 ```
 
-> See [other examples of migrating to `ByTitle` queries](#bytitle-examples).
+#### Other Examples
 
 
 ### ByTestId
 
-Use [ByTestId queries][by-test-id-queries] to query for elements that have a `title` attribute, but not text content or role.
+Use [ByTestId queries][by-test-id-queries] to query for elements that cannot be accessed using any of the above queries. 
+This should be a last resort because a user would never interact with a page using test ids.
 
-For example, the following test uses `renderAndGetDom` to access the icon element.
+For example, the following test uses `findDOMNode` to access the div element.
 We need to migrate this test to use an RTL query instead.
 
 ```dart
-```
-> Example from [`doc_plat_client`]()
+import 'package:react/react_dom.dart' as react_dom;
+import 'package:react/react_test_utils.dart' as react_test_utils;
+import 'package:test/test.dart';
+import 'package:wdesk_sdk/src/truss/workspaces_module/components/sidebar_brand.dart';
 
-The rendered DOM is printed in the error message of failing `ByTitle` queries. This is the DOM for the element we are trying to access:
+main() {
+  test('WorkspacesSidebarBrand should render properly with no props', () {
+    final component =
+    react_test_utils.renderIntoDocument(WorkspacesSidebarBrand()());
+    final componentNode = react_dom.findDOMNode(component);
+
+    expect(componentNode.classes, contains('wksp-sidebar-content-block'));
+    expect(componentNode.classes, contains('wksp-sidebar-masthead-brand'));
+  });
+}
+```
+> Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L22)
+
+The rendered DOM is printed in the error message of failing `ByTestId` queries. This is the DOM for the element we are trying to access:
 
 ```html
+<div
+  class="wksp-sidebar-content-block wksp-sidebar-masthead-brand"
+  data-test-id="workspaces.sidebar.brand"
+>
+    <div
+      class="brand-img-wrapper"
+    >
+        ...
+    </div>
+    <div
+      class="wksp-sidebar-min-max-control-wrapper"
+    >
+        <button
+          class="hitarea sidebar-toggle"
+          data-test-id="workspaces.sidebar.toggle"
+          type="button"
+        >
+            ...
+        </button>
+    </div>
+</div>
 ```
 
-Since this element does not have a role or text content, we have to query by title using: `getByTitle('Internal use sheet')`, so the
+Since this div element does not have a role, label, text content, or title we have to query by its test id using: `getByTestId('workspaces.sidebar.brand')`, so the
 resulting RTL test will be:
 
 ```dart
-```
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/matchers.dart' show hasClasses;
+import 'package:test/test.dart';
+import 'package:wdesk_sdk/src/truss/workspaces_module/components/sidebar_brand.dart';
 
-> See [other examples of migrating to `ByTestId` queries](#bytestid-examples).
+import '../../../../../truss_helpers/utils.dart';
+
+main() {
+  initializeTest();
+
+  test('WorkspacesSidebarBrand should render properly with no props', () {
+    final renderResult = rtl.render(WorkspacesSidebarBrand()());
+    final componentNode =
+        renderResult.getByTestId('workspaces.sidebar.brand');
+
+    expect(componentNode,
+        hasClasses('wksp-sidebar-content-block wksp-sidebar-masthead-brand'));
+  });
+}
+```
 
 #### Other Examples
 
@@ -591,7 +651,7 @@ Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva
 ```
 
 
-### Query For DOM Elements instead of Component Instances or Props Maps
+## Migrating from Component/Prop Queries to DOM Element Queries
 
 React testing library does not support querying for a component instance or testing props. We need to replace these queries with
 queries for DOM elements. This can be done by looking at what props are being tested and determining which DOM elements we need to 
@@ -685,7 +745,7 @@ void main() {
 }
 ```
 
-#### Other Examples
+### Other Examples
 
 Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
 ```diff
