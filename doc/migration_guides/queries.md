@@ -3,7 +3,7 @@
 * __[Background](#background)__
 * __[Best Practices](#best-practices)__
     * __[Priority](#priority)__
-* __[Migration Process](#migration-process)__
+* __[Migrating to RTL Queries](#migrating-to-rtl-queries)__
     * __[ByRole](#byrole)__
     * __[ByLabelText](#bylabeltext)__
     * __[ByPlaceholderText](#byplaceholdertext)__
@@ -11,13 +11,37 @@
     * __[ByAltText](#byalttext)__
     * __[ByTitle](#bytitle)__
     * __[ByTestId](#bytestid)__
-* __[Examples](#examples)__
-    * __[ByRole](#byrole-examples)__
-    * __[ByLabelText](#bylabeltext-examples)__
-    * __[ByText](#bytext-examples)__
-    * __[ByTestId](#bytestid-examples)__
+* __[Query for DOM Elements instead of Component or Props](#query-for-dom-elements-instead-of-component-instances-or-props-maps)__
 
 ## Background
+
+React Testing Library (RTL) queries will replace all utilities (from `over_react_test` and otherwise) that current tests use
+to access elements, component instances, or props.
+
+These utilities include:
+
+* Element Queries
+    * `getElementsByTagName()`
+    * `getElementsByClassName()`
+    * `findDomNode()`
+    * `querySelector()` / `querySelectorAll()`
+    * `renderAndGetDom()`
+    * `getByTestId()` / `getAllByTestId()`
+    * `queryByTestId()` / `queryAllByTestId()`
+    * `getComponentRootDomByTestId()`
+    * `findRenderedDOMComponentWithClass()`
+* Component Queries
+    * `getDartComponent()`
+    * `renderAndGetComponent()`
+    * `getComponentByTestId()` / `getAllComponentsByTestId()`
+* Props Queries
+    * `getPropsByTestId()`
+    * `getProps()`
+    
+See [Migrating to RTL Queries](#migrating-to-rtl-queries) section for how to determine which query to migrate to.
+
+See [Query for DOM Elements instead of Component or Props](#query-for-dom-elements-instead-of-component-instances-or-props-maps) section for how to migrate from querying for components/props to DOM elements.
+
 
 ## Best Practices
 
@@ -44,38 +68,13 @@ In general, `getByRole` should cover most cases and `getByTestId` should only be
 
 For more information, see [documentation on query priority][query-priority].
 
-## Migration Process
 
-// TODO List all queries that should be replaced...
+## Migrating to RTL Queries
 
 // TODO add additional examples for each
 
-React Testing Library queries will replace all utilities (from `over_react_test` and otherwise) that current tests use
-to access elements, component instances, or props.
-
-These utilities include:
-
-* Element Queries
-    * `getElementsByTagName()`
-    * `getElementsByClassName()`
-    * `findDomNode()`
-    * `querySelector()` / `querySelectorAll()`
-    * `renderAndGetDom()`
-    * `getByTestId()` / `getAllByTestId()`
-    * `queryByTestId()` / `queryAllByTestId()`
-    * `getComponentRootDomByTestId()`
-    * `findRenderedDOMComponentWithClass()`
-* Component Queries
-    * `getDartComponent()`
-    * `renderAndGetComponent()`
-    * `getComponentByTestId()` / `getAllComponentsByTestId()`
-* Props Queries
-    * `getPropsByTestId()`
-    * `getProps()`
-
-
 When migrating from `over_react_test` queries to RTL queries, try to use the [highest priority queries](#priority) 
-first when possible. The following guides are in order of priority.
+first when possible. The following migration guidance is in order of priority.
 
 ### ByRole
 
@@ -175,6 +174,7 @@ when querying for form elements. These queries reflect how the user navigates a 
 For example, the following test uses `getComponentByTestId` and `component.getInputDomNode()` to access the input element. 
 We need to migrate this test to use an RTL query instead.
 
+// TODO replace this and move to component testing
 ```dart
 import 'dart:html';
 
@@ -258,11 +258,7 @@ void main() {
 
 #### Other Examples
 
-Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
-```diff
-- AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'))
-+ renderResult.getByLabelText('List Options')
-```
+
 
 
 ### ByPlaceholderText
@@ -595,55 +591,107 @@ Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva
 ```
 
 
+### Query For DOM Elements instead of Component Instances or Props Maps
 
-// TODO add migrating component instances
+React testing library does not support querying for a component instance or testing props. We need to replace these queries with
+queries for DOM elements. This can be done by looking at what props are being tested and determining which DOM elements we need to 
+access to test the same things. This will sometimes mean replacing one query with multiple.
 
-## Examples
+For example, the following test uses `getComponentByTestId` to access the `VerticalButtonComponent` instance.
+We need to migrate this test to use an RTL query instead.
 
-### ByRole Examples
-### ByLabelText Examples
-
-#### Access the element instead of the props
-
-```diff
-import 'dart:html';
-
-+ import 'package:react_testing_library/matchers.dart' show isDisabled;
-+ import 'package:react_testing_library/react_testing_library.dart' as rtl;
-- import 'package:over_react_test/over_react_test.dart';
+```dart
+import 'package:over_react_test/over_react_test.dart';
 import 'package:test/test.dart';
-import 'package:web_skin_dart/component2/all.dart';
-import 'package:cerebral_ui/src/report_builder/field_properties_module/components/parameter_choices_component.dart';
+import 'package:w_filing/src/filing_module/components/collect_action_toolbar.dart';
+import 'package:w_filing/src/test_ids.dart' as test_ids;
+import 'package:web_skin_dart/component2/icon.dart';
+import 'package:web_skin_dart/component2/toolbars.dart';
 
-main() {
-  test('Parameter choices component renders text area', () {
-+   var renderResult = rtl.render((ParameterChoices()
--   var instance = render((ParameterChoices()
-      ..isMultiSelect = false
-      ..defaultValue = 3
-      ..choices = [1, 2, 3]
-    )());
+void main() {
+  test('CollectActionToolbar combine button renders correctly', () {
+    final root = renderAttachedToDocument(CollectActionToolbar()
+      ..actions = filingDispatcher
+      ..store = mockFilingMall
+      ..selectedDocuments = []);
 
-    // Use `getByLabelText` to store a reference to the textarea element.
-+   var textArea = renderResult.getByLabelText('List Options') as TextAreaElement;
--   var choicesProps =
--       AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'));
-
-    // Verify textArea
--   expect(choicesProps.label, 'List Options');
-+   expect(textArea.placeholder, 'Add list options (one per line)');
--   expect(choicesProps.placeholder, 'Add list options (one per line)');
-+   expect(textArea, isNot(isDisabled));
--   expect(choicesProps.isDisabled, false);
+    VerticalButtonComponent button = getComponentByTestId(root, test_ids.CollectViewIds.combineDocsButton);
+    expect(button.props.glyph, IconGlyph.TWFR_GROUP_ADD);
+    expect(button.props.isDisabled, isTrue);
+    expect(button.props.displayText, 'Combine');
   });
 }
 ```
-> Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21)
+> Example from [`w_filing`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_filing/-/blob/test/unit/tests/components/collect_action_toolbar_test.dart#L171)
 
-### ByText Examples
-### ByTitle Examples
-### ByTestId Examples
+This is the DOM for the `VerticalButtonComponent` we are trying to access:
 
+```html
+<div
+  aria-disabled="true"
+  aria-haspopup="false"
+  class="btn btn-vertical disabled"
+  data-test-id="combine-edgar-overlay combine-docs-button toolbars.AbstractToolbarItem.base wsd.VerticalToolbarButton.button wsd.hitareaComponent wsd.hitarea"
+  id="o_trigger_VRmxPJ"
+  role="button"
+  style="pointer-events: auto !important;"
+  title=""
+>
+    <i
+      aria-hidden="true"
+      class="icon icon-md icon-two-color icon-twfr-group-add"
+      data-test-id="wsd.AbstractVerticalToolbarButton.glyph"
+    />
+    <small
+      class="btn-label-sm"
+      data-test-id="wsd.AbstractVerticalToolbarButton.displayText"
+    >
+        Combine
+    </small>
+</div>
+```
+
+In order to determine which element(s) to query for, we need to look at what props are being tested and which element 
+they each correspond to:
+
+* `props.glyph`: The glyph is a part of the `i` element inside the button, so we can use the following query to access it:
+    * `rtl.within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph')`
+* `props.isDisabled`: `disabled` is an attribute of the button, so we need to access the top level `div` with the following query:
+    * `renderResult.getByRole('button', name: 'Combine')`
+* `props.displayText`: The display text of the button is already being tested using the `name` argument in the `getByRole` query we used to access the button.
+
+Now that we determined which elements to access, the resulting RTL test will be:
+
+```dart
+import 'package:react_testing_library/matchers.dart' show hasClasses;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+import 'package:w_filing/src/filing_module/components/collect_action_toolbar.dart';
+
+void main() {
+  test('CollectActionToolbar combine button renders correctly', () {
+    final renderResult = rtl.render((CollectActionToolbar()
+      ..actions = filingDispatcher
+      ..store = mockFilingMall
+      ..selectedDocuments = []
+    )());
+
+    final button = renderResult.getByRole('button', name: 'Combine');
+    expect(button, hasClasses('disabled'));
+
+    final buttonIcon = rtl.within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph');
+    expect(buttonIcon, hasClasses('icon-twfr-group-add'));
+  });
+}
+```
+
+#### Other Examples
+
+Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
+```diff
+- AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'))
++ renderResult.getByLabelText('List Options')
+```
 
 
 [guiding-principles]: https://testing-library.com/docs/guiding-principles/
