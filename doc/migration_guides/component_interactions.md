@@ -106,7 +106,7 @@ main() {
 
 Note that the query `getByTestId` also changed to `getByRole`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here). Otherwise, all we needed to do was switch out the imports and use a different API for click!
 
-### Changing the Element's value
+### Changing an Element's value
 
 This section is the migragation reference for:
 
@@ -352,9 +352,104 @@ This section is the migragation reference for tests that:
 
 - call any compopnent lifecycle event (`shouldComponentUpdate`, `componentWillUncomount`, `componentWillReceiveProps`, etc)
 
-Similar to accessing component methods directly, tests should focus on the affect a process has on the UI rather than the expected output of a component lifecycle event. This can be migrated like so:
+Similar to accessing component methods directly, tests should focus on the affect a process has on the UI rather than the expected output of a component lifecycle event.
 
-TODO EXAMPLE add lifecycle example
+<details>
+  <summary>Component Definition</summary>
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/button.dart';
+
+part 'component_definition.over_react.g.dart';
+
+UiFactory<LifecycleTestProps> LifecycleTest = castUiFactory(_$LifecycleTest); // ignore: undefined_identifier
+
+mixin LifecycleTestProps on UiProps {}
+
+mixin LifecycleTestState on UiState {
+  int count;
+}
+
+class LifecycleTestComponent extends UiStatefulComponent2<LifecycleTestProps, LifecycleTestState> {
+  @override
+  Map get initialState => newState()..count = 0;
+
+  @override
+  bool shouldComponentUpdate(_, Map nextState) {
+    final tNextState = typedStateFactory(nextState);
+    if (tNextState.count % 3 != 0) return false;
+
+    return true;
+  }
+
+  @override
+  render() {
+    return (Dom.div()(
+      (Dom.div()..addTestId('count-text'))('The count is ${state.count}'),
+      (Button()
+        ..addTestId('counter-button')
+        ..onClick = (e) => setState(newState()..count = state.count + 1)
+      )(),
+    ));
+  }
+}
+```
+
+</details>
+In the example, the component's UI is dependendent upon the outcome of `shouldComponentUpdate`. Since we can just access the method on the component, we could test how the method behaves like so:
+
+```dart
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('verify input changes', () {
+    final renderedInstance = render(LifecycleTest()());
+
+    LifecycleTestComponent component = getDartComponent(renderedInstance);
+    expect(component.shouldComponentUpdate({}, {'LifecycleTestState.count': 1}), isFalse);
+    expect(component.shouldComponentUpdate({}, {'LifecycleTestState.count': 11}), isFalse);
+    expect(component.shouldComponentUpdate({}, {'LifecycleTestState.count': 12}), isTrue);
+  });
+}
+```
+
+However, with RTL, we would do:
+
+```dart
+import 'package:react_testing_library/react_testing_library.dart';
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('verify input changes', () {
+    final renderedInstance = rtl.render(LifecycleTest()());
+
+    final button = rtl.queryByRole(renderedInstance.container, 'button');
+    final count = rtl.queryByText(renderedInstance.container, RegExp('The count is'));
+    expect(count.innerHtml, contains('0'));
+
+    // Instead of calling the component instance,
+    // simulate the user behavior
+    ue.UserEvent.click(button);
+    expect(count.innerHtml, contains('0'));
+
+    // Rather than programatically setting
+    // the state, simulate the user interaction
+    // that would create the UI
+    for (var i = 1; i <= 4; i++) {
+      ue.UserEvent.click(button);
+    }
+
+    expect(count.innerHtml, contains('3'));
+  });
+}
+```
 
 ### Using APIs to get UI and trigger an event
 
