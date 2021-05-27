@@ -66,7 +66,7 @@ void main() {
       expect(newConfig.showOriginalStackTrace, !initialConfig.showOriginalStackTrace);
       expect(newConfig.throwSuggestions, !initialConfig.throwSuggestions);
       expect(
-          () => rtl.screen.getByTestId('does-not-exist'),
+          () => rtl.screen.getByText('does-not-exist'),
           throwsA(allOf(
             isA<TestingLibraryElementError>(),
             hasToStringValue(contains('something custom')),

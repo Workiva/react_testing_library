@@ -35,6 +35,7 @@ library react_testing_library.src.dom.queries.by_testid;
 import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
+import 'package:meta/meta.dart';
 
 import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/async/wait_for.dart';
@@ -103,7 +104,6 @@ mixin ByTestIdQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
   }) {
-    dynamic errorCaughtUsingStringTestIdValue;
     E jsQuery(dynamic testIdTextMatchValue) {
       return withErrorInterop(
         () => _jsGetByTestId(
@@ -119,19 +119,15 @@ mixin ByTestIdQueries on IQueries {
     // For strings, we need to jump through a few more hoops to ensure that we support matching a single
     // test id value on an element that may have more than one.
     try {
-      return jsQuery(TextMatch.toJs(testId));
-    } catch (e) {
-      errorCaughtUsingStringTestIdValue = e;
-
-      try {
-        // Try using a regex to do a word match within the attribute value in case the element has multiple test ids.
-        return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
-      } catch (_) {
-        // Even the string converted to regex didn't match, which means the string passed was not found at all.
-        // Throw the original error that was thrown as a result of the string provided since that is how the
-        // user authored it so that the failure message displayed to the user doesn't contain a strange regex
-        // that they didn't write.
-        throw errorCaughtUsingStringTestIdValue;
+      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
       }
     }
   }
@@ -162,7 +158,6 @@ mixin ByTestIdQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
   }) {
-    dynamic errorCaughtUsingStringTestIdValue;
     List<E> jsQuery(dynamic testIdTextMatchValue) {
       return withErrorInterop(
         () => _jsGetAllByTestId(
@@ -178,19 +173,15 @@ mixin ByTestIdQueries on IQueries {
     // For strings, we need to jump through a few more hoops to ensure that we support matching a single
     // test id value on an element that may have more than one.
     try {
-      return jsQuery(TextMatch.toJs(testId));
-    } catch (e) {
-      errorCaughtUsingStringTestIdValue = e;
-
-      try {
-        // Try using a regex to do a word match within the attribute value in case the element has multiple test ids.
-        return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
-      } catch (_) {
-        // Even the string converted to regex didn't match, which means the string passed was not found at all.
-        // Throw the original error that was thrown as a result of the string provided since that is how the
-        // user authored it so that the failure message displayed to the user doesn't contain a strange regex
-        // that they didn't write.
-        throw TestingLibraryElementError.fromJs(errorCaughtUsingStringTestIdValue);
+      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
       }
     }
   }
@@ -233,15 +224,22 @@ mixin ByTestIdQueries on IQueries {
       );
     }
 
-    final jsQueryResult = jsQuery(TextMatch.toJs(testId));
+    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
 
-    // Since queryBy queries don't return errors, let's check for a null result and try using a regex
-    // to do a word match within the attribute value in case the element has multiple test ids.
-    if (testId is String && jsQueryResult == null) {
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    try {
       return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
+      }
     }
-
-    return jsQueryResult;
   }
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
@@ -282,15 +280,22 @@ mixin ByTestIdQueries on IQueries {
       );
     }
 
-    final jsQueryResult = jsQuery(TextMatch.toJs(testId));
+    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
 
-    // Since queryAllBy queries don't return errors, let's check for a null result and try using a regex
-    // to do a word match within the attribute value in case the element has multiple test ids.
-    if (testId is String && jsQueryResult.isEmpty) {
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    try {
       return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
+      }
     }
-
-    return jsQueryResult;
   }
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
@@ -442,4 +447,19 @@ dynamic _convertTestIdStringToRegExp(dynamic testId, {bool exact = true}) {
   final testIdMatcher = exact ? RegExp('(\\s|^)$testId(\\s|\$)') : RegExp('(.?)$testId(.?)', caseSensitive: false);
 
   return TextMatch.toJs(testIdMatcher);
+}
+
+/// Returns an error with the [errorThrownUsingRegExTestIdValue] converted to use the original [testId] provided by
+/// the consumer in its message so that the implementation details of our [_convertTestIdStringToRegExp] `RegExp`
+/// workaround are completely opaque to the consumer.
+TestingLibraryElementError _errorWithMessageUsingStringTestIdProvided({
+  @required TestingLibraryElementError errorThrownUsingRegExTestIdValue,
+  @required StackTrace stackTrace,
+  @required String testId,
+}) {
+  final messageUsingTestIdProvidedByUser =
+      errorThrownUsingRegExTestIdValue.message.replaceAllMapped(RegExp(r'\[(.*)="RegExp\/(.*)\/".?\]'), (match) {
+    return '[${match.group(1)}="$testId"]';
+  });
+  return TestingLibraryElementError(messageUsingTestIdProvidedByUser, stackTrace);
 }
