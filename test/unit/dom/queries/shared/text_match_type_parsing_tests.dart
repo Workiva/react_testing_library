@@ -284,7 +284,6 @@ void testTextMatchTypes<E extends Element>(
                 () => getQueryResult(),
                 throwsA(allOf(
                   hasToStringValue(contains('Found multiple elements')),
-                  hasToStringValue(contains('Here are the matching elements')),
                   hasToStringValue(contains(getExpectedPrettyDom())),
                 )),
                 reason:
