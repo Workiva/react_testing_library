@@ -21,8 +21,6 @@ to access elements, component instances, or props.
 These utilities include:
 
 * Element Queries
-    * `getElementsByTagName()`
-    * `getElementsByClassName()`
     * `findDomNode()`
     * `querySelector()` / `querySelectorAll()`
     * `renderAndGetDom()`
@@ -30,6 +28,11 @@ These utilities include:
     * `queryByTestId()` / `queryAllByTestId()`
     * `getComponentRootDomByTestId()`
     * `findRenderedDOMComponentWithClass()`
+    * `getElementsByTagName()`
+    * `getElementsByClassName()`
+    * `scryRenderedDOMComponentsWithClass()`
+    * `scryRenderedDOMComponentsWithTag()`
+    * `scryWithDartType()`
 * Component Queries
     * `getDartComponent()`
     * `renderAndGetComponent()`
@@ -71,8 +74,6 @@ For more information, see [documentation on query priority][query-priority].
 
 ## Migrating to RTL Queries
 
-// TODO add additional examples for each
-
 When migrating from `over_react_test` queries to RTL queries, try to use the [highest priority queries](#priority) 
 first when possible. The following migration guidance is in order of priority.
 
@@ -108,7 +109,7 @@ main() {
 ```
 > Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
 
-The rendered DOM is printed in the error message of failing `ByRole` queries. This is the DOM for the header we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the header we are trying to access:
 
 ```html
 <h4 
@@ -169,89 +170,95 @@ Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Worki
 + renderResult.getByRole('button')
 ```
 
+Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/rich_app_shell/components/document_tabs_pane_test.dart#L372-373):
+```diff
+- scryRenderedDOMComponentsWithClass(component, 'nav-item')
++ renderResult.getAllByRole('presentation')
+```
+
 
 ### ByLabelText
 
 While ByRole queries are top priority for most elements, you should use [ByLabelText queries][by-label-text-queries] 
 when querying for form elements. These queries reflect how the user navigates a form by looking at label text.
 
-For example, the following test uses `getComponentByTestId` and `component.getInputDomNode()` to access the input element. 
+For example, the following test uses `findRenderedDOMComponentWithClass` and `findDOMNode` to access the input element. 
 We need to migrate this test to use an RTL query instead.
 
-// TODO replace this and move to component testing
 ```dart
 import 'dart:html';
 
-import 'package:over_react_test/over_react_test.dart';
+import 'package:react/react_dom.dart' as react_dom;
+import 'package:react/react_test_utils.dart';
 import 'package:test/test.dart';
-import 'package:web_skin_dart/ui_components.dart';
-import 'package:graph_ui/src/components/form/property_inputs/graph_number_property_input.dart';
-import 'shared_property_tests.dart';
+import 'package:wdesk_sdk/src/truss/session_module/components/expiration/session_expired_modal.dart';
 
-void main() {
-  test('GraphNumberPropertyInput accepts valid input', () {
-    var renderedComponent = render((GraphNumberPropertyInput()
-      ..isCTE = false
-      ..property = numProp
+main() {
+  test('SessionExpiredModal password input', () {
+    final component = renderIntoDocument((SessionExpiredModal()
+      ..failed = false
+      ..reauthenticating = false
+      ..userDisplayName = 'superUser'
     )());
 
-    final component =
-        getComponentByTestId(renderedComponent, 'graph_ui__number-property-input__input') as ClickToEditInputComponent;
-    final input = component.getInputDomNode() as InputElement;
+    final password = findRenderedDOMComponentWithClass(component, 'form-control');
+    InputElement passwordNode = react_dom.findDOMNode(password);
 
-    input.value = '3.14';
-    change(input);
+    String passwordInputValue = 'superSecretPassword';
+    passwordNode.value = passwordInputValue;
+    Simulate.change(password);
 
     // ...
   });
 }
 ```
-> Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54)
+> Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/session_module/components/expiration/session_expired_modal_test.dart#L140-142)
 
-The rendered DOM is printed in the error message of failing `ByLabelText` queries. This is the DOM for the input we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM containing the input we are trying to access:
 
 ```html
-<div>
+<div
+  class="form-group"
+>
     <label
-      class="rol-label"
-      data-tecontst-id="wsd.FormComponentBehaviorMixin.label"
-      for="input_5HfL"
+      class="col-xs-3 control-label"
+      for="enterPasswordField"
     >
-        testPropertyName
+        Password
     </label>
-    <div>
+    <div
+      class="form-control-wrapper col-xs-6"
+    >
         <input
-          class="clip-text form-control"
-          data-test-id="graph_ui__number-property-input__input graph_ui__abstract-graph-input__input wsd.TextInput.input"
-          id="input_5HfL"
-          placeholder="Enter number"
-          type="text"
-          value=""
+          aria-required="true"
+          class="form-control"
+          id="enterPasswordField"
+          type="password"
         />
     </div>
 </div>
 ```
 
-Since the input element has a label with the text `'testPropertyName'`, we can query for the
-element using: `getByLabelText('testPropertyName')`, so the resulting RTL test will be:
+Since the input element has a label with the text `'Password'`, we can query for the
+element using: `getByLabelText('Password')`, so the resulting RTL test will be:
 
 ```dart
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
-import 'package:graph_ui/src/components/form/property_inputs/graph_number_property_input.dart';
-import 'shared_property_tests.dart';
+import 'package:wdesk_sdk/src/truss/session_module/components/expiration/session_expired_modal.dart';
 
-void main() {
-  test('GraphNumberPropertyInput accepts valid input', () {
-    var renderResult = rtl.render((GraphNumberPropertyInput()
-      ..isCTE = false
-      ..property = numProp
+main() {
+  test('SessionExpiredModal password input', () {
+    final renderResult = rtl.render((SessionExpiredModal()
+      ..failed = false
+      ..reauthenticating = false
+      ..userDisplayName = 'superUser'
     )());
 
-    final input = renderResult.getByLabelText('testPropertyName');
+    final passwordInput = renderResult.getByLabelText('Password');
 
-    UserEvent.type(input, '3.14');
+    UserEvent.type(passwordInput, 'superSecretPassword');
 
     // ...
   });
@@ -260,6 +267,11 @@ void main() {
 
 #### Other Examples
 
+Example from [`xbrl-module`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/xbrl-module/-/blob/test/unit/src/components/xbrl_blackline_filters_test.dart#L222-225):
+```diff
+- queryAllByTestId(component.getInstance(), 'xbrl--blackline-history-panel-toolbar--filter-form--datepicker')
++ renderResult.queryAllByLabelText('Date', exact: false)
+```
 
 
 
@@ -294,7 +306,7 @@ main() {
 }
 ```
 
-The rendered DOM is printed in the error message of failing `ByPlaceholderText` queries. This is the DOM for the input we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -360,7 +372,7 @@ void main() {
 ```
 > Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history/-/blob/test/src/components/cards/history_card_parts/authors_test.dart#L205-206)
 
-The rendered DOM is printed in the error message of failing `ByText` queries. This is the DOM for the divs we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the divs we are trying to access:
 
 ```html
 <div>
@@ -465,7 +477,7 @@ main() {
 }
 ```
 
-The rendered DOM is printed in the error message of failing `ByAltText` queries. This is the DOM for the input we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -528,7 +540,7 @@ void main() {
 ```
 > Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
 
-The rendered DOM is printed in the error message of failing `ByTitle` queries. This is the DOM for the element we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the element we are trying to access:
 
 ```html
 <i
@@ -591,7 +603,7 @@ main() {
 ```
 > Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L22)
 
-The rendered DOM is printed in the error message of failing `ByTestId` queries. This is the DOM for the element we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the element we are trying to access:
 
 ```html
 <div
@@ -684,7 +696,7 @@ void main() {
 ```
 > Example from [`w_filing`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_filing/-/blob/test/unit/tests/components/collect_action_toolbar_test.dart#L171)
 
-This is the DOM for the `VerticalButtonComponent` we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
 
 ```html
 <div
@@ -751,6 +763,12 @@ Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Wor
 ```diff
 - AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'))
 + renderResult.getByLabelText('List Options')
+```
+
+Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54):
+```diff
+- getComponentByTestId(renderedComponent, 'graph_ui__number-property-input__input')
++ renderResult.getByLabelText('testPropertyName')
 ```
 
 
