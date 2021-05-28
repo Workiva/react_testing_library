@@ -485,7 +485,93 @@ This section is the migragation reference for tests that call methods to grab UI
 - `getHitareaDOMNode`
 
 These APIs are related to how to query for elements ([see that migration guide here](TODO add migration guide)), but are often
-tightly coupled with triggering events. Consequently, there is an example of how to migrate these APIs below:
+tightly coupled with triggering events. Below is an example showing switching away from that pattern.
+
+<details>
+  <summary>Component Definiition</summary>
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/all.dart';
+
+part 'component_definition.over_react.g.dart';
+
+mixin WrappedMenuProps on UiProps {
+  void Function(dynamic event) handleClick;
+}
+
+UiFactory<WrappedMenuProps> WrappedMenu = uiForwardRef(
+  (props, ref) {
+    return (Dom.div()(
+      (DropdownButton()..addTestId('button'))(
+        DropdownMenu()(
+          (MenuItem()
+            ..ref = ref
+            ..onClick = props.handleClick
+          )('First Menu Item'),
+          MenuItem()('Second Menu Item'),
+          MenuItem()('Third Menu Item'),
+          MenuItem()('Fourth Menu Item'),
+        ),
+      ),
+    ));
+  },
+  _$WrappedMenuConfig, // ignore: undefined_identifier
+);
+```
+
+</details>
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('click menu item', () {
+    final ref = createRef<MenuItemComponent>();
+    var wasClicked = false;
+    final renderedInstance = render(Wrapper()(
+      (WrappedMenu()
+        ..ref = ref
+        ..handleClick = (_) {
+          wasClicked = true;
+        }
+      )(),
+    ));
+
+    click(queryByTestId(renderedInstance, 'button'));
+    click(ref.current.getHitareaDOMNode());
+    expect(wasClicked, isTrue);
+  });
+}
+```
+
+```dart
+import 'package:react_testing_library/react_testing_library.dart';
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+main() {
+  test('click menu item', () {
+    var wasClicked = false;
+    final renderedInstance = render(Wrapper()(
+      (WrappedMenu()
+        ..handleClick = (_) {
+          wasClicked = true;
+        }
+      )(),
+    ));
+
+    UserEvent.click(queryByRole(renderedInstance.container, 'button'));
+    UserEvent.click(queryByText(renderedInstance.container, 'First Menu Item'));
+
+    expect(wasClicked, isTrue);
+  });
+}
+```
 
 ## Component State Changes
 
