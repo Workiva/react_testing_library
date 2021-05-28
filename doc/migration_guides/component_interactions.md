@@ -6,13 +6,13 @@ This guide talks about the part of tests that verify a behavior exists. This mig
 
 This guide does not go into detail about React Testing Library (RTL) APIs themselves and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the references below.
 
-> NOTE: this guide defaults to using the `UserEvent` API because most of the time, that should work. However, in more complex environments, it may be necessary to use the `fireEvent` API instead.
+> NOTE: this guide defaults to using the `UserEvent` API because most of the time, that is the best option. However, in certain situations, it may be necessary to use the `fireEvent` API instead.
 
 ## References
 
-For a high level understanding, examples here should be declarative enough that knowledge of the RTL APIs being used isn't required. That being said, understanding the philosophy and the options would be beneficial. Below is a list of documentation that is relevant to this aspect of the migration.
+Examples here should be declarative enough that knowledge of the RTL APIs being used isn't required. That being said, understanding the philosophy and the options would be beneficial. Below is a list of documentation that is relevant to this aspect of the migration.
 
-Both Dart and JS docs are referenced underneath the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. However, the Dart APIs often link to the JS docs for supplemental information and context.
+Both Dart and JS docs are referenced underneath the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. However, the Dart APIs often link to the JS docs for supplemental information.
 
 - [User Actions Philosophy]
 - UserEvent APIs
@@ -45,11 +45,37 @@ Besides those general categories, there are special cases that are related to in
 - Verifying Event Order
 - Meta keys
 
-Those will be covered in individual sections after the general categories are covered.
-
 ## Event Simulation
 
-The event simulation category is around migrating away from the pre-existing ways of imitating user interaction via the event simulation methods.
+The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. Consequently, there is not a 1 to 1 API to switch to because `UserEvent`'s APIs trigger multiple events.
+
+Below is a table of `UserEvent` APIs and the some of events that each one triggers. It may be used as a general reference, but the list of events are not exact\*.
+
+Using this table, the line of thinking would be to determine what event a test is currently simulating and find a `UserEvent` API that triggers the desired event. There are examples of this in sections are the table.
+
+| RTL's UserEvent API                                                                                              | Events on Target\*                                                                                                        |
+| ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| [clear](https://workiva.github.io/react_testing_library/user_event/UserEvent/clear.html)                         | onMouseOver, onMouseEnter, onMouseMove, onMouseDown, onMouseUp, onClick, onKeyDown, onChange, onKeyUp                     |
+| [click](https://workiva.github.io/react_testing_library/user_event/UserEvent/click.html)                         | onMouseOver, onMouseEnter, onMouseMove, onMouseDown, onMouseUp, onClick                                                   |
+| [dblClick](https://workiva.github.io/react_testing_library/user_event/UserEvent/dblClick.html)                   | onMouseOver, onMouseEnter, onMouseMove, onMouseDown, onMouseUp, onClick, onMouseDown, onMouseUp, onClick                  |
+| [deselectOptions](https://workiva.github.io/react_testing_library/user_event/UserEvent/deselectOptions.html)     | {onMouseOver, onMouseEnter, onMouseMove, onMouseDown, onMouseUp, onClick} repeated for each option                        |
+| [hover](https://workiva.github.io/react_testing_library/user_event/UserEvent/hover.html)                         | onMouseOver, onMouseEnter, onMouseMove                                                                                    |
+| [keyboard](https://workiva.github.io/react_testing_library/user_event/UserEvent/keyboard.html)                   | {onKeyDown, onChange, onKeyUp} repeated for every keystroke                                                               |
+| [keyboardWithDelay](https://workiva.github.io/react_testing_library/user_event/UserEvent/keyboardWithDelay.html) | {onKeyDown, onChange, onKeyUp} repeated for every keystroke                                                               |
+| [paste](https://workiva.github.io/react_testing_library/user_event/UserEvent/paste.html)                         | onFocus, onChange                                                                                                         |
+| [selectOptions](https://workiva.github.io/react_testing_library/user_event/UserEvent/selectOptions.html)         | {onMouseOver, onMouseEnter, onMouseMove, onMouseDown, onMouseUp, onClick} repeated for each option                        |
+| [tab](https://workiva.github.io/react_testing_library/user_event/UserEvent/tab.html)                             | onKeyDown, onBlur, onFocus, onKeyUp                                                                                       |
+| [type](https://workiva.github.io/react_testing_library/user_event/UserEvent/type.html)                           | MouseEvents, ClickEvents, onFocus                                                                                         |
+| [typeWithDelay](https://workiva.github.io/react_testing_library/user_event/UserEvent/typeWithDelay.html)         | onMouseOver, onMouseEnter, onMouseMove, onMouseDown, onFocus, onMouseUp, onClick, {onKeyDown, onChange, onKeyUp} repeated |
+| [unhover](https://workiva.github.io/react_testing_library/user_event/UserEvent/unhover.html)                     | onMouseMove, onMouseLeave                                                                                                 |
+| [upload](https://workiva.github.io/react_testing_library/user_event/UserEvent/upload.html)                       | onMouseOver, onMouseEnter, onMouseMove, onMouseDown, onFocus, onMouseUp, onClick, onBlur, onFocus, onChange               |
+
+> \* This table does not show the _exact_ events that get triggered because
+>
+> 1. It would be overwhelming to show less common events (pointer events, for example)
+> 1. There may be more or less events events based on custom component and page logic
+
+Because multiple events get triggered at once, the test may not behave as necessary. In those cases, specific events should be simulated with [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html).
 
 ### Triggering DOM events
 
@@ -104,7 +130,7 @@ main() {
 }
 ```
 
-Note that the query `getByTestId` also changed to `getByRole`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here). Otherwise, all we needed to do was switch out the imports and use a different API for click!
+Note that the query `getByTestId` also changed to `getByRole`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here).
 
 ### Changing an Element's value
 
