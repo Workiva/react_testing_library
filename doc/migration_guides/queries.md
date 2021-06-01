@@ -83,7 +83,8 @@ first when possible. The following migration guidance is in order of priority.
 ### ByRole
 
 [ByRole queries][by-role-queries] search for elements by their role. Use [this table of HTML elements with their
-corresponding roles](https://www.w3.org/TR/html-aria/#docconformance) to determine what role to query for.
+corresponding roles](https://www.w3.org/TR/html-aria/#docconformance) to determine what role to query for. ByRole queries 
+should be the go-to queries to use in most cases because they most closely reflect how the user would find elements on the page.
 
 For example, the following test uses `querySelector` to access the header element. We need to migrate this test to
 use an RTL query instead.
@@ -124,7 +125,7 @@ The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. Th
 </h4>
 ```
 
-Since the role for the `<h4>` element above is `heading` and the text content is `Transition Started` we can query for this
+Since the role for the `h4` element above is `heading` and the text content is `Transition Started` we can query for this
 element using: `getByRole('heading', name: 'Transition Started')`. This query also combines the test's expectation
 for text content with the query, so the resulting RTL test will be:
 
@@ -242,7 +243,7 @@ The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. Th
 </div>
 ```
 
-Since the input element has a label with the text `'Password'`, we can query for the
+Since the input element has a label with the text `Password`, we can query for the
 element using: `getByLabelText('Password')`, so the resulting RTL test will be:
 
 ```dart
@@ -304,7 +305,8 @@ main() {
     final instance = render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
-        ..placeholder = 'Type here...'
+        ..type = 'password'
+        ..placeholder = 'Password'
       )(),
     ));
 
@@ -320,12 +322,13 @@ The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. Th
 <div>
     <input
       data-test-id="test-id"
-      placeholder="Type here..."
+      placeholder="Password"
+      type="password"
     />
 </div>
 ```
 
-Since the input element has no label, we have to use the placeholder text to query for the element using:
+Since the input element has no label and no role, we have to use the placeholder text to query for the element using:
 `getByPlaceholderText('Type here...')`, so the resulting RTL test will be:
 
 ```dart
@@ -339,11 +342,12 @@ main() {
     final renderResult = rtl.render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
-        ..placeholder = 'Type here...'
+        ..type = 'password'
+        ..placeholder = 'Password'
       )(),
     ));
 
-    var input = renderResult.getByPlaceholderText('Type here...');
+    var input = renderResult.getByPlaceholderText('Password');
     expect(input, isInTheDocument);
   });
 }
@@ -456,9 +460,9 @@ Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Worki
 
 If a form field does not have a label or placeholder, use [ByDisplayValue queries][by-display-value-queries] to find the element.
 
-> Note: This case should be rare because an accessible form field should have a label.
+> Note: This case should be rare because form fields can often be searched for using [ByLabelText queries](#bylabeltext) instead.
 
-For example, the following test uses `queryByTestId` to access the select element.
+For example, the following test uses `queryByTestId` to access the input element.
 We need to migrate this test to use an RTL query instead.
 
 ```dart
@@ -469,61 +473,54 @@ import 'package:over_react_test/over_react_test.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('Select Element', () {
+  test('Date Input', () {
     final instance = render(Dom.div()(
-      (Dom.select()..addTestId('test-id'))([
-        (Dom.option()..value = 'topping1')('Pepperoni'),
-        (Dom.option()
-          ..value = 'topping2'
-          ..selected = true
-        )('Black Olives'),
-        (Dom.option()..value = 'topping3')('Pineapple'),
-      ]),
+      (Dom.input()
+        ..addTestId('test-id')
+        ..type = 'date'
+        ..defaultValue = '2021-06-01'
+      )(),
     ));
 
-    final select = queryByTestId(instance, 'test-id') as SelectElement;
-    expect(select.value, 'topping2');
-    expect(select.selectedOptions.single.label, 'Black Olives');
+    final input = queryByTestId(instance, 'test-id') as InputElement;
+    expect(input.value, '2021-06-01');
   });
 }
 ```
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the select we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
-    <select data-test-id="test-id">
-        <option value="topping1">Pepperoni</option>
-        <option value="topping2" selected>Black Olives</option>
-        <option value="topping3">Pineapple</option>
-    </select>
+    <input
+      data-test-id="test-id"
+      type="date"
+      value="2021-06-01"
+    />
 </div>
 ```
 
-Since the select element has no label, we have to use the display value of the selected option to query for the element using:
-`queryByDisplayValue('Black Olives')`, so the resulting RTL test will be:
+Since the select element has no label, no placeholder, and no role, we have to use the display value to query for the element using:
+`getByDisplayValue('2021-06-01')`, so the resulting RTL test will be:
 
 ```dart
 import 'package:over_react/over_react.dart';
-import 'package:react_testing_library/matchers.dart' show hasValue;
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 main() {
-  test('Select Element', () {
+  test('Date Input', () {
     final renderResult = rtl.render(Dom.div()(
-      (Dom.select()..addTestId('test-id'))([
-        (Dom.option()..value = 'topping1')('Pepperoni'),
-        (Dom.option()
-          ..value = 'topping2'
-          ..selected = true
-        )('Black Olives'),
-        (Dom.option()..value = 'topping3')('Pineapple'),
-      ]),
+      (Dom.input()
+        ..addTestId('test-id')
+        ..type = 'date'
+        ..defaultValue = '2021-06-01'
+      )(),
     ));
 
-    final select = renderResult.queryByDisplayValue('Black Olives');
-    expect(select, hasValue('topping2'));
+    final input = renderResult.getByDisplayValue('2021-06-01');
+    expect(input, isInTheDocument);
   });
 }
 ```
@@ -602,7 +599,7 @@ main() {
 
 ### ByTitle
 
-Use [ByTitle queries][by-title-queries] to query for elements that have a `title` attribute, but not text content or role.
+Use [ByTitle queries][by-title-queries] to query for elements that have a `title` attribute, but no text content or role.
 
 For example, the following test uses `renderAndGetDom` to access the icon element.
 We need to migrate this test to use an RTL query instead.
