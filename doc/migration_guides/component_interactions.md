@@ -2,7 +2,7 @@ TODO add ToC
 
 # Testing Components with Interactions
 
-This guide talks about the part of tests that verify a behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see if it, or something close, is listed.
+This guide talks about the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see if it, or something close, is listed.
 
 This guide does not go into detail about React Testing Library (RTL) APIs themselves and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the references below.
 
@@ -12,7 +12,7 @@ This guide does not go into detail about React Testing Library (RTL) APIs themse
 
 Examples here should be declarative enough that knowledge of the RTL APIs being used isn't required. That being said, understanding the philosophy and the options would be beneficial. Below is a list of documentation that is relevant to this aspect of the migration.
 
-Both Dart and JS docs are referenced underneath the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. However, the Dart APIs often link to the JS docs for supplemental information.
+Both Dart and JS docs are referenced underneath the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. The Dart APIs often link to the JS docs for supplemental information, which is why they are also referenced here.
 
 - [User Actions Philosophy]
 - UserEvent APIs
@@ -34,7 +34,7 @@ The most general categories for the patterns this guide will focus on migrating 
 - <u>Using Class APIs</u>
   - Accessing component class methods
   - Calling Component Lifecyle methods
-  - Getting UI to trigger an event on
+  - Grabbing UI nodes to use as event targets
 - <u>Component State Changes</u>
   - Calling `setState` on a component instance
   - Assigning state directly
@@ -47,11 +47,13 @@ Besides those general categories, there are special cases that are related to in
 
 ## Event Simulation
 
-The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. Consequently, there is not a 1 to 1 API to switch to because `UserEvent`'s APIs trigger multiple events.
+### Migration Goal
 
-Below is a table of `UserEvent` APIs and the some of events that each one triggers. It may be used as a general reference, but the list of events are not exact\*.
+The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because under the hood, it's calling multiple related events instead of a single one. `UserEvent`'s APIs are also descriptive to the action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a 1 to 1 API for the events exposed in `Simulate`.
 
-Using this table, the line of thinking would be to determine what event a test is currently simulating and find a `UserEvent` API that triggers the desired event. There are examples of this in sections are the table.
+Below is a table of `UserEvent` APIs and some of events that each one triggers. It may be used as a general reference, but the list of events are not exact\*.
+
+Using this table, the line of thinking would be to determine what event a test is currently simulating and find a `UserEvent` API that triggers the desired event.
 
 | RTL's UserEvent API                                                                                              | Events on Target\*                                                                                                        |
 | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -75,9 +77,11 @@ Using this table, the line of thinking would be to determine what event a test i
 > 1. It would be overwhelming to show less common events (pointer events, for example)
 > 1. There may be more or less events events based on custom component and page logic
 
-Because multiple events get triggered at once, the test may not behave as necessary. In those cases, specific events should be simulated with [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html).
+### When Not to Use `UserEvent`
 
-### Triggering DOM events
+There are not any concrete guidelines for when [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html) should be used instead of `UserEvent`. When writing tests, `UserEvent` should be the default tool that is reached for. From there, if the test requires a precise event to avoid conflicts or access a specific UI state, then `fireEvent` may be more appropriate. However, this should not be a common occurance.
+
+### Migrating DOM Event Calls
 
 This section is the migragation reference for tests using:
 
@@ -85,23 +89,34 @@ This section is the migragation reference for tests using:
 - Element.event() (click, focus, blur)
 - `dispatchEvent`
 
-In Dart, there are a few ways to generate browser events (some more real than others) in tests. In the case that your test is just calling one of these APIs to target an element with an event, the switch should be simple. Here is a test written with the traditional APIs:
+In Dart, there are a few ways to generate browser events in tests. In the case that your test is just calling one of these APIs to target an element with an event, the switch should be simple. Here is a simple test written with the traditional APIs:
 
 ```dart
-import 'package:web_skin_dart/component2/button.dart';
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/text_input.dart';
 import 'package:over_react_test/over_react_test.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('button handles onClick', () {
-    var hasBeenClicked = false;
+  test('TextInput calls blur event', () {
+    var wasBlurred = false;
+    final ref = createRef<TextInputComponent>();
 
-    final container = render((Button()
-      ..onClick = (event) => hasBeenClicked = true)());
-    final button = getByTestId(container, 'wsd.hitarea');
+    render(Wrapper()(
+      Dom.div()(
+        (TextInput()
+          ..ref = ref
+          ..onBlur = (_) => wasBlurred = true
+        )(),
+      ),
+    ));
 
-    click(button);
-    expect(hasBeenClicked, isTrue);
+    final input = findDomNode(ref.current.getInputDomNode()) as InputElement;
+    input.focus();
+
+    blur(input);
+
+    expect(wasBlurred, isTrue);
   });
 }
 ```
@@ -109,28 +124,41 @@ main() {
 With React Testing Library, that becomes:
 
 ```diff
-import 'package:web_skin_dart/component2/button.dart';
+- import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/text_input.dart';
 - import 'package:over_react_test/over_react_test.dart';
 + import 'package:react_testing_library/react_testing_library.dart';
 + import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('button handles onClick', () {
-    var hasBeenClicked = false;
+  test('TextInput calls blur event', () {
+    var wasBlurred = false;
+-     final ref = createRef<TextInputComponent>();
 
-    final container = render((Button()
-      ..onClick = (event) => hasBeenClicked = true)());
-    final button = getByRole(container.container, 'button');
+    render(Wrapper()(
+      Dom.div()(
+        (TextInput()
+-          ..ref = ref
+          ..onBlur = (_) => wasBlurred = true
+        )(),
+      ),
+    ));
 
--     click(button);
-+     UserEvent.click(button);
-    expect(hasBeenClicked, isTrue);
+    final input = instance.getByRole('textbox');
+    input.focus();
+
+-    blur(input);
++    UserEvent.tab();
+
+    expect(wasBlurred, isTrue);
   });
 }
 ```
 
-Note that the query `getByTestId` also changed to `getByRole`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here).
+Note that the query `getComponentRootDomByTestId` also changed to `getByRole`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here).
+
+In this example, the original test used the `Simulate.blur` API to trigger the `blur` handler. Because `UserEvent` doesn't explicitly expose an API just for blurring, we can use `tab` instead.
 
 ### Changing an Element's value
 
@@ -505,13 +533,22 @@ UiFactory<WrappedMenuProps> WrappedMenu = uiForwardRef(
     return (Dom.div()(
       (DropdownButton()..addTestId('button'))(
         DropdownMenu()(
-          (MenuItem()
-            ..ref = ref
-            ..onClick = props.handleClick
-          )('First Menu Item'),
-          MenuItem()('Second Menu Item'),
-          MenuItem()('Third Menu Item'),
-          MenuItem()('Fourth Menu Item'),
+          MenuItem()('First Menu Item'),
+          (SubMenu()..menuItem = MenuItem())(
+            DropdownMenu()(
+MenuItem()('First Menu Item'),
+          (SubMenu()..menuItem = MenuItem())(
+DropdownMenu()(
+MenuItem()('First Menu Item'),
+          (SubMenu()..menuItem = MenuItem())(
+
+(MenuItem()..ref = ref..onClick=props.handleClick)('First Menu Item'),
+          )
+            )
+          )
+            )
+
+          )
         ),
       ),
     ));
@@ -521,6 +558,8 @@ UiFactory<WrappedMenuProps> WrappedMenu = uiForwardRef(
 ```
 
 </details>
+
+In the example, there is a dropdown button with menu items. A ref is forwarded to a particular menu item.
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -557,13 +596,12 @@ import 'package:test/test.dart';
 main() {
   test('click menu item', () {
     var wasClicked = false;
-    final renderedInstance = render(Wrapper()(
-      (WrappedMenu()
+    final renderedInstance = render((WrappedMenu()
         ..handleClick = (_) {
           wasClicked = true;
         }
       )(),
-    ));
+    );
 
     UserEvent.click(queryByRole(renderedInstance.container, 'button'));
     UserEvent.click(queryByText(renderedInstance.container, 'First Menu Item'));
@@ -580,7 +618,123 @@ This section is the migragation reference for tests that update state directly, 
 - Calling `setState` on a component instance
 - Setting state equal to a new value directly
 
-TODO EXAMPLE add example of setting state directly
+<details>
+  <summary>Component Definition</summary>
+
+```dart
+UiFactory<WrappedMenuProps> WrappedMenu = castUiFactory(_$WrappedMenu); // ignore: undefined_identifier
+
+mixin WrappedMenuProps on UiProps {}
+
+mixin WrappedMenuState on UiState {
+  String selectedItem;
+}
+
+class WrappedMenuComponent extends UiStatefulComponent2<WrappedMenuProps, WrappedMenuState> {
+  @override
+  render() {
+    return (Dom.div()(
+      (DropdownButton()
+        ..onClick = ((_) => print('ciiicked'))
+        ..addTestId('button')
+      )(
+        DropdownMenu()(
+          (MenuItem()
+            ..onClick = (_) {
+              setState(newState()..selectedItem = 'first');
+            }
+          )('First Menu Item'),
+          (MenuItem()
+            ..onClick = (_) {
+              setState(newState()..selectedItem = 'second');
+            }
+          )('Second Menu Item'),
+          (MenuItem()
+            ..onClick = (_) {
+              setState(newState()..selectedItem = 'third');
+            }
+          )('Third Menu Item'),
+          (MenuItem()
+            ..onClick = (_) {
+              setState(newState()..selectedItem = 'fourth');
+            }
+          )('Fourth Menu Item'),
+        ),
+      ),
+      _renderSubContent(),
+    ));
+  }
+
+  ReactElement _renderSubContent() {
+    switch (state.selectedItem ?? '') {
+      case 'first':
+        return (Dom.div()..addTestId('first'))(
+          'This is the first menu item UI!',
+        );
+      case 'second':
+        return (Dom.div()..addTestId('second'))(
+          'This is the second menu item UI!',
+        );
+      default:
+        return (Dom.div()..addTestId('default'))(
+          'This is the default menu item UI',
+        );
+    }
+  }
+}
+```
+
+</details>
+
+The example component uses state to decide what subcontent to render, and in order to change that content, the user needs to utilize a dropdown button. A common pattern is to skip the interaction with the button, and just set the state directly instead like so:
+
+```dart
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('View changes with state', () {
+     final renderedInstance = render(WrappedMenu()());
+    expect(getByTestId(renderedInstance, 'second'), isNull);
+    expect(getByTestId(renderedInstance, 'default'), isNotNull);
+
+    WrappedMenuComponent component = getDartComponent(renderedInstance);
+    component.setState(component.typedStateFactory({'WrappedMenuState.selectedItem': 'second'}));
+
+
+    expect(getByTestId(renderedInstance, 'second'), isNotNull);
+    expect(getByTestId(renderedInstance, 'default'), isNull);
+  });
+}
+```
+
+However, RTL encourages tests to mirror user behavior. In that case, we want to change the test to use `UserEvent` to navigate the UI and cause the state to change.
+
+```dart
+import 'package:react_testing_library/react_testing_library.dart';
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('View changes with state', () {
+    final renderedInstance = render(WrappedMenu()());
+
+    expect(queryByText(renderedInstance.container, 'second menu item UI', exact: false), isNull);
+    expect(queryByText(renderedInstance.container, 'default menu item UI', exact: false), isNotNull);
+
+    // Instead of setting the state, interact with the UI instead!
+    UserEvent.click(queryByRole(renderedInstance.container, 'button'));
+    UserEvent.click(queryByText(renderedInstance.container, 'Second Menu Item'));
+
+    expect(queryByText(renderedInstance.container, 'second menu item UI', exact: false), isNotNull);
+    expect(queryByText(renderedInstance.container, 'default menu item UI', exact: false), isNull);
+  });
+}
+```
 
 ## Special Cases
 
