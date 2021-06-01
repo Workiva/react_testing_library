@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.sdk == 'dev' }} # Don't fail the workflow if the only errors are in the dev channel
     strategy:
       fail-fast: false
       matrix:
@@ -22,27 +23,46 @@ jobs:
         with:
           sdk: ${{ matrix.sdk }}
 
-      - name: Print Dart SDK version
-        run: dart --version
-
       - name: Use pubspec.next deps
         run: rm -rf pubspec.yaml && mv pubspec.next.yaml pubspec.yaml
 
       - id: install
         name: Install dependencies
         run: dart pub get
+        timeout-minutes: 2
 
       - name: Check formatting
         run: dart format . -l 120 --set-exit-if-changed
+        if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Analyze project source
         run: dart analyze
+        if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (DDC)
-        run: dart run build_runner test
+        run: dart run build_runner test -- --chain-stack-traces --file-reporter json:reports/${{ matrix.sdk }}/ddc/test-results.json
+        timeout-minutes: 10
+        if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
-        run: dart run build_runner test -r
+        run: dart run build_runner test -r -- --chain-stack-traces --file-reporter json:reports/${{ matrix.sdk }}/dart2js/test-results.json
+        timeout-minutes: 10
+        if: ${{ always() && steps.install.outcome == 'success' }}
+
+      - name: Upload Unit Test Results
+        uses: actions/upload-artifact@v2
+        if: ${{ steps.install.outcome == 'success' && (success() || failure()) }} # run this step even if previous step failed, but not if it was skipped
+        with:
+          name: test-results@${{ matrix.sdk }}
+          path: reports/${{ matrix.sdk }}/**/*.json
+
+      - name: Report Unit Test Results
+        uses: dorny/test-reporter@v1
+        if: ${{ always() && steps.install.outcome == 'success' }}
+        with:
+          name: Unit Test Results (${{ matrix.sdk }})
+          path: 'reports/**/test-results.json'
+          reporter: dart-json
 
   build_legacy:
     runs-on: ubuntu-latest
@@ -56,18 +76,36 @@ jobs:
         with:
           sdk: ${{ matrix.sdk }}
 
-      - name: Print Dart SDK version
-        run: dart --version
-
       - id: install
         name: Install dependencies
         run: pub get
+        timeout-minutes: 2
 
       - name: Analyze project source
         run: dartanalyzer .
+        if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (DDC)
-        run: pub run build_runner test
+        run: pub run build_runner test -- --file-reporter json:reports/${{ matrix.sdk }}/ddc/test-results.json
+        timeout-minutes: 10
+        if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
-        run: pub run build_runner test -r
+        run: pub run build_runner test -r -- --file-reporter json:reports/${{ matrix.sdk }}/dart2js/test-results.json
+        timeout-minutes: 10
+        if: ${{ always() && steps.install.outcome == 'success' }}
+
+      - name: Upload Unit Test Results
+        uses: actions/upload-artifact@v2
+        if: ${{ steps.install.outcome == 'success' && (success() || failure()) }} # run this step even if previous step failed, but not if it was skipped
+        with:
+          name: test-results@${{ matrix.sdk }}
+          path: reports/${{ matrix.sdk }}/**/*.json
+
+      - name: Report Unit Test Results
+        uses: dorny/test-reporter@v1
+        if: ${{ always() && steps.install.outcome == 'success' }}
+        with:
+          name: Unit Test Results (${{ matrix.sdk }})
+          path: 'reports/**/test-results.json'
+          reporter: dart-json

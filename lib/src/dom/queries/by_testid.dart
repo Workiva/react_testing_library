@@ -35,12 +35,14 @@ library react_testing_library.src.dom.queries.by_testid;
 import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
+import 'package:meta/meta.dart';
 
 import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/async/wait_for.dart';
 import 'package:react_testing_library/src/dom/matches/types.dart';
 import 'package:react_testing_library/src/dom/queries/interface.dart';
-import 'package:react_testing_library/src/util/error_message_utils.dart' show withErrorInterop;
+import 'package:react_testing_library/src/util/error_message_utils.dart'
+    show TestingLibraryElementError, withErrorInterop;
 
 /// PRIVATE. Do not export from this library.
 ///
@@ -101,14 +103,34 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) =>
-      withErrorInterop(
+  }) {
+    E jsQuery(dynamic testIdTextMatchValue) {
+      return withErrorInterop(
         () => _jsGetByTestId(
           getContainerForScope(),
-          TextMatch.toJs(testId),
+          testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ) as E,
       );
+    }
+
+    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
+
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    try {
+      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -135,14 +157,34 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) =>
-      withErrorInterop(
+  }) {
+    List<E> jsQuery(dynamic testIdTextMatchValue) {
+      return withErrorInterop(
         () => _jsGetAllByTestId(
           getContainerForScope(),
-          TextMatch.toJs(testId),
+          testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
         ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
       );
+    }
+
+    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
+
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    try {
+      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Returns a single element with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -169,12 +211,36 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) =>
-      _jsQueryByTestId(
-        getContainerForScope(),
-        TextMatch.toJs(testId),
-        buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E;
+  }) {
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    E jsQuery(dynamic testIdTextMatchValue) {
+      return withErrorInterop(
+        () => _jsQueryByTestId(
+          getContainerForScope(),
+          testIdTextMatchValue,
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ) as E,
+      );
+    }
+
+    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
+
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    try {
+      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Returns a list of elements with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match.
@@ -201,12 +267,36 @@ mixin ByTestIdQueries on IQueries {
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions]) normalizer,
-  }) =>
-      _jsQueryAllByTestId(
-        getContainerForScope(),
-        TextMatch.toJs(testId),
-        buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ).cast<E>(); // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+  }) {
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    List<E> jsQuery(dynamic testIdTextMatchValue) {
+      return withErrorInterop(
+        () => _jsQueryAllByTestId(
+          getContainerForScope(),
+          testIdTextMatchValue,
+          buildMatcherOptions(exact: exact, normalizer: normalizer),
+        ).cast<E>(), // <vomit/> https://github.com/dart-lang/sdk/issues/37676
+      );
+    }
+
+    if (testId is! String) return jsQuery(TextMatch.toJs(testId));
+
+    // For strings, we need to jump through a few more hoops to ensure that we support matching a single
+    // test id value on an element that may have more than one.
+    try {
+      return jsQuery(_convertTestIdStringToRegExp(testId, exact: exact));
+    } catch (e, st) {
+      if (e is TestingLibraryElementError) {
+        // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
+        // by the consumer since that is how they authored it.
+        throw _errorWithMessageUsingStringTestIdProvided(
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Returns a future with a single element value with the given [testId] value for the `data-test-id` attribute,
   /// defaulting to an [exact] match after waiting 1000ms (or the provided [timeout] duration).
@@ -346,3 +436,30 @@ external List< /*Element*/ dynamic> _jsQueryAllByTestId(
   /*TextMatch*/ dynamic testId, [
   MatcherOptions options,
 ]);
+
+/// Converts string [testId] values into a `RegExp` that matches whole words within a value that may contain one or
+/// more space-separated words before passing it to the JS library.
+///
+/// Necessary to support multiple test id's on a single element
+dynamic _convertTestIdStringToRegExp(dynamic testId, {bool exact = true}) {
+  if (testId is! String) return TextMatch.toJs(testId);
+
+  final testIdMatcher = exact ? RegExp('(\\s|^)$testId(\\s|\$)') : RegExp('(.?)$testId(.?)', caseSensitive: false);
+
+  return TextMatch.toJs(testIdMatcher);
+}
+
+/// Returns an error with the [errorThrownUsingRegExTestIdValue] converted to use the original [testId] provided by
+/// the consumer in its message so that the implementation details of our [_convertTestIdStringToRegExp] `RegExp`
+/// workaround are completely opaque to the consumer.
+TestingLibraryElementError _errorWithMessageUsingStringTestIdProvided({
+  @required TestingLibraryElementError errorThrownUsingRegExTestIdValue,
+  @required StackTrace stackTrace,
+  @required String testId,
+}) {
+  final messageUsingTestIdProvidedByUser =
+      errorThrownUsingRegExTestIdValue.message.replaceAllMapped(RegExp(r'\[(.*)="RegExp\/(.*)\/".?\]'), (match) {
+    return '[${match.group(1)}="$testId"]';
+  });
+  return TestingLibraryElementError(messageUsingTestIdProvidedByUser, stackTrace);
+}
