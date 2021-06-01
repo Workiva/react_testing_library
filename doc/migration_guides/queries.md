@@ -8,6 +8,7 @@
     * __[ByLabelText](#bylabeltext)__
     * __[ByPlaceholderText](#byplaceholdertext)__
     * __[ByText](#bytext)__
+    * __[ByDisplayValue](#bydisplayvalue)__
     * __[ByAltText](#byalttext)__
     * __[ByTitle](#bytitle)__
     * __[ByTestId](#bytestid)__
@@ -451,6 +452,83 @@ Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Worki
 ```
 
 
+### ByDisplayValue
+
+If a form field does not have a label or placeholder, use [ByDisplayValue queries][by-display-value-queries] to find the element.
+
+> Note: This case should be rare because an accessible form field should have a label.
+
+For example, the following test uses `queryByTestId` to access the select element.
+We need to migrate this test to use an RTL query instead.
+
+```dart
+import 'dart:html';
+
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+main() {
+  test('Select Element', () {
+    final instance = render(Dom.div()(
+      (Dom.select()..addTestId('test-id'))([
+        (Dom.option()..value = 'topping1')('Pepperoni'),
+        (Dom.option()
+          ..value = 'topping2'
+          ..selected = true
+        )('Black Olives'),
+        (Dom.option()..value = 'topping3')('Pineapple'),
+      ]),
+    ));
+
+    final select = queryByTestId(instance, 'test-id') as SelectElement;
+    expect(select.value, 'topping2');
+    expect(select.selectedOptions.single.label, 'Black Olives');
+  });
+}
+```
+
+The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the select we are trying to access:
+
+```html
+<div>
+    <select data-test-id="test-id">
+        <option value="topping1">Pepperoni</option>
+        <option value="topping2" selected>Black Olives</option>
+        <option value="topping3">Pineapple</option>
+    </select>
+</div>
+```
+
+Since the select element has no label, we have to use the display value of the selected option to query for the element using:
+`queryByDisplayValue('Black Olives')`, so the resulting RTL test will be:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' show hasValue;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('Select Element', () {
+    final renderResult = rtl.render(Dom.div()(
+      (Dom.select()..addTestId('test-id'))([
+        (Dom.option()..value = 'topping1')('Pepperoni'),
+        (Dom.option()
+          ..value = 'topping2'
+          ..selected = true
+        )('Black Olives'),
+        (Dom.option()..value = 'topping3')('Pineapple'),
+      ]),
+    ));
+
+    final select = renderResult.queryByDisplayValue('Black Olives');
+    expect(select, hasValue('topping2'));
+  });
+}
+```
+
+
 ### ByAltText
 
 [ByAltText queries][by-alt-text-queries] allow you to search for input, image, or area elements by `alt` text.
@@ -792,6 +870,7 @@ Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiv
 [by-label-text-queries]: https://testing-library.com/docs/queries/bylabeltext
 [by-placeholder-text-queries]: https://testing-library.com/docs/queries/byplaceholdertext
 [by-text-queries]: https://testing-library.com/docs/queries/bytext
+[by-display-value-queries]: https://testing-library.com/docs/queries/bydisplayvalue
 [by-alt-text-queries]: https://testing-library.com/docs/queries/byalttext
 [by-title-queries]: https://testing-library.com/docs/queries/bytitle
 [by-test-id-queries]: https://testing-library.com/docs/queries/bytestid
