@@ -2,11 +2,9 @@ TODO add ToC
 
 # Testing Components with Interactions
 
-This guide talks about the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see if it, or something close, is listed.
+This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see the patterns that are covered.
 
-This guide does not go into detail about React Testing Library (RTL) APIs themselves and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the references below.
-
-> NOTE: this guide defaults to using the `UserEvent` API because most of the time, that is the best option. However, in certain situations, it may be necessary to use the `fireEvent` API instead.
+This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the references below.
 
 ## References
 
@@ -89,7 +87,9 @@ This section is the migragation reference for tests using:
 - Element.event() (click, focus, blur)
 - `dispatchEvent`
 
-In Dart, there are a few ways to generate browser events in tests. In the case that your test is just calling one of these APIs to target an element with an event, the switch should be simple. Here is a simple test written with the traditional APIs:
+In Dart, there are a few ways to generate browser events in tests. In the case the test is simply calling a simple event API to eumlate an event, the switch should be simple. Below is an example of doing this switch.
+
+Pre-existing test:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -98,25 +98,38 @@ import 'package:over_react_test/over_react_test.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('TextInput calls blur event', () {
-    var wasBlurred = false;
-    final ref = createRef<TextInputComponent>();
+  test('TextInputs call blur handler', () {
+    var firstWasBlurred = false;
+    var secondWasBlurred = false;
+
+    final firstInputRef = createRef<TextInputComponent>();
+    final secondInputRef = createRef<TextInputComponent>();
 
     render(Wrapper()(
       Dom.div()(
         (TextInput()
-          ..ref = ref
-          ..onBlur = (_) => wasBlurred = true
+          ..ref = firstInputRef
+          ..label = 'the second input'
+          ..onBlur = (_) => firstWasBlurred = true
+        )(),
+        (TextInput()
+          ..ref = secondInputRef
+          ..label = 'the second input'
+          ..onBlur = (_) => secondWasBlurred = true
         )(),
       ),
     ));
 
-    final input = findDomNode(ref.current.getInputDomNode()) as InputElement;
-    input.focus();
+    final firstInput = findDomNode(firstInputRef.current.getInputDomNode()) as InputElement;
+    firstInput.focus();
+    blur(firstInput);
 
-    blur(input);
+    final secondInput = findDomNode(secondInputRef.current.getInputDomNode()) as InputElement;
+    secondInput.focus();
+    blur(secondInput);
 
-    expect(wasBlurred, isTrue);
+    expect(firstWasBlurred, isTrue);
+    expect(secondWasBlurred, isTrue);
   });
 }
 ```
@@ -132,33 +145,49 @@ import 'package:web_skin_dart/component2/text_input.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('TextInput calls blur event', () {
-    var wasBlurred = false;
--     final ref = createRef<TextInputComponent>();
+  test('TextInputs call blur handler', () {
+    var firstWasBlurred = false;
+    var secondWasBlurred = false;
+-
+-    final firstInputRef = createRef<TextInputComponent>();
+-    final secondInputRef = createRef<TextInputComponent>();
 
     render(Wrapper()(
       Dom.div()(
         (TextInput()
--          ..ref = ref
-          ..onBlur = (_) => wasBlurred = true
+-          ..ref = firstInputRef
+          ..label = 'the second input'
+          ..onBlur = (_) => firstWasBlurred = true
+        )(),
+        (TextInput()
+-          ..ref = secondInputRef
+          ..label = 'the second input'
+          ..onBlur = (_) => secondWasBlurred = true
         )(),
       ),
     ));
 
-    final input = instance.getByRole('textbox');
-    input.focus();
-
--    blur(input);
+    final firstInput = instance.getByLabelText('the first input');
+    firstInput.focus();
+-    blur(firstInput);
+-
+-    final secondInput = findDomNode(secondInputRef.current.getInputDomNode()) as InputElement;
+-    secondInput.focus();
+-    blur(secondInput);
++    UserEvent.tab();
 +    UserEvent.tab();
 
-    expect(wasBlurred, isTrue);
+    expect(firstWasBlurred, isTrue);
+    expect(secondWasBlurred, isTrue);
   });
 }
 ```
 
-Note that the query `getComponentRootDomByTestId` also changed to `getByRole`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here).
+Note that the query `findDomNode` also changed to `getByLabelText`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here).
 
-In this example, the original test used the `Simulate.blur` API to trigger the `blur` handler. Because `UserEvent` doesn't explicitly expose an API just for blurring, we can use `tab` instead.
+In this example, the goal was to simulate a user navigating through a form and different input events losing focus. In the original test, we were doing this by getting the input DOM node via a ref and query, and then manually calling `focus` and `blur`.
+
+With RTL, it's a simpler test. Instead of difficult queries, the first input is grabbed and then all we need is the `tab` API! Not only does this test the same core behavior, but it's in a way that the user may actually interact with the page. The `tab` API has checks under the hood to navigate the page as the `tab` key would in a browser. Consequently, you'll also be able to see if there is unexpected behavior when tabbing between fields. However, perhaps the user really wouldn't tab through this form for whatever reason. We could use `click` API instead! Or whatever makes the most sense. The gaols is to use `UserEvent` to emulate what the anticipated user behavior is.
 
 ### Changing an Element's value
 
@@ -185,6 +214,7 @@ UiFactory<WrappedInputProps> WrappedInput = uiForwardRef(
 
     return (Dom.div()(
       (TextInput()
+        ..label = 'the text input'
         ..ref = ref
         ..onChange = (e) {
           props.onChange(e);
@@ -201,7 +231,7 @@ UiFactory<WrappedInputProps> WrappedInput = uiForwardRef(
 
 </details>
 
-The simple example shows a component that has an unconctrolled input and another element that is relying on on the input's `onChange` function to keep it up to date. To test this, we could update the `TextInput`'s value directly and then manually trigger a change, like so:
+The simple example shows a component that has an unconctrolled input and another element that is relying on the input's `onChange` function to keep it up to date. To test this, we could update the `TextInput`'s value directly and then manually trigger a change, like so:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -210,33 +240,35 @@ import 'package:test/test.dart';
 
 import '../component_definition.dart';
 
-test('verify input changes', () {
-  var wasChanged = false;
-  final ref = createRef<TextInputComponent>();
+main() {
+  test('verify input changes', () {
+    var wasChanged = false;
+    final ref = createRef<TextInputComponent>();
 
-  final renderedInstance = render(Wrapper()(
-    (WrappedInput()
-      ..onChange = ((_) => wasChanged = true)
-      ..ref = ref
-    )(),
-  ));
+    final renderedInstance = render(Wrapper()(
+      (WrappedInput()
+        ..onChange = ((_) => wasChanged = true)
+        ..ref = ref
+      )(),
+    ));
 
-  final inputElement = ref.current.getInputDomNode();
-  expect(inputElement.value, '');
+    final inputElement = ref.current.getInputDomNode();
+    expect(inputElement.value, '');
 
-  inputElement.value = 'a new value';
-  change(inputElement, {'target': inputElement});
+    inputElement.value = 'a new value';
+    change(inputElement, {'target': inputElement});
 
-  expect(wasChanged, isTrue);
+    expect(wasChanged, isTrue);
 
-  final valueMirror = getByTestId(renderedInstance, 'valueMirror');
-  final valueMirrorNode = findDomNode(valueMirror);
+    final valueMirror = getByTestId(renderedInstance, 'valueMirror');
+    final valueMirrorNode = findDomNode(valueMirror);
 
-  expect(valueMirrorNode.innerHtml, 'a new value');
-});
+    expect(valueMirrorNode.innerHtml, 'a new value');
+  });
+}
 ```
 
-Instead, using React Testing Library, we can grab the element and use `UserEvent` to immitate a user typing!
+Instead, using React Testing Library, we can grab the element and use `UserEvent` to imitate a user typing!
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -247,14 +279,14 @@ import 'package:test/test.dart';
 
 import '../component_definition.dart';
 
-test('closes when the document it clickeds', () {
+test('verify input changes', () {
   var wasChanged = false;
-  // Note that the `Wrapper` component could be removed!
+
   final renderedInstance = render(
     (WrappedInput()..onChange = ((_) => wasChanged = true))(),
   );
 
-  final input = getByRole(renderedInstance.container, 'textbox') as InputElement;
+  final input = renderedInstance.getByLabelText('the text input') as InputElement;
   expect(input.value, '');
 
   // This is the main change! Note that we're not even
@@ -263,7 +295,7 @@ test('closes when the document it clickeds', () {
   UserEvent.type(input, 'a new value');
   expect(wasChanged, isTrue);
 
-  final mirror = getByText(renderedInstance.container, 'a new value');
+  final mirror = renderedInstance.queryByText('a new value');
   expect(mirror, isNotNull);
   expect(mirror, isA<DivElement>());
 });
@@ -271,7 +303,7 @@ test('closes when the document it clickeds', () {
 
 ## Direct API calls
 
-Tests that rely on direct API calls are those that utilities the component's object instance to trigger a behavior.
+Tests that rely on direct API calls are those that utilize the component's object instance to trigger a behavior.
 
 ### Using a Ref to call component APIs
 
@@ -281,7 +313,7 @@ This section is the migragation reference for using a ref or component instance 
 - class methods that update state (`componentRef.updateValue`)
 - methods that update the UI directly (`.show`, `.toggle`, `.focus`, `.blur`, etc)
 
-Another common pattern is using APIs on the instance (whether it is a component Ref or an Element) to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests demonstrating this.
+Another common pattern is using APIs on the component instance (whether it is a component Ref, ReactElement, or Element) to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests demonstrating this.
 
 <details>
   <summary>Component Definition</summary>
@@ -295,47 +327,46 @@ import 'package:over_react/over_react.dart';
 
 part 'component_definition.over_react.g.dart'; // ignore: uri_does_not_exist
 
-UiFactory<CallbackComponentProps> Callback = castUiFactory(_$Callback); // ignore: undefined_identifier
+UiFactory<FormParentProps> FormParent = castUiFactory(_$FormParent); // ignore: undefined_identifier
 
-mixin CallbackComponentProps on UiProps {}
+mixin FormParentProps on UiProps {}
 
-mixin CallbackComponentState on UiState {
-int count;
+mixin FormParentState on UiState {
+  int count;
 }
 
-class CallbackComponent extends UiStatefulComponent2<CallbackComponentProps, CallbackComponentState> {
-@override
-get initialState => (newState()..count = 0);
+class FormParentComponent extends UiStatefulComponent2<FormParentProps, FormParentState> {
+  @override
+  get initialState => (newState()..count = 0);
 
-incrementCount() {
-this.setState(newState()..count = state.count + 1);
-}
+  incrementCount() {
+    this.setState(newState()..count = state.count + 1);
+  }
 
-@override
-render() {
-return (Dom.div()(
-(ControlledForm()
-..count=state.count
-..updateCount = incrementCount
-)(),
-));
-}
+  @override
+  render() {
+    return (Dom.div()(
+      (ControlledForm()
+        ..count = state.count
+        ..updateCount = incrementCount
+      )(),
+    ));
+  }
 }
 
 mixin ControlledFormProps on UiProps {
-void Function() updateCount;
-int count;
+  void Function() updateCount;
+  int count;
 }
 
-UiFactory<ControlledFormProps> ControlledForm = uiFunction((props) {
-return (
-Dom.div()(
-(Dom.button()..onClick = (_) => props.updateCount())('Update Count'),
-(Dom.div()..addTestId('count'))(props.count),
-)
-);
-},
-_$ControlledFormConfig, // ignore: undefined_identifier
+UiFactory<ControlledFormProps> ControlledForm = uiFunction(
+  (props) {
+    return (Dom.div()(
+      (Dom.button()..onClick = (_) => props.updateCount())('Update Count'),
+      (Dom.div()..addTestId('count'))(props.count),
+    ));
+  },
+  _$ControlledFormConfig, // ignore: undefined_identifier
 );
 
 ```
@@ -391,7 +422,7 @@ main() {
     //
     // Instead of using a ref, we're quering for the button directly and using
     // `UserEvent` to click it and trigger the state change
-    final incrementButton = queryByRole(renderdInstance.container, 'button');
+    final incrementButton = renderdInstance.getByRole('button', name: 'Update Count');
     UserEvent.click(incrementButton);
 
     // Verify the click changed the component state
@@ -444,7 +475,7 @@ class LifecycleTestComponent extends UiStatefulComponent2<LifecycleTestProps, Li
       (Button()
         ..addTestId('counter-button')
         ..onClick = (e) => setState(newState()..count = state.count + 1)
-      )(),
+      )('Update Count'),
     ));
   }
 }
@@ -471,7 +502,7 @@ main() {
 }
 ```
 
-However, with RTL, we would do:
+However, with RTL, we could do something like:
 
 ```dart
 import 'package:react_testing_library/react_testing_library.dart';
@@ -482,22 +513,22 @@ import '../component_definition.dart';
 
 main() {
   test('verify input changes', () {
-    final renderedInstance = rtl.render(LifecycleTest()());
+    final renderedInstance = render(LifecycleTest()());
 
-    final button = rtl.queryByRole(renderedInstance.container, 'button');
-    final count = rtl.queryByText(renderedInstance.container, RegExp('The count is'));
+    final button = renderedInstance.getByRole('button', name: 'Update Count');
+    final count = renderedInstance.queryByText('The count is', exact: false);
     expect(count.innerHtml, contains('0'));
 
     // Instead of calling the component instance,
     // simulate the user behavior
-    ue.UserEvent.click(button);
+    UserEvent.click(button);
     expect(count.innerHtml, contains('0'));
 
     // Rather than programatically setting
     // the state, simulate the user interaction
     // that would create the UI
     for (var i = 1; i <= 4; i++) {
-      ue.UserEvent.click(button);
+      UserEvent.click(button);
     }
 
     expect(count.innerHtml, contains('3'));
@@ -531,7 +562,10 @@ mixin WrappedMenuProps on UiProps {
 UiFactory<WrappedMenuProps> WrappedMenu = uiForwardRef(
   (props, ref) {
     return (Dom.div()(
-      (DropdownButton()..addTestId('button'))(
+      (DropdownButton()
+        ..displayText = 'Open Menu'
+        ..addTestId('button')
+      )(
         DropdownMenu()(
           MenuItem()('First Menu Item'),
           (SubMenu()..menuItem = MenuItem())(
@@ -559,7 +593,7 @@ MenuItem()('First Menu Item'),
 
 </details>
 
-In the example, there is a dropdown button with menu items. A ref is forwarded to a particular menu item.
+In the example, there is a dropdown button with menu items. A ref is forwarded to a particular menu item. The pre-existing test could be:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -588,6 +622,8 @@ main() {
 }
 ```
 
+However, we want to avoid using refs to trigger events in tests meant to vefiry UI works a certain way due to user interaction. Instead, we could do:
+
 ```dart
 import 'package:react_testing_library/react_testing_library.dart';
 import 'package:react_testing_library/user_event.dart';
@@ -603,8 +639,8 @@ main() {
       )(),
     );
 
-    UserEvent.click(queryByRole(renderedInstance.container, 'button'));
-    UserEvent.click(queryByText(renderedInstance.container, 'First Menu Item'));
+    UserEvent.click(renderedInstance.queryByRole('button', name: 'Open Menu'));
+    UserEvent.click(renderedInstance.queryByText('First Menu Item'));
 
     expect(wasClicked, isTrue);
   });
@@ -635,7 +671,7 @@ class WrappedMenuComponent extends UiStatefulComponent2<WrappedMenuProps, Wrappe
   render() {
     return (Dom.div()(
       (DropdownButton()
-        ..onClick = ((_) => print('ciiicked'))
+        ..displayText = 'Open Menu'
         ..addTestId('button')
       )(
         DropdownMenu()(
@@ -723,18 +759,20 @@ main() {
   test('View changes with state', () {
     final renderedInstance = render(WrappedMenu()());
 
-    expect(queryByText(renderedInstance.container, 'second menu item UI', exact: false), isNull);
-    expect(queryByText(renderedInstance.container, 'default menu item UI', exact: false), isNotNull);
+    expect(renderedInstance.queryByText('second menu item UI', exact: false), isNull);
+    expect(renderedInstance.queryByText('default menu item UI', exact: false), isNotNull);
 
     // Instead of setting the state, interact with the UI instead!
-    UserEvent.click(queryByRole(renderedInstance.container, 'button'));
-    UserEvent.click(queryByText(renderedInstance.container, 'Second Menu Item'));
+    UserEvent.click(renderedInstance.getByRole('button', name: 'Open Menu'));
+    UserEvent.click(renderedInstance.getByText('Second Menu Item'));
 
-    expect(queryByText(renderedInstance.container, 'second menu item UI', exact: false), isNotNull);
-    expect(queryByText(renderedInstance.container, 'default menu item UI', exact: false), isNull);
+    expect(renderedInstance.queryByText('second menu item UI', exact: false), isNotNull);
+    expect(renderedInstance.queryByText('default menu item UI', exact: false), isNull);
   });
 }
 ```
+
+Note that the RTL test also changed how we asserted that the click events caused a change, but that's covered more in the Expectations migration guide!
 
 ## Special Cases
 
