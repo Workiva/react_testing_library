@@ -4,7 +4,7 @@
 - **[Event Simulation](#event-simulation)**
   - **[Migration Goal](#migration-goal)**
   - **[When Not to Use UserEvent](#when-not-to-use-userevent)**
-  - **[Migrating DOM Event Calls](#migrating-dom-event-call)**
+  - **[Migrating DOM Event Calls](#migrating-dom-event-calls)**
   - **[Changing an Element's value](#changing-an-elements-value)**
 - **[Direct API calls](#direct-api-calls)**
   - **[Calling Component Instance APIs](#calling-component-instance-apis)**
@@ -13,9 +13,9 @@
 - **[Component State Changes](#component-state-changes)**
 - **[Documentation References](#documentation-references)**
 
-This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see the patterns that are covered.
+This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#patterns-covered-here) to see the patterns that are covered.
 
-This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references)
+This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what they look like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references)
 
 ## Patterns Covered Here
 
@@ -24,7 +24,7 @@ The most general categories for the patterns this guide will focus on migrating 
 - <u>Event Simulation</u>
   - react_test_utils.Simulate
   - Element.event() (click, focus, blur)
-  - `dispatchEvent`
+  - Element.dispatchEvent
   - Changes via `Element.value`
 - <u>Direct API calls</u>
   - Accessing component class methods
@@ -40,7 +40,7 @@ The most general categories for the patterns this guide will focus on migrating 
 
 The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because under the hood, it's calling multiple related events instead of a single one. `UserEvent`'s APIs are also descriptive to the user action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a 1 to 1 API for the events exposed in `Simulate`.
 
-Below is a table of `UserEvent` APIs and some of events that each one triggers. It may be used as a general reference, but the list of events are not exact\*.
+Below is a table of `UserEvent` APIs and some of events that each one triggers. It should be used as a general reference, but the lists of events are not exact to what you may see in a test\*.
 
 Using this table, the line of thinking would be to determine what event a test is currently simulating and find a `UserEvent` API that triggers the desired event.
 
@@ -63,7 +63,7 @@ Using this table, the line of thinking would be to determine what event a test i
 
 > \* This table does not show the _exact_ events that get triggered because
 >
-> 1. It would be overwhelming to show less common events (pointer events, for example)
+> 1. Some handlers trigger _a lot_ of events, so less utilitized ones (such as pointer events) were excluded to keep the table parseable
 > 1. There may be more or less events events based on custom component and page logic
 
 ### When Not to Use `UserEvent`
@@ -76,9 +76,9 @@ This section is the migragation reference for tests using:
 
 - react_test_utils.Simulate
 - Element.event() (click, focus, blur)
-- `dispatchEvent`
+- Element.dispatchEvent
 
-In Dart, there are a few ways to generate browser events in tests. In the case the test is simply calling a simple event API to eumlate an event, the switch should be simple. Below is an example of doing this switch.
+In the case the test is simply calling a basic event API to emulate an event, the switch should be simple. Below is an example of doing this switch.
 
 Pre-existing test:
 
@@ -174,7 +174,7 @@ main() {
 }
 ```
 
-Note that the query `findDomNode` also changed to `getByLabelText`, but was not highlighted because that change is explained more in the [querying conversion guide](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md).
+Note that the query `findDomNode` also changed to `getByLabelText`, but was not highlighted because that change is explained more in the [querying migration guide](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md).
 
 In this example, the goal was to simulate a user navigating through a form and different inputs losing focus. In the original test, we were doing this by getting the input DOM node via a ref and query, and then manually calling `focus` and `blur`.
 
@@ -423,7 +423,7 @@ main() {
 
 This section is the migragation reference for tests that:
 
-- call any compopnent lifecycle event (`shouldComponentUpdate`, `componentWillUncomount`, `componentWillReceiveProps`, etc)
+- call any component lifecycle event (`shouldComponentUpdate`, `componentWillUnmount`, `componentWillReceiveProps`, etc)
 
 Similar to accessing component methods directly, tests should focus on the affect a process has on the UI rather than the expected output of a component lifecycle event.
 
@@ -470,6 +470,7 @@ class LifecycleTestComponent extends UiStatefulComponent2<LifecycleTestProps, Li
 ```
 
 </details>
+
 In the example, the component's UI is dependendent upon the outcome of `shouldComponentUpdate`. Since we can just access the method on the component, we could test how the method behaves like so:
 
 ```dart
@@ -531,8 +532,7 @@ This section is the migragation reference for tests that call methods to grab UI
 - `getInputDomNode`
 - `getHitareaDOMNode`
 
-These APIs are related to how to query for elements ([see that migration guide here](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md)), but are often
-tightly coupled with triggering events. Below is an example showing switching away from that pattern.
+These APIs are related to how to query for elements ([see that migration guide here](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md)), but the fix may involve using events to show new elements. An example of that is below!
 
 <details>
   <summary>Component Definiition</summary>
@@ -558,19 +558,20 @@ UiFactory<WrappedMenuProps> WrappedMenu = uiForwardRef(
           MenuItem()('First Menu Item'),
           (SubMenu()..menuItem = MenuItem())(
             DropdownMenu()(
-MenuItem()('First Menu Item'),
-          (SubMenu()..menuItem = MenuItem())(
-DropdownMenu()(
-MenuItem()('First Menu Item'),
-          (SubMenu()..menuItem = MenuItem())(
-
-(MenuItem()..ref = ref..onClick=props.handleClick)('First Menu Item'),
-          )
-            )
-          )
-            )
-
-          )
+              MenuItem()('First Menu Item'),
+              (SubMenu()..menuItem = MenuItem())(
+                DropdownMenu()(
+                  MenuItem()('First Menu Item'),
+                  (SubMenu()..menuItem = MenuItem())(
+                    (MenuItem()
+                      ..ref = ref
+                      ..onClick = props.handleClick
+                    )('First Menu Item'),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     ));
@@ -610,7 +611,7 @@ main() {
 }
 ```
 
-However, we want to avoid using refs to trigger events in tests meant to vefiry UI works a certain way due to user interaction. Instead, we could do:
+However, we want to avoid using refs to trigger events in tests meant to verify UI works a certain way due to user interaction. Instead, we could do:
 
 ```dart
 import 'package:react_testing_library/react_testing_library.dart';
@@ -720,7 +721,7 @@ import '../component_definition.dart';
 
 main() {
   test('View changes with state', () {
-     final renderedInstance = render(WrappedMenu()());
+    final renderedInstance = render(WrappedMenu()());
     expect(getByTestId(renderedInstance, 'second'), isNull);
     expect(getByTestId(renderedInstance, 'default'), isNotNull);
 
@@ -734,7 +735,7 @@ main() {
 }
 ```
 
-However, RTL encourages tests to mirror user behavior. In that case, we want to change the test to use `UserEvent` to navigate the UI and cause the state to change.
+However, RTL encourages tests to mirror user behavior. We want to change the test to use `UserEvent` to navigate the UI and cause the state to change.
 
 ```dart
 import 'package:react_testing_library/react_testing_library.dart';
