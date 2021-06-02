@@ -3,6 +3,7 @@
 * __[Background](#background)__
 * __[Best Practices](#best-practices)__
     * __[Priority](#priority)__
+    * __[Types of Queries](#types-of-queries)__
 * __[Migrating to RTL Queries](#migrating-to-rtl-queries)__
     * __[ByRole](#byrole)__
     * __[ByLabelText](#bylabeltext)__
