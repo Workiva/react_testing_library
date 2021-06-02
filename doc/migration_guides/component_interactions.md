@@ -1,26 +1,23 @@
-TODO add ToC
-
 # Testing Components with Interactions
+
+- **[Patterns Covered Here](#patterns-covered-here)**
+- **[Event Simulation](#event-simulation)**
+  - **[Migration Goal](#migration-goal)**
+  - **[When Not to Use UserEvent](#when-not-to-use-userevent)**
+  - **[Migrating DOM Event Calls](#migrating-dom-event-call)**
+  - **[Changing an Element's value](#changing-an-elements-value)**
+- **[Direct API calls](#direct-api-calls)**
+  - **[Calling Component Instance APIs](#calling-component-instance-apis)**
+  - **[Calling Component Lifecycle Methods](#calling-component-lifecycle-methods)**
+  - **[Using APIs to get UI and trigger an event](#using-apis-to-get-ui-and-trigger-an-event)**
+- **[Component State Changes](#component-state-changes)**
+- **[Documentation References](#documentation-references)**
 
 This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#what-patterns-does-this-cover) to see the patterns that are covered.
 
-This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the references below.
+This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what that looks like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references)
 
-## References
-
-Examples here should be declarative enough that knowledge of the RTL APIs being used isn't required. That being said, understanding the philosophy and the options would be beneficial. Below is a list of documentation that is relevant to this aspect of the migration.
-
-Both Dart and JS docs are referenced underneath the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. The Dart APIs often link to the JS docs for supplemental information, which is why they are also referenced here.
-
-- [User Actions Philosophy]
-- UserEvent APIs
-  - [Dart UserEvent]
-  - [JS UserEvent]
-- fireEvent
-  - [Dart fireEvent]
-  - [JS fireEvent]
-
-## What Patterns Does This Cover?
+## Patterns Covered Here
 
 The most general categories for the patterns this guide will focus on migrating are:
 
@@ -29,7 +26,7 @@ The most general categories for the patterns this guide will focus on migrating 
   - Element.event() (click, focus, blur)
   - `dispatchEvent`
   - Changes via `Element.value`
-- <u>Using Class APIs</u>
+- <u>Direct API calls</u>
   - Accessing component class methods
   - Calling Component Lifecyle methods
   - Grabbing UI nodes to use as event targets
@@ -37,17 +34,11 @@ The most general categories for the patterns this guide will focus on migrating 
   - Calling `setState` on a component instance
   - Assigning state directly
 
-Besides those general categories, there are special cases that are related to interactions but are a broader pattern. These are:
-
-- Async events
-- Verifying Event Order
-- Meta keys
-
 ## Event Simulation
 
 ### Migration Goal
 
-The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because under the hood, it's calling multiple related events instead of a single one. `UserEvent`'s APIs are also descriptive to the action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a 1 to 1 API for the events exposed in `Simulate`.
+The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because under the hood, it's calling multiple related events instead of a single one. `UserEvent`'s APIs are also descriptive to the user action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a 1 to 1 API for the events exposed in `Simulate`.
 
 Below is a table of `UserEvent` APIs and some of events that each one triggers. It may be used as a general reference, but the list of events are not exact\*.
 
@@ -77,7 +68,7 @@ Using this table, the line of thinking would be to determine what event a test i
 
 ### When Not to Use `UserEvent`
 
-There are not any concrete guidelines for when [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html) should be used instead of `UserEvent`. When writing tests, `UserEvent` should be the default tool that is reached for. From there, if the test requires a precise event to avoid conflicts or access a specific UI state, then `fireEvent` may be more appropriate. However, this should not be a common occurance.
+There are not any concrete guidelines for when [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html) should be used instead of `UserEvent`. When writing tests, `UserEvent` should be the default tool that is reached for. From there, if the test requires a precise event to avoid conflicts or to gain access to a specific UI state, then `fireEvent` may be more appropriate. However, this should not be a common occurance.
 
 ### Migrating DOM Event Calls
 
@@ -183,11 +174,11 @@ main() {
 }
 ```
 
-Note that the query `findDomNode` also changed to `getByLabelText`, but was not highlighted because that change is explained more in the [querying conversion guide](TODO add link here).
+Note that the query `findDomNode` also changed to `getByLabelText`, but was not highlighted because that change is explained more in the [querying conversion guide](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md).
 
-In this example, the goal was to simulate a user navigating through a form and different input events losing focus. In the original test, we were doing this by getting the input DOM node via a ref and query, and then manually calling `focus` and `blur`.
+In this example, the goal was to simulate a user navigating through a form and different inputs losing focus. In the original test, we were doing this by getting the input DOM node via a ref and query, and then manually calling `focus` and `blur`.
 
-With RTL, it's a simpler test. Instead of difficult queries, the first input is grabbed and then all we need is the `tab` API! Not only does this test the same core behavior, but it's in a way that the user may actually interact with the page. The `tab` API has checks under the hood to navigate the page as the `tab` key would in a browser. Consequently, you'll also be able to see if there is unexpected behavior when tabbing between fields. However, perhaps the user really wouldn't tab through this form for whatever reason. We could use `click` API instead! Or whatever makes the most sense. The gaols is to use `UserEvent` to emulate what the anticipated user behavior is.
+With RTL, it's a simpler test. Instead of difficult queries, the first input is grabbed and then all we need is the `tab` API! Not only does this test the same core behavior, but it's in a way that the user may actually interact with the page. The `tab` API has checks under the hood to navigate the page as the `tab` key would in a browser. Consequently, you'll also be able to see if there is unexpected behavior when tabbing between fields. However, perhaps the user really wouldn't tab through this form for whatever reason. We could use `click` API instead! Whatever makes the most sense. The goal is to use `UserEvent` to emulate what the anticipated user behavior is.
 
 ### Changing an Element's value
 
@@ -282,11 +273,11 @@ import '../component_definition.dart';
 test('verify input changes', () {
   var wasChanged = false;
 
-  final renderedInstance = render(
+  final renderResult = render(
     (WrappedInput()..onChange = ((_) => wasChanged = true))(),
   );
 
-  final input = renderedInstance.getByLabelText('the text input') as InputElement;
+  final input = renderResult.getByLabelText('the text input') as InputElement;
   expect(input.value, '');
 
   // This is the main change! Note that we're not even
@@ -295,7 +286,7 @@ test('verify input changes', () {
   UserEvent.type(input, 'a new value');
   expect(wasChanged, isTrue);
 
-  final mirror = renderedInstance.queryByText('a new value');
+  final mirror = renderResult.queryByText('a new value');
   expect(mirror, isNotNull);
   expect(mirror, isA<DivElement>());
 });
@@ -305,7 +296,7 @@ test('verify input changes', () {
 
 Tests that rely on direct API calls are those that utilize the component's object instance to trigger a behavior.
 
-### Using a Ref to call component APIs
+### Calling Component Instance APIs
 
 This section is the migragation reference for using a ref or component instance to access:
 
@@ -317,8 +308,6 @@ Another common pattern is using APIs on the component instance (whether it is a 
 
 <details>
   <summary>Component Definition</summary>
-
-TODO format / comment / rename this
 
 ```dart
 import 'dart:html';
@@ -372,7 +361,7 @@ UiFactory<ControlledFormProps> ControlledForm = uiFunction(
 ```
 
 </details>
-This is a classic controlled component example where a parent's state and callbacks are used to update a child's UI. It's a common testing pattern to access the parent's `incrementCount` method to check that the UI can be updated as expected when that API gets called. This is what that test looks like:
+This is a classic controlled component example where a parent's state and callbacks are used to update a child's UI. It's a common testing pattern to do something like access the parent's `incrementCount` method to check that the UI can be updated as expected when that API gets called. This is what that test looks like:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -383,14 +372,14 @@ import '../component_definition.dart';
 
 main() {
   test('the component can be incremented', () {
-    final callbackRef = createRef<CallbackComponent>();
+    final formParentRef = createRef<FormParentComponent>();
 
-    final renderdInstance = render((Callback()..ref=callbackRef)());
+    final renderdInstance = render((FormParent()..ref=formParentRef)());
     final countDiv = getByTestId(renderdInstance, 'count');
     final countDivNode = findDomNode(countDiv);
     expect(countDivNode.innerHtml, '0');
 
-    callbackRef.current.incrementCount();
+    formParentRef.current.incrementCount();
     expect(countDivNode.innerHtml, '1');
   });
 }
@@ -411,10 +400,9 @@ import '../component_definition.dart';
 main() {
   test('the component can be incremented', () {
     // Remove the ref
-    final renderdInstance = render(Callback()());
+    final renderResult = render(FormParent()());
 
-    final countDiv = queryByText(renderdInstance.container, '0');
-
+    final countDiv = renderResult.queryByText('0');
     expect(countDiv, isNotNull);
     expect(countDiv, isA<DivElement>());
 
@@ -422,7 +410,7 @@ main() {
     //
     // Instead of using a ref, we're quering for the button directly and using
     // `UserEvent` to click it and trigger the state change
-    final incrementButton = renderdInstance.getByRole('button', name: 'Update Count');
+    final incrementButton = renderResult.getByRole('button', name: 'Update Count');
     UserEvent.click(incrementButton);
 
     // Verify the click changed the component state
@@ -513,10 +501,10 @@ import '../component_definition.dart';
 
 main() {
   test('verify input changes', () {
-    final renderedInstance = render(LifecycleTest()());
+    final renderResult = render(LifecycleTest()());
 
-    final button = renderedInstance.getByRole('button', name: 'Update Count');
-    final count = renderedInstance.queryByText('The count is', exact: false);
+    final button = renderResult.getByRole('button', name: 'Update Count');
+    final count = renderResult.queryByText('The count is', exact: false);
     expect(count.innerHtml, contains('0'));
 
     // Instead of calling the component instance,
@@ -543,7 +531,7 @@ This section is the migragation reference for tests that call methods to grab UI
 - `getInputDomNode`
 - `getHitareaDOMNode`
 
-These APIs are related to how to query for elements ([see that migration guide here](TODO add migration guide)), but are often
+These APIs are related to how to query for elements ([see that migration guide here](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md)), but are often
 tightly coupled with triggering events. Below is an example showing switching away from that pattern.
 
 <details>
@@ -632,15 +620,15 @@ import 'package:test/test.dart';
 main() {
   test('click menu item', () {
     var wasClicked = false;
-    final renderedInstance = render((WrappedMenu()
+    final renderResult = render((WrappedMenu()
         ..handleClick = (_) {
           wasClicked = true;
         }
       )(),
     );
 
-    UserEvent.click(renderedInstance.queryByRole('button', name: 'Open Menu'));
-    UserEvent.click(renderedInstance.queryByText('First Menu Item'));
+    UserEvent.click(renderResult.queryByRole('button', name: 'Open Menu'));
+    UserEvent.click(renderResult.queryByText('First Menu Item'));
 
     expect(wasClicked, isTrue);
   });
@@ -757,44 +745,35 @@ import '../component_definition.dart';
 
 main() {
   test('View changes with state', () {
-    final renderedInstance = render(WrappedMenu()());
-
-    expect(renderedInstance.queryByText('second menu item UI', exact: false), isNull);
-    expect(renderedInstance.queryByText('default menu item UI', exact: false), isNotNull);
+    final renderResult = render(WrappedMenu()());
+    expect(renderResult.queryByText('second menu item UI', exact: false), isNull);
+    expect(renderResult.queryByText('default menu item UI', exact: false), isNotNull);
 
     // Instead of setting the state, interact with the UI instead!
-    UserEvent.click(renderedInstance.getByRole('button', name: 'Open Menu'));
-    UserEvent.click(renderedInstance.getByText('Second Menu Item'));
+    UserEvent.click(renderResult.getByRole('button', name: 'Open Menu'));
+    UserEvent.click(renderResult.getByText('Second Menu Item'));
 
-    expect(renderedInstance.queryByText('second menu item UI', exact: false), isNotNull);
-    expect(renderedInstance.queryByText('default menu item UI', exact: false), isNull);
+    expect(renderResult.queryByText('second menu item UI', exact: false), isNotNull);
+    expect(renderResult.queryByText('default menu item UI', exact: false), isNull);
   });
 }
 ```
 
 Note that the RTL test also changed how we asserted that the click events caused a change, but that's covered more in the Expectations migration guide!
 
-## Special Cases
+## Documentation References
 
-This section is the migragation reference for tests that have more complex interaction requirements, such as:
+The examples here were intended to be declarative enough that underlying knowledge of RTL wasn't necessary, but throughout the migration it would be beneficial to have the context. Below are documents related to the APIs needed for migrating.
 
-- Listening for async events
-- Verifying event order
-- Interactions with meta keys
+Both Dart and JS docs are referenced underneath the specific APIs. The Dart version should be the source of truth for usage, as even though an attempt was made to match the JS API's 1 to 1, there are some differences. The Dart docs often link to the JS docs for supplemental information, which is why they are also referenced here.
 
-### Listening for Async Events
-
-Tests that listen for async events are close to the same:
-
-TODO EXAMPLE listening for async events
-
-### Verifying Event Order
-
-TODO EXAMPLE verifying event order
-
-### Using Meta Keys
-
-TODO EXAMPLE meta keys
+- [User Actions Philosophy]
+- UserEvent APIs
+  - [Dart UserEvent]
+  - [JS UserEvent]
+- fireEvent
+  - [Dart fireEvent]
+  - [JS fireEvent]
 
 [user actions philosophy]: https://workiva.github.io/react_testing_library/topics/UserActions-topic.html
 [dart userevent]: https://workiva.github.io/react_testing_library/user_event/UserEvent-class.html
