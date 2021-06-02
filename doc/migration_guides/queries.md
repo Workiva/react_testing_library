@@ -70,10 +70,33 @@ With this in mind, the following is the recommended order of priority for querie
 1. Test IDs
     1. `getByTestId`
 
-In general, `getByRole` should cover most cases and `getByTestId` should only be used as a last resort.
+In general, `getByRole` (and `getByLabelText` for form fields) should cover most cases and `getByTestId` should only be used as a last resort.
 
 For more information, see [documentation on query priority][query-priority].
 
+### Types of Queries
+
+Refer to the following table for a summary of the different types of queries:
+
+Type of Query       | 0 Matches   | 1 Match        | \>1 Matches  | Retry (Async/Await)
+------------------- | ----------- | -------------- | ------------ | -------------------
+_Single Element_    |             |                |              |
+`getBy...`          | Throw error | Return element | Throw error  | No
+`queryBy...`        | Return null | Return element | Throw error  | No
+`findBy...`         | Throw error | Return element | Throw error  | Yes
+_Multiple Elements_ |             |                |              | 
+`getAllBy...`       | Throw       | Return array   | Return array | No
+`queryAllBy...`     | Return []   | Return array   | Return array | No
+`findAllBy...`      | Throw       | Return array   | Return array | Yes
+
+In general:
+* `get(All)By...` queries will commonly be used when the element(s) are expected to be in the document. 
+  This will remove the need to check that the query result is not `null` or empty.
+* `query(All)By...` queries will commonly be used when the element(s) are not always expected to be in the document. 
+  This allows you to expect the query result to be `null` or empty without an error being thrown.
+* `find(All)By...` queries will be used in async tests that need to wait for the element(s) to be in the document before querying for them.
+
+For more information, see [documentation on types of queries][query-types].
 
 ## Migrating to RTL Queries
 
@@ -434,13 +457,14 @@ void main() {
   });
 }
 ```
+> Note: As an alternative to using RegEx, you can also set the `exact` option to `false` like: `getAllByText('name', exact: false)`.
 
 #### Other Examples
 
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalDescription)
-+ renderResult.getByText('You\'ll get an email letting you know when the transition is complete.')
++ renderResult.getByText('You\'ll get an email letting you know', exact: false)
 ```
 
 Example from [`workspaces_components`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/workspaces_components/-/blob/test/unit/workspaces_components/time_ago_test.dart#L34):
@@ -823,7 +847,7 @@ they each correspond to:
 Now that we determined which elements to access, the resulting RTL test will be:
 
 ```dart
-import 'package:react_testing_library/matchers.dart' show hasClasses;
+import 'package:react_testing_library/matchers.dart' show isDisabled;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 import 'package:w_filing/src/filing_module/components/collect_action_toolbar.dart';
@@ -837,7 +861,7 @@ void main() {
     )());
 
     final button = renderResult.getByRole('button', name: 'Combine');
-    expect(button, hasClasses('disabled'));
+    expect(button, isDisabled);
 
     final buttonIcon = rtl.within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph');
     expect(buttonIcon, hasClasses('icon-twfr-group-add'));
@@ -863,6 +887,7 @@ Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiv
 [query-docs]: https://testing-library.com/docs/queries/about
 [guiding-principles]: https://testing-library.com/docs/guiding-principles/
 [query-priority]: https://testing-library.com/docs/queries/about/#priority
+[query-types]: https://testing-library.com/docs/queries/about#types-of-queries
 [by-role-queries]: https://testing-library.com/docs/queries/byrole
 [by-label-text-queries]: https://testing-library.com/docs/queries/bylabeltext
 [by-placeholder-text-queries]: https://testing-library.com/docs/queries/byplaceholdertext
