@@ -848,7 +848,7 @@ they each correspond to:
 Now that we determined which elements to access, the resulting RTL test will be:
 
 ```dart
-import 'package:react_testing_library/matchers.dart' show isDisabled;
+import 'package:react_testing_library/matchers.dart' show hasClasses, isDisabled;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 import 'package:w_filing/src/filing_module/components/collect_action_toolbar.dart';
