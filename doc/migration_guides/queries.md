@@ -122,17 +122,17 @@ import 'package:over_react_test/over_react_test.dart';
 import 'package:test/test.dart';
 
 main() {
-    test('EmailConfirmationModal renders with correct DOM structure', () async {
-      final jacket = mount(
-          (EmailConfirmationModal()
-            ..jobType = JobTypes.transition.toLowerCase()
-          )(),
-          attachedToDocument: true);
-
-      final header = querySelector('.modal-callout-heading');
-      expect(header, isNotNull);
-      expect(header.text, 'Transition Started');
-    });
+  test('EmailConfirmationModal renders with correct DOM structure', () async {
+    final jacket = mount(
+        (EmailConfirmationModal()
+          ..jobType = JobTypes.transition.toLowerCase()
+        )(),
+        attachedToDocument: true);
+  
+    final header = querySelector('.modal-callout-heading');
+    expect(header, isNotNull);
+    expect(header.text, 'Transition Started');
+  });
 }
 ```
 > Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
@@ -157,7 +157,6 @@ for text content with the query, so the resulting RTL test will be:
 import 'package:copy_ui/src/copy/components/common/email_confirmation_modal.dart';
 import 'package:copy_ui/src/copy/shared/constants.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:test/test.dart';
 
 main() {
@@ -168,7 +167,6 @@ main() {
 
     // This both finds the element and verifies the text content in one function call.
     final header = renderResult.getByRole('heading', name: 'Transition Started');
-    expect(header, isInTheDocument);
   });
 }
 ```
@@ -357,7 +355,6 @@ Since the input element has no label and no role, we have to use the placeholder
 
 ```dart
 import 'package:over_react/over_react.dart';
-import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -372,7 +369,6 @@ main() {
     ));
 
     var input = renderResult.getByPlaceholderText('Password');
-    expect(input, isInTheDocument);
   });
 }
 ```
@@ -530,7 +526,6 @@ Since the select element has no label, no placeholder, and no role, we have to u
 
 ```dart
 import 'package:over_react/over_react.dart';
-import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -545,7 +540,6 @@ main() {
     ));
 
     final input = renderResult.getByDisplayValue('2021-06-01');
-    expect(input, isInTheDocument);
   });
 }
 ```
@@ -601,7 +595,6 @@ Since the color input element has no label, no placeholder, and no role, we have
 
 ```dart
 import 'package:over_react/over_react.dart';
-import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -616,7 +609,6 @@ main() {
     ));
 
     var input = renderResult.getByAltText('color input');
-    expect(input, isInTheDocument);
   });
 }
 ```
@@ -663,7 +655,6 @@ Since this element does not have a role or text content, we have to query by tit
 resulting RTL test will be:
 
 ```dart
-import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:shared_ui/src/outline/badges/internal_sheet_badge.dart';
 import 'package:test/test.dart';
@@ -675,7 +666,6 @@ void main() {
     )());
 
     final badge = renderResult.getByTitle('Internal use sheet');
-    expect(badge, isInTheDocument);
   });
 }
 ```
