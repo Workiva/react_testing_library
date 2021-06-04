@@ -158,7 +158,7 @@ With React Testing Library, that becomes:
        ),
      ));
 
-     final firstInput = instance.getByLabelText('the first input');
+     final firstInput = screen.getByLabelText('the first input');
      firstInput.focus();
 -    blur(firstInput);
 -
@@ -264,6 +264,7 @@ Instead, using React Testing Library, we can grab the element and use `UserEvent
 ```dart
 import 'package:over_react/over_react.dart';
 
+import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -273,12 +274,10 @@ import '../component_definition.dart';
 test('verify input changes', () {
   var wasChanged = false;
 
-  final renderResult = render(
-    (WrappedInput()..onChange = ((_) => wasChanged = true))(),
-  );
+  render((WrappedInput()..onChange = ((_) => wasChanged = true))());
 
-  final input = renderResult.getByLabelText<InputElement>('the text input');
-  expect(input.value, '');
+  final input = screen.getByLabelText<InputElement>('the text input');
+  expect(input, hasValue(''));
 
   // This is the main change! Note that we're not even
   // explicitly triggering an `onChange` event. The
@@ -286,7 +285,7 @@ test('verify input changes', () {
   UserEvent.type(input, 'a new value');
   expect(wasChanged, isTrue);
 
-  expect(renderResult.getByText('a new value'), isInTheDocument);
+  expect(screen.getByText('a new value'), isInTheDocument);
 });
 ```
 
@@ -390,6 +389,7 @@ However, this testing strategy may not reflect the user behavior. Instead, we sh
 import 'package:over_react/over_react.dart';
 
 // Switch out the imports to use RTL
+import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -399,17 +399,15 @@ import '../component_definition.dart';
 main() {
   test('the component can be incremented', () {
     // Remove the ref
-    final renderResult = render(FormParent()());
+    render(FormParent()());
 
-    final countDiv = renderResult.queryByText('0');
-    expect(countDiv, isNotNull);
-    expect(countDiv, isA<DivElement>());
+    final countDiv = screen.getByText('0');
 
     // This is the main change!
     //
     // Instead of using a ref, we're querying for the button directly and using
     // `UserEvent` to click it and trigger the state change
-    final incrementButton = renderResult.getByRole('button', name: 'Update Count');
+    final incrementButton = screen.getByRole('button', name: 'Update Count');
     UserEvent.click(incrementButton);
 
     // Verify the click changed the component state
@@ -493,6 +491,7 @@ main() {
 However, with RTL, we could do something like:
 
 ```dart
+import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -501,16 +500,16 @@ import '../component_definition.dart';
 
 main() {
   test('verify input changes', () {
-    final renderResult = render(LifecycleTest()());
+    render(LifecycleTest()());
 
-    final button = renderResult.getByRole('button', name: 'Update Count');
-    final count = renderResult.queryByText('The count is', exact: false);
+    final button = screen.getByRole('button', name: 'Update Count');
+    final count = screen.queryByText('The count is', exact: false);
     expect(count, hasTextContent(endsWith(' 0')));
 
     // Instead of calling the component instance,
     // simulate the user behavior
     UserEvent.click(button);
-    expect(count.innerHtml, contains('0'));
+    expect(count, hasTextContent('0'));
 
     // Rather than programatically setting
     // the state, simulate the user interaction
@@ -519,7 +518,7 @@ main() {
       UserEvent.click(button);
     }
 
-    expect(count.innerHtml, contains('3'));
+    expect(count, hasTextContent('3'));
   });
 }
 ```
@@ -620,7 +619,7 @@ import 'package:test/test.dart';
 main() {
   test('click menu item', () async {
     var wasClicked = false;
-    final renderResult = render(
+    render(
       (WrappedMenu()
         ..handleClick = (_) {
           wasClicked = true;
@@ -628,8 +627,8 @@ main() {
       )(),
     );
 
-    UserEvent.click(renderResult.getByRole('button', name: 'Open Menu'));
-    UserEvent.click(await renderResult.findByText('First Menu Item'));
+    UserEvent.click(screen.getByRole('button', name: 'Open Menu'));
+    UserEvent.click(await screen.findByText('First Menu Item'));
 
     expect(wasClicked, isTrue);
   });
@@ -746,16 +745,16 @@ import '../component_definition.dart';
 
 main() {
   test('View changes with state', () {
-    final renderResult = render(CustomDropdown()());
-    expect(renderResult.queryByText('second menu item UI', exact: false), isNull);
-    expect(renderResult.queryByText('default menu item UI', exact: false), isNotNull);
+    render(CustomDropdown()());
+    expect(screen.queryByText('second menu item UI', exact: false), isNull);
+    expect(screen.queryByText('default menu item UI', exact: false), isNotNull);
 
     // Instead of setting the state, interact with the UI instead!
-    UserEvent.click(renderResult.getByRole('button', name: 'Open Menu'));
-    UserEvent.click(renderResult.getByText('Second Menu Item'));
+    UserEvent.click(screen.getByRole('button', name: 'Open Menu'));
+    UserEvent.click(screen.getByText('Second Menu Item'));
 
-    expect(renderResult.queryByText('second menu item UI', exact: false), isNotNull);
-    expect(renderResult.queryByText('default menu item UI', exact: false), isNull);
+    expect(screen.queryByText('second menu item UI', exact: false), isNotNull);
+    expect(screen.queryByText('default menu item UI', exact: false), isNull);
   });
 }
 ```
