@@ -8,8 +8,9 @@
   - **[Changing an Element's value](#changing-an-elements-value)**
 - **[Direct API calls](#direct-api-calls)**
   - **[Calling Component Instance APIs](#calling-component-instance-apis)**
+  - **[Triggering Callbacks via Props](#triggering-callbacks-via-props)**
   - **[Calling Component Lifecycle Methods](#calling-component-lifecycle-methods)**
-  - **[Using APIs to get UI and trigger an event](#using-apis-to-get-ui-and-trigger-an-event)**
+  - **[Using APIs to get UI and Trigger an Event](#using-apis-to-get-ui-and-trigger-an-event)**
 - **[Component State Changes](#component-state-changes)**
 - **[Documentation References](#documentation-references)**
 
@@ -28,6 +29,7 @@ The most general categories for the patterns this guide will focus on migrating 
   - Changes via `Element.value`
 - <u>Direct API calls</u>
   - Accessing component class methods
+  - Using `.props` to trigger callbacks
   - Calling Component Lifecyle methods
   - Grabbing UI nodes to use as event targets
 - <u>Component State Changes</u>
@@ -77,6 +79,7 @@ This section is the migration reference for tests using:
 - react_test_utils.Simulate
 - Element.event() (click, focus, blur)
 - Element.dispatchEvent
+- Calling component event handlers
 
 In the case that the test is simply calling a basic event API to emulate an event, the swmigrationitch should be simple. Below is an example of doing this migration.
 
@@ -412,6 +415,152 @@ main() {
 
     // Verify the click changed the component state
     expect(countDiv, hasTextContent('1'));
+  });
+}
+```
+
+### Triggering Callbacks via Props
+
+This section is the migragation reference for tests that access props and:
+
+- call raw event handlers (`onClick`, `onFocus`, etc)
+- custom component callbacks
+
+Tests sometimes use the `props` field on a component instance to trigger event callbacks that are set on that component.
+
+<details>
+  <summary>Component Definition (click to expand)</summary>
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/all.dart';
+
+part 'component_definition.over_react.g.dart';
+
+mixin LoginProps on UiProps {}
+
+UiFactory<LoginProps> Login = uiFunction(
+  (_) {
+    final username = useState('');
+    final password = useState('');
+    final error = useState<String>(null);
+    final isAuthed = useState(false);
+
+    bool _credentialsAreValid() {
+      return username.value.isNotEmpty && password.value.isNotEmpty;
+    }
+
+    return ((Form()
+      ..addTestId('form')
+      ..onSubmit = (e) {
+        e.preventDefault();
+        error.set(null);
+
+        if (_credentialsAreValid()) {
+          isAuthed.set(true);
+        } else {
+          isAuthed.set(false);
+          error.set('Uh oh, there was an error!');
+        }
+      }
+    )(
+      (TextInput()
+        ..addTestId('username-field')
+        ..label = 'Username'
+        ..placeholder = 'Username'
+        ..onChange = (e) {
+          username.set(e.target.value);
+        }
+      )(),
+      (TextInput()
+        ..addTestId('password-field')
+        ..label = 'Password'
+        ..placeholder = 'Password'
+        ..onChange = (e) {
+          password.set(e.target.value);
+        }
+      )(),
+      (Button()..type = ButtonType.SUBMIT)('Log In'),
+      error.value != null ? (Dom.div()..addTestId('error-message'))(error.value) : null,
+      isAuthed.value ? (Dom.div()..addTestId('success-message'))('Welcome!') : null,
+    ));
+  },
+  _$LoginConfig, // ignore: undefined_identifier
+);
+```
+
+</details>
+
+This example is an extremely simplified login form that changes the UI based on what happens in the `onSubmit` callback. To verify that form behaves as expected, with OverReact Test we may have done something like:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('can submit a form', () {
+    final renderedInstance = render(Wrapper()(
+      Login()(),
+    ));
+
+    FormComponent form = getComponentByTestId(renderedInstance, 'form');
+    form.props.onSubmit(createSyntheticFormEvent());
+
+    expect(queryByTestId(renderedInstance, 'error-message')?.innerHtml, contains('Uh oh'));
+
+    TextInputComponent username = getComponentByTestId(renderedInstance, 'username-field');
+    TextInputComponent password = getComponentByTestId(renderedInstance, 'password-field');
+
+    username.setValue('jonsnow');
+    change(username.getInputDomNode());
+
+    password.setValue('winteriscoming');
+    change(password.getInputDomNode());
+
+    form.props.onSubmit(createSyntheticFormEvent());
+    expect(queryByTestId(renderedInstance, 'error-message'), isNull);
+    expect(queryByTestId(renderedInstance, 'success-message'), isNotNull);
+  });
+```
+
+This example differs from others in that we're getting the form instance with `getComponentByTestId` and then calling `form.props.onSubmit` to change the state of the form. On top of that though, we're using `TextInput` APIs to change the values of the input nodes and the `Simulate.change` API to get our `Login` form's state to update. We can simplify this with RTL APIs like so:
+
+```dart
+import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/react_testing_library.dart';
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+main() {
+  test('can submit a form', () async {
+    render(Login()());
+
+    // Instead of worrying about the component's props, we can just
+    // find the button and click it!
+    final loginButton = screen.getByRole('button', name: 'Log In');
+    UserEvent.click(loginButton);
+
+    expect(screen.getByText('Uh oh', exact: false), isInTheDocument);
+
+    // Instead of using a component's APIs to grab a node and simulate a
+    // change, we can just search by label and use the `type` API!
+    UserEvent.type(screen.getByLabelText('Username'), 'jonsnow');
+
+    // Additionally, we can test that the user can just "tab" to the
+    // password input by using the `tab` API instead of querying for
+    // the input!
+    UserEvent.tab();
+    UserEvent.keyboard('winteriscoming');
+
+    // Again, clicking the button instead of
+    // calling `onSubmit` directly
+    UserEvent.click(loginButton);
+
+    expect(screen.queryByText('Uh oh', exact: false), isNot(isInTheDocument));
+    expect(screen.getByText('Welcome!'), isInTheDocument);
   });
 }
 ```
