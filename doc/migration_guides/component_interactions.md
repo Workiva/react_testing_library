@@ -23,7 +23,7 @@ The most general categories for the patterns this guide will focus on migrating 
 
 - <u>Event Simulation</u>
   - react_test_utils.Simulate
-  - Element.event() (click, focus, blur)
+  - `Element.click()`/`.focus()`/`.blur()`
   - Element.dispatchEvent
   - Changes via `Element.value`
 - <u>Direct API calls</u>
@@ -38,7 +38,7 @@ The most general categories for the patterns this guide will focus on migrating 
 
 ### Migration Goal
 
-The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because under the hood, it's calling multiple related events instead of a single one. `UserEvent`'s APIs are also descriptive to the user action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a 1 to 1 API for the events exposed in `Simulate`.
+The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because its methods simulate real-world sequences of different event types, as opposed to just dispatching a single event. `UserEvent`'s APIs are also descriptive to the user action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a one-to-one API for the events exposed in `Simulate`.
 
 Below is a table of `UserEvent` APIs and some of events that each one triggers. It should be used as a general reference, but the lists of events are not exact to what you may see in a test\*.
 
@@ -78,7 +78,7 @@ This section is the migration reference for tests using:
 - Element.event() (click, focus, blur)
 - Element.dispatchEvent
 
-In the case the test is simply calling a basic event API to emulate an event, the switch should be simple. Below is an example of doing this switch.
+In the case that the test is simply calling a basic event API to emulate an event, the swmigrationitch should be simple. Below is an example of doing this migration.
 
 Pre-existing test:
 
@@ -128,38 +128,38 @@ main() {
 With React Testing Library, that becomes:
 
 ```diff
-- import 'package:over_react/over_react.dart';
-import 'package:web_skin_dart/component2/text_input.dart';
-- import 'package:over_react_test/over_react_test.dart';
-+ import 'package:react_testing_library/react_testing_library.dart';
-+ import 'package:react_testing_library/user_event.dart';
-import 'package:test/test.dart';
+-import 'package:over_react/over_react.dart';
+ import 'package:web_skin_dart/component2/text_input.dart';
+-import 'package:over_react_test/over_react_test.dart';
++import 'package:react_testing_library/react_testing_library.dart';
++import 'package:react_testing_library/user_event.dart';
+ import 'package:test/test.dart';
 
-main() {
-  test('TextInputs call blur handler', () {
-    var firstWasBlurred = false;
-    var secondWasBlurred = false;
+ main() {
+   test('TextInputs call blur handler', () {
+     var firstWasBlurred = false;
+     var secondWasBlurred = false;
 -
 -    final firstInputRef = createRef<TextInputComponent>();
 -    final secondInputRef = createRef<TextInputComponent>();
 
-    render(Wrapper()(
-      Dom.div()(
-        (TextInput()
+     render(Wrapper()(
+       Dom.div()(
+         (TextInput()
 -          ..ref = firstInputRef
-          ..label = 'the second input'
-          ..onBlur = (_) => firstWasBlurred = true
-        )(),
-        (TextInput()
+           ..label = 'the second input'
+           ..onBlur = (_) => firstWasBlurred = true
+         )(),
+         (TextInput()
 -          ..ref = secondInputRef
-          ..label = 'the second input'
-          ..onBlur = (_) => secondWasBlurred = true
-        )(),
-      ),
-    ));
+           ..label = 'the second input'
+           ..onBlur = (_) => secondWasBlurred = true
+         )(),
+       ),
+     ));
 
-    final firstInput = instance.getByLabelText('the first input');
-    firstInput.focus();
+     final firstInput = instance.getByLabelText('the first input');
+     firstInput.focus();
 -    blur(firstInput);
 -
 -    final secondInput = findDomNode(secondInputRef.current.getInputDomNode()) as InputElement;
@@ -168,10 +168,10 @@ main() {
 +    UserEvent.tab();
 +    UserEvent.tab();
 
-    expect(firstWasBlurred, isTrue);
-    expect(secondWasBlurred, isTrue);
+     expect(firstWasBlurred, isTrue);
+     expect(secondWasBlurred, isTrue);
   });
-}
+ }
 ```
 
 Note that the query `findDomNode` also changed to `getByLabelText`, but was not highlighted because that change is explained more in the [querying migration guide](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md).
@@ -302,7 +302,7 @@ This section is the migragation reference for using a ref or component instance 
 - class methods that update state (`componentRef.updateValue`)
 - methods that update the UI directly (`.show`, `.toggle`, `.focus`, `.blur`, etc)
 
-Another common pattern is using APIs on the component instance (whether it is a component Ref, ReactElement, or Element) to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests demonstrating this.
+Another common pattern is using APIs on the component instance to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests demonstrating this.
 
 <details>
   <summary>Component Definition</summary>
@@ -359,6 +359,7 @@ UiFactory<ControlledFormProps> ControlledForm = uiFunction(
 ```
 
 </details>
+
 This is a classic controlled component example where a parent's state and callbacks are used to update a child's UI. It's a common testing pattern to do something like access the parent's `incrementCount` method to check that the UI can be updated as expected when that API gets called. This is what that test looks like:
 
 ```dart
@@ -617,7 +618,7 @@ import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('click menu item', () {
+  test('click menu item', () async {
     var wasClicked = false;
     final renderResult = render(
       (WrappedMenu()
@@ -627,8 +628,8 @@ main() {
       )(),
     );
 
-    UserEvent.click(renderResult.queryByRole('button', name: 'Open Menu'));
-    UserEvent.click(renderResult.queryByText('First Menu Item'));
+    UserEvent.click(renderResult.getByRole('button', name: 'Open Menu'));
+    UserEvent.click(await renderResult.findByText('First Menu Item'));
 
     expect(wasClicked, isTrue);
   });
@@ -646,15 +647,15 @@ This section is the migragation reference for tests that update state directly, 
   <summary>Component Definition</summary>
 
 ```dart
-UiFactory<WrappedMenuProps> WrappedMenu = castUiFactory(_$WrappedMenu); // ignore: undefined_identifier
+UiFactory<CustomDropdownProps> CustomDropdown = castUiFactory(_$CustomDropdown); // ignore: undefined_identifier
 
-mixin WrappedMenuProps on UiProps {}
+mixin CustomDropdownProps on UiProps {}
 
-mixin WrappedMenuState on UiState {
+mixin CustomDropdownState on UiState {
   String selectedItem;
 }
 
-class WrappedMenuComponent extends UiStatefulComponent2<WrappedMenuProps, WrappedMenuState> {
+class CustomDropdownComponent extends UiStatefulComponent2<CustomDropdownProps, CustomDropdownState> {
   @override
   render() {
     return (Dom.div()(
@@ -720,12 +721,12 @@ import '../component_definition.dart';
 
 main() {
   test('View changes with state', () {
-    final renderedInstance = render(WrappedMenu()());
+    final renderedInstance = render(CustomDropdown()());
     expect(getByTestId(renderedInstance, 'second'), isNull);
     expect(getByTestId(renderedInstance, 'default'), isNotNull);
 
-    WrappedMenuComponent component = getDartComponent(renderedInstance);
-    component.setState(component.typedStateFactory({'WrappedMenuState.selectedItem': 'second'}));
+    CustomDropdownComponent component = getDartComponent(renderedInstance);
+    component.setState(component.typedStateFactory({'CustomDropdownState.selectedItem': 'second'}));
 
 
     expect(getByTestId(renderedInstance, 'second'), isNotNull);
@@ -745,7 +746,7 @@ import '../component_definition.dart';
 
 main() {
   test('View changes with state', () {
-    final renderResult = render(WrappedMenu()());
+    final renderResult = render(CustomDropdown()());
     expect(renderResult.queryByText('second menu item UI', exact: false), isNull);
     expect(renderResult.queryByText('default menu item UI', exact: false), isNotNull);
 
