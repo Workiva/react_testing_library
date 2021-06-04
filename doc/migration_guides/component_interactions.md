@@ -15,7 +15,7 @@
 
 This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#patterns-covered-here) to see the patterns that are covered.
 
-This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what they look like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references)
+This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what they look like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references).
 
 ## Patterns Covered Here
 
@@ -68,11 +68,11 @@ Using this table, the line of thinking would be to determine what event a test i
 
 ### When Not to Use `UserEvent`
 
-There are not any concrete guidelines for when [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html) should be used instead of `UserEvent`. When writing tests, `UserEvent` should be the default tool that is reached for. From there, if the test requires a precise event to avoid conflicts or to gain access to a specific UI state, then `fireEvent` may be more appropriate. However, this should not be a common occurance.
+There are not any concrete guidelines for when [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html) should be used instead of `UserEvent`. When writing tests, `UserEvent` should be the default tool you reach for. From there, if the test requires a precise event to avoid conflicts or to gain access to a specific UI state, then `fireEvent` may be more appropriate. However, this should not be a common occurance.
 
 ### Migrating DOM Event Calls
 
-This section is the migragation reference for tests using:
+This section is the migration reference for tests using:
 
 - react_test_utils.Simulate
 - Element.event() (click, focus, blur)
@@ -189,7 +189,7 @@ This section is the migragation reference for:
 Another common case is using the `value` property on an element to update the UI and trigger an `onChange` (or other) listener.
 
 <details>
-  <summary>Component Definition</summary>
+  <summary>Component Definition (click to expand)</summary>
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -277,7 +277,7 @@ test('verify input changes', () {
     (WrappedInput()..onChange = ((_) => wasChanged = true))(),
   );
 
-  final input = renderResult.getByLabelText('the text input') as InputElement;
+  final input = renderResult.getByLabelText<InputElement>('the text input');
   expect(input.value, '');
 
   // This is the main change! Note that we're not even
@@ -286,9 +286,7 @@ test('verify input changes', () {
   UserEvent.type(input, 'a new value');
   expect(wasChanged, isTrue);
 
-  final mirror = renderResult.queryByText('a new value');
-  expect(mirror, isNotNull);
-  expect(mirror, isA<DivElement>());
+  expect(renderResult.getByText('a new value'), isInTheDocument);
 });
 ```
 
@@ -374,7 +372,7 @@ main() {
   test('the component can be incremented', () {
     final formParentRef = createRef<FormParentComponent>();
 
-    final renderdInstance = render((FormParent()..ref=formParentRef)());
+    final renderdInstance = render((FormParent()..ref = formParentRef)());
     final countDiv = getByTestId(renderdInstance, 'count');
     final countDivNode = findDomNode(countDiv);
     expect(countDivNode.innerHtml, '0');
@@ -408,13 +406,13 @@ main() {
 
     // This is the main change!
     //
-    // Instead of using a ref, we're quering for the button directly and using
+    // Instead of using a ref, we're querying for the button directly and using
     // `UserEvent` to click it and trigger the state change
     final incrementButton = renderResult.getByRole('button', name: 'Update Count');
     UserEvent.click(incrementButton);
 
     // Verify the click changed the component state
-    expect(countDiv.innerHtml, '1');
+    expect(countDiv, hasTextContent('1'));
   });
 }
 ```
@@ -506,7 +504,7 @@ main() {
 
     final button = renderResult.getByRole('button', name: 'Update Count');
     final count = renderResult.queryByText('The count is', exact: false);
-    expect(count.innerHtml, contains('0'));
+    expect(count, hasTextContent(endsWith(' 0')));
 
     // Instead of calling the component instance,
     // simulate the user behavior
@@ -621,7 +619,8 @@ import 'package:test/test.dart';
 main() {
   test('click menu item', () {
     var wasClicked = false;
-    final renderResult = render((WrappedMenu()
+    final renderResult = render(
+      (WrappedMenu()
         ..handleClick = (_) {
           wasClicked = true;
         }
