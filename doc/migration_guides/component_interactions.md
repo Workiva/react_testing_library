@@ -304,7 +304,7 @@ This section is the migragation reference for using a ref or component instance 
 Another common pattern is using APIs on the component instance to change the values in order to verify the UI updates as expected. In general, the new approach here is to query for the UI element that should trigger the change and use the `UserEvent` API to trigger the correct event instead. Below is an example of tests demonstrating this.
 
 <details>
-  <summary>Component Definition</summary>
+  <summary>Component Definition (click to expand)</summary>
 
 ```dart
 import 'dart:html';
@@ -425,7 +425,7 @@ This section is the migragation reference for tests that:
 Similar to accessing component methods directly, tests should focus on the affect a process has on the UI rather than the expected output of a component lifecycle event.
 
 <details>
-  <summary>Component Definition</summary>
+  <summary>Component Definition (click to expand)</summary>
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -643,7 +643,7 @@ This section is the migragation reference for tests that update state directly, 
 - Setting state equal to a new value directly
 
 <details>
-  <summary>Component Definition</summary>
+  <summary>Component Definition (click to expand)</summary>
 
 ```dart
 UiFactory<CustomDropdownProps> CustomDropdown = castUiFactory(_$CustomDropdown); // ignore: undefined_identifier
