@@ -4,6 +4,7 @@
 * __[Best Practices](#best-practices)__
     * __[Priority](#priority)__
     * __[Types of Queries](#types-of-queries)__
+    * __[Query Using `screen`](#query-using-screen)__
 * __[Migrating to RTL Queries](#migrating-to-rtl-queries)__
     * __[ByRole](#byrole)__
     * __[ByLabelText](#bylabeltext)__
@@ -98,6 +99,18 @@ In general:
 * `find(All)By...` queries will be used in async tests that need to wait for the element(s) to be in the document before querying for them.
 
 For more information, see [documentation on types of queries][query-types].
+
+### Query Using `screen`
+
+Prefer querying within `screen` rather than `renderResult` to avoid an unnecessary variable declaration:
+
+```diff
+- final renderResult = render(Example()());
++ render(Example()());
+
+- final button = renderResult.getByRole('button');
++ final button = screen.getByRole('button');
+```
 
 ## Migrating to RTL Queries
 
