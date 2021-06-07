@@ -148,7 +148,7 @@ main() {
   });
 }
 ```
-> Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
+> Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
 
 The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the header we are trying to access:
 
@@ -188,13 +188,13 @@ main() {
 
 #### Other Examples
 
-Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L39-40):
+Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L39-40):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalButton)
 + screen.getByRole('button', name: SharedModalConstants.okButtonText)
 ```
 
-Examples from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/ss_to_graph/import_table_test.dart#L521-526):
+Examples from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui@f22018bf25a129e95cf24d56d3e84a1078613bf6/-/blob/test/unit/ui_components/ss_to_graph/import_table_test.dart#L521-526):
 ```diff
 - getAllByTestId(renderedInstance, 'a.vertexData.headCell')
 + screen.getByRole('rowheader', name: 'a')
@@ -205,13 +205,13 @@ Examples from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Worki
 + screen.getAllByRole('cell')
 ```
 
-Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L44-45):
+Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L44-45):
 ```diff
 - findRenderedDOMComponentWithClass(component, 'hitarea')
 + screen.getByRole('button')
 ```
 
-Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/rich_app_shell/components/document_tabs_pane_test.dart#L372-373):
+Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/rich_app_shell/components/document_tabs_pane_test.dart#L372-373):
 ```diff
 - scryRenderedDOMComponentsWithClass(component, 'nav-item')
 + screen.getAllByRole('presentation')
@@ -253,7 +253,7 @@ main() {
   });
 }
 ```
-> Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/session_module/components/expiration/session_expired_modal_test.dart#L140-142)
+> Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/session_module/components/expiration/session_expired_modal_test.dart#L140-142)
 
 The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM containing the input we are trying to access:
 
@@ -308,13 +308,13 @@ main() {
 
 #### Other Examples
 
-Example from [`xbrl-module`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/xbrl-module/-/blob/test/unit/src/components/xbrl_blackline_filters_test.dart#L222-225):
+Example from [`xbrl-module`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/xbrl-module@0eb7a422e768d68208ec1cd78832d890fa0afe43/-/blob/test/unit/src/components/xbrl_blackline_filters_test.dart#L222-225):
 ```diff
 - queryAllByTestId(component.getInstance(), 'xbrl--blackline-history-panel-toolbar--filter-form--datepicker')
 + screen.queryAllByLabelText('Date', exact: false)
 ```
 
-Example from [`w_comments`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_comments/-/blob/test/unit/src/comments/components/thread/create_comment_form_test.dart#L133):
+Example from [`w_comments`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_comments@23d0c03b9388286febedb703b71ff1ccc5ea54b2/-/blob/test/unit/src/comments/components/thread/create_comment_form_test.dart#L133):
 ```diff
 - directMentionsComponent.getInputDomNode()
 + screen.getByLabelText('Comment')
@@ -420,7 +420,7 @@ void main() {
   });
 }
 ```
-> Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history/-/blob/test/src/components/cards/history_card_parts/authors_test.dart#L205-206)
+> Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history@8b1fcb2328bb27ed420029064218fd4657de6ae4/-/blob/test/src/components/cards/history_card_parts/authors_test.dart#L205-206)
 
 The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the divs we are trying to access:
 
@@ -476,19 +476,19 @@ void main() {
 
 #### Other Examples
 
-Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
+Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalDescription)
 + screen.getByText('You\'ll get an email letting you know', exact: false)
 ```
 
-Example from [`workspaces_components`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/workspaces_components/-/blob/test/unit/workspaces_components/time_ago_test.dart#L34):
+Example from [`workspaces_components`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/workspaces_components@af5177ca4d37d43e18f03c50c9a3a29bb89636b9/-/blob/test/unit/workspaces_components/time_ago_test.dart#L34):
 ```diff
 - queryByTestId(renderedInstance, TimeAgoTestIds.timeAgo)
 + screen.getByText(TimeAgoComponent.formatTimeAgo(nowTimestamp))
 ```
 
-Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/app_infrastructure_1/network_health/network_health_alerts_test.dart#L23):
+Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/app_infrastructure_1/network_health/network_health_alerts_test.dart#L23):
 ```diff
 - queryByTestId(component, 'network-health-offline')
 + screen.getByText('You are not connected to the internet.')
@@ -661,7 +661,7 @@ void main() {
   });
 }
 ```
-> Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
+> Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client@659287a02a269c8b2c82d9a91e9239a11c74abe0/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
 
 The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
 
@@ -699,7 +699,7 @@ void main() {
 
 #### Other Examples
 
-Example from [`admin_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/admin_client/-/blob/test/unit/suite_3/my_profile_module/my_profile_module_test.dart#L116):
+Example from [`admin_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/admin_client@c302b8f7be289ca25e3343339c3d9ffcb549424b/-/blob/test/unit/suite_3/my_profile_module/my_profile_module_test.dart#L116):
 ```diff
 - queryByTestId(testJacket.getDartInstance(), 'wsd.Avatar.initials')
 + screen.getByTitle('firstName lastName')
@@ -731,7 +731,7 @@ main() {
   });
 }
 ```
-> Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L22)
+> Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L22)
 
 The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
 
@@ -785,7 +785,7 @@ main() {
 
 #### Other Examples
 
-Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L34-35):
+Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L34-35):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalIcon)
 + screen.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon)
@@ -823,7 +823,7 @@ void main() {
   });
 }
 ```
-> Example from [`w_filing`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_filing/-/blob/test/unit/tests/components/collect_action_toolbar_test.dart#L171)
+> Example from [`w_filing`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_filing@ddc298f7ab01762698e227d6709a63695db6067a/-/blob/test/unit/tests/components/collect_action_toolbar_test.dart#L171)
 
 The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
 
@@ -888,13 +888,13 @@ void main() {
 
 ### Other Examples
 
-Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
+Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui@7156511e9c5b8ee1a6da104605ff73e5039dcc41/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
 ```diff
 - AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'))
 + screen.getByLabelText('List Options')
 ```
 
-Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54):
+Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui@f22018bf25a129e95cf24d56d3e84a1078613bf6/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54):
 ```diff
 - getComponentByTestId(renderedComponent, 'graph_ui__number-property-input__input')
 + screen.getByLabelText('testPropertyName')
