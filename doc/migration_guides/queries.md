@@ -165,8 +165,10 @@ main() {
       ..jobType = JobTypes.transition.toLowerCase()
     )());
 
-    // This both finds the element and verifies the text content in one function call.
-    final header = renderResult.getByRole('heading', name: 'Transition Started');
+    // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
+    // but it can be a good idea to make the assertion explicit.
+    // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
+    expect(rtl.screen.getByRole('heading', name: 'Transition Started'), isInTheDocument);
   });
 }
 ```
@@ -368,7 +370,10 @@ main() {
       )(),
     ));
 
-    var input = renderResult.getByPlaceholderText('Password');
+    // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
+    // but it can be a good idea to make the assertion explicit.
+    // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
+    expect(renderResult.getByPlaceholderText('Password'), isInTheDocument);
   });
 }
 ```
@@ -539,7 +544,10 @@ main() {
       )(),
     ));
 
-    final input = renderResult.getByDisplayValue('2021-06-01');
+    // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
+    // but it can be a good idea to make the assertion explicit.
+    // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
+    expect(renderResult.getByDisplayValue('2021-06-01'), isInTheDocument);
   });
 }
 ```
@@ -608,7 +616,10 @@ main() {
       )(),
     ));
 
-    var input = renderResult.getByAltText('color input');
+    // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
+    // but it can be a good idea to make the assertion explicit.
+    // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
+    expect(renderResult.getByAltText('color input'), isInTheDocument);
   });
 }
 ```
@@ -665,7 +676,10 @@ void main() {
       ..badgeMeta = (InternalSheetBadgeMeta()..isInternal = true)
     )());
 
-    final badge = renderResult.getByTitle('Internal use sheet');
+    // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
+    // but it can be a good idea to make the assertion explicit.
+    // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
+    expect(renderResult.getByTitle('Internal use sheet'), isInTheDocument);
   });
 }
 ```
