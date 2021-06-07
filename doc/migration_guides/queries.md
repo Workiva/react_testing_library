@@ -137,7 +137,7 @@ main() {
 ```
 > Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the header we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the header we are trying to access:
 
 ```html
 <h4 
@@ -161,7 +161,7 @@ import 'package:test/test.dart';
 
 main() {
   test('EmailConfirmationModal renders with correct DOM structure', () async {
-    final renderResult = rtl.render((EmailConfirmationModal()
+    rtl.render((EmailConfirmationModal()
       ..jobType = JobTypes.transition.toLowerCase()
     )());
 
@@ -178,30 +178,30 @@ main() {
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L39-40):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalButton)
-+ renderResult.getByRole('button', name: SharedModalConstants.okButtonText)
++ screen.getByRole('button', name: SharedModalConstants.okButtonText)
 ```
 
 Examples from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/ss_to_graph/import_table_test.dart#L521-526):
 ```diff
-- getAllByTestId(renderResult, 'a.vertexData.headCell')
-+ renderResult.getByRole('rowheader', name: 'a')
+- getAllByTestId(renderedInstance, 'a.vertexData.headCell')
++ screen.getByRole('rowheader', name: 'a')
 ```
 
 ```diff
-- getAllByTestId(renderResult, 'graph_ui.ImportTable.tableBody.vertexData')
-+ renderResult.getAllByRole('cell')
+- getAllByTestId(renderedInstance, 'graph_ui.ImportTable.tableBody.vertexData')
++ screen.getAllByRole('cell')
 ```
 
 Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L44-45):
 ```diff
 - findRenderedDOMComponentWithClass(component, 'hitarea')
-+ renderResult.getByRole('button')
++ screen.getByRole('button')
 ```
 
 Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/rich_app_shell/components/document_tabs_pane_test.dart#L372-373):
 ```diff
 - scryRenderedDOMComponentsWithClass(component, 'nav-item')
-+ renderResult.getAllByRole('presentation')
++ screen.getAllByRole('presentation')
 ```
 
 
@@ -242,7 +242,7 @@ main() {
 ```
 > Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/session_module/components/expiration/session_expired_modal_test.dart#L140-142)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM containing the input we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM containing the input we are trying to access:
 
 ```html
 <div
@@ -278,13 +278,13 @@ import 'package:wdesk_sdk/src/truss/session_module/components/expiration/session
 
 main() {
   test('SessionExpiredModal password input', () {
-    final renderResult = rtl.render((SessionExpiredModal()
+    rtl.render((SessionExpiredModal()
       ..failed = false
       ..reauthenticating = false
       ..userDisplayName = 'superUser'
     )());
 
-    final passwordInput = renderResult.getByLabelText('Password');
+    final passwordInput = rtl.screen.getByLabelText('Password');
 
     UserEvent.type(passwordInput, 'superSecretPassword');
 
@@ -298,13 +298,13 @@ main() {
 Example from [`xbrl-module`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/xbrl-module/-/blob/test/unit/src/components/xbrl_blackline_filters_test.dart#L222-225):
 ```diff
 - queryAllByTestId(component.getInstance(), 'xbrl--blackline-history-panel-toolbar--filter-form--datepicker')
-+ renderResult.queryAllByLabelText('Date', exact: false)
++ screen.queryAllByLabelText('Date', exact: false)
 ```
 
 Example from [`w_comments`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_comments/-/blob/test/unit/src/comments/components/thread/create_comment_form_test.dart#L133):
 ```diff
 - directMentionsComponent.getInputDomNode()
-+ renderResult.getByLabelText('Comment')
++ screen.getByLabelText('Comment')
 ```
 
 
@@ -340,7 +340,7 @@ main() {
 }
 ```
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the input we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -362,7 +362,7 @@ import 'package:test/test.dart';
 
 main() {
   test('Input without a label', () {
-    final renderResult = rtl.render(Dom.div()(
+    rtl.render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
         ..type = 'password'
@@ -373,7 +373,7 @@ main() {
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(renderResult.getByPlaceholderText('Password'), isInTheDocument);
+    expect(rtl.screen.getByPlaceholderText('Password'), isInTheDocument);
   });
 }
 ```
@@ -409,7 +409,7 @@ void main() {
 ```
 > Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history/-/blob/test/src/components/cards/history_card_parts/authors_test.dart#L205-206)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the divs we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the divs we are trying to access:
 
 ```html
 <div>
@@ -445,13 +445,13 @@ import 'package:w_history/src/components/cards/history_card_parts/authors.dart';
 
 void main() {
   test('Author Card Component: Multiple document authors', () {
-    final renderResult = rtl.render((Authors()
+    rtl.render((Authors()
       ..actions = actions
       ..historyData = historyData
       ..authorListExpanded = true
     )());
 
-    final components = renderResult.getAllByText(RegExp(r'name\d'));
+    final components = rtl.screen.getAllByText(RegExp(r'name\d'));
     expect(components, hasLength(3));
     expect(components[0], hasTextContent('name1'));
     expect(components[1], hasTextContent('name3'));
@@ -466,19 +466,19 @@ void main() {
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalDescription)
-+ renderResult.getByText('You\'ll get an email letting you know', exact: false)
++ screen.getByText('You\'ll get an email letting you know', exact: false)
 ```
 
 Example from [`workspaces_components`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/workspaces_components/-/blob/test/unit/workspaces_components/time_ago_test.dart#L34):
 ```diff
 - queryByTestId(renderedInstance, TimeAgoTestIds.timeAgo)
-+ renderResult.getByText(TimeAgoComponent.formatTimeAgo(nowTimestamp))
++ screen.getByText(TimeAgoComponent.formatTimeAgo(nowTimestamp))
 ```
 
 Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/app_infrastructure_1/network_health/network_health_alerts_test.dart#L23):
 ```diff
 - queryByTestId(component, 'network-health-offline')
-+ renderResult.getByText('You are not connected to the internet.')
++ screen.getByText('You are not connected to the internet.')
 ```
 
 
@@ -514,7 +514,7 @@ main() {
 }
 ```
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the input we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -536,7 +536,7 @@ import 'package:test/test.dart';
 
 main() {
   test('Date Input', () {
-    final renderResult = rtl.render(Dom.div()(
+    rtl.render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
         ..type = 'date'
@@ -547,7 +547,7 @@ main() {
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(renderResult.getByDisplayValue('2021-06-01'), isInTheDocument);
+    expect(rtl.screen.getByDisplayValue('2021-06-01'), isInTheDocument);
   });
 }
 ```
@@ -586,7 +586,7 @@ main() {
 }
 ```
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the input we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -608,7 +608,7 @@ import 'package:test/test.dart';
 
 main() {
   test('Color Input', () {
-    final renderResult = rtl.render(Dom.div()(
+    rtl.render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
         ..type = 'color'
@@ -619,7 +619,7 @@ main() {
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(renderResult.getByAltText('color input'), isInTheDocument);
+    expect(rtl.screen.getByAltText('color input'), isInTheDocument);
   });
 }
 ```
@@ -650,7 +650,7 @@ void main() {
 ```
 > Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the element we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
 
 ```html
 <i
@@ -672,14 +672,14 @@ import 'package:test/test.dart';
 
 void main() {
   test('Internal Sheet Badge renders badge when internal', () {
-    var renderResult = rtl.render((InternalSheetBadge()
+    rtl.render((InternalSheetBadge()
       ..badgeMeta = (InternalSheetBadgeMeta()..isInternal = true)
     )());
 
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(renderResult.getByTitle('Internal use sheet'), isInTheDocument);
+    expect(rtl.screen.getByTitle('Internal use sheet'), isInTheDocument);
   });
 }
 ```
@@ -689,7 +689,7 @@ void main() {
 Example from [`admin_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/admin_client/-/blob/test/unit/suite_3/my_profile_module/my_profile_module_test.dart#L116):
 ```diff
 - queryByTestId(testJacket.getDartInstance(), 'wsd.Avatar.initials')
-+ renderResult.getByTitle('firstName lastName')
++ screen.getByTitle('firstName lastName')
 ```
 
 
@@ -720,7 +720,7 @@ main() {
 ```
 > Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L22)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the element we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
 
 ```html
 <div
@@ -761,9 +761,8 @@ main() {
   initializeTest();
 
   test('WorkspacesSidebarBrand should render properly with no props', () {
-    final renderResult = rtl.render(WorkspacesSidebarBrand()());
-    final componentNode =
-        renderResult.getByTestId('workspaces.sidebar.brand');
+    rtl.render(WorkspacesSidebarBrand()());
+    final componentNode = rtl.screen.getByTestId('workspaces.sidebar.brand');
 
     expect(componentNode,
         hasClasses('wksp-sidebar-content-block wksp-sidebar-masthead-brand'));
@@ -776,7 +775,7 @@ main() {
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L34-35):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalIcon)
-+ renderResult.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon)
++ screen.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon)
 ```
 
 
@@ -813,7 +812,7 @@ void main() {
 ```
 > Example from [`w_filing`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_filing/-/blob/test/unit/tests/components/collect_action_toolbar_test.dart#L171)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(renderResult.container)`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
+The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
 
 ```html
 <div
@@ -844,9 +843,9 @@ In order to determine which element(s) to query for, we need to look at what pro
 they each correspond to:
 
 * `props.glyph`: The glyph is a part of the `i` element inside the button, so we can use the following query to access it:
-    * `rtl.within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph')`
+    * `within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph')`
 * `props.isDisabled`: `disabled` is an attribute of the button, so we need to access the top level `div` with the following query:
-    * `renderResult.getByRole('button', name: 'Combine')`
+    * `screen.getByRole('button', name: 'Combine')`
 * `props.displayText`: The display text of the button is already being tested using the `name` argument in the `getByRole` query we used to access the button.
 
 Now that we determined which elements to access, the resulting RTL test will be:
@@ -859,13 +858,13 @@ import 'package:w_filing/src/filing_module/components/collect_action_toolbar.dar
 
 void main() {
   test('CollectActionToolbar combine button renders correctly', () {
-    final renderResult = rtl.render((CollectActionToolbar()
+    rtl.render((CollectActionToolbar()
       ..actions = filingDispatcher
       ..store = mockFilingMall
       ..selectedDocuments = []
     )());
 
-    final button = renderResult.getByRole('button', name: 'Combine');
+    final button = rtl.screen.getByRole('button', name: 'Combine');
     expect(button, isDisabled);
 
     final buttonIcon = rtl.within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph');
@@ -879,13 +878,13 @@ void main() {
 Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
 ```diff
 - AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'))
-+ renderResult.getByLabelText('List Options')
++ screen.getByLabelText('List Options')
 ```
 
 Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54):
 ```diff
 - getComponentByTestId(renderedComponent, 'graph_ui__number-property-input__input')
-+ renderResult.getByLabelText('testPropertyName')
++ screen.getByLabelText('testPropertyName')
 ```
 
 
