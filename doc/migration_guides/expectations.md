@@ -51,6 +51,61 @@ Given the philosophy of test assertions under RTL, there are two broad sections 
   - asserting a component state
 - Migrating to Testing Library matchers. Testing Library has a set of DOM matchers that encourage best practices when asserting a specific condition with the document or DOM nodes.
 
+## Migrating to Use Case Testing
+
+This section focuses on giving a framework for rethinking tests that are checking implementation details. This step is best after verifying in the decision tree that:
+
+1. The test is asserting implementation details in an attempt to verify a use case
+1. No other tests already verifies this use case.
+
+Remember that unnecessary tests, especially those which rely on implementation details, can cause developers grief! Once a test is deemed as necessary and needing to be refactored, we can take it through a few steps. Those steps could be:
+
+> **NOTE:** for simple tests, this process is likely overkill 😄 It can be condensed into:
+>
+> 1. Determine the use case being tested
+> 1. Remove unnecessary expectations and steps that don't align with the core use case (creating new, focused tests if multiple use cases are being tested)
+> 1. Test the DOM for expected outcomes instead of the implementation details
+> 1. Make sure all implementation details are removed
+>
+> If the test is complex enough that any of those steps don't feel intuitive, you can follow the process below!
+
+1. Spend a little time understanding which parts of the implementation are important for this test and how those parts interact. Here are some guiding questions:
+
+   - Is it a single prop field? Or is it the interaction of props and state together?
+   - Is re-rendering or the mutation of these details important?
+   - Are any of these values controlled by a flux or redux store?
+   - Is this an integration test with multiple components being tested or is it being tested in isolation?
+     - If the component is being tested in isolation, would it be easier to remove implementation details if it were an integration test?
+
+1. Using the analysis of the implementation details, determine the use case being tested.
+
+   There may be a temptation here to rely on the test description (i.e. the first parameter of the `test` function) to decide the use case being tested. That's another valuable data point, but over time, the test's focus may have shifted. This is why we look at the implementation details before trying to determine the test use case.
+
+   With understanding of the implementation details, think through how the component would get into this circumstance. If the use case is developer focused, it may just be passing certain data into the component. If the use case is for an end user, it is more likely to be interaction based. It may even be possible that there seems to be multiple usecases being tested. If that's the case, make note of it and continue to the next step (we'll come back to that)!
+
+1. Determine if this test strategy is the most appropriate. For example:
+
+   - If this is testing in isolation, would integration be more appropriate for this test?
+   - Or vise versa, if it's an integration test, would isolation be better?
+
+   The testing strategy may still fit well, but the question can be asked in the context of knowing that the component will need to be tested as the user will exercise this use case. If the component is tightly coupled with another when used in the real world, the interaction may be much harder being tested in isolation versus with the other components that tend to work with the one being tested. It's less likely that the component is an integration test that should be tested in isolation instead, but it's also worth ensuring it's still correct after re-thinking the test.
+
+1. Decide what the correct expecations are.
+
+   This step doesn't need to have code. Instead, given what you now know about the test, imagine what the bechmarks for the user are when exercising this use case. What are the specific behaviors that the user should notice? By definition, this should not include any thought about what the implementation details are. Instead, what does the user see and what does the user do to get it there? Those are the expectations. If you need inspiration to know what the possibilities are, browse the matcher section below to see how RTL supports implementation detail free `expect` statements!
+
+   In the case there feels like multiple use cases being tested, this step can be used to use expectations as a guide to differentiate the use cases. If the use cases were grouped originally, they may be closely related. Answering why they're so closely related and what expectations they should share (and not share) can help inform how the test should be broken apart.
+
+1. Remove anything that doesn't support the use case expectations.
+
+   The test may have assertions or lines that aren't necessary for the actual use case being tested. In the case that there does seem to be multiple use cases being tested, for each use case, create a new test and move over any important logic for those use cases into the new test body. That can be revisited after migrating the current test.
+
+1. Begin the migration!
+
+   From here, the test should be relatively slimmed down and focused on a single use case. For migrating away from implementation details relating to querying (getting nodes to assert against or interact with) or interactions (such as setting state, triggering events, etc) see the corresponding migration guides. The rest of this guide is focused on matchers that can be used to assert a specific outcome by using information in the DOM. Switching current `expect` statements to those new matchers may not be one-to-one because RTL is opinionated against checking instance data, so it's important to have a clear idea what the new, implementation detail free, expectations will be!
+
+TODO add an example of going through this framework with an actual component?
+
 ## Verifying Props
 
 [implementation-details-blog]: https://kentcdodds.com/blog/testing-implementation-details
