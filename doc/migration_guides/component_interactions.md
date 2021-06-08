@@ -16,7 +16,7 @@
 
 This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#patterns-covered-here).
 
-This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options. Instead, it focuses on common test patterns and what they look like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references).
+This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options. Instead, it focuses on common test patterns and what they look like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation references](#documentation-references).
 
 ## Patterns Covered Here
 
@@ -26,7 +26,7 @@ The most general categories for the patterns this guide will focus on migrating 
   - react_test_utils.Simulate
   - `Element.click()`/`.focus()`/`.blur()`
   - Element.dispatchEvent
-  - Changes via `Element.value`
+  - Changes via the `Element.value` setter
 - <u>Direct API calls</u>
   - Accessing component class methods
   - Using `.props` to trigger callbacks
@@ -40,7 +40,7 @@ The most general categories for the patterns this guide will focus on migrating 
 
 ### Migration Goal
 
-The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because its methods simulate real-world sequences of different event types, as opposed to just dispatching a single event. `UserEvent`'s APIs are also descriptive to the user action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a one-to-one API for the events exposed in `Simulate`.
+The goal of event simulation migrations is to make the test more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because its methods simulate real-world sequences of different event types, as opposed to just dispatching a single event. `UserEvent`'s APIs are also descriptive to the user action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a one-to-one API for the events exposed in `Simulate`.
 
 Below is a table of `UserEvent` APIs and events that each one triggers. It should be used as a general reference, but the lists of events are not exact to what you may see in a test\*.
 
@@ -150,7 +150,8 @@ With React Testing Library, that becomes:
        Dom.div()(
          (TextInput()
 -          ..ref = firstInputRef
-           ..label = 'the second input'
+-           ..label = 'the second input'
++           ..label = 'the first input'
            ..onBlur = (_) => firstWasBlurred = true
          )(),
          (TextInput()
@@ -187,7 +188,7 @@ With RTL, it's a simpler test. Instead of difficult queries, the first input is 
 
 This section is the migration reference for:
 
-- Changes via `Element.value`
+- Changes via the `Element.value` setter
 
 Another common case is using the `value` property on an element to update the UI and trigger an `onChange` (or other) listener.
 
