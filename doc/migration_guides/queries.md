@@ -4,7 +4,6 @@
 * __[Best Practices](#best-practices)__
     * __[Priority](#priority)__
     * __[Types of Queries](#types-of-queries)__
-    * __[Query Using `screen`](#query-using-screen)__
 * __[Migrating to RTL Queries](#migrating-to-rtl-queries)__
     * __[ByRole](#byrole)__
     * __[ByLabelText](#bylabeltext)__
@@ -66,7 +65,7 @@ With this in mind, the following is the recommended order of priority for querie
     1. `getByPlaceholderText`
     1. `getByText`
     1. `getByDisplayValue`
-1. Semantic Queries HTML5 and ARIA compliant selectors
+1. Semantic Queries _(HTML5 and ARIA compliant selectors)_
     1. `getByAltText`
     1. `getByTitle`
 1. Test IDs
@@ -99,18 +98,6 @@ In general:
 * `find(All)By...` queries will be used in async tests that need to wait for the element(s) to be in the document before querying for them.
 
 For more information, see [documentation on types of queries][query-types].
-
-### Query Using `screen`
-
-Prefer querying within `screen` rather than `renderResult` to avoid an unnecessary variable declaration:
-
-```diff
-- final renderResult = render(Example()());
-+ render(Example()());
-
-- final button = renderResult.getByRole('button');
-+ final button = screen.getByRole('button');
-```
 
 ## Migrating to RTL Queries
 
@@ -150,7 +137,7 @@ main() {
 ```
 > Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the header we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the header we are trying to access:
 
 ```html
 <h4 
@@ -174,47 +161,50 @@ import 'package:test/test.dart';
 
 main() {
   test('EmailConfirmationModal renders with correct DOM structure', () async {
-    rtl.render((EmailConfirmationModal()
+    final view = rtl.render((EmailConfirmationModal()
       ..jobType = JobTypes.transition.toLowerCase()
     )());
 
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(rtl.screen.getByRole('heading', name: 'Transition Started'), isInTheDocument);
+    expect(view.getByRole('heading', name: 'Transition Started'), isInTheDocument);
   });
 }
 ```
 
 #### Other Examples
 
+The following examples are abbreviated to only show how the query portion of the test should be updated. 
+Refer to the [other migration guides][other-migration-guides] for how to update the rest of these tests to RTL.
+
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L39-40):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalButton)
-+ screen.getByRole('button', name: SharedModalConstants.okButtonText)
++ view.getByRole('button', name: SharedModalConstants.okButtonText)
 ```
 
 Examples from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui@f22018bf25a129e95cf24d56d3e84a1078613bf6/-/blob/test/unit/ui_components/ss_to_graph/import_table_test.dart#L521-526):
 ```diff
 - getAllByTestId(renderedInstance, 'a.vertexData.headCell')
-+ screen.getByRole('rowheader', name: 'a')
++ view.getByRole('rowheader', name: 'a')
 ```
 
 ```diff
 - getAllByTestId(renderedInstance, 'graph_ui.ImportTable.tableBody.vertexData')
-+ screen.getAllByRole('cell')
++ view.getAllByRole('cell')
 ```
 
 Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L44-45):
 ```diff
 - findRenderedDOMComponentWithClass(component, 'hitarea')
-+ screen.getByRole('button')
++ view.getByRole('button')
 ```
 
 Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/rich_app_shell/components/document_tabs_pane_test.dart#L372-373):
 ```diff
 - scryRenderedDOMComponentsWithClass(component, 'nav-item')
-+ screen.getAllByRole('presentation')
++ view.getAllByRole('presentation')
 ```
 
 
@@ -255,7 +245,7 @@ main() {
 ```
 > Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/session_module/components/expiration/session_expired_modal_test.dart#L140-142)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM containing the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM containing the input we are trying to access:
 
 ```html
 <div
@@ -291,13 +281,13 @@ import 'package:wdesk_sdk/src/truss/session_module/components/expiration/session
 
 main() {
   test('SessionExpiredModal password input', () {
-    rtl.render((SessionExpiredModal()
+    final view = rtl.render((SessionExpiredModal()
       ..failed = false
       ..reauthenticating = false
       ..userDisplayName = 'superUser'
     )());
 
-    final passwordInput = rtl.screen.getByLabelText('Password');
+    final passwordInput = view.getByLabelText('Password');
 
     UserEvent.type(passwordInput, 'superSecretPassword');
 
@@ -308,16 +298,19 @@ main() {
 
 #### Other Examples
 
+The following examples are abbreviated to only show how the query portion of the test should be updated.
+Refer to the [other migration guides][other-migration-guides] for how to update the rest of these tests to RTL.
+
 Example from [`xbrl-module`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/xbrl-module@0eb7a422e768d68208ec1cd78832d890fa0afe43/-/blob/test/unit/src/components/xbrl_blackline_filters_test.dart#L222-225):
 ```diff
 - queryAllByTestId(component.getInstance(), 'xbrl--blackline-history-panel-toolbar--filter-form--datepicker')
-+ screen.queryAllByLabelText('Date', exact: false)
++ view.queryAllByLabelText('Date', exact: false)
 ```
 
 Example from [`w_comments`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_comments@23d0c03b9388286febedb703b71ff1ccc5ea54b2/-/blob/test/unit/src/comments/components/thread/create_comment_form_test.dart#L133):
 ```diff
 - directMentionsComponent.getInputDomNode()
-+ screen.getByLabelText('Comment')
++ view.getByLabelText('Comment')
 ```
 
 
@@ -353,7 +346,7 @@ main() {
 }
 ```
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -375,7 +368,7 @@ import 'package:test/test.dart';
 
 main() {
   test('Input without a label', () {
-    rtl.render(Dom.div()(
+    final view = rtl.render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
         ..type = 'password'
@@ -386,7 +379,7 @@ main() {
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(rtl.screen.getByPlaceholderText('Password'), isInTheDocument);
+    expect(view.getByPlaceholderText('Password'), isInTheDocument);
   });
 }
 ```
@@ -422,7 +415,7 @@ void main() {
 ```
 > Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history@8b1fcb2328bb27ed420029064218fd4657de6ae4/-/blob/test/src/components/cards/history_card_parts/authors_test.dart#L205-206)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the divs we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the divs we are trying to access:
 
 ```html
 <div>
@@ -458,17 +451,17 @@ import 'package:w_history/src/components/cards/history_card_parts/authors.dart';
 
 void main() {
   test('Author Card Component: Multiple document authors', () {
-    rtl.render((Authors()
+    final view = rtl.render((Authors()
       ..actions = actions
       ..historyData = historyData
       ..authorListExpanded = true
     )());
 
-    final components = rtl.screen.getAllByText(RegExp(r'name\d'));
-    expect(components, hasLength(3));
-    expect(components[0], hasTextContent('name1'));
-    expect(components[1], hasTextContent('name3'));
-    expect(components[2], hasTextContent('name4'));
+    final authorNodes = view.getAllByText(RegExp(r'name\d'));
+    expect(authorNodes, hasLength(3));
+    expect(authorNodes[0], hasTextContent('name1'));
+    expect(authorNodes[1], hasTextContent('name3'));
+    expect(authorNodes[2], hasTextContent('name4'));
   });
 }
 ```
@@ -476,22 +469,25 @@ void main() {
 
 #### Other Examples
 
+The following examples are abbreviated to only show how the query portion of the test should be updated.
+Refer to the [other migration guides][other-migration-guides] for how to update the rest of these tests to RTL.
+
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L37-38):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalDescription)
-+ screen.getByText('You\'ll get an email letting you know', exact: false)
++ view.getByText('You\'ll get an email letting you know', exact: false)
 ```
 
 Example from [`workspaces_components`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/workspaces_components@af5177ca4d37d43e18f03c50c9a3a29bb89636b9/-/blob/test/unit/workspaces_components/time_ago_test.dart#L34):
 ```diff
 - queryByTestId(renderedInstance, TimeAgoTestIds.timeAgo)
-+ screen.getByText(TimeAgoComponent.formatTimeAgo(nowTimestamp))
++ view.getByText(TimeAgoComponent.formatTimeAgo(nowTimestamp))
 ```
 
 Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/app_infrastructure_1/network_health/network_health_alerts_test.dart#L23):
 ```diff
 - queryByTestId(component, 'network-health-offline')
-+ screen.getByText('You are not connected to the internet.')
++ view.getByText('You are not connected to the internet.')
 ```
 
 
@@ -527,7 +523,7 @@ main() {
 }
 ```
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -539,7 +535,7 @@ The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the
 </div>
 ```
 
-Since the select element has no label, no placeholder, and no role, we have to use the display value to query for the element using:
+Since the input element has no label, no placeholder, and no role, we have to use the display value to query for the element using:
 `getByDisplayValue('2021-06-01')`, so the resulting RTL test will be:
 
 ```dart
@@ -549,7 +545,7 @@ import 'package:test/test.dart';
 
 main() {
   test('Date Input', () {
-    rtl.render(Dom.div()(
+    final view = rtl.render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
         ..type = 'date'
@@ -560,7 +556,7 @@ main() {
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(rtl.screen.getByDisplayValue('2021-06-01'), isInTheDocument);
+    expect(view.getByDisplayValue('2021-06-01'), isInTheDocument);
   });
 }
 ```
@@ -599,7 +595,7 @@ main() {
 }
 ```
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -621,7 +617,7 @@ import 'package:test/test.dart';
 
 main() {
   test('Color Input', () {
-    rtl.render(Dom.div()(
+    final view = rtl.render(Dom.div()(
       (Dom.input()
         ..addTestId('test-id')
         ..type = 'color'
@@ -632,7 +628,7 @@ main() {
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(rtl.screen.getByAltText('color input'), isInTheDocument);
+    expect(view.getByAltText('color input'), isInTheDocument);
   });
 }
 ```
@@ -663,7 +659,7 @@ void main() {
 ```
 > Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client@659287a02a269c8b2c82d9a91e9239a11c74abe0/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
 
 ```html
 <i
@@ -685,24 +681,27 @@ import 'package:test/test.dart';
 
 void main() {
   test('Internal Sheet Badge renders badge when internal', () {
-    rtl.render((InternalSheetBadge()
+    final view = rtl.render((InternalSheetBadge()
       ..badgeMeta = (InternalSheetBadgeMeta()..isInternal = true)
     )());
 
     // `isInTheDocument` is redundant here since `get*` queries throw when a match is not found, 
     // but it can be a good idea to make the assertion explicit.
     // See: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-    expect(rtl.screen.getByTitle('Internal use sheet'), isInTheDocument);
+    expect(view.getByTitle('Internal use sheet'), isInTheDocument);
   });
 }
 ```
 
 #### Other Examples
 
+The following examples are abbreviated to only show how the query portion of the test should be updated.
+Refer to the [other migration guides][other-migration-guides] for how to update the rest of these tests to RTL.
+
 Example from [`admin_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/admin_client@c302b8f7be289ca25e3343339c3d9ffcb549424b/-/blob/test/unit/suite_3/my_profile_module/my_profile_module_test.dart#L116):
 ```diff
 - queryByTestId(testJacket.getDartInstance(), 'wsd.Avatar.initials')
-+ screen.getByTitle('firstName lastName')
++ view.getByTitle('firstName lastName')
 ```
 
 
@@ -733,7 +732,7 @@ main() {
 ```
 > Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L22)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
 
 ```html
 <div
@@ -774,8 +773,8 @@ main() {
   initializeTest();
 
   test('WorkspacesSidebarBrand should render properly with no props', () {
-    rtl.render(WorkspacesSidebarBrand()());
-    final componentNode = rtl.screen.getByTestId('workspaces.sidebar.brand');
+    final view = rtl.render(WorkspacesSidebarBrand()());
+    final componentNode = view.getByTestId('workspaces.sidebar.brand');
 
     expect(componentNode,
         hasClasses('wksp-sidebar-content-block wksp-sidebar-masthead-brand'));
@@ -785,10 +784,13 @@ main() {
 
 #### Other Examples
 
+The following examples are abbreviated to only show how the query portion of the test should be updated.
+Refer to the [other migration guides][other-migration-guides] for how to update the rest of these tests to RTL.
+
 Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L34-35):
 ```diff
 - queryByTestId(renderedInstance, CommonComponentTestIds.emailConfirmationModalIcon)
-+ screen.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon)
++ view.getByTestId(CommonComponentTestIds.emailConfirmationModalIcon)
 ```
 
 
@@ -817,15 +819,15 @@ void main() {
       ..selectedDocuments = []);
 
     VerticalButtonComponent button = getComponentByTestId(root, test_ids.CollectViewIds.combineDocsButton);
-    expect(button.props.glyph, IconGlyph.TWFR_GROUP_ADD);
     expect(button.props.isDisabled, isTrue);
     expect(button.props.displayText, 'Combine');
+    expect(button.props.glyph, IconGlyph.TWFR_GROUP_ADD);
   });
 }
 ```
 > Example from [`w_filing`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_filing@ddc298f7ab01762698e227d6709a63695db6067a/-/blob/test/unit/tests/components/collect_action_toolbar_test.dart#L171)
 
-The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
 
 ```html
 <div
@@ -855,11 +857,11 @@ The rendered DOM can be viewed using `rtl.prettyDOM(document.body)`. This is the
 In order to determine which element(s) to query for, we need to look at what props are being tested and which element 
 they each correspond to:
 
-* `props.glyph`: The glyph is a part of the `i` element inside the button, so we can use the following query to access it:
-    * `within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph')`
 * `props.isDisabled`: `disabled` is an attribute of the button, so we need to access the top level `div` with the following query:
-    * `screen.getByRole('button', name: 'Combine')`
+    * `final button = view.getByRole('button', name: 'Combine');`
 * `props.displayText`: The display text of the button is already being tested using the `name` argument in the `getByRole` query we used to access the button.
+* `props.glyph`: The glyph is a part of the `i` element inside the button, so we can use the following query to access it:
+    * `final buttonIcon = within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph');`
 
 Now that we determined which elements to access, the resulting RTL test will be:
 
@@ -871,13 +873,13 @@ import 'package:w_filing/src/filing_module/components/collect_action_toolbar.dar
 
 void main() {
   test('CollectActionToolbar combine button renders correctly', () {
-    rtl.render((CollectActionToolbar()
+    final view = rtl.render((CollectActionToolbar()
       ..actions = filingDispatcher
       ..store = mockFilingMall
       ..selectedDocuments = []
     )());
 
-    final button = rtl.screen.getByRole('button', name: 'Combine');
+    final button = view.getByRole('button', name: 'Combine');
     expect(button, isDisabled);
 
     final buttonIcon = rtl.within(button).getByTestId('wsd.AbstractVerticalToolbarButton.glyph');
@@ -888,16 +890,19 @@ void main() {
 
 ### Other Examples
 
+The following examples are abbreviated to only show how the query portion of the test should be updated.
+Refer to the [other migration guides][other-migration-guides] for how to update the rest of these tests to RTL.
+
 Example from [`cerebral-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/cerebral-ui@7156511e9c5b8ee1a6da104605ff73e5039dcc41/-/blob/test/unit/report_builder/field_properties_module/parameter_choices_component_test.dart#L20-21):
 ```diff
 - AutosizeTextarea(getPropsByTestId(instance, 'cdp.parameter.choices'))
-+ screen.getByLabelText('List Options')
++ view.getByLabelText('List Options')
 ```
 
 Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/graph_ui@f22018bf25a129e95cf24d56d3e84a1078613bf6/-/blob/test/unit/ui_components/form/property_inputs/graph_number_property_input_test.dart#L51-54):
 ```diff
 - getComponentByTestId(renderedComponent, 'graph_ui__number-property-input__input')
-+ screen.getByLabelText('testPropertyName')
++ view.getByLabelText('testPropertyName')
 ```
 
 
@@ -913,3 +918,4 @@ Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiv
 [by-alt-text-queries]: https://workiva.github.io/react_testing_library/topics/ByAltText-topic.html
 [by-title-queries]: https://workiva.github.io/react_testing_library/topics/ByTitle-topic.html
 [by-test-id-queries]: https://workiva.github.io/react_testing_library/topics/ByTestId-topic.html
+[other-migration-guides]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/from_over_react_test.md#migration-guides
