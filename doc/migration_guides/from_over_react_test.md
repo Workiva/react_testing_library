@@ -10,7 +10,7 @@
     - **[Verify You're Testing a Use Case](#verify-youre-testing-a-use-case)**
     - **[Identifying a Test's Use Case](#identifying-a-tests-use-case)**
 - **[The Path Forward](#the-path-forward)**
-- **[Deciding to Migrate Approaches](#deciding-to-migrate-approaches)**
+- **[Deciding to Migrate a Test's Approach](#deciding-to-migrate-a-tests-approach)**
 - **[Migrating to Use Case Testing](#migrating-to-use-case-testing)**
 
 ## Introduction
@@ -130,7 +130,7 @@ Now that you understand RTL's philosophy, use case testing, and how to identify 
 
 The rest of this guide serves as a reference in the event that you encounter a test that is asserting against implementation details. If that happens, remember [how to identify a use case](#identifying-a-tests-use-case) and work through the decision tree below. Then, if it's necessary to migrate the test's approach, the [Migrating to Use Case Testing section](#migrating-to-use-case-testing) is dedicated to that effort.
 
-## Deciding to Migrate Approaches
+## Deciding to Migrate a Test's Approach
 
 In the case that you have encountered a test that is asserting against implementation details, use this section to decide what the best next step is. See "[Identifying a Tests Use Case](#identifying-a-tests-use-case)" if it is not clear what the test's use case is.
 
