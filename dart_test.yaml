@@ -5,3 +5,20 @@ paths:
   - test/unit/
 
 concurrency: 8
+
+presets:
+  # Run only the tests that can be run concurrently:
+  #   $ pub run build_runner test -- -P concurrent-tests
+  concurrent-tests:
+    exclude_tags: run-alone
+    concurrency: 8
+    paths:
+      - test/unit/
+
+  # Run only the tests that need to be run alone:
+  #   $ pub run build_runner test -- -P non-concurrent-tests
+  non-concurrent-tests:
+    include_tags: run-alone
+    concurrency: 1
+    paths:
+      - test/unit/
