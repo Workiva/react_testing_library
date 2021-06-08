@@ -901,15 +901,15 @@ Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiv
 ```
 
 
-[query-docs]: https://testing-library.com/docs/queries/about
+[query-docs]: https://workiva.github.io/react_testing_library/topics/Queries-topic.html
 [guiding-principles]: https://testing-library.com/docs/guiding-principles/
 [query-priority]: https://testing-library.com/docs/queries/about/#priority
 [query-types]: https://testing-library.com/docs/queries/about#types-of-queries
-[by-role-queries]: https://testing-library.com/docs/queries/byrole
-[by-label-text-queries]: https://testing-library.com/docs/queries/bylabeltext
-[by-placeholder-text-queries]: https://testing-library.com/docs/queries/byplaceholdertext
-[by-text-queries]: https://testing-library.com/docs/queries/bytext
-[by-display-value-queries]: https://testing-library.com/docs/queries/bydisplayvalue
-[by-alt-text-queries]: https://testing-library.com/docs/queries/byalttext
-[by-title-queries]: https://testing-library.com/docs/queries/bytitle
-[by-test-id-queries]: https://testing-library.com/docs/queries/bytestid
+[by-role-queries]: https://workiva.github.io/react_testing_library/topics/ByRole-topic.html
+[by-label-text-queries]: https://workiva.github.io/react_testing_library/topics/ByLabelText-topic.html
+[by-placeholder-text-queries]: https://workiva.github.io/react_testing_library/topics/ByPlaceholderText-topic.html
+[by-text-queries]: https://workiva.github.io/react_testing_library/topics/ByText-topic.html
+[by-display-value-queries]: https://workiva.github.io/react_testing_library/topics/ByDisplayValue-topic.html
+[by-alt-text-queries]: https://workiva.github.io/react_testing_library/topics/ByAltText-topic.html
+[by-title-queries]: https://workiva.github.io/react_testing_library/topics/ByTitle-topic.html
+[by-test-id-queries]: https://workiva.github.io/react_testing_library/topics/ByTestId-topic.html
