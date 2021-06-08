@@ -103,7 +103,7 @@ main() {
       Dom.div()(
         (TextInput()
           ..ref = firstInputRef
-          ..label = 'the second input'
+          ..label = 'the first input'
           ..onBlur = (_) => firstWasBlurred = true
         )(),
         (TextInput()
@@ -150,8 +150,7 @@ With React Testing Library, that becomes:
        Dom.div()(
          (TextInput()
 -          ..ref = firstInputRef
--           ..label = 'the second input'
-+           ..label = 'the first input'
+           ..label = 'the first input'
            ..onBlur = (_) => firstWasBlurred = true
          )(),
          (TextInput()
