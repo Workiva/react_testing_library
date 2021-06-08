@@ -14,9 +14,9 @@
 - **[Component State Changes](#component-state-changes)**
 - **[Documentation References](#documentation-references)**
 
-This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#patterns-covered-here) to see the patterns that are covered.
+This migration guide covers the part of tests that verify a component behavior exists. This might be clicking a button and expecting the DOM to change, calling component APIs on a ref to trigger state changes, or setting the component state directly! For more information on what patterns are covered, check the [patterns list below](#patterns-covered-here).
 
-This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options, and instead focuses on common test patterns and what they look like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references).
+This guide does not go into detail about React Testing Library (RTL) APIs themselves in terms of parameters or options. Instead, it focuses on common test patterns and what they look like using the RTL APIs. For more resources on how these interaction APIs work, see the [documentation section](#documentation-references).
 
 ## Patterns Covered Here
 
@@ -30,7 +30,7 @@ The most general categories for the patterns this guide will focus on migrating 
 - <u>Direct API calls</u>
   - Accessing component class methods
   - Using `.props` to trigger callbacks
-  - Calling Component Lifecyle methods
+  - Calling Component Lifecycle methods
   - Grabbing UI nodes to use as event targets
 - <u>Component State Changes</u>
   - Calling `setState` on a component instance
@@ -42,7 +42,7 @@ The most general categories for the patterns this guide will focus on migrating 
 
 The goal of event simulation migrations are to move the test to more closely resemble how a user will interact with your UI. The recommended way to do this is to use the `UserEvent` class because its methods simulate real-world sequences of different event types, as opposed to just dispatching a single event. `UserEvent`'s APIs are also descriptive to the user action that is being tested, as opposed to an event that is being triggered. For example, `UserEvent.hover` will emulate a user hovering a DOM node, triggering multiple mouse and pointer events. As a result, `UserEvent` may not have a one-to-one API for the events exposed in `Simulate`.
 
-Below is a table of `UserEvent` APIs and some of events that each one triggers. It should be used as a general reference, but the lists of events are not exact to what you may see in a test\*.
+Below is a table of `UserEvent` APIs and events that each one triggers. It should be used as a general reference, but the lists of events are not exact to what you may see in a test\*.
 
 Using this table, the line of thinking would be to determine what event a test is currently simulating and find a `UserEvent` API that triggers the desired event.
 
@@ -65,12 +65,12 @@ Using this table, the line of thinking would be to determine what event a test i
 
 > \* This table does not show the _exact_ events that get triggered because
 >
-> 1. Some handlers trigger _a lot_ of events, so less utilitized ones (such as pointer events) were excluded to keep the table parseable
-> 1. There may be more or less events events based on custom component and page logic
+> 1. Some handlers trigger _a lot_ of events, so less utilized ones (such as pointer events) were excluded to keep the table parsable
+> 1. There may be more or fewer events based on custom component and page logic
 
 ### When Not to Use `UserEvent`
 
-There are not any concrete guidelines for when [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html) should be used instead of `UserEvent`. When writing tests, `UserEvent` should be the default tool you reach for. From there, if the test requires a precise event to avoid conflicts or to gain access to a specific UI state, then `fireEvent` may be more appropriate. However, this should not be a common occurance.
+There are not any concrete guidelines for when [fireEvent](https://workiva.github.io/react_testing_library/rtl.dom.events/fireEvent.html) should be used instead of `UserEvent`. When writing tests, `UserEvent` should be the default tool you reach for. From there, if the test requires a precise event to avoid conflicts or to gain access to a specific UI state, then `fireEvent` may be more appropriate. However, this should not be a common occurrence.
 
 ### Migrating DOM Event Calls
 
@@ -81,7 +81,7 @@ This section is the migration reference for tests using:
 - Element.dispatchEvent
 - Calling component event handlers
 
-In the case that the test is simply calling a basic event API to emulate an event, the swmigrationitch should be simple. Below is an example of doing this migration.
+In the case that the test is simply calling a basic event API to emulate an event, the migration should be simple. Below is an example of doing this migration.
 
 Pre-existing test:
 
@@ -185,7 +185,7 @@ With RTL, it's a simpler test. Instead of difficult queries, the first input is 
 
 ### Changing an Element's value
 
-This section is the migragation reference for:
+This section is the migration reference for:
 
 - Changes via `Element.value`
 
@@ -225,7 +225,7 @@ UiFactory<WrappedInputProps> WrappedInput = uiForwardRef(
 
 </details>
 
-The simple example shows a component that has an unconctrolled input and another element that is relying on the input's `onChange` function to keep it up to date. To test this, we could update the `TextInput`'s value directly and then manually trigger a change, like so:
+The simple example shows a component that has an uncontrolled input and another element that is relying on the input's `onChange` function to keep it up to date. To test this with OverReact Test, we may have updated the `TextInput`'s value directly and then manually triggered a change, like so:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -274,22 +274,24 @@ import 'package:test/test.dart';
 
 import '../component_definition.dart';
 
-test('verify input changes', () {
-  var wasChanged = false;
+main() {
+  test('verify input changes', () {
+    var wasChanged = false;
 
-  render((WrappedInput()..onChange = ((_) => wasChanged = true))());
+    render((WrappedInput()..onChange = ((_) => wasChanged = true))());
 
-  final input = screen.getByLabelText<InputElement>('the text input');
-  expect(input, hasValue(''));
+    final input = screen.getByLabelText<InputElement>('the text input');
+    expect(input, hasValue(''));
 
-  // This is the main change! Note that we're not even
-  // explicitly triggering an `onChange` event. The
-  // `type` API simulates a user typing into an input!
-  UserEvent.type(input, 'a new value');
-  expect(wasChanged, isTrue);
+    // This is the main change! Note that we're not even
+    // explicitly triggering an `onChange` event. The
+    // `type` API simulates a user typing into an input!
+    UserEvent.type(input, 'a new value');
+    expect(wasChanged, isTrue);
 
-  expect(screen.getByText('a new value'), isInTheDocument);
-});
+    expect(screen.getByText('a new value'), isInTheDocument);
+  });
+}
 ```
 
 ## Direct API calls
@@ -298,7 +300,7 @@ Tests that rely on direct API calls are those that utilize the component's objec
 
 ### Calling Component Instance APIs
 
-This section is the migragation reference for using a ref or component instance to access:
+This section is the migration reference for using a ref or component instance to access:
 
 - prop callbacks (`componentRef.props.onChange`)
 - class methods that update state (`componentRef.updateValue`)
@@ -375,8 +377,8 @@ main() {
   test('the component can be incremented', () {
     final formParentRef = createRef<FormParentComponent>();
 
-    final renderdInstance = render((FormParent()..ref = formParentRef)());
-    final countDiv = getByTestId(renderdInstance, 'count');
+    final renderedInstance = render((FormParent()..ref = formParentRef)());
+    final countDiv = getByTestId(renderedInstance, 'count');
     final countDivNode = findDomNode(countDiv);
     expect(countDivNode.innerHtml, '0');
 
@@ -421,7 +423,7 @@ main() {
 
 ### Triggering Callbacks via Props
 
-This section is the migragation reference for tests that access props and:
+This section is the migration reference for tests that access props and:
 
 - call raw event handlers (`onClick`, `onFocus`, etc)
 - custom component callbacks
@@ -524,6 +526,7 @@ main() {
     expect(queryByTestId(renderedInstance, 'error-message'), isNull);
     expect(queryByTestId(renderedInstance, 'success-message'), isNotNull);
   });
+}
 ```
 
 This example differs from others in that we're getting the form instance with `getComponentByTestId` and then calling `form.props.onSubmit` to change the state of the form. On top of that though, we're using `TextInput` APIs to change the values of the input nodes and the `Simulate.change` API to get our `Login` form's state to update. We can simplify this with RTL APIs like so:
@@ -567,7 +570,7 @@ main() {
 
 ### Calling Component Lifecycle Methods
 
-This section is the migragation reference for tests that:
+This section is the migration reference for tests that:
 
 - call any component lifecycle event (`shouldComponentUpdate`, `componentWillUnmount`, `componentWillReceiveProps`, etc)
 
@@ -617,7 +620,7 @@ class LifecycleTestComponent extends UiStatefulComponent2<LifecycleTestProps, Li
 
 </details>
 
-In the example, the component's UI is dependendent upon the outcome of `shouldComponentUpdate`. Since we can just access the method on the component, we could test how the method behaves like so:
+In the example, the component's UI is dependent upon the outcome of `shouldComponentUpdate`. Since we can just access the method on the component, we could test how the method behaves like so:
 
 ```dart
 import 'package:over_react_test/over_react_test.dart';
@@ -658,23 +661,23 @@ main() {
     // Instead of calling the component instance,
     // simulate the user behavior
     UserEvent.click(button);
-    expect(count, hasTextContent('0'));
+    expect(count, hasTextContent(endsWith('0')));
 
-    // Rather than programatically setting
+    // Rather than programmatically setting
     // the state, simulate the user interaction
     // that would create the UI
     for (var i = 1; i <= 4; i++) {
       UserEvent.click(button);
     }
 
-    expect(count, hasTextContent('3'));
+    expect(count, hasTextContent(endsWith('3')));
   });
 }
 ```
 
 ### Using APIs to get UI and trigger an event
 
-This section is the migragation reference for tests that call methods to grab UI, such as (but not limited to):
+This section is the migration reference for tests that call methods to grab UI, such as (but not limited to):
 
 - `getInputDomNode`
 - `getHitareaDOMNode`
@@ -682,7 +685,7 @@ This section is the migragation reference for tests that call methods to grab UI
 These APIs are related to how to query for elements ([see that migration guide here](https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md)), but the fix may involve using events to show new elements. An example of that is below!
 
 <details>
-  <summary>Component Definiition</summary>
+  <summary>Component Definition</summary>
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -786,7 +789,7 @@ main() {
 
 ## Component State Changes
 
-This section is the migragation reference for tests that update state directly, such as:
+This section is the migration reference for tests that update state directly, such as:
 
 - Calling `setState` on a component instance
 - Setting state equal to a new value directly
