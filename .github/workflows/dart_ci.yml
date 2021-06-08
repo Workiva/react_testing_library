@@ -87,7 +87,7 @@ jobs:
 
       - name: Run tests (DDC)
         run: pub run build_runner test -- --file-reporter json:reports/${{ matrix.sdk }}/ddc/test-results.json
-        timeout-minutes: 10
+        timeout-minutes: 15
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
