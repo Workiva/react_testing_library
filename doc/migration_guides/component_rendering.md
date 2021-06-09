@@ -8,7 +8,7 @@ todo fill this table of contents out
 ## Background
 
 todo add something about how nice render is
-it's similar to `TestJacket` where it returns a `RenderResult` object that can be queried from.
+It's similar to `TestJacket` where it returns a `RenderResult` object that can be queried from.
 
 It also always renders attached to the document.
 
@@ -72,10 +72,10 @@ Tentative outline: todo update this
 * Render and getting
   * `renderAndGetComponent()`
   * `renderAndGetDom()`
-  * `jacket.getInstance()`
-  * `jacket.getProps()`
-  * `jacket.getNode()`
-  * `jacket.getDartInstance()`
+  * `testJacket.getInstance()`
+  * `testJacket.getProps()`
+  * `testJacket.getNode()`
+  * `testJacket.getDartInstance()`
 * Re-rendering or settings state
   * `jacket.rerender()`
   * `jacket.setState()`
@@ -188,7 +188,24 @@ For more information on `autoTearDown` and `onDidTearDown`, see [RTL render docs
 
 ### Shallow Rendering
 
+Should not be done todo fill out why and how to change
+
 ### Accessing Rendered DOM
+
+Some OverReact Test render utilities both render UI and access rendered components, props, and elements.
+
+These utilities include:
+
+* `renderAndGetComponent()`
+* `renderAndGetDom()`
+* `testJacket.getInstance()`
+* `testJacket.getProps()`
+* `testJacket.getNode()`
+* `testJacket.getDartInstance()`
+
+To migrate these kinds of utilities to RTL, we need to split the functionality into two parts: rendering the UI and accessing parts of the UI.
+
+For example, the following test 
 
 ### Re-Rendering
 
