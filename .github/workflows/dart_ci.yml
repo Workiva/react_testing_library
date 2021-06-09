@@ -41,15 +41,15 @@ jobs:
 
       - name: Run tests (DDC)
         run: |
-          dart run build_runner test -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/concurrent/test-results.json
-          dart run build_runner test -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/non-current/test-results.json
+          pub run build_runner test -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/concurrent/test-results.json
+          pub run build_runner test -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/non-current/test-results.json
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
         run: |
-          dart run build_runner test -r -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/concurrent/test-results.json
-          dart run build_runner test -r -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/non-concurrent/test-results.json
+          pub run build_runner test -r -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/concurrent/test-results.json
+          pub run build_runner test -r -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/non-concurrent/test-results.json
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
