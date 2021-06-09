@@ -40,12 +40,12 @@ jobs:
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (DDC)
-        run: dart run build_runner test -- --chain-stack-traces --file-reporter json:reports/${{ matrix.sdk }}/ddc/test-results.json
+        run: dart run build_runner test -- --file-reporter json:reports/${{ matrix.sdk }}/ddc/test-results.json
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
-        run: dart run build_runner test -r -- --chain-stack-traces --file-reporter json:reports/${{ matrix.sdk }}/dart2js/test-results.json
+        run: dart run build_runner test -r -- --file-reporter json:reports/${{ matrix.sdk }}/dart2js/test-results.json
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
@@ -69,7 +69,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ 2.7.2 ]
+        sdk: [2.7.2]
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
