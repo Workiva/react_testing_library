@@ -41,8 +41,8 @@ jobs:
 
       - name: Run tests (DDC)
         run: |
-          pub run build_runner test -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/concurrent/test-results.json
-          pub run build_runner test -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/non-current/test-results.json
+          pub run build_runner test -- -P concurrent-tests
+          pub run build_runner test -- -P non-concurrent-tests
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
@@ -91,8 +91,8 @@ jobs:
 
       - name: Run tests (DDC)
         run: |
-          pub run build_runner test -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/concurrent/test-results.json
-          pub run build_runner test -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/ddc/non-concurrent/test-results.json
+          pub run build_runner test -- -P concurrent-tests
+          pub run build_runner test -- -P non-concurrent-tests
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
