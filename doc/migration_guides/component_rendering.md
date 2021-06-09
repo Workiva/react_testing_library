@@ -40,6 +40,22 @@ These two methods have a lot in common and will have similar migration paths to 
 
 todo add best practices
 
+### Naming
+
+We recommend naming the return value of RTL's `render` function `view`.
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+void main() {
+  test('', () {
+    final view = rtl.render((Dom.input()..type = 'checkbox')());
+  });
+}
+```
+
 ## Migrating from OverReact Test
 
 Tentative outline: todo update this
@@ -129,7 +145,7 @@ Most current tests render into a detached node while RTL's `render` function alw
 This does not change the functionality of existing tests, but it does mean that tests no longer need to specify when 
 to render attached to the document.
 
-Below are examples of these kinds of tests:
+Below are examples of how to migrate these kinds of tests:
 
 ```diff
 import 'package:over_react/over_react.dart';
@@ -158,7 +174,17 @@ void main() {
 ```
 
 #### Auto Tear Down
+
+RTL's `render` function provides `autoTearDown` and `onDidTearDown` arguments that work the same way as `autoTearDown` 
+and `autoTearDownCallback` arguments do in [OverReact Test's `render` function][over-react-test-render-doc].
+
+These arguments can simply be copy and pasted when the render method is replaced with the RTL version.
+
+For more information on `autoTearDown` and `onDidTearDown`, see [RTL render docs][react-testing-library-render-doc].
+
 #### Render into Container
+
+
 
 ### Shallow Rendering
 
@@ -181,3 +207,5 @@ migrate both render and jacket.mount
 todo add example
 
 [queries-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
+[over-react-test-render-doc]: https://pub.dev/documentation/over_react_test/latest/over_react_test/render.html
+[react-testing-library-render-doc]: https://workiva.github.io/react_testing_library/rtl.react/render.html
