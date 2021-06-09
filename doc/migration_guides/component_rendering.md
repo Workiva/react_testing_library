@@ -1,7 +1,17 @@
 # Migration Guide for Component Rendering
 
-* __[Background](#background)__
-* __[Best Practices](#best-practices)__
+- **[Background](#background)**
+- **[Best Practices](#best-practices)**
+    - **[Naming](#naming)**
+- **[Migrating to RTL Rendering](#migrating-to-rtl-rendering)** todo should i rename this?
+    - **[Rendering](#rendering)**
+        - **[Attached to the Document](#attached-to-the-document)**
+        - **[Auto Tear Down](#auto-tear-down)**
+        - **[Render into Container](#render-into-container)**
+    - **[Shallow Rendering](#shallow-rendering)**
+    - **[Accessing Rendered DOM](#accessing-rendered-dom)**
+    - **[Re-Rendering](#re-rendering)**
+    - **[Unmounting](#unmounting)**
 
 todo fill this table of contents out
 
@@ -56,7 +66,7 @@ void main() {
 }
 ```
 
-## Migrating from OverReact Test
+## Migrating to RTL Rendering
 
 Tentative outline: todo update this
 
@@ -205,7 +215,43 @@ These utilities include:
 
 To migrate these kinds of utilities to RTL, we need to split the functionality into two parts: rendering the UI and accessing parts of the UI.
 
-For example, the following test 
+For example, the following test uses `renderAndGetDom()` to both render the `DateHeading` and get the `div` element that is being tested.
+
+```dart
+import 'package:test/test.dart';
+import 'package:w_history/components/date_heading.dart';
+import 'package:over_react_test/over_react_test.dart';
+
+main() {
+  test('DateHeading renders date', () {
+    const String date = 'April 17, 2019';
+    var renderedDateHeading = renderAndGetDom(DateHeading()..date = date);
+    expect(renderedDateHeading.innerHtml, equals(date));
+    expect(renderedDateHeading, hasExactClasses('history-date-header'));
+  });
+}
+```
+> Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history@8b1fcb2328bb27ed420029064218fd4657de6ae4/-/blob/test/components/date_heading_test.dart#L9-14)
+
+When converting this test to RTL, the `renderAndGetDom()` needs to be split out into a separate render call and then query to get the element like this:
+
+```dart
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/matchers.dart' show hasClasses;
+import 'package:test/test.dart';
+import 'package:w_history/components/date_heading.dart';
+
+main() {
+  test('DateHeading renders date', () {
+    const String date = 'April 17, 2019';
+    final view = rtl.render((DateHeading()..date = date)());
+    final dateHeading = view.getByText(date);
+    expect(dateHeading, hasClasses('history-date-header'));
+  });
+}
+```
+
+For more information on how to migrate the query part of these utilities, see the [queries migration guide][queries-migration-guide].
 
 ### Re-Rendering
 
