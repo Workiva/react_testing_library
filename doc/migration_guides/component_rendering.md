@@ -17,22 +17,22 @@ The React Testing Library (RTL) `render` function will replace all methods of re
 OverReact Test had two main utilities for rendering components: `render()` and `mount()`.
 
 1. `render` function variations
-  * `render()`
-  * `renderIntoDocument()` (from `react-dart`)
-  * `renderAttachedToDocument()`
-  * `renderAndGet...` utilities
-    * `renderAndGetComponent()`
-    * `renderAndGetDom()`
-  * `renderShallow()`
+    * `render()`
+    * `renderIntoDocument()` (from `react-dart`)
+    * `renderAttachedToDocument()`
+    * `renderAndGet...` utilities
+        * `renderAndGetComponent()`
+        * `renderAndGetDom()`
+    * `renderShallow()`
 2. `TestJacket` usage with `mount()`
-  * `jacket.rerender()`
-  * `jacket.get...` utilities
-    * `jacket.getInstance()`
-    * `jacket.getProps()`
-    * `jacket.getNode()`
-    * `jacket.getDartInstance()`
-  * `jacket.setState()`
-  * `jacket.unmount()`
+    * `jacket.rerender()`
+    * `jacket.get...` utilities
+        * `jacket.getInstance()`
+        * `jacket.getProps()`
+        * `jacket.getNode()`
+        * `jacket.getDartInstance()`
+    * `jacket.setState()`
+    * `jacket.unmount()`
 
 These two methods have a lot in common and will have similar migration paths to RTL.
 
@@ -68,40 +68,95 @@ Tentative outline: todo update this
 
 ### Rendering
 
-Most current rendering methods can be easily migrated to RTL simply by adding the `react_testing_library` import
-(namespaced as `rtl`) and replacing all render methods with `rtl.render` like so:
+The RTL `render` method will be a one-to-one replacement for most of the current rendering methods used in tests.
 
-```diff
-- import 'package:over_react_test/over_react_test.dart';
-- import 'package:react/react_test_utils.dart' as test_utils;
-+ import 'package:react_testing_library/react_testing_library.dart' as rtl;
+For example, below are multiple ways a component may be rendered using OverReact Test and other test utilities:
+
+```dart
+import 'dart:html';
+
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:react/react_test_utils.dart' as test_utils;
 import 'package:test/test.dart';
 
 void main() {
   test('render', () {
--   render(Example()());
-+   final view = rtl.render(Example()());
+    final instance = render((Dom.button()..addTestId('test-id'))('Click me!'))
+        as ButtonElement;
 
-    // The rest of the test...
+    expect(instance.text, equals('Click me!'));
   });
 
   test('renderIntoDocument', () {
--   test_utils.renderIntoDocument(Example()());
-+   final view = rtl.render(Example()());
+    final button = test_utils.renderIntoDocument(
+        (Dom.button()..addTestId('test-id'))('Click me!')) as ButtonElement;
 
-    // The rest of the test...
+    expect(button.text, equals('Click me!'));
   });
 
   test('mount', () {
--   final jacket = mount(Example()());
-+   final view = rtl.render(Example()());
+    final jacket = mount((Dom.button()..addTestId('test-id'))('Click me!'));
 
-    // The rest of the test...
+    expect(jacket.getNode().text, equals('Click me!'));
   });
 }
 ```
 
+To migrate to RTL, simply import `react_testing_library` (namespaced as `rtl`) and replace the current render method with `rtl.render`. 
+The tests above all translate to the same test in RTL:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+void main() {
+  test('rtl.render', () {
+    final view = rtl.render((Dom.button()..addTestId('test-id'))('Click me!'));
+
+    expect(view.getByRole('button', name: 'Click me!'), isInTheDocument);
+  });
+}
+```
+
+> Note: The query was also updated here. For information on how to update queries to RTL, see [the queries migration guide][queries-migration-guide].
+
 #### Attached to the Document
+
+Most current tests render into a detached node while RTL's `render` function always renders attached to `document.body`. 
+This does not change the functionality of existing tests, but it does mean that tests no longer need to specify when 
+to render attached to the document.
+
+Below are examples of these kinds of tests:
+
+```diff
+import 'package:over_react/over_react.dart';
+- import 'package:over_react_test/over_react_test.dart';
++ import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+void main() {
+  test('renderAttachedToDocument', () {
+-   renderAttachedToDocument((Dom.button()..addTestId('test-id'))('Click me!'));
++   final view = rtl.render((Dom.button()..addTestId('test-id'))('Click me!'));
+
+    // The rest of the test ...
+  });
+
+  test('mount attachedToDocument', () {
+-   final jacket = mount(
+-     (Dom.button()..addTestId('test-id'))('Click me!'),
+-     attachedToDocument: true,
+-   );
++   final view = rtl.render((Dom.button()..addTestId('test-id'))('Click me!'));
+
+    // The rest of the test ...
+  });
+}
+```
+
 #### Auto Tear Down
 #### Render into Container
 
@@ -124,3 +179,5 @@ migrate both render and jacket.mount
 ### Migrate Re-Rendering
 
 todo add example
+
+[queries-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md

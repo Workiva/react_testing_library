@@ -341,7 +341,7 @@ main() {
     ));
 
     final input = queryByTestId(instance, 'test-id') as InputElement;
-    expect(input.placeholder, 'Type here...');
+    expect(input.placeholder, 'Password');
   });
 }
 ```
