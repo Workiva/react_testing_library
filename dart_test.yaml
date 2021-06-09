@@ -4,14 +4,14 @@ platforms:
 paths:
   - test/unit/
 
-concurrency: 8
+concurrency: 4
 
 presets:
   # Run only the tests that can be run concurrently:
   #   $ pub run build_runner test -- -P concurrent-tests
   concurrent-tests:
     exclude_tags: run-alone
-    concurrency: 8
+    concurrency: 4
     paths:
       - test/unit/
 
