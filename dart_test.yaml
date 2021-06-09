@@ -20,5 +20,4 @@ presets:
   non-concurrent-tests:
     include_tags: run-alone
     concurrency: 1
-    paths:
-      - test/unit/
+    file: test/unit/user_event/type_test.dart
