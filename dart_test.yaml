@@ -4,4 +4,20 @@ platforms:
 paths:
   - test/unit/
 
-concurrency: 8
+concurrency: 4
+
+presets:
+  # Run only the tests that can be run concurrently:
+  #   $ pub run build_runner test -- -P concurrent-tests
+  concurrent-tests:
+    exclude_tags: run-alone
+    concurrency: 4
+    paths:
+      - test/unit/
+
+  # Run only the tests that need to be run alone:
+  #   $ pub run build_runner test -- -P non-concurrent-tests
+  non-concurrent-tests:
+    include_tags: run-alone
+    concurrency: 1
+    file: test/unit/user_event/type_test.dart
