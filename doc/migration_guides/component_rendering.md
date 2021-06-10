@@ -3,27 +3,21 @@
 - **[Background](#background)**
 - **[Best Practices](#best-practices)**
     - **[Avoid Shallow Rendering](#avoid-shallow-rendering)**
-    - **[Naming](#naming)**
-- **[Migrating to RTL Rendering](#migrating-to-rtl-rendering)** todo should i rename this?
+    - **[Naming Conventions](#naming-conventions)**
+- **[Migrating to React Testing Library Rendering](#migrating-to-react-testing-library-rendering)**
     - **[Rendering](#rendering)**
         - **[Attached to the Document](#attached-to-the-document)**
         - **[Auto Tear Down](#auto-tear-down)**
         - **[Render into Container](#render-into-container)**
-    - **[Shallow Rendering](#shallow-rendering)**
     - **[Accessing Rendered DOM](#accessing-rendered-dom)**
     - **[Re-Rendering](#re-rendering)**
     - **[Unmounting](#unmounting)**
 
-todo fill this table of contents out
-
 ## Background
 
-todo add something about how nice render is
-It's similar to `TestJacket` where it returns a `RenderResult` object that can be queried from.
-
-It also always renders attached to the document.
-
 The React Testing Library (RTL) `render` function will replace all methods of rendering or mounting components in OverReact Test.
+
+> To learn about how to use `render` in RTL, see [render documentation][rtl-render-doc].
 
 OverReact Test had two main utilities for rendering components: `render()` and `mount()`.
 
@@ -57,47 +51,18 @@ Instead of using `renderShallow`, just use RTL's `render` function to render the
 
 For more information, see [Kent Dodd's article on why he does not use shallow rendering](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering).
 
-### Naming
+### Naming Conventions
 
-To avoid importing duplicate render functions todo complete this
+Because OverReact and OverReact Test expose `render` functions, we recommend namespacing your `react_testing_library`
+import as `rtl` to avoid collision:
 
-We recommend naming the return value of RTL's `render` function `view`.
+`import 'package:react_testing_library/react_testing_library.dart' as rtl;`
 
-```dart
-import 'package:over_react/over_react.dart';
-import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:test/test.dart';
+We also recommend naming the return value of the `rtl.render` function `view`:
 
-void main() {
-  test('', () {
-    final view = rtl.render((Dom.input()..type = 'checkbox')());
-  });
-}
-```
+`final view = rtl.render(...);`
 
-## Migrating to RTL Rendering
-
-Tentative outline: todo update this
-
-* General rendering
-  * `render()`
-  * `renderIntoDocument()`
-  * `mount()`
-* Rendering attached to the document
-  * `renderAttachedToDocument()`
-  * `mount(..., attachedToDocument: true)`
-* Render and getting
-  * `renderAndGetComponent()`
-  * `renderAndGetDom()`
-  * `testJacket.getInstance()`
-  * `testJacket.getProps()`
-  * `testJacket.getNode()`
-  * `testJacket.getDartInstance()`
-* Re-rendering or settings state
-  * `jacket.rerender()`
-  * `jacket.setState()`
-* Unmounting
-  * `jacket.unmount()`
+## Migrating to React Testing Library Rendering
 
 ### Rendering
 
@@ -137,7 +102,7 @@ void main() {
 ```
 
 To migrate to RTL, simply import `react_testing_library` (namespaced as `rtl`) and replace the current render method with `rtl.render`. 
-The tests above all translate to the same test in RTL:
+The three tests above all translate to the same test in RTL:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -154,7 +119,8 @@ void main() {
 }
 ```
 
-> Note: The query was also updated here. For information on how to update queries to RTL, see [the queries migration guide][queries-migration-guide].
+> Note: For more information on how to migrate the query and expectation portions of the test to RTL,
+> see the [other migration guides][all-migration-guides].
 
 #### Attached to the Document
 
@@ -197,7 +163,7 @@ and `autoTearDownCallback` arguments do in [OverReact Test's `render` function][
 
 These arguments can simply be copy and pasted when the render method is replaced with the RTL version.
 
-For more information on `autoTearDown` and `onDidTearDown`, see [RTL render docs][react-testing-library-render-doc].
+For more information on `autoTearDown` and `onDidTearDown`, see [RTL render docs][rtl-render-doc].
 
 #### Render into Container
 
@@ -263,7 +229,8 @@ main() {
 }
 ```
 
-> Note: For how to migrate the query and expectation portions of the test to RTL, see the [queries migration guide][queries-migration-guide] and [expectations migration guide][expectations-migration-guide].
+> Note: For more information on how to migrate the query and expectation portions of the test to RTL,
+> see the [other migration guides][all-migration-guides].
 
 ### Accessing Rendered DOM
 
@@ -323,6 +290,8 @@ For more information on how to migrate the query part of these utilities, see th
 While RTL provides a `view.rerender()` utility that can replace usages of OverReact Test's `jacket.rerender()`, it would
 be more in line with the [Testing Library's guiding principles][rtl-guiding-principles] to test the user interaction on 
 the component causing the prop updates.
+
+> To learn more about re-rendering in RTL, see [`RenderResult.rerender` documentation][rtl-rerender-doc].
 
 Below is an example of how re-rendering might be replaced with user interactions.
 
@@ -445,24 +414,24 @@ main() {
 }
 ```
 
-> Note: For more information on how to migrate the query and expectation portions of the test to RTL, see the [queries migration guide][queries-migration-guide] and [expectations migration guide][expectations-migration-guide].
+> Note: For more information on how to migrate the query, user interaction, and expectation portions of the test to RTL, 
+> see the [other migration guides][all-migration-guides].
 
 ### Unmounting
 
+It is unnecessary to manually call `view.unmount()` because it is automatically called in the `tearDown` of each test 
+that calls `rtl.render` unless you set `autoTearDown` to `false`. Once rendering is migrated to RTL, `unmount` calls can
+be removed unless the test is specifically testing what happens when the component is removed from the page.
+
+> To learn more, see [`RenderResult.unmount` documentation][rtl-unmount-doc].
 
 
-### Migrate Rendering
-
-something about container being defaulted to document.body
-
-migrate both render and jacket.mount
-
-### Migrate Re-Rendering
-
-todo add example
-
+[all-migration-guides]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/from_over_react_test.md#migration-guides
 [queries-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
+[component-interactions-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/component_interactions.md
 [expectations-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/expectations.md
 [over-react-test-render-doc]: https://pub.dev/documentation/over_react_test/latest/over_react_test/render.html
-[react-testing-library-render-doc]: https://workiva.github.io/react_testing_library/rtl.react/render.html
+[rtl-render-doc]: https://workiva.github.io/react_testing_library/rtl.react/render.html
+[rtl-unmount-doc]: https://workiva.github.io/react_testing_library/rtl.react/RenderResult/unmount.html
+[rtl-rerender-doc]: https://workiva.github.io/react_testing_library/rtl.react/RenderResult/rerender.html
 [rtl-guiding-principles]: https://testing-library.com/docs/guiding-principles/
