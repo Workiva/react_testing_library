@@ -58,15 +58,15 @@ RTL exposes a new set of matchers that can be used for asserting conditions on D
 
 ## Queries as an Expectation
 
-You may have already worked through the [querying migration guide][querying-guide]. If so, you're familiar with the three different ways to query:
+You may have already worked through the [querying migration guide][querying-guide]. If so, you're familiar with the three different query categories:
 
-- `getBy{X}`
-- `queryBy{X}`
-- `findBy{X}`
+- `getBy`
+- `queryBy`
+- `findBy`
 
-and that some query APIs will fail the test and others will just return `null` if the query fails.
+and that `getBy` APIs will fail the test while others will just return `null` if the query fails.
 
-Because some queries will actually fail the test instead of returning nothing, those queries can be used as expectations all on their own. Below is an example differentiating how this would have worked in OverReact Test with how it works in RTL.
+Because `getBy` will actually fail the test instead of returning nothing, those queries can be used as expectations all on their own. Below is an example differentiating how this would have worked in OverReact Test with how it works in RTL.
 
 <details>
 
@@ -105,7 +105,7 @@ UiFactory<SubmitButtonProps> SubmitButton = uiFunction(
 
 </details>
 
-The example is little contrived, but the important thing is that there are two elements that _could_ exist, but may not. To test one of them, we need the other to already exist. To test that with OverReact Test, we could do:
+The example is little contrived, but the important thing is that there are two elements that _could_ exist but may not. To test the last one, we need the other to already exist. To test that with OverReact Test, we could do:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -129,7 +129,7 @@ main() {
 }
 ```
 
-That test is nice and terse, but the problem is that the query for the `submit-button` may return `null`, which will throw this super helpful error:
+That test is nice and terse, but the problem is that the query for the `submit-button` may return `null`, which will throw this rather unhelpful error when running the test:
 
 ```
 NoSuchMethodError: invalid member on null: '__reactFiber$ng533drevep'
@@ -139,7 +139,7 @@ package:react/react_test_utils.dart 63:67  click
 ui_components/button/rtl_test.dart 72:10   <fn>
 ```
 
-It gives a line number and meantions the `click` API, but it doesn't actually spell out "Your query gave returned `null`". As a result, most would actually do this:
+It gives a line number and mentions the `click` API, but it doesn't actually spell out "Your query returned `null`". As a result, most would actually do this:
 
 ```diff
  import 'package:over_react/over_react.dart';
@@ -166,11 +166,15 @@ It gives a line number and meantions the `click` API, but it doesn't actually sp
  }
 ```
 
-That way, if the test is going to fail because that `submit-button` doesn't get rendered like expected, the test failure error is actually helpful. Let's look at this with RTL though:
+That way, if the test is going to fail because that `submit-button` doesn't get rendered like expected, the test failure error is actually helpful.
+
+So for OverReact Test, that looks good. Let's look at how we could write in with RTL though:
 
 ```dart
 import 'package:over_react/over_react.dart';
-import 'package:over_react_test/over_react_test.dart';
+import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
 import '../component_definition.dart';
@@ -188,7 +192,7 @@ main() {
 }
 ```
 
-That looks almost exactly like the first OverReact Test. However, there are two differences:
+That looks almost exactly like the first (and simpler) OverReact Test example. However, there are two differences:
 
 1. If the test fails trying to find the submit button, it fails _before_ getting to `UserEvent.click` because the `getByRole` query failed. On top of that, here's the error message (collapsed, because it's quite long):
 
@@ -260,10 +264,24 @@ That looks almost exactly like the first OverReact Test. However, there are two 
    Here's why that message is so awesome:
 
    - It explicitly says it couldn't find a button with the name "Submit", and that's why it failed.
-   - It shows the elements on the DOM that _could have_ been queried successfully
-   - There is a stack trace that references `getByRole` directly.
+   - It shows the elements on the DOM that _could have_ been queried successfully.
+   - There is still a stack trace, but it's actually helpful and points to the line and the query directly.
 
-   This test looks almost the exact same as the ideal version of the
+   So while this test looks like the simplest version that could be written in OverReact Test, it handles that failure much better.
+
+1. The last `expect` statement is redundant. The last assertion is:
+
+   ```dart
+   expect(view.getByText('Yay, you submitted!'), isInTheDocument);
+   ```
+
+   Technically, the `expect` statement itself will never fail because the nested `getByText` query will fail first if an element isn't found. As a result, that `expect` statement is the equivelant to just:
+
+   ```dart
+   view.getByText('Yay, you submitted!');
+   ```
+
+   For this example, it made sense to actually wrap it in an `expect` so that it is clear that the test is ending with an expectation that the text could be found, but doing this [is up to personal preference][common-mistakes-get-assertions]. The important thing is to understand that `getBy` queries have this behavior and can be used that way.
 
 ## Assertions Verifying Props and State Values
 
@@ -308,6 +326,7 @@ TODO add example
 [entrypoint-use-cases]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#use-case-testing
 [querying-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
 [matcher-docs]: https://workiva.github.io/react_testing_library/topics/Matchers-topic.html
+[common-mistakes-get-assertions]: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
 
 ```
 
