@@ -2,6 +2,7 @@
 
 - **[Background](#background)**
 - **[Best Practices](#best-practices)**
+    - **[Avoid Shallow Rendering](#avoid-shallow-rendering)**
     - **[Naming](#naming)**
 - **[Migrating to RTL Rendering](#migrating-to-rtl-rendering)** todo should i rename this?
     - **[Rendering](#rendering)**
@@ -48,9 +49,17 @@ These two methods have a lot in common and will have similar migration paths to 
 
 ## Best Practices
 
-todo add best practices
+### Avoid Shallow Rendering
+
+React Testing Library does not support shallow rendering of components because it does not resemble how users would interact with components.
+
+Instead of using `renderShallow`, just use RTL's `render` function to render the full component and its children.
+
+For more information, see [Kent Dodd's article on why he does not use shallow rendering](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering).
 
 ### Naming
+
+To avoid importing duplicate render functions todo complete this
 
 We recommend naming the return value of RTL's `render` function `view`.
 
@@ -77,8 +86,6 @@ Tentative outline: todo update this
 * Rendering attached to the document
   * `renderAttachedToDocument()`
   * `mount(..., attachedToDocument: true)`
-* Shallow Rendering
-  * `renderShallow()`
 * Render and getting
   * `renderAndGetComponent()`
   * `renderAndGetDom()`
@@ -258,11 +265,6 @@ main() {
 
 > Note: For how to migrate the query and expectation portions of the test to RTL, see the [queries migration guide][queries-migration-guide] and [expectations migration guide][expectations-migration-guide].
 
-
-### Shallow Rendering
-
-Should not be done todo fill out why and how to change
-
 ### Accessing Rendered DOM
 
 Some OverReact Test render utilities both render UI and access rendered components, props, and elements.
@@ -318,6 +320,133 @@ For more information on how to migrate the query part of these utilities, see th
 
 ### Re-Rendering
 
+While RTL provides a `view.rerender()` utility that can replace usages of OverReact Test's `jacket.rerender()`, it would
+be more in line with the [Testing Library's guiding principles][rtl-guiding-principles] to test the user interaction on 
+the component causing the prop updates.
+
+Below is an example of how re-rendering might be replaced with user interactions.
+
+<details>
+  <summary>Component Definition (click to expand)</summary>
+
+```dart
+import 'package:over_react/over_react.dart';
+
+part 'component_implementation.over_react.g.dart';
+
+UiFactory<FancySubmitButtonProps> FancySubmitButton =
+    castUiFactory(_$FancySubmitButton); // ignore: undefined_identifier
+
+class FancySubmitButtonProps = UiProps with DomPropsMixin;
+
+class FancySubmitButtonComponent extends UiComponent2<FancySubmitButtonProps> {
+  @override
+  get defaultProps => (newProps()..disabled = false);
+
+  @override
+  render() => (Dom.button()
+    ..addTestId('fancy-button')
+    ..type = 'submit'
+    ..className = 'fancy-class-name${props.disabled ? ' disabled' : ''}'
+    ..addProps(props)
+  )('Submit');
+}
+
+mixin FancyFormProps on UiProps {}
+
+UiFactory<FancyFormProps> FancyForm = uiFunction(
+  (props) {
+    final firstName = useState('');
+    final lastName = useState('');
+    return Dom.form()(
+      (Dom.label()..htmlFor = 'first-name')('First Name'),
+      (Dom.input()
+        ..type = 'text'
+        ..onChange = ((SyntheticFormEvent e) => firstName.set(e.target.value))
+        ..id = 'first-name'
+      )(),
+      (Dom.label()..htmlFor = 'last-name')('Last Name'),
+      (Dom.input()
+        ..type = 'text'
+        ..onChange = ((SyntheticFormEvent e) => lastName.set(e.target.value))
+        ..id = 'last-name'
+      )(),
+      (FancySubmitButton()
+        ..disabled = firstName.value.isEmpty || lastName.value.isEmpty
+      )(),
+    );
+  },
+  _$FancyFormConfig, // ignore: undefined_identifier
+);
+```
+
+</details>
+
+Using OverReact Test, the disabled and non-disabled styling for `FancySubmitButton` might be tested by 
+rendering the component and then re-rendering with the `disabled` prop set to `true`:
+
+```dart
+import 'dart:html';
+
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import 'component_interaction.dart';
+
+main() {
+  test('FancySubmitButton applies correct classes based on disabled state', () {
+    final jacket = mount(FancySubmitButton()());
+
+    final button =
+        getByTestId(jacket.getInstance(), 'fancy-button') as ButtonElement;
+
+    expect(button.disabled, isFalse);
+    expect(button.classes, ['fancy-class-name']);
+
+    jacket.rerender((FancySubmitButton()..disabled = true)());
+
+    expect(button.disabled, isTrue);
+    expect(button.classes, ['fancy-class-name', 'disabled']);
+  });
+}
+```
+
+To migrate this test to RTL, we could use `view.rerender()` to replace the re-rendering logic in this test, but this is 
+something a user would never do when interacting with `FancySubmitButton`. 
+
+A better approach would be to test the user interactions on `FancyForm` that would cause `FancySubmitButton` to re-render
+with the `disabled` prop set to `true`. In this case, that means typing into the two input fields, so the RTL version of 
+this test would be:
+
+```dart
+import 'package:react_testing_library/matchers.dart' show hasExactClasses, isDisabled;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import 'component_interaction.dart';
+
+main() {
+  test('FancySubmitButton applies correct classes based on disabled state', () {
+    final view = rtl.render(FancyForm()());
+
+    final button = view.getByRole('button', name: 'Submit');
+
+    expect(button, isDisabled);
+    expect(button, hasExactClasses('fancy-class-name disabled'));
+
+    // Perform the user interaction that would cause the button to become enabled.
+    UserEvent.type(view.getByLabelText('First Name'), 'Jane');
+    UserEvent.type(view.getByLabelText('Last Name'), 'Doe');
+
+    expect(button, isNot(isDisabled));
+    expect(button, hasExactClasses('fancy-class-name'));
+  });
+}
+```
+
+> Note: For more information on how to migrate the query and expectation portions of the test to RTL, see the [queries migration guide][queries-migration-guide] and [expectations migration guide][expectations-migration-guide].
+
 ### Unmounting
 
 
@@ -336,3 +465,4 @@ todo add example
 [expectations-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/expectations.md
 [over-react-test-render-doc]: https://pub.dev/documentation/over_react_test/latest/over_react_test/render.html
 [react-testing-library-render-doc]: https://workiva.github.io/react_testing_library/rtl.react/render.html
+[rtl-guiding-principles]: https://testing-library.com/docs/guiding-principles/
