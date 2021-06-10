@@ -194,6 +194,69 @@ For more information on `autoTearDown` and `onDidTearDown`, see [RTL render docs
 
 #### Render into Container
 
+The `container` argument works very similar to OverReact Test's `container` and `mountNode` arguments for `render()` and `mount()`, respectively.
+
+If the test is setting the `container` / `mountNode` to a `DivElement` with default props, this argument can be removed entirely when converting the test to RTL because `rtl.render` already renders content inside a `DivElement` that is attached to `document.body`. Below is an example of this:
+
+```diff
+import 'dart:html';
+
+import 'package:over_react/over_react.dart';
+- import 'package:over_react_test/over_react_test.dart';
++ import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('Div Container', () {
+-   final container = DivElement();
+-   final jacket = mount(
++   final view = rtl.render(
+      (Dom.p()..addTestId('test-id'))('Hello World!'),
+-     mountNode: container,
+    );
+-   expect(jacket.getNode().text, equals('Hello World!'));
++   expect(view.getByText('Hello World!'), isInTheDocument);
+  });
+}
+```
+
+In most cases, adding a `container` argument should not be necessary, but if you do need to set `container` to something else, make sure to append that node to `document.body` because it will not be done automatically.
+
+For example, to update this test with a `TableElement` container, make sure to also append the `container` to `document.body`:
+
+```diff
+import 'dart:html';
+
+import 'package:over_react/over_react.dart';
+- import 'package:over_react_test/over_react_test.dart';
++ import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('Table Container', () {
+    final container = TableElement();
+-   final instance = render(
++   final view = rtl.render(
+      Dom.tbody()(
+        (Dom.tr()..addTestId('table-row'))(
+          Dom.td()('January'),
+          Dom.td()('\$100'),
+        ),
+        (Dom.tr()..addTestId('table-row'))(
+          Dom.td()('February'),
+          Dom.td()('\$80'),
+        ),
+      ),
+-     container: container,
++     container: document.body.append(container),
+    );
+-   expect(queryAllByTestId(instance, 'table-row'), hasLength(2));
++   expect(view.getAllByRole('row'), equals([isInTheDocument, isInTheDocument]));
+  });
+}
+```
+
+> Note: For how to migrate the query and expectation portions of the test to RTL, see the [queries migration guide][queries-migration-guide] and [expectations migration guide][expectations-migration-guide].
 
 
 ### Shallow Rendering
@@ -233,7 +296,7 @@ main() {
 ```
 > Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history@8b1fcb2328bb27ed420029064218fd4657de6ae4/-/blob/test/components/date_heading_test.dart#L9-14)
 
-When converting this test to RTL, the `renderAndGetDom()` needs to be split out into a separate render call and then query to get the element like this:
+When converting this test to RTL, the `renderAndGetDom()` should be replaced with a render call and followed by a query for the element being tested:
 
 ```dart
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
@@ -270,5 +333,6 @@ migrate both render and jacket.mount
 todo add example
 
 [queries-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
+[expectations-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/expectations.md
 [over-react-test-render-doc]: https://pub.dev/documentation/over_react_test/latest/over_react_test/render.html
 [react-testing-library-render-doc]: https://workiva.github.io/react_testing_library/rtl.react/render.html
