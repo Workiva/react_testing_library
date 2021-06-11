@@ -15,11 +15,11 @@
 
 ## Background
 
-The React Testing Library (RTL) `render` function will replace all methods of rendering or mounting components in OverReact Test.
+The React Testing Library (RTL) `render` function will replace all methods of rendering or mounting components used in current tests.
 
 > To learn about how to use `render` in RTL, see [render documentation][rtl-render-doc].
 
-OverReact Test had two main utilities for rendering components: `render()` and `mount()`.
+OverReact Test has two main utilities for rendering components: `render()` and `mount()`.
 
 1. `render` function variations
     * `render()`
@@ -49,7 +49,7 @@ React Testing Library does not support shallow rendering of components because i
 
 Instead of using `renderShallow`, just use RTL's `render` function to render the full component and its children.
 
-For more information, see [Kent Dodd's article on why he does not use shallow rendering](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering).
+For more information, see [Kent Dodds' article on why he does not use shallow rendering](https://kentcdodds.com/blog/why-i-never-use-shallow-rendering).
 
 ### Naming Conventions
 
@@ -163,7 +163,7 @@ and `autoTearDownCallback` arguments do in [OverReact Test's `render` function][
 
 These arguments can simply be copy and pasted when the render method is replaced with the RTL version.
 
-For more information on `autoTearDown` and `onDidTearDown`, see [RTL render docs][rtl-render-doc].
+For more information on `autoTearDown` and `onDidTearDown`, see [RTL `render` docs][rtl-render-doc].
 
 #### Render into Container
 
@@ -265,7 +265,7 @@ main() {
 ```
 > Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history@8b1fcb2328bb27ed420029064218fd4657de6ae4/-/blob/test/components/date_heading_test.dart#L9-14)
 
-When converting this test to RTL, the `renderAndGetDom()` should be replaced with a render call and followed by a query for the element being tested:
+When converting this test to RTL, the `renderAndGetDom()` should be replaced with a render call followed by a query for the element being tested:
 
 ```dart
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
