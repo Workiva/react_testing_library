@@ -27,6 +27,7 @@ Most patterns are similar. Some network requests will not impact the UI while ma
   - Verifying Styles are Set
 - Checking Form Input Nodes
 - Migrating Children Assertions
+- Async Assertions
 
 ## New Matchers
 
@@ -294,15 +295,31 @@ This section covers:
 
 For all of these scenarios, the approach is to shift from checking the underlying values to what the user should expect to see in the application when the props and state are set to those values.
 
+All of the examples in this section will use the same component definition (below, collapsed) to illustrate how a test was written with OverReact Test and how it could now be written with RTL. The example is a simple log in form that triggers `onSuccessfulAuth` or `onFailedAuth`, in addition to managing it's own form state.
+
+<details>
+  <summary>Component Definition (click to expand)</summary>
+
+</details>
+
 ### Asserting Props or State are Set as Expected
 
 When props or state are being checked in a test, there are three broad scenarios usually being tested:
 
 - Defaults are the expected value
-- Values are correct after a re-render (which can be triggered by events or test APIs)
+- Values are correct after a re-render
 - Children of a parent have the expected values given the parent's props and state
 
-TODO add an example
+#### Default values are the expected value
+
+Usually when a test reaches into a component to verify initial props, the idea is to ensure the component is initialized with the expected data. The use case being tested, then, is that the component loads as expected. Instead of testing that the data loads as expected though, we should be testing that the UI loads as expected. Here is what this test could have looked like in OverReact Test:
+
+#### Values are Correct after Re-Render
+
+When components re-render, there is an opportunity for either data or UI to update in an unexpected ways. Re-renders are largely triggered by two things:
+
+- A parent changing the component's props
+- Internal state changes
 
 ### Verifying Styles or Class Names
 
@@ -320,14 +337,143 @@ TODO add example
 
 Often, a component should return children depending on the context. Assertions here may be checking how many children are rendered or that specific children have correct values. In both cases, as is the pattern, we should turn to the DOM to ensure what we expect is showing to the user.
 
-TODO add example
+<details>
+  <summary>Component Definition (click to expand)</summary>
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/all.dart';
+
+part 'component_definition.over_react.g.dart';
+
+UiFactory<TodoListProps> TodoList = castUiFactory(_$TodoList); // ignore: undefined_identifier
+
+mixin TodoListProps on UiProps {}
+
+mixin TodoListState on UiState {
+  List<String> listItems;
+}
+
+class TodoListComponent extends UiStatefulComponent2<TodoListProps, TodoListState> {
+  @override
+  get initialState => newState()..listItems = [];
+
+  Ref<TextInputComponent> _ref = createRef<TextInputComponent>();
+
+  @override
+  render() {
+    return (Dom.div()(
+      (TextInput()
+        ..ref = _ref
+        ..addTestId('text-input')
+        ..label = 'New List Item'
+      )(),
+      (Button()
+        ..addTestId('submit-button')
+        ..onClick = (_) {
+          final inputValue = _ref.current.getValue();
+          _ref.current.setValue('');
+
+          setState(newState()..listItems = [...state.listItems, inputValue]);
+        }
+      )('Add Item'),
+      (ListGroup()..addTestId('list-group'))(
+        state.listItems.map((content) {
+          return (ListGroupItem()..key = content)(content);
+        }),
+      ),
+    ));
+  }
+}
+```
+
+</details>
+
+This example features a simple input and button that can be used to add items to a `ListGroup`. To test that the `ListGroup` renders the expected children with OverReact Test, we would do:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+   test('renders children as expected', () {
+    final renderResult = render(TodoList()());
+    final listGroup = getComponentByTestId(renderResult, 'list-group') as ListGroupComponent;
+
+    void addListItem(String item) {
+      final component = getDartComponent(renderResult) as TodoListComponent;
+      component.setState(component.newState()..listItems = [...component.state.listItems, item]);
+    }
+
+    expect(listGroup.props.children.length, 0);
+
+    addListItem('first item');
+    addListItem('second item');
+
+    expect(listGroup.props.children.length, 2);
+  });
+}
+```
+
+This is a common pattern, but has a couple of weaknesses (as far as expectations go):
+
+1. We don't actually know that users can see the children. Children can exist with styles that prevent the node from being visible in the DOM.
+1. Assuming the children render as expected, we aren't checking what they are displaying to the user. We could do that, but it's a little more verbose so often this is as far as tests go.
+
+In RTL, we can't access the component instance itself and are guided towards testing in a way that avoids these pitfalls:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+   test('renders children as expected', () {
+    final view = rtl.render(TodoList()());
+    final listGroup = view.getByTestId('list-group');
+
+    void addListItem(String item) {
+      final input = view.getByLabelText('New List Item');
+      UserEvent.type(input, item);
+      click(view.getByRole('button', name: 'Add Item'));
+    }
+
+    expect(listGroup, isEmptyDomElement);
+
+    addListItem('first item');
+    addListItem('second item');
+
+    expect(listGroup, containsElement(view.getByText('first item')));
+    expect(listGroup, containsElement(view.getByText('second item')));
+  });
+}
+```
+
+Note that here we're making the same fundamental assertions, but all of them are based in the DOM as opposed to the implementation details of the component. Another important takeaway is doing:
+
+```dart
+expect(listGroup, containsElement(view.getByText('first item')));
+```
+
+and not doing:
+
+```dart
+expect(view.getByText('first item'), isInTheDocument);
+```
+
+While the latter does verify the component will add to nodes to the DOM, we want to enforce that not only does that node exist in the document, but its parent is also the `listGroup`.
+
+## Migrating Async Assertions
 
 [entrypoint-philosophy]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#philosophy
 [entrypoint-use-cases]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#use-case-testing
 [querying-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
 [matcher-docs]: https://workiva.github.io/react_testing_library/topics/Matchers-topic.html
 [common-mistakes-get-assertions]: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions
-
-```
-
-```
