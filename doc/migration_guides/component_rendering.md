@@ -58,11 +58,15 @@ For more information, see [Kent Dodds' article on why he does not use shallow re
 Because OverReact and OverReact Test expose `render` functions, we recommend namespacing your `react_testing_library`
 import as `rtl` to avoid collision:
 
-`import 'package:react_testing_library/react_testing_library.dart' as rtl;`
+```dart
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+```
 
 We also recommend naming the return value of the `rtl.render` function `view`:
 
-`final view = rtl.render(...);`
+```dart
+final view = rtl.render(ui);
+```
 
 ## Migrating to React Testing Library Rendering
 
@@ -271,7 +275,7 @@ When converting this test to RTL, the `renderAndGetDom()` should be replaced wit
 
 ```dart
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/matchers.dart' show hasClasses;
+import 'package:react_testing_library/matchers.dart' show hasExactClasses;
 import 'package:test/test.dart';
 import 'package:w_history/components/date_heading.dart';
 
@@ -280,7 +284,7 @@ main() {
     const String date = 'April 17, 2019';
     final view = rtl.render((DateHeading()..date = date)());
     final dateHeading = view.getByText(date);
-    expect(dateHeading, hasClasses('history-date-header'));
+    expect(dateHeading, hasExactClasses('history-date-header'));
   });
 }
 ```
