@@ -17,8 +17,6 @@
 
 The React Testing Library (RTL) `render` function will replace all methods of rendering or mounting components used in current tests.
 
-> To learn about how to use `render` in RTL, see [render documentation][rtl-render-doc].
-
 OverReact Test has two main utilities for rendering components: `render()` and `mount()`.
 
 1. `render` function variations
@@ -40,6 +38,10 @@ OverReact Test has two main utilities for rendering components: `render()` and `
     * `jacket.unmount()`
 
 These two methods have a lot in common and will have similar migration paths to RTL.
+
+For information on how to migrate the rendering portion of tests to RTL, see the [Migrating to RTL Rendering](#migrating-to-react-testing-library-rendering) section of this page.
+
+To learn more about the specifics of RTL's rendering API, see [RTL render documentation][rtl-render-doc].
 
 ## Best Practices
 
@@ -163,7 +165,7 @@ and `autoTearDownCallback` arguments do in [OverReact Test's `render` function][
 
 These arguments can simply be copy and pasted when the render method is replaced with the RTL version.
 
-For more information on `autoTearDown` and `onDidTearDown`, see [RTL `render` docs][rtl-render-doc].
+For more information on `autoTearDown` and `onDidTearDown`, see [RTL `render` documentation][rtl-render-doc].
 
 #### Render into Container
 
@@ -384,7 +386,7 @@ To migrate this test to RTL, we could use `view.rerender()` to replace the re-re
 something a user would never do when interacting with `FancySubmitButton`. 
 
 A better approach would be to test the user interactions on `FancyForm` that would cause `FancySubmitButton` to re-render
-with the `disabled` prop set to `true`. In this case, that means typing into the two input fields, so the RTL version of 
+with the `disabled` prop set to `false`. In this case, that means typing into the two input fields, so the RTL version of 
 this test would be:
 
 ```dart
@@ -420,7 +422,7 @@ main() {
 ### Unmounting
 
 It is unnecessary to manually call `view.unmount()` because it is automatically called in the `tearDown` of each test 
-that calls `rtl.render` unless you set `autoTearDown` to `false`. Once rendering is migrated to RTL, `unmount` calls can
+that calls `rtl.render` unless `autoTearDown` is set to `false`. When migrating rendering to RTL, `unmount` calls can
 be removed unless the test is specifically testing what happens when the component is removed from the page.
 
 > To learn more, see [`RenderResult.unmount` documentation][rtl-unmount-doc].
