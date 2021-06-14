@@ -25,7 +25,7 @@ Most patterns are similar. Some network requests will not impact the UI while ma
 - Migrating Props and State Assertions
   - Asserting Props or State are Set as Expected
   - Verifying Styles are Set
-- Checking Form Input Nodes
+- Checking Form Input Values
 - Migrating Children Assertions
 - Async Assertions
 
@@ -327,11 +327,237 @@ Styles and class names are often set on an element based on the props or state o
 
 TODO add an example
 
-## Checking Form Input Nodes
+## Checking Form Input Values
 
-To assert that a form input has an expected attribute, there are many common patterns. Sometimes it's easiest to grab the DOM node and check its values directly, sometimes the props instance is easiest, or maybe even the state. All around though, RTL makes testing these nodes very intuitive. As is mentioned in [assertions verifying props and state values](#assertions-verifying-props-and-state-values), in the case that the form inputs were being tested via their props or state, it will be important to determine what the UI the corresponds with those values are. From there though, the RTL test is really straight forward.
+To check the value of form inputs in RTL, the best practice is:
 
-TODO add example
+1. Query to find the input DOM node
+1. Use a matcher instead of accessing the input's properties ourselves
+
+The first point is very much inline with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab an input's value (think `TextInputComponent.getValue()`), RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
+
+For the second point, the new pattern is only a slight adjustment. With OverReact Test, form input values were usually verified by accessing a property on the element (or a Dart component counterpart) similarly to:
+
+```dart
+expect(someElementInstance.value, 'this is an input value');
+```
+
+With RTL though, the matcher does more of the work for us. That same `expect` statement would be:
+
+```dart
+expect(someElementInstance, hasDisplayValue('this is an input value'));
+```
+
+Note that it looks very similar, but instead of accessing the node properties ourselves, the matcher does it for us. Similar matchers are:
+
+- `isChecked`
+- `isDisabled`
+- `isEnabled`
+- `isFocused`
+- `isPartiallyChecked`
+- `hasDisplayValue`
+- `hasFormValues`
+- `hasValue`
+
+For a full example showing what a migrated test may look like, see below.
+
+<details>
+  <summary>Component Definition (click to expand)</summary>
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/all.dart';
+
+part 'component_definition.over_react.g.dart';
+
+UiFactory<ExampleFormProps> ExampleForm = castUiFactory(_$ExampleForm); // ignore: undefined_identifier
+
+mixin ExampleFormProps on UiProps {}
+
+mixin ExampleFormState on UiState {
+  String firstName;
+  String lastName;
+  List<String> ownedPets;
+
+  bool prefersDogs;
+  bool hasSubmitted;
+}
+
+class ExampleFormComponent extends UiStatefulComponent2<ExampleFormProps, ExampleFormState> {
+  @override
+  get initialState => newState()
+    ..firstName = ''
+    ..lastName = ''
+    ..ownedPets = []
+    ..prefersDogs = true
+    ..hasSubmitted = false;
+
+  void _updateOwnedPets(String pet) {
+    final isAdding = !state.ownedPets.contains(pet);
+
+    if (isAdding) {
+      this.setState(newState()..ownedPets = [...state.ownedPets, pet]);
+      return;
+    }
+
+    this.setState(newState()..ownedPets = state.ownedPets.where((ownedPet) => ownedPet != pet).toList());
+  }
+
+  bool _isFormValid() {
+    return state.firstName.isNotEmpty && state.lastName.isNotEmpty && state.ownedPets.isNotEmpty;
+  }
+
+  @override
+  render() {
+    return (Form()
+      ..addTestId('form')
+    )(
+      (TextInput()
+        ..label = 'First Name'
+        ..value = state.firstName
+        ..onChange = ((e) => setState(newState()..firstName = e.target.value))
+        ..addTestId('first-name-input')
+      )(),
+      (TextInput()
+        ..label = 'Last Name'
+        ..value = state.lastName
+        ..onChange = ((e) => setState(newState()..lastName = e.target.value))
+        ..addTestId('last-name-input')
+      )(),
+      (ToggleInputGroup()..groupLabel = 'I prefer...'..addTestId('prefers-group'))(
+        (RadioInput()
+          ..value = 'Dogs'
+          ..label = 'Dogs'
+          ..checked = state.prefersDogs
+          ..onClick = (_) => setState(newState()..prefersDogs = true)
+        )('Dogs'),
+        (RadioInput()
+          ..value = 'Cats'
+          ..label = 'Cats'
+          ..checked = !state.prefersDogs
+          ..onClick = (_) => setState(newState()..prefersDogs = false)
+        )('Cats'),
+      ),
+      (ToggleInputGroup()..groupLabel = 'What type of pets have you owned?'..addTestId('owned-group'))(
+        (CheckboxInput()
+          ..checked = state.ownedPets.contains('Dogs')
+          ..onChange = ((_) => _updateOwnedPets('Dogs'))
+          ..value = 'Dogs'
+          ..label = 'Dogs'
+        )('Dogs'),
+        (CheckboxInput()
+          ..checked = state.ownedPets.contains('Cats')
+          ..onChange = ((_) => _updateOwnedPets('Cats'))
+          ..value = 'Cats'
+          ..label = 'Cats'
+        )('Cats'),
+        (CheckboxInput()
+          ..checked = state.ownedPets.contains('Birds')
+          ..onChange = ((_) => _updateOwnedPets('Birds'))
+          ..value = 'Birds'
+          ..label = 'Birds'
+        )('Birds'),
+        (CheckboxInput()
+          ..checked = state.ownedPets.contains('Reptiles')
+          ..onChange = ((_) => _updateOwnedPets('Reptiles'))
+          ..value = 'Reptiles'
+          ..label = 'Reptiles'
+        )('Reptiles'),
+        (CheckboxInput()
+          ..checked = state.ownedPets.contains('Fish')
+          ..onChange = ((_) => _updateOwnedPets('Fish'))
+          ..value = 'Fish'
+          ..label = 'Fish'
+        )('Fish'),
+      ),
+      (Button()..isDisabled = !_isFormValid()..type = ButtonType.SUBMIT..addTestId('submit-button'))('Submit'),
+    );
+  }
+}
+
+```
+
+</details>
+
+This component is just a form with a few different types of inputs and a button that requires every input (or group) to have a value before being enabled. A test verifying that the input values and button update as expected would have looked like:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+   test('the form can be filled out', () {
+    final renderResult = render(ExampleForm()());
+    final formComponent = getDartComponent(renderResult) as ExampleFormComponent;
+    final button = queryByTestId(renderResult, 'submit-button') as ButtonElement;
+
+    List<InputElement> getCheckedRadioInputs() => (getComponentByTestId(renderResult, 'prefers-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
+    List<InputElement> getCheckedCheckboxes() => (getComponentByTestId(renderResult, 'owned-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
+
+
+    expect(button.disabled, isTrue);
+
+    // Set the state to imitate user interaction
+    formComponent.setState(formComponent.newState()..firstName = 'Jon'..lastName = 'Snow'..prefersDogs = false..ownedPets = ['Dogs', 'Reptiles']);
+
+    expect(button.disabled, isFalse);
+    expect((queryByTestId(renderResult, 'first-name-input') as InputElement).value, 'Jon');
+    expect((queryByTestId(renderResult, 'last-name-input') as InputElement).value, 'Snow');
+
+    final checkedRadioInputs = getCheckedRadioInputs();
+    expect(checkedRadioInputs.length, 1);
+    expect(checkedRadioInputs.first.value, 'Cats');
+
+    final checkedCheckBoxes = getCheckedCheckboxes();
+    expect(checkedCheckBoxes.length, 2);
+    expect(checkedCheckBoxes.first.value, 'Dogs');
+    expect(checkedCheckBoxes[1].value, 'Reptiles');
+  });
+}
+```
+
+With RTL, that becomes:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+   test('the form can be filled out', () {
+    final view = rtl.render(ExampleForm()());
+    final button = view.queryByRole('button', name: 'Submit') as ButtonElement;
+    final firstNameInput = view.getByLabelText('First Name');
+    final lastNameInput = view.getByLabelText('Last Name');
+    final prefersGroup = view.getByText('I prefer...').parent;
+    final ownedGroup = view.getByText('What type of pets have you owned?').parent;
+
+    expect(button, isDisabled);
+
+    UserEvent.type(firstNameInput, 'jon');
+    UserEvent.type(lastNameInput, 'snow');
+    UserEvent.click(rtl.getByLabelText(prefersGroup, 'Cats'));
+    UserEvent.click(rtl.getByLabelText(ownedGroup, 'Dogs'));
+    UserEvent.click(rtl.getByLabelText(ownedGroup, 'Reptiles'));
+
+    expect(button, isEnabled);
+    expect(firstNameInput, hasDisplayValue('jon'));
+    expect(lastNameInput, hasDisplayValue('snow'));
+    expect(rtl.getByLabelText(prefersGroup, 'Cats'), isChecked);
+    expect(rtl.getByLabelText(ownedGroup, 'Dogs'), isChecked);
+    expect(rtl.getByLabelText(ownedGroup, 'Reptiles'), isChecked);
+  });
+}
+```
+
+Besides the queries, the only that really changed is that the first paremeter of `expect` only receives an HTML element, while the second parameter is a matcher that knows how to verify that the input element has the expected attributes.
 
 ## Migrating Children Assertions
 
