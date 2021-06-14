@@ -407,7 +407,8 @@ main() {
 
     final button = view.getByRole('button', name: 'Submit');
 
-    expect(button, isDisabled);
+    expect(button, isDisabled, 
+        reason: 'the submit button is disabled by default because the form inputs are empty');
     expect(button, hasExactClasses('fancy-class-name disabled'));
 
     // Perform the user interaction that would cause the button to become enabled.
