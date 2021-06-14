@@ -300,6 +300,117 @@ All of the examples in this section will use the same component definition (belo
 <details>
   <summary>Component Definition (click to expand)</summary>
 
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:web_skin_dart/component2/all.dart';
+
+part 'component_definition.over_react.g.dart';
+
+class AuthError {
+  static Map<String, String> authErrors = {
+    'bad-username': 'The username provided is invalid.',
+    'invalid-credentials': 'Whoops, the username or password provided were not valid.',
+  };
+
+  static String get badUsername => authErrors['bad-username'];
+  static String get invalidCredentials => authErrors['invalid-credentials'];
+}
+
+UiFactory<LoginFormProps> LoginForm = castUiFactory(_$LoginForm); // ignore: undefined_identifier
+
+mixin LoginFormProps on UiProps {
+  bool isAuthed;
+  void Function() onSuccessfulAuth;
+  void Function(String errorMessage) onFailedAuth;
+}
+
+mixin LoginFormState on UiState {
+  String username;
+  String password;
+  bool hasUsernameError;
+  bool hasCredentialsError;
+}
+
+class LoginFormComponent extends UiStatefulComponent2<LoginFormProps, LoginFormState> {
+  @override
+  get defaultProps => newProps()..isAuthed = false;
+
+  @override
+  get initialState => newState()
+    ..username = ''
+    ..password = ''
+    ..hasUsernameError = false
+    ..hasCredentialsError = false;
+
+  bool _credentialsAreValid() {
+    return state.username == 'jonsnow' && state.password == 'winteriscoming';
+  }
+
+  bool _usernameIsValid() {
+    return state.username.isNotEmpty;
+  }
+
+  @override
+  render() {
+    return ((Form()
+      ..onSubmit = (e) {
+        e.preventDefault();
+
+        if (!_usernameIsValid()) {
+          props.onFailedAuth(AuthError.badUsername);
+          setState(newState()..hasUsernameError = true);
+          return;
+        }
+
+        if (!_credentialsAreValid()) {
+          props.onFailedAuth(AuthError.invalidCredentials);
+          setState(newState()..hasCredentialsError = true);
+          return;
+        }
+
+        props.onSuccessfulAuth();
+        setState(newState()
+          ..hasUsernameError = false
+          ..hasCredentialsError = false
+        );
+      }
+      ..addTestId('form')
+    )(
+      (TextInput()
+        ..className = state.hasUsernameError ? 'invalid-input' : ''
+        ..style = {'borderColor': 'orange'}
+        ..isDisabled = props.isAuthed
+        ..label = 'Username'
+        ..placeholder = 'Username'
+        ..value = state.username
+        ..onChange = (e) {
+          setState(newState()..username = e.target.value);
+        }
+        ..addTestId('username-field')
+      )(),
+      (TextInput()
+        ..className = state.hasCredentialsError ? 'invalid-input' : ''
+        ..style = {'borderColor': 'orange'}
+        ..isDisabled = props.isAuthed
+        ..label = 'Password'
+        ..placeholder = 'Password'
+        ..type = TextInputType.PASSWORD
+        ..value = state.password
+        ..onChange = (e) {
+          setState(newState()..password = e.target.value);
+        }
+        ..addTestId('password-field')
+      )(),
+      (Button()
+        ..isDisabled = props.isAuthed
+        ..type = ButtonType.SUBMIT
+        ..addTestId('log-in-button')
+      )('Log In'),
+    ));
+  }
+}
+```
+
 </details>
 
 ### Asserting Props or State are Set as Expected
@@ -308,11 +419,61 @@ When props or state are being checked in a test, there are three broad scenarios
 
 - Defaults are the expected value
 - Values are correct after a re-render
-- Children of a parent have the expected values given the parent's props and state
 
 #### Default values are the expected value
 
-Usually when a test reaches into a component to verify initial props, the idea is to ensure the component is initialized with the expected data. The use case being tested, then, is that the component loads as expected. Instead of testing that the data loads as expected though, we should be testing that the UI loads as expected. Here is what this test could have looked like in OverReact Test:
+One of the first component tests written is often just verifying initial props or state. For the component defined above with OverReact Test, this may have looked like:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('loads as expected', () {
+    final jacket = mount(LoginForm()());
+    final component = jacket.getDartInstance() as LoginFormComponent;
+
+    expect(component.state.username, isEmpty);
+    expect(component.state.password, isEmpty);
+    expect(component.props.isAuthed, isFalse);
+  });
+}
+```
+
+This test is simple, but to migrate it we need to step back and wonder how the user would know that these values are correct without knowing the implementation of the component. For this simple example, we can see that this test is essentially:
+
+- verifiying that the inputs are initially empty and
+- making sure that all the inputs are enabled (as setting `isAuthed` to true would disable them)
+
+From there, we can re-write the test using RTL such that instead of just verifying what the component props or state are, we verify the user will see empty, enabled inputs:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('loads as expected', () {
+    final view = rtl.render(LoginForm()());
+
+    final usernameInput = view.getByLabelText('Username');
+    final passwordInput = view.getByLabelText('Password');
+
+    expect(usernameInput, hasDisplayValue(''));
+    expect(passwordInput, hasDisplayValue(''));
+    expect(usernameInput, isEnabled);
+    expect(passwordInput, isEnabled);
+    expect(view.getByRole('button'), isEnabled);
+  });
+}
+```
 
 #### Values are Correct after Re-Render
 
@@ -320,6 +481,60 @@ When components re-render, there is an opportunity for either data or UI to upda
 
 - A parent changing the component's props
 - Internal state changes
+
+From looking at the `LoginForm` declared above, we can see that a parent component may listen for a successful auth attempt and then update the `isAuthed` prop to be `true`. With OverReact Test, we could verify this works as expected like:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('disables inputs when authed', () {
+    var isAuthed = false;
+
+    final jacket = mount((LoginForm()
+      ..isAuthed = isAuthed
+      ..onSuccessfulAuth = (() => isAuthed = true)
+      ..onFailedAuth = (_) => isAuthed = false
+    )());
+
+    FormComponent form = getComponentByTestId(jacket.getInstance(), 'form');
+    final username = queryByTestId(jacket.getInstance(), 'username-field') as InputElement;
+    final password = queryByTestId(jacket.getInstance(), 'password-field') as InputElement;
+    final button = queryByTestId(jacket.getInstance(), 'log-in-button') as ButtonElement;
+
+    void login() {
+      username.value = 'jonsnow';
+      change(username);
+
+      password.value = 'winteriscoming';
+      change(password);
+
+      form.props.onSubmit(createSyntheticFormEvent());
+    }
+
+    expect(username.disabled, isFalse);
+    expect(password.disabled, isFalse);
+    expect(button.disabled, isFalse);
+
+    login();
+    jacket.rerender((LoginForm()
+      ..isAuthed = isAuthed
+      ..onSuccessfulAuth = (() => isAuthed = true)
+      ..onFailedAuth = (_) => isAuthed = false
+    )());
+
+    expect(username.disabled, isTrue);
+    expect(password.disabled, isTrue);
+    expect(button.disabled, isTrue);
+  });
+}
+```
+
+That example shows that we need to trigger an explicit `rerender`. This is because we're passing in the variable `isAuthed` and even after our `onSuccessfulAuth` callback fires, the component doesn't automatically update
 
 ### Verifying Styles or Class Names
 
