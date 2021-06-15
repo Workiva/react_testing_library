@@ -64,14 +64,14 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(
+  ///     final view = rtl.render(
   ///       react.input({
   ///         'type': 'text',
   ///         'placeholder': 'Username',
   ///       }),
   ///     );
   ///
-  ///     final inputNode = result.getByPlaceholderText('Username');
+  ///     final inputNode = view.getByPlaceholderText('Username');
   ///   });
   /// }
   /// ```

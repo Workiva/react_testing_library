@@ -46,10 +46,10 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.button({}, 'Text Content'));
+///     final view = rtl.render(react.button({}, 'Text Content'));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final button = result.getByRole('button');
+///     final button = view.getByRole('button');
 ///
 ///     // Use the `hasTextContent` matcher as the second argument of `expect()`
 ///     expect(button, hasTextContent('Text Content'));

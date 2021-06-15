@@ -46,7 +46,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(
+///     final view = rtl.render(
 ///       react.button({'style': {
 ///         'display': 'block',
 ///         'backgroundColor': 'red',
@@ -54,7 +54,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     );
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final button = result.getByRole('button', name: 'Delete');
+///     final button = view.getByRole('button', name: 'Delete');
 ///
 ///     // Use the `hasStyles` matcher as the second argument of `expect()`
 ///     expect(button, hasStyles({'display': 'block'}));

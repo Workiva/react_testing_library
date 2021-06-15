@@ -32,7 +32,7 @@ void main() {
 
           ------------------------------
           Query Failure Stack Trace:''';
-      rtl.RenderResult renderResult;
+      rtl.RenderResult view;
 
       group('ByAltText query', () {
         const actualText = 'Johnny Be Good';
@@ -45,7 +45,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.img({'alt': actualText}) as ReactElement);
+          view = rtl.render(react.img({'alt': actualText}) as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -55,7 +55,7 @@ void main() {
               $byAltTextSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByAltText(RegExp(r'^' + expectedText)),
+            () => view.getByAltText(RegExp(r'^' + expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -82,7 +82,7 @@ void main() {
               $byAltTextSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByAltText(textMatchQueryFn(expectedText)),
+            () => view.getByAltText(textMatchQueryFn(expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -107,7 +107,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.input({'value': actualValue}) as ReactElement);
+          view = rtl.render(react.input({'value': actualValue}) as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -117,7 +117,7 @@ void main() {
               $byDisplayValueSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByDisplayValue(RegExp(r'^' + expectedValue)),
+            () => view.getByDisplayValue(RegExp(r'^' + expectedValue)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -144,7 +144,7 @@ void main() {
               $byDisplayValueSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByDisplayValue(textMatchQueryFn(expectedValue)),
+            () => view.getByDisplayValue(textMatchQueryFn(expectedValue)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -170,7 +170,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(
+          view = rtl.render(
             react.label(
               {},
               actualText,
@@ -186,7 +186,7 @@ void main() {
               $byLabelTextFailureExplanation''';
 
           expect(
-            () => renderResult.getByLabelText(RegExp(r'^' + expectedText)),
+            () => view.getByLabelText(RegExp(r'^' + expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -213,7 +213,7 @@ void main() {
               $byLabelTextFailureExplanation''';
 
           expect(
-            () => renderResult.getByLabelText(textMatchQueryFn(expectedText)),
+            () => view.getByLabelText(textMatchQueryFn(expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -239,7 +239,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.input({'type': 'text', 'placeholder': actualText}) as ReactElement);
+          view = rtl.render(react.input({'type': 'text', 'placeholder': actualText}) as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -249,7 +249,7 @@ void main() {
               $byPlaceholderTextSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByPlaceholderText(RegExp(r'^' + expectedText)),
+            () => view.getByPlaceholderText(RegExp(r'^' + expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -276,7 +276,7 @@ void main() {
               $byPlaceholderTextSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByPlaceholderText(textMatchQueryFn(expectedText)),
+            () => view.getByPlaceholderText(textMatchQueryFn(expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -300,7 +300,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.button({}, 'Hello') as ReactElement);
+          view = rtl.render(react.button({}, 'Hello') as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -310,7 +310,7 @@ void main() {
               $byRoleSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByRole(RegExp(r'^' + expectedRole)),
+            () => view.getByRole(RegExp(r'^' + expectedRole)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -337,7 +337,7 @@ void main() {
               $byRoleSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByRole(textMatchQueryFn(expectedRole)),
+            () => view.getByRole(textMatchQueryFn(expectedRole)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -362,7 +362,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.button({}, actualName) as ReactElement);
+          view = rtl.render(react.button({}, actualName) as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -372,7 +372,7 @@ void main() {
               $byRoleSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByRole('button', name: RegExp(r'^' + expectedName)),
+            () => view.getByRole('button', name: RegExp(r'^' + expectedName)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -399,7 +399,7 @@ void main() {
               $byRoleSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByRole('button', name: textMatchQueryFn(expectedName)),
+            () => view.getByRole('button', name: textMatchQueryFn(expectedName)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -426,7 +426,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.div({defaultTestIdKey: actualTestId}, 'Hello') as ReactElement);
+          view = rtl.render(react.div({defaultTestIdKey: actualTestId}, 'Hello') as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -436,7 +436,7 @@ void main() {
               $byTestIdSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByTestId(RegExp(r'^' + expectedTestId)),
+            () => view.getByTestId(RegExp(r'^' + expectedTestId)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -467,7 +467,7 @@ void main() {
               $byTestIdSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByTestId(textMatchQueryFn(expectedTestId)),
+            () => view.getByTestId(textMatchQueryFn(expectedTestId)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -494,7 +494,7 @@ This could be because the text is broken up by multiple elements. In this case, 
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.div({}, actualText) as ReactElement);
+          view = rtl.render(react.div({}, actualText) as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -502,7 +502,7 @@ This could be because the text is broken up by multiple elements. In this case, 
               'Unable to find an element with the text: RegExp/^$expectedText/. $byTextSharedFailureExplanation';
 
           expect(
-            () => renderResult.getByText(RegExp(r'^' + expectedText)),
+            () => view.getByText(RegExp(r'^' + expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -529,7 +529,7 @@ This could be because the text is broken up by multiple elements. In this case, 
               $byTextSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByText(textMatchQueryFn(expectedText)),
+            () => view.getByText(textMatchQueryFn(expectedText)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -556,7 +556,7 @@ This could be because the text is broken up by multiple elements. In this case, 
 </div>$stackTraceHeading''';
 
         setUp(() {
-          renderResult = rtl.render(react.div({'title': actualTitle}, 'Hello') as ReactElement);
+          view = rtl.render(react.div({'title': actualTitle}, 'Hello') as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -566,7 +566,7 @@ This could be because the text is broken up by multiple elements. In this case, 
               $byTitleSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByTitle(RegExp(r'^' + expectedTitle)),
+            () => view.getByTitle(RegExp(r'^' + expectedTitle)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),
@@ -593,7 +593,7 @@ This could be because the text is broken up by multiple elements. In this case, 
               $byTitleSharedFailureExplanation''';
 
           expect(
-            () => renderResult.getByTitle(textMatchQueryFn(expectedTitle)),
+            () => view.getByTitle(textMatchQueryFn(expectedTitle)),
             throwsA(
               allOf(
                 isA<rtl.TestingLibraryElementError>(),

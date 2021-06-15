@@ -31,14 +31,14 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult renderResult;
+    rtl.RenderResult view;
     tearDown(() {
-      renderResult = null;
+      view = null;
     });
 
     group('basic functionality', () {
       setUp(() {
-        renderResult = rtl.render(react.section(
+        view = rtl.render(react.section(
             {},
             react.span({
               'data-test-id': 'testId-1',
@@ -53,138 +53,138 @@ void main() {
 
       group('getByTestId', () {
         test('[string match]', () {
-          expect(renderResult.getByTestId('testId-1'), isA<SpanElement>());
+          expect(view.getByTestId('testId-1'), isA<SpanElement>());
         });
 
         test('[regex match]', () {
-          expect(renderResult.getByTestId(RegExp('testId-1')), isA<SpanElement>());
+          expect(view.getByTestId(RegExp('testId-1')), isA<SpanElement>());
         });
 
         test('[multiple elements error]', () {
           expect(
-              () => renderResult.getByTestId('testId-2'),
+              () => view.getByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
 
         test('[no match error]', () {
           expect(
-              () => renderResult.getByTestId('fail'),
+              () => view.getByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('getAllByTestId', () {
         test('[string match]', () {
-          expect(renderResult.getAllByTestId('testId-2'), hasLength(2));
+          expect(view.getAllByTestId('testId-2'), hasLength(2));
         });
 
         test('[regex match]', () {
-          expect(renderResult.getAllByTestId(RegExp('testId-2')), hasLength(2));
+          expect(view.getAllByTestId(RegExp('testId-2')), hasLength(2));
         });
 
         test('[no match error]', () {
           expect(
-              () => renderResult.getAllByTestId('fail'),
+              () => view.getAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('queryByTestId', () {
         test('[string match]', () {
-          expect(renderResult.queryByTestId('testId-1'), isA<SpanElement>());
+          expect(view.queryByTestId('testId-1'), isA<SpanElement>());
         });
 
         test('[regex match]', () {
-          expect(renderResult.queryByTestId(RegExp('testId-1')), isA<SpanElement>());
+          expect(view.queryByTestId(RegExp('testId-1')), isA<SpanElement>());
         });
 
         test('[multiple elements error]', () {
           expect(
-              () => renderResult.queryByTestId('testId-2'),
+              () => view.queryByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
 
         test('[no match]', () {
-          expect(renderResult.queryByTestId('fail'), isNull);
+          expect(view.queryByTestId('fail'), isNull);
         });
       });
 
       group('queryAllByTestId', () {
         test('[string match]', () {
-          expect(renderResult.queryAllByTestId('testId-2'), hasLength(2));
+          expect(view.queryAllByTestId('testId-2'), hasLength(2));
         });
 
         test('[regex match]', () {
-          expect(renderResult.queryAllByTestId(RegExp('testId-2')), hasLength(2));
+          expect(view.queryAllByTestId(RegExp('testId-2')), hasLength(2));
         });
 
         test('[no match error]', () {
-          expect(renderResult.queryAllByTestId('fail'), hasLength(0));
+          expect(view.queryAllByTestId('fail'), hasLength(0));
         });
       });
 
       group('findByTestId', () {
         test('[string match]', () async {
-          expect(await renderResult.findByTestId('testId-1'), isA<SpanElement>());
+          expect(await view.findByTestId('testId-1'), isA<SpanElement>());
         });
 
         test('[regex match]', () async {
-          expect(await renderResult.findByTestId(RegExp('testId-1')), isA<SpanElement>());
+          expect(await view.findByTestId(RegExp('testId-1')), isA<SpanElement>());
         });
 
         test('[multiple elements error]', () async {
           expect(
-              () => renderResult.findByTestId('testId-2'),
+              () => view.findByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
 
         test('[no match]', () async {
           expect(
-              () => renderResult.findByTestId('fail'),
+              () => view.findByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('findAllByTestId', () {
         test('[string match]', () async {
-          expect(await renderResult.findAllByTestId('testId-2'), hasLength(2));
+          expect(await view.findAllByTestId('testId-2'), hasLength(2));
         });
 
         test('[regex match]', () async {
-          expect(await renderResult.findAllByTestId(RegExp('testId-2')), hasLength(2));
+          expect(await view.findAllByTestId(RegExp('testId-2')), hasLength(2));
         });
 
         test('[no match]', () async {
           expect(
-              () => renderResult.findAllByTestId('fail'),
+              () => view.findAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
@@ -192,67 +192,67 @@ void main() {
       group('with the "exact: false" argument', () {
         group('getByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.getByTestId('estid-1', exact: false), isA<SpanElement>());
+            expect(view.getByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () {
             expect(
-                () => renderResult.getByTestId('estid-2', exact: false),
+                () => view.getByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('getAllByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.getAllByTestId('estid-2', exact: false), hasLength(2));
+            expect(view.getAllByTestId('estid-2', exact: false), hasLength(2));
           });
         });
 
         group('queryByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.queryByTestId('estid-1', exact: false), isA<SpanElement>());
+            expect(view.queryByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () {
             expect(
-                () => renderResult.queryByTestId('estid-2', exact: false),
+                () => view.queryByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('queryAllByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.queryAllByTestId('estid-2', exact: false), hasLength(2));
+            expect(view.queryAllByTestId('estid-2', exact: false), hasLength(2));
           });
         });
 
         group('findByTestId', () {
           test('[non-exact string match]', () async {
-            expect(await renderResult.findByTestId('estid-1', exact: false), isA<SpanElement>());
+            expect(await view.findByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () async {
             expect(
-                () => renderResult.findByTestId('estid-2', exact: false),
+                () => view.findByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findAllByTestId', () {
           test('[non-exact string match]', () async {
-            expect(await renderResult.findAllByTestId('estid-2', exact: false), hasLength(2));
+            expect(await view.findAllByTestId('estid-2', exact: false), hasLength(2));
           });
         });
       });
@@ -262,7 +262,7 @@ void main() {
         'the testId argument can target a matching testid when more than '
         'one testId is present on the data-test-id attribute', () {
       setUp(() {
-        renderResult = rtl.render(react.section(
+        view = rtl.render(react.section(
             {},
             react.span({
               'data-test-id': 'testId-3',
@@ -277,150 +277,150 @@ void main() {
 
       group('getByTestId', () {
         test('[string match]', () {
-          expect(renderResult.getByTestId('testId-1'), isA<SpanElement>());
+          expect(view.getByTestId('testId-1'), isA<SpanElement>());
         });
 
         test('[regex match]', () {
-          expect(renderResult.getByTestId(RegExp('testId-1')), isA<SpanElement>());
+          expect(view.getByTestId(RegExp('testId-1')), isA<SpanElement>());
         });
 
         test('[multiple elements error]', () {
           expect(
-              () => renderResult.getByTestId('testId-3'),
+              () => view.getByTestId('testId-3'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-3"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
 
         test('[no match error]', () {
           expect(
-              () => renderResult.getByTestId('fail'),
+              () => view.getByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('getAllByTestId', () {
         test('[string match]', () {
-          expect(renderResult.getAllByTestId('testId-1'), hasLength(1));
-          expect(renderResult.getAllByTestId('testId-2'), hasLength(2));
-          expect(renderResult.getAllByTestId('testId-3'), hasLength(3));
+          expect(view.getAllByTestId('testId-1'), hasLength(1));
+          expect(view.getAllByTestId('testId-2'), hasLength(2));
+          expect(view.getAllByTestId('testId-3'), hasLength(3));
         });
 
         test('[regex match]', () {
-          expect(renderResult.getAllByTestId(RegExp('testId-1')), hasLength(1));
-          expect(renderResult.getAllByTestId(RegExp('testId-2')), hasLength(2));
-          expect(renderResult.getAllByTestId(RegExp('testId-3')), hasLength(3));
+          expect(view.getAllByTestId(RegExp('testId-1')), hasLength(1));
+          expect(view.getAllByTestId(RegExp('testId-2')), hasLength(2));
+          expect(view.getAllByTestId(RegExp('testId-3')), hasLength(3));
         });
 
         test('[no match error]', () {
           expect(
-              () => renderResult.getAllByTestId('fail'),
+              () => view.getAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('queryByTestId', () {
         test('[string match]', () {
-          expect(renderResult.queryByTestId('testId-1'), isA<SpanElement>());
+          expect(view.queryByTestId('testId-1'), isA<SpanElement>());
         });
 
         test('[regex match]', () {
-          expect(renderResult.queryByTestId(RegExp('testId-1')), isA<SpanElement>());
+          expect(view.queryByTestId(RegExp('testId-1')), isA<SpanElement>());
         });
 
         test('[multiple elements error]', () {
           expect(
-              () => renderResult.queryByTestId('testId-3'),
+              () => view.queryByTestId('testId-3'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-3"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
 
         test('[no match]', () {
-          expect(renderResult.queryByTestId('fail'), isNull);
+          expect(view.queryByTestId('fail'), isNull);
         });
       });
 
       group('queryAllByTestId', () {
         test('[string match]', () {
-          expect(renderResult.queryAllByTestId('testId-1'), hasLength(1));
-          expect(renderResult.queryAllByTestId('testId-2'), hasLength(2));
-          expect(renderResult.queryAllByTestId('testId-3'), hasLength(3));
+          expect(view.queryAllByTestId('testId-1'), hasLength(1));
+          expect(view.queryAllByTestId('testId-2'), hasLength(2));
+          expect(view.queryAllByTestId('testId-3'), hasLength(3));
         });
 
         test('[regex match]', () {
-          expect(renderResult.queryAllByTestId(RegExp('testId-1')), hasLength(1));
-          expect(renderResult.queryAllByTestId(RegExp('testId-2')), hasLength(2));
-          expect(renderResult.queryAllByTestId(RegExp('testId-3')), hasLength(3));
+          expect(view.queryAllByTestId(RegExp('testId-1')), hasLength(1));
+          expect(view.queryAllByTestId(RegExp('testId-2')), hasLength(2));
+          expect(view.queryAllByTestId(RegExp('testId-3')), hasLength(3));
         });
 
         test('[no match]', () {
-          expect(renderResult.queryAllByTestId('fail'), hasLength(0));
+          expect(view.queryAllByTestId('fail'), hasLength(0));
         });
       });
 
       group('findByTestId', () {
         test('[string match]', () async {
-          expect(await renderResult.findByTestId('testId-1'), isA<SpanElement>());
+          expect(await view.findByTestId('testId-1'), isA<SpanElement>());
         });
 
         test('[regex match]', () async {
-          expect(await renderResult.findByTestId(RegExp('testId-1')), isA<SpanElement>());
+          expect(await view.findByTestId(RegExp('testId-1')), isA<SpanElement>());
         });
 
         test('[multiple elements error]', () async {
           expect(
-              () => renderResult.findByTestId('testId-2'),
+              () => view.findByTestId('testId-2'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
 
         test('[no match]', () async {
           expect(
-              () => renderResult.findByTestId('fail'),
+              () => view.findByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('findAllByTestId', () {
         test('[string match]', () async {
-          expect(await renderResult.findAllByTestId('testId-1'), hasLength(1));
-          expect(await renderResult.findAllByTestId('testId-2'), hasLength(2));
-          expect(await renderResult.findAllByTestId('testId-3'), hasLength(3));
+          expect(await view.findAllByTestId('testId-1'), hasLength(1));
+          expect(await view.findAllByTestId('testId-2'), hasLength(2));
+          expect(await view.findAllByTestId('testId-3'), hasLength(3));
         });
 
         test('[regex match]', () async {
-          expect(await renderResult.findAllByTestId(RegExp('testId-1')), hasLength(1));
-          expect(await renderResult.findAllByTestId(RegExp('testId-2')), hasLength(2));
-          expect(await renderResult.findAllByTestId(RegExp('testId-3')), hasLength(3));
+          expect(await view.findAllByTestId(RegExp('testId-1')), hasLength(1));
+          expect(await view.findAllByTestId(RegExp('testId-2')), hasLength(2));
+          expect(await view.findAllByTestId(RegExp('testId-3')), hasLength(3));
         });
 
         test('[no match]', () async {
           expect(
-              () => renderResult.findAllByTestId('fail'),
+              () => view.findAllByTestId('fail'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
@@ -428,73 +428,73 @@ void main() {
       group('with the "exact: false" argument', () {
         group('getByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.getByTestId('estid-1', exact: false), isA<SpanElement>());
+            expect(view.getByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () {
             expect(
-                () => renderResult.getByTestId('estid-2', exact: false),
+                () => view.getByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('getAllByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.getAllByTestId('estid-1', exact: false), hasLength(1));
-            expect(renderResult.getAllByTestId('estid-2', exact: false), hasLength(2));
-            expect(renderResult.getAllByTestId('estid-3', exact: false), hasLength(3));
+            expect(view.getAllByTestId('estid-1', exact: false), hasLength(1));
+            expect(view.getAllByTestId('estid-2', exact: false), hasLength(2));
+            expect(view.getAllByTestId('estid-3', exact: false), hasLength(3));
           });
         });
 
         group('queryByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.queryByTestId('estid-1', exact: false), isA<SpanElement>());
+            expect(view.queryByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () {
             expect(
-                () => renderResult.queryByTestId('estid-2', exact: false),
+                () => view.queryByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('queryAllByTestId', () {
           test('[non-exact string match]', () {
-            expect(renderResult.getAllByTestId('estid-1', exact: false), hasLength(1));
-            expect(renderResult.getAllByTestId('estid-2', exact: false), hasLength(2));
-            expect(renderResult.getAllByTestId('estid-3', exact: false), hasLength(3));
+            expect(view.getAllByTestId('estid-1', exact: false), hasLength(1));
+            expect(view.getAllByTestId('estid-2', exact: false), hasLength(2));
+            expect(view.getAllByTestId('estid-3', exact: false), hasLength(3));
           });
         });
 
         group('findByTestId', () {
           test('[non-exact string match]', () async {
-            expect(await renderResult.findByTestId('estid-1', exact: false), isA<SpanElement>());
+            expect(await view.findByTestId('estid-1', exact: false), isA<SpanElement>());
           });
 
           test('[non-exact multiple elements error]', () async {
             expect(
-                () => renderResult.findByTestId('estid-2', exact: false),
+                () => view.findByTestId('estid-2', exact: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findAllByTestId', () {
           test('[non-exact string match]', () async {
-            expect(await renderResult.findAllByTestId('estid-1', exact: false), hasLength(1));
-            expect(await renderResult.findAllByTestId('estid-2', exact: false), hasLength(2));
-            expect(await renderResult.findAllByTestId('estid-3', exact: false), hasLength(3));
+            expect(await view.findAllByTestId('estid-1', exact: false), hasLength(1));
+            expect(await view.findAllByTestId('estid-2', exact: false), hasLength(2));
+            expect(await view.findAllByTestId('estid-3', exact: false), hasLength(3));
           });
         });
       });

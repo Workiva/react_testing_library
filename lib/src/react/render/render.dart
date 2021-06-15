@@ -50,12 +50,12 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 ///
 /// main() {
 ///   test('', () {
-///     final renderResult = rtl.render(
+///     final view = rtl.render(
 ///       react.button({}, 'Click Me'),
 ///     );
 ///
-///     // The renderResult can now be used to query within the DOM!
-///     expect(renderResult.getByRole('button'), hasText('Click Me'));
+///     // The `view` can now be used to query within the DOM!
+///     expect(view.getByRole('button'), hasText('Click Me'));
 ///   });
 /// }
 /// ```
@@ -79,7 +79,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// main() {
 ///   test('', () {
 ///     final tableElem = document.body.append(TableElement());
-///     final renderResult = rtl.render(
+///     final view = rtl.render(
 ///       react.tbody({}, /*...*/),
 ///       container: tableElem,
 ///     );

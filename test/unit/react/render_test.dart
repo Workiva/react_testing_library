@@ -31,13 +31,13 @@ void main() {
     group('returns a RenderResult', () {
       test('', () {
         final elementToRender = react.div({'id': 'root'}, 'oh hai') as ReactElement;
-        final renderedResult = rtl.render(elementToRender);
-        expect(renderedResult.container, isA<Element>());
-        expect(renderedResult.baseElement, isA<Element>());
-        expect(renderedResult.rerender, isA<Function>());
-        expect(renderedResult.unmount, isA<Function>());
-        expect(renderedResult.asFragment, isA<Function>());
-        expect(renderedResult.renderedElement, same(elementToRender));
+        final view = rtl.render(elementToRender);
+        expect(view.container, isA<Element>());
+        expect(view.baseElement, isA<Element>());
+        expect(view.rerender, isA<Function>());
+        expect(view.unmount, isA<Function>());
+        expect(view.asFragment, isA<Function>());
+        expect(view.renderedElement, same(elementToRender));
       });
 
       group('that contains queries scoped to', () {
@@ -60,10 +60,10 @@ void main() {
 
     group('renders the provided element in a default container', () {
       test('', () {
-        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement);
-        expect(document.body.contains(renderedResult.container), isTrue);
-        expect(renderedResult.container.childNodes, hasLength(1));
-        expect(renderedResult.container.childNodes.single.text, 'oh hai');
+        final view = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement);
+        expect(document.body.contains(view.container), isTrue);
+        expect(view.container.childNodes, hasLength(1));
+        expect(view.container.childNodes.single.text, 'oh hai');
       });
 
       test('wrapped in a wrapper when specified', () {
@@ -74,12 +74,12 @@ void main() {
       });
 
       test('and then updates the DOM when rerender is called', () {
-        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement);
+        final view = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement);
         final elementForRerender = react.div({'id': 'root'}, 'different') as ReactElement;
-        renderedResult.rerender(elementForRerender);
-        expect(renderedResult.container.childNodes, hasLength(1));
-        expect(renderedResult.container.childNodes.single.text, 'different');
-        expect(renderedResult.renderedElement, same(elementForRerender));
+        view.rerender(elementForRerender);
+        expect(view.container.childNodes, hasLength(1));
+        expect(view.container.childNodes.single.text, 'different');
+        expect(view.renderedElement, same(elementForRerender));
       });
 
       group('and then unmounts / removes it by default, also calling the provided autoTearDownCallback', () {
@@ -96,19 +96,19 @@ void main() {
         });
 
         group('unless autoTearDown is false', () {
-          rtl.RenderResult renderedResult;
+          rtl.RenderResult view;
 
           tearDownAll(() {
-            renderedResult.unmount();
-            renderedResult.container.remove();
+            view.unmount();
+            view.container.remove();
           });
 
           test('', () {
-            renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, autoTearDown: false);
+            view = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, autoTearDown: false);
           });
 
           test('', () {
-            expect(document.body.children.contains(renderedResult.container), isTrue);
+            expect(document.body.children.contains(view.container), isTrue);
           });
         });
       });
@@ -133,18 +133,18 @@ void main() {
         });
 
         group('unless autoTearDown is false', () {
-          rtl.RenderResult renderedResult;
+          rtl.RenderResult view;
 
           tearDown(() {
-            expect(document.body.children.contains(renderedResult.container), isTrue);
-            renderedResult.unmount();
-            renderedResult.container.remove();
+            expect(document.body.children.contains(view.container), isTrue);
+            view.unmount();
+            view.container.remove();
             customContainer = null;
           });
 
           test('', () {
             customContainer = document.body.append(DivElement()..id = 'custom-container');
-            renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement,
+            view = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement,
                 container: customContainer, autoTearDown: false);
           });
         });

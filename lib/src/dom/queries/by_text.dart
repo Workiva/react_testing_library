@@ -63,11 +63,11 @@ mixin ByTextQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(
+  ///     final view = rtl.render(
   ///       react.a({'href': '/about'}, 'About ℹ️'),
   ///     );
   ///
-  ///     final aboutAnchorNode = result.getByText(RegExp(r'^About'));
+  ///     final aboutAnchorNode = view.getByText(RegExp(r'^About'));
   ///   });
   /// }
   /// ```

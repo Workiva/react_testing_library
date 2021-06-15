@@ -31,8 +31,8 @@ import 'package:js/js.dart';
 ///
 /// main() {
 ///   test('', () {
-///     final renderedResult = rtl.render(someReactVDom);
-///     print(rtl.prettyDOM(renderedResult.container));
+///     final view = rtl.render(someReactVDom);
+///     print(rtl.prettyDOM(view.container));
 ///   });
 /// }
 /// ```

@@ -48,7 +48,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.div({},
+///     final view = rtl.render(react.div({},
 ///       react.input({'type': 'checkbox', 'name': 'pepperoni', 'checked': true}),
 ///       react.input({'type': 'checkbox', 'name': 'pineapple'}),
 ///       react.div({'role': 'checkbox', 'aria-checked': 'true'}, 'Red Sauce'),
@@ -58,12 +58,12 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     const inputCheckboxChecked = result.getByRole('checkbox', name: 'pepperoni');
-///     const inputCheckboxUnchecked = result.getByRole('checkbox', name: 'pineapple');
-///     const ariaCheckboxChecked = result.getByRole('checkbox', name: 'Red Sauce');
-///     const ariaCheckboxUnchecked = result.getByRole('checkbox', name: 'White Sauce');
-///     const ariaSwitchChecked = result.getByRole('switch', name: 'Mozzarella');
-///     const ariaSwitchUnchecked = result.getByRole('switch', name: 'Cheddar');
+///     const inputCheckboxChecked = view.getByRole('checkbox', name: 'pepperoni');
+///     const inputCheckboxUnchecked = view.getByRole('checkbox', name: 'pineapple');
+///     const ariaCheckboxChecked = view.getByRole('checkbox', name: 'Red Sauce');
+///     const ariaCheckboxUnchecked = view.getByRole('checkbox', name: 'White Sauce');
+///     const ariaSwitchChecked = view.getByRole('switch', name: 'Mozzarella');
+///     const ariaSwitchUnchecked = view.getByRole('switch', name: 'Cheddar');
 ///
 ///     // Use the `isChecked` matcher as the second argument of `expect()`
 ///     expect(inputCheckboxChecked, isChecked);

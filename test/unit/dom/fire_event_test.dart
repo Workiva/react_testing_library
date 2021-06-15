@@ -26,7 +26,7 @@ import '../util/matchers.dart';
 void main() {
   group('', () {
     List<Event> calls;
-    rtl.RenderResult renderedResult;
+    rtl.RenderResult view;
 
     setUp(() {
       calls = [];
@@ -36,12 +36,12 @@ void main() {
           calls.add((event as react.SyntheticMouseEvent).nativeEvent as Event);
         }
       }, 'oh hai') as ReactElement;
-      renderedResult = rtl.render(elementToRender);
+      view = rtl.render(elementToRender);
     });
 
     test('fireEvent() fires the provided event on the provided element when called', () {
       final event = MouseEvent('click');
-      rtl.fireEvent(renderedResult.getByRole('button'), event);
+      rtl.fireEvent(view.getByRole('button'), event);
       expect(calls, hasLength(1));
       expect(calls.single, same(event));
     });
@@ -49,7 +49,7 @@ void main() {
     test(
         'fireEventByName() fires the event specified by name '
         'with the specified eventProperties on the provided element when called', () {
-      rtl.fireEventByName('click', renderedResult.getByRole('button'), {
+      rtl.fireEventByName('click', view.getByRole('button'), {
         'shiftKey': true,
       });
       expect(calls, hasLength(1));
@@ -59,7 +59,7 @@ void main() {
 
     test('fireEventByName() throws when an invalid eventName is provided', () {
       expect(
-          () => rtl.fireEventByName('definitelyNotValid', renderedResult.getByRole('button'), {
+          () => rtl.fireEventByName('definitelyNotValid', view.getByRole('button'), {
                 'shiftKey': true,
               }),
           throwsA(allOf(

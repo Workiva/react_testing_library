@@ -56,7 +56,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.form({},
+///     final view = rtl.render(react.form({},
 ///       react.input({'type': 'text', name: 'username', 'value': 'jane.doe'}),
 ///       react.input({'type': 'number', 'name': 'age', value: '35'}),
 ///       react.input({'type': 'text', 'name': 'occupation'}),
@@ -68,10 +68,10 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     const textInput = result.getByRole('textbox', name: 'username');
-///     const numberInput = result.getByRole('spinbutton', name: 'age');
-///     const emptyInput = result.getByRole('textbox', name: 'occupation');
-///     const selectInput = result.getByRole('listbox', name: 'options');
+///     const textInput = view.getByRole('textbox', name: 'username');
+///     const numberInput = view.getByRole('spinbutton', name: 'age');
+///     const emptyInput = view.getByRole('textbox', name: 'occupation');
+///     const selectInput = view.getByRole('listbox', name: 'options');
 ///
 ///     // Use the `hasValue` matcher as the second argument of `expect()`
 ///     expect(textInput, hasValue('jane.doe'));

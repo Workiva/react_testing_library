@@ -69,7 +69,7 @@ mixin ByDisplayValueQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(react.div({},
+  ///     final view = rtl.render(react.div({},
   ///       react.input({
   ///         'type': 'text',
   ///         'name': 'lastName',
@@ -87,11 +87,11 @@ mixin ByDisplayValueQueries on IQueries {
   ///       ),
   ///     ));
   ///
-  ///     final lastNameInput = result.getByDisplayValue('Norris');
-  ///     final messageTextArea = result.getByDisplayValue('Hello World');
+  ///     final lastNameInput = view.getByDisplayValue('Norris');
+  ///     final messageTextArea = view.getByDisplayValue('Hello World');
   ///     // In the case of a `<select>`, this will search for a `<select>`
   ///     // whose selected `<option>` matches the given `TextMatch`.
-  ///     final selectElement = result.getByDisplayValue('Alaska');
+  ///     final selectElement = view.getByDisplayValue('Alaska');
   ///   });
   /// }
   /// ```

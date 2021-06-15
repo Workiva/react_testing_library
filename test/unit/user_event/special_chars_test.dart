@@ -27,12 +27,12 @@ void main() {
   group('SpecialChars', () {
     InputElement input;
     TextAreaElement textArea;
-    rtl.RenderResult result;
+    rtl.RenderResult view;
     List<String> keyDownCalls;
 
     setUp(() {
       keyDownCalls = [];
-      result = rtl.render(react.div({}, [
+      view = rtl.render(react.div({}, [
         react.input({
           'defaultValue': 'oh hai',
           'onKeyDown': (e) => keyDownCalls.add((e as react.SyntheticKeyboardEvent).key),
@@ -43,8 +43,8 @@ void main() {
         }),
       ]) as ReactElement);
 
-      input = result.getAllByRole('textbox').first as InputElement;
-      textArea = result.getAllByRole('textbox')[1] as TextAreaElement;
+      input = view.getAllByRole('textbox').first as InputElement;
+      textArea = view.getAllByRole('textbox')[1] as TextAreaElement;
       expect(input, hasValue('oh hai'), reason: 'sanity check');
       expect(textArea, hasValue('hello\n\nthere!'), reason: 'sanity check');
     });

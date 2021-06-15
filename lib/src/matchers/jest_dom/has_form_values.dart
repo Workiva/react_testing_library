@@ -53,7 +53,7 @@ import 'package:react_testing_library/src/util/js_utils.dart';
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.form({'data-test-id': 'login-form'},
+///     final view = rtl.render(react.form({'data-test-id': 'login-form'},
 ///       react.input({'type': 'text', 'name': 'username', value: 'jane.doe'}),
 ///       react.input({'type': 'number', 'name': 'age', value: '35'}),
 ///       react.input({'type': 'password', 'name': 'password', value: '12345678'}),
@@ -62,7 +62,7 @@ import 'package:react_testing_library/src/util/js_utils.dart';
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final form = result.getByTestId('login-form');
+///     final form = view.getByTestId('login-form');
 ///
 ///     // Use the `hasFormValues` matcher as the second argument of `expect()`
 ///     expect(form, hasFormValues({

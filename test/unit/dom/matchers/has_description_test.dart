@@ -27,10 +27,10 @@ import '../../util/matchers.dart';
 
 void main() {
   group('hasDescription matcher', () {
-    RenderResult renderedResult;
+    RenderResult view;
 
     setUp(() {
-      renderedResult = render(react.div(
+      view = render(react.div(
         {},
         react.button({
           'aria-label': 'Close',
@@ -48,13 +48,13 @@ void main() {
     });
 
     tearDown(() {
-      renderedResult = null;
+      view = null;
     });
 
     group('[element with a single id as its aria-describedby attribute value]', () {
       Element closeButtonElement;
       setUp(() {
-        closeButtonElement = renderedResult.getByRole('button', name: 'Close');
+        closeButtonElement = view.getByRole('button', name: 'Close');
       });
 
       group('passes when provided with a', () {
@@ -83,7 +83,7 @@ void main() {
     group('[element with multiple, space-separated ids as its aria-describedby attribute value]', () {
       Element buttonElementWithMultipleDescriptions;
       setUp(() {
-        buttonElementWithMultipleDescriptions = renderedResult.getByRole('button', name: 'Has Multiple Descriptions');
+        buttonElementWithMultipleDescriptions = view.getByRole('button', name: 'Has Multiple Descriptions');
       });
 
       group('passes when provided with a', () {
@@ -131,7 +131,7 @@ void main() {
       });
 
       test('the first argument of `expect()` is an HTML Element without an `aria-describedby` attribute', () {
-        final buttonWithNoAriaDescribedbyAttr = renderedResult.getByRole('button', name: 'Delete');
+        final buttonWithNoAriaDescribedbyAttr = view.getByRole('button', name: 'Delete');
         expect(buttonWithNoAriaDescribedbyAttr.getAttribute('aria-describedby'), isNull,
             reason: 'Test setup sanity check');
         shouldFail(
@@ -146,7 +146,7 @@ void main() {
       test(
           'the first argument of `expect()` is an HTML Element with an `aria-describedby` attribute '
           'value that does not correspond to the id of any elements found in the DOM', () {
-        final buttonWithInvalidAriaDescribedbyAttr = renderedResult.getByRole('button', name: 'Has id not found');
+        final buttonWithInvalidAriaDescribedbyAttr = view.getByRole('button', name: 'Has id not found');
         final ariaDescribedByAttrValue = buttonWithInvalidAriaDescribedbyAttr.getAttribute('aria-describedby');
         expect(querySelector('#$ariaDescribedByAttrValue'), isNull, reason: 'Test setup sanity check');
         shouldFail(
@@ -161,7 +161,7 @@ void main() {
 
       test('the String provided is not found within the provided element\'s description', () {
         shouldFail(
-            renderedResult.getByRole('button', name: 'Close'),
+            view.getByRole('button', name: 'Close'),
             hasDescription('Invalid description'),
             allOf(
               contains('Expected: An HTML Element that is described by HTML Element(s) that have description '
@@ -172,7 +172,7 @@ void main() {
 
       test('the RegExp provided does not have a match within the provided element\'s description', () {
         shouldFail(
-            renderedResult.getByRole('button', name: 'Close'),
+            view.getByRole('button', name: 'Close'),
             hasDescription(RegExp(r'Invalid description$')),
             allOf(
               contains('Expected: An HTML Element that is described by HTML Element(s) that have description '

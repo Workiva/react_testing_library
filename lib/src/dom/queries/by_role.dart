@@ -95,13 +95,13 @@ mixin ByRoleQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(react.div({},
+  ///     final view = rtl.render(react.div({},
   ///       react.button({'onClick': (_) { /*...*/ }, 'Ok'),
   ///       react.button({'onClick': (_) { /*...*/ }, 'Cancel'),
   ///     ));
   ///
-  ///     final okButtonElement = result.getByRole('button', name: 'Ok');
-  ///     final cancelButtonElement = result.getByRole('button', name: 'Cancel');
+  ///     final okButtonElement = view.getByRole('button', name: 'Ok');
+  ///     final cancelButtonElement = view.getByRole('button', name: 'Cancel');
   ///   });
   /// }
   /// ```

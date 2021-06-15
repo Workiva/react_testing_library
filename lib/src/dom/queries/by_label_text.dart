@@ -86,7 +86,7 @@ mixin ByLabelTextQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render some of the DOM shown in the example snippet above
-  ///     final result = rtl.render(react.div({},
+  ///     final view = rtl.render(react.div({},
   ///       react.label({'htmlFor': 'username-input'}, 'Username'),
   ///       react.input({
   ///         'type': 'text',
@@ -94,7 +94,7 @@ mixin ByLabelTextQueries on IQueries {
   ///       }),
   ///     ));
   ///
-  ///     final inputNode = result.getByLabelText('Username');
+  ///     final inputNode = view.getByLabelText('Username');
   ///   });
   /// }
   /// ```

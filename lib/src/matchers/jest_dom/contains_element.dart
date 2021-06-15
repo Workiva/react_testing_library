@@ -40,15 +40,15 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(
+///     final view = rtl.render(
 ///       react.span({'data-test-id': 'ancestor'},
 ///         react.span({'data-test-id': 'descendant'}),
 ///       ),
 ///     );
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final ancestor = result.getByTestId('ancestor');
-///     final descendant = result.getByTestId('descendant');
+///     final ancestor = view.getByTestId('ancestor');
+///     final descendant = view.getByTestId('descendant');
 ///
 ///     // Use the `containsElement` matcher as the second argument of `expect()`
 ///     expect(ancestor, containsElement(descendant));

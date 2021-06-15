@@ -27,11 +27,11 @@ import '../../util/matchers.dart';
 
 void main() {
   group('hasStyles matcher', () {
-    RenderResult renderedResult;
+    RenderResult view;
     StyleElement externalStyleSheet;
 
     tearDown(() {
-      renderedResult = null;
+      view = null;
       externalStyleSheet?.remove();
       externalStyleSheet = null;
     });
@@ -48,7 +48,7 @@ void main() {
       ''';
       document.head.append(externalStyleSheet);
 
-      renderedResult = render(react.button({
+      view = render(react.button({
         'className': 'foo',
         'style': {
           'backgroundColor': 'red',
@@ -64,19 +64,19 @@ void main() {
     group('passes', () {
       group('when checking a single property', () {
         test('set using an inline style', () {
-          shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': '2'}),
+          shouldPass(view.getByRole('button'), hasStyles({'z-index': '2'}),
               reason: 'string values that can be converted to nums should match their num equivalent');
-          shouldPass(renderedResult.getByRole('button'), hasStyles({'z-index': 2}),
+          shouldPass(view.getByRole('button'), hasStyles({'z-index': 2}),
               reason: 'num values should match their string equivalent');
         });
 
         test('set using an external stylesheet', () {
-          shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': '2'}),
+          shouldPass(view.getByRole('button'), hasStyles({'flex-grow': '2'}),
               reason: 'string values that can be converted to nums should match their num equivalent');
-          shouldPass(renderedResult.getByRole('button'), hasStyles({'flex-grow': 2}),
+          shouldPass(view.getByRole('button'), hasStyles({'flex-grow': 2}),
               reason: 'num values should match their string equivalent');
-          shouldPass(renderedResult.getByRole('button'), hasStyles({'content': '"this is the title"'}));
-          shouldPass(renderedResult.getByRole('button'), hasStyles({'flexGrow': '2'}),
+          shouldPass(view.getByRole('button'), hasStyles({'content': '"this is the title"'}));
+          shouldPass(view.getByRole('button'), hasStyles({'flexGrow': '2'}),
               reason: 'camelCase property names should work');
         });
       });
@@ -84,7 +84,7 @@ void main() {
       group('when checking multiple properties', () {
         test('set using an inline style', () {
           shouldPass(
-              renderedResult.getByRole('button'),
+              view.getByRole('button'),
               hasStyles({
                 'background-color': 'red',
                 'color': '#cc0000',
@@ -94,7 +94,7 @@ void main() {
               }),
               reason: 'string values that can be converted to nums should match their num equivalent');
           shouldPass(
-              renderedResult.getByRole('button'),
+              view.getByRole('button'),
               hasStyles({
                 'z-index': 2,
               }),
@@ -103,7 +103,7 @@ void main() {
 
         test('set using an external stylesheet', () {
           shouldPass(
-              renderedResult.getByRole('button'),
+              view.getByRole('button'),
               hasStyles({
                 'font-size': '27px',
                 'font-weight': 'bold',
@@ -112,7 +112,7 @@ void main() {
               }),
               reason: 'string values that can be converted to nums should match their num equivalent');
           shouldPass(
-              renderedResult.getByRole('button'),
+              view.getByRole('button'),
               hasStyles({
                 'flex-grow': 2,
               }),
@@ -130,7 +130,7 @@ void main() {
       group('a single value does not match', () {
         test('and the expected value is a string', () {
           shouldFail(
-              renderedResult.getByRole('button'),
+              view.getByRole('button'),
               hasStyles({'display': 'inline'}),
               allOf(
                 contains('Expected: A element with styles {\'display\': \'inline\'}'),
@@ -141,7 +141,7 @@ void main() {
 
         test('and the expected value is a map', () {
           shouldFail(
-              renderedResult.getByRole('button'),
+              view.getByRole('button'),
               hasStyles({
                 'font-size': '27px',
                 'display': 'inline',
@@ -158,7 +158,7 @@ void main() {
 
       test('multiple values do not match', () {
         shouldFail(
-            renderedResult.getByRole('button'),
+            view.getByRole('button'),
             hasStyles({
               'font-size': '26px',
               'display': 'inline',

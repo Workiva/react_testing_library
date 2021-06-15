@@ -29,7 +29,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// ## Examples
 ///
 /// ```html
-/// <input type="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" />
+/// <div role="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" />
 /// <input type="checkbox" checked data-test-id="input-checkbox-checked" />
 /// <input type="checkbox" data-test-id="input-checkbox-unchecked" />
 /// <div role="checkbox" aria-checked="true" data-test-id="aria-checkbox-checked" />
@@ -42,18 +42,28 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// ```
 ///
 /// ```dart
+/// import 'package:react/react.dart' as react;
 /// import 'package:react_testing_library/matchers.dart' show isPartiallyChecked;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
-///     const ariaCheckboxMixed = rtl.screen.getByTestId('aria-checkbox-mixed')
-///     const inputCheckboxChecked = rtl.screen.getByTestId('input-checkbox-checked')
-///     const inputCheckboxUnchecked = rtl.screen.getByTestId('input-checkbox-unchecked')
-///     const ariaCheckboxChecked = rtl.screen.getByTestId('aria-checkbox-checked')
-///     const ariaCheckboxUnchecked = rtl.screen.getByTestId('aria-checkbox-unchecked')
-///     const inputCheckboxIndeterminate = rtl.screen.getByTestId('input-checkbox-indeterminate')
+///     final view = rtl.render(react.div({}, [
+///       react.div({'role': 'checkbox', 'aria-checked': 'mixed', 'data-test-id': 'aria-checkbox-mixed'}),
+///       react.input({'type': 'checkbox', 'checked': 'true', 'data-test-id': 'input-checkbox-checked'}),
+///       react.input({'type': 'checkbox', 'data-test-id': 'input-checkbox-unchecked'}),
+///       react.div({'role': 'checkbox', 'aria-checked': 'true', 'data-test-id': 'aria-checkbox-checked'}),
+///       react.div({'role': 'checkbox', 'aria-checked': 'false', 'data-test-id': 'aria-checkbox-unchecked'}),
+///       react.input({'type': 'checkbox', 'indeterminate': 'true', 'data-test-id': 'input-checkbox-indeterminate'}),
+///     ]));
+///
+///     const ariaCheckboxMixed = view.getByTestId('aria-checkbox-mixed');
+///     const inputCheckboxChecked = view.getByTestId('input-checkbox-checked');
+///     const inputCheckboxUnchecked = view.getByTestId('input-checkbox-unchecked');
+///     const ariaCheckboxChecked = view.getByTestId('aria-checkbox-checked');
+///     const ariaCheckboxUnchecked = view.getByTestId('aria-checkbox-unchecked');
+///     const inputCheckboxIndeterminate = view.getByTestId('input-checkbox-indeterminate');
 ///
 ///     expect(ariaCheckboxMixed, isPartiallyChecked);
 ///     expect(inputCheckboxChecked, isNot(isPartiallyChecked));
@@ -61,7 +71,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     expect(ariaCheckboxChecked, isNot(isPartiallyChecked));
 ///     expect(ariaCheckboxUnchecked, isNot(isPartiallyChecked));
 ///
-///     inputCheckboxIndeterminate.indeterminate = true
+///     inputCheckboxIndeterminate.indeterminate = true;
 ///     expect(inputCheckboxIndeterminate, isPartiallyChecked);
 ///   });
 /// }

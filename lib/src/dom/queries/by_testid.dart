@@ -82,11 +82,11 @@ mixin ByTestIdQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(
+  ///     final view = rtl.render(
   ///       react.div({'data-test-id': 'custom-element'}),
   ///     );
   ///
-  ///     final el = result.getByTestId('custom-element');
+  ///     final el = view.getByTestId('custom-element');
   ///   });
   /// }
   /// ```

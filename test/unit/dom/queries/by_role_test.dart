@@ -30,16 +30,16 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult renderResult;
+    rtl.RenderResult view;
     Ref<Element> emptyElementRef;
     tearDown(() {
-      renderResult = null;
+      view = null;
     });
 
     group('when more than one element has the same role,', () {
       setUp(() {
         emptyElementRef = react.createRef<Element>();
-        renderResult = rtl.render(react.article(
+        view = rtl.render(react.article(
           {},
           react.h1({}, 'Heading'),
           react.h2({}, 'Sub Heading'),
@@ -63,10 +63,10 @@ void main() {
         ) as ReactElement);
 
         expect(emptyElementRef.current, isNotNull);
-        expect(renderResult.queryAllByRole('button'), hasLength(greaterThan(1)));
-        expect(renderResult.queryAllByRole('tab'), hasLength(greaterThan(1)));
-        expect(renderResult.queryAllByRole('heading'), hasLength(greaterThan(1)));
-        expect(renderResult.queryAllByRole('checkbox'), hasLength(greaterThan(1)));
+        expect(view.queryAllByRole('button'), hasLength(greaterThan(1)));
+        expect(view.queryAllByRole('tab'), hasLength(greaterThan(1)));
+        expect(view.queryAllByRole('heading'), hasLength(greaterThan(1)));
+        expect(view.queryAllByRole('checkbox'), hasLength(greaterThan(1)));
       });
 
       // ----- hidden ----- //
@@ -75,91 +75,91 @@ void main() {
           'are usually excluded from the accessibility tree:', () {
         group('queryByRole', () {
           test('[match]', () {
-            expect(renderResult.queryByRole('dialog', hidden: true), isA<Element>());
+            expect(view.queryByRole('dialog', hidden: true), isA<Element>());
           });
 
           test('[no match]', () {
-            expect(renderResult.queryByRole('dialog', hidden: false), isNull);
+            expect(view.queryByRole('dialog', hidden: false), isNull);
           });
         });
 
         group('queryAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByRole('dialog', hidden: true);
+            final result = view.queryAllByRole('dialog', hidden: true);
             expect(result, [isA<Element>()]);
           });
 
           test('[no matches]', () {
-            expect(renderResult.queryAllByRole('dialog', hidden: false), isEmpty);
+            expect(view.queryAllByRole('dialog', hidden: false), isEmpty);
           });
         });
 
         group('getByRole', () {
           test('[match]', () {
-            expect(renderResult.getByRole('dialog', hidden: true), isA<Element>());
+            expect(view.getByRole('dialog', hidden: true), isA<Element>());
           });
 
           test('[no match]', () {
             expect(
-                () => renderResult.getByRole('dialog', hidden: false),
+                () => view.getByRole('dialog', hidden: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('getAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.getAllByRole('dialog', hidden: true);
+            final result = view.getAllByRole('dialog', hidden: true);
             expect(result, [isA<Element>()]);
           });
 
           test('[no matches]', () {
             expect(
-                () => renderResult.getAllByRole('dialog', hidden: false),
+                () => view.getAllByRole('dialog', hidden: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findByRole', () {
           test('[match]', () async {
-            expect(await renderResult.findByRole('dialog', hidden: true), isA<Element>());
+            expect(await view.findByRole('dialog', hidden: true), isA<Element>());
           });
 
           test('[no match]', () async {
             expect(
-                () => renderResult.findByRole('dialog', hidden: false),
+                () => view.findByRole('dialog', hidden: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findAllByRole', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByRole('dialog', hidden: true);
+            final result = await view.findAllByRole('dialog', hidden: true);
             expect(result, [isA<Element>()]);
           });
 
           test('[no matches]', () async {
             expect(
-                () => renderResult.findAllByRole('dialog', hidden: false),
+                () => view.findAllByRole('dialog', hidden: false),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "dialog"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
@@ -171,91 +171,91 @@ void main() {
           'only selectable element(s) that are selected:', () {
         group('queryByRole', () {
           test('[match]', () {
-            expect(renderResult.queryByRole('tab', selected: true), isA<ButtonElement>());
+            expect(view.queryByRole('tab', selected: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
-            expect(renderResult.queryByRole('option', selected: true), isNull);
+            expect(view.queryByRole('option', selected: true), isNull);
           });
         });
 
         group('queryAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByRole('tab', selected: true);
+            final result = view.queryAllByRole('tab', selected: true);
             expect(result, [isA<Element>()]);
           });
 
           test('[no matches]', () {
-            expect(renderResult.queryAllByRole('option', selected: true), isEmpty);
+            expect(view.queryAllByRole('option', selected: true), isEmpty);
           });
         });
 
         group('getByRole', () {
           test('[match]', () {
-            expect(renderResult.getByRole('tab', selected: true), isA<ButtonElement>());
+            expect(view.getByRole('tab', selected: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
             expect(
-                () => renderResult.getByRole('option', selected: true),
+                () => view.getByRole('option', selected: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('getAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.getAllByRole('tab', selected: true);
+            final result = view.getAllByRole('tab', selected: true);
             expect(result, [isA<Element>()]);
           });
 
           test('[no matches]', () {
             expect(
-                () => renderResult.getAllByRole('option', selected: true),
+                () => view.getAllByRole('option', selected: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findByRole', () {
           test('[match]', () async {
-            expect(await renderResult.findByRole('tab', selected: true), isA<ButtonElement>());
+            expect(await view.findByRole('tab', selected: true), isA<ButtonElement>());
           });
 
           test('[no match]', () async {
             expect(
-                () => renderResult.findByRole('option', selected: true),
+                () => view.findByRole('option', selected: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findAllByRole', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByRole('tab', selected: true);
+            final result = await view.findAllByRole('tab', selected: true);
             expect(result, [isA<Element>()]);
           });
 
           test('[no matches]', () async {
             expect(
-                () => renderResult.findAllByRole('option', selected: true),
+                () => view.findAllByRole('option', selected: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "option"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
@@ -267,7 +267,7 @@ void main() {
           'only checkbox element(s) that are checked:', () {
         group('queryByRole', () {
           test('[match]', () {
-            expect(renderResult.queryByRole('checkbox', checked: true), isA<ButtonElement>());
+            expect(view.queryByRole('checkbox', checked: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
@@ -277,7 +277,7 @@ void main() {
 
         group('queryAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByRole('checkbox', checked: true);
+            final result = view.queryAllByRole('checkbox', checked: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
@@ -288,7 +288,7 @@ void main() {
 
         group('getByRole', () {
           test('[match]', () {
-            expect(renderResult.getByRole('checkbox', checked: true), isA<ButtonElement>());
+            expect(view.getByRole('checkbox', checked: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
@@ -306,7 +306,7 @@ void main() {
 
         group('getAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.getAllByRole('checkbox', checked: true);
+            final result = view.getAllByRole('checkbox', checked: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
@@ -325,7 +325,7 @@ void main() {
 
         group('findByRole', () {
           test('[match]', () async {
-            expect(await renderResult.findByRole('checkbox', checked: true), isA<ButtonElement>());
+            expect(await view.findByRole('checkbox', checked: true), isA<ButtonElement>());
           });
 
           test('[no match]', () async {
@@ -343,7 +343,7 @@ void main() {
 
         group('findAllByRole', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByRole('checkbox', checked: true);
+            final result = await view.findAllByRole('checkbox', checked: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
@@ -367,7 +367,7 @@ void main() {
           'only button(s) that are pressed:', () {
         group('queryByRole', () {
           test('[match]', () {
-            expect(renderResult.queryByRole('button', pressed: true), isA<ButtonElement>());
+            expect(view.queryByRole('button', pressed: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
@@ -377,7 +377,7 @@ void main() {
 
         group('queryAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByRole('button', pressed: true);
+            final result = view.queryAllByRole('button', pressed: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
@@ -388,7 +388,7 @@ void main() {
 
         group('getByRole', () {
           test('[match]', () {
-            expect(renderResult.getByRole('button', pressed: true), isA<ButtonElement>());
+            expect(view.getByRole('button', pressed: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
@@ -406,7 +406,7 @@ void main() {
 
         group('getAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.getAllByRole('button', pressed: true);
+            final result = view.getAllByRole('button', pressed: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
@@ -425,7 +425,7 @@ void main() {
 
         group('findByRole', () {
           test('[match]', () async {
-            expect(await renderResult.findByRole('button', pressed: true), isA<ButtonElement>());
+            expect(await view.findByRole('button', pressed: true), isA<ButtonElement>());
           });
 
           test('[no match]', () async {
@@ -443,7 +443,7 @@ void main() {
 
         group('findAllByRole', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByRole('button', pressed: true);
+            final result = await view.findAllByRole('button', pressed: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
@@ -467,91 +467,91 @@ void main() {
           'only expandable element(s) that are expanded:', () {
         group('queryByRole', () {
           test('[match]', () {
-            expect(renderResult.queryByRole('button', expanded: true), isA<ButtonElement>());
+            expect(view.queryByRole('button', expanded: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
-            expect(renderResult.queryByRole('checkbox', expanded: true), isNull);
+            expect(view.queryByRole('checkbox', expanded: true), isNull);
           });
         });
 
         group('queryAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByRole('button', expanded: true);
+            final result = view.queryAllByRole('button', expanded: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
           test('[no matches]', () {
-            expect(renderResult.queryAllByRole('checkbox', expanded: true), isEmpty);
+            expect(view.queryAllByRole('checkbox', expanded: true), isEmpty);
           });
         });
 
         group('getByRole', () {
           test('[match]', () {
-            expect(renderResult.getByRole('button', expanded: true), isA<ButtonElement>());
+            expect(view.getByRole('button', expanded: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
             expect(
-                () => renderResult.getByRole('checkbox', expanded: true),
+                () => view.getByRole('checkbox', expanded: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('getAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.getAllByRole('button', expanded: true);
+            final result = view.getAllByRole('button', expanded: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
           test('[no matches]', () {
             expect(
-                () => renderResult.getAllByRole('checkbox', expanded: true),
+                () => view.getAllByRole('checkbox', expanded: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findByRole', () {
           test('[match]', () async {
-            expect(await renderResult.findByRole('button', expanded: true), isA<ButtonElement>());
+            expect(await view.findByRole('button', expanded: true), isA<ButtonElement>());
           });
 
           test('[no match]', () async {
             expect(
-                () => renderResult.findByRole('checkbox', expanded: true),
+                () => view.findByRole('checkbox', expanded: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findAllByRole', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByRole('button', expanded: true);
+            final result = await view.findAllByRole('button', expanded: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
           test('[no matches]', () async {
             expect(
-                () => renderResult.findAllByRole('checkbox', expanded: true),
+                () => view.findAllByRole('checkbox', expanded: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
@@ -563,8 +563,8 @@ void main() {
           'only heading(s) at a specific nesting level:', () {
         group('queryByRole', () {
           test('[match]', () {
-            expect(renderResult.queryByRole('heading', level: 2), isA<HeadingElement>());
-            expect(renderResult.queryByRole('heading', level: 3), isA<DivElement>());
+            expect(view.queryByRole('heading', level: 2), isA<HeadingElement>());
+            expect(view.queryByRole('heading', level: 3), isA<DivElement>());
           });
 
           test('[no match]', () {
@@ -574,7 +574,7 @@ void main() {
 
         group('queryAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByRole('heading', level: 2);
+            final result = view.queryAllByRole('heading', level: 2);
             expect(result, [isA<HeadingElement>()]);
           });
 
@@ -585,7 +585,7 @@ void main() {
 
         group('getByRole', () {
           test('[match]', () {
-            expect(renderResult.getByRole('heading', level: 2), isA<HeadingElement>());
+            expect(view.getByRole('heading', level: 2), isA<HeadingElement>());
           });
 
           test('[no match]', () {
@@ -603,7 +603,7 @@ void main() {
 
         group('getAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.getAllByRole('heading', level: 2);
+            final result = view.getAllByRole('heading', level: 2);
             expect(result, [isA<HeadingElement>()]);
           });
 
@@ -622,7 +622,7 @@ void main() {
 
         group('findByRole', () {
           test('[match]', () async {
-            expect(await renderResult.findByRole('heading', level: 2), isA<HeadingElement>());
+            expect(await view.findByRole('heading', level: 2), isA<HeadingElement>());
           });
 
           test('[no match]', () async {
@@ -640,7 +640,7 @@ void main() {
 
         group('findAllByRole', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByRole('heading', level: 2);
+            final result = await view.findAllByRole('heading', level: 2);
             expect(result, [isA<HeadingElement>()]);
           });
 
@@ -663,96 +663,96 @@ void main() {
           'the queryFallbacks argument can be set to true to target '
           'elements using fallback roles:', () {
         setUp(() {
-          expect(renderResult.queryByRole('switch'), isNull, reason: 'test setup sanity check');
+          expect(view.queryByRole('switch'), isNull, reason: 'test setup sanity check');
         });
 
         group('queryByRole', () {
           test('[match]', () {
-            expect(renderResult.queryByRole('switch', queryFallbacks: true), isA<ButtonElement>());
+            expect(view.queryByRole('switch', queryFallbacks: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
-            expect(renderResult.queryByRole('switch'), isNull);
+            expect(view.queryByRole('switch'), isNull);
           });
         });
 
         group('queryAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByRole('switch', queryFallbacks: true);
+            final result = view.queryAllByRole('switch', queryFallbacks: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
           test('[no matches]', () {
-            expect(renderResult.queryAllByRole('switch'), isEmpty);
+            expect(view.queryAllByRole('switch'), isEmpty);
           });
         });
 
         group('getByRole', () {
           test('[match]', () {
-            expect(renderResult.getByRole('switch', queryFallbacks: true), isA<ButtonElement>());
+            expect(view.getByRole('switch', queryFallbacks: true), isA<ButtonElement>());
           });
 
           test('[no match]', () {
             expect(
-                () => renderResult.getByRole('switch'),
+                () => view.getByRole('switch'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('getAllByRole', () {
           test('[matches]', () {
-            final result = renderResult.getAllByRole('switch', queryFallbacks: true);
+            final result = view.getAllByRole('switch', queryFallbacks: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
           test('[no matches]', () {
             expect(
-                () => renderResult.getAllByRole('switch'),
+                () => view.getAllByRole('switch'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findByRole', () {
           test('[match]', () async {
-            expect(await renderResult.findByRole('switch', queryFallbacks: true), isA<ButtonElement>());
+            expect(await view.findByRole('switch', queryFallbacks: true), isA<ButtonElement>());
           });
 
           test('[no match]', () async {
             expect(
-                () => renderResult.findByRole('switch'),
+                () => view.findByRole('switch'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findAllByRole', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByRole('switch', queryFallbacks: true);
+            final result = await view.findAllByRole('switch', queryFallbacks: true);
             expect(result, [isA<ButtonElement>()]);
           });
 
           test('[no matches]', () async {
             expect(
-                () => renderResult.findAllByRole('switch'),
+                () => view.findAllByRole('switch'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "switch"')),
                   hasToStringValue(contains('Here are the accessible roles:')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });

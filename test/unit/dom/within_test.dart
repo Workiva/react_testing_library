@@ -39,16 +39,16 @@ void main() {
             // ignore: unnecessary_cast
             ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
             : elsForQuerying;
-        final _renderResult = rtl.render(els);
-        final queries = rtl.within(_renderResult.container);
-        return ScopedQueriesTestWrapper(queries, _renderResult);
+        final view = rtl.render(els);
+        final queries = rtl.within(view.container);
+        return ScopedQueriesTestWrapper(queries, view);
       });
     });
 
     test('supports querying within a shadowRoot', () {
       final elsForQuerying = elementsForQuerying('<container>');
-      final renderResult = rtl.render(elsForQuerying);
-      final nodeWithShadowRoot = renderResult.getByTestId(nodeWithShadowRootDefaultTestId);
+      final view = rtl.render(elsForQuerying);
+      final nodeWithShadowRoot = view.getByTestId(nodeWithShadowRootDefaultTestId);
       expect(rtl.within(nodeWithShadowRoot.shadowRoot).getByRole('button'), isA<ButtonElement>());
     });
   });

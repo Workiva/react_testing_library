@@ -64,11 +64,11 @@ mixin ByAltTextQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(
+  ///     final view = rtl.render(
   ///       react.img({'alt': 'Incredibles 2 Poster', 'src': '/incredibles-2.png'}),
   ///     );
   ///
-  ///     final el = result.getByAltText(RegExp(r'incredibles.*? poster'));
+  ///     final el = view.getByAltText(RegExp(r'incredibles.*? poster'));
   ///   });
   /// }
   /// ```

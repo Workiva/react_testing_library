@@ -26,7 +26,7 @@ void main() {
   group('User click events:', () {
     List<Event> calls;
     int hoverEventCount;
-    rtl.RenderResult renderedResult;
+    rtl.RenderResult view;
 
     setUp(() {
       calls = [];
@@ -41,7 +41,7 @@ void main() {
         'onMouseOver': (_) => hoverEventCount++,
       }, 'oh hai');
 
-      renderedResult = rtl.render(elementToRender as ReactElement);
+      view = rtl.render(elementToRender as ReactElement);
     });
 
     group('UserEvent.click', () {
@@ -66,13 +66,13 @@ void main() {
       }
 
       test('', () {
-        UserEvent.click(renderedResult.getByRole('button'));
+        UserEvent.click(view.getByRole('button'));
         _verifyClickEvent();
       });
 
       test('eventInit', () {
         UserEvent.click(
-          renderedResult.getByRole('button'),
+          view.getByRole('button'),
           eventInit: {'shiftKey': true},
         );
         _verifyClickEvent(hasEventInit: true);
@@ -80,7 +80,7 @@ void main() {
 
       test('skipHover', () {
         UserEvent.click(
-          renderedResult.getByRole('button'),
+          view.getByRole('button'),
           skipHover: true,
         );
         _verifyClickEvent(skipHover: true);
@@ -89,7 +89,7 @@ void main() {
       test('clickCount', () {
         const clickCount = 5;
         UserEvent.click(
-          renderedResult.getByRole('button'),
+          view.getByRole('button'),
           clickCount: clickCount,
         );
         _verifyClickEvent(clickCount: clickCount);
@@ -116,13 +116,13 @@ void main() {
       }
 
       test('', () {
-        UserEvent.dblClick(renderedResult.getByRole('button'));
+        UserEvent.dblClick(view.getByRole('button'));
         _verifyDblClickEvent();
       });
 
       test('eventInit', () {
         UserEvent.dblClick(
-          renderedResult.getByRole('button'),
+          view.getByRole('button'),
           eventInit: {'shiftKey': true},
         );
         _verifyDblClickEvent(hasEventInit: true);

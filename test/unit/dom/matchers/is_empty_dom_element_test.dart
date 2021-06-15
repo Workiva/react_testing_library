@@ -28,8 +28,8 @@ void main() {
   group('isEmptyDomElement matcher', () {
     group('passes when provided a valid Element', () {
       test('that has no children', () {
-        final renderResult = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
-        shouldPass(renderResult.getByTestId('empty'), isEmptyDomElement);
+        final view = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
+        shouldPass(view.getByTestId('empty'), isEmptyDomElement);
       });
     });
 
@@ -39,16 +39,16 @@ void main() {
       });
 
       test('the matched item has empty children', () {
-        final renderResult = render(
+        final view = render(
             react.span({defaultTestIdKey: 'not-empty'}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
         shouldFail(
-            renderResult.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
+            view.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
       });
 
       test('the matched item has text children', () {
-        final renderResult = render(react.span({defaultTestIdKey: 'not-empty'}, 'oh hai') as ReactElement);
+        final view = render(react.span({defaultTestIdKey: 'not-empty'}, 'oh hai') as ReactElement);
         shouldFail(
-            renderResult.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
+            view.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
       });
     });
   });

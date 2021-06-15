@@ -58,9 +58,9 @@ void main() {
       return render(vDom);
     }
 
-    RenderResult renderedResult;
+    RenderResult view;
     tearDown(() {
-      renderedResult = null;
+      view = null;
     });
 
     group('passes when provided with a valid name/value combination for a', () {
@@ -72,7 +72,7 @@ void main() {
 
       group('TextInputElement', () {
         setUp(() {
-          renderedResult = renderFormWithValues(react.form, [
+          view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
               'type': 'text',
               'name': 'firstName',
@@ -83,12 +83,12 @@ void main() {
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByTestId(rootElemTestId), hasFormValues({'firstName': 'John'}));
+          shouldPass(view.getByTestId(rootElemTestId), hasFormValues({'firstName': 'John'}));
         });
 
         test('fuzzy string matcher(s)', () {
           shouldPass(
-              renderedResult.getByTestId(rootElemTestId),
+              view.getByTestId(rootElemTestId),
               hasFormValues({
                 'firstName': allOf(
                   startsWith('Jo'),
@@ -100,7 +100,7 @@ void main() {
 
       group('TextAreaElement', () {
         setUp(() {
-          renderedResult = renderFormWithValues(react.form, [
+          view = renderFormWithValues(react.form, [
             _FormElemDefinition(
               react.textarea,
               {
@@ -113,19 +113,19 @@ void main() {
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByTestId(rootElemTestId),
+          shouldPass(view.getByTestId(rootElemTestId),
               hasFormValues({'comment': 'I am here to say something nice about you'}));
         });
 
         test('fuzzy string matcher(s)', () {
           shouldPass(
-              renderedResult.getByTestId(rootElemTestId), hasFormValues({'comment': contains('something nice')}));
+              view.getByTestId(rootElemTestId), hasFormValues({'comment': contains('something nice')}));
         });
       });
 
       group('NumberInputElement', () {
         setUp(() {
-          renderedResult = renderFormWithValues(react.form, [
+          view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
               'type': 'number',
               'name': 'age',
@@ -136,17 +136,17 @@ void main() {
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByTestId(rootElemTestId), hasFormValues({'age': 35}));
+          shouldPass(view.getByTestId(rootElemTestId), hasFormValues({'age': 35}));
         });
 
         test('number matcher', () {
-          shouldPass(renderedResult.getByTestId(rootElemTestId), hasFormValues({'age': greaterThan(18)}));
+          shouldPass(view.getByTestId(rootElemTestId), hasFormValues({'age': greaterThan(18)}));
         });
       });
 
       group('CheckboxInputElement', () {
         test('when each has a unique name', () {
-          renderedResult = renderFormWithValues(react.form, [
+          view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'business-in-front',
@@ -167,7 +167,7 @@ void main() {
           ]);
 
           shouldPass(
-              renderedResult.getByTestId(rootElemTestId),
+              view.getByTestId(rootElemTestId),
               hasFormValues({
                 'business-in-front': isTrue,
                 'party-in-the-back': isFalse,
@@ -177,7 +177,7 @@ void main() {
 
         group('when they have the same names', () {
           setUp(() {
-            renderedResult = renderFormWithValues(react.form, [
+            view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
                 'type': 'checkbox',
                 'name': 'pizza-toppings',
@@ -219,7 +219,7 @@ void main() {
 
           test('exact match', () {
             shouldPass(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({
                   'pizza-toppings': [
                     'pepperoni',
@@ -231,7 +231,7 @@ void main() {
 
           test('fuzzy iterable matcher', () {
             shouldPass(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({
                   'pizza-toppings': isNot(contains('pineapple')),
                 }));
@@ -241,7 +241,7 @@ void main() {
 
       group('RadioInputElement', () {
         setUp(() {
-          renderedResult = renderFormWithValues(react.form, [
+          view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
               'type': 'radio',
               'name': 'account-type',
@@ -259,7 +259,7 @@ void main() {
 
         test('exact match', () {
           shouldPass(
-              renderedResult.getByTestId(rootElemTestId),
+              view.getByTestId(rootElemTestId),
               hasFormValues({
                 'account-type': 'personal',
               }));
@@ -270,7 +270,7 @@ void main() {
         group('when only a single option can be selected', () {
           group('and a single option is selected', () {
             test('exact match', () {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
                 }, [
@@ -288,14 +288,14 @@ void main() {
               ]);
 
               shouldPass(
-                  renderedResult.getByTestId(rootElemTestId),
+                  view.getByTestId(rootElemTestId),
                   hasFormValues({
                     'account-type': 'business',
                   }));
             });
 
             test('using a matcher', () {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
                 }, [
@@ -312,7 +312,7 @@ void main() {
               ]);
 
               shouldPass(
-                  renderedResult.getByTestId(rootElemTestId),
+                  view.getByTestId(rootElemTestId),
                   hasFormValues({
                     'account-type': allOf(isNotNull, isNot('business')),
                   }));
@@ -320,7 +320,7 @@ void main() {
           });
 
           test('and no option is selected', () {
-            renderedResult = renderFormWithValues(react.form, [
+            view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.select, {
                 'name': 'account-type',
               }, [
@@ -339,7 +339,7 @@ void main() {
             ]);
 
             shouldPass(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({
                   'account-type': isNull,
                 }));
@@ -349,7 +349,7 @@ void main() {
         group('when multiple options can be selected', () {
           group('and a single option is selected', () {
             setUp(() {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
                   'multiple': 'true',
@@ -375,7 +375,7 @@ void main() {
 
             test('exact match', () {
               shouldPass(
-                  renderedResult.getByTestId(rootElemTestId),
+                  view.getByTestId(rootElemTestId),
                   hasFormValues({
                     'pizza-toppings': ['sausage'],
                   }));
@@ -383,7 +383,7 @@ void main() {
 
             test('using a matcher', () {
               shouldPass(
-                  renderedResult.getByTestId(rootElemTestId),
+                  view.getByTestId(rootElemTestId),
                   hasFormValues({
                     'pizza-toppings': allOf(isNotEmpty, isNot('pineapple')),
                   }));
@@ -392,7 +392,7 @@ void main() {
 
           group('and multiple options are selected', () {
             setUp(() {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
                   'multiple': 'true',
@@ -419,7 +419,7 @@ void main() {
 
             test('exact match', () {
               shouldPass(
-                  renderedResult.getByTestId(rootElemTestId),
+                  view.getByTestId(rootElemTestId),
                   hasFormValues({
                     'pizza-toppings': ['pepperoni', 'sausage'],
                   }));
@@ -427,7 +427,7 @@ void main() {
 
             test('using a matcher', () {
               shouldPass(
-                  renderedResult.getByTestId(rootElemTestId),
+                  view.getByTestId(rootElemTestId),
                   hasFormValues({
                     'pizza-toppings': unorderedEquals(['sausage', 'pepperoni']),
                   }));
@@ -435,7 +435,7 @@ void main() {
           });
 
           test('and no option is selected', () {
-            renderedResult = renderFormWithValues(react.form, [
+            view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.select, {
                 'name': 'pizza-toppings',
                 'multiple': 'true',
@@ -460,7 +460,7 @@ void main() {
             ]);
 
             shouldPass(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({
                   'pizza-toppings': isEmpty,
                 }));
@@ -497,7 +497,7 @@ void main() {
         }
 
         test('element which has a name not used as a key in the provided map', () {
-          renderedResult = renderFormWithValues(react.form, [
+          view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
               'type': 'text',
               'name': 'firstName',
@@ -506,7 +506,7 @@ void main() {
           ]);
 
           shouldFail(
-            renderedResult.getByTestId(rootElemTestId),
+            view.getByTestId(rootElemTestId),
             hasFormValues({'lastName': 'Doe'}),
             getMatcherForExpectedCustomMatcherMessage(expected: {'lastName': 'Doe'}, actual: {}),
             useDoubleQuotes: true,
@@ -515,7 +515,7 @@ void main() {
 
         group('which has a name found in the provided map, but different value(s):', () {
           test('TextInputElement', () {
-            renderedResult = renderFormWithValues(react.form, [
+            view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
                 'type': 'text',
                 'name': 'firstName',
@@ -524,7 +524,7 @@ void main() {
             ]);
 
             shouldFail(
-              renderedResult.getByTestId(rootElemTestId),
+              view.getByTestId(rootElemTestId),
               hasFormValues({'firstName': 'Jane'}),
               getMatcherForExpectedCustomMatcherMessage(expected: {'firstName': 'Jane'}, actual: {'firstName': 'John'}),
               useDoubleQuotes: true,
@@ -532,7 +532,7 @@ void main() {
           });
 
           test('TextAreaElement', () {
-            renderedResult = renderFormWithValues(react.form, [
+            view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.textarea, {
                 'name': 'comments',
                 'value': 'I have nothing nice to say',
@@ -540,7 +540,7 @@ void main() {
             ]);
 
             shouldFail(
-              renderedResult.getByTestId(rootElemTestId),
+              view.getByTestId(rootElemTestId),
               hasFormValues({'comments': 'I have something nice to say'}),
               getMatcherForExpectedCustomMatcherMessage(
                   expected: {'comments': 'I have something nice to say'},
@@ -550,7 +550,7 @@ void main() {
           });
 
           test('NumberInputElement', () {
-            renderedResult = renderFormWithValues(react.form, [
+            view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
                 'type': 'number',
                 'name': 'age',
@@ -559,7 +559,7 @@ void main() {
             ]);
 
             shouldFail(
-              renderedResult.getByTestId(rootElemTestId),
+              view.getByTestId(rootElemTestId),
               hasFormValues({'age': 36}),
               getMatcherForExpectedCustomMatcherMessage(expected: {'age': 36}, actual: {'age': 35}),
               useDoubleQuotes: true,
@@ -568,7 +568,7 @@ void main() {
 
           group('CheckboxInputElement', () {
             test('when each has a unique name', () {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'business-in-front',
@@ -588,7 +588,7 @@ void main() {
               ]);
 
               shouldFail(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({'business-in-front': isFalse}),
                 getMatcherForExpectedCustomMatcherMessage(
                     expected: {'business-in-front': false}, actual: {'business-in-front': true}),
@@ -597,7 +597,7 @@ void main() {
             });
 
             test('when they have the same names', () {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
@@ -636,7 +636,7 @@ void main() {
               ]);
 
               shouldFail(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({
                   'pizza-toppings': ['pineapple', 'bbq chicken']
                 }),
@@ -661,7 +661,7 @@ void main() {
           });
 
           test('RadioInputElement', () {
-            renderedResult = renderFormWithValues(react.form, [
+            view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
                 'type': 'radio',
                 'name': 'account-type',
@@ -676,7 +676,7 @@ void main() {
             ]);
 
             shouldFail(
-              renderedResult.getByTestId(rootElemTestId),
+              view.getByTestId(rootElemTestId),
               hasFormValues({'account-type': 'business'}),
               getMatcherForExpectedCustomMatcherMessage(
                   expected: {'account-type': 'business'}, actual: {'account-type': 'personal'}),
@@ -686,7 +686,7 @@ void main() {
 
           group('SelectElement', () {
             test('when only a single option can be selected', () {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
                 }, [
@@ -703,7 +703,7 @@ void main() {
               ]);
 
               shouldFail(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({'account-type': 'personal'}),
                 getMatcherForExpectedCustomMatcherMessage(
                     expected: {'account-type': 'personal'}, actual: {'account-type': 'business'}),
@@ -712,7 +712,7 @@ void main() {
             });
 
             test('when multiple options can be selected', () {
-              renderedResult = renderFormWithValues(react.form, [
+              view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
                   'multiple': 'true',
@@ -736,7 +736,7 @@ void main() {
               ]);
 
               shouldFail(
-                renderedResult.getByTestId(rootElemTestId),
+                view.getByTestId(rootElemTestId),
                 hasFormValues({
                   'pizza-toppings': ['pineapple', 'pepperoni']
                 }),

@@ -68,7 +68,7 @@ mixin ByTitleQueries on IQueries {
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(react.div({},
+  ///     final view = rtl.render(react.div({},
   ///       react.span({
   ///         'title': 'Delete',
   ///         'id': '2',
@@ -79,8 +79,8 @@ mixin ByTitleQueries on IQueries {
   ///       ),
   ///     ));
   ///
-  ///     final deleteElement = result.getByTitle('Delete');
-  ///     final closeElement = result.getByTitle('Close');
+  ///     final deleteElement = view.getByTitle('Delete');
+  ///     final closeElement = view.getByTitle('Close');
   ///   });
   /// }
   /// ```

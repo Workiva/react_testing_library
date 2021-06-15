@@ -60,7 +60,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.div({},
+///     final view = rtl.render(react.div({},
 ///       react.button({
 ///         'aria-label': 'Close',
 ///         'aria-describedby': 'description-close',
@@ -70,8 +70,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     const closeButton = result.getByRole('button', {name: 'Close'});
-///     const deleteButton = result.getByRole('button', {name: 'Delete'});
+///     const closeButton = view.getByRole('button', {name: 'Close'});
+///     const deleteButton = view.getByRole('button', {name: 'Delete'});
 ///
 ///     // Use the `hasDescription` matcher as the second argument of `expect()`
 ///     expect(closeButton, hasDescription('Closing will discard any changes'));
