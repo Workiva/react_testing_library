@@ -118,8 +118,7 @@ void main() {
         });
 
         test('fuzzy string matcher(s)', () {
-          shouldPass(
-              view.getByTestId(rootElemTestId), hasFormValues({'comment': contains('something nice')}));
+          shouldPass(view.getByTestId(rootElemTestId), hasFormValues({'comment': contains('something nice')}));
         });
       });
 

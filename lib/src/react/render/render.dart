@@ -46,7 +46,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// import 'package:react/react.dart' as react;
 /// import 'package:test/test.dart';
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
-/// import 'package:react_testing_library/matchers.dart';
+/// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 ///
 /// main() {
 ///   test('', () {
@@ -55,7 +55,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 ///     );
 ///
 ///     // The `view` can now be used to query within the DOM!
-///     expect(view.getByRole('button'), hasText('Click Me'));
+///     expect(view.getByRole('button', name: 'Click Me'), isInTheDocument);
 ///   });
 /// }
 /// ```

@@ -55,8 +55,7 @@ void main() {
         });
 
         test('even when nested within a FormElement that is disabled', () {
-          final view =
-              render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
+          final view = render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
           final divNode = view.getByTestId('div');
           shouldFail(divNode, isDisabled, contains('Which: is not a type of HTML Element that can be disabled.'));
         });
@@ -88,8 +87,7 @@ void main() {
         });
 
         test('even when nested within a FormElement that is disabled', () {
-          final view =
-              render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
+          final view = render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
           final divNode = view.getByTestId('div');
           shouldFail(divNode, isEnabled, contains('Which: is not a type of HTML Element that can be disabled.'));
         });

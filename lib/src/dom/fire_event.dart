@@ -51,7 +51,7 @@ import '../user_event/user_event.dart';
 ///     final view = rtl.render(react.button({}, 'Submit'));
 ///
 ///     // Use react_testing_library queries to store a reference to the node.
-///     final button = view.getByRole('button');
+///     final button = view.getByRole('button', name: 'Submit');
 ///
 ///     // Use `fireEvent` to create a click event, and emit it on the node.
 ///     rtl.fireEvent(

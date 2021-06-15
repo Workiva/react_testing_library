@@ -29,50 +29,58 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// ## Examples
 ///
 /// ```html
-/// <div role="checkbox" aria-checked="mixed" data-test-id="aria-checkbox-mixed" />
-/// <input type="checkbox" checked data-test-id="input-checkbox-checked" />
-/// <input type="checkbox" data-test-id="input-checkbox-unchecked" />
-/// <div role="checkbox" aria-checked="true" data-test-id="aria-checkbox-checked" />
-/// <div
-///   role="checkbox"
-///   aria-checked="false"
-///   data-test-id="aria-checkbox-unchecked"
-/// />
-/// <input type="checkbox" data-test-id="input-checkbox-indeterminate" indeterminate />
+/// <!-- Input Checkboxes -->
+/// <input type="checkbox" checked />
+/// <input type="checkbox" />
+/// <input type="checkbox" indeterminate />
+///
+/// <!-- Aria Checkboxes -->
+/// <div role="checkbox" aria-checked="true" />
+/// <div role="checkbox" aria-checked="false" />
+/// <div role="checkbox" aria-checked="mixed" />
 /// ```
 ///
 /// ```dart
+/// import 'dart:html';
+///
 /// import 'package:react/react.dart' as react;
 /// import 'package:react_testing_library/matchers.dart' show isPartiallyChecked;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
-///   test('', () {
+///   test('Input Checkboxes', () {
 ///     final view = rtl.render(react.div({}, [
-///       react.div({'role': 'checkbox', 'aria-checked': 'mixed', 'data-test-id': 'aria-checkbox-mixed'}),
-///       react.input({'type': 'checkbox', 'checked': 'true', 'data-test-id': 'input-checkbox-checked'}),
-///       react.input({'type': 'checkbox', 'data-test-id': 'input-checkbox-unchecked'}),
-///       react.div({'role': 'checkbox', 'aria-checked': 'true', 'data-test-id': 'aria-checkbox-checked'}),
-///       react.div({'role': 'checkbox', 'aria-checked': 'false', 'data-test-id': 'aria-checkbox-unchecked'}),
-///       react.input({'type': 'checkbox', 'indeterminate': 'true', 'data-test-id': 'input-checkbox-indeterminate'}),
+///       react.input({'type': 'checkbox', 'checked': 'true'}),
+///       react.input({'type': 'checkbox'}),
+///       react.input({'type': 'checkbox'}),
+///     ]) as ReactElement);
+///
+///     final checkboxes = view.getAllByRole('checkbox');
+///
+///     // Set the last checkbox to be indeterminate.
+///     (checkboxes[2] as InputElement).indeterminate = true;
+///
+///     expect(checkboxes, orderedEquals([
+///       isNot(isPartiallyChecked),
+///       isNot(isPartiallyChecked),
+///       isPartiallyChecked,
 ///     ]));
+///   });
 ///
-///     const ariaCheckboxMixed = view.getByTestId('aria-checkbox-mixed');
-///     const inputCheckboxChecked = view.getByTestId('input-checkbox-checked');
-///     const inputCheckboxUnchecked = view.getByTestId('input-checkbox-unchecked');
-///     const ariaCheckboxChecked = view.getByTestId('aria-checkbox-checked');
-///     const ariaCheckboxUnchecked = view.getByTestId('aria-checkbox-unchecked');
-///     const inputCheckboxIndeterminate = view.getByTestId('input-checkbox-indeterminate');
+///   test('Aria Checkboxes', () {
+///     final view = rtl.render(react.div({}, [
+///       react.div({'role': 'checkbox', 'aria-checked': 'true'}),
+///       react.div({'role': 'checkbox', 'aria-checked': 'false'}),
+///       react.div({'role': 'checkbox', 'aria-checked': 'mixed'}),
+///     ]) as ReactElement);
 ///
-///     expect(ariaCheckboxMixed, isPartiallyChecked);
-///     expect(inputCheckboxChecked, isNot(isPartiallyChecked));
-///     expect(inputCheckboxUnchecked, isNot(isPartiallyChecked));
-///     expect(ariaCheckboxChecked, isNot(isPartiallyChecked));
-///     expect(ariaCheckboxUnchecked, isNot(isPartiallyChecked));
-///
-///     inputCheckboxIndeterminate.indeterminate = true;
-///     expect(inputCheckboxIndeterminate, isPartiallyChecked);
+///     final checkboxes = view.getAllByRole('checkbox');
+///     expect(checkboxes, orderedEquals([
+///       isNot(isPartiallyChecked),
+///       isNot(isPartiallyChecked),
+///       isPartiallyChecked,
+///     ]));
 ///   });
 /// }
 /// ```

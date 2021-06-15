@@ -79,9 +79,7 @@ void main() {
         test('listing elements', () {
           UserEvent.selectOptions(
             select,
-            isMultiSelect
-                ? [view.getByText('A'), view.getByText('C')]
-                : [view.getByText('C')],
+            isMultiSelect ? [view.getByText('A'), view.getByText('C')] : [view.getByText('C')],
           );
           _verifySelectEvent();
         });

@@ -53,28 +53,28 @@ import 'package:react_testing_library/src/util/js_utils.dart';
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final view = rtl.render(react.form({'data-test-id': 'login-form'},
-///       react.input({'type': 'text', 'name': 'username', value: 'jane.doe'}),
-///       react.input({'type': 'number', 'name': 'age', value: '35'}),
-///       react.input({'type': 'password', 'name': 'password', value: '12345678'}),
-///       react.input({'type': 'checkbox', 'name': 'rememberMe', checked: true}),
+///     final view = rtl.render(react.form({'role': 'form'},
+///       react.input({'type': 'text', 'name': 'username', 'value': 'jane.doe'}),
+///       react.input({'type': 'number', 'name': 'age', 'value': '35'}),
+///       react.input({'type': 'password', 'name': 'password', 'value': '12345678'}),
+///       react.input({'type': 'checkbox', 'name': 'rememberMe', 'checked': true}),
 ///       react.button({'type': 'submit'}, 'Sign in'),
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final form = view.getByTestId('login-form');
+///     final form = view.getByRole('form');
 ///
 ///     // Use the `hasFormValues` matcher as the second argument of `expect()`
 ///     expect(form, hasFormValues({
 ///       'username': 'jane.doe',
 ///       'rememberMe': true,
-///     });
+///     }));
 ///
 ///     // You can also use matchers for the value
 ///     expect(form, hasFormValues({
 ///       'username': startsWith('jane'),
 ///       'age': greaterThan(18),
-///     });
+///     }));
 ///   });
 /// }
 /// ```

@@ -70,8 +70,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     const closeButton = view.getByRole('button', {name: 'Close'});
-///     const deleteButton = view.getByRole('button', {name: 'Delete'});
+///     final closeButton = view.getByRole('button', name: 'Close');
+///     final deleteButton = view.getByRole('button', name: 'Delete');
 ///
 ///     // Use the `hasDescription` matcher as the second argument of `expect()`
 ///     expect(closeButton, hasDescription('Closing will discard any changes'));

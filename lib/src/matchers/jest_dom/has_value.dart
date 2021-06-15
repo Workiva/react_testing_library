@@ -57,27 +57,27 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
 ///     final view = rtl.render(react.form({},
-///       react.input({'type': 'text', name: 'username', 'value': 'jane.doe'}),
-///       react.input({'type': 'number', 'name': 'age', value: '35'}),
+///       react.input({'type': 'text', 'name': 'username', 'value': 'jane.doe'}),
+///       react.input({'type': 'number', 'name': 'age', 'value': '35'}),
 ///       react.input({'type': 'text', 'name': 'occupation'}),
 ///       react.select({'multiple': true},
 ///         react.option({'value': 'first'}, 'First Value'),
-///         react.option({'value': 'second' 'selected': true}, 'Second Value'),
+///         react.option({'value': 'second', 'selected': true}, 'Second Value'),
 ///         react.option({'value': 'third', 'selected': true}, 'Third Value'),
 ///       ),
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     const textInput = view.getByRole('textbox', name: 'username');
-///     const numberInput = view.getByRole('spinbutton', name: 'age');
-///     const emptyInput = view.getByRole('textbox', name: 'occupation');
-///     const selectInput = view.getByRole('listbox', name: 'options');
+///     final textInput = view.getAllByRole('textbox').first;
+///     final numberInput = view.getByRole('spinbutton');
+///     final emptyInput = view.getAllByRole('textbox')[1];
+///     final selectInput = view.getByRole('listbox');
 ///
 ///     // Use the `hasValue` matcher as the second argument of `expect()`
 ///     expect(textInput, hasValue('jane.doe'));
 ///     expect(textInput, hasValue(startsWith('jane.')));
 ///     expect(numberInput, hasValue(35));
-///     expect(emptyInput, isNot(hasValue()));
+///     expect(emptyInput, hasValue(''));
 ///     expect(selectInput, hasValue(['second', 'third']));
 ///     expect(selectInput, isNot(hasValue(['first'])));
 ///   });

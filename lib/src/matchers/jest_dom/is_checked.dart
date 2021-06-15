@@ -58,12 +58,12 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     const inputCheckboxChecked = view.getByRole('checkbox', name: 'pepperoni');
-///     const inputCheckboxUnchecked = view.getByRole('checkbox', name: 'pineapple');
-///     const ariaCheckboxChecked = view.getByRole('checkbox', name: 'Red Sauce');
-///     const ariaCheckboxUnchecked = view.getByRole('checkbox', name: 'White Sauce');
-///     const ariaSwitchChecked = view.getByRole('switch', name: 'Mozzarella');
-///     const ariaSwitchUnchecked = view.getByRole('switch', name: 'Cheddar');
+///     final inputCheckboxChecked = view.getAllByRole('checkbox').first;
+///     final inputCheckboxUnchecked = view.getAllByRole('checkbox')[1];
+///     final ariaCheckboxChecked = view.getByRole('checkbox', name: 'Red Sauce');
+///     final ariaCheckboxUnchecked = view.getByRole('checkbox', name: 'White Sauce');
+///     final ariaSwitchChecked = view.getByRole('switch', name: 'Mozzarella');
+///     final ariaSwitchUnchecked = view.getByRole('switch', name: 'Cheddar');
 ///
 ///     // Use the `isChecked` matcher as the second argument of `expect()`
 ///     expect(inputCheckboxChecked, isChecked);

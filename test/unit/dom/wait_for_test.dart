@@ -53,8 +53,8 @@ void main() {
 
           test('that fails', () async {
             expect(
-                () => rtl.waitFor(() => expect(view.container.contains(rootElement), isFalse),
-                    container: view.container),
+                () =>
+                    rtl.waitFor(() => expect(view.container.contains(rootElement), isFalse), container: view.container),
                 throwsA(isA<TestFailure>()));
           }, timeout: asyncQueryTestTimeout);
         });
@@ -73,8 +73,7 @@ void main() {
           test('that fails, throws the error returned from the expectation', () async {
             expect(view.queryByAltText('waitFor'), isNull, reason: 'test setup sanity check');
             expect(
-                () => rtl.waitFor(() => view.getByAltText('somethingThatDoesNotExist'),
-                    container: view.container),
+                () => rtl.waitFor(() => view.getByAltText('somethingThatDoesNotExist'), container: view.container),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('alt text: somethingThatDoesNotExist')),
@@ -92,8 +91,7 @@ void main() {
             test('', () async {
               expect(view.queryByAltText('waitFor'), isNull, reason: 'test setup sanity check');
               expect(
-                  () => rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'),
-                      container: view.container),
+                  () => rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'), container: view.container),
                   throwsA(allOf(
                     isA<TestingLibraryElementError>(),
                     hasToStringValue(contains('alt text: somethingThatDoesNotExist')),
@@ -116,8 +114,8 @@ void main() {
 
       test('when onTimeout is customized', () async {
         expect(
-            () => rtl.waitFor(() => expect(view.container.contains(rootElement), isFalse),
-                    container: view.container, onTimeout: (error) {
+            () => rtl.waitFor(() => expect(view.container.contains(rootElement), isFalse), container: view.container,
+                    onTimeout: (error) {
                   return TimeoutException('This is a custom message\n\noriginalError: \n$error');
                 }),
             throwsA(allOf(
@@ -163,8 +161,8 @@ void main() {
         group('an element that is present initially', () {
           test('and eventually removed before timeout, completes successfully', () async {
             expect(
-                () => rtl.waitForElementToBeRemoved(() => elementThatWillBeRemovedAfterDelay,
-                    container: view.container),
+                () =>
+                    rtl.waitForElementToBeRemoved(() => elementThatWillBeRemovedAfterDelay, container: view.container),
                 returnsNormally);
           }, timeout: asyncQueryTestTimeout);
 
@@ -185,8 +183,7 @@ void main() {
           expect(querySelector('#notInScope'), isNotNull, reason: 'test setup sanity check');
           expect(view.container, isNot(document.body), reason: 'test setup sanity check');
           expect(
-              () => rtl.waitForElementToBeRemoved(() => elementInDomButOutsideContainer,
-                  container: view.container),
+              () => rtl.waitForElementToBeRemoved(() => elementInDomButOutsideContainer, container: view.container),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains(
@@ -251,8 +248,7 @@ void main() {
       group('when the callback argument returns', () {
         group('an element that is present initially', () {
           test('and eventually removed before timeout, completes successfully', () async {
-            await rtl.waitForElementsToBeRemoved(() => [elementThatWillBeRemovedAfterDelay],
-                container: view.container);
+            await rtl.waitForElementsToBeRemoved(() => [elementThatWillBeRemovedAfterDelay], container: view.container);
           }, timeout: asyncQueryTestTimeout);
 
           test('and not removed before timeout, throws ', () async {
@@ -301,8 +297,7 @@ void main() {
 
         test('a single element that is not present in the container initially, throws', () async {
           expect(
-              () => rtl.waitForElementsToBeRemoved(() => [elementInDomButOutsideContainer],
-                  container: view.container),
+              () => rtl.waitForElementsToBeRemoved(() => [elementInDomButOutsideContainer], container: view.container),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains(

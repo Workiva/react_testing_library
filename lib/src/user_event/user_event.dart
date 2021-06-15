@@ -585,8 +585,14 @@ abstract class UserEvent {
   /// ## Example
   ///
   /// ```html
-  /// <input data-test-id="single-input" type="file" accept=".png,.jpeg" />
-  /// <input data-test-id="multi-input" type="file" accept=".png,.jpeg" multiple />
+  /// <div>
+  ///   <label for="single-input">Single Input:</label>
+  ///   <input id="single-input" type="file" accept=".png,.jpeg" />
+  /// </div>
+  /// <div>
+  ///   <label for="multi-input">Multi-Input:</label>
+  ///   <input id="multi-input" type="file" accept=".png,.jpeg" multiple />
+  /// </div>
   /// ```
   ///
   /// ```dart
@@ -600,14 +606,19 @@ abstract class UserEvent {
   ///     final file = File([], 'file1.mp3');
   ///
   ///     // Render the DOM shown in the example snippet above.
-  ///     final view = rtl.render(react.input({
-  ///       'data-test-id': 'single-input',
-  ///       'type': 'file',
-  ///       'accept': '.png,.jpeg',
-  ///     }));
+  ///     final view = rtl.render(react.div({}, [
+  ///       react.label({
+  ///         'htmlFor': 'single-input',
+  ///       }, 'Single Input:'),
+  ///       react.input({
+  ///         'id': 'single-input',
+  ///         'type': 'file',
+  ///         'accept': '.png,.jpeg',
+  ///       }),
+  ///     ]));
   ///
   ///     // Use react_testing_library queries to store references to the nodes.
-  ///     final input = view.getByTestId('single-input') as FileUploadInputElement;
+  ///     final input = view.getByLabelText('Single Input:') as FileUploadInputElement;
   ///
   ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
   ///     UserEvent.upload(input, [file]);
@@ -624,15 +635,20 @@ abstract class UserEvent {
   ///     ];
   ///
   ///     // Render the DOM shown in the example snippet above.
-  ///     final view = rtl.render(react.input({
-  ///       'data-test-id': 'multi-input',
-  ///       'type': 'file',
-  ///       'multiple': true,
-  ///       'accept': '.png,.jpeg',
-  ///     }));
+  ///     final view = rtl.render(react.div({}, [
+  ///       react.label({
+  ///         'htmlFor': 'multi-input',
+  ///       }, 'Multi-Input:'),
+  ///       react.input({
+  ///         'data-test-id': 'multi-input',
+  ///         'type': 'file',
+  ///         'multiple': true,
+  ///         'accept': '.png,.jpeg',
+  ///       }),
+  ///     ]));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final input = view.getByTestId('multi-input') as FileUploadInputElement;
+  ///     final input = view.getByLabelText('Multi-Input:') as FileUploadInputElement;
   ///
   ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
   ///     UserEvent.upload(input, files, applyAccept: true);

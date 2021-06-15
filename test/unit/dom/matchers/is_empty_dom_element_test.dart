@@ -41,14 +41,12 @@ void main() {
       test('the matched item has empty children', () {
         final view = render(
             react.span({defaultTestIdKey: 'not-empty'}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
-        shouldFail(
-            view.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
+        shouldFail(view.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
       });
 
       test('the matched item has text children', () {
         final view = render(react.span({defaultTestIdKey: 'not-empty'}, 'oh hai') as ReactElement);
-        shouldFail(
-            view.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
+        shouldFail(view.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
       });
     });
   });

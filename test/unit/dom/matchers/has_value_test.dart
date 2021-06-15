@@ -248,8 +248,7 @@ void sharedHasValueTests(String description,
               if (matcherFn == hasValue) {
                 shouldPass(view.getByRole('listbox'), matcherFn(isNot(contains('pineapple'))));
               } else if (matcherFn == hasDisplayValue) {
-                shouldPass(
-                    view.getByRole('listbox'), matcherFn(isNot(contains('Processed Sweetened Pineapple'))));
+                shouldPass(view.getByRole('listbox'), matcherFn(isNot(contains('Processed Sweetened Pineapple'))));
               }
             });
           });
