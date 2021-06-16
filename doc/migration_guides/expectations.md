@@ -488,34 +488,6 @@ main() {
 
     expect(view.getByText('27'), isInTheDocument);
   });
-
-  test('adds styles after calculating', () {
-    final jacket = mount(AdditionCalculator()());
-    final component = jacket.getDartInstance() as AdditionCalculatorComponent;
-    final outputNode = queryByTestId(jacket.getInstance(), 'output');
-
-    expect(outputNode.classes, contains('indeterminate'));
-    component.setState(component.newState()..sumWasLastOp = true);
-
-    expect(outputNode.classes, contains('summed'));
-    expect(outputNode.style.borderColor, 'green');
-  });
-
-  test('adds styles after calculating (rtl)', () {
-    final view = rtl.render(AdditionCalculator()());
-    final output = rtl.within(view.getByTestId('output')).getByText('0');
-
-    expect(output, hasClasses('indeterminate'));
-
-    UserEvent.click(view.getByText('2'));
-    UserEvent.click(view.getByText('0'));
-    UserEvent.click(view.getByText('+'));
-    UserEvent.click(view.getByText('1'));
-    UserEvent.click(view.getByText('='));
-
-    expect(output, hasClasses('summed'));
-    expect(output, hasStyles({'borderColor': 'green'}));
-  });
 }
 ```
 
@@ -713,20 +685,73 @@ main() {
 }
 ```
 
-### Verifying Styles or Class Names
+## Verifying Styles or Class Names
 
-Styles and class names are often set on an element based on the props or state of a parent. Because of that, it is common to grab the child's ref and just check its props to make sure the parent set the expected values.
+Migrating styles based assertions from OverReact Test and RTL is a fairly easy switch. There are four new matchers relevant to styles and classes:
 
-TODO add an example
+- `excludesClasses`
+- `hasClassess`
+- `hasExactClasses`
+- `hasStyles`
 
-## Checking Form Input Values
+All of them require a that a queried DOM node is the first parameter of the `expect` statement. In the case that the test being migrated was using a component instance or referencing either props or state in order to get to the styles, then the migration includes [using the best query][querying-guide] to grab the DOM node instead. Assuming that the test is working with a node though, OverReact Test assertions for an arbitrary component would have looked like:
 
-To check the value of form inputs in RTL, the best practice is:
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('sums as expected', () {
+    final renderResult = render(ArbitraryComponent()());
+    final styledNode = queryByTestId(renderResult, 'styled-node');
+
+    expect(styledNode, hasClasses('a-class-name'));
+    expect(styledNode, hasExactClasses('a-class-name'));
+    expect(styledNode, excludesClasses('another-class-name'));
+    expect(styledNode.styles.margin, '10px');
+  });
+}
+```
+
+In RTL, this same test would be something like:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' rtlm;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+  test('sums as expected', () {
+    final view = rtl.render(ArbitraryComponent()());
+    final styledNode = view.getByTestId('styled-node');
+
+    expect(styledNode, rtlm.hasClasses('a-class-name'));
+    expect(styledNode, rtlm.hasExactClasses('a-class-name'));
+    expect(styledNode, rtlm.excludesClasses('another-class-name'));
+
+    // This is the only one that changes!
+    expect(styledNode, rtlm.hasStyles({'margin': '10px'}));
+  });
+}
+```
+
+Note that the conversion from OverReact Test to RTL just required switching the import for 75% of the cases! Here the matcher library was namespaced to make it clear that although the matcher has the same name, it is a different matcher. The only time a small change may be necessary is when checking a specific style on a node.
+
+## Checking Form Input Properties
+
+To check input properties in RTL, the best practice is:
 
 1. Query to find the input DOM node
-1. Use a matcher instead of accessing the input's properties ourselves
+1. Use a matcher instead of accessing the node's properties outselves
 
-The first point is very much inline with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab an input's value (think `TextInputComponent.getValue()`), RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
+The first point is very much inline with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab a node's property value, RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
 
 For the second point, the new pattern is only a slight adjustment. With OverReact Test, form input values were usually verified by accessing a property on the element (or a Dart component counterpart) similarly to:
 
@@ -740,7 +765,7 @@ With RTL though, the matcher does more of the work for us. That same `expect` st
 expect(someElementInstance, hasDisplayValue('this is an input value'));
 ```
 
-The useful matchers for forms (which all behave this way) are:
+The useful matchers for inputs (which all behave this way) are:
 
 - `isChecked`
 - `isDisabled`
