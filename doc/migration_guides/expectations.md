@@ -1,5 +1,23 @@
 # Migrating Test Expectations
 
+- **[What this Guide Covers](#what-this-guide-covers)**
+- **[New Matchers](#new-matchers)**
+  - **[Constants](#constants)**
+  - **[Functions](#functions)**
+- **[Queries as an Expectation](#queries-as-an-expectation)**
+- **[Assertions Verifying Props and State Values](#assertions-verifying-props-and-state-values)**
+  - **[Default Values are the Expected Value](#default-values-are-the-expected-value)**
+  - **[Values are Correct after Re-Render](#values-are-correct-after-re-render)**
+- **[Verifying Styles or Class Names](#verifying-styles-or-class-names)**
+- **[Checking Form Input Properties](#checking-form-input-properties)**
+- **[Checking a Component's Children](#checking-a-components-children)**
+- **[Async Tests](#async-tests)**
+  - **[Verifying Data Changes as Expected](#verifying-data-changes-as-expected)**
+  - **[Ensuring Async Event Handlers are Called](#ensuring-async-event-handlers-are-called)**
+  - **[Waiting for Asynchronous UI to Display](#waiting-for-asynchronous-ui-to-display)**
+  - **[Async DOM Assertions in RTL](#async-dom-assertions-in-rtl)**
+- **[Documentation References](#documentation-references)**
+
 The guide is focused on what matchers React Testing Library (RTL) exposes and how to use them to convert common expectation patterns to those new matchers. Before beginning this migragation guide, but sure you have read the [philosophy][entrypoint-philosophy] of RTL. Not all tests can migrate expectations without extra forethought, and the migration guide's entrypoint describes when that is the case.
 
 The matchers and examples here are focused on inspecting the DOM, which means some tests may not need to have their `expect` statements migrated. Here are some examples that may be good to go:
@@ -303,7 +321,7 @@ To demonstrate this thinking in simple use cases, this section will walk through
 
 Below is an example component that will be used in this section's examples. The component is a calculator for simple addition operations. It supports adding multidigit numbers and clearing the calculator state. This component will be used to show how one might have asserted values based on state (or similar pieces of data) with OverReact Test versus how it would be done with RTL.
 
-Additionally, beneath the example component are all tests being used for this section (both the OverReact Test and RTL versions). Because these sections will walk through the process of thinking through migrating a test, it's more difficult to see an exmplicit before and after of each test. The test collapsed region is a good source to just compare tests back to back.
+Additionally, beneath the example component are all tests being used for this section (both the OverReact Test and RTL versions). Because these sections will walk through the process of thinking through migrating a test, it's more difficult to see an explicit before and after of each test. The test collapsed region is a good source to just compare tests back to back.
 
 <details>
   <summary>Component Definition (click to expand)</summary>
@@ -493,14 +511,7 @@ main() {
 
 </details>
 
-### Asserting Props or State are Set as Expected
-
-When props or state are being checked in a test, there are two broad scenarios usually being tested:
-
-- Defaults are the expected value
-- Values are correct after a re-render
-
-#### Default values are the expected value
+### Default Values are the Expected Value
 
 One of the first component tests written is often just verifying initial props or state. For the component defined above with OverReact Test, this may have looked like:
 
@@ -601,7 +612,7 @@ main() {
 }
 ```
 
-#### Values are Correct after Re-Render
+### Values are Correct after Re-Render
 
 When components re-render, there is an opportunity for either data or UI to update in an unexpected ways. Re-renders are largely triggered by two things:
 
@@ -980,7 +991,7 @@ main() {
 
 Besides the queries, the only that really changed is that the first paremeter of `expect` only receives an HTML element, while the second parameter is a matcher that knows how to verify that the input element has the expected attributes.
 
-## Migrating Children Assertions
+## Checking a Component's Children
 
 Often, a component should return children depending on the context. Assertions here may be checking how many children are rendered or that specific children have correct values. In both cases, as is the pattern, we should turn to the DOM to ensure what we expect is showing to the user.
 
@@ -1117,9 +1128,9 @@ expect(view.getByText('first item'), isInTheDocument);
 
 While the latter does verify the component will add nodes to the DOM, we want to enforce that not only does that node exist in the document, but also that those nodes are within the `listGroup`.
 
-## Migrating Async Assertions
+## Async Tests
 
-Async functions are complicated, with lots of variations and nuances to them. This section does not attempt to dive deep into async test patterns, but the assertions migration guide would be incomplete without at least some discussion of async tests.
+Async tests are complicated, with lots of variations and nuances to them. This section does not attempt to dive deep into async test patterns, but the assertions migration guide would be incomplete without at least some discussion of async tests.
 
 Common assertion patterns related to asyncronocity of a component are:
 
@@ -1138,7 +1149,7 @@ This case is likely the trickiest as it may rely on the component instance itsel
 - Developers: if the use case for the test is one for developers, then UI may not be involved and the test may not need to be migrated. The exception is if the test is relying on a class instance, in which case the test needs to be reworked to avoid that, but generally the new DOM related matchers do not come into play.
 - Application users: these users rely on DOM changes to know something has happened, which means the test should be reworked to verify the DOM. See the [async DOM assertions section below](#async-dom-assertions-in-rtl).
 
-### Ensuring Async Event Handlers Occur
+### Ensuring Async Event Handlers Are Called
 
 Most of the time, this case passes in callbacks or connects the component to a store and then interacts with the component. After that, the callbacks or store are checked to ensure something happened after waiting. Assuming the test does not rely on a component's instance method and doesn't need to verify a UI change, then the test pattern is still solid and doesn't have anything to migrate.
 
@@ -1146,7 +1157,7 @@ Another consideration here though is whether the test _should_ have a UI verific
 
 If there is a UI expectation, continue to the [async DOM assertions section below](#async-dom-assertions-in-rtl).
 
-### Waiting for Asyncronous UI to Display
+### Waiting for Asynchronous UI to Display
 
 This case is all about triggering some interaction and expecting the UI to change. RTL has support specifically for this scenario, and therefore the tast may be able to be migrated. See the [async DOM assertions section below](#async-dom-assertions-in-rtl).
 
@@ -1244,6 +1255,12 @@ main() {
 ```
 
 Now, RTL will check the document several times so as soon as that element exists, the test passes. We also aren't concerned with why or how the delay is happening, just that it is happening!
+
+## Documentation References
+
+- [Matchers](matcher-docs) (Dart)
+- [Matchers](https://github.com/testing-library/jest-dom#the-problem) (JS)
+- [Async Utils](https://workiva.github.io/react_testing_library/rtl.dom.async/rtl.dom.async-library.html)
 
 [entrypoint-philosophy]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#philosophy
 [entrypoint-use-cases]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#use-case-testing

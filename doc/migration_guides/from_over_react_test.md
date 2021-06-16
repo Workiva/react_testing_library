@@ -12,6 +12,7 @@
 - **[The Path Forward](#the-path-forward)**
 - **[Deciding to Migrate a Test's Approach](#deciding-to-migrate-a-tests-approach)**
 - **[Migrating to Use Case Testing](#migrating-to-use-case-testing)**
+- **[Documentation References](#documentation-references)**
 
 ## Introduction
 
@@ -164,7 +165,7 @@ Remember that unnecessary tests, especially those which rely on implementation d
 
 1. Decide what the correct expecations are.
 
-   This step doesn't need to have code. Instead, given what you now know about the test, imagine what the benchmarks for the user are when exercising this use case. What are the specific behaviors that the user should notice? This should not include any thought about what the implementation details are. Instead, what does the user see at the conclusion of the scenario and what are the important, noticeable steps prior to that outcome? Those are the expectations. If you need inspiration to know what the possibilities are, browse the matcher section in the [expectations guide](TODO ADD LINK) to see how RTL supports implementation detail free `expect` statements!
+   This step doesn't need to have code. Instead, given what you now know about the test, imagine what the benchmarks for the user are when exercising this use case. What are the specific behaviors that the user should notice? This should not include any thought about what the implementation details are. Instead, what does the user see at the conclusion of the scenario and what are the important, noticeable steps prior to that outcome? Those are the expectations. If you need inspiration to know what the possibilities are, browse the matcher section in the [expectations guide][expectations-migration-guide] to see how RTL supports implementation detail free `expect` statements!
 
    In the case there feels like multiple use cases being tested, use the expectations as a guide to differentiate the use cases. If the use cases were grouped originally, they may be closely related. Answering why they're so closely related and what expectations they should share (and not share) can help inform how the test should be broken apart.
 
@@ -182,9 +183,22 @@ Remember that unnecessary tests, especially those which rely on implementation d
 
    From here, the test can be migrated like one that started without relying on implementation details. As noted, there is a guide for each major test section (rendering, querying, interacting, expecting). Since the original test is slimmed down, there may be gaps to fill in, but those guides will each gives examples of ways to use RTL to fill those in!
 
-TODO add an example of going through this framework with an actual component?
+## Documentation References
 
-TODO add a references section
+This section includes links to the articles and APIs mentioned in this document.
+
+### Blog Articles (all by Dodds)
+
+- [Kent C. Dodds Testing Reference](https://kentcdodds.com/testing/)
+- [Testing Implementation Details][implementation-details-blog]
+- [How to Know What to Test](https://kentcdodds.com/blog/how-to-know-what-to-test)
+- [Write Tests](https://kentcdodds.com/blog/write-tests)
+- [Common RTL Mistakes](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
+
+### APIs
+
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) (JS)
+- [React Testing Libary](https://workiva.github.io/react_testing_library) (Dart)
 
 [rendering-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/component_rendering.md
 [queries-migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
