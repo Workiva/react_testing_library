@@ -1119,6 +1119,132 @@ While the latter does verify the component will add nodes to the DOM, we want to
 
 ## Migrating Async Assertions
 
+Async functions are complicated, with lots of variations and nuances to them. This section does not attempt to dive deep into async test patterns, but the assertions migration guide would be incomplete without at least some discussion of async tests.
+
+Common assertion patterns related to asyncronocity of a component are:
+
+1. Verifying data changes as expected after async interactions
+1. Ensuring async event handlers occur (and happen in the correct order)
+1. Waiting for asyncronous and transitioning UI to display
+
+There are undoubtably more patterns, but speaking with broadstrokes, those are the most common that occur. RTL is focused on the DOM, meaning that if an async test wasn't (and shouldn't be) verifying something async changed the DOM, then the test may not need to be migrated. A global exception to that is if the test relies on a platform class based component's instance (by accessing props, state, APIs, etc), at some point it will need to be migrated so that it doesn't rely on the instance itself.
+
+To help know if the test needs to be migrated, we can walk through every broadstroke pattern.
+
+### Verifying Data Changes as Expected
+
+This case is likely the trickiest as it may rely on the component instance itself to verify the data. If the data is purely an implementation detail, it may not need to be verified in the first place. Assuming it does need to be verified, identify what the use case is and who the user of that use case is would be the first step. Usually the user will either be application users or developers. Both cases are described below:
+
+- Developers: if the use case for the test is one for developers, then UI may not be involved and the test may not need to be migrated. The exception is if the test is relying on a class instance, in which case the test needs to be reworked to avoid that, but generally the new DOM related matchers do not come into play.
+- Application users: these users rely on DOM changes to know something has happened, which means the test should be reworked to verify the DOM. See the [async DOM assertions section below](#async-dom-assertions-in-rtl).
+
+### Ensuring Async Event Handlers Occur
+
+Most of the time, this case passes in callbacks or connects the component to a store and then interacts with the component. After that, the callbacks or store are checked to ensure something happened after waiting. Assuming the test does not rely on a component's instance method and doesn't need to verify a UI change, then the test pattern is still solid and doesn't have anything to migrate.
+
+Another consideration here though is whether the test _should_ have a UI verification. Even if the use case is focused on a developer, who is less concerned with the UI itself (at least compared to an application user), it may be more precise to say that the developer should expect event X before UI shows or event Y after UI shows. If that's the case, a UI expectation could be added to the test.
+
+If there is a UI expectation, continue to the [async DOM assertions section below](#async-dom-assertions-in-rtl).
+
+### Waiting for Asyncronous UI to Display
+
+This case is all about triggering some interaction and expecting the UI to change. RTL has support specifically for this scenario, and therefore the tast may be able to be migrated. See the [async DOM assertions section below](#async-dom-assertions-in-rtl).
+
+### Async DOM Assertions in RTL
+
+When waiting for an element to appear or disappear, it was common to either use `Future.delayed()` or `window.animationFrame` to signify that it's expected for an async UI update to happen. Using RTL, those methods still work but are not ideal. RTL introduces more precise ways to handle these types of expectations. The three APIs introduced are:
+
+- [waitFor](https://workiva.github.io/react_testing_library/rtl.dom.async/waitFor.html)
+- [waitForElementsToBeRemoved](https://workiva.github.io/react_testing_library/rtl.dom.async/waitForElementsToBeRemoved.html)
+- [waitForElementToBeRemoved](https://workiva.github.io/react_testing_library/rtl.dom.async/waitForElementToBeRemoved.html)
+
+These APIs all take in a callback that has an expectation inside. That way, the APIs can call the expectation at an interval until it times out. Both that interval and timeout have a default, but they can also be specified as a parameter on the API. Below is a simple example of what these APIs look like!
+
+<details>
+  <summary>Component Definition (click to expand)</summary>
+
+```dart
+import 'package:over_react/over_react.dart';
+
+part 'component_definition.over_react.g.dart';
+
+mixin AsyncExampleProps on UiProps {}
+
+UiFactory<AsyncExampleProps> AsyncExample = uiFunction(
+  (props) {
+    final showElement = useState(false);
+
+    return (Dom.div()(
+      (Dom.button()
+        ..onClick = (_) {
+          Future.delayed(Duration(milliseconds: 500), () => showElement.set(true));
+        }
+        ..addTestId('button-to-show-element')
+      )('Click to show Element'),
+      showElement.value ? (Dom.div()..addTestId('hidden-element'))('Element is Showing') : null,
+    ));
+  },
+  _$AsyncExampleConfig, // ignore: undefined_identifier
+);
+```
+
+The component has a button that can be clicked, which will cause an element to be shown after 500ms. To test that the component does indeed show the element, in OverReact Test we could do:
+
+</details>
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:over_react_test/over_react_test.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+   test('Will show content after delay', () async {
+    final renderResult = render(Wrapper()(
+      AsyncExample()(),
+    ));
+
+    click(queryByTestId(renderResult, 'button-to-show-element'));
+    expect(queryByTestId(renderResult, 'hidden-element'), isNull);
+
+    await Future.delayed(Duration(milliseconds: 500));
+
+    expect(queryByTestId(renderResult, 'hidden-element'), isNotNull);
+  });
+}
+```
+
+There are a couple things that are less than ideal with this test:
+
+- Assuming the real world component actually does hard code the delay (in this case to 500ms), that could be considered an implementation detail. In same cases it may be important to verify, but the more important thing is that the element is not shown immediately but then is eventually.
+- In the real world, we don't always know how long to wait. The async event may be a mocked HTTP call or dependent upon other calculation. In those cases, waiting via a hardcoded amount could either slow tests down unnecessarily or be flaky if the timeframe is too short.
+
+The new RTL API's fix both of those concerns:
+
+```dart
+import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/user_event.dart';
+import 'package:test/test.dart';
+
+import '../component_definition.dart';
+
+main() {
+   test('Will show content after delay', () async {
+    final view = rtl.render(AsyncExample()());
+
+    UserEvent.click(view.getByRole('button'));
+    expect(view.queryByText('Element is Showing'), isNot(isInTheDocument));
+
+    await rtl.waitFor(() => expect(view.getByText('Element is Showing'), isInTheDocument));
+  });
+}
+```
+
+Now, RTL will check the document several times so as soon as that element exists, the test passes. We also aren't concerned with why or how the delay is happening, just that it is happening!
+
 [entrypoint-philosophy]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#philosophy
 [entrypoint-use-cases]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#use-case-testing
 [entrypoint-migrating-test-strategy]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.mdmigrating-to-use-case-testing
