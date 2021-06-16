@@ -15,6 +15,12 @@
 // limitations under the License.
 
 /// https://testing-library.com/docs/queries/bydisplayvalue/
+///
+/// {@template PreferByLabelTextNote}
+/// __Prefer__ using [`ByLabelText` queries](https://workiva.github.io/react_testing_library/topics/ByLabelText-topic.html)
+/// for form elements when possible in order to query for elements in a way that
+/// [most reflects how the user would interact with them](https://testing-library.com/docs/queries/about#priority).
+/// {@endtemplate}
 @JS()
 library react_testing_library.src.dom.queries.by_display_value;
 
@@ -38,6 +44,10 @@ mixin ByDisplayValueQueries on IQueries {
   ///
   /// Throws if no element is found.
   /// Use [queryByDisplayValue] if a RTE is not expected.
+  ///
+  /// {@macro PreferByLabelTextNote}
+  ///
+  /// > Related: [getAllByDisplayValue]
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
   ///
@@ -129,6 +139,8 @@ mixin ByDisplayValueQueries on IQueries {
   /// Throws if no elements are found.
   /// Use [queryAllByDisplayValue] if a RTE is not expected.
   ///
+  /// {@macro PreferByLabelTextNote}
+  ///
   /// > Related: [getByDisplayValue]
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
@@ -161,6 +173,8 @@ mixin ByDisplayValueQueries on IQueries {
   /// Returns `null` if no element is found.
   /// Use [getByDisplayValue] if a RTE is expected.
   ///
+  /// {@macro PreferByLabelTextNote}
+  ///
   /// > Related: [queryAllByDisplayValue]
   ///
   /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
@@ -190,6 +204,8 @@ mixin ByDisplayValueQueries on IQueries {
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByDisplayValue] if a RTE is expected.
+  ///
+  /// {@macro PreferByLabelTextNote}
   ///
   /// > Related: [queryByDisplayValue]
   ///
@@ -222,6 +238,8 @@ mixin ByDisplayValueQueries on IQueries {
   /// a non-async query like [getByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
   ///
   /// Throws if exactly one element is not found.
+  ///
+  /// {@macro PreferByLabelTextNote}
   ///
   /// > Related: [findAllByDisplayValue]
   ///
@@ -275,6 +293,8 @@ mixin ByDisplayValueQueries on IQueries {
   /// a non-async query like [getByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
   ///
   /// Throws if no elements are found.
+  ///
+  /// {@macro PreferByLabelTextNote}
   ///
   /// > Related: [findByDisplayValue]
   ///

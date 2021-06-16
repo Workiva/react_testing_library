@@ -15,6 +15,13 @@
 // limitations under the License.
 
 /// https://testing-library.com/docs/queries/byalttext/
+///
+/// {@template PreferByRoleOrByLabelTextNote}
+/// __Prefer__ using [`ByRole` queries](https://workiva.github.io/react_testing_library/topics/ByRole-topic.html)
+/// for [ImageElement]s and [`ByLabelText` queries](https://workiva.github.io/react_testing_library/topics/ByLabelText-topic.html)
+/// for [InputElement]s and [AreaElement]s when possible in order to query for elements
+/// in a way that [most reflects how the user would interact with them](https://testing-library.com/docs/queries/about#priority).
+/// {@endtemplate}
 @JS()
 library react_testing_library.src.dom.queries.by_alt_text;
 
@@ -38,6 +45,8 @@ mixin ByAltTextQueries on IQueries {
   ///
   /// Throws if no element is found.
   /// Use [queryByAltText] if a RTE is not expected.
+  ///
+  /// {@macro PreferByRoleOrByLabelTextNote}
   ///
   /// > Related: [getAllByAltText]
   ///
@@ -102,6 +111,8 @@ mixin ByAltTextQueries on IQueries {
   /// Throws if no elements are found.
   /// Use [queryAllByAltText] if a RTE is not expected.
   ///
+  /// {@macro PreferByRoleOrByLabelTextNote}
+  ///
   /// > Related: [getByAltText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
@@ -134,6 +145,8 @@ mixin ByAltTextQueries on IQueries {
   /// Returns `null` if no element is found.
   /// Use [getByAltText] if a RTE is expected.
   ///
+  /// {@macro PreferByRoleOrByLabelTextNote}
+  ///
   /// > Related: [queryAllByAltText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byalttext/>
@@ -163,6 +176,8 @@ mixin ByAltTextQueries on IQueries {
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByAltText] if a RTE is expected.
+  ///
+  /// {@macro PreferByRoleOrByLabelTextNote}
   ///
   /// > Related: [queryByAltText]
   ///
@@ -196,6 +211,8 @@ mixin ByAltTextQueries on IQueries {
   /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
   ///
   /// Throws if exactly one element is not found.
+  ///
+  /// {@macro PreferByRoleOrByLabelTextNote}
   ///
   /// > Related: [findAllByAltText]
   ///
@@ -250,6 +267,8 @@ mixin ByAltTextQueries on IQueries {
   /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
   ///
   /// Throws if no elements are found.
+  ///
+  /// {@macro PreferByRoleOrByLabelTextNote}
   ///
   /// > Related: [findByAltText]
   ///
