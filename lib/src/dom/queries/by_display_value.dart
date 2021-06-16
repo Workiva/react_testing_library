@@ -63,6 +63,7 @@ mixin ByDisplayValueQueries on IQueries {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
   /// import 'package:test/test.dart';
   ///
@@ -88,10 +89,15 @@ mixin ByDisplayValueQueries on IQueries {
   ///     ));
   ///
   ///     final lastNameInput = view.getByDisplayValue('Norris');
+  ///     expect(lastNameInput, isInTheDocument);
+  ///
   ///     final messageTextArea = view.getByDisplayValue('Hello World');
+  ///     expect(messageTextArea, isInTheDocument);
+  ///
   ///     // In the case of a `<select>`, this will search for a `<select>`
   ///     // whose selected `<option>` matches the given `TextMatch`.
   ///     final selectElement = view.getByDisplayValue('Alaska');
+  ///     expect(selectElement, isInTheDocument);
   ///   });
   /// }
   /// ```
