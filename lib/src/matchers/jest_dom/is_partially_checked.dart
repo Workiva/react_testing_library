@@ -54,7 +54,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///       react.input({'type': 'checkbox', 'checked': 'true'}),
 ///       react.input({'type': 'checkbox'}),
 ///       react.input({'type': 'checkbox'}),
-///     ]) as ReactElement);
+///     ]));
 ///
 ///     final checkboxes = view.getAllByRole('checkbox');
 ///
@@ -73,7 +73,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///       react.div({'role': 'checkbox', 'aria-checked': 'true'}),
 ///       react.div({'role': 'checkbox', 'aria-checked': 'false'}),
 ///       react.div({'role': 'checkbox', 'aria-checked': 'mixed'}),
-///     ]) as ReactElement);
+///     ]));
 ///
 ///     final checkboxes = view.getAllByRole('checkbox');
 ///     expect(checkboxes, orderedEquals([

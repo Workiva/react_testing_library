@@ -54,9 +54,9 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 ///     // Use the `hasTextContent` matcher as the second argument of `expect()`
 ///     expect(button, hasTextContent('Text Content'));
 ///     expect(button, hasTextContent(RegExp(r'Content$'))); // to match partially
-///     expect(button, hasContent(RegExp('content', caseSensitive: false))); // to use case-insensitive match
-///     expect(button, isNot(hasContent('foo')));
-///     expect(button, hasContent()); // Will match a non-empty description
+///     expect(button, hasTextContent(RegExp('content', caseSensitive: false))); // to use case-insensitive match
+///     expect(button, isNot(hasTextContent('foo')));
+///     expect(button, hasTextContent()); // Will match a non-empty description
 ///   });
 /// }
 /// ```

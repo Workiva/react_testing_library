@@ -97,8 +97,8 @@ mixin ByRoleQueries on IQueries {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
   ///     final view = rtl.render(react.div({},
-  ///       react.button({'onClick': (_) { /*...*/ }, 'Ok'),
-  ///       react.button({'onClick': (_) { /*...*/ }, 'Cancel'),
+  ///       react.button({'onClick': (_) { /*...*/ }}, 'Ok'),
+  ///       react.button({'onClick': (_) { /*...*/ }}, 'Cancel'),
   ///     ));
   ///
   ///     final okButtonElement = view.getByRole('button', name: 'Ok');

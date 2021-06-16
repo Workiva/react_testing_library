@@ -189,7 +189,7 @@ main() {
     
     group('renders the expected elements:', () {
       group('a <header>', () {
-        HeaderElement headerElement;
+        HeadingElement headerElement;
         
         setUp(() {
           view = rtl.render((Greeting()

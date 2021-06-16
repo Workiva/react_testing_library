@@ -42,8 +42,6 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 ///
 /// ## Example
 /// ```dart
-/// import 'dart:html';
-///
 /// import 'package:react/react.dart' as react;
 /// import 'package:test/test.dart';
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
