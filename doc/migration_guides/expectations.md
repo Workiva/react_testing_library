@@ -18,7 +18,7 @@
   - **[Async DOM Assertions in RTL](#async-dom-assertions-in-rtl)**
 - **[Documentation References](#documentation-references)**
 
-The guide is focused on what matchers React Testing Library (RTL) exposes and how to use them to convert common expectation patterns to those new matchers. Before beginning this migragation guide, but sure you have read the [philosophy][entrypoint-philosophy] of RTL. Not all tests can migrate expectations without extra forethought, and the migration guide's entrypoint describes when that is the case.
+The guide is focused on what matchers React Testing Library (RTL) exposes and how to use them to convert common expectation patterns to those new matchers. Before beginning this migration guide, but sure you have read the [philosophy][entrypoint-philosophy] of RTL. Not all tests can migrate expectations without extra forethought, and the migration guide's entrypoint describes when that is the case.
 
 The matchers and examples here are focused on inspecting the DOM, which means some tests may not need to have their `expect` statements migrated. Here are some examples that may be good to go:
 
@@ -294,7 +294,7 @@ That looks almost exactly like the first (and simpler) OverReact Test example. H
    expect(view.getByText('Yay, you submitted!'), isInTheDocument);
    ```
 
-   Technically, the `expect` statement itself will never fail because the nested `getByText` query will fail first if an element isn't found. As a result, that `expect` statement is the equivelant to just:
+   Technically, the `expect` statement itself will never fail because the nested `getByText` query will fail first if an element isn't found. As a result, that `expect` statement is the equivalent to just:
 
    ```dart
    view.getByText('Yay, you submitted!');
@@ -319,7 +319,7 @@ For all of these scenarios, the approach is to shift from checking the underlyin
 
 To demonstrate this thinking in simple use cases, this section will walk through examples using that line of thinking. If working through a migration and a particular case is more complex than these examples help with, see the [migrating to use case testing][entrypoint-migrating-test-strategy] section of the entrypoint document.
 
-Below is an example component that will be used in this section's examples. The component is a calculator for simple addition operations. It supports adding multidigit numbers and clearing the calculator state. This component will be used to show how one might have asserted values based on state (or similar pieces of data) with OverReact Test versus how it would be done with RTL.
+Below is an example component that will be used in this section's examples. The component is a calculator for simple addition operations. It supports adding multi-digit numbers and clearing the calculator state. This component will be used to show how one might have asserted values based on state (or similar pieces of data) with OverReact Test versus how it would be done with RTL.
 
 Additionally, beneath the example component are all tests being used for this section (both the OverReact Test and RTL versions). Because these sections will walk through the process of thinking through migrating a test, it's more difficult to see an explicit before and after of each test. The test collapsed region is a good source to just compare tests back to back.
 
@@ -551,11 +551,11 @@ This is essentially the same thing, except it's more clear how that affects the 
 
 Out in the wild, there may be many `expect` statements (that are not as focused) or other factors that make it harder to determine the actual use case. Since this test is simple and there's nothing else to look at though, that's our use case: the component loads with no initial values so that it's ready for whatever the user needs to do!
 
-**2. Check that the Expect Statements Support the Use Case**
+**2. Check that the `expect` Statements Support the Use Case**
 
-Now that we know exactly what's being tested, we should make sure the expect statements we're going to have to migrate are all doing valuable work. "Valuable work" here just means that it's verifying something our user should be able to detect within the scope of this use case.
+Now that we know exactly what's being tested, we should make sure the `expect` statements we're going to have to migrate are all doing valuable work. "Valuable work" here just means that it's verifying something our user should be able to detect within the scope of this use case.
 
-Off the bat, we can pretty quickly break this assertions into two groups:
+Off the bat, we can pretty quickly break the assertions into two groups:
 
 - Visible to the user on load
   - `state.displayValue`
@@ -570,7 +570,7 @@ The last two though are trickier. Those thoroughly qualify as asserting implemen
 
 This gets even more interesting though because it's likely that if this were reality, we already have a test verifying that we can mount and use the calculator (requiring these values be correct). That means that these implementation detail assertions are redundant, may cause trouble in the future, and can be removed! For the purposes of this example, we'll go ahead and remove those assertions.
 
-To recap, we now need to tweek the `state.displayValue` and `state.sumWasLastOp` assertions, and we're removing the other two because those values are already being checked elsewhere.
+To recap, we now need to tweak the `state.displayValue` and `state.sumWasLastOp` assertions, and we're removing the other two because those values are already being checked elsewhere.
 
 **3. Tweak the Expectations**
 
@@ -584,7 +584,7 @@ For such a simple example, this is relatively straight forward. The question her
 )(state.displayValue)
 ```
 
-So instead of checking what the value of `state.displayValue` is, we can check the text content of the `output` div! Then for `sumWasLastOp`, we need to check styles on that same containor.
+So instead of checking what the value of `state.displayValue` is, we can check the text content of the `output` div! Then for `sumWasLastOp`, we need to check styles on that same container.
 
 Taking all three of those points into account, here is the new test:
 
@@ -658,13 +658,13 @@ Similarly to the last section, let's go through this using the steps outline [ab
 
 **1. Verify the Use Case Being Tested**
 
-In slight contrast to the [last example](#default-values-are-the-expected-value), this test is pretty focused on a valid use case. The test description notes that this test is for testing the ability to sum the numbers. Then the expect statements are verifying the state right after the sum button is clicked. Additionally, there's nothing signalling that the user here is a developer, which means the use case is focused on an application user. All that being said, we'll keep the use case:
+In slight contrast to the [last example](#default-values-are-the-expected-value), this test is pretty focused on a valid use case. The test description notes that this test is for testing the ability to sum the numbers. Then the `expect` statements are verifying the state right after the sum button is clicked. Additionally, there's nothing signalling that the user here is a developer, which means the use case is focused on an application user. All that being said, we'll keep the use case:
 
 > sums as expected
 
-**2. Check that the Expect Statements Support the Use Case**
+**2. Check that the `Expect` Statements Support the Use Case**
 
-The expect statements here are similar to those in the last section. `state.displayValue` is relevant because it shows the application user the outcome of the calculation. The other three though aren't relevant to _this summation_. Rather, `nextNumber` and `numbersToAdd` are all relevant if the user does not hit `clear` and begins a new addition formula. That is another use case though, which should have its own test. Therefore, in practice, we'd verify that test exists (writing it if not) and remove them from this test.
+The `expect` statements here are similar to those in the last section. `state.displayValue` is relevant because it shows the application user the outcome of the calculation. The other three though aren't relevant to _this summation_. Rather, `nextNumber` and `numbersToAdd` are all relevant if the user does not hit `clear` and begins a new addition formula. That is another use case though, which should have its own test. Therefore, in practice, we'd verify that test exists (writing it if not) and remove them from this test.
 
 **3. Tweak the Expectations**
 
@@ -760,7 +760,7 @@ Note that the conversion from OverReact Test to RTL just required switching the 
 To check input properties in RTL, the best practice is:
 
 1. Query to find the input DOM node
-1. Use a matcher instead of accessing the node's properties outselves
+1. Use a matcher instead of accessing the node's properties ourselves
 
 The first point is very much inline with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab a node's property value, RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
 
@@ -911,7 +911,7 @@ class ExampleFormComponent extends UiStatefulComponent2<ExampleFormProps, Exampl
 
 </details>
 
-This component is just a form with a few different types of inputs and a button that requires every input (or group) to have a value before being enabled. A test verifying that the input values and button update as expected could have looked like:
+This component is just a form with a few different types of inputs, along with a button that requires every input (or group) to have a value before being enabled. A test verifying that the input values and button update as expected could have looked like:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -989,7 +989,7 @@ main() {
 }
 ```
 
-Besides the queries, the only that really changed is that the first paremeter of `expect` only receives an HTML element, while the second parameter is a matcher that knows how to verify that the input element has the expected attributes.
+Besides the queries, the only that really changed is that the first parameter of `expect` only receives an HTML element, while the second parameter is a matcher that knows how to verify that the input element has the expected attributes.
 
 ## Checking a Component's Children
 
@@ -1126,21 +1126,21 @@ and not doing:
 expect(view.getByText('first item'), isInTheDocument);
 ```
 
-While the latter does verify the component will add nodes to the DOM, we want to enforce that not only does that node exist in the document, but also that those nodes are within the `listGroup`.
+While the latter does verify the component will add nodes to the DOM, we want to enforce that not only does the node exist in the document, but also that those nodes are within the `listGroup`.
 
 ## Async Tests
 
 Async tests are complicated, with lots of variations and nuances to them. This section does not attempt to dive deep into async test patterns, but the assertions migration guide would be incomplete without at least some discussion of async tests.
 
-Common assertion patterns related to asyncronocity of a component are:
+Common assertion patterns related to asynchronicity of a component are:
 
 1. Verifying data changes as expected after async interactions
 1. Ensuring async event handlers occur (and happen in the correct order)
-1. Waiting for asyncronous and transitioning UI to display
+1. Waiting for asynchronous and transitioning UI to display
 
-There are undoubtably more patterns, but speaking with broadstrokes, those are the most common that occur. RTL is focused on the DOM, meaning that if an async test wasn't (and shouldn't be) verifying something async changed the DOM, then the test may not need to be migrated. A global exception to that is if the test relies on a platform class based component's instance (by accessing props, state, APIs, etc), at some point it will need to be migrated so that it doesn't rely on the instance itself.
+There are undoubtedly more patterns, but speaking with broad strokes, those are the most common that occur. RTL is focused on the DOM, meaning that if an async test wasn't (and shouldn't be) verifying something async changed the DOM, then the test may not need to be migrated. A global exception to that is if the test relies on a platform class based component's instance (by accessing props, state, APIs, etc), at some point it will need to be migrated so that it doesn't rely on the instance itself.
 
-To help know if the test needs to be migrated, we can walk through every broadstroke pattern.
+To help know if the test needs to be migrated, we can walk through every broad stroke pattern.
 
 ### Verifying Data Changes as Expected
 
@@ -1159,7 +1159,7 @@ If there is a UI expectation, continue to the [async DOM assertions section belo
 
 ### Waiting for Asynchronous UI to Display
 
-This case is all about triggering some interaction and expecting the UI to change. RTL has support specifically for this scenario, and therefore the tast may be able to be migrated. See the [async DOM assertions section below](#async-dom-assertions-in-rtl).
+This case is all about triggering some interaction and expecting the UI to change. RTL has support specifically for this scenario, and therefore the test may be able to be migrated. See the [async DOM assertions section below](#async-dom-assertions-in-rtl).
 
 ### Async DOM Assertions in RTL
 
@@ -1226,9 +1226,9 @@ main() {
 }
 ```
 
-There are a couple things that are less than ideal with this test:
+There are a couple of things that are less than ideal with this test:
 
-- Assuming the real world component actually does hard code the delay (in this case to 500ms), that could be considered an implementation detail. In same cases it may be important to verify, but the more important thing is that the element is not shown immediately but then is eventually.
+- Assuming the real world component actually does hard code the delay (in this case to 500ms), that could be considered an implementation detail. In same cases it may be important to verify, but the more important thing is that the element is not shown immediately but is eventually.
 - In the real world, we don't always know how long to wait. The async event may be a mocked HTTP call or dependent upon other calculation. In those cases, waiting via a hardcoded amount could either slow tests down unnecessarily or be flaky if the timeframe is too short.
 
 The new RTL API's fix both of those concerns:
@@ -1258,7 +1258,7 @@ Now, RTL will check the document several times so as soon as that element exists
 
 ## Documentation References
 
-- [Matchers](matcher-docs) (Dart)
+- [Matchers][matcher-docs] (Dart)
 - [Matchers](https://github.com/testing-library/jest-dom#the-problem) (JS)
 - [Async Utils](https://workiva.github.io/react_testing_library/rtl.dom.async/rtl.dom.async-library.html)
 
