@@ -14,9 +14,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+@JS()
+library react_testing_library.src.dom.within;
+
 import 'dart:html' show Node, ShadowRoot, document;
 
+import 'package:js/js.dart';
 import 'package:meta/meta.dart';
+import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:react_testing_library/src/util/is_or_contains.dart';
 
@@ -59,3 +64,29 @@ WithinQueries within(Node node) {
 
   return WithinQueries._(node);
 }
+
+@sealed
+class ScreenQueries extends WithinQueries {
+  ScreenQueries._() : super._(document.body);
+
+  /// A shortcut for `console.log(prettyDOM(document.body))`.
+  ///
+  /// > See: <https://testing-library.com/docs/queries/about/#screendebug>
+  void debug([
+    Node baseElement,
+    int maxLength,
+    PrettyDomOptions options,
+  ]) =>
+      _screen.debug(baseElement, maxLength, options);
+}
+
+/// Exposes all the "top-level" queries exposed by the dom-testing-library,
+/// but the scope/container is defaulted to `document.body`.
+///
+/// > See: <https://testing-library.com/docs/queries/about/#screen>
+///
+/// {@category Queries}
+final screen = ScreenQueries._();
+
+@JS('rtl.screen')
+external dynamic get _screen;

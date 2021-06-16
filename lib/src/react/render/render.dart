@@ -25,6 +25,7 @@ import 'package:meta/meta.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
+import 'package:react_testing_library/src/dom/within.dart' show ScreenQueries;
 import 'package:test/test.dart' show addTearDown;
 
 import 'package:react_testing_library/src/react/render/types.dart' show JsRenderResult, RenderOptions;
@@ -180,7 +181,7 @@ class RenderResult extends ScopedQueries {
 
   /// A shortcut for `console.log(prettyDOM(baseElement))`.
   ///
-  /// > __NOTE: It's recommended to use `screen.debug` instead.__
+  /// > __NOTE: It's recommended to use [ScreenQueries.debug] instead.__
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([
