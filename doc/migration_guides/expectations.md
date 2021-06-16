@@ -18,7 +18,7 @@
   - **[Async DOM Assertions in RTL](#async-dom-assertions-in-rtl)**
 - **[Documentation References](#documentation-references)**
 
-The guide is focused on what matchers React Testing Library (RTL) exposes and how to use them to convert common expectation patterns to those new matchers. Before beginning this migration guide, but sure you have read the [philosophy][entrypoint-philosophy] of RTL. Not all tests can migrate expectations without extra forethought, and the migration guide's entrypoint describes when that is the case.
+This guide is focused on what matchers React Testing Library (RTL) exposes and how to use them to convert common expectation patterns to those new matchers. Before beginning this migration guide, but sure you have read the [philosophy][entrypoint-philosophy] of RTL. Not all tests can migrate expectations without extra forethought, and the migration guide's entrypoint describes when that is the case.
 
 The matchers and examples here are focused on inspecting the DOM, which means some tests may not need to have their `expect` statements migrated. Here are some examples that may be good to go:
 
@@ -41,8 +41,7 @@ Most patterns are similar. Some network requests will not impact the UI while ma
 
 - Queries as an Expectation
 - Migrating Props and State Assertions
-  - Asserting Props or State are Set as Expected
-  - Verifying Styles are Set
+- Verifying Styles are Set
 - Checking Form Input Values
 - Migrating Children Assertions
 - Async Assertions
@@ -107,7 +106,7 @@ UiFactory<SubmitButtonProps> SubmitButton = uiFunction(
     return (Fragment()(
       (Button()
         ..addTestId('pre-submit-button')
-        ..onClick = (_) => hasSubmitted.set(true)
+        ..onClick = (_) => hasClickedPreSubmit.set(true)
       )('Create Submit Button'),
       hasClickedPreSubmit.value
           ? (Button()
@@ -304,12 +303,12 @@ That looks almost exactly like the first (and simpler) OverReact Test example. H
 
 ## Assertions Verifying Props and State Values
 
-The most common pattern to be migrated is checking an instance's prop or state are the expected values. Before migrating these types of expectations, it's import to understand the concept of [use case testing][entrypoint-use-case].
+The most common pattern to be migrated is checking an instance's prop or state are the expected values. Before migrating these types of expectations, it's import to understand the concept of [use case testing][entrypoint-use-cases].
 
 This section covers:
 
-- Asserting Props or State are Set as Expected
-- Verifying Styles or Class Names
+- Checking that default props are set as expected
+- Verifying a re-render updates the component as expected
 
 For all of these scenarios, the approach is to shift from checking the underlying values to what the user should expect to see in the application when the props and state are set to those values. In simple cases, the thought process that can be followed here is:
 
@@ -549,7 +548,7 @@ Then, what does it mean to "load as expected" to the application user? That exac
 
 This is essentially the same thing, except it's more clear how that affects the user.
 
-Out in the wild, there may be many `expect` statements (that are not as focused) or other factors that make it harder to determine the actual use case. Since this test is simple and there's nothing else to look at though, that's our use case: the component loads with no initial values so that it's ready for whatever the user needs to do!
+Out in the wild, as opposed to having focused expectations, there may be many `expect` statements or other factors that make it harder to determine the actual use case. Since this test is simple and there's nothing else to look at though, that's our use case: the component loads with no initial values so that it's ready for whatever the user needs to do!
 
 **2. Check that the `expect` Statements Support the Use Case**
 
@@ -566,11 +565,11 @@ Off the bat, we can pretty quickly break the assertions into two groups:
 
 The first two are visible because `displayValue` is literally what the calculator shows to the user and `sumWasLastOp` because it sets styles on the output container. Because our user is the application user, we _know_ we need to test those.
 
-The last two though are trickier. Those thoroughly qualify as asserting implementation details because the user should never know they exist. After looking at the component, we can see that they exist as a cache of numbers that will be ultimately summed. Therefore, the user really only know if they work when they attempt to total all the numbers. Instead of testing that as part of the initial set up, we should instead test these state values by attempting to actually sum all the numbers.
+The last two though are trickier. Those thoroughly qualify as asserting implementation details because the user should never know they exist. After looking at the component, we can see that they exist as a cache of numbers that will be ultimately summed. Therefore, the user really only knows if they work when they attempt to total all the numbers. Instead of testing that as part of the initial set up, we should instead test these state values by attempting to actually sum all the numbers.
 
-This gets even more interesting though because it's likely that if this were reality, we already have a test verifying that we can mount and use the calculator (requiring these values be correct). That means that these implementation detail assertions are redundant, may cause trouble in the future, and can be removed! For the purposes of this example, we'll go ahead and remove those assertions.
+This gets even more interesting though because if this were reality, it is likely we would already have a test verifying that we can mount and use the calculator. That means that these implementation detail assertions are redundant, may cause trouble in the future, and can be removed! So for the purposes of this example, we'll go ahead and remove those assertions.
 
-To recap, we now need to tweak the `state.displayValue` and `state.sumWasLastOp` assertions, and we're removing the other two because those values are already being checked elsewhere.
+To recap, we now need to tweak the `state.displayValue` and `state.sumWasLastOp` assertions to avoid implementation details, and we're removing the other two because those values are already being checked elsewhere.
 
 **3. Tweak the Expectations**
 
@@ -658,7 +657,7 @@ Similarly to the last section, let's go through this using the steps outline [ab
 
 **1. Verify the Use Case Being Tested**
 
-In slight contrast to the [last example](#default-values-are-the-expected-value), this test is pretty focused on a valid use case. The test description notes that this test is for testing the ability to sum the numbers. Then the `expect` statements are verifying the state right after the sum button is clicked. Additionally, there's nothing signalling that the user here is a developer, which means the use case is focused on an application user. All that being said, we'll keep the use case:
+In slight contrast to the [last example](#default-values-are-the-expected-value), this test is pretty focused on a valid use case. The test description notes that this test is for testing the ability to sum the numbers. Then the `expect` statements are verifying the state right after the sum button is clicked. Additionally, there's nothing signaling that the user here is a developer, which means the use case is focused on an application user. All that being said, we'll keep the use case:
 
 > sums as expected
 
@@ -668,7 +667,7 @@ The `expect` statements here are similar to those in the last section. `state.di
 
 **3. Tweak the Expectations**
 
-We're verified the `state.displayValue` before! All we need to do is check the text of the output container as opposed to the state value.
+We've verified the `state.displayValue` before! All we need to do is check the text of the output container as opposed to the state value.
 
 All together, here's the new test with RTL:
 
@@ -705,7 +704,7 @@ Migrating styles based assertions from OverReact Test and RTL is a fairly easy s
 - `hasExactClasses`
 - `hasStyles`
 
-All of them require a that a queried DOM node is the first parameter of the `expect` statement. In the case that the test being migrated was using a component instance or referencing either props or state in order to get to the styles, then the migration includes [using the best query][querying-guide] to grab the DOM node instead. Assuming that the test is working with a node though, OverReact Test assertions for an arbitrary component would have looked like:
+All of them require a that a queried DOM node is the first parameter of the `expect` statement. In the case that the test being migrated was using a component instance to get the styles, then the migration includes [using the best query][querying-guide] to grab the DOM node instead. Assuming that the test is working with a node though, OverReact Test assertions for an arbitrary component would have looked like:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -720,7 +719,7 @@ main() {
     final styledNode = queryByTestId(renderResult, 'styled-node');
 
     expect(styledNode, hasClasses('a-class-name'));
-    expect(styledNode, hasExactClasses('a-class-name'));
+    expect(styledNode, hasExactClasses('a-class-name a-second-class-name'));
     expect(styledNode, excludesClasses('another-class-name'));
     expect(styledNode.styles.margin, '10px');
   });
@@ -744,7 +743,7 @@ main() {
     final styledNode = view.getByTestId('styled-node');
 
     expect(styledNode, rtlm.hasClasses('a-class-name'));
-    expect(styledNode, rtlm.hasExactClasses('a-class-name'));
+    expect(styledNode, rtlm.hasExactClasses('a-class-name a-second-class-name'));
     expect(styledNode, rtlm.excludesClasses('another-class-name'));
 
     // This is the only one that changes!
@@ -762,7 +761,7 @@ To check input properties in RTL, the best practice is:
 1. Query to find the input DOM node
 1. Use a matcher instead of accessing the node's properties ourselves
 
-The first point is very much inline with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab a node's property value, RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
+The first point is very much inline with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab a node's property, RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
 
 For the second point, the new pattern is only a slight adjustment. With OverReact Test, form input values were usually verified by accessing a property on the element (or a Dart component counterpart) similarly to:
 
@@ -837,9 +836,7 @@ class ExampleFormComponent extends UiStatefulComponent2<ExampleFormProps, Exampl
 
   @override
   render() {
-    return (Form()
-      ..addTestId('form')
-    )(
+    return (Form()..addTestId('form'))(
       (TextInput()
         ..label = 'First Name'
         ..value = state.firstName
@@ -852,7 +849,10 @@ class ExampleFormComponent extends UiStatefulComponent2<ExampleFormProps, Exampl
         ..onChange = ((e) => setState(newState()..lastName = e.target.value))
         ..addTestId('last-name-input')
       )(),
-      (ToggleInputGroup()..groupLabel = 'I prefer...'..addTestId('prefers-group'))(
+      (ToggleInputGroup()
+        ..groupLabel = 'I prefer...'
+        ..addTestId('prefers-group')
+      )(
         (RadioInput()
           ..value = 'Dogs'
           ..label = 'Dogs'
@@ -866,7 +866,10 @@ class ExampleFormComponent extends UiStatefulComponent2<ExampleFormProps, Exampl
           ..onClick = (_) => setState(newState()..prefersDogs = false)
         )('Cats'),
       ),
-      (ToggleInputGroup()..groupLabel = 'What type of pets have you owned?'..addTestId('owned-group'))(
+      (ToggleInputGroup()
+        ..groupLabel = 'What type of pets have you owned?'
+        ..addTestId('owned-group')
+      )(
         (CheckboxInput()
           ..checked = state.ownedPets.contains('Dogs')
           ..onChange = ((_) => _updateOwnedPets('Dogs'))
@@ -926,14 +929,20 @@ main() {
     final formComponent = getDartComponent(renderResult) as ExampleFormComponent;
     final button = queryByTestId(renderResult, 'submit-button') as ButtonElement;
 
-    List<InputElement> getCheckedRadioInputs() => (getComponentByTestId(renderResult, 'prefers-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
-    List<InputElement> getCheckedCheckboxes() => (getComponentByTestId(renderResult, 'owned-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
-
+    List<InputElement> getCheckedRadioInputs() =>
+        (getComponentByTestId(renderResult, 'prefers-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
+    List<InputElement> getCheckedCheckboxes() =>
+        (getComponentByTestId(renderResult, 'owned-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
 
     expect(button.disabled, isTrue);
 
     // Set the state to imitate user interaction
-    formComponent.setState(formComponent.newState()..firstName = 'Jon'..lastName = 'Snow'..prefersDogs = false..ownedPets = ['Dogs', 'Reptiles']);
+    formComponent.setState(formComponent.newState()
+      ..firstName = 'Jon'
+      ..lastName = 'Snow'
+      ..prefersDogs = false
+      ..ownedPets = ['Dogs', 'Reptiles']
+    );
 
     expect(button.disabled, isFalse);
     expect((queryByTestId(renderResult, 'first-name-input') as InputElement).value, 'Jon');
@@ -988,8 +997,6 @@ main() {
   });
 }
 ```
-
-Besides the queries, the only that really changed is that the first parameter of `expect` only receives an HTML element, while the second parameter is a matcher that knows how to verify that the input element has the expected attributes.
 
 ## Checking a Component's Children
 
@@ -1135,23 +1142,23 @@ Async tests are complicated, with lots of variations and nuances to them. This s
 Common assertion patterns related to asynchronicity of a component are:
 
 1. Verifying data changes as expected after async interactions
-1. Ensuring async event handlers occur (and happen in the correct order)
+1. Ensuring async event handlers are called (and happen in the correct order)
 1. Waiting for asynchronous and transitioning UI to display
 
-There are undoubtedly more patterns, but speaking with broad strokes, those are the most common that occur. RTL is focused on the DOM, meaning that if an async test wasn't (and shouldn't be) verifying something async changed the DOM, then the test may not need to be migrated. A global exception to that is if the test relies on a platform class based component's instance (by accessing props, state, APIs, etc), at some point it will need to be migrated so that it doesn't rely on the instance itself.
+There are undoubtedly more patterns, but speaking with broad strokes, those are the most common that occur. RTL is focused on the DOM, meaning that if an async test wasn't (and shouldn't be) verifying something async changed the DOM, then the test may not need to be migrated. A global exception to that is if the test relies on a class based component's instance (by accessing props, state, APIs, etc) and that component is being converted to a functional component. If that's the case, at some point it will need to be migrated so that it doesn't rely on the instance itself.
 
 To help know if the test needs to be migrated, we can walk through every broad stroke pattern.
 
 ### Verifying Data Changes as Expected
 
-This case is likely the trickiest as it may rely on the component instance itself to verify the data. If the data is purely an implementation detail, it may not need to be verified in the first place. Assuming it does need to be verified, identify what the use case is and who the user of that use case is would be the first step. Usually the user will either be application users or developers. Both cases are described below:
+This case is likely the trickiest as it may rely on the component instance itself to verify the data. If the data is purely an implementation detail, it may not need to be verified in the first place. Assuming it does need to be verified, the first step is identifying what the use case is and who the user is. Usually the user will either be application users or developers. Both cases are described below:
 
-- Developers: if the use case for the test is one for developers, then UI may not be involved and the test may not need to be migrated. The exception is if the test is relying on a class instance, in which case the test needs to be reworked to avoid that, but generally the new DOM related matchers do not come into play.
+- Developers: if the use case for the test is one for developers, then UI may not be involved and the test may not need to be migrated. In that case, the new RTL APIs may not come into play. The exception is if the test is relying on a class instance, which needs to be migrated. When migrating away from the class instance, the best path forward may include checking the UI.
 - Application users: these users rely on DOM changes to know something has happened, which means the test should be reworked to verify the DOM. See the [async DOM assertions section below](#async-dom-assertions-in-rtl).
 
 ### Ensuring Async Event Handlers Are Called
 
-Most of the time, this case passes in callbacks or connects the component to a store and then interacts with the component. After that, the callbacks or store are checked to ensure something happened after waiting. Assuming the test does not rely on a component's instance method and doesn't need to verify a UI change, then the test pattern is still solid and doesn't have anything to migrate.
+Most of the time, this case passes callbacks to a component or connects the component to a store. After that, the component is interacted with and the callbacks or store are checked after a wait to make sure something changed. Assuming the test does not rely on a component's instance and doesn't need to verify a UI change, then the test pattern is still solid and doesn't have any assertions to migrate.
 
 Another consideration here though is whether the test _should_ have a UI verification. Even if the use case is focused on a developer, who is less concerned with the UI itself (at least compared to an application user), it may be more precise to say that the developer should expect event X before UI shows or event Y after UI shows. If that's the case, a UI expectation could be added to the test.
 
@@ -1163,7 +1170,7 @@ This case is all about triggering some interaction and expecting the UI to chang
 
 ### Async DOM Assertions in RTL
 
-When waiting for an element to appear or disappear, it was common to either use `Future.delayed()` or `window.animationFrame` to signify that it's expected for an async UI update to happen. Using RTL, those methods still work but are not ideal. RTL introduces more precise ways to handle these types of expectations. The three APIs introduced are:
+When waiting for an element to appear or disappear, it was common to either use `Future.delayed()` or `window.animationFrame` to wait for an async UI change to occur. Using RTL, those methods still work but are not ideal. RTL introduces more precise ways to handle these types of expectations. The three APIs introduced are:
 
 - [waitFor](https://workiva.github.io/react_testing_library/rtl.dom.async/waitFor.html)
 - [waitForElementsToBeRemoved](https://workiva.github.io/react_testing_library/rtl.dom.async/waitForElementsToBeRemoved.html)
@@ -1199,9 +1206,9 @@ UiFactory<AsyncExampleProps> AsyncExample = uiFunction(
 );
 ```
 
-The component has a button that can be clicked, which will cause an element to be shown after 500ms. To test that the component does indeed show the element, in OverReact Test we could do:
-
 </details>
+
+The component has a button that can be clicked, which will cause an element to be shown after 500ms. To test that the component does indeed show the element, in OverReact Test we could do:
 
 ```dart
 import 'package:over_react/over_react.dart';

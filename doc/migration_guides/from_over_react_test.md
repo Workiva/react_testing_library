@@ -20,9 +20,9 @@ This document focuses on giving context around why migrating away from OverReact
 
 ## Migration Background
 
-The first big question - do we _have_ to migrate?
+First, the big question - do we _have_ to migrate?
 
-The only time you need to migrate is if the test is relying on a class component instance. This is because the new norm is to build components using the modern patterns of hooks, ref forwarding, and all the other tools that functional components expose. OverReact Test does not have full support for function based components, meaning that as we transition UI to utilize MUI components, the tests will need to be migrated as well.
+The only time you need to migrate is if the test is relying on a class component instance. This is because the new norm is to build components using the modern patterns of hooks, ref forwarding, and all the other tools that functional components expose. OverReact Test does not have full support for function based components, meaning that as we transition UI to utilize functional components, the tests will need to be migrated as well.
 
 However, all component tests can be migrated to gain the simplicity and maintainability offered by React Testing Library (RTL). RTL makes testing much more delightful, and by migrating our tests to it, we will be able to:
 
@@ -67,7 +67,7 @@ Each guide gives insight into the new mentality behind testing with RTL, along a
 
 ## Philosophy
 
-React Testing Library's (RTL) guiding philosophy is different from what many are used to coming from OverReact Test. Before migrating, take time to read this section and the connected blog posts. Then, as you are migrating tests, keep in mind that the migration may be adjusting the goal of a test as a whole in addition to the underlying APIs being used.
+React Testing Library's guiding philosophy is different from what many are used to coming from OverReact Test. Before migrating, take time to read this section and the connected blog posts. Then, as you are migrating tests, keep in mind that the migration may be adjusting the goal of a test as a whole in addition to the underlying APIs being used.
 
 RTL's philosophy, in its simplest form, is:
 
@@ -83,7 +83,7 @@ When it's said not to test implementation details, what does that mean? Dodds [a
 
 > Implementation details are things which users of your code will not typically use, see, or even know about.
 
-That means implementation details can be somewhat insidious. It's not just about avoiding using certain getters or patterns, but also about understanding what an API can reveal to a user and only testing those possibilities. Within the scope of migrating from OverReact Test, there are some code smells that are indicative of implementation details are being tested. Most of them stem from grabbing the component instance itself and utilizing the class APIs to check data on that instance (props, state, children, etc).
+That means implementation details can be somewhat insidious. It's not just about avoiding using certain getters or patterns, but also about understanding what an API can reveal to a user and only testing those possibilities. Within the scope of migrating from OverReact Test, there are some code smells that are indicative of implementation details being tested. Most of them stem from grabbing the component instance itself and utilizing the class APIs to check data on that instance (props, state, children, etc).
 
 If you want to dive deeper into what implementation details are, Kent's [blog post][implementation-details-blog] is a great source.
 
@@ -106,7 +106,7 @@ Note that a use case is defined by something _coming out_ of the component. Appl
 
 #### Verify You're Testing a Use Case
 
-If it's ambiguous, checking that a test verifies a use case is important before the migration because otherwise migrating to RTL may feel like fitting a square peg into a round hole. When a test is relying on implementation details to verify an outcome, it is easier to first correlate those details with a use case. Once the use case is known, migrate the test with that use case in mind. That approach gives the insight to know what code needs to be converted, removed, or added to fit the new philosophy.
+If it's ambiguous, checking that a test verifies a use case is important before the migration. Otherwise, migrating to RTL may feel like fitting a square peg into a round hole. When a test is relying on implementation details to verify an outcome, it is easier to first correlate those details with a use case. Once the use case is known, migrate the test with that use case in mind. That approach gives the insight to know what code needs to be converted, removed, or added to fit the new philosophy.
 
 #### Identifying a Test's Use Case
 
@@ -123,19 +123,19 @@ Identifying a use case from an existing test is really just about figuring out w
 
    There may be a temptation here to rely on the test description (the first parameter of the `test` function) to decide the use case being tested. That's another valuable data point, but over time, the test's focus may have shifted. Instead, we should keep it in mind but use the analysis of the test in the previous step to determine what the scenario is.
 
-   With understanding of the important outcomes being tested, think through how the component would get into this circumstance out in the wild. What data needs to exist? What would the user have to do? The _scenario_ that matches what the test is trying to create is the use case!
+   With the understanding of the important outcomes being tested, think through how the component would get into this circumstance out in the wild. What data needs to exist? What would the user have to do? Convert this into a single, easily stated scenario. That's the use case!
 
 ## The Path Forward
 
 Now that you understand RTL's philosophy, use case testing, and how to identify a use case, you can start your migration! As you work through tests, the related guides for rendering, querying, interacting, and expecting can be referenced.
 
-The rest of this guide serves as a reference in the event that you encounter a test that is asserting against implementation details. If that happens, remember [how to identify a use case](#identifying-a-tests-use-case) and work through the decision tree below. Then, if it's necessary to migrate the test's approach, the [Migrating to Use Case Testing section](#migrating-to-use-case-testing) is dedicated to that effort.
+The rest of this guide serves as a reference in the event that you encounter a test that is asserting against implementation details. If that happens, remember [how to identify a use case](#identifying-a-tests-use-case) and work through the decision tree below. Then, if it's necessary to migrate the test's approach as a whole, the [Migrating to Use Case Testing section](#migrating-to-use-case-testing) is dedicated to that effort.
 
 ## Deciding to Migrate a Test's Approach
 
-In the case that you have encountered a test that is asserting against implementation details, use this section to decide what the best next step is. See "[Identifying a Tests Use Case](#identifying-a-tests-use-case)" if it is not clear what the test's use case is.
+In the case that you have encountered a test that is asserting against implementation details, use this section to decide what the best next step is. See "[Identifying a Test's Use Case](#identifying-a-tests-use-case)" if it is not clear what the test's use case is.
 
-> NOTE: The first decision tree check ("Is the test asserting against implementation details?") is _very_ specific. If you are using implementation details to query or interact, the corresponding migration guides walk through adjusting that! This big "migrating approaches" deal is only if the _expectation_ part of the test is so reliant on implementation details that the test needs to be re-thought.
+> NOTE: The first check below ("Is the test asserting against implementation details?") is _very_ specific. If you are using implementation details to query or interact, the corresponding migration guides walk through adjusting that! This big "migrating approaches" deal is only if the _expectation_ part of the test is so reliant on implementation details that the test needs to be re-thought.
 
 <img alt='migration decision tree' src='./images/migration_decision_tree.png' />
 
@@ -152,16 +152,16 @@ This section focuses on giving a framework for rethinking tests that are asserti
 This step is best after verifying in the decision tree that:
 
 1. The test is asserting implementation details in an attempt to verify a use case
-1. No other tests already verifies this use case
+1. No other tests already verify this use case
 
 Remember that unnecessary tests, especially those which rely on implementation details, can cause developers grief! Once a test is deemed as necessary and needing to be refactored, we can take it through a few steps. Those steps are:
 
-1. Determine if this test strategy is the most appropriate. For example:
+1. Determine if the existing test strategy is the most appropriate. For example:
 
    - If this is testing in isolation, would an integration environment be more appropriate for this test?
    - Or vise versa, if it's an integration test, would isolation be better?
 
-   The testing strategy may still fit well, but the question can be asked in the context of knowing that the component will need to be tested as the user will exercise this use case. If the component is tightly coupled with another when used in the real world, the interaction may be much harder being tested in isolation versus with the other related components. It's less likely that the component is an integration test that should be tested in isolation instead, but given that the test's context has changed, it's worth double-checking that the integration strategy is still adding value.
+   The testing strategy may still fit well, but the question can be asked in the context of knowing that the component will need to be tested as the user will exercise the use case. If the component is tightly coupled with another when used in the real world, the interaction may be much harder when tested in isolation. It's less likely that the component is an integration test that should be tested in isolation instead, but given that the test's context has changed, it's also worth double-checking that the integration strategy is still adding value.
 
 1. Decide what the correct expectations are.
 
@@ -181,7 +181,7 @@ Remember that unnecessary tests, especially those which rely on implementation d
 
 1. Begin the migration!
 
-   From here, the test can be migrated like one that started without relying on implementation details. As noted, there is a guide for each major test section (rendering, querying, interacting, expecting). Since the original test is slimmed down, there may be gaps to fill in, but those guides will each gives examples of ways to use RTL to fill those in!
+   From here, the test can be migrated like one that started without relying on implementation details. As noted, there is a guide for each major test section (rendering, querying, interacting, expecting). Since the original test is slimmed down, there may be gaps to fill in, but those guides will each gives examples of ways to use RTL to do that!
 
 ## Documentation References
 
