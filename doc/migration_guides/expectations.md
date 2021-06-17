@@ -82,9 +82,9 @@ You may have already worked through the [querying migration guide][querying-guid
 - `queryBy`
 - `findBy`
 
-and that `getBy` APIs will fail the test while others will just return `null` if the query fails.
+and that `getBy` / `findBy` APIs will fail the test while others will just return `null` if the query fails.
 
-Because `getBy` will actually fail the test instead of returning nothing, those queries can be used as expectations all on their own. Below is an example differentiating how this would have worked in OverReact Test with how it works in RTL.
+Because `getBy` / `findBy` will actually fail the test instead of returning nothing, those queries can be used as expectations all on their own. Below is an example differentiating how this would have worked in OverReact Test with how it works in RTL.
 
 <details>
 
@@ -704,7 +704,7 @@ Migrating styles based assertions from OverReact Test and RTL is a fairly easy s
 - `hasExactClasses`
 - `hasStyles`
 
-All of them require a that a queried DOM node is the first parameter of the `expect` statement. In the case that the test being migrated was using a component instance to get the styles, then the migration includes [using the best query][querying-guide] to grab the DOM node instead. Assuming that the test is working with a node though, OverReact Test assertions for an arbitrary component would have looked like:
+All of them require that a queried DOM node is the first parameter of the `expect` statement. In the case that the test being migrated was using a component instance to get the styles, then the migration includes [using the best query][querying-guide] to grab the DOM node instead. Assuming that the test is working with a node though, OverReact Test assertions for an arbitrary component would have looked like:
 
 ```dart
 import 'package:over_react/over_react.dart';
