@@ -303,7 +303,7 @@ That looks almost exactly like the first (and simpler) OverReact Test example. H
 
 ## Assertions Verifying Props and State Values
 
-The most common pattern to be migrated is checking an instance's prop or state are the expected values. Before migrating these types of expectations, it's import to understand the concept of [use case testing][entrypoint-use-cases].
+The most common pattern to be migrated is checking that an instance's prop or state are the expected values. Before migrating these types of expectations, it's import to understand the concept of [use case testing][entrypoint-use-cases].
 
 This section covers:
 
@@ -320,7 +320,7 @@ To demonstrate this thinking in simple use cases, this section will walk through
 
 Below is an example component that will be used in this section's examples. The component is a calculator for simple addition operations. It supports adding multi-digit numbers and clearing the calculator state. This component will be used to show how one might have asserted values based on state (or similar pieces of data) with OverReact Test versus how it would be done with RTL.
 
-Additionally, beneath the example component are all tests being used for this section (both the OverReact Test and RTL versions). Because these sections will walk through the process of thinking through migrating a test, it's more difficult to see an explicit before and after of each test. The test collapsed region is a good source to just compare tests back to back.
+Additionally, beneath the example component are all the tests being used for this section (both the OverReact Test and RTL versions). Because these sections will walk through the process of thinking through migrating a test, it's more difficult to see an explicit before and after of each test. The test collapsed region is a good source to just compare tests back to back.
 
 <details>
   <summary>Component Definition (click to expand)</summary>
@@ -345,18 +345,22 @@ mixin AdditionCalculatorState on UiState {
 
 class AdditionCalculatorComponent extends UiStatefulComponent2<AdditionCalculatorProps, AdditionCalculatorState> {
   @override
-  get initialState => newState()
+  get initialState => (newState()
     ..displayValue = '0'
     ..numbersToAdd = []
     ..nextNumber = []
-    ..sumWasLastOp = false;
+    ..sumWasLastOp = false
+  );
 
-  _pushNewNumber(int number) {
+  void _pushNewNumber(int number) {
     var newDisplayValue = '';
-    var nextNumber = state.sumWasLastOp ? [number] : [...state.nextNumber, number];
+    var nextNumber = [
+      if (state.sumWasLastOp) ...state.nextNumber,
+      number
+    ];
 
     if (state.displayValue == '0') {
-      newDisplayValue = '${number.toString()}';
+      newDisplayValue = '$number';
 
       setState(newState()
         ..displayValue = newDisplayValue
@@ -368,9 +372,9 @@ class AdditionCalculatorComponent extends UiStatefulComponent2<AdditionCalculato
     newDisplayValue = state.sumWasLastOp ? '' : state.displayValue;
 
     if (newDisplayValue.split('').last == '+') {
-      newDisplayValue += ' ${number.toString()}';
+      newDisplayValue += ' $number';
     } else {
-      newDisplayValue += '${number.toString()}';
+      newDisplayValue += '$number';
     }
 
     setState(newState()
@@ -380,7 +384,7 @@ class AdditionCalculatorComponent extends UiStatefulComponent2<AdditionCalculato
     );
   }
 
-  _sum() {
+  void _sum() {
     final total = state.numbersToAdd.reduce((total, next) => total + next) + _nextNumber;
 
     setState(newState()
@@ -391,7 +395,7 @@ class AdditionCalculatorComponent extends UiStatefulComponent2<AdditionCalculato
     );
   }
 
-  _add() {
+  void _add() {
     final numbersToAdd = _nextNumber != null ? [...state.numbersToAdd, _nextNumber] : state.numbersToAdd;
 
     setState(newState()
@@ -455,7 +459,7 @@ import 'package:test/test.dart';
 import '../component_definition.dart';
 
 main() {
-  test('the component loads as expected', () {
+  test('the component loads as expected (OverReact Test)', () {
     final jacket = mount(AdditionCalculator()());
     final component = jacket.getDartInstance() as AdditionCalculatorComponent;
 
@@ -469,14 +473,16 @@ main() {
     final view = rtl.render(AdditionCalculator()());
     final outputContainer = view.getByTestId('output');
 
-    // Check within the `output` container because the calculator has a `0` button
-    expect(rtl.within(outputContainer).getByText('0'), isInTheDocument);
+    // Use `within()` here to scope the `getByText` query to the
+    // output container
+    expect(rtl.within(outputContainer).getByText('0'), isInTheDocument,
+        reason: 'The output should initially show `0`.');
 
     expect(outputContainer, isNot(hasStyles({'borderColor': 'green'})));
     expect(outputContainer, hasClasses('indeterminate'));
   });
 
-  test('sums as expected', () {
+  test('sums as expected (OverReact Test)', () {
     final jacket = mount(AdditionCalculator()());
     final component = jacket.getDartInstance() as AdditionCalculatorComponent;
 
@@ -497,11 +503,11 @@ main() {
   test('sums as expected (rtl)', () {
     final view = rtl.render(AdditionCalculator()());
 
-    UserEvent.click(view.getByText('2'));
-    UserEvent.click(view.getByText('1'));
-    UserEvent.click(view.getByText('+'));
-    UserEvent.click(view.getByText('6'));
-    UserEvent.click(view.getByText('='));
+    UserEvent.click(view.getByRole('button', name: '2'));
+    UserEvent.click(view.getByRole('button', name: '1'));
+    UserEvent.click(view.getByRole('button', name: '+'));
+    UserEvent.click(view.getByRole('button', name: '6'));
+    UserEvent.click(view.getByRole('button', name: '='));
 
     expect(view.getByText('27'), isInTheDocument);
   });
@@ -602,8 +608,11 @@ main() {
     final view = rtl.render(AdditionCalculator()());
     final outputContainer = view.getByTestId('output');
 
-    // Check within the `output` container because the calculator has a `0` button
-    expect(rtl.within(outputContainer).getByText('0'), isInTheDocument);
+    // Use `within()` here to scope the `getByText` query to the
+    // output container
+    expect(rtl.within(outputContainer).getByText('0'), isInTheDocument,
+        reason: 'The output should initially show `0`.');
+
 
     expect(outputContainer, isNot(hasStyles({'borderColor': 'green'})));
     expect(outputContainer, hasClasses('indeterminate'));
@@ -684,11 +693,11 @@ main() {
   test('sums as expected', () {
     final view = rtl.render(AdditionCalculator()());
 
-    UserEvent.click(view.getByText('2'));
-    UserEvent.click(view.getByText('1'));
-    UserEvent.click(view.getByText('+'));
-    UserEvent.click(view.getByText('6'));
-    UserEvent.click(view.getByText('='));
+    UserEvent.click(view.getByRole('button', name: '2'));
+    UserEvent.click(view.getByRole('button', name: '1'));
+    UserEvent.click(view.getByRole('button', name: '+'));
+    UserEvent.click(view.getByRole('button', name: '6'));
+    UserEvent.click(view.getByRole('button', name: '='));
 
     expect(view.getByText('27'), isInTheDocument);
   });
@@ -761,7 +770,7 @@ To check input properties in RTL, the best practice is:
 1. Query to find the input DOM node
 1. Use a matcher instead of accessing the node's properties ourselves
 
-The first point is very much inline with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab a node's property, RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
+The first point is very much in line with all other portions of the migration. Instead of checking a component's state or using component instance methods to grab a node's property, RTL expects the test to query for the HTML element directly. For more information on querying, see the [querying migration guide][querying-guide].
 
 For the second point, the new pattern is only a slight adjustment. With OverReact Test, form input values were usually verified by accessing a property on the element (or a Dart component counterpart) similarly to:
 
@@ -806,28 +815,29 @@ mixin ExampleFormState on UiState {
   String lastName;
   List<String> ownedPets;
 
-  bool prefersDogs;
+  bool prefersBigDogs;
   bool hasSubmitted;
 }
 
 class ExampleFormComponent extends UiStatefulComponent2<ExampleFormProps, ExampleFormState> {
   @override
-  get initialState => newState()
+  get initialState => (newState()
     ..firstName = ''
     ..lastName = ''
     ..ownedPets = []
-    ..prefersDogs = true
-    ..hasSubmitted = false;
+    ..prefersBigDogs = true
+    ..hasSubmitted = false
+  );
 
   void _updateOwnedPets(String pet) {
     final isAdding = !state.ownedPets.contains(pet);
 
     if (isAdding) {
-      this.setState(newState()..ownedPets = [...state.ownedPets, pet]);
+      setState(newState()..ownedPets = [...state.ownedPets, pet]);
       return;
     }
 
-    this.setState(newState()..ownedPets = state.ownedPets.where((ownedPet) => ownedPet != pet).toList());
+    setState(newState()..ownedPets = state.ownedPets.where((ownedPet) => ownedPet != pet).toList());
   }
 
   bool _isFormValid() {
@@ -854,17 +864,17 @@ class ExampleFormComponent extends UiStatefulComponent2<ExampleFormProps, Exampl
         ..addTestId('prefers-group')
       )(
         (RadioInput()
-          ..value = 'Dogs'
-          ..label = 'Dogs'
-          ..checked = state.prefersDogs
-          ..onClick = (_) => setState(newState()..prefersDogs = true)
-        )('Dogs'),
+          ..value = 'Big Dogs'
+          ..label = 'Big Dogs'
+          ..checked = state.prefersBigDogs
+          ..onClick = (_) => setState(newState()..prefersBigDogs = true)
+        )('Big Dogs'),
         (RadioInput()
-          ..value = 'Cats'
-          ..label = 'Cats'
-          ..checked = !state.prefersDogs
-          ..onClick = (_) => setState(newState()..prefersDogs = false)
-        )('Cats'),
+          ..value = 'Small Dogs'
+          ..label = 'Small Dogs'
+          ..checked = !state.prefersBigDogs
+          ..onClick = (_) => setState(newState()..prefersBigDogs = false)
+        )('Small Dogs'),
       ),
       (ToggleInputGroup()
         ..groupLabel = 'What type of pets have you owned?'
@@ -924,7 +934,7 @@ import 'package:test/test.dart';
 import '../component_definition.dart';
 
 main() {
-   test('the form can be filled out', () {
+  test('the form can be filled out', () {
     final renderResult = render(ExampleForm()());
     final formComponent = getDartComponent(renderResult) as ExampleFormComponent;
     final button = queryByTestId(renderResult, 'submit-button') as ButtonElement;
@@ -940,9 +950,8 @@ main() {
     formComponent.setState(formComponent.newState()
       ..firstName = 'Jon'
       ..lastName = 'Snow'
-      ..prefersDogs = false
-      ..ownedPets = ['Dogs', 'Reptiles']
-    );
+      ..prefersBigDogs = false
+      ..ownedPets = ['Dogs', 'Reptiles']);
 
     expect(button.disabled, isFalse);
     expect((queryByTestId(renderResult, 'first-name-input') as InputElement).value, 'Jon');
@@ -950,7 +959,7 @@ main() {
 
     final checkedRadioInputs = getCheckedRadioInputs();
     expect(checkedRadioInputs.length, 1);
-    expect(checkedRadioInputs.first.value, 'Cats');
+    expect(checkedRadioInputs.first.value, 'Small Dogs');
 
     final checkedCheckBoxes = getCheckedCheckboxes();
     expect(checkedCheckBoxes.length, 2);
@@ -972,28 +981,26 @@ import 'package:test/test.dart';
 import '../component_definition.dart';
 
 main() {
-   test('the form can be filled out', () {
+  test('the form can be filled out', () {
     final view = rtl.render(ExampleForm()());
     final button = view.queryByRole('button', name: 'Submit') as ButtonElement;
     final firstNameInput = view.getByLabelText('First Name');
     final lastNameInput = view.getByLabelText('Last Name');
-    final prefersGroup = view.getByText('I prefer...').parent;
-    final ownedGroup = view.getByText('What type of pets have you owned?').parent;
 
     expect(button, isDisabled);
 
     UserEvent.type(firstNameInput, 'jon');
     UserEvent.type(lastNameInput, 'snow');
-    UserEvent.click(rtl.getByLabelText(prefersGroup, 'Cats'));
-    UserEvent.click(rtl.getByLabelText(ownedGroup, 'Dogs'));
-    UserEvent.click(rtl.getByLabelText(ownedGroup, 'Reptiles'));
+    UserEvent.click(view.getByLabelText('Small Dogs'));
+    UserEvent.click(view.getByLabelText('Dogs'));
+    UserEvent.click(view.getByLabelText('Reptiles'));
 
     expect(button, isEnabled);
     expect(firstNameInput, hasDisplayValue('jon'));
     expect(lastNameInput, hasDisplayValue('snow'));
-    expect(rtl.getByLabelText(prefersGroup, 'Cats'), isChecked);
-    expect(rtl.getByLabelText(ownedGroup, 'Dogs'), isChecked);
-    expect(rtl.getByLabelText(ownedGroup, 'Reptiles'), isChecked);
+    expect(view.getByLabelText('Small Dogs'), isChecked);
+    expect(view.getByLabelText('Dogs'), isChecked);
+    expect(view.getByLabelText('Reptiles'), isChecked);
   });
 }
 ```
@@ -1021,7 +1028,7 @@ mixin TodoListState on UiState {
 
 class TodoListComponent extends UiStatefulComponent2<TodoListProps, TodoListState> {
   @override
-  get initialState => newState()..listItems = [];
+  get initialState => (newState()..listItems = []);
 
   Ref<TextInputComponent> _ref = createRef<TextInputComponent>();
 
@@ -1064,7 +1071,7 @@ import 'package:test/test.dart';
 import '../component_definition.dart';
 
 main() {
-   test('renders children as expected', () {
+  test('renders children as expected', () {
     final renderResult = render(TodoList()());
     final listGroup = getComponentByTestId(renderResult, 'list-group') as ListGroupComponent;
 
@@ -1100,7 +1107,7 @@ import 'package:test/test.dart';
 import '../component_definition.dart';
 
 main() {
-   test('renders children as expected', () {
+  test('Adds new list items when the `Add Item` button is clicked', () {
     final view = rtl.render(TodoList()());
     final listGroup = view.getByTestId('list-group');
 
@@ -1170,13 +1177,19 @@ This case is all about triggering some interaction and expecting the UI to chang
 
 ### Async DOM Assertions in RTL
 
-When waiting for an element to appear or disappear, it was common to either use `Future.delayed()` or `window.animationFrame` to wait for an async UI change to occur. Using RTL, those methods still work but are not ideal. RTL introduces more precise ways to handle these types of expectations. The three APIs introduced are:
+When waiting for an element to appear or disappear, it was common to either use `Future.delayed()` or `window.animationFrame`. Using RTL, those methods still work but are not ideal. RTL introduces more precise ways to handle these types of expectations.
+
+One way is just to use queries as assertions! Recall in an [earlier section](#queries-as-an-expectation) that we can use `findBy` or `getBy` queries to assert an element is in the document. The `getBy` queries are all synchronous, but the `findBy` queries will wait for the element to be shown! This means that when a test is relying on an element appearing in the DOM after a short delay, `findBy` can be used to check that the element appears as expected.
+
+In addition to the `findBy` queries though, RTL introduces more APIs to assist with async testing. The three APIs introduced are:
 
 - [waitFor](https://workiva.github.io/react_testing_library/rtl.dom.async/waitFor.html)
 - [waitForElementsToBeRemoved](https://workiva.github.io/react_testing_library/rtl.dom.async/waitForElementsToBeRemoved.html)
 - [waitForElementToBeRemoved](https://workiva.github.io/react_testing_library/rtl.dom.async/waitForElementToBeRemoved.html)
 
-These APIs all take in a callback that has an expectation inside. That way, the APIs can call the expectation at an interval until it times out. Both that interval and timeout have a default, but they can also be specified as a parameter on the API. Below is a simple example of what these APIs look like!
+These three APIs all take in a callback that has an expectation inside. That way, the APIs can call the expectation at an interval until it times out. Both that interval and timeout have a default, but they can also be specified as a parameter on the API.
+
+Below is a simple example of what the `findBy` queries and the new async APIs look like.
 
 <details>
   <summary>Component Definition (click to expand)</summary>
@@ -1195,7 +1208,8 @@ UiFactory<AsyncExampleProps> AsyncExample = uiFunction(
     return (Dom.div()(
       (Dom.button()
         ..onClick = (_) {
-          Future.delayed(Duration(milliseconds: 500), () => showElement.set(true));
+          Future.delayed(
+              Duration(milliseconds: 500), () => showElement.setWithUpdater((isCurrentlyShown) => !isCurrentlyShown));
         }
         ..addTestId('button-to-show-element')
       )('Click to show Element'),
@@ -1208,7 +1222,7 @@ UiFactory<AsyncExampleProps> AsyncExample = uiFunction(
 
 </details>
 
-The component has a button that can be clicked, which will cause an element to be shown after 500ms. To test that the component does indeed show the element, in OverReact Test we could do:
+The component has a button that can be clicked, which will cause an element to be shown or hidden after 500ms. To test that the component does indeed show and hide the element, in OverReact Test we could do:
 
 ```dart
 import 'package:over_react/over_react.dart';
@@ -1218,17 +1232,24 @@ import 'package:test/test.dart';
 import '../component_definition.dart';
 
 main() {
-   test('Will show content after delay', () async {
+  test('Will show and hide content after a delay', () async {
     final renderResult = render(Wrapper()(
       AsyncExample()(),
     ));
+    final button = queryByTestId(renderResult, 'button-to-show-element');
+    Element getHiddenElement() => queryByTestId(renderResult, 'hidden-element');
 
-    click(queryByTestId(renderResult, 'button-to-show-element'));
-    expect(queryByTestId(renderResult, 'hidden-element'), isNull);
+    click(button);
 
+    expect(getHiddenElement(), isNull);
     await Future.delayed(Duration(milliseconds: 500));
+    expect(getHiddenElement(), isNotNull);
 
-    expect(queryByTestId(renderResult, 'hidden-element'), isNotNull);
+    click(button);
+
+    expect(getHiddenElement(), isNotNull);
+    await Future.delayed(Duration(milliseconds: 500));
+    expect(getHiddenElement(), isNull);
   });
 }
 ```
@@ -1250,18 +1271,23 @@ import 'package:test/test.dart';
 import '../component_definition.dart';
 
 main() {
-   test('Will show content after delay', () async {
+  test('Will show and hide content after a delay', () async {
     final view = rtl.render(AsyncExample()());
+    final button = view.getByRole('button');
 
-    UserEvent.click(view.getByRole('button'));
+    UserEvent.click(button);
+
     expect(view.queryByText('Element is Showing'), isNot(isInTheDocument));
+    await view.findByText('Element is Showing');
 
-    await rtl.waitFor(() => expect(view.getByText('Element is Showing'), isInTheDocument));
+    UserEvent.click(button);
+
+    await rtl.waitForElementToBeRemoved(() => view.getByText('Element is Showing'));
   });
 }
 ```
 
-Now, RTL will check the document several times so as soon as that element exists, the test passes. We also aren't concerned with why or how the delay is happening, just that it is happening!
+Now, RTL will check the document several times so as soon as that element appears and disappears, the test passes. This happens primary because these APIs (including the `findBy` queries) all utilitize a [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) under the hood. That observer should catch the expected change as soon as it occurs, but the APIs all use an interval as a fallback to query the DOM!
 
 ## Documentation References
 
@@ -1269,9 +1295,9 @@ Now, RTL will check the document several times so as soon as that element exists
 - [Matchers](https://github.com/testing-library/jest-dom#the-problem) (JS)
 - [Async Utils](https://workiva.github.io/react_testing_library/rtl.dom.async/rtl.dom.async-library.html)
 
-[entrypoint-philosophy]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#philosophy
-[entrypoint-use-cases]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.md#use-case-testing
-[entrypoint-migrating-test-strategy]: https://github.com/Workiva/react_testing_library/blob/master/doc/from_over_react_test.mdmigrating-to-use-case-testing
+[entrypoint-philosophy]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/from_over_react_test.md#philosophy
+[entrypoint-use-cases]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/from_over_react_test.md#use-case-testing
+[entrypoint-migrating-test-strategy]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/from_over_react_test.md#migrating-to-use-case-testing
 [querying-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/queries.md
 [matcher-docs]: https://workiva.github.io/react_testing_library/topics/Matchers-topic.html
 [common-mistakes-get-assertions]: https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#using-get-variants-as-assertions

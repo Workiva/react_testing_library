@@ -22,7 +22,7 @@ This document focuses on giving context around why migrating away from OverReact
 
 First, the big question - do we _have_ to migrate?
 
-The only time you need to migrate is if the test is relying on a class component instance. This is because the new norm is to build components using the modern patterns of hooks, ref forwarding, and all the other tools that functional components expose. OverReact Test does not have full support for function based components, meaning that as we transition UI to utilize functional components, the tests will need to be migrated as well.
+The only time you need to migrate is if the test is relying on a class component instance. This is because the new norm is to build components using the modern patterns of hooks, ref forwarding, and all the other tools that functional components expose. OverReact Test does not have full support for function based components because the APIs and patterns rely on querying component instances. Function components do not have instances for those APIs to find. Consequently, as we transition UI to utilize functional components, the tests will need to be migrated as well.
 
 However, all component tests can be migrated to gain the simplicity and maintainability offered by React Testing Library (RTL). RTL makes testing much more delightful, and by migrating our tests to it, we will be able to:
 
@@ -161,13 +161,15 @@ Remember that unnecessary tests, especially those which rely on implementation d
    - If this is testing in isolation, would an integration environment be more appropriate for this test?
    - Or vise versa, if it's an integration test, would isolation be better?
 
-   The testing strategy may still fit well, but the question can be asked in the context of knowing that the component will need to be tested as the user will exercise the use case. If the component is tightly coupled with another when used in the real world, the interaction may be much harder when tested in isolation. It's less likely that the component is an integration test that should be tested in isolation instead, but given that the test's context has changed, it's also worth double-checking that the integration strategy is still adding value.
+   Defining the use case may have changed the test's paradigm enough that the strategy should be revisited. Consider how the user would exercise this use case and if the current strategy is the most appropriate for that scenario. If the component is tightly coupled with another when used in the real world, the interaction may be more difficult when tested in isolation. On top of that, switching to an integration test may create more confidence because it is closer to how the user would actually interact with the code.
+
+   On the flip side, integration tests are often more complex, maybe involving mocking and lots of set up. In the case that the behavior to be tested does not necessarily require all the complexity, testing in isolation may be better. This is less likely as integration tests tend to add more confidence than isolation testing, but if the test's paradigm has shifted enough, it may be a chance to simplify it.
 
 1. Decide what the correct expectations are.
 
-   This step doesn't need to have code. Instead, given what you now know about the test, imagine what the benchmarks for the user are when exercising this use case. What are the specific behaviors that the user should notice? This should not include any thought about what the implementation details are. Instead, what does the user see at the conclusion of the scenario and what are the important, noticeable steps prior to that outcome? Those are the expectations. If you need inspiration to know what the possibilities are, browse the matcher section in the [expectations guide][expectations-migration-guide] to see how RTL supports implementation detail free `expect` statements!
+   This step doesn't need to have code. Instead, given what you now know about the test, imagine what the benchmarks for the user are when exercising this use case. What are the specific behaviors that the user should notice? This should not include any thought about what the implementation details are. Instead, what does the user see at the conclusion of the scenario and what are the important, noticeable steps prior to that outcome? Those are the expectations. If you need inspiration to know what the possibilities are, browse the matcher section in the [expectations guide][expectations-migration-guide] to see how RTL supports implementation-detail-free `expect` statements!
 
-   In the case there feels like multiple use cases being tested, use the expectations as a guide to differentiate the use cases. If the use cases were grouped originally, they may be closely related. Answering why they're so closely related and what expectations they should share (and not share) can help inform how the test should be broken apart.
+   If it seems like there are multiple use cases being tested, use the expectations as a guide to differentiate the use cases. If the use cases were grouped originally, they may be closely related. Answering why they're so closely related and what expectations they should share (and not share) can help inform how the test should be broken apart.
 
 1. Remove anything that doesn't support the new expectations.
 
@@ -177,7 +179,7 @@ Remember that unnecessary tests, especially those which rely on implementation d
 
    Depending on the test and your preference, it may even be worth removing _relevant_ interaction or expectation statements. Add code comments outlining the steps that existed before, with any important details, instead of leaving code that may just get in your way.
 
-   In the end, the test should feel like a clean (not blank) slate that is ready to be reworked to the match the new, implementation detail free, expectations.
+   In the end, the test should feel like a clean (not blank) slate that is ready to be reworked to the match the new, implementation-detail-free expectations.
 
 1. Begin the migration!
 
