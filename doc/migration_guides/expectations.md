@@ -320,7 +320,7 @@ To demonstrate this thinking in simple use cases, this section will walk through
 
 Below is an example component that will be used in this section's examples. The component is a calculator for simple addition operations. It supports adding multi-digit numbers and clearing the calculator state. This component will be used to show how one might have asserted values based on state (or similar pieces of data) with OverReact Test versus how it would be done with RTL.
 
-Additionally, beneath the example component are all the tests being used for this section (both the OverReact Test and RTL versions). Because these sections will walk through the process of thinking through migrating a test, it's more difficult to see an explicit before and after of each test. The test collapsed region is a good source to just compare tests back to back.
+Additionally, beneath the example component are all the tests being used for this section (both the OverReact Test and RTL versions). Because these sections will walk through the process of thinking through migrating a test, it's more difficult to see an explicit before and after of each test. The "Component tests (click to expand)" region is a good source to just compare tests back to back.
 
 <details>
   <summary>Component Definition (click to expand)</summary>
