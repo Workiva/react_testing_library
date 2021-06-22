@@ -94,7 +94,7 @@ Use case testing is the answer to how to avoid testing implementation details. T
 - Other programmers who will use the code
 - Users of the application
 
-These two groups make up the actual users of the code. RTL is opinionated is towards verifying [use cases][use-case-testing] for those two groups, as opposed to traditional line or branch [code coverage][code-coverage]. In Kent's blog post he articulates more, but the tl;dr is that a line of code supports a use case for the API. Then, the lines should be tested by exercising their use cases.
+These two groups make up the actual users of the code. RTL is opinionated is towards verifying [use cases][use-case-testing] for those two groups, as opposed to traditional line or branch [code coverage][code-coverage]. In Kent's blog post he articulates more, but the tl;dr is that a line of code exists because a use case requires it to. To test that line of code, a test for the use case it supports should be written.
 
 #### What is a Use Case?
 
@@ -102,7 +102,7 @@ It will be important to know what a test's use case is before migrating it, so w
 
 Summarizing from the article, a use case is a _scenario_ that causes a change that a user will notice. When we're defining a use case for an application user, it's likely interactions that change the UI. When the user is a developer, the scenario could be creating any side effect that the component is capable of (event emissions, HTTP calls, etc).
 
-Note that a use case is defined by something _coming out_ of the component. Application users will be seeing the DOM that a component created. Developers will see data or events that leak outside the walls of the component. If a use case seems like it needs to look inside the component's instance to verify the outcome, that's an indication it's testing implementation details.
+Note that a use case is defined by something _coming out_ of the component. Application users will be seeing the DOM that a component created. Developers will see data or events that leak outside the walls of the component. If a use case seems like it needs to look inside the component's instance to verify the outcome, that's an indication it's testing implementation details and not a real user use case.
 
 #### Verify You're Testing a Use Case
 
@@ -127,7 +127,7 @@ Identifying a use case from an existing test is really just about figuring out w
 
 ## The Path Forward
 
-Now that you understand RTL's philosophy, use case testing, and how to identify a use case, you can start your migration! As you work through tests, the related guides for rendering, querying, interacting, and expecting can be referenced.
+Now that you understand RTL's philosophy, use case testing, and how to identify a use case, you can start your migration! As you work through tests, the related guides for [rendering][rendering-migration-guide], [querying][queries-migration-guide], [interacting][component-interactions], and [expecting][expectations-migration-guide] can be referenced.
 
 The rest of this guide serves as a reference in the event that you encounter a test that is asserting against implementation details. If that happens, remember [how to identify a use case](#identifying-a-tests-use-case) and work through the decision tree below. Then, if it's necessary to migrate the test's approach as a whole, the [Migrating to Use Case Testing section](#migrating-to-use-case-testing) is dedicated to that effort.
 

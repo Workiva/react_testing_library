@@ -18,7 +18,7 @@
   - **[Async DOM Assertions in RTL](#async-dom-assertions-in-rtl)**
 - **[Documentation References](#documentation-references)**
 
-This guide is focused on what matchers React Testing Library (RTL) exposes and how to use them to convert common expectation patterns to those new matchers. Before beginning this migration guide, but sure you have read the [philosophy][entrypoint-philosophy] of RTL. Not all tests can migrate expectations without extra forethought, and the migration guide's entrypoint describes when that is the case.
+This guide is focused on what matchers React Testing Library (RTL) exposes and how to use them to convert common expectation patterns to those new matchers. Before beginning this migration guide, be sure you have read the [philosophy][entrypoint-philosophy] of RTL. Not all tests can migrate expectations without extra forethought, and the migration guide's entrypoint describes when that is the case.
 
 The matchers and examples here are focused on inspecting the DOM, which means some tests may not need to have their `expect` statements migrated. Here are some examples that may be good to go:
 
@@ -134,15 +134,15 @@ import '../component_definition.dart';
 
 main() {
    test('can submit a form', () {
-    final renderResult = render(Wrapper()(
+    final renderedInstance = render(Wrapper()(
       SubmitButton()(),
     ));
 
-    click(queryByTestId(renderResult, 'pre-submit-button'));
+    click(queryByTestId(renderedInstance, 'pre-submit-button'));
 
-    click(queryByTestId(renderResult, 'submit-button'));
+    click(queryByTestId(renderedInstance, 'submit-button'));
 
-    expect(queryByTestId(renderResult, 'submitted-container'), isNotNull);
+    expect(queryByTestId(renderedInstance, 'submitted-container'), isNotNull);
   });
 }
 ```
@@ -168,18 +168,18 @@ It gives a line number and mentions the `click` API, but it doesn't actually spe
 
  main() {
    test('can submit a form', () {
-     final renderResult = render(Wrapper()(
+     final renderedInstance = render(Wrapper()(
        SubmitButton()(),
      ));
 
-     click(queryByTestId(renderResult, 'pre-submit-button'));
+     click(queryByTestId(renderedInstance, 'pre-submit-button'));
 
-+    final submitButton = queryByTestId(renderResult, 'submit-button');
++    final submitButton = queryByTestId(renderedInstance, 'submit-button');
 +    expect(submitButton, isNotNull);
 +    click(submitButton);
--    click(queryByTestId(renderResult, 'submit-button'));
+-    click(queryByTestId(renderedInstance, 'submit-button'));
 
-     expect(queryByTestId(renderResult, 'submitted-container'), isNotNull);
+     expect(queryByTestId(renderedInstance, 'submitted-container'), isNotNull);
    });
  }
 ```
@@ -307,7 +307,7 @@ The most common pattern to be migrated is checking that an instance's prop or st
 
 This section covers:
 
-- Checking that default props are set as expected
+- Checking that default props and initial state are set as expected
 - Verifying a re-render updates the component as expected
 
 For all of these scenarios, the approach is to shift from checking the underlying values to what the user should expect to see in the application when the props and state are set to those values. In simple cases, the thought process that can be followed here is:
@@ -542,7 +542,7 @@ main() {
 
 Let's migrate this test using the steps outlined [above](#assertions-verifying-props-and-state-values).
 
-**1. Verify the Use Case Being Tested**
+**1. Identify the Use Case Being Tested**
 
 This feels overly obvious and seems to be stated clearly: the component loads as expected. The current `expect` statements all back this up, too. Everything is just focused on checking the internal state values after the component renders once.
 
@@ -622,7 +622,7 @@ main() {
 
 ### Values are Correct after Re-Render
 
-When components re-render, there is an opportunity for either data or UI to update in an unexpected ways. Re-renders are largely triggered by two things:
+When components re-render, there is an opportunity for either data or UI to update in unexpected ways. Re-renders are largely triggered by two things:
 
 - A parent changing the component's props
 - Internal state changes
@@ -662,9 +662,9 @@ main() {
 }
 ```
 
-Similarly to the last section, let's go through this using the steps outline [above](#assertions-verifying-props-and-state-values). We'll go through it more quickly than the [last section](#default-values-are-the-expected-value) though!
+Similarly to the last section, let's go through this using the steps outlined [above](#assertions-verifying-props-and-state-values). We'll go through it more quickly than the [last section](#default-values-are-the-expected-value) though!
 
-**1. Verify the Use Case Being Tested**
+**1. Identify the Use Case Being Tested**
 
 In slight contrast to the [last example](#default-values-are-the-expected-value), this test is pretty focused on a valid use case. The test description notes that this test is for testing the ability to sum the numbers. Then the `expect` statements are verifying the state right after the sum button is clicked. Additionally, there's nothing signaling that the user here is a developer, which means the use case is focused on an application user. All that being said, we'll keep the use case:
 
@@ -724,8 +724,8 @@ import '../component_definition.dart';
 
 main() {
   test('sums as expected', () {
-    final renderResult = render(ArbitraryComponent()());
-    final styledNode = queryByTestId(renderResult, 'styled-node');
+    final renderedInstance = render(ArbitraryComponent()());
+    final styledNode = queryByTestId(renderedInstance, 'styled-node');
 
     expect(styledNode, hasClasses('a-class-name'));
     expect(styledNode, hasExactClasses('a-class-name a-second-class-name'));
@@ -935,14 +935,14 @@ import '../component_definition.dart';
 
 main() {
   test('the form can be filled out', () {
-    final renderResult = render(ExampleForm()());
-    final formComponent = getDartComponent(renderResult) as ExampleFormComponent;
-    final button = queryByTestId(renderResult, 'submit-button') as ButtonElement;
+    final renderedInstance = render(ExampleForm()());
+    final formComponent = getDartComponent(renderedInstance) as ExampleFormComponent;
+    final button = queryByTestId(renderedInstance, 'submit-button') as ButtonElement;
 
     List<InputElement> getCheckedRadioInputs() =>
-        (getComponentByTestId(renderResult, 'prefers-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
+        (getComponentByTestId(renderedInstance, 'prefers-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
     List<InputElement> getCheckedCheckboxes() =>
-        (getComponentByTestId(renderResult, 'owned-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
+        (getComponentByTestId(renderedInstance, 'owned-group') as ToggleInputGroupComponent).getCheckedInputDomNodes();
 
     expect(button.disabled, isTrue);
 
@@ -954,8 +954,8 @@ main() {
       ..ownedPets = ['Dogs', 'Reptiles']);
 
     expect(button.disabled, isFalse);
-    expect((queryByTestId(renderResult, 'first-name-input') as InputElement).value, 'Jon');
-    expect((queryByTestId(renderResult, 'last-name-input') as InputElement).value, 'Snow');
+    expect((queryByTestId(renderedInstance, 'first-name-input') as InputElement).value, 'Jon');
+    expect((queryByTestId(renderedInstance, 'last-name-input') as InputElement).value, 'Snow');
 
     final checkedRadioInputs = getCheckedRadioInputs();
     expect(checkedRadioInputs.length, 1);
@@ -1072,11 +1072,11 @@ import '../component_definition.dart';
 
 main() {
   test('renders children as expected', () {
-    final renderResult = render(TodoList()());
-    final listGroup = getComponentByTestId(renderResult, 'list-group') as ListGroupComponent;
+    final renderedInstance = render(TodoList()());
+    final listGroup = getComponentByTestId(renderedInstance, 'list-group') as ListGroupComponent;
 
     void addListItem(String item) {
-      final component = getDartComponent(renderResult) as TodoListComponent;
+      final component = getDartComponent(renderedInstance) as TodoListComponent;
       component.setState(component.newState()..listItems = [...component.state.listItems, item]);
     }
 
@@ -1092,8 +1092,10 @@ main() {
 
 This is a common pattern, but has a couple of weaknesses (as far as the expectations go):
 
-1. We don't actually know that users can see the children. Children can exist with styles that prevent the node from being visible in the DOM.
-1. Assuming the children render as expected, we aren't checking what they are displaying to the user. We could do that, but it's a little more verbose so often this is as far as tests go.
+1. We don't actually know that users can see the children at all. Checking if the children exist verify that the component data structure exists as expected, but it does not check if the content is in the DOM as expected.
+1. Assuming the children are in the DOM as expected, we aren't checking what the ultimate display value of the children. For example, the node might have correctly mounted into the DOM, but work that the component did to generate the text to show might have still gone wrong.
+
+We could do that, but it's a little more verbose so often this is as far as tests go.
 
 In RTL, we can't access the component instance itself and are guided towards testing in a way that avoids these pitfalls:
 
@@ -1233,11 +1235,11 @@ import '../component_definition.dart';
 
 main() {
   test('Will show and hide content after a delay', () async {
-    final renderResult = render(Wrapper()(
+    final renderedInstance = render(Wrapper()(
       AsyncExample()(),
     ));
-    final button = queryByTestId(renderResult, 'button-to-show-element');
-    Element getHiddenElement() => queryByTestId(renderResult, 'hidden-element');
+    final button = queryByTestId(renderedInstance, 'button-to-show-element');
+    Element getHiddenElement() => queryByTestId(renderedInstance, 'hidden-element');
 
     click(button);
 
@@ -1287,7 +1289,7 @@ main() {
 }
 ```
 
-Now, RTL will check the document several times so as soon as that element appears and disappears, the test passes. This happens primary because these APIs (including the `findBy` queries) all utilitize a [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) under the hood. That observer should catch the expected change as soon as it occurs, but the APIs all use an interval as a fallback to query the DOM!
+Now, RTL will check the document several times so as soon as that element appears and disappears, the test passes. This happens primarily because these APIs (including the `findBy` queries) all utilize a [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) under the hood. That observer should catch the expected change as soon as it occurs, but the APIs all use an interval as a fallback to query the DOM!
 
 ## Documentation References
 
