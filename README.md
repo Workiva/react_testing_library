@@ -146,7 +146,7 @@ Using the [render] function, you can now generate DOM using React components and
 
 Then, you can use the [`Matcher`s][matchers] from the `matchers.dart` entrypoint to perform assertions on that DOM, and the events and user events entrypoints or whatever to interact with the DOM.
 
-<!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) --> 
+> For more in depth examples, see the [migration guides](#migration-guides).
 
 <figure>
 <figcaption>lib/src/components/greeting.dart</figcaption>

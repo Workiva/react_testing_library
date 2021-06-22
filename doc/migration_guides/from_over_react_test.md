@@ -44,10 +44,10 @@ import 'package:test/test.dart';
 void main() {
   test('', () {
     // [1] Render the component.
-    final result = rtl.render(react.input({'type': 'checkbox'}));
+    final view = rtl.render(react.input({'type': 'checkbox'}));
 
     // [2] Query for relevant nodes to test.
-    final checkbox = result.getByRole('checkbox');
+    final checkbox = view.getByRole('checkbox');
 
     // [3] Interact with the component.
     UserEvent.click(checkbox);
