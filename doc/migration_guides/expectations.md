@@ -1092,8 +1092,8 @@ main() {
 
 This is a common pattern, but has a couple of weaknesses (as far as the expectations go):
 
-1. We don't actually know that users can see the children at all. Checking if the children exist verify that the component data structure exists as expected, but it does not check if the content is in the DOM as expected.
-1. Assuming the children are in the DOM as expected, we aren't checking what the ultimate display value of the children. For example, the node might have correctly mounted into the DOM, but work that the component did to generate the text to show might have still gone wrong.
+1. We don't actually know that users can see the children at all. Checking if the children exist on `props` verifies that the component data structure exists as expected, but it does not check if the content is in the DOM as expected.
+1. Assuming the children are in the DOM as expected, we aren't checking what the ultimate display value of the children is. For example, the node might have correctly mounted into the DOM, but work that the component did to generate the text to show might still have gone wrong.
 
 We could do that, but it's a little more verbose so often this is as far as tests go.
 
