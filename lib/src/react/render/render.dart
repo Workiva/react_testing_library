@@ -183,6 +183,7 @@ class RenderResult extends ScopedQueries {
   /// > __NOTE: It's recommended to use `screen.debug` instead.__
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
+  // todo update this to print as well (also update screen.debug)
   void debug([
     Node baseElement,
     int maxLength,

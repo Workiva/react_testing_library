@@ -62,6 +62,7 @@ mixin ByRoleQueries on IQueries {
 
     return byRoleOptions;
   }
+// todo link to accessibility utilities in migration guides and other query doc comments
 
   /// Returns a single element with the given [role] value, defaulting to an [exact] match.
   ///
