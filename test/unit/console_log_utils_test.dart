@@ -24,6 +24,19 @@ import 'package:test/test.dart';
 
 import 'util/over_react_stubs.dart';
 
+// Returns whether `assert`s are enabled in the current runtime.
+//
+// Unless the Dart SDK option to enable `assert`s in dart2js is configured,
+// this can also be used to indicate whether the JS was compiled using `dartdevc`.
+bool _assertsEnabled() {
+  var assertsEnabled = false;
+  assert(assertsEnabled = true);
+  return assertsEnabled;
+}
+
+// Whether the current runtime supports `propTypes` matchers like `logsPropError`.
+bool _runtimeSupportsPropTypeWarnings() => _assertsEnabled();
+
 void main() {
   group('recordConsoleLogs', () {
     group('captures all logs correctly', () {
@@ -37,7 +50,11 @@ void main() {
           contains('act(...)'),
         ];
 
-        expect(logs, unorderedEquals([...expectedLogs, contains('shouldNeverBeNull is necessary.')]));
+        if (_runtimeSupportsPropTypeWarnings()) {
+          expect(logs, unorderedEquals([...expectedLogs, contains('shouldNeverBeNull is necessary.')]));
+        } else {
+          expect(logs, unorderedEquals(expectedLogs));
+        }
       });
 
       test('when re-rendering', () {
@@ -50,54 +67,60 @@ void main() {
           contains('And a third'),
         ];
 
-        expect(logs, unorderedEquals([...expectedLogs, contains('shouldNeverBeNull is necessary.')]));
+        if (_runtimeSupportsPropTypeWarnings()) {
+          expect(logs, unorderedEquals([...expectedLogs, contains('shouldNeverBeNull is necessary.')]));
+        } else {
+          expect(logs, unorderedEquals(expectedLogs));
+        }
       });
 
       test('with nested components', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement));
-        expect(logs, hasLength(10));
+        expect(logs, hasLength(_runtimeSupportsPropTypeWarnings() ? 10 : 8));
       });
 
       test('with nested components that are the same', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement));
-        expect(logs, hasLength(9));
+        expect(logs, hasLength(_runtimeSupportsPropTypeWarnings() ? 9 : 8));
       });
     });
 
-    group('captures errors correctly', () {
-      test('when mounting', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement),
-            configuration: ConsoleConfig.error);
+    if (_runtimeSupportsPropTypeWarnings()) {
+      group('captures errors correctly', () {
+        test('when mounting', () {
+          final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement),
+              configuration: ConsoleConfig.error);
 
-        expect(logs, hasLength(2));
-        expect(logs.firstWhere((log) => log.contains('shouldAlwaysBeFalse')), contains('should never equal true'));
+          expect(logs, hasLength(2));
+          expect(logs.firstWhere((log) => log.contains('shouldAlwaysBeFalse')), contains('should never equal true'));
+        });
+
+        test('when re-rendering', () {
+          // Will cause one error
+          final jacket = rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement);
+
+          // Should clear the error from mounting and not create any more
+          final logs = recordConsoleLogs(() => jacket.rerender(Sample({'shouldNeverBeNull': true}) as ReactElement),
+              configuration: ConsoleConfig.error);
+
+          expect(logs, hasLength(0));
+        });
+
+        test('with nested components', () {
+          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
+              configuration: ConsoleConfig.error);
+
+          expect(logs, hasLength(2));
+        });
+
+        test('with nested components that are the same', () {
+          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
+              configuration: ConsoleConfig.error);
+
+          expect(logs, hasLength(1), reason: 'React will only show a particular props error once');
+        });
       });
-
-      test('when re-rendering', () {
-        // Will cause one error
-        final jacket = rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement);
-
-        // Should clear the error from mounting and not create any more
-        final logs = recordConsoleLogs(() => jacket.rerender(Sample({'shouldNeverBeNull': true}) as ReactElement),
-            configuration: ConsoleConfig.error);
-
-        expect(logs, hasLength(0));
-      });
-
-      test('with nested components', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
-            configuration: ConsoleConfig.error);
-
-        expect(logs, hasLength(2));
-      });
-
-      test('with nested components that are the same', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
-            configuration: ConsoleConfig.error);
-
-        expect(logs, hasLength(1), reason: 'React will only show a particular props error once');
-      });
-    });
+    }
 
     group('captures logs correctly', () {
       test('when mounting', () {
@@ -165,39 +188,42 @@ void main() {
       });
     });
 
-    test('handles errors as expected when mounting', () {
-      final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
-          configuration: ConsoleConfig.error);
+    if (_runtimeSupportsPropTypeWarnings()) {
+      test('handles errors as expected when mounting', () {
+        final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
+            configuration: ConsoleConfig.error);
 
-      expect(logs, hasLength(2));
-    });
-
-    group('handles propType warnings as expected with shouldResetWarningCache', () {
-      test('left as true', () {
-        final logs =
-            recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.error);
-
-        expect(logs, hasLength(1));
+        expect(logs, hasLength(2));
       });
 
-      test('set to false', () {
-        var logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.error);
+      group('handles propType warnings as expected with shouldResetWarningCache', () {
+        test('left as true', () {
+          final logs =
+              recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.error);
 
-        expect(logs, hasLength(1));
+          expect(logs, hasLength(1));
+        });
 
-        logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement),
-            configuration: ConsoleConfig.error, shouldResetPropTypesWarningCache: false);
-        expect(logs, hasLength(0),
-            reason: 'Because the last test triggered the same propType warning, '
-                'without resetting the cache the warning will not be logged.');
+        test('set to false', () {
+          var logs =
+              recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.error);
 
-        PropTypes.resetWarningCache();
+          expect(logs, hasLength(1));
 
-        logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement),
-            configuration: ConsoleConfig.error, shouldResetPropTypesWarningCache: false);
-        expect(logs, hasLength(1));
+          logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement),
+              configuration: ConsoleConfig.error, shouldResetPropTypesWarningCache: false);
+          expect(logs, hasLength(0),
+              reason: 'Because the last test triggered the same propType warning, '
+                  'without resetting the cache the warning will not be logged.');
+
+          PropTypes.resetWarningCache();
+
+          logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement),
+              configuration: ConsoleConfig.error, shouldResetPropTypesWarningCache: false);
+          expect(logs, hasLength(1));
+        });
       });
-    });
+    }
   });
 }
 
