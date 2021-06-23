@@ -18,11 +18,13 @@
 @JS()
 library react_testing_library.src.react.render.render;
 
+import 'dart:async';
 import 'dart:html' show DocumentFragment, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
-import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
+// ignore: invalid_use_of_visible_for_testing_member
+import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement, componentZone;
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:test/test.dart' show addTearDown;
@@ -115,6 +117,9 @@ RenderResult render(
   bool autoTearDown = true,
   void Function() onDidTearDown,
 }) {
+  // ignore: invalid_use_of_visible_for_testing_member
+  componentZone = Zone.current;
+
   final renderOptions = RenderOptions()..hydrate = hydrate;
   if (container != null) renderOptions.container = container;
   if (baseElement != null) renderOptions.baseElement = baseElement;
