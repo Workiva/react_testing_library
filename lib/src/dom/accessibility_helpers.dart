@@ -22,9 +22,13 @@ import 'dart:html' show Node, Element;
 import 'package:js/js.dart';
 import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
+import 'package:react_testing_library/src/util/console_log_utils.dart';
 
 Map<String, List> getRoles(Node container, {bool hidden = false}) =>
     Map.from(JsBackedMap.fromJs(_getRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)));
+
+void logRoles(Node dom, {bool hidden = false}) =>
+    recordConsoleLogs(() => _logRoles(dom, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)).forEach(print);
 
 @JS('rtl.getRoles')
 external JsMap _getRoles(
@@ -34,3 +38,9 @@ external JsMap _getRoles(
 
 @JS('rtl.isInaccessible')
 external bool isInaccessible(Element element);
+
+@JS('rtl.logRoles')
+external JsMap _logRoles(
+  Node dom,
+  JsMap options,
+);
