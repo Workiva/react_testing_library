@@ -24,11 +24,27 @@ import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 import 'package:react_testing_library/src/util/console_log_utils.dart';
 
+/// Returns a map, indexed by role name, with each value being an array of
+/// elements in [container] which have that implicit ARIA role.
+///
+/// See [ARIA in HTML](https://www.w3.org/TR/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html) for more information about implicit ARIA roles.
+///
+/// > Learn more: <https://testing-library.com/docs/dom-testing-library/api-accessibility/#getroles>
+///
+/// {@category Accessibility}
 Map<String, List> getRoles(Node container, {bool hidden = false}) =>
     Map.from(JsBackedMap.fromJs(_getRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)));
 
-void logRoles(Node dom, {bool hidden = false}) =>
-    recordConsoleLogs(() => _logRoles(dom, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)).forEach(print);
+/// Prints a list of all the implicit ARIA roles within [container], each role containing a list of all of the
+/// nodes which match that role.
+///
+/// This can be helpful for finding ways to query the DOM under test with [ByRole queries](https://workiva.github.io/react_testing_library/topics/ByRole-topic.html).
+///
+/// > Learn more: <https://testing-library.com/docs/dom-testing-library/api-accessibility/#logroles>
+///
+/// {@category Accessibility}
+void logRoles(Node container, {bool hidden = false}) =>
+    recordConsoleLogs(() => _logRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)).forEach(print);
 
 @JS('rtl.getRoles')
 external JsMap _getRoles(
@@ -36,6 +52,15 @@ external JsMap _getRoles(
   JsMap options,
 );
 
+/// Returns whether or not [element] should be excluded from the accessibility
+/// API by the browser.
+///
+/// It implements every MUST criteria from the [Excluding Elements from the Accessibility Tree](https://www.w3.org/TR/wai-aria-1.2/#tree_exclusion)
+/// section in WAI-ARIA 1.2 with the exception of checking the role attribute.
+///
+/// > Learn more: <https://testing-library.com/docs/dom-testing-library/api-accessibility/#isinaccessible>
+///
+/// {@category Accessibility}
 @JS('rtl.isInaccessible')
 external bool isInaccessible(Element element);
 

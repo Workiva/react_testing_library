@@ -19,7 +19,6 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/src/dom/accessibility_helpers.dart';
 import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart';
 
@@ -36,7 +35,7 @@ void main() {
             react.a({'href': '/'}),
           ]) as ReactElement);
           expect(
-            getRoles(view.container),
+            rtl.getRoles(view.container),
             equals({
               // There are two div elements because the container is also a div element.
               'generic': [isA<DivElement>(), isA<DivElement>()],
@@ -54,7 +53,7 @@ void main() {
             react.h1({}),
           ]) as ReactElement);
           expect(
-            getRoles(rtl.screen.container),
+            rtl.getRoles(rtl.screen.container),
             equals({
               'document': [isA<BodyElement>()],
               // There are two div elements because the container is also a div element.
@@ -73,7 +72,7 @@ void main() {
           ]) as ReactElement);
           final button = view.getByRole('button');
           expect(
-            getRoles(button),
+            rtl.getRoles(button),
             equals({
               'button': [isA<ButtonElement>()],
             }),
@@ -93,7 +92,7 @@ void main() {
 
         test('when `hidden` option is false (default)', () {
           expect(
-            getRoles(view.container),
+            rtl.getRoles(view.container),
             equals({
               // There are three div elements because the container is also a div element.
               'generic': [isA<DivElement>(), isA<DivElement>(), isA<DivElement>()],
@@ -104,7 +103,7 @@ void main() {
 
         test('when `hidden` option is true', () {
           expect(
-            getRoles(view.container, hidden: true),
+            rtl.getRoles(view.container, hidden: true),
             equals({
               // There are four div elements because the container is also a div element.
               'generic': [isA<DivElement>(), isA<DivElement>(), isA<DivElement>(), isA<DivElement>()],
@@ -122,7 +121,7 @@ void main() {
           react.a({}),
         ]) as ReactElement);
         expect(
-          getRoles(view.container),
+          rtl.getRoles(view.container),
           equals({
             // There are two div elements because the container is also a div element.
             'generic': [isA<DivElement>(), isA<DivElement>()],
@@ -156,29 +155,31 @@ void main() {
       });
 
       test('for inaccessible elements', () {
-        expect(isInaccessible(view.getByTestId('no-display')), isTrue,
+        expect(rtl.isInaccessible(view.getByTestId('no-display')), isTrue,
             reason: 'the `display` style attribute is set to `none`');
-        expect(isInaccessible(view.getByRole('textbox', hidden: true)), isTrue, reason: 'dependent of a hidden div');
-
-        expect(isInaccessible(view.getByTestId('visibility-hidden')), isTrue,
-            reason: 'the `visibility` style attribute is set to `hidden`');
-        expect(isInaccessible(view.getByRole('combobox', hidden: true)), isTrue, reason: 'dependent of a hidden div');
-
-        expect(isInaccessible(view.getByTestId('hidden')), isTrue, reason: 'the `hidden` prop is set to true');
-        expect(isInaccessible(view.getByRole('button', name: 'Hidden Button', hidden: true)), isTrue,
+        expect(rtl.isInaccessible(view.getByRole('textbox', hidden: true)), isTrue,
             reason: 'dependent of a hidden div');
 
-        expect(isInaccessible(view.getByTestId('aria-hidden')), isTrue,
+        expect(rtl.isInaccessible(view.getByTestId('visibility-hidden')), isTrue,
+            reason: 'the `visibility` style attribute is set to `hidden`');
+        expect(rtl.isInaccessible(view.getByRole('combobox', hidden: true)), isTrue,
+            reason: 'dependent of a hidden div');
+
+        expect(rtl.isInaccessible(view.getByTestId('hidden')), isTrue, reason: 'the `hidden` prop is set to true');
+        expect(rtl.isInaccessible(view.getByRole('button', name: 'Hidden Button', hidden: true)), isTrue,
+            reason: 'dependent of a hidden div');
+
+        expect(rtl.isInaccessible(view.getByTestId('aria-hidden')), isTrue,
             reason: 'the `aria-hidden` prop is set to true');
-        expect(isInaccessible(view.getByText('Hidden Text')), isTrue, reason: 'dependent of a hidden div');
+        expect(rtl.isInaccessible(view.getByText('Hidden Text')), isTrue, reason: 'dependent of a hidden div');
       });
 
       test('for accessible elements', () {
-        expect(isInaccessible(view.getByRole('img')), isFalse);
-        expect(isInaccessible(view.getByRole('button', name: 'Click me!')), isFalse);
-        expect(isInaccessible(view.getByText('Hello World!')), isFalse);
+        expect(rtl.isInaccessible(view.getByRole('img')), isFalse);
+        expect(rtl.isInaccessible(view.getByRole('button', name: 'Click me!')), isFalse);
+        expect(rtl.isInaccessible(view.getByText('Hello World!')), isFalse);
         expect(
-          isInaccessible(view.getByTestId('i-element')),
+          rtl.isInaccessible(view.getByTestId('i-element')),
           isFalse,
           reason: 'still returns false even though the element has no role '
               'because isInaccessible does not check the role attribute',
@@ -189,7 +190,7 @@ void main() {
     group('getRoles', () {
       Map<String, String> _getLoggedRoleMatches(Node dom, {bool hidden = false}) {
         final rolePattern = RegExp(r'(\w*):\n\n((.|(\n(?!-)))*)\n\n---');
-        final logs = recordConsoleLogs(() => logRoles(dom, hidden: hidden));
+        final logs = recordConsoleLogs(() => rtl.logRoles(dom, hidden: hidden));
         expect(logs, equals([logs.first, logs.first]),
             reason: 'logRoles prints the same roles in both the terminal and the console');
 

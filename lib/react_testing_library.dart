@@ -18,6 +18,7 @@
 /// the [JS `react-testing-library` package](https://testing-library.com/docs/react-testing-library/intro)
 library react_testing_library;
 
+export 'package:react_testing_library/dom/accessibility.dart';
 export 'package:react_testing_library/dom/async.dart';
 export 'package:react_testing_library/dom/configure.dart';
 export 'package:react_testing_library/dom/debugging.dart';
