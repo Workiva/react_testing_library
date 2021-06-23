@@ -49,8 +49,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
 ///     final view = rtl.render(react.div({},
-///       react.input({'type': 'checkbox', 'name': 'pepperoni', 'checked': true}),
-///       react.input({'type': 'checkbox', 'name': 'pineapple'}),
+///       react.input({'type': 'checkbox', 'aria-label': 'pepperoni', 'checked': true}),
+///       react.input({'type': 'checkbox', 'aria-label': 'pineapple'}),
 ///       react.div({'role': 'checkbox', 'aria-checked': 'true'}, 'Red Sauce'),
 ///       react.div({'role': 'checkbox', 'aria-checked': 'false'}, 'White Sauce'),
 ///       react.div({'role': 'switch', 'aria-checked': 'true'}, 'Mozzarella'),
@@ -58,8 +58,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final inputCheckboxChecked = view.getAllByRole('checkbox').first;
-///     final inputCheckboxUnchecked = view.getAllByRole('checkbox')[1];
+///     final inputCheckboxChecked = view.getByRole('checkbox', name: 'pepperoni');
+///     final inputCheckboxUnchecked = view.getByRole('checkbox', name: 'pineapple');
 ///     final ariaCheckboxChecked = view.getByRole('checkbox', name: 'Red Sauce');
 ///     final ariaCheckboxUnchecked = view.getByRole('checkbox', name: 'White Sauce');
 ///     final ariaSwitchChecked = view.getByRole('switch', name: 'Mozzarella');
