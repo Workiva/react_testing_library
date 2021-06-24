@@ -569,15 +569,15 @@
     <li class="section-title inherited">
       <a href="../../user_event/UserEvent-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -603,7 +603,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L961"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L985"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">tab</span> method 
 </h1></div>
 
@@ -611,8 +611,8 @@
       
 
 <span class="returntype">void</span>
-<span class="name ">tab</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="tab-param-shift">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">shift</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="tab-param-focusTrap"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">focusTrap</span>}</span></li>
+<span class="name ">tab</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="tab-param-shift">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">shift</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="tab-param-focusTrap"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">focusTrap</span>}</span></li>
 </ol>)
 
       
@@ -629,7 +629,7 @@
 <p>Default: <code>false</code></p>
 <p>Set <code>shift</code> to <code>true</code> to invert the tab direction.</p>
 <h3 id="focustrap"><code>focusTrap</code></h3>
-<p>Default: <a href="https://api.dart.dev/stable/2.13.1/dart-html/HtmlDocument/body.html">HtmlDocument.body</a></p>
+<p>Default: <a href="https://api.dart.dev/stable/2.13.3/dart-html/HtmlDocument/body.html">HtmlDocument.body</a></p>
 <p>Set <code>focusTrap</code> to restrict the tabbing within a certain container.</p>
 <h2 id="example">Example</h2>
 <pre class="language-html"><code class="language-html">&lt;div&gt;
@@ -640,7 +640,9 @@
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+<pre class="language-dart"><code class="language-dart">import 'dart:html';
+
+import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show isFocused;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
@@ -649,7 +651,7 @@ import 'package:test/test.dart';
 void main() {
   test('', () {
     // Render the DOM shown in the example snippet above.
-    final result = rtl.render(react.div({}, [
+    final view = rtl.render(react.div({}, [
       react.input({}),
       react.div({
         'data-test-id': 'container'
@@ -660,8 +662,8 @@ void main() {
     ]));
 
     // Use react_testing_library queries to store references to the nodes.
-    final inputs = result.getAllByRole('textbox');
-    final container = result.getByTestId('container');
+    final inputs = view.getAllByRole('textbox');
+    final container = view.getByTestId('container');
 
     // Use `isFocused` matcher to verify the currently focused element.
     expect(document.body, isFocused);

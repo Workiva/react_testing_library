@@ -718,23 +718,23 @@ import 'package:your_package/src/components/greeting.dart';
 
 main() {
   group('Greeting', () {
-    rtl.RenderResult renderResult;
+    rtl.RenderResult view;
     tearDown(() {
-      renderResult = null;
+      view = null;
     });
     
     group('renders the expected elements:', () {
       group('a &lt;header&gt;', () {
-        HeaderElement headerElement;
+        HeadingElement headerElement;
         
         setUp(() {
-          renderResult = rtl.render((Greeting()
+          view = rtl.render((Greeting()
             ..heading = 'Hello There!'
             ..subHeading = 'Welcome to the unit testing party.'
             ..getStartedRoute = '/start/partying'
           )());
           
-          headerElement = renderResult.getByRole('group');
+          headerElement = view.getByRole('group');
         });
         
         test('with a child &lt;h1&gt; with a text value equal to props.heading', () {
@@ -757,7 +757,7 @@ main() {
 }
 </code></pre></figure>
 <blockquote>
-<p><a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">Read more about how queries are scoped to both the <code>renderResult</code> and return value of <code>within()</code>in the above example</a></p>
+<p><a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">Read more about how queries are scoped to both the <code>view</code> and return value of <code>within()</code>in the above example</a></p>
 </blockquote>
 <h2 id="dart--js-api-parity">Dart / JS API Parity</h2>
 <p>The <code>react_testing_library</code> Dart package strives to maintain API parity with the analogous JS <code>testing-library</code> packages within reason. However, there are certain differences that are either unavoidable, or intentional for the purposes of building Dart APIs that are easy to use and reason about.</p>

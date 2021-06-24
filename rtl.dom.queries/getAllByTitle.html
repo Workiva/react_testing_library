@@ -561,6 +561,7 @@
     <ol>
   <li class="section-title"><a href="../rtl.dom.queries/rtl.dom.queries-library.html#classes">Classes</a></li>
   <li><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></li>
+  <li><a href="../rtl.dom.queries/ScreenQueries-class.html">ScreenQueries</a></li>
   <li><a href="../rtl.dom.queries/WithinQueries-class.html">WithinQueries</a></li>
 
 
@@ -631,7 +632,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L1852"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L1904"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">getAllByTitle&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;</span> function 
  
     <span class="category bytitle cp-8 linked" title="This is part of the ByTitle Topic."><a href="../topics/ByTitle-topic.html">ByTitle</a></span>
@@ -641,10 +642,10 @@
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.13.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
-<span class="name ">getAllByTitle</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="getAllByTitle-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.13.3/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+<span class="name ">getAllByTitle</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="getAllByTitle-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
 <li><span class="parameter" id="getAllByTitle-param-title"><span class="type-annotation">dynamic</span> <span class="parameter-name">title</span>, </span></li>
-<li><span class="parameter" id="getAllByTitle-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="getAllByTitle-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="getAllByTitle-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<ol class="parameter-list"><li><span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span></li>
 </ol>
 )}</span></li>
@@ -657,6 +658,9 @@
 defaulting to an <code>exact</code> match.</p>
 <p>Throws if no elements are found within the provided <code>container</code>.
 Use <a href="../rtl.dom.queries/queryAllByTitle.html">queryAllByTitle</a> if a RTE is not expected.</p>
+<p><strong>Prefer</strong> using <a href="https://workiva.github.io/react_testing_library/topics/ByRole-topic.html"><code>ByRole</code> queries</a>
+when possible in order to query for elements in a way that
+<a href="https://testing-library.com/docs/queries/about#priority">most reflects how the user would interact with them</a>.</p>
 <blockquote>
 <p>Related: <a href="../rtl.dom.queries/getByTitle.html">getByTitle</a></p>
 </blockquote>
@@ -677,13 +681,14 @@ and <code>findAllByTitle</code>.</p>
 &lt;/svg&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 main() {
   test('', () {
     // Render the DOM shown in the example snippet above
-    final result = rtl.render(react.div({},
+    final view = rtl.render(react.div({},
       react.span({
         'title': 'Delete',
         'id': '2',
@@ -694,8 +699,8 @@ main() {
       ),
     ));
 
-    final deleteElement = result.getByTitle('Delete');
-    final closeElement = result.getByTitle('Close');
+    expect(view.getByTitle('Delete'), isInTheDocument);
+    expect(view.getByTitle('Close'), isInTheDocument);
   });
 }
 </code></pre>

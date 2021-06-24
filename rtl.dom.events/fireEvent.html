@@ -590,9 +590,9 @@
   </ol>
 </div>
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.13.1/dart-core/bool-class.html">bool</a></span>
-<span class="name ">fireEvent</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fireEvent-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span></li>
-<li><span class="parameter" id="fireEvent-param-event"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Event-class.html">Event</a></span> <span class="parameter-name">event</span></span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span>
+<span class="name ">fireEvent</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fireEvent-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span></li>
+<li><span class="parameter" id="fireEvent-param-event"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Event-class.html">Event</a></span> <span class="parameter-name">event</span></span></li>
 </ol>)
 
     </section>
@@ -615,10 +615,10 @@ import 'package:test/test.dart';
 void main() {
   test('', () {
     // Render the DOM shown in the example snippet above.
-    final result = rtl.render(react.button({}, 'Submit'));
+    final view = rtl.render(react.button({}, 'Submit'));
 
     // Use react_testing_library queries to store a reference to the node.
-    final button = result.getByRole('button');
+    final button = view.getByRole('button', name: 'Submit');
 
     // Use `fireEvent` to create a click event, and emit it on the node.
     rtl.fireEvent(

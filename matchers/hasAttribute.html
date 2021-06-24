@@ -603,7 +603,7 @@
         
 
 <span class="returntype"><a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
-<span class="name ">hasAttribute</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="hasAttribute-param-attribute"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">attribute</span>, </span></li>
+<span class="name ">hasAttribute</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="hasAttribute-param-attribute"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/String-class.html">String</a></span> <span class="parameter-name">attribute</span>, </span></li>
 <li><span class="parameter" id="hasAttribute-param-valueOrMatcher">[<span class="type-annotation">dynamic</span> <span class="parameter-name">valueOrMatcher</span> = <span class="default-value">isNotNull</span>]</span></li>
 </ol>)
 
@@ -625,12 +625,12 @@ import 'package:test/test.dart';
 main() {
   test('', () {
     // Render the DOM shown in the example snippet above
-    final result = rtl.render(
+    final view = rtl.render(
       react.button({'type': 'submit', 'aria-label': 'Submit the form'}, 'ok'),
     );
 
     // Use react_testing_library queries to store references to the node(s)
-    final button = result.getByRole('button', name: 'ok');
+    final button = view.getByRole('button', name: 'ok');
 
     // Use the `hasAttribute` matcher as the second argument of `expect()`
     expect(button, hasAttribute('type', 'submit'));

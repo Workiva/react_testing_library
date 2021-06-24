@@ -561,6 +561,7 @@
     <ol>
   <li class="section-title"><a href="../rtl.dom.queries/rtl.dom.queries-library.html#classes">Classes</a></li>
   <li><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></li>
+  <li><a href="../rtl.dom.queries/ScreenQueries-class.html">ScreenQueries</a></li>
   <li><a href="../rtl.dom.queries/WithinQueries-class.html">WithinQueries</a></li>
 
 
@@ -631,16 +632,16 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/screen.dart#L28"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/within.dart#L89"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-top-level-property">screen</span> top-level property 
  
     <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
 </h1></div>
 
         <section class="multi-line-signature">
-          <a href="../rtl.dom.queries/WithinQueries-class.html">WithinQueries</a>
+          <a href="../rtl.dom.queries/ScreenQueries-class.html">ScreenQueries</a>
           <span class="name ">screen</span>
-          <div class="features">final</div>
+          <div class="features">read / write</div>
 
         </section>
         
@@ -656,8 +657,7 @@ but the scope/container is defaulted to <code>document.body</code>.</p>
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">&#47;&#47; ignore: type_annotate_public_apis
-final screen = within(document.body);</code></pre>
+  <pre class="language-dart"><code class="language-dart">ScreenQueries screen = ScreenQueries._();</code></pre>
 </section>
 
 

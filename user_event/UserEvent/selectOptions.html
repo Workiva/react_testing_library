@@ -569,15 +569,15 @@
     <li class="section-title inherited">
       <a href="../../user_event/UserEvent-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -603,7 +603,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L788"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L808"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">selectOptions</span> method 
 </h1></div>
 
@@ -611,9 +611,9 @@
       
 
 <span class="returntype">void</span>
-<span class="name ">selectOptions</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="selectOptions-param-selectElement"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/SelectElement-class.html">SelectElement</a></span> <span class="parameter-name">selectElement</span>, </span></li>
-<li><span class="parameter" id="selectOptions-param-values"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/List-class.html">List</a></span> <span class="parameter-name">values</span>, </span></li>
-<li><span class="parameter" id="selectOptions-param-clickInit">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">clickInit</span>}</span></li>
+<span class="name ">selectOptions</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="selectOptions-param-selectElement"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/SelectElement-class.html">SelectElement</a></span> <span class="parameter-name">selectElement</span>, </span></li>
+<li><span class="parameter" id="selectOptions-param-values"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/List-class.html">List</a></span> <span class="parameter-name">values</span>, </span></li>
+<li><span class="parameter" id="selectOptions-param-clickInit">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">clickInit</span>}</span></li>
 </ol>)
 
       
@@ -622,7 +622,7 @@
     
 <section class="desc markdown">
   <p>Selects the specified <code>values</code> of <code>selectElement</code>.</p>
-<p><code>values</code> can either be a list of values or <a href="https://api.dart.dev/stable/2.13.1/dart-html/OptionElement-class.html">OptionElement</a>s.</p>
+<p><code>values</code> can either be a list of values or <a href="https://api.dart.dev/stable/2.13.3/dart-html/OptionElement-class.html">OptionElement</a>s.</p>
 <blockquote>
 <p>Related: <a href="../../user_event/UserEvent/deselectOptions.html">UserEvent.deselectOptions</a></p>
 </blockquote>
@@ -641,7 +641,9 @@
   &lt;option value="topping5"&gt;Bacon&lt;/option&gt;
 &lt;/select&gt;
 </code></pre>
-<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+<pre class="language-dart"><code class="language-dart">import 'dart:html';
+
+import 'package:react/react.dart' as react;
 import 'package:react_testing_library/matchers.dart' show hasValue;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
@@ -650,7 +652,7 @@ import 'package:test/test.dart';
 void main() {
   test('', () {
     // Render the DOM shown in the example snippet above.
-    final result = rtl.render(react.select(
+    final view = rtl.render(react.select(
       {'multiple': true},
       [
         react.option({'value': 'topping1'}, 'Cheese'),
@@ -662,11 +664,11 @@ void main() {
     ));
 
     // Use react_testing_library queries to store references to the nodes.
-    final select = result.getByRole('listbox') as SelectElement;
+    final select = view.getByRole('listbox') as SelectElement;
 
     // Use `UserEvent.selectOptions` to simulate a user selecting options from a list.
     UserEvent.selectOptions(select, ['topping1']);
-    UserEvent.selectOptions(select, [result.getByText('Olives'), result.getByText('Bacon')]);
+    UserEvent.selectOptions(select, [view.getByText('Olives'), view.getByText('Bacon')]);
 
     // Use the `hasValue` matcher to verify the value of the select.
     expect(select, hasValue(['topping1', 'topping3', 'topping5']));

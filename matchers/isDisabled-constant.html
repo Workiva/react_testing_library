@@ -593,7 +593,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/is_disabled.dart#L67"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/is_disabled.dart#L69"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-top-level-property">isDisabled</span> top-level constant 
  
     <span class="category matchers cp-10 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
@@ -609,8 +609,11 @@
 <section class="desc markdown">
   <p>Allows you to assert whether an element is disabled from the user's perspective.</p>
 <p>It matches if the element is an element that supports the <code>disabled</code> attribute, and the <code>disabled</code> attribute
-is specified, or the element is a descendant of a <a href="https://api.dart.dev/stable/2.13.1/dart-html/FormElement-class.html">FormElement</a> with a <code>disabled</code> attribute.</p>
+is specified, or the element is a descendant of a <a href="https://api.dart.dev/stable/2.13.3/dart-html/FormElement-class.html">FormElement</a> with a <code>disabled</code> attribute.</p>
 <p>Similar to <a href="https://github.com/testing-library/jest-dom#tobedisabled">jest-dom's <code>toBeDisabled</code> matcher</a>.</p>
+<blockquote>
+<p>Related: <a href="../matchers/isEnabled-constant.html">isEnabled</a></p>
+</blockquote>
 <h2 id="examples">Examples</h2>
 <pre class="language-html"><code class="language-html">&lt;div&gt;
   &lt;button type="submit" disabled&gt;submit&lt;/button&gt;
@@ -626,7 +629,7 @@ import 'package:test/test.dart';
 main() {
   test('', () {
     // Render the DOM shown in the example snippet above
-    final result = rtl.render(react.div({},
+    final view = rtl.render(react.div({},
       react.button({'type': 'submit', 'disabled': true}, 'submit'),
       react.fieldset({'disabled': true},
         react.input({'type': 'text', 'value': 'jane.doe'}),
@@ -635,9 +638,9 @@ main() {
     ));
 
     // Use the `isDisabled` matcher as the second argument of `expect()`
-    expect(result.getByRole('button'), isDisabled);
-    expect(result.getByRole('textbox'), isDisabled);
-    expect(result.getByText('link'), isNot(isDisabled)); // Anchor elements cannot be disabled
+    expect(view.getByRole('button'), isDisabled);
+    expect(view.getByRole('textbox'), isDisabled);
+    expect(view.getByRole('link'), isEnabled); // Anchor elements cannot be disabled
   });
 }
 </code></pre>

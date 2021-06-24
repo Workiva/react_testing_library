@@ -569,15 +569,15 @@
     <li class="section-title inherited">
       <a href="../../user_event/UserEvent-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../user_event/UserEvent-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -603,7 +603,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L1030"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L1054"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">hover</span> method 
 </h1></div>
 
@@ -611,8 +611,8 @@
       
 
 <span class="returntype">void</span>
-<span class="name ">hover</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="hover-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span></li>
-<li><span class="parameter" id="hover-param-eventInit">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">eventInit</span>}</span></li>
+<span class="name ">hover</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="hover-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span>, </span></li>
+<li><span class="parameter" id="hover-param-eventInit">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">eventInit</span>}</span></li>
 </ol>)
 
       
@@ -658,17 +658,17 @@ void main() {
     });
 
     // Render the DOM shown in the example snippet above.
-    final result = rtl.render(HoverButton({}));
+    final view = rtl.render(HoverButton({}));
 
     // Use react_testing_library queries to store references to the node.
-    final button = result.getByRole('button');
-    expect(result.queryByText('Hello!'), isNull, reason: 'sanity check');
+    final button = view.getByRole('button');
+    expect(view.queryByText('Hello!'), isNull, reason: 'sanity check');
 
     // Use `UserEvent.hover` to simulate a user mousing over a button.
     UserEvent.hover(button);
 
     // Use `isInTheDocument` matcher to verify that the new element is present.
-    expect(result.getByText('Hello!'), isInTheDocument);
+    expect(view.getByText('Hello!'), isInTheDocument);
   });
 }
 </code></pre>

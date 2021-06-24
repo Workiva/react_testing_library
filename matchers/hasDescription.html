@@ -604,7 +604,7 @@
 
 <span class="returntype"><a href="https://pub.dev/documentation/matcher/0.12.10/matcher/Matcher-class.html">Matcher</a></span>
 <span class="name ">hasDescription</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="hasDescription-param-expectedDescription">[<span class="type-annotation">dynamic</span> <span class="parameter-name">expectedDescription</span>, </span></li>
-<li><span class="parameter" id="hasDescription-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span></li>
+<li><span class="parameter" id="hasDescription-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span></li>
 </ol>)
 
     </section>
@@ -639,7 +639,7 @@ import 'package:test/test.dart';
 main() {
   test('', () {
     // Render the DOM shown in the example snippet above
-    final result = rtl.render(react.div({},
+    final view = rtl.render(react.div({},
       react.button({
         'aria-label': 'Close',
         'aria-describedby': 'description-close',
@@ -649,8 +649,8 @@ main() {
     ));
 
     // Use react_testing_library queries to store references to the node(s)
-    const closeButton = result.getByRole('button', {name: 'Close'});
-    const deleteButton = result.getByRole('button', {name: 'Delete'});
+    final closeButton = view.getByRole('button', name: 'Close');
+    final deleteButton = view.getByRole('button', name: 'Delete');
 
     // Use the `hasDescription` matcher as the second argument of `expect()`
     expect(closeButton, hasDescription('Closing will discard any changes'));

@@ -629,9 +629,9 @@ import 'package:test/test.dart';
 main() {
   test('', () {
     // Render the DOM shown in the example snippet above
-    final result = rtl.render(react.div({},
-      react.input({'type': 'checkbox', 'name': 'pepperoni', 'checked': true}),
-      react.input({'type': 'checkbox', 'name': 'pineapple'}),
+    final view = rtl.render(react.div({},
+      react.input({'type': 'checkbox', 'aria-label': 'pepperoni', 'checked': true}),
+      react.input({'type': 'checkbox', 'aria-label': 'pineapple'}),
       react.div({'role': 'checkbox', 'aria-checked': 'true'}, 'Red Sauce'),
       react.div({'role': 'checkbox', 'aria-checked': 'false'}, 'White Sauce'),
       react.div({'role': 'switch', 'aria-checked': 'true'}, 'Mozzarella'),
@@ -639,12 +639,12 @@ main() {
     ));
 
     // Use react_testing_library queries to store references to the node(s)
-    const inputCheckboxChecked = result.getByRole('checkbox', name: 'pepperoni');
-    const inputCheckboxUnchecked = result.getByRole('checkbox', name: 'pineapple');
-    const ariaCheckboxChecked = result.getByRole('checkbox', name: 'Red Sauce');
-    const ariaCheckboxUnchecked = result.getByRole('checkbox', name: 'White Sauce');
-    const ariaSwitchChecked = result.getByRole('switch', name: 'Mozzarella');
-    const ariaSwitchUnchecked = result.getByRole('switch', name: 'Cheddar');
+    final inputCheckboxChecked = view.getByRole('checkbox', name: 'pepperoni');
+    final inputCheckboxUnchecked = view.getByRole('checkbox', name: 'pineapple');
+    final ariaCheckboxChecked = view.getByRole('checkbox', name: 'Red Sauce');
+    final ariaCheckboxUnchecked = view.getByRole('checkbox', name: 'White Sauce');
+    final ariaSwitchChecked = view.getByRole('switch', name: 'Mozzarella');
+    final ariaSwitchUnchecked = view.getByRole('switch', name: 'Cheddar');
 
     // Use the `isChecked` matcher as the second argument of `expect()`
     expect(inputCheckboxChecked, isChecked);

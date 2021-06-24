@@ -561,6 +561,7 @@
     <ol>
   <li class="section-title"><a href="../rtl.dom.queries/rtl.dom.queries-library.html#classes">Classes</a></li>
   <li><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></li>
+  <li><a href="../rtl.dom.queries/ScreenQueries-class.html">ScreenQueries</a></li>
   <li><a href="../rtl.dom.queries/WithinQueries-class.html">WithinQueries</a></li>
 
 
@@ -631,7 +632,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L337"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L355"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">queryByDisplayValue&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;</span> function 
  
     <span class="category bydisplayvalue cp-2 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
@@ -642,9 +643,9 @@
         
 
 <span class="returntype">E</span>
-<span class="name ">queryByDisplayValue</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="queryByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<span class="name ">queryByDisplayValue</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="queryByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
 <li><span class="parameter" id="queryByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span></li>
-<li><span class="parameter" id="queryByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="queryByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="queryByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<ol class="parameter-list"><li><span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span></li>
 </ol>
 )}</span></li>
@@ -653,10 +654,13 @@
     </section>
     
 <section class="desc markdown">
-  <p>Returns a single <a href="https://api.dart.dev/stable/2.13.1/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.13.1/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.13.1/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
+  <p>Returns a single <a href="https://api.dart.dev/stable/2.13.3/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.13.3/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.13.3/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
 defaulting to an <code>exact</code> match.</p>
 <p>Returns <code>null</code> if no element is found within the provided <code>container</code>.
 Use <a href="../rtl.dom.queries/getByDisplayValue.html">getByDisplayValue</a> if a RTE is expected.</p>
+<p><strong>Prefer</strong> using <a href="https://workiva.github.io/react_testing_library/topics/ByLabelText-topic.html"><code>ByLabelText</code> queries</a>
+for form elements when possible in order to query for elements in a way that
+<a href="https://testing-library.com/docs/queries/about#priority">most reflects how the user would interact with them</a>.</p>
 <blockquote>
 <p>Related: <a href="../rtl.dom.queries/queryAllByDisplayValue.html">queryAllByDisplayValue</a></p>
 </blockquote>
@@ -680,13 +684,14 @@ and <code>findAllByDisplayValue</code>.</p>
 &lt;/select&gt;
 </code></pre>
 <pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 main() {
   test('', () {
     // Render the DOM shown in the example snippet above
-    final result = rtl.render(react.div({},
+    final view = rtl.render(react.div({},
       react.input({
         'type': 'text',
         'name': 'lastName',
@@ -704,11 +709,13 @@ main() {
       ),
     ));
 
-    final lastNameInput = result.getByDisplayValue('Norris');
-    final messageTextArea = result.getByDisplayValue('Hello World');
+    expect(view.getByDisplayValue('Norris'), isInTheDocument);
+
+    expect(view.getByDisplayValue('Hello World'), isInTheDocument);
+
     // In the case of a `&lt;select&gt;`, this will search for a `&lt;select&gt;`
     // whose selected `&lt;option&gt;` matches the given `TextMatch`.
-    final selectElement = result.getByDisplayValue('Alaska');
+    expect(view.getByDisplayValue('Alaska'), isInTheDocument);
   });
 }
 </code></pre>

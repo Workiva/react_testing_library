@@ -609,8 +609,8 @@
     </section>
     
 <section class="desc markdown">
-  <p>Allows you to check whether an <a href="https://api.dart.dev/stable/2.13.1/dart-html/Element-class.html">Element</a> does not have certain <code>classes</code> within its HTML <code>class</code> attribute.</p>
-<p><code>classes</code> can be a String of space-separated CSS classes, or an <a href="https://api.dart.dev/stable/2.13.1/dart-core/Iterable-class.html">Iterable</a> of String CSS classes.</p>
+  <p>Allows you to check whether an <a href="https://api.dart.dev/stable/2.13.3/dart-html/Element-class.html">Element</a> does not have certain <code>classes</code> within its HTML <code>class</code> attribute.</p>
+<p><code>classes</code> can be a String of space-separated CSS classes, or an <a href="https://api.dart.dev/stable/2.13.3/dart-core/Iterable-class.html">Iterable</a> of String CSS classes.</p>
 <p>Similar to using <code>.not.hasClasses(classes)</code> in the jest-dom JS API.</p>
 <h2 id="examples">Examples</h2>
 <pre class="language-html"><code class="language-html">&lt;button class="btn extra btn-danger"&gt;Delete&lt;/button&gt;
@@ -623,14 +623,14 @@ import 'package:test/test.dart';
 main() {
   test('', () {
     // Render the DOM shown in the example snippet above
-    final result = rtl.render(
+    final view = rtl.render(
       react.button({'className': 'btn extra btn-danger'},
         'Delete',
       ),
     );
 
     // Use react_testing_library queries to store references to the node(s)
-    final deleteButton = result.getByRole('button', name: 'Delete');
+    final deleteButton = view.getByRole('button', name: 'Delete');
 
     // Use the `excludesClasses` matcher as the second argument of `expect()`
     expect(deleteButton, excludesClasses('not-there'));

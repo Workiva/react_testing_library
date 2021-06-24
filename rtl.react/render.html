@@ -577,7 +577,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/react/render/render.dart#L107"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/react/render/render.dart#L106"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">render</span> function 
  
 </h1></div>
@@ -587,11 +587,11 @@
 
 <span class="returntype"><a href="../rtl.react/RenderResult-class.html">RenderResult</a></span>
 <span class="name ">render</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="render-param-ui"><span class="type-annotation"><a href="https://pub.dev/documentation/react/6.0.1/react_client.react_interop/ReactElement-class.html">ReactElement</a></span> <span class="parameter-name">ui</span>, </span></li>
-<li><span class="parameter" id="render-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
-<li><span class="parameter" id="render-param-baseElement"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">baseElement</span>, </span></li>
-<li><span class="parameter" id="render-param-hydrate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hydrate</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="render-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<li><span class="parameter" id="render-param-baseElement"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">baseElement</span>, </span></li>
+<li><span class="parameter" id="render-param-hydrate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hydrate</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="render-param-wrapper"><span class="type-annotation">dynamic</span> <span class="parameter-name">wrapper</span>, </span></li>
-<li><span class="parameter" id="render-param-autoTearDown"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">autoTearDown</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="render-param-autoTearDown"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">autoTearDown</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="render-param-onDidTearDown"><span class="type-annotation">void</span> <span class="parameter-name">onDidTearDown</span>(<ol class="parameter-list"></ol>
 )}</span></li>
 </ol>)
@@ -609,28 +609,26 @@ function unless <code>autoTearDown</code> is set to false.</p>
 <p>See: <a href="https://testing-library.com/docs/react-testing-library/api#render">testing-library.com/docs/react-testing-library/api#render</a></p>
 </blockquote>
 <h2 id="example">Example</h2>
-<pre class="language-dart"><code class="language-dart">import 'dart:html';
-
-import 'package:react/react.dart' as react;
+<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
 import 'package:test/test.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/matchers.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 
 main() {
   test('', () {
-    final renderResult = rtl.render(
+    final view = rtl.render(
       react.button({}, 'Click Me'),
     );
 
-    // The renderResult can now be used to query within the DOM!
-    expect(renderResult.getByRole('button'), hasText('Click Me'));
+    // The `view` can now be used to query within the DOM!
+    expect(view.getByRole('button', name: 'Click Me'), isInTheDocument);
   });
 }
 </code></pre>
 <h2 id="options">Options</h2>
 <h3 id="container"><code>container</code></h3>
 <p>By default, <code>render</code> will create a <code>&lt;div&gt;</code> and append that <code>&lt;div&gt;</code> to <code>document.body</code> and this is where your
-React component will be mounted/rendered. If you specify your own <a href="https://api.dart.dev/stable/2.13.1/dart-html/Node-class.html">Node</a> via the <code>container</code> option,
+React component will be mounted/rendered. If you specify your own <a href="https://api.dart.dev/stable/2.13.3/dart-html/Node-class.html">Node</a> via the <code>container</code> option,
 it will not be appended to the document.body automatically.</p>
 <p>For example: If you are unit testing a <code>&lt;tbody&gt;</code> element, it cannot be a child of a <code>&lt;div&gt;</code>.
 In this case, you can specify a <code>&lt;table&gt;</code> as the render <code>container</code>:</p>
@@ -643,7 +641,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 main() {
   test('', () {
     final tableElem = document.body.append(TableElement());
-    final renderResult = rtl.render(
+    final view = rtl.render(
       react.tbody({}, /*...*/),
       container: tableElem,
     );
@@ -651,7 +649,7 @@ main() {
 }
 </code></pre>
 <h3 id="baseelement"><code>baseElement</code></h3>
-<p>If the <code>container</code> is specified, then <code>baseElement</code> defaults to that <a href="https://api.dart.dev/stable/2.13.1/dart-html/Node-class.html">Node</a>,
+<p>If the <code>container</code> is specified, then <code>baseElement</code> defaults to that <a href="https://api.dart.dev/stable/2.13.3/dart-html/Node-class.html">Node</a>,
 otherwise this defaults to <code>document.body</code>. This is used as the base element
 for the queries as well as what is printed when you use <a href="../rtl.react/RenderResult/debug.html">RenderResult.debug</a>.</p>
 <h3 id="wrapper"><code>wrapper</code></h3>
