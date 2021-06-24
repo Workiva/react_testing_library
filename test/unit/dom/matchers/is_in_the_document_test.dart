@@ -30,14 +30,14 @@ import '../../util/shadow_dom.dart';
 void main() {
   group('isInTheDocument matcher', () {
     test('passes when provided an element found in the document', () {
-      final renderResult = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
-      shouldPass(renderResult.getByTestId('empty'), isInTheDocument);
+      final view = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
+      shouldPass(view.getByTestId('empty'), isInTheDocument);
     });
 
     test('passes when provided an element found in a ShadowRoot within the document', () {
       // ignore: unnecessary_cast
-      final renderResult = render(ShadowNested({}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
-      final nodeWithShadowRoot = renderResult.getByTestId(nodeWithShadowRootDefaultTestId);
+      final view = render(ShadowNested({}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
+      final nodeWithShadowRoot = view.getByTestId(nodeWithShadowRootDefaultTestId);
       shouldPass(within(nodeWithShadowRoot.shadowRoot).getByTestId('empty'), isInTheDocument);
     });
 

@@ -32,6 +32,8 @@ import 'package:react_testing_library/src/dom/within.dart' show within;
 /// Throws if no element is found within the provided [container].
 /// Use [queryByAltText] if a RTE is not expected.
 ///
+/// {@macro PreferByRoleOrByLabelTextNote}
+///
 /// > Related: [getAllByAltText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
@@ -61,6 +63,8 @@ E getByAltText<E extends Element>(
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByAltText] if a RTE is not expected.
+///
+/// {@macro PreferByRoleOrByLabelTextNote}
 ///
 /// > Related: [getByAltText]
 ///
@@ -92,6 +96,8 @@ List<E> getAllByAltText<E extends Element>(
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByAltText] if a RTE is expected.
 ///
+/// {@macro PreferByRoleOrByLabelTextNote}
+///
 /// > Related: [queryAllByAltText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byalttext/>
@@ -121,6 +127,8 @@ E queryByAltText<E extends Element>(
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByAltText] if a RTE is expected.
+///
+/// {@macro PreferByRoleOrByLabelTextNote}
 ///
 /// > Related: [queryByAltText]
 ///
@@ -154,6 +162,8 @@ List<E> queryAllByAltText<E extends Element>(
 /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
+///
+/// {@macro PreferByRoleOrByLabelTextNote}
 ///
 /// > Related: [findAllByAltText]
 ///
@@ -205,6 +215,8 @@ Future<E> findByAltText<E extends Element>(
 /// a non-async query like [getByAltText] or [queryByAltText] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
+///
+/// {@macro PreferByRoleOrByLabelTextNote}
 ///
 /// > Related: [findByAltText]
 ///
@@ -258,6 +270,8 @@ Future<List<E>> findAllByAltText<E extends Element>(
 /// Throws if no element is found within the provided [container].
 /// Use [queryByDisplayValue] if a RTE is not expected.
 ///
+/// {@macro PreferByLabelTextNote}
+///
 /// > Related: [getAllByDisplayValue]
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
@@ -287,6 +301,8 @@ E getByDisplayValue<E extends Element>(
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByDisplayValue] if a RTE is not expected.
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [getByDisplayValue]
 ///
@@ -318,6 +334,8 @@ List<E> getAllByDisplayValue<E extends Element>(
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByDisplayValue] if a RTE is expected.
 ///
+/// {@macro PreferByLabelTextNote}
+///
 /// > Related: [queryAllByDisplayValue]
 ///
 /// > See: <https://testing-library.com/docs/queries/bydisplayvalue/>
@@ -347,6 +365,8 @@ E queryByDisplayValue<E extends Element>(
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByDisplayValue] if a RTE is expected.
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [queryByDisplayValue]
 ///
@@ -379,6 +399,8 @@ List<E> queryAllByDisplayValue<E extends Element>(
 /// a non-async query like [getByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [findAllByDisplayValue]
 ///
@@ -429,6 +451,8 @@ Future<E> findByDisplayValue<E extends Element>(
 /// a non-async query like [getByDisplayValue] or [queryByDisplayValue] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [findByDisplayValue]
 ///
@@ -720,6 +744,8 @@ Future<List<E>> findAllByLabelText<E extends Element>(
 /// Throws if no element is found within the provided [container].
 /// Use [queryByPlaceholderText] if a RTE is not expected.
 ///
+/// {@macro PreferByLabelTextNote}
+///
 /// > Related: [getAllByPlaceholderText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
@@ -749,6 +775,8 @@ E getByPlaceholderText<E extends Element>(
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByPlaceholderText] if a RTE is not expected.
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [getByPlaceholderText]
 ///
@@ -780,6 +808,8 @@ List<E> getAllByPlaceholderText<E extends Element>(
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByPlaceholderText] if a RTE is expected.
 ///
+/// {@macro PreferByLabelTextNote}
+///
 /// > Related: [queryAllByPlaceholderText]
 ///
 /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
@@ -809,6 +839,8 @@ E queryByPlaceholderText<E extends Element>(
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByPlaceholderText] if a RTE is expected.
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [queryByPlaceholderText]
 ///
@@ -841,6 +873,8 @@ List<E> queryAllByPlaceholderText<E extends Element>(
 /// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [findAllByPlaceholderText]
 ///
@@ -891,6 +925,8 @@ Future<E> findByPlaceholderText<E extends Element>(
 /// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
+///
+/// {@macro PreferByLabelTextNote}
 ///
 /// > Related: [findByPlaceholderText]
 ///
@@ -1554,6 +1590,8 @@ Future<List<E>> findAllByTestId<E extends Element>(
 /// Throws if no element is found within the provided [container].
 /// Use [queryByText] if a RTE is not expected.
 ///
+/// {@macro PreferByRoleNote}
+///
 /// > Related: [getAllByText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
@@ -1586,6 +1624,8 @@ E getByText<E extends Element>(
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByText] if a RTE is not expected.
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [getByText]
 ///
@@ -1620,6 +1660,8 @@ List<E> getAllByText<E extends Element>(
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByText] if a RTE is expected.
 ///
+/// {@macro PreferByRoleNote}
+///
 /// > Related: [queryAllByText]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytext/>
@@ -1652,6 +1694,8 @@ E queryByText<E extends Element>(
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByText] if a RTE is expected.
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [queryByText]
 ///
@@ -1688,6 +1732,8 @@ List<E> queryAllByText<E extends Element>(
 /// a non-async query like [getByText] or [queryByText] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [findAllByText]
 ///
@@ -1744,6 +1790,8 @@ Future<E> findByText<E extends Element>(
 /// a non-async query like [getByText] or [queryByText] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [findByText]
 ///
@@ -1803,6 +1851,8 @@ Future<List<E>> findAllByText<E extends Element>(
 /// Throws if no element is found within the provided [container].
 /// Use [queryByTitle] if a RTE is not expected.
 ///
+/// {@macro PreferByRoleNote}
+///
 /// > Related: [getAllByTitle]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
@@ -1832,6 +1882,8 @@ E getByTitle<E extends Element>(
 ///
 /// Throws if no elements are found within the provided [container].
 /// Use [queryAllByTitle] if a RTE is not expected.
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [getByTitle]
 ///
@@ -1863,6 +1915,8 @@ List<E> getAllByTitle<E extends Element>(
 /// Returns `null` if no element is found within the provided [container].
 /// Use [getByTitle] if a RTE is expected.
 ///
+/// {@macro PreferByRoleNote}
+///
 /// > Related: [queryAllByTitle]
 ///
 /// > See: <https://testing-library.com/docs/queries/bytitle/>
@@ -1892,6 +1946,8 @@ E queryByTitle<E extends Element>(
 ///
 /// Returns an empty list if no element(s) are found within the provided [container].
 /// Use [getAllByTitle] if a RTE is expected.
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [queryByTitle]
 ///
@@ -1924,6 +1980,8 @@ List<E> queryAllByTitle<E extends Element>(
 /// a non-async query like [getByTitle] or [queryByTitle] in a `waitFor` function.
 ///
 /// Throws if exactly one element is not found within the provided [container].
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [findAllByTitle]
 ///
@@ -1974,6 +2032,8 @@ Future<E> findByTitle<E extends Element>(
 /// a non-async query like [getByTitle] or [queryByTitle] in a `waitFor` function.
 ///
 /// Throws if no elements are found within the provided [container].
+///
+/// {@macro PreferByRoleNote}
 ///
 /// > Related: [findByTitle]
 ///

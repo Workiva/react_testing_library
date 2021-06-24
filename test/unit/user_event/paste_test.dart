@@ -26,7 +26,7 @@ import 'package:test/test.dart';
 void main() {
   group('UserEvent.paste', () {
     List<ClipboardEvent> calls;
-    rtl.RenderResult renderedResult;
+    rtl.RenderResult view;
     InputElement input;
 
     setUp(() {
@@ -47,8 +47,8 @@ void main() {
           },
         });
 
-        renderedResult = rtl.render(elementToRender as ReactElement);
-        input = renderedResult.getByRole('textbox');
+        view = rtl.render(elementToRender as ReactElement);
+        input = view.getByRole('textbox');
         expect(input, hasValue(''));
       });
 
@@ -74,8 +74,8 @@ void main() {
           'defaultValue': 'this is a bad example',
         });
 
-        renderedResult = rtl.render(elementToRender as ReactElement);
-        input = renderedResult.getByRole('textbox');
+        view = rtl.render(elementToRender as ReactElement);
+        input = view.getByRole('textbox');
         expect(input, hasValue('this is a bad example'));
       });
 

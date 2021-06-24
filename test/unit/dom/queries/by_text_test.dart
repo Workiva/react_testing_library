@@ -30,16 +30,16 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult renderResult;
+    rtl.RenderResult view;
     tearDown(() {
-      renderResult = null;
+      view = null;
     });
 
     group(
         'the selector argument can be specified to target only matching '
         'element(s) when more than one has matching text:', () {
       setUp(() {
-        renderResult = rtl.render(react.div(
+        view = rtl.render(react.div(
           {},
           react.div(
             {},
@@ -51,92 +51,92 @@ void main() {
           ),
         ) as ReactElement);
 
-        expect(renderResult.queryAllByText('Foo'), hasLength(2));
+        expect(view.queryAllByText('Foo'), hasLength(2));
       });
 
       group('queryByText', () {
         test('[match]', () {
-          expect(renderResult.queryByText('Foo', selector: 'span'), isA<SpanElement>());
+          expect(view.queryByText('Foo', selector: 'span'), isA<SpanElement>());
         });
 
         test('[no match]', () {
-          expect(renderResult.queryByText('Foo', selector: 'p'), isNull);
+          expect(view.queryByText('Foo', selector: 'p'), isNull);
         });
       });
 
       group('queryAllByText', () {
         test('[matches]', () {
-          final result = renderResult.queryAllByText('Foo', selector: 'span');
+          final result = view.queryAllByText('Foo', selector: 'span');
           expect(result, [isA<SpanElement>()]);
         });
 
         test('[no matches]', () {
-          expect(renderResult.queryAllByText('Foo', selector: 'p'), isEmpty);
+          expect(view.queryAllByText('Foo', selector: 'p'), isEmpty);
         });
       });
 
       group('getByText', () {
         test('[match]', () {
-          expect(renderResult.getByText('Foo', selector: 'span'), isA<SpanElement>());
+          expect(view.getByText('Foo', selector: 'span'), isA<SpanElement>());
         });
 
         test('[no match]', () {
           expect(
-              () => renderResult.getByText('Foo', selector: 'p'),
+              () => view.getByText('Foo', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('getAllByText', () {
         test('[matches]', () {
-          final result = renderResult.getAllByText('Foo', selector: 'span');
+          final result = view.getAllByText('Foo', selector: 'span');
           expect(result, [isA<SpanElement>()]);
         });
 
         test('[no matches]', () {
           expect(
-              () => renderResult.getAllByText('Foo', selector: 'p'),
+              () => view.getAllByText('Foo', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('findByText', () {
         test('[match]', () async {
-          expect(await renderResult.findByText('Foo', selector: 'span'), isA<SpanElement>());
+          expect(await view.findByText('Foo', selector: 'span'), isA<SpanElement>());
         });
 
         test('[no match]', () async {
           expect(
-              () => renderResult.findByText('Foo', selector: 'p'),
+              () => view.findByText('Foo', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('findAllByText', () {
         test('[matches]', () async {
-          final result = await renderResult.findAllByText('Foo', selector: 'span');
+          final result = await view.findAllByText('Foo', selector: 'span');
           expect(result, [isA<SpanElement>()]);
         });
 
         test('[no matches]', () async {
           expect(
-              () => renderResult.findAllByText('Foo', selector: 'p'),
+              () => view.findAllByText('Foo', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
@@ -144,7 +144,7 @@ void main() {
 
     group('the ignore argument', () {
       setUp(() {
-        renderResult = rtl.render(react.div(
+        view = rtl.render(react.div(
           {},
           react.div(
             {},
@@ -160,87 +160,87 @@ void main() {
       group('can be set to a String query to ignore certain elements matching the selector query:', () {
         group('queryByText', () {
           test('[match]', () {
-            expect(renderResult.queryByText('Foo', ignore: 'span'), isA<DivElement>());
+            expect(view.queryByText('Foo', ignore: 'span'), isA<DivElement>());
           });
 
           test('[no match]', () {
-            expect(renderResult.queryByText('Bar', ignore: 'p'), isNull);
+            expect(view.queryByText('Bar', ignore: 'p'), isNull);
           });
         });
 
         group('queryAllByText', () {
           test('[matches]', () {
-            final result = renderResult.queryAllByText('Foo', ignore: 'span');
+            final result = view.queryAllByText('Foo', ignore: 'span');
             expect(result, [isA<DivElement>()]);
           });
 
           test('[no matches]', () {
-            expect(renderResult.queryAllByText('Bar', ignore: 'p'), isEmpty);
+            expect(view.queryAllByText('Bar', ignore: 'p'), isEmpty);
           });
         });
 
         group('getByText', () {
           test('[match]', () {
-            expect(renderResult.getByText('Foo', ignore: 'span'), isA<DivElement>());
+            expect(view.getByText('Foo', ignore: 'span'), isA<DivElement>());
           });
 
           test('[no match]', () {
             expect(
-                () => renderResult.getByText('Bar', ignore: 'p'),
+                () => view.getByText('Bar', ignore: 'p'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('getAllByText', () {
           test('[matches]', () {
-            final result = renderResult.getAllByText('Foo', ignore: 'span');
+            final result = view.getAllByText('Foo', ignore: 'span');
             expect(result, [isA<DivElement>()]);
           });
 
           test('[no matches]', () {
             expect(
-                () => renderResult.getAllByText('Bar', ignore: 'span'),
+                () => view.getAllByText('Bar', ignore: 'span'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findByText', () {
           test('[match]', () async {
-            expect(await renderResult.findByText('Foo', ignore: 'span'), isA<DivElement>());
+            expect(await view.findByText('Foo', ignore: 'span'), isA<DivElement>());
           });
 
           test('[no match]', () async {
             expect(
-                () => renderResult.findByText('Bar', ignore: 'p'),
+                () => view.findByText('Bar', ignore: 'p'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });
 
         group('findAllByText', () {
           test('[matches]', () async {
-            final result = await renderResult.findAllByText('Foo', ignore: 'span');
+            final result = await view.findAllByText('Foo', ignore: 'span');
             expect(result, [isA<DivElement>()]);
           });
 
           test('[no matches]', () async {
             expect(
-                () => renderResult.findAllByText('Bar', ignore: 'p'),
+                () => view.findAllByText('Bar', ignore: 'p'),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
                 )));
           });
         });

@@ -31,17 +31,17 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// import 'package:react_testing_library/matchers.dart' show containsElement;
+/// import 'package:react_testing_library/matchers.dart' show isFocused;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.input({'type': 'text', 'name': 'username'}));
+///     final view = rtl.render(react.input({'type': 'text', 'name': 'username'}));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final input = result.getByRole('textbox');
+///     final input = view.getByRole('textbox');
 ///
 ///     // Use the `isFocused` matcher as the second argument of `expect()`
 ///     input.focus();

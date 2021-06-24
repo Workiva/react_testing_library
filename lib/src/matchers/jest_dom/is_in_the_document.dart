@@ -41,14 +41,14 @@ import 'contains_element.dart' show containsElement;
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// import 'package:react_testing_library/matchers.dart' show isChecked;
+/// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.div({},
+///     final view = rtl.render(react.div({},
 ///       react.span({'data-test-id': 'html-element'},
 ///         react.span({}, 'Html Element'),
 ///       ),
@@ -56,9 +56,9 @@ import 'contains_element.dart' show containsElement;
 ///     ));
 ///
 ///     // Use the `isInTheDocument` matcher as the second argument of `expect()`
-///     expect(result.getByTestId('html-element'), isInTheDocument);
-///     expect(result.getByTestId('svg-element'), isInTheDocument);
-///     expect(result.queryByTestId('does-not-exist'), isNot(isInTheDocument));
+///     expect(view.getByTestId('html-element'), isInTheDocument);
+///     expect(view.getByTestId('svg-element'), isInTheDocument);
+///     expect(view.queryByTestId('does-not-exist'), isNot(isInTheDocument));
 ///   });
 /// }
 /// ```

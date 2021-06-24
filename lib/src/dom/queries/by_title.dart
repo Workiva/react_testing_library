@@ -39,6 +39,8 @@ mixin ByTitleQueries on IQueries {
   /// Throws if no element is found.
   /// Use [queryByTitle] if a RTE is not expected.
   ///
+  /// {@macro PreferByRoleNote}
+  ///
   /// > Related: [getAllByTitle]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
@@ -62,13 +64,14 @@ mixin ByTitleQueries on IQueries {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
   /// import 'package:test/test.dart';
   ///
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(react.div({},
+  ///     final view = rtl.render(react.div({},
   ///       react.span({
   ///         'title': 'Delete',
   ///         'id': '2',
@@ -79,8 +82,8 @@ mixin ByTitleQueries on IQueries {
   ///       ),
   ///     ));
   ///
-  ///     final deleteElement = result.getByTitle('Delete');
-  ///     final closeElement = result.getByTitle('Close');
+  ///     expect(view.getByTitle('Delete'), isInTheDocument);
+  ///     expect(view.getByTitle('Close'), isInTheDocument);
   ///   });
   /// }
   /// ```
@@ -111,6 +114,8 @@ mixin ByTitleQueries on IQueries {
   ///
   /// Throws if no elements are found.
   /// Use [queryAllByTitle] if a RTE is not expected.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [getByTitle]
   ///
@@ -144,6 +149,8 @@ mixin ByTitleQueries on IQueries {
   /// Returns `null` if no element is found.
   /// Use [getByTitle] if a RTE is expected.
   ///
+  /// {@macro PreferByRoleNote}
+  ///
   /// > Related: [queryAllByTitle]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytitle/>
@@ -173,6 +180,8 @@ mixin ByTitleQueries on IQueries {
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByTitle] if a RTE is expected.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [queryByTitle]
   ///
@@ -205,6 +214,8 @@ mixin ByTitleQueries on IQueries {
   /// a non-async query like [getByTitle] or [queryByTitle] in a `waitFor` function.
   ///
   /// Throws if exactly one element is not found.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [findAllByTitle]
   ///
@@ -258,6 +269,8 @@ mixin ByTitleQueries on IQueries {
   /// a non-async query like [getByTitle] or [queryByTitle] in a `waitFor` function.
   ///
   /// Throws if no elements are found.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [findByTitle]
   ///

@@ -39,6 +39,8 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// Throws if no element is found.
   /// Use [queryByPlaceholderText] if a RTE is not expected.
   ///
+  /// {@macro PreferByLabelTextNote}
+  ///
   /// > Related: [getAllByPlaceholderText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
@@ -58,20 +60,21 @@ mixin ByPlaceholderTextQueries on IQueries {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
   /// import 'package:test/test.dart';
   ///
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(
+  ///     final view = rtl.render(
   ///       react.input({
   ///         'type': 'text',
   ///         'placeholder': 'Username',
   ///       }),
   ///     );
   ///
-  ///     final inputNode = result.getByPlaceholderText('Username');
+  ///     expect(view.getByPlaceholderText('Username'), isInTheDocument);
   ///   });
   /// }
   /// ```
@@ -102,6 +105,8 @@ mixin ByPlaceholderTextQueries on IQueries {
   ///
   /// Throws if no elements are found.
   /// Use [queryAllByPlaceholderText] if a RTE is not expected.
+  ///
+  /// {@macro PreferByLabelTextNote}
   ///
   /// > Related: [getByPlaceholderText]
   ///
@@ -135,6 +140,8 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// Returns `null` if no element is found.
   /// Use [getByPlaceholderText] if a RTE is expected.
   ///
+  /// {@macro PreferByLabelTextNote}
+  ///
   /// > Related: [queryAllByPlaceholderText]
   ///
   /// > See: <https://testing-library.com/docs/queries/byplaceholdertext/>
@@ -164,6 +171,8 @@ mixin ByPlaceholderTextQueries on IQueries {
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByPlaceholderText] if a RTE is expected.
+  ///
+  /// {@macro PreferByLabelTextNote}
   ///
   /// > Related: [queryByPlaceholderText]
   ///
@@ -196,6 +205,8 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
   ///
   /// Throws if exactly one element is not found.
+  ///
+  /// {@macro PreferByLabelTextNote}
   ///
   /// > Related: [findAllByPlaceholderText]
   ///
@@ -249,6 +260,8 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// a non-async query like [getByPlaceholderText] or [queryByPlaceholderText] in a `waitFor` function.
   ///
   /// Throws if no elements are found.
+  ///
+  /// {@macro PreferByLabelTextNote}
   ///
   /// > Related: [findByPlaceholderText]
   ///

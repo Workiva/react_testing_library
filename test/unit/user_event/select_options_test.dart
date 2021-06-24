@@ -28,12 +28,12 @@ void main() {
       void _selectOptionsTestHelper({bool isMultiSelect = false}) {
         List<MouseEvent> calls;
         SelectElement select;
-        rtl.RenderResult renderedResult;
+        rtl.RenderResult view;
 
         setUp(() {
           calls = [];
 
-          renderedResult = rtl.render(react.select({
+          view = rtl.render(react.select({
             'id': 'root',
             'onClick': (event) {
               calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
@@ -45,24 +45,24 @@ void main() {
             react.option({'value': '3'}, 'C'),
           ]) as ReactElement);
 
-          select = renderedResult.getByRole(isMultiSelect ? 'listbox' : 'combobox');
+          select = view.getByRole(isMultiSelect ? 'listbox' : 'combobox');
 
           // Sanity checks.
           expect(
-            (renderedResult.getByText('A') as OptionElement).selected,
+            (view.getByText('A') as OptionElement).selected,
             !isMultiSelect,
             reason: 'the first option will be selected by default for non-multi-select',
           );
-          expect((renderedResult.getByText('B') as OptionElement).selected, isFalse);
-          expect((renderedResult.getByText('C') as OptionElement).selected, isFalse);
+          expect((view.getByText('B') as OptionElement).selected, isFalse);
+          expect((view.getByText('C') as OptionElement).selected, isFalse);
         });
 
         void _verifySelectEvent({
           bool hasClickInit = false,
         }) {
-          expect((renderedResult.getByText('A') as OptionElement).selected, isMultiSelect);
-          expect((renderedResult.getByText('B') as OptionElement).selected, isFalse);
-          expect((renderedResult.getByText('C') as OptionElement).selected, isTrue);
+          expect((view.getByText('A') as OptionElement).selected, isMultiSelect);
+          expect((view.getByText('B') as OptionElement).selected, isFalse);
+          expect((view.getByText('C') as OptionElement).selected, isTrue);
 
           // Verify click event.
           expect(calls, hasLength(2));
@@ -79,9 +79,7 @@ void main() {
         test('listing elements', () {
           UserEvent.selectOptions(
             select,
-            isMultiSelect
-                ? [renderedResult.getByText('A'), renderedResult.getByText('C')]
-                : [renderedResult.getByText('C')],
+            isMultiSelect ? [view.getByText('A'), view.getByText('C')] : [view.getByText('C')],
           );
           _verifySelectEvent();
         });
@@ -106,12 +104,12 @@ void main() {
     group('UserEvent.deselectOptions', () {
       List<MouseEvent> calls;
       SelectElement select;
-      rtl.RenderResult renderedResult;
+      rtl.RenderResult view;
 
       setUp(() {
         calls = [];
 
-        renderedResult = rtl.render(react.select({
+        view = rtl.render(react.select({
           'id': 'root',
           'onClick': (event) {
             calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
@@ -123,20 +121,20 @@ void main() {
           react.option({'value': '3', 'selected': true}, 'C'),
         ]) as ReactElement);
 
-        select = renderedResult.getByRole('listbox');
+        select = view.getByRole('listbox');
 
         // Sanity checks.
-        expect((renderedResult.getByText('A') as OptionElement).selected, isTrue);
-        expect((renderedResult.getByText('B') as OptionElement).selected, isTrue);
-        expect((renderedResult.getByText('C') as OptionElement).selected, isTrue);
+        expect((view.getByText('A') as OptionElement).selected, isTrue);
+        expect((view.getByText('B') as OptionElement).selected, isTrue);
+        expect((view.getByText('C') as OptionElement).selected, isTrue);
       });
 
       void _verifyDeselectEvent({
         bool hasClickInit = false,
       }) {
-        expect((renderedResult.getByText('A') as OptionElement).selected, isFalse);
-        expect((renderedResult.getByText('B') as OptionElement).selected, isTrue);
-        expect((renderedResult.getByText('C') as OptionElement).selected, isFalse);
+        expect((view.getByText('A') as OptionElement).selected, isFalse);
+        expect((view.getByText('B') as OptionElement).selected, isTrue);
+        expect((view.getByText('C') as OptionElement).selected, isFalse);
 
         // Verify click event.
         expect(calls, hasLength(2));
@@ -153,7 +151,7 @@ void main() {
       test('listing elements', () {
         UserEvent.deselectOptions(
           select,
-          [renderedResult.getByText('A'), renderedResult.getByText('C')],
+          [view.getByText('A'), view.getByText('C')],
         );
         _verifyDeselectEvent();
       });

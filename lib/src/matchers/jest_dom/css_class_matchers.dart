@@ -42,14 +42,14 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(
+///     final view = rtl.render(
 ///       react.button({'className': 'btn extra btn-danger'},
 ///         'Delete',
 ///       ),
 ///     );
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final deleteButton = result.getByRole('button', name: 'Delete');
+///     final deleteButton = view.getByRole('button', name: 'Delete');
 ///
 ///     // Use the `hasClasses` matcher as the second argument of `expect()`
 ///     expect(deleteButton, hasClasses('extra'));
@@ -86,14 +86,14 @@ Matcher hasClasses(dynamic classes) => _ElementClassNameMatcher(_ClassNameMatche
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(
+///     final view = rtl.render(
 ///       react.button({'className': 'btn extra btn-danger'},
 ///         'Delete',
 ///       ),
 ///     );
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final deleteButton = result.getByRole('button', name: 'Delete');
+///     final deleteButton = view.getByRole('button', name: 'Delete');
 ///
 ///     // Use the `hasExactClasses` matcher as the second argument of `expect()`
 ///     expect(deleteButton, hasExactClasses('btn-danger extra btn'));
@@ -128,14 +128,14 @@ Matcher hasExactClasses(dynamic classes) =>
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(
+///     final view = rtl.render(
 ///       react.button({'className': 'btn extra btn-danger'},
 ///         'Delete',
 ///       ),
 ///     );
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final deleteButton = result.getByRole('button', name: 'Delete');
+///     final deleteButton = view.getByRole('button', name: 'Delete');
 ///
 ///     // Use the `excludesClasses` matcher as the second argument of `expect()`
 ///     expect(deleteButton, excludesClasses('not-there'));

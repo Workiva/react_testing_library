@@ -103,8 +103,8 @@ void main() {
             // ignore: unnecessary_cast
             ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
             : elsForQuerying;
-        final renderResult = rtl.render(els);
-        container = renderResult.container;
+        final view = rtl.render(els);
+        container = view.container;
         expectedPrettyDom = rtl.prettyDOM(container);
 
         if (testAsyncQuery) {
@@ -120,7 +120,7 @@ void main() {
           // to zero so we can see what DOM to expect when the future completes in the
           // actual query test.
           final tempRenderResult =
-              rtl.render(cloneElement(renderResult.renderedElement, {'delay': Duration.zero}), autoTearDown: false);
+              rtl.render(cloneElement(view.renderedElement, {'delay': Duration.zero}), autoTearDown: false);
           expectedPrettyDom = rtl.prettyDOM(tempRenderResult.container);
           tempRenderResult.unmount();
           tempRenderResult.container?.remove();

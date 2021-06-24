@@ -182,23 +182,23 @@ import 'package:your_package/src/components/greeting.dart';
 
 main() {
   group('Greeting', () {
-    rtl.RenderResult renderResult;
+    rtl.RenderResult view;
     tearDown(() {
-      renderResult = null;
+      view = null;
     });
     
     group('renders the expected elements:', () {
       group('a <header>', () {
-        HeaderElement headerElement;
+        HeadingElement headerElement;
         
         setUp(() {
-          renderResult = rtl.render((Greeting()
+          view = rtl.render((Greeting()
             ..heading = 'Hello There!'
             ..subHeading = 'Welcome to the unit testing party.'
             ..getStartedRoute = '/start/partying'
           )());
           
-          headerElement = renderResult.getByRole('group');
+          headerElement = view.getByRole('group');
         });
         
         test('with a child <h1> with a text value equal to props.heading', () {
@@ -222,7 +222,7 @@ main() {
 ```
 </figure>
 
-> [Read more about how queries are scoped to both the `renderResult` and return value of `within()`in the above example][queries] 
+> [Read more about how queries are scoped to both the `view` and return value of `within()`in the above example][queries] 
 
 
 ## Dart / JS API Parity

@@ -56,28 +56,28 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.form({},
-///       react.input({'type': 'text', name: 'username', 'value': 'jane.doe'}),
-///       react.input({'type': 'number', 'name': 'age', value: '35'}),
-///       react.input({'type': 'text', 'name': 'occupation'}),
+///     final view = rtl.render(react.form({},
+///       react.input({'type': 'text', 'aria-label': 'username', 'value': 'jane.doe'}),
+///       react.input({'type': 'number', 'aria-label': 'age', 'value': '35'}),
+///       react.input({'type': 'text', 'aria-label': 'occupation'}),
 ///       react.select({'multiple': true},
 ///         react.option({'value': 'first'}, 'First Value'),
-///         react.option({'value': 'second' 'selected': true}, 'Second Value'),
+///         react.option({'value': 'second', 'selected': true}, 'Second Value'),
 ///         react.option({'value': 'third', 'selected': true}, 'Third Value'),
 ///       ),
 ///     ));
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     const textInput = result.getByRole('textbox', name: 'username');
-///     const numberInput = result.getByRole('spinbutton', name: 'age');
-///     const emptyInput = result.getByRole('textbox', name: 'occupation');
-///     const selectInput = result.getByRole('listbox', name: 'options');
+///     final textInput = view.getByRole('textbox', name: 'username');
+///     final numberInput = view.getByRole('spinbutton', name: 'age');
+///     final emptyInput = view.getByRole('textbox', name: 'occupation');
+///     final selectInput = view.getByRole('listbox');
 ///
 ///     // Use the `hasValue` matcher as the second argument of `expect()`
 ///     expect(textInput, hasValue('jane.doe'));
 ///     expect(textInput, hasValue(startsWith('jane.')));
 ///     expect(numberInput, hasValue(35));
-///     expect(emptyInput, isNot(hasValue()));
+///     expect(emptyInput, hasValue(''));
 ///     expect(selectInput, hasValue(['second', 'third']));
 ///     expect(selectInput, isNot(hasValue(['first'])));
 ///   });

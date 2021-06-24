@@ -58,9 +58,9 @@ void main() {
           }),
         ]);
 
-        final renderedResult = rtl.render(elementToRender as ReactElement);
-        input = renderedResult.getByLabelText('Upload file:');
-        label = renderedResult.getByText('Upload file:');
+        final view = rtl.render(elementToRender as ReactElement);
+        input = view.getByLabelText('Upload file:');
+        label = view.getByText('Upload file:');
         expect(input.files, hasLength(0), reason: 'sanity check');
       });
 

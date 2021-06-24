@@ -31,9 +31,9 @@ void main() {
     Element rootElement;
 
     setUp(() {
-      final renderedResult = render(
+      final view = render(
           react.span({defaultTestIdKey: 'root'}, 'The quick brown fox jumps over the (lazy)    dog') as ReactElement);
-      rootElement = renderedResult.getByTestId('root');
+      rootElement = view.getByTestId('root');
     });
 
     tearDown(() {

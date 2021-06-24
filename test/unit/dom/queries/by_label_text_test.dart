@@ -30,16 +30,16 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult renderResult;
+    rtl.RenderResult view;
     tearDown(() {
-      renderResult = null;
+      view = null;
     });
 
     group(
         'the selector argument can be specified to target only matching '
         'element(s) when more than one has matching label text:', () {
       setUp(() {
-        renderResult = rtl.render(react.div(
+        view = rtl.render(react.div(
           {},
           react.label(
             {},
@@ -53,92 +53,92 @@ void main() {
           ),
         ) as ReactElement);
 
-        expect(renderResult.queryAllByLabelText('Username'), hasLength(2));
+        expect(view.queryAllByLabelText('Username'), hasLength(2));
       });
 
       group('queryByLabelText', () {
         test('[match]', () {
-          expect(renderResult.queryByLabelText('Username', selector: 'input'), isA<TextInputElement>());
+          expect(view.queryByLabelText('Username', selector: 'input'), isA<TextInputElement>());
         });
 
         test('[no match]', () {
-          expect(renderResult.queryByLabelText('Username', selector: 'p'), isNull);
+          expect(view.queryByLabelText('Username', selector: 'p'), isNull);
         });
       });
 
       group('queryAllByLabelText', () {
         test('[matches]', () {
-          final result = renderResult.queryAllByLabelText('Username', selector: 'input');
+          final result = view.queryAllByLabelText('Username', selector: 'input');
           expect(result, [isA<TextInputElement>()]);
         });
 
         test('[no matches]', () {
-          expect(renderResult.queryAllByLabelText('Username', selector: 'p'), isEmpty);
+          expect(view.queryAllByLabelText('Username', selector: 'p'), isEmpty);
         });
       });
 
       group('getByLabelText', () {
         test('[match]', () {
-          expect(renderResult.getByLabelText('Username', selector: 'input'), isA<TextInputElement>());
+          expect(view.getByLabelText('Username', selector: 'input'), isA<TextInputElement>());
         });
 
         test('[no match]', () {
           expect(
-              () => renderResult.getByLabelText('Username', selector: 'p'),
+              () => view.getByLabelText('Username', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('getAllByLabelText', () {
         test('[matches]', () {
-          final result = renderResult.getAllByLabelText('Username', selector: 'input');
+          final result = view.getAllByLabelText('Username', selector: 'input');
           expect(result, [isA<TextInputElement>()]);
         });
 
         test('[no matches]', () {
           expect(
-              () => renderResult.getAllByLabelText('Username', selector: 'p'),
+              () => view.getAllByLabelText('Username', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('findByLabelText', () {
         test('[match]', () async {
-          expect(await renderResult.findByLabelText('Username', selector: 'input'), isA<TextInputElement>());
+          expect(await view.findByLabelText('Username', selector: 'input'), isA<TextInputElement>());
         });
 
         test('[no match]', () async {
           expect(
-              () => renderResult.findByLabelText('Username', selector: 'p'),
+              () => view.findByLabelText('Username', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });
 
       group('findAllByLabelText', () {
         test('[matches]', () async {
-          final result = await renderResult.findAllByLabelText('Username', selector: 'input');
+          final result = await view.findAllByLabelText('Username', selector: 'input');
           expect(result, [isA<TextInputElement>()]);
         });
 
         test('[no matches]', () async {
           expect(
-              () => renderResult.findAllByLabelText('Username', selector: 'p'),
+              () => view.findAllByLabelText('Username', selector: 'p'),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('no form control was found associated to that label')),
-                hasToStringValue(contains(rtl.prettyDOM(renderResult.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.container))),
               )));
         });
       });

@@ -25,6 +25,7 @@ import 'package:meta/meta.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
+import 'package:react_testing_library/src/dom/within.dart' show ScreenQueries;
 import 'package:test/test.dart' show addTearDown;
 
 import 'package:react_testing_library/src/react/render/types.dart' show JsRenderResult, RenderOptions;
@@ -41,21 +42,19 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 ///
 /// ## Example
 /// ```dart
-/// import 'dart:html';
-///
 /// import 'package:react/react.dart' as react;
 /// import 'package:test/test.dart';
 /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
-/// import 'package:react_testing_library/matchers.dart';
+/// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 ///
 /// main() {
 ///   test('', () {
-///     final renderResult = rtl.render(
+///     final view = rtl.render(
 ///       react.button({}, 'Click Me'),
 ///     );
 ///
-///     // The renderResult can now be used to query within the DOM!
-///     expect(renderResult.getByRole('button'), hasText('Click Me'));
+///     // The `view` can now be used to query within the DOM!
+///     expect(view.getByRole('button', name: 'Click Me'), isInTheDocument);
 ///   });
 /// }
 /// ```
@@ -79,7 +78,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// main() {
 ///   test('', () {
 ///     final tableElem = document.body.append(TableElement());
-///     final renderResult = rtl.render(
+///     final view = rtl.render(
 ///       react.tbody({}, /*...*/),
 ///       container: tableElem,
 ///     );
@@ -180,7 +179,7 @@ class RenderResult extends ScopedQueries {
 
   /// A shortcut for `console.log(prettyDOM(baseElement))`.
   ///
-  /// > __NOTE: It's recommended to use `screen.debug` instead.__
+  /// > __NOTE: It's recommended to use [ScreenQueries.debug] instead.__
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([

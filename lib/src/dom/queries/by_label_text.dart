@@ -80,13 +80,14 @@ mixin ByLabelTextQueries on IQueries {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
   /// import 'package:test/test.dart';
   ///
   /// main() {
   ///   test('', () {
   ///     // Render some of the DOM shown in the example snippet above
-  ///     final result = rtl.render(react.div({},
+  ///     final view = rtl.render(react.div({},
   ///       react.label({'htmlFor': 'username-input'}, 'Username'),
   ///       react.input({
   ///         'type': 'text',
@@ -94,7 +95,7 @@ mixin ByLabelTextQueries on IQueries {
   ///       }),
   ///     ));
   ///
-  ///     final inputNode = result.getByLabelText('Username');
+  ///     expect(view.getByLabelText('Username'), isInTheDocument);
   ///   });
   /// }
   /// ```

@@ -41,12 +41,12 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(
+///     final view = rtl.render(
 ///       react.button({'type': 'submit', 'aria-label': 'Submit the form'}, 'ok'),
 ///     );
 ///
 ///     // Use react_testing_library queries to store references to the node(s)
-///     final button = result.getByRole('button', name: 'ok');
+///     final button = view.getByRole('button', name: 'ok');
 ///
 ///     // Use the `hasAttribute` matcher as the second argument of `expect()`
 ///     expect(button, hasAttribute('type', 'submit'));

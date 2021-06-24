@@ -29,22 +29,22 @@ import '../../util/over_react_stubs.dart';
 void main() {
   group('containsElement matcher', () {
     test('passes when provided an ancestor with a matching direct descendant', () {
-      final renderResult = render(react.span(
+      final view = render(react.span(
         {defaultTestIdKey: 'ancestor'},
         react.span({defaultTestIdKey: 'direct-descendant'}),
       ) as ReactElement);
-      shouldPass(renderResult.getByTestId('ancestor'), containsElement(renderResult.getByTestId('direct-descendant')));
+      shouldPass(view.getByTestId('ancestor'), containsElement(view.getByTestId('direct-descendant')));
     });
 
     test('passes when provided an ancestor with a matching descendant', () {
-      final renderResult = render(react.span(
+      final view = render(react.span(
         {defaultTestIdKey: 'ancestor'},
         react.span(
           {defaultTestIdKey: 'direct-descendant'},
           react.span({defaultTestIdKey: 'descendant'}),
         ),
       ) as ReactElement);
-      shouldPass(renderResult.getByTestId('ancestor'), containsElement(renderResult.getByTestId('descendant')));
+      shouldPass(view.getByTestId('ancestor'), containsElement(view.getByTestId('descendant')));
     });
 
     group('provides a useful failure message when', () {
@@ -53,10 +53,10 @@ void main() {
       });
 
       test('the matched item does not have a matching descendant', () {
-        final renderResult = render(
+        final view = render(
             react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})) as ReactElement);
-        final ancestor = renderResult.getByTestId('ancestor');
-        final descendant = renderResult.getByTestId('descendant');
+        final ancestor = view.getByTestId('ancestor');
+        final descendant = view.getByTestId('descendant');
         shouldFail(descendant, containsElement(ancestor), contains('Which: does not contain $ancestor.'));
       });
 

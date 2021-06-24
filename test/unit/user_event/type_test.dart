@@ -60,7 +60,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
   int clickEventCount;
   Element element;
   List<String> keyUpCalls;
-  rtl.RenderResult renderedResult;
+  rtl.RenderResult view;
 
   void _verifyTypeEvent({
     bool skipClick = false,
@@ -104,13 +104,13 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       clickEventCount = 0;
       keyUpCalls = [];
 
-      renderedResult = rtl.render((isTextArea ? react.textarea : react.input)({
+      view = rtl.render((isTextArea ? react.textarea : react.input)({
         'id': 'root',
         'onClick': (_) => clickEventCount++,
         'onKeyUp': (e) => keyUpCalls.add((e as react.SyntheticKeyboardEvent).key),
       }) as ReactElement);
 
-      element = renderedResult.getByRole('textbox');
+      element = view.getByRole('textbox');
       expect(element, hasValue(''), reason: 'sanity check');
     });
 
@@ -210,14 +210,14 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       clickEventCount = 0;
       keyUpCalls = [];
 
-      renderedResult = rtl.render((isTextArea ? react.textarea : react.input)({
+      view = rtl.render((isTextArea ? react.textarea : react.input)({
         'id': 'root',
         'onClick': (_) => clickEventCount++,
         'onKeyUp': (e) => keyUpCalls.add((e as react.SyntheticKeyboardEvent).key),
         'defaultValue': 'this is a bad example',
       }) as ReactElement);
 
-      element = renderedResult.getByRole('textbox');
+      element = view.getByRole('textbox');
       expect(element, hasValue('this is a bad example'), reason: 'sanity check');
     });
 
@@ -259,7 +259,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
 
 void _keyboardTestHelper({bool hasDelay = false}) {
   List<String> calls;
-  rtl.RenderResult renderedResult;
+  rtl.RenderResult view;
   InputElement input;
 
   setUp(() {
@@ -304,8 +304,8 @@ void _keyboardTestHelper({bool hasDelay = false}) {
       },
     });
 
-    renderedResult = rtl.render(elementToRender as ReactElement);
-    input = renderedResult.getByRole('textbox');
+    view = rtl.render(elementToRender as ReactElement);
+    input = view.getByRole('textbox');
     expect(input, hasValue(''));
   });
 
