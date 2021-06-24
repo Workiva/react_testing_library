@@ -47,7 +47,6 @@ void main() {
           contains('A second warning'),
           contains('And a third'),
           contains('Just a lil warning'),
-          contains('act(...)'),
         ];
 
         if (_runtimeSupportsPropTypeWarnings()) {

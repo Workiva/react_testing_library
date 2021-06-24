@@ -6,7 +6,6 @@ import nodeGlobals from 'rollup-plugin-node-globals';
 import commonjs from '@rollup/plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
 import resolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 import json from '@rollup/plugin-json';
 
 import pkg from './package.json';
@@ -57,7 +56,6 @@ export default (commandFlags) => {
       },
       plugins: [
         ...commonPlugins,
-        replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
         filesize(),
       ],
     },
