@@ -87,8 +87,7 @@ mixin ByTestIdQueries on IQueries {
   ///       react.div({'data-test-id': 'custom-element'}),
   ///     );
   ///
-  ///     final el = view.getByTestId('custom-element');
-  ///     expect(el, isInTheDocument);
+  ///     expect(view.getByTestId('custom-element'), isInTheDocument);
   ///   });
   /// }
   /// ```

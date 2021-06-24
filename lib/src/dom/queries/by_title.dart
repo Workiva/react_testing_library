@@ -82,11 +82,8 @@ mixin ByTitleQueries on IQueries {
   ///       ),
   ///     ));
   ///
-  ///     final deleteElement = view.getByTitle('Delete');
-  ///     expect(deleteElement, isInTheDocument);
-  ///
-  ///     final closeElement = view.getByTitle('Close');
-  ///     expect(closeElement, isInTheDocument);
+  ///     expect(view.getByTitle('Delete'), isInTheDocument);
+  ///     expect(view.getByTitle('Close'), isInTheDocument);
   ///   });
   /// }
   /// ```

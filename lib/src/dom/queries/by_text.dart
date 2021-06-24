@@ -78,8 +78,7 @@ mixin ByTextQueries on IQueries {
   ///       react.a({'href': '/about'}, 'About ℹ️'),
   ///     );
   ///
-  ///     final aboutAnchorNode = view.getByText(RegExp(r'^About'));
-  ///     expect(aboutAnchorNode, isInTheDocument);
+  ///     expect(view.getByText(RegExp(r'^About')), isInTheDocument);
   ///   });
   /// }
   /// ```

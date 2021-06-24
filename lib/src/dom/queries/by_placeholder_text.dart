@@ -74,8 +74,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   ///       }),
   ///     );
   ///
-  ///     final inputNode = view.getByPlaceholderText('Username');
-  ///     expect(inputNode, isInTheDocument);
+  ///     expect(view.getByPlaceholderText('Username'), isInTheDocument);
   ///   });
   /// }
   /// ```

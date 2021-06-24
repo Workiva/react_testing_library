@@ -98,16 +98,13 @@ mixin ByDisplayValueQueries on IQueries {
   ///       ),
   ///     ));
   ///
-  ///     final lastNameInput = view.getByDisplayValue('Norris');
-  ///     expect(lastNameInput, isInTheDocument);
+  ///     expect(view.getByDisplayValue('Norris'), isInTheDocument);
   ///
-  ///     final messageTextArea = view.getByDisplayValue('Hello World');
-  ///     expect(messageTextArea, isInTheDocument);
+  ///     expect(view.getByDisplayValue('Hello World'), isInTheDocument);
   ///
   ///     // In the case of a `<select>`, this will search for a `<select>`
   ///     // whose selected `<option>` matches the given `TextMatch`.
-  ///     final selectElement = view.getByDisplayValue('Alaska');
-  ///     expect(selectElement, isInTheDocument);
+  ///     expect(view.getByDisplayValue('Alaska'), isInTheDocument);
   ///   });
   /// }
   /// ```

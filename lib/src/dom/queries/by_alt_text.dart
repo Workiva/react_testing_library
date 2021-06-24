@@ -78,8 +78,7 @@ mixin ByAltTextQueries on IQueries {
   ///       react.img({'alt': 'Incredibles 2 Poster', 'src': '/incredibles-2.png'}),
   ///     );
   ///
-  ///     final el = view.getByAltText(RegExp(r'incredibles.*? poster'));
-  ///     expect(el, isInTheDocument);
+  ///     expect(view.getByAltText(RegExp(r'incredibles.*? poster')), isInTheDocument);
   ///   });
   /// }
   /// ```

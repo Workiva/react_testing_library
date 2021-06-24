@@ -86,7 +86,7 @@ class ScreenQueries extends WithinQueries {
 /// > See: <https://testing-library.com/docs/queries/about/#screen>
 ///
 /// {@category Queries}
-final screen = ScreenQueries._();
+ScreenQueries screen = ScreenQueries._();
 
 @JS('rtl.screen')
 external dynamic get _screen;

@@ -95,8 +95,7 @@ mixin ByLabelTextQueries on IQueries {
   ///       }),
   ///     ));
   ///
-  ///     final inputNode = view.getByLabelText('Username');
-  ///     expect(inputNode, isInTheDocument);
+  ///     expect(view.getByLabelText('Username'), isInTheDocument);
   ///   });
   /// }
   /// ```

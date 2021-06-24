@@ -101,11 +101,8 @@ mixin ByRoleQueries on IQueries {
   ///       react.button({'onClick': (_) { /*...*/ }}, 'Cancel'),
   ///     ));
   ///
-  ///     final okButtonElement = view.getByRole('button', name: 'Ok');
-  ///     expect(okButtonElement, isInTheDocument);
-  ///
-  ///     final cancelButtonElement = view.getByRole('button', name: 'Cancel');
-  ///     expect(cancelButtonElement, isInTheDocument);
+  ///     expect(view.getByRole('button', name: 'Ok'), isInTheDocument);
+  ///     expect(view.getByRole('button', name: 'Cancel'), isInTheDocument);
   ///   });
   /// }
   /// ```
