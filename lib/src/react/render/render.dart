@@ -27,6 +27,7 @@ import 'package:meta/meta.dart';
 import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement, componentZone;
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
+import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart' show addTearDown;
 
 import 'package:react_testing_library/src/react/render/types.dart' show JsRenderResult, RenderOptions;
@@ -139,15 +140,21 @@ RenderResult render(
     throw ArgumentError('onDidTearDown cannot be set when autoTearDown is false.');
   }
 
-  final jsResult = _render(ui, renderOptions);
+  JsRenderResult jsResult;
+  recordConsoleLogs(
+    () {
+      jsResult = _render(ui, renderOptions);
 
-  if (autoTearDown) {
-    addTearDown(() {
-      jsResult.unmount();
-      jsResult.container?.remove();
-      onDidTearDown?.call();
-    });
-  }
+      if (autoTearDown) {
+        addTearDown(() {
+          jsResult.unmount();
+          jsResult.container?.remove();
+          onDidTearDown?.call();
+        });
+      }
+    },
+    configuration: ConsoleConfig.error,
+  ).forEach((error) => print('⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}'));
 
   return RenderResult._(jsResult, ui);
 }
