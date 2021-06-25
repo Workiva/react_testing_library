@@ -5,6 +5,13 @@
 [![Dart CI](https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml/badge.svg?branch=master)](https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml)
 [![API Documentation](https://img.shields.io/static/v1?label=API&message=Documentation&color=informational)](https://workiva.github.io/react_testing_library)
 
+---
+
+* __[Introduction](#introduction)__
+* __[How Does It Work?](#how-does-it-work)__
+* __[Getting Started](#getting-started)__
+* __[Migration Guides](#migration-guides)__
+* __[Dart / JS API Parity](#dart--js-api-parity)__
 
 ## Introduction
 
@@ -139,7 +146,7 @@ Using the [render] function, you can now generate DOM using React components and
 
 Then, you can use the [`Matcher`s][matchers] from the `matchers.dart` entrypoint to perform assertions on that DOM, and the events and user events entrypoints or whatever to interact with the DOM.
 
-<!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) -->
+> For more in depth examples, see the [migration guides](#migration-guides).
 
 <figure>
 <figcaption>lib/src/components/greeting.dart</figcaption>
@@ -225,6 +232,11 @@ main() {
 > [Read more about how queries are scoped to both the `view` and return value of `within()`in the above example][queries] 
 
 
+## Migration Guides
+
+* [OverReact Test to React Testing Library Migration Guide][migration-guide]: A guide to updating tests to use `react_testing_library` instead of [`over_react_test`][over-react-test].
+
+
 ## Dart / JS API Parity
 
 The `react_testing_library` Dart package strives to maintain API parity with the analogous JS `testing-library` packages within reason. However, there are certain differences that are either unavoidable, or intentional for the purposes of building Dart APIs that are easy to use and reason about.
@@ -248,3 +260,5 @@ Read more about Dart / JS API Parity for the following API categories:
 [render]: https://workiva.github.io/react_testing_library/rtl.react/render.html
 [queries]: https://workiva.github.io/react_testing_library/topics/Queries-topic.html
 [matchers]: https://workiva.github.io/react_testing_library/topics/Matchers-topic.html
+[migration-guide]: https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/from_over_react_test.md
+[over-react-test]: https://github.com/Workiva/over_react_test
