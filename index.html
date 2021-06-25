@@ -593,6 +593,14 @@
 <p><a href="https://dart.dev/">Dart</a> bindings for the JS <a href="https://testing-library.com/docs/dom-testing-library/intro">dom-testing-library</a> and <a href="https://testing-library.com/docs/react-testing-library/intro">react-testing-library</a> packages, which provide simple and complete DOM/React testing utilities that encourage good testing practices.</p>
 <p><a href="https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml"><img src="https://github.com/Workiva/react_testing_library/actions/workflows/dart_ci.yml/badge.svg?branch=master" alt="Dart CI"></a>
 <a href="https://workiva.github.io/react_testing_library"><img src="https://img.shields.io/static/v1?label=API&amp;message=Documentation&amp;color=informational" alt="API Documentation"></a></p>
+<hr>
+<ul>
+<li><strong><a href="#introduction">Introduction</a></strong></li>
+<li><strong><a href="#how-does-it-work">How Does It Work?</a></strong></li>
+<li><strong><a href="#getting-started">Getting Started</a></strong></li>
+<li><strong><a href="#migration-guides">Migration Guides</a></strong></li>
+<li><strong><a href="#dart--js-api-parity">Dart / JS API Parity</a></strong></li>
+</ul>
 <h2 id="introduction">Introduction</h2>
 <p>The libraries in this package help you to test Dart UI components in a user-centric way.</p>
 <blockquote>
@@ -684,7 +692,10 @@ paths:
 </code></pre></figure>
 <h3 id="5-write-tests-for-your-components">5. Write test(s) for your component(s)!</h3>
 <p>Using the <a href="https://workiva.github.io/react_testing_library/rtl.react/render.html">render</a> function, you can now generate DOM using React components and <a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">query</a> within that DOM to get the element(s) you want to test!</p>
-<p>Then, you can use the <a href="https://workiva.github.io/react_testing_library/topics/Matchers-topic.html"><code>Matcher</code>s</a> from the <code>matchers.dart</code> entrypoint to perform assertions on that DOM, and the events and user events entrypoints or whatever to interact with the DOM.</p><!-- TODO: Add link to more in-depth examples once we have them (CPLAT-13504) --><figure>
+<p>Then, you can use the <a href="https://workiva.github.io/react_testing_library/topics/Matchers-topic.html"><code>Matcher</code>s</a> from the <code>matchers.dart</code> entrypoint to perform assertions on that DOM, and the events and user events entrypoints or whatever to interact with the DOM.</p>
+<blockquote>
+<p>For more in depth examples, see the <a href="#migration-guides">migration guides</a>.</p>
+</blockquote><figure>
 <figcaption>lib/src/components/greeting.dart</figcaption>
 <pre class="language-dart"><code class="language-dart">import 'package:over_react/over_react.dart';
 
@@ -759,6 +770,10 @@ main() {
 <blockquote>
 <p><a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">Read more about how queries are scoped to both the <code>view</code> and return value of <code>within()</code>in the above example</a></p>
 </blockquote>
+<h2 id="migration-guides">Migration Guides</h2>
+<ul>
+<li><a href="https://github.com/Workiva/react_testing_library/blob/master/doc/migration_guides/from_over_react_test.md">OverReact Test to React Testing Library Migration Guide</a>: A guide to updating tests to use <code>react_testing_library</code> instead of <a href="https://github.com/Workiva/over_react_test"><code>over_react_test</code></a>.</li>
+</ul>
 <h2 id="dart--js-api-parity">Dart / JS API Parity</h2>
 <p>The <code>react_testing_library</code> Dart package strives to maintain API parity with the analogous JS <code>testing-library</code> packages within reason. However, there are certain differences that are either unavoidable, or intentional for the purposes of building Dart APIs that are easy to use and reason about.</p>
 <p>Read more about Dart / JS API Parity for the following API categories:</p>
