@@ -122,7 +122,7 @@ import 'package:over_react_test/over_react_test.dart';
 import 'package:test/test.dart';
 
 main() {
-  test('EmailConfirmationModal renders with correct DOM structure', () async {
+  test('EmailConfirmationModal renders with correct DOM structure', () {
     final jacket = mount(
         (EmailConfirmationModal()
           ..jobType = JobTypes.transition.toLowerCase()
@@ -160,7 +160,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 main() {
-  test('EmailConfirmationModal renders with correct DOM structure', () async {
+  test('EmailConfirmationModal renders with correct DOM structure', () {
     final view = rtl.render((EmailConfirmationModal()
       ..jobType = JobTypes.transition.toLowerCase()
     )());

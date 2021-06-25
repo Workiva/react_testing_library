@@ -137,29 +137,29 @@ to render attached to the document.
 Below are examples of how to migrate these kinds of tests:
 
 ```diff
-import 'package:over_react/over_react.dart';
-- import 'package:over_react_test/over_react_test.dart';
-+ import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:test/test.dart';
+ import 'package:over_react/over_react.dart';
+-import 'package:over_react_test/over_react_test.dart';
++import 'package:react_testing_library/react_testing_library.dart' as rtl;
+ import 'package:test/test.dart';
 
-void main() {
-  test('renderAttachedToDocument', () {
--   renderAttachedToDocument((Dom.button()..addTestId('test-id'))('Click me!'));
-+   final view = rtl.render((Dom.button()..addTestId('test-id'))('Click me!'));
+ void main() {
+   test('renderAttachedToDocument', () {
+-    renderAttachedToDocument((Dom.button()..addTestId('test-id'))('Click me!'));
++    final view = rtl.render((Dom.button()..addTestId('test-id'))('Click me!'));
 
-    // The rest of the test ...
-  });
+     // The rest of the test ...
+   });
 
-  test('mount attachedToDocument', () {
--   final jacket = mount(
--     (Dom.button()..addTestId('test-id'))('Click me!'),
--     attachedToDocument: true,
--   );
-+   final view = rtl.render((Dom.button()..addTestId('test-id'))('Click me!'));
+   test('mount attachedToDocument', () {
+-    final jacket = mount(
+-      (Dom.button()..addTestId('test-id'))('Click me!'),
+-      attachedToDocument: true,
+-    );
++    final view = rtl.render((Dom.button()..addTestId('test-id'))('Click me!'));
 
-    // The rest of the test ...
-  });
-}
+     // The rest of the test ...
+   });
+ }
 ```
 
 #### Auto Tear Down
@@ -178,25 +178,25 @@ The `container` argument works very similar to OverReact Test's `container` and 
 If the test is setting the `container` / `mountNode` to a `DivElement` with default props, this argument can be removed entirely when converting the test to RTL because `rtl.render` already renders content inside a `DivElement` that is attached to `document.body`. Below is an example of this:
 
 ```diff
-import 'dart:html';
+ import 'dart:html';
 
-import 'package:over_react/over_react.dart';
-- import 'package:over_react_test/over_react_test.dart';
-+ import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:test/test.dart';
+ import 'package:over_react/over_react.dart';
+-import 'package:over_react_test/over_react_test.dart';
++import 'package:react_testing_library/react_testing_library.dart' as rtl;
+ import 'package:test/test.dart';
 
-main() {
-  test('Div Container', () {
--   final container = DivElement();
--   final jacket = mount(
-+   final view = rtl.render(
-      (Dom.p()..addTestId('test-id'))('Hello World!'),
--     mountNode: container,
-    );
--   expect(jacket.getNode().text, equals('Hello World!'));
-+   expect(view.getByText('Hello World!'), isInTheDocument);
-  });
-}
+ main() {
+   test('Div Container', () {
+-    final container = DivElement();
+-    final jacket = mount(
++    final view = rtl.render(
+       (Dom.p()..addTestId('test-id'))('Hello World!'),
+-      mountNode: container,
+     );
+-    expect(jacket.getNode().text, equals('Hello World!'));
++    expect(view.getByText('Hello World!'), isInTheDocument);
+   });
+ }
 ```
 
 In most cases, adding a `container` argument should not be necessary, but if you do need to set `container` to something else, make sure to append that node to `document.body` because it will not be done automatically.
@@ -204,35 +204,35 @@ In most cases, adding a `container` argument should not be necessary, but if you
 For example, to update this test with a `TableElement` container, make sure to also append the `container` to `document.body`:
 
 ```diff
-import 'dart:html';
+ import 'dart:html';
 
-import 'package:over_react/over_react.dart';
-- import 'package:over_react_test/over_react_test.dart';
-+ import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:test/test.dart';
+ import 'package:over_react/over_react.dart';
+-import 'package:over_react_test/over_react_test.dart';
++import 'package:react_testing_library/react_testing_library.dart' as rtl;
+ import 'package:test/test.dart';
 
-main() {
-  test('Table Container', () {
-    final container = TableElement();
--   final instance = render(
-+   final view = rtl.render(
-      Dom.tbody()(
-        (Dom.tr()..addTestId('table-row'))(
-          Dom.td()('January'),
-          Dom.td()('\$100'),
-        ),
-        (Dom.tr()..addTestId('table-row'))(
-          Dom.td()('February'),
-          Dom.td()('\$80'),
-        ),
-      ),
--     container: container,
-+     container: document.body.append(container),
-    );
--   expect(queryAllByTestId(instance, 'table-row'), hasLength(2));
-+   expect(view.getAllByRole('row'), equals([isInTheDocument, isInTheDocument]));
-  });
-}
+ main() {
+   test('Table Container', () {
+     final container = TableElement();
+-    final instance = render(
++    final view = rtl.render(
+       Dom.tbody()(
+         (Dom.tr()..addTestId('table-row'))(
+           Dom.td()('January'),
+           Dom.td()('\$100'),
+         ),
+         (Dom.tr()..addTestId('table-row'))(
+           Dom.td()('February'),
+           Dom.td()('\$80'),
+         ),
+       ),
+-      container: container,
++      container: document.body.append(container),
+     );
+-    expect(queryAllByTestId(instance, 'table-row'), hasLength(2));
++    expect(view.getAllByRole('row'), equals([isInTheDocument, isInTheDocument]));
+   });
+ }
 ```
 
 > Note: For more information on how to migrate the query and expectation portions of the test to RTL,

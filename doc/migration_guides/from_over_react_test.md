@@ -6,7 +6,7 @@
 - **[Philosophy](#philosophy)**
   - **[Don't Test Implementation Details](#dont-test-implementation-details)**
   - **[Use Case Testing](#use-case-testing)**
-    - **[What is a use case?](#what-is-a-use-case?)**
+    - **[What is a use case?](#what-is-a-use-case)**
     - **[Verify You're Testing a Use Case](#verify-youre-testing-a-use-case)**
     - **[Identifying a Test's Use Case](#identifying-a-tests-use-case)**
 - **[The Path Forward](#the-path-forward)**

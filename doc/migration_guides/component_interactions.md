@@ -705,23 +705,11 @@ UiFactory<WrappedMenuProps> WrappedMenu = uiForwardRef(
         ..addTestId('button')
       )(
         DropdownMenu()(
-          MenuItem()('First Menu Item'),
-          (SubMenu()..menuItem = MenuItem())(
-            DropdownMenu()(
-              MenuItem()('First Menu Item'),
-              (SubMenu()..menuItem = MenuItem())(
-                DropdownMenu()(
-                  MenuItem()('First Menu Item'),
-                  (SubMenu()..menuItem = MenuItem())(
-                    (MenuItem()
-                      ..ref = ref
-                      ..onClick = props.handleClick
-                    )('First Menu Item'),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          (MenuItem()
+            ..ref = ref
+            ..onClick = props.handleClick
+          )('First Menu Item'),
+          MenuItem()('Second Menu Item'),
         ),
       ),
     ));
