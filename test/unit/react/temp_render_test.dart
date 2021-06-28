@@ -20,7 +20,6 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart';
 
 class _HelloComponent extends react.Component2 {
@@ -37,7 +36,7 @@ class _HelloComponent extends react.Component2 {
 
   @override
   dynamic render() {
-    return react.span({}, ["Hello ${props['name']}!"]);
+    return react.div({}, ['abc', react.div({})]);
   }
 }
 
@@ -51,14 +50,10 @@ void main() {
     test('on an InputElement', () {
       var ui;
 
-      // This prints a key warning.
-      recordConsoleLogs(() => ui = react.div({}, [
-        react.div({}),
-        react.div({'data-test-id': 'a'}, 'abc'),
-        react.div({}),
-        react.div({}),
+      ui = react.div({}, [
         helloComponent({'name': '123456789012345678901'}),
-      ])).forEach(print);
+        react.div({})
+      ]);
 
       // This just prints the prop type warning.
       view = rtl.render(ui as ReactElement);
