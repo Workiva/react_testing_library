@@ -154,7 +154,8 @@ RenderResult render(
       }
     },
     configuration: ConsoleConfig.error,
-  ).forEach((error) => print('⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}'));
+  ).forEach((error) =>
+      print('\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'));
 
   return RenderResult._(jsResult, ui);
 }

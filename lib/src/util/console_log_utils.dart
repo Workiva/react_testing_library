@@ -26,24 +26,21 @@ import 'package:react/react_client/react_interop.dart';
 /// the [configuration]. To set the [configuration], pass in the corresponding
 /// config class ([ConsoleConfig.log], [ConsoleConfig.warn], [ConsoleConfig.error], [ConsoleConfig.all]).
 ///
-/// By default, the function assumes that any `propType` warnings that occur during
+/// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
-/// is reset prior to calling the provided callback. If you wish to ignore the
-/// `propType` warnings that have occurred outside the scope of the callback,
-/// set [shouldResetPropTypesWarningCache] to `false`.
+/// is reset prior to calling the provided callback.
 ///
 /// If any errors are thrown during the callback, e.g. during a render that expects
 /// props that are not valid, the errors will be caught to allow the test to complete.
 List<String> recordConsoleLogs(
   Function() callback, {
   ConsoleConfig configuration = ConsoleConfig.all,
-  bool shouldResetPropTypesWarningCache = true,
 }) {
   final consoleLogs = <String>[];
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, JsFunction>{};
 
-  if (shouldResetPropTypesWarningCache) _resetPropTypeWarningCache();
+  _resetPropTypeWarningCache();
 
   for (final config in logTypeToCapture) {
     consoleRefs[config] = context['console'][config] as JsFunction;

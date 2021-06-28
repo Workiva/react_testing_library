@@ -67,7 +67,7 @@ void main() {
       final unTestedChildFormElemThatShouldNotCauseFailure = _FormElemDefinition(react.input, {
         'type': 'text',
         'name': 'notTested',
-        'value': 'does not matter',
+        'defaultValue': 'does not matter',
       });
 
       group('TextInputElement', () {
@@ -76,7 +76,7 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'text',
               'name': 'firstName',
-              'value': 'John',
+              'defaultValue': 'John',
             }),
             unTestedChildFormElemThatShouldNotCauseFailure,
           ]);
@@ -105,7 +105,7 @@ void main() {
               react.textarea,
               {
                 'name': 'comment',
-                'value': 'I am here to say something nice about you',
+                'defaultValue': 'I am here to say something nice about you',
               },
             ),
             unTestedChildFormElemThatShouldNotCauseFailure,
@@ -129,7 +129,7 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'number',
               'name': 'age',
-              'value': 35,
+              'defaultValue': 35,
             }),
             unTestedChildFormElemThatShouldNotCauseFailure,
           ]);
@@ -150,18 +150,18 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'business-in-front',
-              'checked': true,
+              'defaultChecked': true,
             }),
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'party-in-the-back',
-              'checked': false,
+              'defaultChecked': false,
             }),
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'has-mullet',
               'disabled': true,
-              'checked': false,
+              'defaultChecked': false,
             }),
             unTestedChildFormElemThatShouldNotCauseFailure,
           ]);
@@ -182,19 +182,19 @@ void main() {
                 'type': 'checkbox',
                 'name': 'pizza-toppings',
                 'value': 'pepperoni',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'checkbox',
                 'name': 'pizza-toppings',
                 'value': 'sausage',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'checkbox',
                 'name': 'pizza-toppings',
                 'value': 'black olives',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'checkbox',
@@ -246,7 +246,7 @@ void main() {
               'type': 'radio',
               'name': 'account-type',
               'value': 'personal',
-              'checked': true,
+              'defaultChecked': true,
             }),
             _FormElemDefinition(react.input, {
               'type': 'radio',
@@ -501,7 +501,7 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'text',
               'name': 'firstName',
-              'value': 'John',
+              'defaultValue': 'John',
             }),
           ]);
 
@@ -519,7 +519,7 @@ void main() {
               _FormElemDefinition(react.input, {
                 'type': 'text',
                 'name': 'firstName',
-                'value': 'John',
+                'defaultValue': 'John',
               }),
             ]);
 
@@ -535,7 +535,7 @@ void main() {
             renderedResult = renderFormWithValues(react.form, [
               _FormElemDefinition(react.textarea, {
                 'name': 'comments',
-                'value': 'I have nothing nice to say',
+                'defaultValue': 'I have nothing nice to say',
               }),
             ]);
 
@@ -554,7 +554,7 @@ void main() {
               _FormElemDefinition(react.input, {
                 'type': 'number',
                 'name': 'age',
-                'value': 35,
+                'defaultValue': 35,
               }),
             ]);
 
@@ -572,18 +572,18 @@ void main() {
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'business-in-front',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'party-in-the-back',
-                  'checked': false,
+                  'defaultChecked': false,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'has-mullet',
                   'disabled': true,
-                  'checked': false,
+                  'defaultChecked': false,
                 }),
               ]);
 
@@ -602,19 +602,19 @@ void main() {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
                   'value': 'pepperoni',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
                   'value': 'sausage',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
                   'value': 'black olives',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
@@ -666,7 +666,7 @@ void main() {
                 'type': 'radio',
                 'name': 'account-type',
                 'value': 'personal',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'radio',
