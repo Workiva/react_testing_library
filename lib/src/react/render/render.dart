@@ -28,6 +28,7 @@ import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactE
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:react_testing_library/src/dom/within.dart' show ScreenQueries;
+import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart' show addTearDown;
 
 import 'package:react_testing_library/src/react/render/types.dart' show JsRenderResult, RenderOptions;
