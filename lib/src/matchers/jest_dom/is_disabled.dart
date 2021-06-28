@@ -26,6 +26,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// Similar to [jest-dom's `toBeDisabled` matcher](https://github.com/testing-library/jest-dom#tobedisabled).
 ///
+/// > Related: [isEnabled]
+///
 /// ## Examples
 ///
 /// ```html
@@ -45,7 +47,7 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(react.div({},
+///     final view = rtl.render(react.div({},
 ///       react.button({'type': 'submit', 'disabled': true}, 'submit'),
 ///       react.fieldset({'disabled': true},
 ///         react.input({'type': 'text', 'value': 'jane.doe'}),
@@ -54,9 +56,9 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///     ));
 ///
 ///     // Use the `isDisabled` matcher as the second argument of `expect()`
-///     expect(result.getByRole('button'), isDisabled);
-///     expect(result.getByRole('textbox'), isDisabled);
-///     expect(result.getByText('link'), isNot(isDisabled)); // Anchor elements cannot be disabled
+///     expect(view.getByRole('button'), isDisabled);
+///     expect(view.getByRole('textbox'), isDisabled);
+///     expect(view.getByRole('link'), isEnabled); // Anchor elements cannot be disabled
 ///   });
 /// }
 /// ```

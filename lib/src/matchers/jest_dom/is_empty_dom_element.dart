@@ -38,15 +38,15 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 /// main() {
 ///   test('', () {
 ///     // Render the DOM shown in the example snippet above
-///     final result = rtl.render(
+///     final view = rtl.render(
 ///       react.span({'data-test-id': 'not-empty'},
 ///         react.span({'data-test-id': 'empty'}),
 ///       ),
 ///     );
 ///
 ///     // Use the `isEmptyDomElement` matcher as the second argument of `expect()`
-///     expect(result.getByTestId('empty'), isEmptyDomElement);
-///     expect(result.getByTestId('not-empty'), isNot(isEmptyDomElement));
+///     expect(view.getByTestId('empty'), isEmptyDomElement);
+///     expect(view.getByTestId('not-empty'), isNot(isEmptyDomElement));
 ///   });
 /// }
 /// ```

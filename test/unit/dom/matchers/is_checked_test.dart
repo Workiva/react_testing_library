@@ -28,44 +28,44 @@ void main() {
   group('isChecked matcher', () {
     group('passes when provided a valid Element that can be checked - is checked:', () {
       test('CheckboxInputElement', () {
-        final renderResult = render(react.input({
+        final view = render(react.input({
           'type': 'checkbox',
           'checked': true,
         }) as ReactElement);
-        shouldPass(renderResult.getByRole('checkbox'), isChecked);
+        shouldPass(view.getByRole('checkbox'), isChecked);
       });
 
       test('An element with role="checkbox"', () {
-        final renderResult = render(react.div({
+        final view = render(react.div({
           'role': 'checkbox',
           'aria-checked': 'true',
         }) as ReactElement);
-        shouldPass(renderResult.getByRole('checkbox'), isChecked);
+        shouldPass(view.getByRole('checkbox'), isChecked);
       });
 
       test('RadioInputElement', () {
-        final renderResult = render(react.input({
+        final view = render(react.input({
           'type': 'radio',
           'name': 'something',
           'checked': true,
         }) as ReactElement);
-        shouldPass(renderResult.getByRole('radio'), isChecked);
+        shouldPass(view.getByRole('radio'), isChecked);
       });
 
       test('An element with role="radio"', () {
-        final renderResult = render(react.div({
+        final view = render(react.div({
           'role': 'radio',
           'aria-checked': 'true',
         }) as ReactElement);
-        shouldPass(renderResult.getByRole('radio'), isChecked);
+        shouldPass(view.getByRole('radio'), isChecked);
       });
 
       test('An element with role="switch"', () {
-        final renderResult = render(react.div({
+        final view = render(react.div({
           'role': 'switch',
           'aria-checked': 'true',
         }) as ReactElement);
-        shouldPass(renderResult.getByRole('switch'), isChecked);
+        shouldPass(view.getByRole('switch'), isChecked);
       });
     });
 
@@ -76,18 +76,18 @@ void main() {
 
       group('the matched item is not a type of element that can be checked', () {
         test('', () {
-          final renderResult = render(react.div({defaultTestIdKey: 'div'}) as ReactElement);
-          final divNode = renderResult.getByTestId('div');
+          final view = render(react.div({defaultTestIdKey: 'div'}) as ReactElement);
+          final divNode = view.getByTestId('div');
           shouldFail(divNode, isChecked, contains('Which: is not a type of HTML Element that can be checked.'));
         });
       });
 
       test('the matched item is not checked', () {
-        final renderResult = render(react.input({
+        final view = render(react.input({
           'type': 'checkbox',
           'checked': false,
         }) as ReactElement);
-        shouldFail(renderResult.getByRole('checkbox'), isChecked, contains('Which: is not checked.'));
+        shouldFail(view.getByRole('checkbox'), isChecked, contains('Which: is not checked.'));
       });
     });
   });

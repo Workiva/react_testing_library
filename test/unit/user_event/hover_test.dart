@@ -27,7 +27,7 @@ import 'package:test/test.dart';
 void main() {
   group('UserEvent.hover and UserEvent.unhover', () {
     List<MouseEvent> calls;
-    rtl.RenderResult renderedResult;
+    rtl.RenderResult view;
 
     setUp(() {
       calls = [];
@@ -51,9 +51,9 @@ void main() {
         ]);
       });
 
-      renderedResult = rtl.render(react.div({}, [HoverTestComponent({})]) as ReactElement);
+      view = rtl.render(react.div({}, [HoverTestComponent({})]) as ReactElement);
       // Sanity check.
-      expect(renderedResult.queryByText('Hello!'), isNull);
+      expect(view.queryByText('Hello!'), isNull);
     });
 
     void _verifyHoverEvent({
@@ -67,26 +67,26 @@ void main() {
     }
 
     test('', () {
-      UserEvent.hover(renderedResult.getByRole('button'));
-      expect(renderedResult.getByText('Hello!'), isInTheDocument);
+      UserEvent.hover(view.getByRole('button'));
+      expect(view.getByText('Hello!'), isInTheDocument);
 
-      UserEvent.unhover(renderedResult.getByRole('button'));
-      expect(renderedResult.queryByText('Hello!'), isNull);
+      UserEvent.unhover(view.getByRole('button'));
+      expect(view.queryByText('Hello!'), isNull);
       _verifyHoverEvent();
     });
 
     test('eventInit', () {
       UserEvent.hover(
-        renderedResult.getByRole('button'),
+        view.getByRole('button'),
         eventInit: {'shiftKey': true},
       );
-      expect(renderedResult.getByText('Hello!'), isInTheDocument);
+      expect(view.getByText('Hello!'), isInTheDocument);
 
       UserEvent.unhover(
-        renderedResult.getByRole('button'),
+        view.getByRole('button'),
         eventInit: {'shiftKey': true},
       );
-      expect(renderedResult.queryByText('Hello!'), isNull);
+      expect(view.queryByText('Hello!'), isNull);
       _verifyHoverEvent(hasEventInit: true);
     });
   });

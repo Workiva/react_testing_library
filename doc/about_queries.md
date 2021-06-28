@@ -38,25 +38,25 @@ main() {
   );
   
   test('', () {
-    final renderedResult = rtl.render(exampleVDom);
+    final view = rtl.render(exampleVDom);
     
     // Succeeds, there is only one in the react tree.
-    final goodNavQuery = renderedResult.getByRole('nav');
+    final goodNavQuery = view.getByRole('nav');
     // This is identical to the first query, but shows how 
     // the top level queries must specify a container. 
     final moreVerboseNavQuery = 
-        rtl.getByRole(renderedResult.container, 'nav');
+        rtl.getByRole(view.container, 'nav');
     
     // Fails, there is more than one element with the list role 
     // in the default scope used by the `RenderResult` instance 
     // returned from `rtl.render`. If we want to get only the 
     // nested list, we should use a more tightly scoped query
     // like the one shown next.
-    final badSubListQuery = renderedResult.getByRole('list');
+    final badSubListQuery = view.getByRole('list');
     
     // Succeeds, there is only one list nested within the" "Item 3" item.
     final goodSubListQuery = 
-        rtl.within(renderedResult.getByText('Item 3')).getByRole('list');
+        rtl.within(view.getByText('Item 3')).getByRole('list');
     
     // Lets say that our test above also renders an element that displays an 
     // overlay / "portal" dialog of some kind that renders in its own tree. 

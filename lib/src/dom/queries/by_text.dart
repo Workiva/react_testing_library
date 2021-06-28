@@ -15,6 +15,12 @@
 // limitations under the License.
 
 /// https://testing-library.com/docs/queries/bytext/
+///
+/// {@template PreferByRoleNote}
+/// __Prefer__ using [`ByRole` queries](https://workiva.github.io/react_testing_library/topics/ByRole-topic.html)
+/// when possible in order to query for elements in a way that
+/// [most reflects how the user would interact with them](https://testing-library.com/docs/queries/about#priority).
+/// {@endtemplate}
 @JS()
 library react_testing_library.src.dom.queries.by_text;
 
@@ -32,11 +38,15 @@ import 'package:react_testing_library/src/util/error_message_utils.dart' show wi
 ///
 /// The public API is either the top level function by the same name as the methods in here,
 /// or the methods by the same name exposed by `screen` / `within()`.
+///
+///
 mixin ByTextQueries on IQueries {
   /// Returns a single element with the given [text] content, defaulting to an [exact] match.
   ///
   /// Throws if no element is found.
   /// Use [queryByText] if a RTE is not expected.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [getAllByText]
   ///
@@ -57,17 +67,18 @@ mixin ByTextQueries on IQueries {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
   /// import 'package:test/test.dart';
   ///
   /// main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above
-  ///     final result = rtl.render(
+  ///     final view = rtl.render(
   ///       react.a({'href': '/about'}, 'About ℹ️'),
   ///     );
   ///
-  ///     final aboutAnchorNode = result.getByText(RegExp(r'^About'));
+  ///     expect(view.getByText(RegExp(r'^About')), isInTheDocument);
   ///   });
   /// }
   /// ```
@@ -101,6 +112,8 @@ mixin ByTextQueries on IQueries {
   ///
   /// Throws if no elements are found.
   /// Use [queryAllByText] if a RTE is not expected.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [getByText]
   ///
@@ -137,6 +150,8 @@ mixin ByTextQueries on IQueries {
   /// Returns `null` if no element is found.
   /// Use [getByText] if a RTE is expected.
   ///
+  /// {@macro PreferByRoleNote}
+  ///
   /// > Related: [queryAllByText]
   ///
   /// > See: <https://testing-library.com/docs/queries/bytext/>
@@ -169,6 +184,8 @@ mixin ByTextQueries on IQueries {
   ///
   /// Returns an empty list if no element(s) are found.
   /// Use [getAllByText] if a RTE is expected.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [queryByText]
   ///
@@ -205,6 +222,8 @@ mixin ByTextQueries on IQueries {
   /// a non-async query like [getByText] or [queryByText] in a `waitFor` function.
   ///
   /// Throws if exactly one element is not found.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [findAllByText]
   ///
@@ -264,6 +283,8 @@ mixin ByTextQueries on IQueries {
   /// a non-async query like [getByText] or [queryByText] in a `waitFor` function.
   ///
   /// Throws if no elements are found.
+  ///
+  /// {@macro PreferByRoleNote}
   ///
   /// > Related: [findByText]
   ///

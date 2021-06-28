@@ -78,10 +78,10 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.input({'type': 'checkbox'}));
+  ///     final view = rtl.render(react.input({'type': 'checkbox'}));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final checkbox = result.getByRole('checkbox');
+  ///     final checkbox = view.getByRole('checkbox');
   ///
   ///     // Use `UserEvent.click` to simulate a user clicking the checkbox.
   ///     UserEvent.click(checkbox);
@@ -142,13 +142,13 @@ abstract class UserEvent {
   ///     var clickCount = 0;
   ///
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.input({
+  ///     final view = rtl.render(react.input({
   ///       'type': 'checkbox',
   ///       'onChange': (_) => clickCount++,
   ///     }));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final checkbox = result.getByRole('checkbox');
+  ///     final checkbox = view.getByRole('checkbox');
   ///
   ///     // Use `UserEvent.dblClick` to simulate a user double clicking the checkbox.
   ///     UserEvent.dblClick(checkbox);
@@ -231,7 +231,7 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.div({}, [
+  ///     final view = rtl.render(react.div({}, [
   ///       react.label({
   ///         'htmlFor': 'input',
   ///       }, 'Type here:'),
@@ -239,7 +239,7 @@ abstract class UserEvent {
   ///     ]));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final input = result.getByLabelText('Type here:');
+  ///     final input = view.getByLabelText('Type here:');
   ///
   ///     // Use `UserEvent.type` to simulate a user typing in the input.
   ///     UserEvent.type(input, 'Hello, World!');
@@ -340,7 +340,7 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () async {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.div({}, [
+  ///     final view = rtl.render(react.div({}, [
   ///       react.label({
   ///         'htmlFor': 'input',
   ///       }, 'Type here:'),
@@ -348,7 +348,7 @@ abstract class UserEvent {
   ///     ]));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final input = result.getByLabelText('Type here:');
+  ///     final input = view.getByLabelText('Type here:');
   ///
   ///     // Use `UserEvent.type` to simulate a user typing in the input.
   ///     await UserEvent.typeWithDelay(input, 'Hello, World!', Duration(milliseconds: 500));
@@ -585,11 +585,19 @@ abstract class UserEvent {
   /// ## Example
   ///
   /// ```html
-  /// <input data-test-id="single-input" type="file" accept=".png,.jpeg" />
-  /// <input data-test-id="multi-input" type="file" accept=".png,.jpeg" multiple />
+  /// <div>
+  ///   <label for="single-input">Single Input:</label>
+  ///   <input id="single-input" type="file" accept=".png,.jpeg" />
+  /// </div>
+  /// <div>
+  ///   <label for="multi-input">Multi-Input:</label>
+  ///   <input id="multi-input" type="file" accept=".png,.jpeg" multiple />
+  /// </div>
   /// ```
   ///
   /// ```dart
+  /// import 'dart:html';
+  ///
   /// import 'package:react/react.dart' as react;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
   /// import 'package:react_testing_library/user_event.dart';
@@ -600,14 +608,19 @@ abstract class UserEvent {
   ///     final file = File([], 'file1.mp3');
   ///
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.input({
-  ///       'data-test-id': 'single-input',
-  ///       'type': 'file',
-  ///       'accept': '.png,.jpeg',
-  ///     }));
+  ///     final view = rtl.render(react.div({}, [
+  ///       react.label({
+  ///         'htmlFor': 'single-input',
+  ///       }, 'Single Input:'),
+  ///       react.input({
+  ///         'id': 'single-input',
+  ///         'type': 'file',
+  ///         'accept': '.png,.jpeg',
+  ///       }),
+  ///     ]));
   ///
   ///     // Use react_testing_library queries to store references to the nodes.
-  ///     final input = result.getByTestId('single-input') as FileUploadInputElement;
+  ///     final input = view.getByLabelText('Single Input:') as FileUploadInputElement;
   ///
   ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
   ///     UserEvent.upload(input, [file]);
@@ -624,15 +637,20 @@ abstract class UserEvent {
   ///     ];
   ///
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.input({
-  ///       'data-test-id': 'multi-input',
-  ///       'type': 'file',
-  ///       'multiple': true,
-  ///       'accept': '.png,.jpeg',
-  ///     }));
+  ///     final view = rtl.render(react.div({}, [
+  ///       react.label({
+  ///         'htmlFor': 'multi-input',
+  ///       }, 'Multi-Input:'),
+  ///       react.input({
+  ///         'data-test-id': 'multi-input',
+  ///         'type': 'file',
+  ///         'multiple': true,
+  ///         'accept': '.png,.jpeg',
+  ///       }),
+  ///     ]));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final input = result.getByTestId('multi-input') as FileUploadInputElement;
+  ///     final input = view.getByLabelText('Multi-Input:') as FileUploadInputElement;
   ///
   ///     // Use `UserEvent.upload` to simulate a user uploading a file in the input.
   ///     UserEvent.upload(input, files, applyAccept: true);
@@ -699,12 +717,12 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.input({
+  ///     final view = rtl.render(react.input({
   ///       'defaultValue': 'Hello, World!',
   ///     }));
   ///
   ///     // Use react_testing_library queries to store references to the nodes.
-  ///     final input = result.getByRole('textbox');
+  ///     final input = view.getByRole('textbox');
   ///     expect(input, hasValue('Hello, World!'), reason: 'sanity check');
   ///
   ///     // Use `UserEvent.clear` to simulate a user deleting the contents of the input.
@@ -748,6 +766,8 @@ abstract class UserEvent {
   /// ```
   ///
   /// ```dart
+  /// import 'dart:html';
+  ///
   /// import 'package:react/react.dart' as react;
   /// import 'package:react_testing_library/matchers.dart' show hasValue;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
@@ -757,7 +777,7 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.select(
+  ///     final view = rtl.render(react.select(
   ///       {'multiple': true},
   ///       [
   ///         react.option({'value': 'topping1'}, 'Cheese'),
@@ -769,11 +789,11 @@ abstract class UserEvent {
   ///     ));
   ///
   ///     // Use react_testing_library queries to store references to the nodes.
-  ///     final select = result.getByRole('listbox') as SelectElement;
+  ///     final select = view.getByRole('listbox') as SelectElement;
   ///
   ///     // Use `UserEvent.selectOptions` to simulate a user selecting options from a list.
   ///     UserEvent.selectOptions(select, ['topping1']);
-  ///     UserEvent.selectOptions(select, [result.getByText('Olives'), result.getByText('Bacon')]);
+  ///     UserEvent.selectOptions(select, [view.getByText('Olives'), view.getByText('Bacon')]);
   ///
   ///     // Use the `hasValue` matcher to verify the value of the select.
   ///     expect(select, hasValue(['topping1', 'topping3', 'topping5']));
@@ -826,6 +846,8 @@ abstract class UserEvent {
   /// ```
   ///
   /// ```dart
+  /// import 'dart:html';
+  ///
   /// import 'package:react/react.dart' as react;
   /// import 'package:react_testing_library/matchers.dart' show hasValue;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
@@ -835,7 +857,7 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.select(
+  ///     final view = rtl.render(react.select(
   ///       {'multiple': true},
   ///       [
   ///         react.option({'value': 'topping1', 'selected': true}, 'Cheese'),
@@ -847,11 +869,11 @@ abstract class UserEvent {
   ///     ));
   ///
   ///     // Use react_testing_library queries to store references to the nodes.
-  ///     final select = result.getByRole('listbox') as SelectElement;
+  ///     final select = view.getByRole('listbox') as SelectElement;
   ///
   ///     // Use `UserEvent.deselectOptions` to simulate a user deselecting options from a list.
   ///     UserEvent.deselectOptions(select, ['topping5']);
-  ///     UserEvent.deselectOptions(select, [result.getByText('Pineapple')]);
+  ///     UserEvent.deselectOptions(select, [view.getByText('Pineapple')]);
   ///
   ///     // Use the `hasValue` matcher to verify the value of the select.
   ///     expect(select, hasValue(['topping1']));
@@ -906,6 +928,8 @@ abstract class UserEvent {
   /// ```
   ///
   /// ```dart
+  /// import 'dart:html';
+  ///
   /// import 'package:react/react.dart' as react;
   /// import 'package:react_testing_library/matchers.dart' show isFocused;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
@@ -915,7 +939,7 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.div({}, [
+  ///     final view = rtl.render(react.div({}, [
   ///       react.input({}),
   ///       react.div({
   ///         'data-test-id': 'container'
@@ -926,8 +950,8 @@ abstract class UserEvent {
   ///     ]));
   ///
   ///     // Use react_testing_library queries to store references to the nodes.
-  ///     final inputs = result.getAllByRole('textbox');
-  ///     final container = result.getByTestId('container');
+  ///     final inputs = view.getAllByRole('textbox');
+  ///     final container = view.getByTestId('container');
   ///
   ///     // Use `isFocused` matcher to verify the currently focused element.
   ///     expect(document.body, isFocused);
@@ -1009,17 +1033,17 @@ abstract class UserEvent {
   ///     });
   ///
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(HoverButton({}));
+  ///     final view = rtl.render(HoverButton({}));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final button = result.getByRole('button');
-  ///     expect(result.queryByText('Hello!'), isNull, reason: 'sanity check');
+  ///     final button = view.getByRole('button');
+  ///     expect(view.queryByText('Hello!'), isNull, reason: 'sanity check');
   ///
   ///     // Use `UserEvent.hover` to simulate a user mousing over a button.
   ///     UserEvent.hover(button);
   ///
   ///     // Use `isInTheDocument` matcher to verify that the new element is present.
-  ///     expect(result.getByText('Hello!'), isInTheDocument);
+  ///     expect(view.getByText('Hello!'), isInTheDocument);
   ///   });
   /// }
   /// ```
@@ -1075,23 +1099,23 @@ abstract class UserEvent {
   ///     });
   ///
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(HoverButton({}));
+  ///     final view = rtl.render(HoverButton({}));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final button = result.getByRole('button');
-  ///     expect(result.queryByText('Hello!'), isNull, reason: 'sanity check');
+  ///     final button = view.getByRole('button');
+  ///     expect(view.queryByText('Hello!'), isNull, reason: 'sanity check');
   ///
   ///     // Use `UserEvent.hover` to simulate a user mousing over a button.
   ///     UserEvent.hover(button);
   ///
   ///     // Use `isInTheDocument` matcher to verify that the new element is present.
-  ///     expect(result.getByText('Hello!'), isInTheDocument);
+  ///     expect(view.getByText('Hello!'), isInTheDocument);
   ///
   ///     // Use `UserEvent.unhover` to simulate a user unhovering a button.
   ///     UserEvent.unhover(button);
   ///
   ///     // Verify that the new element is no longer present in the document.
-  ///     expect(result.queryByText('Hello!'), isNull);
+  ///     expect(view.queryByText('Hello!'), isNull);
   ///   });
   /// }
   /// ```
@@ -1131,6 +1155,8 @@ abstract class UserEvent {
   /// ```
   ///
   /// ```dart
+  /// import 'dart:html';
+  ///
   /// import 'package:react/react.dart' as react;
   /// import 'package:react_testing_library/matchers.dart' show hasValue;
   /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
@@ -1140,10 +1166,10 @@ abstract class UserEvent {
   /// void main() {
   ///   test('', () {
   ///     // Render the DOM shown in the example snippet above.
-  ///     final result = rtl.render(react.input({'defaultValue': 'This is a bad example'}));
+  ///     final view = rtl.render(react.input({'defaultValue': 'This is a bad example'}));
   ///
   ///     // Use react_testing_library queries to store references to the node.
-  ///     final input = result.getByRole('textbox') as InputElement;
+  ///     final input = view.getByRole('textbox') as InputElement;
   ///
   ///     input.setSelectionRange(10, 13);
   ///

@@ -33,15 +33,15 @@ void main() {
 void sharedHasValueTests(String description,
     {Matcher Function([dynamic]) matcherFn, String valueDescription = 'value'}) {
   group(description, () {
-    RenderResult renderedResult;
+    RenderResult view;
     tearDown(() {
-      renderedResult = null;
+      view = null;
     });
 
     group('passes when the provided value matches the value found in a', () {
       group('TextInputElement', () {
         setUp(() {
-          renderedResult = render(react.input({
+          view = render(react.input({
             'type': 'text',
             'name': 'firstName',
             'value': 'John',
@@ -49,12 +49,12 @@ void sharedHasValueTests(String description,
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByRole('textbox'), matcherFn('John'));
+          shouldPass(view.getByRole('textbox'), matcherFn('John'));
         });
 
         test('fuzzy string matcher(s)', () {
           shouldPass(
-              renderedResult.getByRole('textbox'),
+              view.getByRole('textbox'),
               matcherFn(allOf(
                 startsWith('Jo'),
                 endsWith('hn'),
@@ -64,24 +64,24 @@ void sharedHasValueTests(String description,
 
       group('TextAreaElement', () {
         setUp(() {
-          renderedResult = render(react.textarea({
+          view = render(react.textarea({
             'name': 'comment',
             'value': 'I am here to say something nice about you',
           }) as ReactElement);
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByRole('textbox'), matcherFn('I am here to say something nice about you'));
+          shouldPass(view.getByRole('textbox'), matcherFn('I am here to say something nice about you'));
         });
 
         test('fuzzy string matcher(s)', () {
-          shouldPass(renderedResult.getByRole('textbox'), matcherFn(contains('something nice')));
+          shouldPass(view.getByRole('textbox'), matcherFn(contains('something nice')));
         });
       });
 
       group('NumberInputElement', () {
         setUp(() {
-          renderedResult = render(react.input({
+          view = render(react.input({
             'type': 'number',
             'name': 'age',
             'value': 35,
@@ -89,11 +89,11 @@ void sharedHasValueTests(String description,
         });
 
         test('exact match', () {
-          shouldPass(renderedResult.getByRole('spinbutton'), matcherFn(35));
+          shouldPass(view.getByRole('spinbutton'), matcherFn(35));
         });
 
         test('number matcher', () {
-          shouldPass(renderedResult.getByRole('spinbutton'), matcherFn(greaterThan(18)));
+          shouldPass(view.getByRole('spinbutton'), matcherFn(greaterThan(18)));
         });
       });
 
@@ -101,7 +101,7 @@ void sharedHasValueTests(String description,
         group('when only a single option can be selected', () {
           group('and a single option is selected', () {
             test('exact match', () {
-              renderedResult = render(react.select(
+              view = render(react.select(
                 {'name': 'account-type'},
                 react.option({
                   'value': 'personal',
@@ -113,14 +113,14 @@ void sharedHasValueTests(String description,
               ) as ReactElement);
 
               if (matcherFn == hasValue) {
-                shouldPass(renderedResult.getByRole('combobox'), matcherFn('business'));
+                shouldPass(view.getByRole('combobox'), matcherFn('business'));
               } else if (matcherFn == hasDisplayValue) {
-                shouldPass(renderedResult.getByRole('combobox'), matcherFn('business description'));
+                shouldPass(view.getByRole('combobox'), matcherFn('business description'));
               }
             });
 
             test('using a matcher', () {
-              renderedResult = render(react.select(
+              view = render(react.select(
                 {'name': 'account-type'},
                 react.option({
                   'value': 'personal',
@@ -132,14 +132,14 @@ void sharedHasValueTests(String description,
 
               if (matcherFn == hasValue) {
                 shouldPass(
-                    renderedResult.getByRole('combobox'),
+                    view.getByRole('combobox'),
                     matcherFn(allOf(
                       isNotNull,
                       isNot('business'),
                     )));
               } else if (matcherFn == hasDisplayValue) {
                 shouldPass(
-                    renderedResult.getByRole('combobox'),
+                    view.getByRole('combobox'),
                     matcherFn(allOf(
                       isNotNull,
                       isNot('business description'),
@@ -149,7 +149,7 @@ void sharedHasValueTests(String description,
           });
 
           test('and no option is selected', () {
-            renderedResult = render(react.select(
+            view = render(react.select(
               {'name': 'account-type'},
               react.option({
                 'value': 'personal',
@@ -161,14 +161,14 @@ void sharedHasValueTests(String description,
               }, 'business'),
             ) as ReactElement);
 
-            shouldPass(renderedResult.getByRole('combobox'), matcherFn());
+            shouldPass(view.getByRole('combobox'), matcherFn());
           });
         });
 
         group('when multiple options can be selected', () {
           group('and a single option is selected', () {
             setUp(() {
-              renderedResult = render(react.select(
+              view = render(react.select(
                 {
                   'name': 'pizza-toppings',
                   'multiple': 'true',
@@ -189,23 +189,23 @@ void sharedHasValueTests(String description,
 
             test('exact match', () {
               if (matcherFn == hasValue) {
-                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['sausage']));
+                shouldPass(view.getByRole('listbox'), matcherFn(['sausage']));
               } else if (matcherFn == hasDisplayValue) {
-                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['Italian Sausage']));
+                shouldPass(view.getByRole('listbox'), matcherFn(['Italian Sausage']));
               }
             });
 
             test('using a matcher', () {
               if (matcherFn == hasValue) {
                 shouldPass(
-                    renderedResult.getByRole('listbox'),
+                    view.getByRole('listbox'),
                     matcherFn(allOf(
                       isNotEmpty,
                       isNot(contains('pineapple')),
                     )));
               } else if (matcherFn == hasDisplayValue) {
                 shouldPass(
-                    renderedResult.getByRole('listbox'),
+                    view.getByRole('listbox'),
                     matcherFn(allOf(
                       isNotEmpty,
                       isNot(contains('Processed Sweetened Pineapple')),
@@ -216,7 +216,7 @@ void sharedHasValueTests(String description,
 
           group('and multiple options are selected', () {
             setUp(() {
-              renderedResult = render(react.select(
+              view = render(react.select(
                 {
                   'name': 'pizza-toppings',
                   'multiple': 'true',
@@ -238,24 +238,23 @@ void sharedHasValueTests(String description,
 
             test('exact match', () {
               if (matcherFn == hasValue) {
-                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['pepperoni', 'sausage']));
+                shouldPass(view.getByRole('listbox'), matcherFn(['pepperoni', 'sausage']));
               } else if (matcherFn == hasDisplayValue) {
-                shouldPass(renderedResult.getByRole('listbox'), matcherFn(['Delicious Pepperoni', 'Italian Sausage']));
+                shouldPass(view.getByRole('listbox'), matcherFn(['Delicious Pepperoni', 'Italian Sausage']));
               }
             });
 
             test('using a matcher', () {
               if (matcherFn == hasValue) {
-                shouldPass(renderedResult.getByRole('listbox'), matcherFn(isNot(contains('pineapple'))));
+                shouldPass(view.getByRole('listbox'), matcherFn(isNot(contains('pineapple'))));
               } else if (matcherFn == hasDisplayValue) {
-                shouldPass(
-                    renderedResult.getByRole('listbox'), matcherFn(isNot(contains('Processed Sweetened Pineapple'))));
+                shouldPass(view.getByRole('listbox'), matcherFn(isNot(contains('Processed Sweetened Pineapple'))));
               }
             });
           });
 
           test('and no option is selected', () {
-            renderedResult = render(react.select(
+            view = render(react.select(
               {
                 'name': 'pizza-toppings',
                 'multiple': 'true',
@@ -274,7 +273,7 @@ void sharedHasValueTests(String description,
               }, 'pineapple description'),
             ) as ReactElement);
 
-            shouldPass(renderedResult.getByRole('listbox'), matcherFn());
+            shouldPass(view.getByRole('listbox'), matcherFn());
           });
         });
       });
@@ -287,54 +286,54 @@ void sharedHasValueTests(String description,
 
       group('the element is', () {
         test('a CheckboxInputElement', () {
-          renderedResult = render(react.input({
+          view = render(react.input({
             'type': 'checkbox',
             'name': 'business-in-front',
             'checked': true,
           }) as ReactElement);
 
           shouldFail(
-              renderedResult.getByRole('checkbox'),
+              view.getByRole('checkbox'),
               matcherFn('true'),
               contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
                   'matcher. Use either the isChecked or hasFormValues matcher instead.'));
         });
 
         test('an element with role="checkbox"', () {
-          renderedResult = render(react.div({
+          view = render(react.div({
             'role': 'checkbox',
             'aria-checked': 'true',
           }) as ReactElement);
 
           shouldFail(
-              renderedResult.getByRole('checkbox'),
+              view.getByRole('checkbox'),
               matcherFn('true'),
               contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
                   'matcher. Use either the isChecked or hasFormValues matcher instead.'));
         });
 
         test('a RadioInputElement', () {
-          renderedResult = render(react.input({
+          view = render(react.input({
             'type': 'radio',
             'name': 'business-in-front',
             'checked': true,
           }) as ReactElement);
 
           shouldFail(
-              renderedResult.getByRole('radio'),
+              view.getByRole('radio'),
               matcherFn('true'),
               contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
                   'matcher. Use either the isChecked or hasFormValues matcher instead.'));
         });
 
         test('an element with role="radio"', () {
-          renderedResult = render(react.div({
+          view = render(react.div({
             'role': 'radio',
             'aria-checked': 'true',
           }) as ReactElement);
 
           shouldFail(
-              renderedResult.getByRole('radio'),
+              view.getByRole('radio'),
               matcherFn('true'),
               contains('Which: is a checkbox/radio input, which cannot be used with a hasValue / hasDisplayValue '
                   'matcher. Use either the isChecked or hasFormValues matcher instead.'));
@@ -343,14 +342,14 @@ void sharedHasValueTests(String description,
 
       group('the provided value does not match the value found in a', () {
         test('TextInputElement', () {
-          renderedResult = render(react.input({
+          view = render(react.input({
             'type': 'text',
             'name': 'firstName',
             'value': 'John',
           }) as ReactElement);
 
           shouldFail(
-            renderedResult.getByRole('textbox'),
+            view.getByRole('textbox'),
             matcherFn('Jane'),
             allOf(
               contains('Expected: An element with a $valueDescription of \'Jane\''),
@@ -360,13 +359,13 @@ void sharedHasValueTests(String description,
         });
 
         test('TextAreaElement', () {
-          renderedResult = render(react.textarea({
+          view = render(react.textarea({
             'name': 'comments',
             'value': 'I have nothing nice to say',
           }) as ReactElement);
 
           shouldFail(
-            renderedResult.getByRole('textbox'),
+            view.getByRole('textbox'),
             matcherFn('I have something nice to say'),
             allOf(
               contains('Expected: An element with a $valueDescription of \'I have something nice to say\''),
@@ -376,14 +375,14 @@ void sharedHasValueTests(String description,
         });
 
         test('NumberInputElement', () {
-          renderedResult = render(react.input({
+          view = render(react.input({
             'type': 'number',
             'name': 'age',
             'value': 35,
           }) as ReactElement);
 
           shouldFail(
-            renderedResult.getByRole('spinbutton'),
+            view.getByRole('spinbutton'),
             matcherFn(36),
             allOf(
               contains('Expected: An element with a $valueDescription of <36>'),
@@ -394,7 +393,7 @@ void sharedHasValueTests(String description,
 
         group('SelectElement', () {
           test('when only a single option can be selected', () {
-            renderedResult = render(react.select(
+            view = render(react.select(
               {
                 'name': 'account-type',
               },
@@ -409,7 +408,7 @@ void sharedHasValueTests(String description,
 
             if (matcherFn == hasValue) {
               shouldFail(
-                renderedResult.getByRole('combobox'),
+                view.getByRole('combobox'),
                 matcherFn('personal'),
                 allOf(
                   contains('Expected: An element with a $valueDescription of \'personal\''),
@@ -418,7 +417,7 @@ void sharedHasValueTests(String description,
               );
             } else if (matcherFn == hasDisplayValue) {
               shouldFail(
-                renderedResult.getByRole('combobox'),
+                view.getByRole('combobox'),
                 matcherFn('personal description'),
                 allOf(
                   contains('Expected: An element with a $valueDescription of \'personal description\''),
@@ -429,7 +428,7 @@ void sharedHasValueTests(String description,
           });
 
           test('when multiple options can be selected', () {
-            renderedResult = render(react.select(
+            view = render(react.select(
               {
                 'name': 'pizza-toppings',
                 'multiple': 'true',
@@ -450,7 +449,7 @@ void sharedHasValueTests(String description,
 
             if (matcherFn == hasValue) {
               shouldFail(
-                renderedResult.getByRole('listbox'),
+                view.getByRole('listbox'),
                 matcherFn(['pineapple', 'pepperoni']),
                 allOf(
                   contains('Expected: An element with a $valueDescription of [\'pineapple\', \'pepperoni\']'),
@@ -460,7 +459,7 @@ void sharedHasValueTests(String description,
               );
             } else if (matcherFn == hasDisplayValue) {
               shouldFail(
-                renderedResult.getByRole('listbox'),
+                view.getByRole('listbox'),
                 matcherFn(['Processed Sweetened Pineapple', 'Delicious Pepperoni']),
                 allOf(
                   contains('Expected: An element with a $valueDescription of '

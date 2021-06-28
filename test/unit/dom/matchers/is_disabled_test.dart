@@ -31,14 +31,14 @@ void main() {
     group('passes when provided a valid Element that can be disabled', () {
       test('is disabled', () {
         shouldPass(InputElement()..disabled = true, isDisabled);
-        final renderResult = render(
+        final view = render(
             react.form({'disabled': true, defaultTestIdKey: 'form'}, react.button({'type': 'submit'})) as ReactElement);
-        shouldPass(renderResult.getByTestId('form'), isDisabled);
+        shouldPass(view.getByTestId('form'), isDisabled);
       });
 
       test('within a disabled FormElement', () {
-        final renderResult = render(react.form({'disabled': true}, react.button({'type': 'submit'})) as ReactElement);
-        shouldPass(renderResult.getByRole('button'), isDisabled);
+        final view = render(react.form({'disabled': true}, react.button({'type': 'submit'})) as ReactElement);
+        shouldPass(view.getByRole('button'), isDisabled);
       });
     });
 
@@ -49,15 +49,14 @@ void main() {
 
       group('the matched item is not a type of element that can be disabled', () {
         test('', () {
-          final renderResult = render(react.div({defaultTestIdKey: 'div'}) as ReactElement);
-          final divNode = renderResult.getByTestId('div');
+          final view = render(react.div({defaultTestIdKey: 'div'}) as ReactElement);
+          final divNode = view.getByTestId('div');
           shouldFail(divNode, isDisabled, contains('Which: is not a type of HTML Element that can be disabled.'));
         });
 
         test('even when nested within a FormElement that is disabled', () {
-          final renderResult =
-              render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
-          final divNode = renderResult.getByTestId('div');
+          final view = render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
+          final divNode = view.getByTestId('div');
           shouldFail(divNode, isDisabled, contains('Which: is not a type of HTML Element that can be disabled.'));
         });
       });
@@ -82,15 +81,14 @@ void main() {
 
       group('the matched item is not a type of element that can be disabled', () {
         test('', () {
-          final renderResult = render(react.div({defaultTestIdKey: 'div'}) as ReactElement);
-          final divNode = renderResult.getByTestId('div');
+          final view = render(react.div({defaultTestIdKey: 'div'}) as ReactElement);
+          final divNode = view.getByTestId('div');
           shouldFail(divNode, isEnabled, contains('Which: is not a type of HTML Element that can be disabled.'));
         });
 
         test('even when nested within a FormElement that is disabled', () {
-          final renderResult =
-              render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
-          final divNode = renderResult.getByTestId('div');
+          final view = render(react.form({'disabled': true}, react.div({defaultTestIdKey: 'div'})) as ReactElement);
+          final divNode = view.getByTestId('div');
           shouldFail(divNode, isEnabled, contains('Which: is not a type of HTML Element that can be disabled.'));
         });
       });

@@ -27,7 +27,7 @@ import '../util/over_react_stubs.dart';
 
 void main() {
   group('User click events:', () {
-    rtl.RenderResult renderedResult;
+    rtl.RenderResult view;
     List<InputElement> inputs;
 
     setUp(() {
@@ -41,8 +41,8 @@ void main() {
         ]),
       ]);
 
-      renderedResult = rtl.render(elementToRender as ReactElement);
-      inputs = renderedResult.getAllByRole('textbox');
+      view = rtl.render(elementToRender as ReactElement);
+      inputs = view.getAllByRole('textbox');
       expect(inputs, hasLength(3), reason: 'sanity check');
     });
 
@@ -80,7 +80,7 @@ void main() {
     });
 
     test('focusTrap', () {
-      final container = renderedResult.getByTestId('container');
+      final container = view.getByTestId('container');
       expect(document.body, isFocused);
 
       UserEvent.tab(focusTrap: container);
