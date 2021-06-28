@@ -35,7 +35,7 @@ bool _assertsEnabled() {
 }
 
 // Whether the current runtime supports `propTypes` matchers like `logsPropError`.
-bool _runtimeSupportsPropTypeWarnings() => _assertsEnabled();
+bool runtimeSupportsPropTypeWarnings() => _assertsEnabled();
 
 void main() {
   group('recordConsoleLogs', () {
@@ -49,7 +49,7 @@ void main() {
           contains('Just a lil warning'),
         ];
 
-        if (_runtimeSupportsPropTypeWarnings()) {
+        if (runtimeSupportsPropTypeWarnings()) {
           expect(
               logs,
               unorderedEquals(
@@ -69,7 +69,7 @@ void main() {
           contains('And a third'),
         ];
 
-        if (_runtimeSupportsPropTypeWarnings()) {
+        if (runtimeSupportsPropTypeWarnings()) {
           expect(logs, unorderedEquals([...expectedLogs, contains('shouldNeverBeNull is necessary.')]));
         } else {
           expect(logs, unorderedEquals(expectedLogs));
@@ -78,16 +78,16 @@ void main() {
 
       test('with nested components', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement));
-        expect(logs, hasLength(_runtimeSupportsPropTypeWarnings() ? 12 : 8));
+        expect(logs, hasLength(runtimeSupportsPropTypeWarnings() ? 12 : 8));
       });
 
       test('with nested components that are the same', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement));
-        expect(logs, hasLength(_runtimeSupportsPropTypeWarnings() ? 10 : 8));
+        expect(logs, hasLength(runtimeSupportsPropTypeWarnings() ? 10 : 8));
       });
     });
 
-    if (_runtimeSupportsPropTypeWarnings()) {
+    if (runtimeSupportsPropTypeWarnings()) {
       group('captures errors correctly', () {
         test('when mounting', () {
           final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement),
@@ -142,7 +142,7 @@ void main() {
       test('when mounting', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.log);
 
-        if (_runtimeSupportsPropTypeWarnings()) {
+        if (runtimeSupportsPropTypeWarnings()) {
           expect(
             logs,
             unorderedEquals([
@@ -176,7 +176,7 @@ void main() {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
             configuration: ConsoleConfig.log);
 
-        if (_runtimeSupportsPropTypeWarnings()) {
+        if (runtimeSupportsPropTypeWarnings()) {
           expect(
             logs,
             unorderedEquals([
@@ -202,7 +202,7 @@ void main() {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
             configuration: ConsoleConfig.log);
 
-        if (_runtimeSupportsPropTypeWarnings()) {
+        if (runtimeSupportsPropTypeWarnings()) {
           expect(
             logs,
             unorderedEquals([
@@ -269,7 +269,7 @@ void main() {
       });
     });
 
-    if (_runtimeSupportsPropTypeWarnings()) {
+    if (runtimeSupportsPropTypeWarnings()) {
       test('handles errors as expected when mounting', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
             configuration: ConsoleConfig.error);

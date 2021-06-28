@@ -44,7 +44,7 @@ void sharedHasValueTests(String description,
           view = render(react.input({
             'type': 'text',
             'name': 'firstName',
-            'value': 'John',
+            'defaultValue': 'John',
           }) as ReactElement);
         });
 
@@ -66,7 +66,7 @@ void sharedHasValueTests(String description,
         setUp(() {
           view = render(react.textarea({
             'name': 'comment',
-            'value': 'I am here to say something nice about you',
+            'defaultValue': 'I am here to say something nice about you',
           }) as ReactElement);
         });
 
@@ -84,7 +84,7 @@ void sharedHasValueTests(String description,
           view = render(react.input({
             'type': 'number',
             'name': 'age',
-            'value': 35,
+            'defaultValue': 35,
           }) as ReactElement);
         });
 
@@ -102,13 +102,15 @@ void sharedHasValueTests(String description,
           group('and a single option is selected', () {
             test('exact match', () {
               view = render(react.select(
-                {'name': 'account-type'},
+                {
+                  'name': 'account-type',
+                  'defaultValue': 'business',
+                },
                 react.option({
                   'value': 'personal',
                 }, 'personal description'),
                 react.option({
                   'value': 'business',
-                  'selected': true,
                 }, 'business description'),
               ) as ReactElement);
 
@@ -171,14 +173,14 @@ void sharedHasValueTests(String description,
               view = render(react.select(
                 {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['sausage'],
                 },
                 react.option({
                   'value': 'pepperoni',
                 }, 'Delicious Pepperoni'),
                 react.option({
                   'value': 'sausage',
-                  'selected': true,
                 }, 'Italian Sausage'),
                 react.option({
                   'value': 'pineapple',
@@ -219,15 +221,14 @@ void sharedHasValueTests(String description,
               view = render(react.select(
                 {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['pepperoni', 'sausage'],
                 },
                 react.option({
                   'value': 'pepperoni',
-                  'selected': true,
                 }, 'Delicious Pepperoni'),
                 react.option({
                   'value': 'sausage',
-                  'selected': true,
                 }, 'Italian Sausage'),
                 react.option({
                   'value': 'pineapple',
@@ -257,7 +258,7 @@ void sharedHasValueTests(String description,
             view = render(react.select(
               {
                 'name': 'pizza-toppings',
-                'multiple': 'true',
+                'multiple': true,
               },
               react.option({
                 'value': 'white sauce',
@@ -289,7 +290,7 @@ void sharedHasValueTests(String description,
           view = render(react.input({
             'type': 'checkbox',
             'name': 'business-in-front',
-            'checked': true,
+            'defaultChecked': true,
           }) as ReactElement);
 
           shouldFail(
@@ -316,7 +317,7 @@ void sharedHasValueTests(String description,
           view = render(react.input({
             'type': 'radio',
             'name': 'business-in-front',
-            'checked': true,
+            'defaultChecked': true,
           }) as ReactElement);
 
           shouldFail(
@@ -345,7 +346,7 @@ void sharedHasValueTests(String description,
           view = render(react.input({
             'type': 'text',
             'name': 'firstName',
-            'value': 'John',
+            'defaultValue': 'John',
           }) as ReactElement);
 
           shouldFail(
@@ -361,7 +362,7 @@ void sharedHasValueTests(String description,
         test('TextAreaElement', () {
           view = render(react.textarea({
             'name': 'comments',
-            'value': 'I have nothing nice to say',
+            'defaultValue': 'I have nothing nice to say',
           }) as ReactElement);
 
           shouldFail(
@@ -378,7 +379,7 @@ void sharedHasValueTests(String description,
           view = render(react.input({
             'type': 'number',
             'name': 'age',
-            'value': 35,
+            'defaultValue': 35,
           }) as ReactElement);
 
           shouldFail(
@@ -396,13 +397,13 @@ void sharedHasValueTests(String description,
             view = render(react.select(
               {
                 'name': 'account-type',
+                'defaultValue': 'business',
               },
               react.option({
                 'value': 'personal',
               }, 'personal description'),
               react.option({
                 'value': 'business',
-                'selected': true,
               }, 'business description'),
             ) as ReactElement);
 
@@ -431,15 +432,14 @@ void sharedHasValueTests(String description,
             view = render(react.select(
               {
                 'name': 'pizza-toppings',
-                'multiple': 'true',
+                'multiple': true,
+                'defaultValue': ['pepperoni', 'sausage'],
               },
               react.option({
                 'value': 'pepperoni',
-                'selected': true,
               }, 'Delicious Pepperoni'),
               react.option({
                 'value': 'sausage',
-                'selected': true,
               }, 'Italian Sausage'),
               react.option({
                 'value': 'pineapple',

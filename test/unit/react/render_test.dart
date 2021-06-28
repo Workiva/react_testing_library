@@ -19,8 +19,10 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart';
 
+import '../console_log_utils_test.dart';
 import '../dom/queries/shared/scoped_queries_tests.dart';
 import '../util/rendering.dart';
 
@@ -150,5 +152,61 @@ void main() {
         });
       });
     });
+
+    group('prints react warnings', () {
+      test('for custom component', () {
+        final logs = recordConsoleLogs(
+          () => rtl.render(testComponent({'name': '123456789012345678901'}) as ReactElement),
+          configuration: ConsoleConfig.log,
+        );
+        if (runtimeSupportsPropTypeWarnings()) {
+          expect(
+              logs,
+              unorderedEquals([
+                contains('⚠️  Warning: Failed prop type: Invalid argument(s): (123456789012345678901) is too long.'),
+                contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
+              ]));
+        } else {
+          expect(
+              logs,
+              unorderedEquals([
+                contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
+              ]));
+        }
+      });
+
+      test('for dom elements', () {
+        final logs = recordConsoleLogs(
+          () => rtl.render(react.input({'value': 'abc'}) as ReactElement),
+          configuration: ConsoleConfig.log,
+        );
+        expect(
+            logs,
+            equals([
+              contains('⚠️  Warning: You provided a `value` prop to a form field without an `onChange` handler.'),
+            ]));
+      });
+    });
   });
 }
+
+class _TestComponent extends react.Component2 {
+  @override
+  Map<String, react.PropValidator<void>> get propTypes => {
+        'name': (props, info) {
+          final propValue = (props as Map)[info.propName] as String;
+          if (propValue.length > 20) {
+            return ArgumentError('($propValue) is too long. $propValue has a max length of 20 characters.');
+          }
+          return null;
+        },
+      };
+
+  @override
+  dynamic render() {
+    return react.div({}, ['abc', react.div({})]);
+  }
+}
+
+// ignore: type_annotate_public_apis
+final testComponent = react.registerComponent2(() => _TestComponent());

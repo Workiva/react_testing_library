@@ -46,12 +46,11 @@ void main() {
       final vDom = rootElem(
         {defaultTestIdKey: rootElemTestId},
         els.map((definition) {
-          final props = {'key': definition.props['name'], ...definition.props};
           if (definition.children == null) {
-            return definition.formElem(props);
+            return definition.formElem(definition.props);
           }
 
-          return definition.formElem(props, definition.children);
+          return definition.formElem(definition.props, definition.children);
         }),
       ) as ReactElement;
 
@@ -68,6 +67,7 @@ void main() {
         'type': 'text',
         'name': 'notTested',
         'defaultValue': 'does not matter',
+        'key': 0,
       });
 
       group('TextInputElement', () {
@@ -272,6 +272,7 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
+                  'defaultValue': 'business',
                 }, [
                   react.option({
                     'key': 1,
@@ -280,7 +281,6 @@ void main() {
                   react.option({
                     'key': 2,
                     'value': 'business',
-                    'selected': true,
                   }, 'business'),
                 ]),
                 unTestedChildFormElemThatShouldNotCauseFailure,
@@ -351,7 +351,9 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['sausage'],
+                  'key': 4,
                 }, [
                   react.option({
                     'key': 1,
@@ -360,7 +362,6 @@ void main() {
                   react.option({
                     'key': 2,
                     'value': 'sausage',
-                    'selected': true,
                   }, 'sausage'),
                   react.option({
                     'key': 13,
@@ -394,17 +395,17 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['pepperoni', 'sausage'],
+                  'key': 4,
                 }, [
                   react.option({
                     'key': 1,
                     'value': 'pepperoni',
-                    'selected': true,
                   }, 'pepperoni'),
                   react.option({
                     'key': 2,
                     'value': 'sausage',
-                    'selected': true,
                   }, 'sausage'),
                   react.option({
                     'key': 13,
@@ -437,7 +438,7 @@ void main() {
             view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.select, {
                 'name': 'pizza-toppings',
-                'multiple': 'true',
+                'multiple': true,
               }, [
                 react.option({
                   'key': 1,
@@ -688,6 +689,7 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
+                  'defaultValue': 'business',
                 }, [
                   react.option({
                     'key': 1,
@@ -696,7 +698,6 @@ void main() {
                   react.option({
                     'key': 2,
                     'value': 'business',
-                    'selected': true,
                   }, 'business'),
                 ]),
               ]);
@@ -714,17 +715,16 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['pepperoni', 'sausage'],
                 }, [
                   react.option({
                     'key': 1,
                     'value': 'pepperoni',
-                    'selected': true,
                   }, 'pepperoni'),
                   react.option({
                     'key': 2,
                     'value': 'sausage',
-                    'selected': true,
                   }, 'sausage'),
                   react.option({
                     'key': 13,
