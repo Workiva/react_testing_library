@@ -142,13 +142,18 @@ void main() {
       test('when mounting', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.log);
 
-        expect(
+        if (_runtimeSupportsPropTypeWarnings()) {
+          expect(
             logs,
             unorderedEquals([
               contains('Logging a standard log'),
               contains('⚠️  Warning:'),
             ]),
-            reason: 'rtl.render re-prints warnings');
+            reason: 'rtl.render re-prints prop type warnings',
+          );
+        } else {
+          expect(logs, equals([contains('Logging a standard log')]));
+        }
       });
 
       test('when re-rendering', () {
@@ -171,7 +176,8 @@ void main() {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
             configuration: ConsoleConfig.log);
 
-        expect(
+        if (_runtimeSupportsPropTypeWarnings()) {
+          expect(
             logs,
             unorderedEquals([
               contains('Logging a standard log'),
@@ -179,21 +185,42 @@ void main() {
               contains('⚠️  Warning:'),
               contains('⚠️  Warning:'),
             ]),
-            reason: 'rtl.render re-prints warnings');
+            reason: 'rtl.render re-prints prop type warnings',
+          );
+        } else {
+          expect(
+            logs,
+            unorderedEquals([
+              contains('Logging a standard log'),
+              contains('Logging a standard log'),
+            ]),
+          );
+        }
       });
 
       test('with nested components that are the same', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
             configuration: ConsoleConfig.log);
 
-        expect(
+        if (_runtimeSupportsPropTypeWarnings()) {
+          expect(
             logs,
             unorderedEquals([
               contains('Logging a standard log'),
               contains('Logging a standard log'),
               contains('⚠️  Warning:'),
             ]),
-            reason: 'rtl.render re-prints warnings and only shows a particular props error once');
+            reason: 'rtl.render re-prints warnings and only shows a particular props error once',
+          );
+        } else {
+          expect(
+            logs,
+            unorderedEquals([
+              contains('Logging a standard log'),
+              contains('Logging a standard log'),
+            ]),
+          );
+        }
       });
     });
 
