@@ -29,6 +29,8 @@ import 'package:react_testing_library/src/util/console_log_utils.dart';
 ///
 /// See [ARIA in HTML](https://www.w3.org/TR/html-aria/#document-conformance-requirements-for-use-of-aria-attributes-in-html) for more information about implicit ARIA roles.
 ///
+/// Set [hidden] to `true` to include elements that are normally [excluded from the accessibility tree](https://www.w3.org/TR/wai-aria-1.2/#tree_exclusion).
+///
 /// > Learn more: <https://testing-library.com/docs/dom-testing-library/api-accessibility/#getroles>
 ///
 /// {@category Accessibility}
@@ -39,6 +41,8 @@ Map<String, List> getRoles(Node container, {bool hidden = false}) =>
 /// nodes which match that role.
 ///
 /// This can be helpful for finding ways to query the DOM under test with [ByRole queries](https://workiva.github.io/react_testing_library/topics/ByRole-topic.html).
+///
+/// Set [hidden] to `true` to include elements that are normally [excluded from the accessibility tree](https://www.w3.org/TR/wai-aria-1.2/#tree_exclusion).
 ///
 /// > Learn more: <https://testing-library.com/docs/dom-testing-library/api-accessibility/#logroles>
 ///

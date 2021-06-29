@@ -22,6 +22,7 @@ import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
+import 'package:react_testing_library/src/dom/accessibility_helpers.dart';
 
 import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/async/wait_for.dart';
