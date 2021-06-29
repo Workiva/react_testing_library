@@ -62,7 +62,6 @@ mixin ByRoleQueries on IQueries {
 
     return byRoleOptions;
   }
-// todo link to accessibility utilities in migration guides and other query doc comments
 
   /// Returns a single element with the given [role] value, defaulting to an [exact] match.
   ///
@@ -529,6 +528,8 @@ class ByRoleOptions {
   /// with the same role are present on the rendered content.
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#api> for more details and examples.
+  ///
+  /// Use the [logRoles] utility to help determine what roles and names are visible to query for.
   /// {@endtemplate}
   external /*TextMatch*/ dynamic get name;
   external set name(/*TextMatch*/ dynamic value);

@@ -137,25 +137,107 @@ main() {
 ```
 > Example from [`copy-ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/copy-ui@2562f5c5d417ee6c1e1d9da28ccb261640af6fb4/-/blob/test/copy/unit/components/common/email_confirmation_modal_test.dart#L36)
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the header we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can print the accessible roles using `rtl.logRoles(rtl.screen.container)` (see [`logRoles` documentation][log-roles]). This is the result for the header we are trying to access:
 
 ```html
-<h4 
+heading:
+
+Name "Transition Started":
+<h4
   class="modal-callout-heading"
-  data-test-id="wsd.Dialog.headerContent"
-  id="dialog_z6f6_callout"
->
-    Transition Started
-</h4>
+  id="dialog_pLPo_callout"
+/>
 ```
 
-Since the role for the `h4` element above is `heading` and the text content is `Transition Started` we can query for this
+<details>
+  <summary>See full result of logRoles call (click to expand)</summary>
+
+```html
+document:
+
+Name "":
+<body />
+
+Name "Transition Started":
+<div
+  aria-labelledby="dialog_pLPo_callout"
+  class="modal-dialog"
+  data-wsd-default-overlay-container=""
+  role="document"
+  tabindex="0"
+/>
+
+--------------------------------------------------
+presentation:
+
+Name "":
+<div
+  class="backdrop modal-backdrop fade in"
+  role="presentation"
+/>
+
+Name "":
+<div
+  class="modal-content"
+  role="presentation"
+/>
+
+--------------------------------------------------
+dialog:
+
+Name "":
+<div
+  class="email-confirmation-modal modal in modal-callout"
+  id="dialog_pLPo"
+  role="dialog"
+  tabindex="-1"
+/>
+
+--------------------------------------------------
+button:
+
+Name "Close":
+<button
+  aria-controls="dialog_pLPo"
+  class="close hitarea"
+  tabindex="0"
+  title="Close"
+  type="button"
+  value=""
+/>
+
+Name "OK":
+<div
+  aria-disabled="false"
+  class="btn btn-primary"
+  data-automation-id="CopyUI.Modal.EmailConfirmation.Close"
+  role="button"
+  tabindex="0"
+  value=""
+/>
+
+--------------------------------------------------
+heading:
+
+Name "Transition Started":
+<h4
+  class="modal-callout-heading"
+  id="dialog_pLPo_callout"
+/>
+
+--------------------------------------------------
+```
+
+</details>
+
+Since the role for the `h4` element above is `heading` and the [accessible name](https://www.w3.org/TR/accname-1.1/) is `Transition Started`, we can query for this
 element using: `getByRole('heading', name: 'Transition Started')`. This query also combines the test's expectation
 for text content with the query, so the resulting RTL test will be:
 
 ```dart
 import 'package:copy_ui/src/copy/components/common/email_confirmation_modal.dart';
 import 'package:copy_ui/src/copy/shared/constants.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -245,7 +327,7 @@ main() {
 ```
 > Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_1/session_module/components/expiration/session_expired_modal_test.dart#L140-142)
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM containing the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM containing the input we are trying to access:
 
 ```html
 <div
@@ -346,7 +428,7 @@ main() {
 }
 ```
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -363,6 +445,7 @@ Since the input element has no label and no role, we have to use the placeholder
 
 ```dart
 import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -415,7 +498,7 @@ void main() {
 ```
 > Example from [`w_history`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_history@8b1fcb2328bb27ed420029064218fd4657de6ae4/-/blob/test/src/components/cards/history_card_parts/authors_test.dart#L205-206)
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the divs we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM for the divs we are trying to access:
 
 ```html
 <div>
@@ -523,7 +606,7 @@ main() {
 }
 ```
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -540,6 +623,7 @@ Since the input element has no label, no placeholder, and no role, we have to us
 
 ```dart
 import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -595,7 +679,7 @@ main() {
 }
 ```
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the input we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM for the input we are trying to access:
 
 ```html
 <div>
@@ -612,6 +696,7 @@ Since the color input element has no label, no placeholder, and no role, we have
 
 ```dart
 import 'package:over_react/over_react.dart';
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -659,7 +744,7 @@ void main() {
 ```
 > Example from [`doc_plat_client`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/doc_plat_client@659287a02a269c8b2c82d9a91e9239a11c74abe0/-/blob/subpackages/shared_ui/test/unit/src/outline/internal_sheet_badge_test.dart#L19-20)
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM for the element we are trying to access:
 
 ```html
 <i
@@ -675,6 +760,7 @@ Since this element does not have a role or text content, we have to query by tit
 resulting RTL test will be:
 
 ```dart
+import 'package:react_testing_library/matchers.dart' show isInTheDocument;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:shared_ui/src/outline/badges/internal_sheet_badge.dart';
 import 'package:test/test.dart';
@@ -732,7 +818,7 @@ main() {
 ```
 > Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/wdesk_sdk@ccaccc053a5fcec4514cac94a9c68394af58739d/-/blob/test/unit/browser/segregated_tests/memory_leakers/truss_2/workspaces_module/components/sidebar_brand_test.dart#L22)
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the element we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM for the element we are trying to access:
 
 ```html
 <div
@@ -827,7 +913,7 @@ void main() {
 ```
 > Example from [`w_filing`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiva/w_filing@ddc298f7ab01762698e227d6709a63695db6067a/-/blob/test/unit/tests/components/collect_action_toolbar_test.dart#L171)
 
-Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.prettyDOM(document.body)`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
+Once we import `react_testing_library` (namespaced as `rtl`) in our test file, we can view the rendered DOM using `rtl.screen.debug()`. This is the DOM for the `VerticalButtonComponent` we are trying to access:
 
 ```html
 <div
@@ -911,6 +997,7 @@ Example from [`graph_ui`](https://sourcegraph.wk-dev.wdesk.org/github.com/Workiv
 [query-priority]: https://testing-library.com/docs/queries/about/#priority
 [query-types]: https://testing-library.com/docs/queries/about#types-of-queries
 [by-role-queries]: https://workiva.github.io/react_testing_library/topics/ByRole-topic.html
+[log-roles]: https://workiva.github.io/react_testing_library/rtl.dom.accessibility/logRoles.html
 [by-label-text-queries]: https://workiva.github.io/react_testing_library/topics/ByLabelText-topic.html
 [by-placeholder-text-queries]: https://workiva.github.io/react_testing_library/topics/ByPlaceholderText-topic.html
 [by-text-queries]: https://workiva.github.io/react_testing_library/topics/ByText-topic.html

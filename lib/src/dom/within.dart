@@ -23,6 +23,7 @@ import 'package:js/js.dart';
 import 'package:meta/meta.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
+import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:react_testing_library/src/util/is_or_contains.dart';
 
 /// Queries scoped to the provided [container].
@@ -69,7 +70,7 @@ WithinQueries within(Node node) {
 class ScreenQueries extends WithinQueries {
   ScreenQueries._() : super._(document.body);
 
-  /// A shortcut for `console.log(prettyDOM(document.body))`.
+  /// A shortcut to print `prettyDOM(document.body)`.
   ///
   /// > See: <https://testing-library.com/docs/queries/about/#screendebug>
   void debug([
@@ -77,7 +78,7 @@ class ScreenQueries extends WithinQueries {
     int maxLength,
     PrettyDomOptions options,
   ]) =>
-      _screen.debug(baseElement, maxLength, options);
+      recordConsoleLogs(() => _screen.debug(baseElement, maxLength, options)).forEach(print);
 }
 
 /// Exposes all the "top-level" queries exposed by the dom-testing-library,

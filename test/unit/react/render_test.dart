@@ -39,6 +39,7 @@ void main() {
         expect(view.rerender, isA<Function>());
         expect(view.unmount, isA<Function>());
         expect(view.asFragment, isA<Function>());
+        expect(view.debug, isA<Function>());
         expect(view.renderedElement, same(elementToRender));
       });
 
@@ -57,6 +58,35 @@ void main() {
               : elsForQuerying;
           return ScopedQueriesTestWrapper(rtl.render(els));
         });
+      });
+
+      test('that contains a debug method', () {
+        final view = rtl.render(react.div({}, [
+          react.label({'htmlFor': 'number-input', 'key': 1}),
+          react.input({
+            'id': 'number-input',
+            'type': 'number',
+            'defaultValue': '3',
+            'key': 2,
+          })
+        ]) as ReactElement);
+
+        final logs = recordConsoleLogs(view.debug);
+        expect(logs, equals([logs.first, logs.first]), reason: 'view.debug() both prints and console.logs the dom');
+        expect(
+            logs.first,
+            contains(
+              '    <div>\n'
+              '      <label\n'
+              '        for="number-input"\n'
+              '      />\n'
+              '      <input\n'
+              '        id="number-input"\n'
+              '        type="number"\n'
+              '        value="3"\n'
+              '      />\n'
+              '    </div>',
+            ));
       });
     });
 
@@ -161,17 +191,19 @@ void main() {
         );
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
-              logs,
-              unorderedEquals([
-                contains('⚠️  Warning: Failed prop type: Invalid argument(s): (123456789012345678901) is too long.'),
-                contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
-              ]));
+            logs,
+            unorderedEquals([
+              contains('⚠️  Warning: Failed prop type: Invalid argument(s): (123456789012345678901) is too long.'),
+              contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
+            ]),
+          );
         } else {
           expect(
-              logs,
-              unorderedEquals([
-                contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
-              ]));
+            logs,
+            unorderedEquals([
+              contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
+            ]),
+          );
         }
       });
 
@@ -181,10 +213,11 @@ void main() {
           configuration: ConsoleConfig.log,
         );
         expect(
-            logs,
-            equals([
-              contains('⚠️  Warning: You provided a `value` prop to a form field without an `onChange` handler.'),
-            ]));
+          logs,
+          equals([
+            contains('⚠️  Warning: You provided a `value` prop to a form field without an `onChange` handler.'),
+          ]),
+        );
       });
     });
   });

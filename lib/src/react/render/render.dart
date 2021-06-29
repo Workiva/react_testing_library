@@ -190,18 +190,17 @@ class RenderResult extends ScopedQueries {
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#baseelement-1>
   Node get baseElement => _jsRenderResult.baseElement;
 
-  /// A shortcut for `console.log(prettyDOM(baseElement))`.
+  /// A shortcut to print `prettyDOM(baseElement)`.
   ///
   /// > __NOTE: It's recommended to use [ScreenQueries.debug] instead.__
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
-  // todo update this to print as well (also update screen.debug)
   void debug([
     Node baseElement,
     int maxLength,
     PrettyDomOptions options,
   ]) =>
-      _jsRenderResult.debug(baseElement, maxLength, options);
+      recordConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options)).forEach(print);
 
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///

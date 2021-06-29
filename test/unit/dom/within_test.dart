@@ -16,9 +16,11 @@
 
 import 'dart:html';
 
+import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/dom/queries.dart' show WithinQueries;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart';
 
 import '../dom/queries/shared/scoped_queries_tests.dart';
@@ -62,7 +64,32 @@ void main() {
     });
 
     test('exposes a debug method', () {
-      expect(rtl.screen.debug, isA<Function>());
+      rtl.render(react.div({}, [
+        react.label({'htmlFor': 'number-input', 'key': 1}),
+        react.input({
+          'id': 'number-input',
+          'type': 'number',
+          'defaultValue': '3',
+          'key': 2,
+        })
+      ]) as ReactElement);
+
+      final logs = recordConsoleLogs(rtl.screen.debug);
+      expect(logs, equals([logs.first, logs.first]), reason: 'screen.debug() both prints and console.logs the dom');
+      expect(
+          logs.first,
+          contains(
+            '    <div>\n'
+            '      <label\n'
+            '        for="number-input"\n'
+            '      />\n'
+            '      <input\n'
+            '        id="number-input"\n'
+            '        type="number"\n'
+            '        value="3"\n'
+            '      />\n'
+            '    </div>',
+          ));
     });
 
     test('exposes all the expected queries', () {
