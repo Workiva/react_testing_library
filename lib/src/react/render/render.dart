@@ -18,14 +18,17 @@
 @JS()
 library react_testing_library.src.react.render.render;
 
+import 'dart:async';
 import 'dart:html' show DocumentFragment, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
-import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement;
+// ignore: invalid_use_of_visible_for_testing_member
+import 'package:react/react_client.dart' show ReactComponentFactoryProxy, ReactElement, componentZone;
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:react_testing_library/src/dom/within.dart' show ScreenQueries;
+import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart' show addTearDown;
 
 import 'package:react_testing_library/src/react/render/types.dart' show JsRenderResult, RenderOptions;
@@ -114,6 +117,9 @@ RenderResult render(
   bool autoTearDown = true,
   void Function() onDidTearDown,
 }) {
+  // ignore: invalid_use_of_visible_for_testing_member
+  componentZone = Zone.current;
+
   final renderOptions = RenderOptions()..hydrate = hydrate;
   if (container != null) renderOptions.container = container;
   if (baseElement != null) renderOptions.baseElement = baseElement;
@@ -133,15 +139,22 @@ RenderResult render(
     throw ArgumentError('onDidTearDown cannot be set when autoTearDown is false.');
   }
 
-  final jsResult = _render(ui, renderOptions);
+  JsRenderResult jsResult;
+  recordConsoleLogs(
+    () {
+      jsResult = _render(ui, renderOptions);
 
-  if (autoTearDown) {
-    addTearDown(() {
-      jsResult.unmount();
-      jsResult.container?.remove();
-      onDidTearDown?.call();
-    });
-  }
+      if (autoTearDown) {
+        addTearDown(() {
+          jsResult.unmount();
+          jsResult.container?.remove();
+          onDidTearDown?.call();
+        });
+      }
+    },
+    configuration: ConsoleConfig.error,
+  ).forEach((error) =>
+      print('\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'));
 
   return RenderResult._(jsResult, ui);
 }
@@ -177,7 +190,7 @@ class RenderResult extends ScopedQueries {
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#baseelement-1>
   Node get baseElement => _jsRenderResult.baseElement;
 
-  /// A shortcut for `console.log(prettyDOM(baseElement))`.
+  /// A shortcut to print `prettyDOM(baseElement)`.
   ///
   /// > __NOTE: It's recommended to use [ScreenQueries.debug] instead.__
   ///
@@ -187,7 +200,7 @@ class RenderResult extends ScopedQueries {
     int maxLength,
     PrettyDomOptions options,
   ]) =>
-      _jsRenderResult.debug(baseElement, maxLength, options);
+      recordConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options)).forEach(print);
 
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///

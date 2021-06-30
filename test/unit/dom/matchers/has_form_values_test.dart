@@ -46,12 +46,11 @@ void main() {
       final vDom = rootElem(
         {defaultTestIdKey: rootElemTestId},
         els.map((definition) {
-          final props = {'key': definition.props['name'], ...definition.props};
           if (definition.children == null) {
-            return definition.formElem(props);
+            return definition.formElem(definition.props);
           }
 
-          return definition.formElem(props, definition.children);
+          return definition.formElem(definition.props, definition.children);
         }),
       ) as ReactElement;
 
@@ -67,7 +66,8 @@ void main() {
       final unTestedChildFormElemThatShouldNotCauseFailure = _FormElemDefinition(react.input, {
         'type': 'text',
         'name': 'notTested',
-        'value': 'does not matter',
+        'defaultValue': 'does not matter',
+        'key': 0,
       });
 
       group('TextInputElement', () {
@@ -76,7 +76,7 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'text',
               'name': 'firstName',
-              'value': 'John',
+              'defaultValue': 'John',
             }),
             unTestedChildFormElemThatShouldNotCauseFailure,
           ]);
@@ -105,7 +105,7 @@ void main() {
               react.textarea,
               {
                 'name': 'comment',
-                'value': 'I am here to say something nice about you',
+                'defaultValue': 'I am here to say something nice about you',
               },
             ),
             unTestedChildFormElemThatShouldNotCauseFailure,
@@ -128,7 +128,7 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'number',
               'name': 'age',
-              'value': 35,
+              'defaultValue': 35,
             }),
             unTestedChildFormElemThatShouldNotCauseFailure,
           ]);
@@ -149,18 +149,18 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'business-in-front',
-              'checked': true,
+              'defaultChecked': true,
             }),
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'party-in-the-back',
-              'checked': false,
+              'defaultChecked': false,
             }),
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'has-mullet',
               'disabled': true,
-              'checked': false,
+              'defaultChecked': false,
             }),
             unTestedChildFormElemThatShouldNotCauseFailure,
           ]);
@@ -181,19 +181,19 @@ void main() {
                 'type': 'checkbox',
                 'name': 'pizza-toppings',
                 'value': 'pepperoni',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'checkbox',
                 'name': 'pizza-toppings',
                 'value': 'sausage',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'checkbox',
                 'name': 'pizza-toppings',
                 'value': 'black olives',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'checkbox',
@@ -245,7 +245,7 @@ void main() {
               'type': 'radio',
               'name': 'account-type',
               'value': 'personal',
-              'checked': true,
+              'defaultChecked': true,
             }),
             _FormElemDefinition(react.input, {
               'type': 'radio',
@@ -272,6 +272,7 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
+                  'defaultValue': 'business',
                 }, [
                   react.option({
                     'key': 1,
@@ -280,7 +281,6 @@ void main() {
                   react.option({
                     'key': 2,
                     'value': 'business',
-                    'selected': true,
                   }, 'business'),
                 ]),
                 unTestedChildFormElemThatShouldNotCauseFailure,
@@ -351,7 +351,9 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['sausage'],
+                  'key': 4,
                 }, [
                   react.option({
                     'key': 1,
@@ -360,7 +362,6 @@ void main() {
                   react.option({
                     'key': 2,
                     'value': 'sausage',
-                    'selected': true,
                   }, 'sausage'),
                   react.option({
                     'key': 13,
@@ -394,17 +395,17 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['pepperoni', 'sausage'],
+                  'key': 4,
                 }, [
                   react.option({
                     'key': 1,
                     'value': 'pepperoni',
-                    'selected': true,
                   }, 'pepperoni'),
                   react.option({
                     'key': 2,
                     'value': 'sausage',
-                    'selected': true,
                   }, 'sausage'),
                   react.option({
                     'key': 13,
@@ -437,7 +438,7 @@ void main() {
             view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.select, {
                 'name': 'pizza-toppings',
-                'multiple': 'true',
+                'multiple': true,
               }, [
                 react.option({
                   'key': 1,
@@ -500,7 +501,7 @@ void main() {
             _FormElemDefinition(react.input, {
               'type': 'text',
               'name': 'firstName',
-              'value': 'John',
+              'defaultValue': 'John',
             }),
           ]);
 
@@ -518,7 +519,7 @@ void main() {
               _FormElemDefinition(react.input, {
                 'type': 'text',
                 'name': 'firstName',
-                'value': 'John',
+                'defaultValue': 'John',
               }),
             ]);
 
@@ -534,7 +535,7 @@ void main() {
             view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.textarea, {
                 'name': 'comments',
-                'value': 'I have nothing nice to say',
+                'defaultValue': 'I have nothing nice to say',
               }),
             ]);
 
@@ -553,7 +554,7 @@ void main() {
               _FormElemDefinition(react.input, {
                 'type': 'number',
                 'name': 'age',
-                'value': 35,
+                'defaultValue': 35,
               }),
             ]);
 
@@ -571,18 +572,18 @@ void main() {
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'business-in-front',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'party-in-the-back',
-                  'checked': false,
+                  'defaultChecked': false,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'has-mullet',
                   'disabled': true,
-                  'checked': false,
+                  'defaultChecked': false,
                 }),
               ]);
 
@@ -601,19 +602,19 @@ void main() {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
                   'value': 'pepperoni',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
                   'value': 'sausage',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
                   'value': 'black olives',
-                  'checked': true,
+                  'defaultChecked': true,
                 }),
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
@@ -665,7 +666,7 @@ void main() {
                 'type': 'radio',
                 'name': 'account-type',
                 'value': 'personal',
-                'checked': true,
+                'defaultChecked': true,
               }),
               _FormElemDefinition(react.input, {
                 'type': 'radio',
@@ -688,6 +689,7 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
+                  'defaultValue': 'business',
                 }, [
                   react.option({
                     'key': 1,
@@ -696,7 +698,6 @@ void main() {
                   react.option({
                     'key': 2,
                     'value': 'business',
-                    'selected': true,
                   }, 'business'),
                 ]),
               ]);
@@ -714,17 +715,16 @@ void main() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
-                  'multiple': 'true',
+                  'multiple': true,
+                  'defaultValue': ['pepperoni', 'sausage'],
                 }, [
                   react.option({
                     'key': 1,
                     'value': 'pepperoni',
-                    'selected': true,
                   }, 'pepperoni'),
                   react.option({
                     'key': 2,
                     'value': 'sausage',
-                    'selected': true,
                   }, 'sausage'),
                   react.option({
                     'key': 13,

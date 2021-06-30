@@ -4,6 +4,8 @@ dartdoc:
   header:
     - doc/styles.html
   categories:
+    "Accessibility":
+      markdown: doc/accessibility.md
     "Async":
       markdown: doc/async_methods.md
     "Matchers":

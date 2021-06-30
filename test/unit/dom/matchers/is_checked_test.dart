@@ -30,7 +30,7 @@ void main() {
       test('CheckboxInputElement', () {
         final view = render(react.input({
           'type': 'checkbox',
-          'checked': true,
+          'defaultChecked': true,
         }) as ReactElement);
         shouldPass(view.getByRole('checkbox'), isChecked);
       });
@@ -47,7 +47,7 @@ void main() {
         final view = render(react.input({
           'type': 'radio',
           'name': 'something',
-          'checked': true,
+          'defaultChecked': true,
         }) as ReactElement);
         shouldPass(view.getByRole('radio'), isChecked);
       });
@@ -85,7 +85,7 @@ void main() {
       test('the matched item is not checked', () {
         final view = render(react.input({
           'type': 'checkbox',
-          'checked': false,
+          'defaultChecked': false,
         }) as ReactElement);
         shouldFail(view.getByRole('checkbox'), isChecked, contains('Which: is not checked.'));
       });

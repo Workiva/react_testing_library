@@ -115,10 +115,11 @@ void main() {
             calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
           },
           'multiple': true,
+          'defaultValue': ['1', '2', '3'],
         }, [
-          react.option({'value': '1', 'selected': true}, 'A'),
-          react.option({'value': '2', 'selected': true}, 'B'),
-          react.option({'value': '3', 'selected': true}, 'C'),
+          react.option({'value': '1'}, 'A'),
+          react.option({'value': '2'}, 'B'),
+          react.option({'value': '3'}, 'C'),
         ]) as ReactElement);
 
         select = view.getByRole('listbox');

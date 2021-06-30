@@ -107,7 +107,7 @@ void main() {
 </div>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.input({'value': actualValue}) as ReactElement);
+          view = rtl.render(react.input({'defaultValue': actualValue}) as ReactElement);
         });
 
         test('with a RegExp TextMatch arg value', () {

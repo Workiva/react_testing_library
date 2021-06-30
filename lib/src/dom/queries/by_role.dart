@@ -22,6 +22,7 @@ import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
+import 'package:react_testing_library/src/dom/accessibility_helpers.dart';
 
 import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/async/wait_for.dart';
@@ -528,6 +529,8 @@ class ByRoleOptions {
   /// with the same role are present on the rendered content.
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#api> for more details and examples.
+  ///
+  /// Use the [logRoles] utility to help determine what roles and names are visible to query for.
   /// {@endtemplate}
   external /*TextMatch*/ dynamic get name;
   external set name(/*TextMatch*/ dynamic value);
