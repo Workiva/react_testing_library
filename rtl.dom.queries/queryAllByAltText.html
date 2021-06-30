@@ -635,17 +635,17 @@
   <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/top_level_queries.dart#L149"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">queryAllByAltText&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;</span> function 
  
-    <span class="category byalttext cp-1 linked" title="This is part of the ByAltText Topic."><a href="../topics/ByAltText-topic.html">ByAltText</a></span>
-    <span class="category queries cp-11 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+    <span class="category byalttext cp-2 linked" title="This is part of the ByAltText Topic."><a href="../topics/ByAltText-topic.html">ByAltText</a></span>
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
 </h1></div>
 
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.13.3/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
-<span class="name ">queryAllByAltText</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="queryAllByAltText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.13.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+<span class="name ">queryAllByAltText</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="queryAllByAltText-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
 <li><span class="parameter" id="queryAllByAltText-param-text"><span class="type-annotation">dynamic</span> <span class="parameter-name">text</span>, </span></li>
-<li><span class="parameter" id="queryAllByAltText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.3/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="queryAllByAltText-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="queryAllByAltText-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<ol class="parameter-list"><li><span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span></li>
 </ol>
 )}</span></li>
@@ -654,13 +654,13 @@
     </section>
     
 <section class="desc markdown">
-  <p>Returns a list of <a href="https://api.dart.dev/stable/2.13.3/dart-html/ImageElement-class.html">ImageElement</a>s, <a href="https://api.dart.dev/stable/2.13.3/dart-html/InputElement-class.html">InputElement</a>s and/or <a href="https://api.dart.dev/stable/2.13.3/dart-html/AreaElement-class.html">AreaElement</a>s  with the given <code>text</code> as the value of
+  <p>Returns a list of <a href="https://api.dart.dev/stable/2.13.4/dart-html/ImageElement-class.html">ImageElement</a>s, <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>s and/or <a href="https://api.dart.dev/stable/2.13.4/dart-html/AreaElement-class.html">AreaElement</a>s  with the given <code>text</code> as the value of
 the <code>alt</code> attribute, defaulting to an <code>exact</code> match.</p>
 <p>Returns an empty list if no element(s) are found within the provided <code>container</code>.
 Use <a href="../rtl.dom.queries/getAllByAltText.html">getAllByAltText</a> if a RTE is expected.</p>
 <p><strong>Prefer</strong> using <a href="https://workiva.github.io/react_testing_library/topics/ByRole-topic.html"><code>ByRole</code> queries</a>
-for <a href="https://api.dart.dev/stable/2.13.3/dart-html/ImageElement-class.html">ImageElement</a>s and <a href="https://workiva.github.io/react_testing_library/topics/ByLabelText-topic.html"><code>ByLabelText</code> queries</a>
-for <a href="https://api.dart.dev/stable/2.13.3/dart-html/InputElement-class.html">InputElement</a>s and <a href="https://api.dart.dev/stable/2.13.3/dart-html/AreaElement-class.html">AreaElement</a>s when possible in order to query for elements
+for <a href="https://api.dart.dev/stable/2.13.4/dart-html/ImageElement-class.html">ImageElement</a>s and <a href="https://workiva.github.io/react_testing_library/topics/ByLabelText-topic.html"><code>ByLabelText</code> queries</a>
+for <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>s and <a href="https://api.dart.dev/stable/2.13.4/dart-html/AreaElement-class.html">AreaElement</a>s when possible in order to query for elements
 in a way that <a href="https://testing-library.com/docs/queries/about#priority">most reflects how the user would interact with them</a>.</p>
 <blockquote>
 <p>Related: <a href="../rtl.dom.queries/queryByAltText.html">queryByAltText</a></p>

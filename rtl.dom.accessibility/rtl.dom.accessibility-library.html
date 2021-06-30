@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="rtl.dom.accessibility library API docs, for the Dart programming language.">
+  <title>rtl.dom.accessibility library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  <style id="gh_markdown">
+    /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
+  .markdown {
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+
+  .markdown::before {
+    display: table;
+    content: "";
+  }
+
+  .markdown::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+
+  .markdown>*:first-child {
+    margin-top: 0 !important;
+  }
+
+  .markdown>*:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .markdown a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .markdown .absent {
+    color: #cb2431;
+  }
+
+  .markdown .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+  }
+
+  .markdown .anchor:focus {
+    outline: none;
+  }
+
+  .markdown p,
+  .markdown blockquote,
+  .markdown ul,
+  .markdown ol,
+  .markdown dl,
+  .markdown table,
+  .markdown pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .markdown hr {
+    height: .25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+  }
+
+  .markdown blockquote {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+  }
+
+  .markdown blockquote>:first-child {
+    margin-top: 0;
+  }
+
+  .markdown blockquote>:last-child {
+    margin-bottom: 0;
+  }
+
+  .markdown kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 10px;
+    color: #444d56;
+    vertical-align: middle;
+    background-color: #fafbfc;
+    border: solid 1px #c6cbd1;
+    border-bottom-color: #959da5;
+    border-radius: 3px;
+    box-shadow: inset 0 -1px 0 #959da5;
+  }
+
+  .markdown h1,
+  .markdown h2,
+  .markdown h3,
+  .markdown h4,
+  .markdown h5,
+  .markdown h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .markdown h1 tt,
+  .markdown h1 code,
+  .markdown h2 tt,
+  .markdown h2 code,
+  .markdown h3 tt,
+  .markdown h3 code,
+  .markdown h4 tt,
+  .markdown h4 code,
+  .markdown h5 tt,
+  .markdown h5 code,
+  .markdown h6 tt,
+  .markdown h6 code {
+    font-size: inherit;
+  }
+
+  .markdown h1 {
+    padding-bottom: 0.3em;
+    font-size: 2em;
+    border-bottom: 1px solid #eaecef;
+  }
+
+  .markdown h2 {
+    padding-bottom: 0.3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #eaecef;
+  }
+
+  .markdown h3 {
+    font-size: 1.25em;
+  }
+
+  .markdown h4 {
+    font-size: 1em;
+  }
+
+  .markdown h5 {
+    font-size: 0.875em;
+  }
+
+  .markdown h6 {
+    font-size: 0.85em;
+    color: #6a737d;
+  }
+
+  .markdown ul,
+  .markdown ol {
+    padding-left: 2em;
+  }
+
+  .markdown ul.no-list,
+  .markdown ol.no-list {
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .markdown ul ul,
+  .markdown ul ol,
+  .markdown ol ol,
+  .markdown ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .markdown li {
+    word-wrap: break-all;
+  }
+
+  .markdown li>p {
+    margin-top: 16px;
+  }
+
+  .markdown li+li {
+    margin-top: .25em;
+  }
+
+  .markdown dl {
+    padding: 0;
+  }
+
+  .markdown dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .markdown dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+
+  .markdown table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .markdown table th {
+    font-weight: 600;
+  }
+
+  .markdown table th,
+  .markdown table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+  }
+
+  .markdown table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+  }
+
+  .markdown table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+  }
+
+  .markdown table img {
+    background-color: transparent;
+  }
+
+  .markdown img {
+    max-width: 100%;
+    box-sizing: content-box;
+    background-color: #fff;
+  }
+
+  .markdown img[align=right] {
+    padding-left: 20px;
+  }
+
+  .markdown img[align=left] {
+    padding-right: 20px;
+  }
+
+  .markdown .emoji {
+    max-width: none;
+    vertical-align: text-top;
+    background-color: transparent;
+  }
+
+  .markdown span.frame {
+    display: block;
+    overflow: hidden;
+  }
+
+  .markdown span.frame>span {
+    display: block;
+    float: left;
+    width: auto;
+    padding: 7px;
+    margin: 13px 0 0;
+    overflow: hidden;
+    border: 1px solid #dfe2e5;
+  }
+
+  .markdown span.frame span img {
+    display: block;
+    float: left;
+  }
+
+  .markdown span.frame span span {
+    display: block;
+    padding: 5px 0 0;
+    clear: both;
+    color: #24292e;
+  }
+
+  .markdown span.align-center {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+
+  .markdown span.align-center>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .markdown span.align-center span img {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .markdown span.align-right {
+    display: block;
+    overflow: hidden;
+    clear: both;
+  }
+
+  .markdown span.align-right>span {
+    display: block;
+    margin: 13px 0 0;
+    overflow: hidden;
+    text-align: right;
+  }
+
+  .markdown span.align-right span img {
+    margin: 0;
+    text-align: right;
+  }
+
+  .markdown span.float-left {
+    display: block;
+    float: left;
+    margin-right: 13px;
+    overflow: hidden;
+  }
+
+  .markdown span.float-left span {
+    margin: 13px 0 0;
+  }
+
+  .markdown span.float-right {
+    display: block;
+    float: right;
+    margin-left: 13px;
+    overflow: hidden;
+  }
+
+  .markdown span.float-right>span {
+    display: block;
+    margin: 13px auto 0;
+    overflow: hidden;
+    text-align: right;
+  }
+
+  .markdown code,
+  .markdown tt {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27,31,35,0.05);
+    border-radius: 3px;
+  }
+
+  .markdown code br,
+  .markdown tt br {
+    display: none;
+  }
+
+  .markdown del code {
+    text-decoration: inherit;
+  }
+
+  .markdown pre {
+    word-wrap: normal;
+  }
+
+  .markdown pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  .markdown .highlight {
+    margin-bottom: 16px;
+  }
+
+  .markdown .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+
+  .markdown .highlight pre,
+  .markdown pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+  }
+
+  .markdown pre code,
+  .markdown pre tt {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+</style>
+<style id="rtl_docs_custom">
+    .sidebar-offcanvas-right:empty {
+        display: none;
+    }
+
+    .callable,
+    .multi-line-signature {
+        font-family: 'Roboto Mono', Menlo, monospace;
+    }
+
+    .callable .signature {
+        display: none;
+    }
+
+    .callable .parameter::after {
+        content: "...";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .multi-line-signature .parameter-list {
+        display: block;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .multi-line-signature .parameter-list .parameter-list {
+        margin-bottom: -48px;
+    }
+
+    .multi-line-signature .parameter {
+        white-space: pre-wrap;
+    }
+
+    .markdown.desc {
+        max-width: 960px;
+    }
+
+    /* Make our blockquotes look like callouts */
+    .markdown blockquote {
+        border-left-color: rgba(0,0,0,.1);
+        /* match the colors / spacing of dart.dev callouts */
+        background: #e7f8ff;
+        color: #4A4A4A;
+        padding: 1em 1.5em;
+        margin: 2em 0;
+    }
+
+    .markdown blockquote + blockquote {
+        padding-top: 0;
+        margin-top: -2em;
+    }
+
+    /* Add language info to code blocks */
+    .markdown pre[class*="language-"] {
+        position: relative;
+    }
+
+    .markdown pre[class*="language-"]::after {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 .3em .1em .4em;
+        border-bottom-left-radius: 3px;
+        background: #ddd; /* Match border color */
+        color: #555;
+    }
+
+    .markdown pre.language-html::after { content: 'HTML'; }
+    .markdown pre.language-dart::after { content: 'DART'; }
+    .markdown pre.language-js::after { content: 'JS'; }
+    .markdown pre.language-yaml::after { content: 'YAML'; }
+
+    .markdown figure {
+        margin: 30px 0 0 0;
+        position: relative;
+    }
+
+    .markdown figure > figcaption {
+        position: absolute;
+        top: -20px;
+        left: 4px;
+        height: 20px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        font-size: .7em;
+        font-family: 'Roboto Mono', Menlo, monospace;
+        background-color: #ddd;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .markdown figcaption + pre[class*="language-"]::after {
+        /* If a figcaption is being used to label the code, omit the ::after label */
+        display: none;
+    }
+</style>
+
+</head>
+
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">react_testing_library</a></li>
+    <li class="self-crumb">rtl.dom.accessibility library</li>
+  </ol>
+  <div class="self-name">rtl.dom.accessibility</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">react_testing_library</a></li>
+  <li class="self-crumb">rtl.dom.accessibility library</li>
+</ol>
+
+
+    <h5><span class="package-name">react_testing_library</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Accessibility-topic.html">Accessibility</a></li>
+        <li><a href="../topics/Async-topic.html">Async</a></li>
+        <li><a href="../topics/ByAltText-topic.html">ByAltText</a></li>
+        <li><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></li>
+        <li><a href="../topics/ByLabelText-topic.html">ByLabelText</a></li>
+        <li><a href="../topics/ByPlaceholderText-topic.html">ByPlaceholderText</a></li>
+        <li><a href="../topics/ByRole-topic.html">ByRole</a></li>
+        <li><a href="../topics/ByTestId-topic.html">ByTestId</a></li>
+        <li><a href="../topics/ByText-topic.html">ByText</a></li>
+        <li><a href="../topics/ByTitle-topic.html">ByTitle</a></li>
+        <li><a href="../topics/Matchers-topic.html">Matchers</a></li>
+        <li><a href="../topics/Queries-topic.html">Queries</a></li>
+        <li><a href="../topics/UserActions-topic.html">UserActions</a></li>
+      <li class="section-title">Libraries</li>
+      <li class="section-subtitle">Dom</li>
+        <li class="section-subitem"><a href="../rtl.dom.accessibility/rtl.dom.accessibility-library.html">rtl.dom.accessibility</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.configure/rtl.dom.configure-library.html">rtl.dom.configure</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.queries/rtl.dom.queries-library.html">rtl.dom.queries</a></li>
+      <li class="section-subtitle">Matchers</li>
+        <li class="section-subitem"><a href="../matchers/matchers-library.html">matchers</a></li>
+      <li class="section-subtitle">React</li>
+        <li class="section-subitem"><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+      <li class="section-subtitle">UserActions</li>
+        <li class="section-subitem"><a href="../user_event/user_event-library.html">user_event</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/dom/accessibility.dart#L18"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-library">rtl.dom.accessibility</span> library 
+ 
+    <span class="category dom cp-10" title="This is part of the Dom Topic.">Dom</span>
+</h1></div>
+
+    
+
+
+
+
+
+
+
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
+
+      <dl class="callables">
+        <dt id="getRoles" class="callable">
+  <span class="name"><a href="../rtl.dom.accessibility/getRoles.html">getRoles</a></span><span class="signature">(<wbr><span class="parameter" id="getRoles-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getRoles-param-hidden">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.13.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/2.13.4/dart-core/List-class.html">List</a></span>&gt;</span></span>
+  </span>
+  
+    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
+
+</dt>
+<dd>
+  Returns a map, indexed by role name, with each value being an array of
+elements in <code>container</code> which have that implicit ARIA role. <a href="../rtl.dom.accessibility/getRoles.html">[...]</a>
+  
+
+</dd>
+
+        <dt id="isInaccessible" class="callable">
+  <span class="name"><a href="../rtl.dom.accessibility/isInaccessible.html">isInaccessible</a></span><span class="signature">(<wbr><span class="parameter" id="isInaccessible-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
+
+</dt>
+<dd>
+  Returns whether or not <code>element</code> should be excluded from the accessibility
+API by the browser. <a href="../rtl.dom.accessibility/isInaccessible.html">[...]</a>
+  <div class="features">@<a href="https://pub.dev/documentation/js/0.6.3/js/JS-class.html">JS</a>(&#39;rtl.isInaccessible&#39;)</div>
+
+</dd>
+
+        <dt id="logRoles" class="callable">
+  <span class="name"><a href="../rtl.dom.accessibility/logRoles.html">logRoles</a></span><span class="signature">(<wbr><span class="parameter" id="logRoles-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="logRoles-param-hidden">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
+
+</dt>
+<dd>
+  Prints a list of all the implicit ARIA roles within <code>container</code>, each role containing a list of all of the
+nodes which match that role. <a href="../rtl.dom.accessibility/logRoles.html">[...]</a>
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>rtl.dom.accessibility library</h5>
+    <ol>
+
+
+
+
+
+  <li class="section-title"><a href="../rtl.dom.accessibility/rtl.dom.accessibility-library.html#functions">Functions</a></li>
+  <li><a href="../rtl.dom.accessibility/getRoles.html">getRoles</a></li>
+  <li><a href="../rtl.dom.accessibility/isInaccessible.html">isInaccessible</a></li>
+  <li><a href="../rtl.dom.accessibility/logRoles.html">logRoles</a></li>
+
+
+
+</ol>
+
+  </div><!--/sidebar-offcanvas-right-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    react_testing_library
+      1.0.1
+  </span>
+
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+
+</body>
+
+</html>
+
