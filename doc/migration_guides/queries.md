@@ -107,11 +107,16 @@ first when possible. The following migration guidance is in order of priority.
 ### ByRole
 
 [ByRole queries][by-role-queries] search for elements by their role. Use [this table of HTML elements with their
-corresponding roles](https://www.w3.org/TR/html-aria/#docconformance) to determine what role to query for. ByRole queries 
-should be the go-to queries to use in most cases because they most closely reflect how the user would find elements on the page.
+corresponding roles](https://www.w3.org/TR/html-aria/#docconformance) to determine what role to query for. 
 
-For example, the following test uses `querySelector` to access the header element. We need to migrate this test to
-use an RTL query instead.
+ByRole queries should be the go-to queries to use in most cases because they:
+
+1. Most closely reflect how the user would find elements on the page.
+1. Encourage accessibility standards by ensuring that elements being tested are exposed on the 
+   [accessibility tree](https://developer.mozilla.org/en-US/docs/Glossary/Accessibility_tree) and have the appropriate ARIA role.
+
+For example, the following test uses `querySelector` to access the header element.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access that same header element.
 
 ```dart
 import 'dart:html';
@@ -295,8 +300,8 @@ Example from [`wdesk_sdk`](https://sourcegraph.wk-dev.wdesk.org/github.com/Worki
 While ByRole queries are top priority for most elements, you should use [ByLabelText queries][by-label-text-queries] 
 when querying for form elements. These queries reflect how the user navigates a form by looking at label text.
 
-For example, the following test uses `findRenderedDOMComponentWithClass` and `findDOMNode` to access the input element. 
-We need to migrate this test to use an RTL query instead.
+For example, the following test uses `findRenderedDOMComponentWithClass` and `findDOMNode` to access the input element.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access that same input element.
 
 ```dart
 import 'dart:html';
@@ -403,7 +408,7 @@ If a form field does not have a label, use [ByPlaceholderText queries][by-placeh
 > Note: This case should be rare because [a placeholder is not a substitute for a label](https://www.nngroup.com/articles/form-design-placeholders/).
 
 For example, the following test uses `queryByTestId` to access the input element.
-We need to migrate this test to use an RTL query instead.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access that same input element.
 
 ```dart
 import 'dart:html';
@@ -473,7 +478,7 @@ main() {
 [ByText queries][by-text-queries] can be used to find non-interactive elements that have no role, but have text content (like divs, spans, and paragraphs).
 
 For example, the following test uses `getAllByTestId` to access all the div elements containing author names.
-We need to migrate this test to use an RTL query instead.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access those same div elements.
 
 ```dart
 import 'package:over_react_test/over_react_test.dart';
@@ -581,7 +586,7 @@ If a form field does not have a label or placeholder, use [ByDisplayValue querie
 > Note: This case should be rare because form fields can often be searched for using [ByLabelText queries](#bylabeltext) instead.
 
 For example, the following test uses `queryByTestId` to access the input element.
-We need to migrate this test to use an RTL query instead.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access that same input element.
 
 ```dart
 import 'dart:html';
@@ -654,7 +659,7 @@ main() {
 > [ByRole queries](#byrole) or [ByLabelText queries](#bylabeltext) instead.
 
 For example, the following test uses `queryByTestId` to access the input element.
-We need to migrate this test to use an RTL query instead.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access that same input element.
 
 ```dart
 import 'dart:html';
@@ -724,7 +729,7 @@ main() {
 Use [ByTitle queries][by-title-queries] to query for elements that have a `title` attribute, but no text content or role.
 
 For example, the following test uses `renderAndGetDom` to access the icon element.
-We need to migrate this test to use an RTL query instead.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access that same icon element.
 
 ```dart
 import 'package:over_react_test/over_react_test.dart' as test_util;
@@ -797,7 +802,7 @@ Use [ByTestId queries][by-test-id-queries] to query for elements that cannot be 
 This should be a last resort because a user would never interact with a page using test ids.
 
 For example, the following test uses `findDOMNode` to access the div element.
-We need to migrate this test to use an RTL query instead.
+To write an RTL test that validates the same behavior, we need to determine which RTL query to use to access that same div element.
 
 ```dart
 import 'package:react/react_dom.dart' as react_dom;
@@ -887,7 +892,7 @@ queries for DOM elements. This can be done by looking at what props are being te
 access to test the same things. This will sometimes mean replacing one query with multiple.
 
 For example, the following test uses `getComponentByTestId` to access the `VerticalButtonComponent` instance.
-We need to migrate this test to use an RTL query instead.
+To write an RTL test that validates the same behavior, we need to use an RTL query to access the elements in `VerticalButtonComponent` that are being tested.
 
 ```dart
 import 'package:over_react_test/over_react_test.dart';

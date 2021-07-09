@@ -209,6 +209,7 @@ For example, to update this test with a `TableElement` container, make sure to a
  import 'package:over_react/over_react.dart';
 -import 'package:over_react_test/over_react_test.dart';
 +import 'package:react_testing_library/react_testing_library.dart' as rtl;
++import 'package:react_testing_library/matchers.dart' show hasTextContent;
  import 'package:test/test.dart';
 
  main() {
@@ -217,20 +218,31 @@ For example, to update this test with a `TableElement` container, make sure to a
 -    final instance = render(
 +    final view = rtl.render(
        Dom.tbody()(
-         (Dom.tr()..addTestId('table-row'))(
-           Dom.td()('January'),
-           Dom.td()('\$100'),
+         Dom.tr()(
+           (Dom.td()..addTestId('table-cell'))('January'),
+           (Dom.td()..addTestId('table-cell'))('\$100'),
          ),
-         (Dom.tr()..addTestId('table-row'))(
-           Dom.td()('February'),
-           Dom.td()('\$80'),
+         Dom.tr()(
+           (Dom.td()..addTestId('table-cell'))('February'),
+           (Dom.td()..addTestId('table-cell'))('\$80'),
          ),
        ),
 -      container: container,
 +      container: document.body.append(container),
      );
--    expect(queryAllByTestId(instance, 'table-row'), hasLength(2));
-+    expect(view.getAllByRole('row'), equals([isInTheDocument, isInTheDocument]));
+
+-    final tableCells = queryAllByTestId(instance, 'table-cell');
+-    expect(tableCells, hasLength(4));
+-    expect(tableCells[0].text, 'January');
+-    expect(tableCells[1].text, '\$100');
+-    expect(tableCells[2].text, 'February');
+-    expect(tableCells[3].text, '\$80');
++    expect(view.getAllByRole('cell'), orderedEquals([
++      hasTextContent('January'),
++      hasTextContent('\$100'),
++      hasTextContent('February'),
++      hasTextContent('\$80'),
++    ]));
    });
  }
 ```
@@ -389,7 +401,7 @@ main() {
 To migrate this test to RTL, we could use `view.rerender()` to replace the re-rendering logic in this test, but this is 
 something a user would never do when interacting with `FancySubmitButton`. 
 
-A better approach would be to test the user interactions on `FancyForm` that would cause `FancySubmitButton` to re-render
+A more user-centric approach would be to test the user interactions on `FancyForm` that would cause `FancySubmitButton` to re-render
 with the `disabled` prop set to `false`. In this case, that means typing into the two input fields, so the RTL version of 
 this test would be:
 
