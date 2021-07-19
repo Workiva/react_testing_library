@@ -32,7 +32,7 @@ jobs:
         timeout-minutes: 2
 
       - name: Check formatting
-        run: dart format . -l 120 --set-exit-if-changed
+        run: dart format . -l 120 && git diff --exit-code
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Analyze project source
