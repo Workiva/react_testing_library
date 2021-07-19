@@ -39,8 +39,7 @@ void main() {
   group('hasFormValues matcher', () {
     const rootElemTestId = 'root-of-test-form';
     RenderResult renderFormWithValues(
-        /*ReactDomComponentFactoryProxy*/ dynamic rootElem,
-        List<_FormElemDefinition> els) {
+        /*ReactDomComponentFactoryProxy*/ dynamic rootElem, List<_FormElemDefinition> els) {
       assert(rootElem == react.form || rootElem == react.fieldset);
 
       final vDom = rootElem(
