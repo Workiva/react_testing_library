@@ -1,5 +1,5 @@
 name: react_testing_library
-version: 1.1.1
+version: 1.1.2
 description: A Dart unit testing library for OverReact components that mimics the API of the JS react-testing-library
 homepage: https://github.com/Workiva/react_testing_library/
 documentation: https://workiva.github.io/react_testing_library
