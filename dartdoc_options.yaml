@@ -1,4 +1,5 @@
 dartdoc:
+  showUndocumentedCategories: true
   exclude:
     - react_testing_library # exclude the big "catch-all" library since we want the exports to be broken up a little nicer in the docs
   header:
