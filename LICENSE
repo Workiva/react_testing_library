@@ -12,23 +12,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
---------------------------------------------------
+This react_testing_library software contains Dart wrappers for JS APIs from the following libraries. Your use of the source
+code for the these libraries is subject to the terms and conditions of the following licenses:
 
-This react_testing_library software provides access to a number of JS
-libraries using a Dart API. These JS libraries have separate copyright
-notices and/or license terms. Your use of the source code for these
-JS APIs is subject to the terms and conditions of the following licenses:
+  - dom-testing-library: https://github.com/testing-library/dom-testing-library
+    - Copyright (c) 2017 Kent C. Dodds
+    - license: https://github.com/testing-library/dom-testing-library/blob/main/LICENSE
 
-dom-testing-library software: https://github.com/testing-library/dom-testing-library
-Copyright (c) 2017 Kent C. Dodds.
-Licensed under the MIT License: https://github.com/testing-library/dom-testing-library/blob/master/LICENSE
+  - react-testing-library: https://github.com/testing-library/react-testing-library
+    - Copyright (c) 2017 Kent C. Dodds
+    - license: https://github.com/testing-library/react-testing-library/blob/main/LICENSE
 
-react-testing-library software: https://github.com/testing-library/react-testing-library
-Copyright (c) 2017 Kent C. Dodds.
-Licensed under the MIT License: https://github.com/testing-library/react-testing-library/blob/master/LICENSE
+  - user-event: https://github.com/testing-library/user-event
+    - Copyright (c) 2020 Giorgio Polvara
+    - license: https://github.com/testing-library/user-event/blob/main/LICENSE
 
-user-event software: https://github.com/testing-library/user-event
-Copyright (c) 2020 Giorgio Polvara
-Licensed under the MIT License: https://github.com/testing-library/user-event/blob/master/LICENSE
+This react_testing_library software also contains Dart APIs that are based on the following library. Your use of the source
+code for the these libraries is subject to the terms and conditions of the following licenses:
 
---------------------------------------------------
+  - jest-dom: https://github.com/testing-library/jest-dom#custom-matchers
+    - Copyright (c) 2017 Kent C. Dodds
+    - license: https://github.com/testing-library/jest-dom/blob/main/LICENSE
