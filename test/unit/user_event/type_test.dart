@@ -60,6 +60,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
   int clickEventCount;
   Element element;
   List<String> keyUpCalls;
+  List<String> keyDownCalls;
   rtl.RenderResult view;
 
   void _verifyTypeEvent({
@@ -326,6 +327,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
       input.focus();
       UserEvent.keyboard('oh hai');
       expect(input, hasValue('oh hai'));
+      expect(calls.where((call) => call.contains('keyDown')).toList().length, 6, reason: '`oh hai` requires six key presses');
     });
   }
 
