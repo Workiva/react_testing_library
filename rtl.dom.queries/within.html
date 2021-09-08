@@ -12,9 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../static-assets/github.css">
-  <link rel="stylesheet" href="../static-assets/styles.css">
-  <link rel="icon" href="../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -543,6 +544,59 @@
 <main>
 
 
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/within.dart#L53"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">within</span> function 
+ 
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype"><a href="../rtl.dom.queries/WithinQueries-class.html">WithinQueries</a></span>
+<span class="name ">within</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="within-param-node"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">node</span></span></li>
+</ol>)
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Takes a DOM <code>node</code> and binds it to the raw query functions.</p>
+<p>Can also be used to query within the <a href="https://api.dart.dev/stable/2.14.1/dart-html/ShadowRoot-class.html">ShadowRoot</a> of an element by setting
+<code>node</code> to the <code>Element.shadowRoot</code> value as shown below:</p>
+<pre class="language-dart"><code class="language-dart">// Or whatever query you want to use to find element(s) within the shadowRoot.
+final fooNodeWithinShadowDom = within(someElement.shadowRoot).getByText('foo');
+</code></pre>
+<blockquote>
+<p>See: <a href="https://testing-library.com/docs/dom-testing-library/api-within">testing-library.com/docs/dom-testing-library/api-within</a></p>
+</blockquote>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">WithinQueries within(Node node) {
+  if (node == null) {
+    throw ArgumentError.notNull(&#39;node&#39;);
+  }
+
+  if (node is! ShadowRoot &amp;&amp; !isOrContains(document.body, node)) {
+    throw ArgumentError.value(
+        node,
+        &#39;node&#39;,
+        &#39;The element you provide as the single argument to within() must exist in the DOM. &#39;
+            &#39;Did you forget to append the element to the body?&#39;);
+  }
+
+  return WithinQueries._(node);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
@@ -630,59 +684,6 @@
 
   </div><!--/.sidebar-offcanvas-left-->
 
-  <div id="dartdoc-main-content" class="main-content">
-      <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/within.dart#L53"><i class="material-icons">description</i></a></div>
-<h1><span class="kind-function">within</span> function 
- 
-    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
-</h1></div>
-
-    <section class="multi-line-signature">
-        
-
-<span class="returntype"><a href="../rtl.dom.queries/WithinQueries-class.html">WithinQueries</a></span>
-<span class="name ">within</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="within-param-node"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">node</span></span></li>
-</ol>)
-
-    </section>
-    
-<section class="desc markdown">
-  <p>Takes a DOM <code>node</code> and binds it to the raw query functions.</p>
-<p>Can also be used to query within the <a href="https://api.dart.dev/stable/2.13.4/dart-html/ShadowRoot-class.html">ShadowRoot</a> of an element by setting
-<code>node</code> to the <code>Element.shadowRoot</code> value as shown below:</p>
-<pre class="language-dart"><code class="language-dart">// Or whatever query you want to use to find element(s) within the shadowRoot.
-final fooNodeWithinShadowDom = within(someElement.shadowRoot).getByText('foo');
-</code></pre>
-<blockquote>
-<p>See: <a href="https://testing-library.com/docs/dom-testing-library/api-within">testing-library.com/docs/dom-testing-library/api-within</a></p>
-</blockquote>
-</section>
-
-
-    
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">WithinQueries within(Node node) {
-  if (node == null) {
-    throw ArgumentError.notNull(&#39;node&#39;);
-  }
-
-  if (node is! ShadowRoot &amp;&amp; !isOrContains(document.body, node)) {
-    throw ArgumentError.value(
-        node,
-        &#39;node&#39;,
-        &#39;The element you provide as the single argument to within() must exist in the DOM. &#39;
-            &#39;Did you forget to append the element to the body?&#39;);
-  }
-
-  return WithinQueries._(node);
-}</code></pre>
-</section>
-
-
-  </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
 
@@ -698,8 +699,9 @@ final fooNodeWithinShadowDom = within(someElement.shadowRoot).getByText('foo');
 </footer>
 
 
-<script src="../static-assets/highlight.pack.js"></script>
-<script src="../static-assets/script.js"></script>
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
 
 
 

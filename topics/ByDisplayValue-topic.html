@@ -12,9 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../static-assets/github.css">
-  <link rel="stylesheet" href="../static-assets/styles.css">
-  <link rel="icon" href="../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -542,6 +543,131 @@
 <main>
 
 
+<div id="dartdoc-main-content" class="main-content">
+  <h1><span class="kind-category">ByDisplayValue</span> Topic</h1>
+  
+<section class="desc markdown">
+  <blockquote>
+<p>getByDisplayValue, queryByDisplayValue, getAllByDisplayValue, queryAllByDisplayValue, findByDisplayValue, findAllByDisplayValue</p>
+</blockquote>
+</section>
+
+
+
+
+
+
+
+  <section class="summary offset-anchor" id="functions">
+    <h2>Functions</h2>
+
+    <dl class="callables">
+      <dt id="findAllByDisplayValue" class="callable">
+  <span class="name"><a href="../rtl.dom.queries/findAllByDisplayValue.html">findAllByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.14.1/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findAllByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findAllByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="findAllByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findAllByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findAllByDisplayValue-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findAllByDisplayValue-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findAllByDisplayValue-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findAllByDisplayValue-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.14.1/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.14.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>&gt;</span></span>
+  </span>
+  
+    <span class="category async cp-1 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
+    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+
+</dt>
+<dd>
+  Returns a list of <a href="https://api.dart.dev/stable/2.14.1/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.14.1/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.14.1/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
+defaulting to an <code>exact</code> match after waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findAllByDisplayValue.html">[...]</a>
+  
+
+</dd>
+
+      <dt id="findByDisplayValue" class="callable">
+  <span class="name"><a href="../rtl.dom.queries/findByDisplayValue.html">findByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.14.1/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="findByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findByDisplayValue-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findByDisplayValue-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findByDisplayValue-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findByDisplayValue-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.14.1/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+  </span>
+  
+    <span class="category async cp-1 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
+    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+
+</dt>
+<dd>
+  Returns a future with a single <a href="https://api.dart.dev/stable/2.14.1/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.14.1/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.14.1/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
+defaulting to an <code>exact</code> match after waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findByDisplayValue.html">[...]</a>
+  
+
+</dd>
+
+      <dt id="getAllByDisplayValue" class="callable">
+  <span class="name"><a href="../rtl.dom.queries/getAllByDisplayValue.html">getAllByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.14.1/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getAllByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getAllByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="getAllByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getAllByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.14.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+  </span>
+  
+    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+
+</dt>
+<dd>
+  Returns a list of <a href="https://api.dart.dev/stable/2.14.1/dart-html/InputElement-class.html">InputElement</a>s, <a href="https://api.dart.dev/stable/2.14.1/dart-html/TextAreaElement-class.html">TextAreaElement</a>s or <a href="https://api.dart.dev/stable/2.14.1/dart-html/SelectElement-class.html">SelectElement</a>s that have the matching <code>value</code> displayed,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getAllByDisplayValue.html">[...]</a>
+  
+
+</dd>
+
+      <dt id="getByDisplayValue" class="callable">
+  <span class="name"><a href="../rtl.dom.queries/getByDisplayValue.html">getByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.14.1/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="getByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
+    <span class="returntype parameter">&#8594; E</span>
+  </span>
+  
+    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+
+</dt>
+<dd>
+  Returns a single <a href="https://api.dart.dev/stable/2.14.1/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.14.1/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.14.1/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getByDisplayValue.html">[...]</a>
+  
+
+</dd>
+
+      <dt id="queryAllByDisplayValue" class="callable">
+  <span class="name"><a href="../rtl.dom.queries/queryAllByDisplayValue.html">queryAllByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.14.1/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryAllByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryAllByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="queryAllByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryAllByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.14.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+  </span>
+  
+    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+
+</dt>
+<dd>
+  Returns a list of <a href="https://api.dart.dev/stable/2.14.1/dart-html/InputElement-class.html">InputElement</a>s, <a href="https://api.dart.dev/stable/2.14.1/dart-html/TextAreaElement-class.html">TextAreaElement</a>s or <a href="https://api.dart.dev/stable/2.14.1/dart-html/SelectElement-class.html">SelectElement</a>s that have the matching <code>value</code> displayed,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryAllByDisplayValue.html">[...]</a>
+  
+
+</dd>
+
+      <dt id="queryByDisplayValue" class="callable">
+  <span class="name"><a href="../rtl.dom.queries/queryByDisplayValue.html">queryByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.14.1/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="queryByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
+    <span class="returntype parameter">&#8594; E</span>
+  </span>
+  
+    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
+    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
+
+</dt>
+<dd>
+  Returns a single <a href="https://api.dart.dev/stable/2.14.1/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.14.1/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.14.1/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
+defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryByDisplayValue.html">[...]</a>
+  
+
+</dd>
+
+    </dl>
+  </section>
+
+
+
+
+</div> <!-- /.main-content -->
+
 <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
   <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
@@ -589,130 +715,6 @@
 
 </div>
 
-<div id="dartdoc-main-content" class="main-content">
-  <h1><span class="kind-category">ByDisplayValue</span> Topic</h1>
-  
-<section class="desc markdown">
-  <blockquote>
-<p>getByDisplayValue, queryByDisplayValue, getAllByDisplayValue, queryAllByDisplayValue, findByDisplayValue, findAllByDisplayValue</p>
-</blockquote>
-</section>
-
-
-
-
-
-
-
-  <section class="summary offset-anchor" id="functions">
-    <h2>Functions</h2>
-
-    <dl class="callables">
-      <dt id="findAllByDisplayValue" class="callable">
-  <span class="name"><a href="../rtl.dom.queries/findAllByDisplayValue.html">findAllByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findAllByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findAllByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="findAllByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findAllByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findAllByDisplayValue-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findAllByDisplayValue-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findAllByDisplayValue-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findAllByDisplayValue-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.13.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>&gt;</span></span>
-  </span>
-  
-    <span class="category async cp-1 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
-    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
-    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
-
-</dt>
-<dd>
-  Returns a list of <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.13.4/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.13.4/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
-defaulting to an <code>exact</code> match after waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findAllByDisplayValue.html">[...]</a>
-  
-
-</dd>
-
-      <dt id="findByDisplayValue" class="callable">
-  <span class="name"><a href="../rtl.dom.queries/findByDisplayValue.html">findByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="findByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="findByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="findByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="findByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>), </span><span class="parameter" id="findByDisplayValue-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span><span class="parameter" id="findByDisplayValue-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span><span class="parameter" id="findByDisplayValue-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span><span class="parameter" id="findByDisplayValue-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
-  </span>
-  
-    <span class="category async cp-1 linked" title="This is part of the Async Topic."><a href="../topics/Async-topic.html">Async</a></span>
-    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
-    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
-
-</dt>
-<dd>
-  Returns a future with a single <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.13.4/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.13.4/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
-defaulting to an <code>exact</code> match after waiting 1000ms (or the provided <code>timeout</code> duration). <a href="../rtl.dom.queries/findByDisplayValue.html">[...]</a>
-  
-
-</dd>
-
-      <dt id="getAllByDisplayValue" class="callable">
-  <span class="name"><a href="../rtl.dom.queries/getAllByDisplayValue.html">getAllByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getAllByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getAllByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="getAllByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getAllByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
-  </span>
-  
-    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
-    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
-
-</dt>
-<dd>
-  Returns a list of <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>s, <a href="https://api.dart.dev/stable/2.13.4/dart-html/TextAreaElement-class.html">TextAreaElement</a>s or <a href="https://api.dart.dev/stable/2.13.4/dart-html/SelectElement-class.html">SelectElement</a>s that have the matching <code>value</code> displayed,
-defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getAllByDisplayValue.html">[...]</a>
-  
-
-</dd>
-
-      <dt id="getByDisplayValue" class="callable">
-  <span class="name"><a href="../rtl.dom.queries/getByDisplayValue.html">getByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="getByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="getByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="getByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
-    <span class="returntype parameter">&#8594; E</span>
-  </span>
-  
-    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
-    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
-
-</dt>
-<dd>
-  Returns a single <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.13.4/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.13.4/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
-defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/getByDisplayValue.html">[...]</a>
-  
-
-</dd>
-
-      <dt id="queryAllByDisplayValue" class="callable">
-  <span class="name"><a href="../rtl.dom.queries/queryAllByDisplayValue.html">queryAllByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryAllByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryAllByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="queryAllByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryAllByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
-  </span>
-  
-    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
-    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
-
-</dt>
-<dd>
-  Returns a list of <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>s, <a href="https://api.dart.dev/stable/2.13.4/dart-html/TextAreaElement-class.html">TextAreaElement</a>s or <a href="https://api.dart.dev/stable/2.13.4/dart-html/SelectElement-class.html">SelectElement</a>s that have the matching <code>value</code> displayed,
-defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryAllByDisplayValue.html">[...]</a>
-  
-
-</dd>
-
-      <dt id="queryByDisplayValue" class="callable">
-  <span class="name"><a href="../rtl.dom.queries/queryByDisplayValue.html">queryByDisplayValue</a></span><span class="signature">&lt;<wbr><span class="type-parameter">E extends <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="queryByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="queryByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="queryByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span><span class="parameter" id="queryByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)}</span>)
-    <span class="returntype parameter">&#8594; E</span>
-  </span>
-  
-    <span class="category bydisplayvalue cp-3 linked" title="This is part of the ByDisplayValue Topic."><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></span>
-    <span class="category queries cp-12 linked" title="This is part of the Queries Topic."><a href="../topics/Queries-topic.html">Queries</a></span>
-
-</dt>
-<dd>
-  Returns a single <a href="https://api.dart.dev/stable/2.13.4/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.13.4/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.13.4/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
-defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryByDisplayValue.html">[...]</a>
-  
-
-</dd>
-
-    </dl>
-  </section>
-
-
-
-
-</div> <!-- /.main-content -->
 <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   <h5>ByDisplayValue Topic</h5>
   <ol>
@@ -721,13 +723,13 @@ defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryByDi
 
 
 
+  <li class="section-title"><a href="../topics/ByDisplayValue-topic.html#functions">Functions</a></li>
   <li><a href="../rtl.dom.queries/findAllByDisplayValue.html">findAllByDisplayValue</a></li>
   <li><a href="../rtl.dom.queries/findByDisplayValue.html">findByDisplayValue</a></li>
   <li><a href="../rtl.dom.queries/getAllByDisplayValue.html">getAllByDisplayValue</a></li>
   <li><a href="../rtl.dom.queries/getByDisplayValue.html">getByDisplayValue</a></li>
   <li><a href="../rtl.dom.queries/queryAllByDisplayValue.html">queryAllByDisplayValue</a></li>
   <li><a href="../rtl.dom.queries/queryByDisplayValue.html">queryByDisplayValue</a></li>
-  <li class="section-title"><a href="../topics/ByDisplayValue-topic.html#functions">Functions</a></li>
 
 
 
@@ -747,8 +749,9 @@ defaulting to an <code>exact</code> match. <a href="../rtl.dom.queries/queryByDi
 </footer>
 
 
-<script src="../static-assets/highlight.pack.js"></script>
-<script src="../static-assets/script.js"></script>
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
 
 
 

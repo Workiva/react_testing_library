@@ -12,9 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../static-assets/github.css">
-  <link rel="stylesheet" href="../static-assets/styles.css">
-  <link rel="icon" href="../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -543,38 +544,6 @@
 <main>
 
 
-  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
-  <form class="search-sidebar" role="search">
-    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
-  </form>
-</header>
-
-<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">react_testing_library</a></li>
-  <li><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
-  <li class="self-crumb">waitFor&lt;<wbr><span class="type-parameter">T</span>&gt; function</li>
-</ol>
-
-
-    <h5>rtl.dom.async library</h5>
-    <ol>
-
-
-
-
-
-  <li class="section-title"><a href="../rtl.dom.async/rtl.dom.async-library.html#functions">Functions</a></li>
-  <li><a href="../rtl.dom.async/waitFor.html">waitFor</a></li>
-  <li><a href="../rtl.dom.async/waitForElementsToBeRemoved.html">waitForElementsToBeRemoved</a></li>
-  <li><a href="../rtl.dom.async/waitForElementToBeRemoved.html">waitForElementToBeRemoved</a></li>
-
-
-
-</ol>
-
-  </div><!--/.sidebar-offcanvas-left-->
-
   <div id="dartdoc-main-content" class="main-content">
       <div>
   <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/async/wait_for.dart#L57"><i class="material-icons">description</i></a></div>
@@ -586,12 +555,12 @@
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.13.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-<span class="name ">waitFor</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="waitFor-param-expectation"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-async/FutureOr-class.html">FutureOr</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">expectation</span>(<ol class="parameter-list"></ol>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.14.1/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+<span class="name ">waitFor</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="waitFor-param-expectation"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-async/FutureOr-class.html">FutureOr</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">expectation</span>(<ol class="parameter-list"></ol>
 ), </span></li>
-<li><span class="parameter" id="waitFor-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
-<li><span class="parameter" id="waitFor-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span></li>
-<li><span class="parameter" id="waitFor-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span> = <span class="default-value">const Duration(milliseconds: 50)</span>, </span></li>
+<li><span class="parameter" id="waitFor-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<li><span class="parameter" id="waitFor-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span></li>
+<li><span class="parameter" id="waitFor-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span> = <span class="default-value">const Duration(milliseconds: 50)</span>, </span></li>
 <li><span class="parameter" id="waitFor-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span></li>
 <li><span class="parameter" id="waitFor-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span></li>
 </ol>)
@@ -603,14 +572,14 @@
 completing only if it does not <code>throw</code>, or by <code>throw</code>ing if
 the <code>timeout</code> expires before the <code>expectation</code> succeeds.</p>
 <p>Similar to <a href="https://testing-library.com/docs/dom-testing-library/api-async/#waitfor">testing-library.com/docs/dom-testing-library/api-async/#waitfor</a>, but designed to
-work with the <code>dart:test</code> package's <a href="https://pub.dev/documentation/test_api/0.2.19/test_api/expect.html">expect</a> function and Dart <a href="https://api.dart.dev/stable/2.13.4/dart-async/Future-class.html">Future</a>s instead of JS <code>Promise</code>s.</p>
+work with the <code>dart:test</code> package's <a href="https://pub.dev/documentation/test_api/0.2.19/test_api/expect.html">expect</a> function and Dart <a href="https://api.dart.dev/stable/2.14.1/dart-async/Future-class.html">Future</a>s instead of JS <code>Promise</code>s.</p>
 <ul>
 <li>If you're waiting for an element to exist in the DOM, use a <code>findBy*</code> query instead.</li>
 <li>If you're waiting for an element to be removed from the DOM, use <a href="../rtl.dom.async/waitForElementToBeRemoved.html">waitForElementToBeRemoved</a> instead.</li>
 </ul>
 <h2 id="options">Options</h2>
 <h3 id="container"><code>container</code></h3>
-<p>The DOM node to attach the <a href="https://api.dart.dev/stable/2.13.4/dart-html/MutationObserver-class.html">MutationObserver</a> to.</p>
+<p>The DOM node to attach the <a href="https://api.dart.dev/stable/2.14.1/dart-html/MutationObserver-class.html">MutationObserver</a> to.</p>
 <p>Defaults to <code>document.body</code>.</p>
 <h3 id="timeout"><code>timeout</code></h3>
 <p>How long to wait for the node to appear in the DOM before throwing a <code>TestFailure</code>, defaulting to <code>1000ms</code>.</p>
@@ -725,6 +694,38 @@ it will re-run the callback.</p>
 
   </div> <!-- /.main-content -->
 
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">react_testing_library</a></li>
+  <li><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
+  <li class="self-crumb">waitFor&lt;<wbr><span class="type-parameter">T</span>&gt; function</li>
+</ol>
+
+
+    <h5>rtl.dom.async library</h5>
+    <ol>
+
+
+
+
+
+  <li class="section-title"><a href="../rtl.dom.async/rtl.dom.async-library.html#functions">Functions</a></li>
+  <li><a href="../rtl.dom.async/waitFor.html">waitFor</a></li>
+  <li><a href="../rtl.dom.async/waitForElementsToBeRemoved.html">waitForElementsToBeRemoved</a></li>
+  <li><a href="../rtl.dom.async/waitForElementToBeRemoved.html">waitForElementToBeRemoved</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
 
@@ -740,8 +741,9 @@ it will re-run the callback.</p>
 </footer>
 
 
-<script src="../static-assets/highlight.pack.js"></script>
-<script src="../static-assets/script.js"></script>
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
 
 
 

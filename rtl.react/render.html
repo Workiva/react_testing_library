@@ -12,9 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../static-assets/github.css">
-  <link rel="stylesheet" href="../static-assets/styles.css">
-  <link rel="icon" href="../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -543,38 +544,6 @@
 <main>
 
 
-  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
-  <form class="search-sidebar" role="search">
-    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
-  </form>
-</header>
-
-<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">react_testing_library</a></li>
-  <li><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
-  <li class="self-crumb">render function</li>
-</ol>
-
-
-    <h5>rtl.react library</h5>
-    <ol>
-  <li class="section-title"><a href="../rtl.react/rtl.react-library.html#classes">Classes</a></li>
-  <li><a href="../rtl.react/RenderResult-class.html">RenderResult</a></li>
-
-
-
-
-
-  <li class="section-title"><a href="../rtl.react/rtl.react-library.html#functions">Functions</a></li>
-  <li><a href="../rtl.react/render.html">render</a></li>
-
-
-
-</ol>
-
-  </div><!--/.sidebar-offcanvas-left-->
-
   <div id="dartdoc-main-content" class="main-content">
       <div>
   <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/react/render/render.dart#L109"><i class="material-icons">description</i></a></div>
@@ -586,12 +555,12 @@
         
 
 <span class="returntype"><a href="../rtl.react/RenderResult-class.html">RenderResult</a></span>
-<span class="name ">render</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="render-param-ui"><span class="type-annotation"><a href="https://pub.dev/documentation/react/6.0.1/react_client.react_interop/ReactElement-class.html">ReactElement</a></span> <span class="parameter-name">ui</span>, </span></li>
-<li><span class="parameter" id="render-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
-<li><span class="parameter" id="render-param-baseElement"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">baseElement</span>, </span></li>
-<li><span class="parameter" id="render-param-hydrate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hydrate</span> = <span class="default-value">false</span>, </span></li>
+<span class="name ">render</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="render-param-ui"><span class="type-annotation"><a href="https://pub.dev/documentation/react/6.1.2/react_client.react_interop/ReactElement-class.html">ReactElement</a></span> <span class="parameter-name">ui</span>, </span></li>
+<li><span class="parameter" id="render-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<li><span class="parameter" id="render-param-baseElement"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">baseElement</span>, </span></li>
+<li><span class="parameter" id="render-param-hydrate"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hydrate</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="render-param-wrapper"><span class="type-annotation">dynamic</span> <span class="parameter-name">wrapper</span>, </span></li>
-<li><span class="parameter" id="render-param-autoTearDown"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">autoTearDown</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="render-param-autoTearDown"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">autoTearDown</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="render-param-onDidTearDown"><span class="type-annotation">void</span> <span class="parameter-name">onDidTearDown</span>(<ol class="parameter-list"></ol>
 )}</span></li>
 </ol>)
@@ -628,7 +597,7 @@ main() {
 <h2 id="options">Options</h2>
 <h3 id="container"><code>container</code></h3>
 <p>By default, <code>render</code> will create a <code>&lt;div&gt;</code> and append that <code>&lt;div&gt;</code> to <code>document.body</code> and this is where your
-React component will be mounted/rendered. If you specify your own <a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a> via the <code>container</code> option,
+React component will be mounted/rendered. If you specify your own <a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a> via the <code>container</code> option,
 it will not be appended to the document.body automatically.</p>
 <p>For example: If you are unit testing a <code>&lt;tbody&gt;</code> element, it cannot be a child of a <code>&lt;div&gt;</code>.
 In this case, you can specify a <code>&lt;table&gt;</code> as the render <code>container</code>:</p>
@@ -649,11 +618,11 @@ main() {
 }
 </code></pre>
 <h3 id="baseelement"><code>baseElement</code></h3>
-<p>If the <code>container</code> is specified, then <code>baseElement</code> defaults to that <a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a>,
+<p>If the <code>container</code> is specified, then <code>baseElement</code> defaults to that <a href="https://api.dart.dev/stable/2.14.1/dart-html/Node-class.html">Node</a>,
 otherwise this defaults to <code>document.body</code>. This is used as the base element
 for the queries as well as what is printed when you use <a href="../rtl.react/RenderResult/debug.html">RenderResult.debug</a>.</p>
 <h3 id="wrapper"><code>wrapper</code></h3>
-<p>An OverReact <code>UiFactory</code> or a <a href="https://pub.dev/documentation/react/6.0.1/react_client/ReactComponentFactoryProxy-class.html">ReactComponentFactoryProxy</a> which will be wrapped around the <code>ui</code>.
+<p>An OverReact <code>UiFactory</code> or a <a href="https://pub.dev/documentation/react/6.1.2/react_client/ReactComponentFactoryProxy-class.html">ReactComponentFactoryProxy</a> which will be wrapped around the <code>ui</code>.
 This is especially useful when testing components that need a context provider of some kind.</p>
 <hr>
 <blockquote>
@@ -726,6 +695,38 @@ At this time, the Dart API does not support them. If you have a use case for cus
 
   </div> <!-- /.main-content -->
 
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">react_testing_library</a></li>
+  <li><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+  <li class="self-crumb">render function</li>
+</ol>
+
+
+    <h5>rtl.react library</h5>
+    <ol>
+  <li class="section-title"><a href="../rtl.react/rtl.react-library.html#classes">Classes</a></li>
+  <li><a href="../rtl.react/RenderResult-class.html">RenderResult</a></li>
+
+
+
+
+
+  <li class="section-title"><a href="../rtl.react/rtl.react-library.html#functions">Functions</a></li>
+  <li><a href="../rtl.react/render.html">render</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
 
@@ -741,8 +742,9 @@ At this time, the Dart API does not support them. If you have a use case for cus
 </footer>
 
 
-<script src="../static-assets/highlight.pack.js"></script>
-<script src="../static-assets/script.js"></script>
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
 
 
 
