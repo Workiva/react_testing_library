@@ -4,7 +4,7 @@ description: A Dart unit testing library for OverReact components that mimics th
 homepage: https://github.com/Workiva/react_testing_library/
 documentation: https://workiva.github.io/react_testing_library
 environment:
-  sdk: '>=2.13.0 <3.0.0'
+  sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
   color: ">=2.1.1 <4.0.0"
