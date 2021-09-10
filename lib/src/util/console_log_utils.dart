@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:js';
 
 import 'package:meta/meta.dart';
@@ -37,30 +38,46 @@ List<String> recordConsoleLogs(
   ConsoleConfig configuration = ConsoleConfig.all,
 }) {
   final consoleLogs = <String>[];
+
+  final stopSpying = startSpyingOnConsoleLogs(configuration: configuration, onLog: consoleLogs.add);
+  try {
+    callback();
+  } finally {
+    stopSpying();
+  }
+
+  return consoleLogs;
+}
+
+void Function() startSpyingOnConsoleLogs({
+  ConsoleConfig configuration = ConsoleConfig.all,
+  @required void Function(String) onLog,
+}) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, JsFunction>{};
 
   _resetPropTypeWarningCache();
+
+  // Bind to the current zone so the callback isn't called in the top-level zone.
+  final boundOnLog = Zone.current.bindUnaryCallback(onLog);
 
   for (final config in logTypeToCapture) {
     consoleRefs[config] = context['console'][config] as JsFunction;
     context['console'][config] = JsFunction.withThis((self, [message, arg1, arg2, arg3, arg4, arg5]) {
       // NOTE: Using console.log or print within this function will cause an infinite
       // loop when the logType is set to `log`.
-      consoleLogs.add(message as String);
+      boundOnLog(message?.toString());
       consoleRefs[config].apply([message, arg1, arg2, arg3, arg4, arg5], thisArg: self);
     });
   }
 
-  try {
-    callback();
-  } finally {
+  void stopSpying() {
     for (final config in logTypeToCapture) {
       context['console'][config] = consoleRefs[config];
     }
   }
 
-  return consoleLogs;
+  return stopSpying;
 }
 
 /// Utility method that resets the `PropTypes` warning cache safely.

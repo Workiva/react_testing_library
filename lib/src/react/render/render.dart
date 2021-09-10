@@ -139,24 +139,27 @@ RenderResult render(
     throw ArgumentError('onDidTearDown cannot be set when autoTearDown is false.');
   }
 
-  JsRenderResult jsResult;
-  recordConsoleLogs(
-    () {
-      jsResult = _render(ui, renderOptions);
-
-      if (autoTearDown) {
-        addTearDown(() {
-          jsResult.unmount();
-          jsResult.container?.remove();
-          onDidTearDown?.call();
-        });
-      }
-    },
+  final stopSpying = startSpyingOnConsoleLogs(
     configuration: ConsoleConfig.error,
-  ).forEach((error) =>
-      print('\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'));
+    onLog: (error) {
+      error = error?.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '');
+      print('\x1B[33m⚠️  Warning: $error\x1B[0m');
+    },
+  );
 
-  return RenderResult._(jsResult, ui);
+  try {
+    final jsResult = _render(ui, renderOptions);
+    if (autoTearDown) {
+      addTearDown(() {
+        jsResult.unmount();
+        jsResult.container?.remove();
+        onDidTearDown?.call();
+      });
+    }
+    return RenderResult._(jsResult, ui);
+  } finally {
+    stopSpying();
+  }
 }
 
 /// The model returned from [render], which includes all the `ScopedQueries` scoped to the
