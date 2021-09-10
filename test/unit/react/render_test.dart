@@ -24,6 +24,7 @@ import 'package:test/test.dart';
 
 import '../console_log_utils_test.dart';
 import '../dom/queries/shared/scoped_queries_tests.dart';
+import '../util/exception.dart';
 import '../util/rendering.dart';
 
 void main() {
@@ -220,6 +221,12 @@ void main() {
         );
       });
     });
+
+    test('throws the original error when a component throws during mount', () {
+      expect(() {
+        rtl.render(TestFailComponent({}) as ReactElement);
+      }, throwsA(isA<ExceptionForTesting>()));
+    });
   });
 }
 
@@ -243,3 +250,8 @@ class _TestComponent extends react.Component2 {
 
 // ignore: type_annotate_public_apis
 final testComponent = react.registerComponent2(() => _TestComponent());
+
+// ignore: type_annotate_public_apis
+final TestFailComponent = react.registerFunctionComponent((props)  {
+  throw ExceptionForTesting('Exception thrown during render');
+});

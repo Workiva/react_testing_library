@@ -22,6 +22,7 @@ import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
+import 'util/exception.dart';
 import 'util/over_react_stubs.dart';
 
 // Returns whether `assert`s are enabled in the current runtime.
@@ -269,14 +270,11 @@ void main() {
       });
     });
 
-    if (runtimeSupportsPropTypeWarnings()) {
-      test('handles errors as expected when mounting', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
-            configuration: ConsoleConfig.error);
-
-        expect(logs, hasLength(2));
-      });
-    }
+    test('does not swallow errors that occur in the function', () {
+      expect(() {
+        recordConsoleLogs(() => throw ExceptionForTesting());
+      }, throwsA(isA<ExceptionForTesting>()));
+    });
   });
 }
 
@@ -320,7 +318,7 @@ class _SampleComponent extends react.Component2 {
   @override
   void componentDidMount() {
     window.console.warn('Just a lil warning');
-    if (props['shouldErrorInMount'] as bool) throw Error();
+    if (props['shouldErrorInMount'] as bool) throw ExceptionForTesting();
     props['onComponentDidMount']?.call();
   }
 
@@ -328,7 +326,7 @@ class _SampleComponent extends react.Component2 {
   dynamic render() {
     window.console.warn('A second warning');
     if (props['shouldErrorInRender'] as bool) {
-      throw Error();
+      throw ExceptionForTesting();
     } else {
       if (props['addExtraLogAndWarn'] as bool) {
         window.console.log('Extra Log');

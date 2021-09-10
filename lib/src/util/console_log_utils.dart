@@ -54,10 +54,6 @@ List<String> recordConsoleLogs(
 
   try {
     callback();
-  } catch (_) {
-    // No error handling is necessary. This catch is meant to catch errors that
-    // may occur if a render fails due to invalid props. It also ensures that the
-    // console is reset correctly, even if the callback is broken.
   } finally {
     for (final config in logTypeToCapture) {
       context['console'][config] = consoleRefs[config];
