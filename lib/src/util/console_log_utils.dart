@@ -35,7 +35,8 @@ import 'package:react/react_client/react_interop.dart';
 T printConsoleLogs<T>(
   T Function() callback, {
   ConsoleConfig configuration = ConsoleConfig.all,
-}) => spyOnConsoleLogs(callback, configuration: configuration, onLog: print);
+}) =>
+    spyOnConsoleLogs(callback, configuration: configuration, onLog: print);
 
 /// Runs a provided [callback] and calls [onLog] for each log that occurs during the runtime
 /// of that function.

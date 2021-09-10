@@ -76,18 +76,18 @@ void main() {
 
       final printCalls = recordPrintCalls(rtl.screen.debug);
       expect(printCalls, [
-          contains(
-            '    <div>\n'
-            '      <label\n'
-            '        for="number-input"\n'
-            '      />\n'
-            '      <input\n'
-            '        id="number-input"\n'
-            '        type="number"\n'
-            '        value="3"\n'
-            '      />\n'
-            '    </div>',
-          ),
+        contains(
+          '    <div>\n'
+          '      <label\n'
+          '        for="number-input"\n'
+          '      />\n'
+          '      <input\n'
+          '        id="number-input"\n'
+          '        type="number"\n'
+          '        value="3"\n'
+          '      />\n'
+          '    </div>',
+        ),
       ]);
     });
 

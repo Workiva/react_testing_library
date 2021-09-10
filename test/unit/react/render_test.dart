@@ -74,18 +74,18 @@ void main() {
 
         final printCalls = recordPrintCalls(view.debug);
         expect(printCalls, [
-            contains(
-              '    <div>\n'
-              '      <label\n'
-              '        for="number-input"\n'
-              '      />\n'
-              '      <input\n'
-              '        id="number-input"\n'
-              '        type="number"\n'
-              '        value="3"\n'
-              '      />\n'
-              '    </div>',
-            ),
+          contains(
+            '    <div>\n'
+            '      <label\n'
+            '        for="number-input"\n'
+            '      />\n'
+            '      <input\n'
+            '        id="number-input"\n'
+            '        type="number"\n'
+            '        value="3"\n'
+            '      />\n'
+            '    </div>',
+          ),
         ]);
       });
     });
@@ -229,7 +229,7 @@ void main() {
       }, throwsA(isA<ExceptionForTesting>()));
 
       expect(printCalls, [
-        contains('⚠️  Warning: The above error occurred in one of your React components:')
+        contains('⚠️  Warning: The above error occurred in one of your React components:'),
       ]);
     });
   });
@@ -257,6 +257,6 @@ class _TestComponent extends react.Component2 {
 final testComponent = react.registerComponent2(() => _TestComponent());
 
 // ignore: type_annotate_public_apis
-final TestFailComponent = react.registerFunctionComponent((props)  {
+final TestFailComponent = react.registerFunctionComponent((props) {
   throw ExceptionForTesting('Exception thrown during render');
 });

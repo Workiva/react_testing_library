@@ -152,8 +152,8 @@ RenderResult render(
       return RenderResult._(jsResult, ui);
     },
     configuration: ConsoleConfig.error,
-    onLog: (error) => print(
-        '\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'),
+    onLog: (error) =>
+        print('\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'),
   );
 }
 
