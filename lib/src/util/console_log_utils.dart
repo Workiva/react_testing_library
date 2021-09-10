@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:js';
 
 import 'package:meta/meta.dart';
@@ -37,6 +38,25 @@ List<String> recordConsoleLogs(
   ConsoleConfig configuration = ConsoleConfig.all,
 }) {
   final consoleLogs = <String>[];
+
+  final stopSpying = _spyOnConsoleLogs(consoleLogs.add, configuration: configuration);
+  try {
+    callback();
+  } catch (_) {
+    // No error handling is necessary. This catch is meant to catch errors that
+    // may occur if a render fails due to invalid props. It also ensures that the
+    // console is reset correctly, even if the callback is broken.
+  } finally {
+    stopSpying();
+  }
+
+  return consoleLogs;
+}
+
+void Function() _spyOnConsoleLogs(
+  Function(String) consoleLogHandler, {
+  ConsoleConfig configuration = ConsoleConfig.all,
+}) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, JsFunction>{};
 
@@ -47,24 +67,34 @@ List<String> recordConsoleLogs(
     context['console'][config] = JsFunction.withThis((self, [message, arg1, arg2, arg3, arg4, arg5]) {
       // NOTE: Using console.log or print within this function will cause an infinite
       // loop when the logType is set to `log`.
-      consoleLogs.add(message as String);
+      consoleLogHandler(message.toString());
       consoleRefs[config].apply([message, arg1, arg2, arg3, arg4, arg5], thisArg: self);
     });
   }
 
-  try {
-    callback();
-  } catch (_) {
-    // No error handling is necessary. This catch is meant to catch errors that
-    // may occur if a render fails due to invalid props. It also ensures that the
-    // console is reset correctly, even if the callback is broken.
-  } finally {
+  void stopSpying() {
     for (final config in logTypeToCapture) {
       context['console'][config] = consoleRefs[config];
     }
   }
 
-  return consoleLogs;
+  return stopSpying;
+}
+
+Stream<String> consoleLogsStream({
+  ConsoleConfig configuration = ConsoleConfig.all,
+}) {
+  void Function() stopSpying;
+  StreamController<String> sc;
+  sc = StreamController<String>.broadcast(
+      onListen: () {
+        stopSpying = _spyOnConsoleLogs(sc.add, configuration: configuration);
+      },
+      onCancel: () {
+        stopSpying();
+        stopSpying = null;
+      });
+  return sc.stream;
 }
 
 /// Utility method that resets the `PropTypes` warning cache safely.

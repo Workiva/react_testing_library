@@ -19,7 +19,8 @@
 library react_testing_library.src.react.render.render;
 
 import 'dart:async';
-import 'dart:html' show DocumentFragment, Node;
+import 'dart:html' show DocumentFragment, ErrorEvent, Node, window;
+import 'dart:js_util';
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
@@ -116,6 +117,7 @@ RenderResult render(
   /*UiFactory || ReactComponentFactoryProxy*/ dynamic wrapper,
   bool autoTearDown = true,
   void Function() onDidTearDown,
+  bool printErrors = true,
 }) {
   // ignore: invalid_use_of_visible_for_testing_member
   componentZone = Zone.current;
@@ -140,23 +142,61 @@ RenderResult render(
   }
 
   JsRenderResult jsResult;
-  recordConsoleLogs(
-    () {
-      jsResult = _render(ui, renderOptions);
 
-      if (autoTearDown) {
-        addTearDown(() {
-          jsResult.unmount();
-          jsResult.container?.remove();
-          onDidTearDown?.call();
-        });
-      }
-    },
-    configuration: ConsoleConfig.error,
-  ).forEach((error) =>
-      print('\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'));
+  final errorSubscriptions = <StreamSubscription>[];
+  try {
+    if (printErrors) {
+      const ansiRed = '\x1B[31m';
+      const ansiYellow = '\x1B[33m';
+      const ansiReset = '\x1B[0m';
+
+      errorSubscriptions
+        // FIXME these might be redundant in some cases, see if we can deduplicate
+        ..add(window.onError.cast<ErrorEvent>().listen((e) {
+          final errorString = _getFullErrorWithStackIfPossibleFromEvent(e)
+              .replaceFirst(RegExp(r'^Error:?\s?', caseSensitive: false), '');
+          print('$ansiRed❌️ Uncaught JS Error: $errorString$ansiReset');
+        }))
+        ..add(consoleLogsStream(configuration: ConsoleConfig.error).listen((error) {
+          final warningMessagePattern = RegExp(r'^Warning:?\s?', caseSensitive: false);
+          if (warningMessagePattern.hasMatch(error)) {
+            final errorString = error.replaceFirst(warningMessagePattern, '');
+            print('$ansiYellow⚠️  Warning: $errorString$ansiReset');
+          } else {
+            print('$ansiRed❌️ console.error: $error$ansiReset');
+          }
+        }));
+    }
+
+    jsResult = _render(ui, renderOptions);
+
+    if (autoTearDown) {
+      addTearDown(() {
+        jsResult.unmount();
+        jsResult.container?.remove();
+        onDidTearDown?.call();
+      });
+    }
+  } finally {
+    errorSubscriptions
+      ..forEach((s) => s.cancel())
+      ..clear();
+  }
 
   return RenderResult._(jsResult, ui);
+}
+
+String _getFullErrorWithStackIfPossibleFromEvent(ErrorEvent e) {
+  try {
+    final stack = getProperty(e.error, 'stack');
+    if (stack is String) return stack;
+  } catch (_) {}
+
+  return '${e.error ?? e.message} at ${[
+    e.filename,
+    if (e.lineno != null) e.lineno,
+    if (e.colno != null) e.colno
+  ].join(':')}';
 }
 
 /// The model returned from [render], which includes all the `ScopedQueries` scoped to the
