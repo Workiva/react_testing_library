@@ -49,6 +49,18 @@ List<String> recordConsoleLogs(
   return consoleLogs;
 }
 
+T printConsoleLogs<T>(
+  T Function() callback, {
+  ConsoleConfig configuration = ConsoleConfig.all,
+}) {
+  final stopSpying = startSpyingOnConsoleLogs(configuration: configuration, onLog: print);
+  try {
+    return callback();
+  } finally {
+    stopSpying();
+  }
+}
+
 void Function() startSpyingOnConsoleLogs({
   ConsoleConfig configuration = ConsoleConfig.all,
   @required void Function(String) onLog,

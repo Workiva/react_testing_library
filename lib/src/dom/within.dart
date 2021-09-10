@@ -78,7 +78,7 @@ class ScreenQueries extends WithinQueries {
     int maxLength,
     PrettyDomOptions options,
   ]) =>
-      recordConsoleLogs(() => _screen.debug(baseElement, maxLength, options)).forEach(print);
+      printConsoleLogs(() => _screen.debug(baseElement, maxLength, options));
 }
 
 /// Exposes all the "top-level" queries exposed by the dom-testing-library,
