@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
@@ -59,6 +60,10 @@ void main() {
     });
 
     group('spyOnConsoleLogs', () {
+      test('returns the value returned by the callback', () {
+        expect(spyOnConsoleLogs(() => 'return value'), 'return value');
+      });
+
       test('stops recording logs once the callback completes', () {
         final logCalls = <String>[];
         spyOnConsoleLogs(() {
@@ -77,10 +82,45 @@ void main() {
           spyOnConsoleLogs(() => throw ExceptionForTesting(), onLog: (_) {});
         }, throwsA(isA<ExceptionForTesting>()));
       });
+
+      test('calls onLog in the same zone as the spyOnConsoleLogs call', () {
+        final logCallZones = <Zone>[];
+        final testZone = Zone.current.fork()
+          ..run(() {
+            spyOnConsoleLogs(() {
+              window.console.log('foo');
+            }, onLog: (_) {
+              logCallZones.add(Zone.current);
+            });
+          });
+        expect(logCallZones, [same(testZone)]);
+      });
+
+      test('stops recording logs if the callback throws', () {
+        final logCalls = <String>[];
+        expect(() {
+          spyOnConsoleLogs(() {
+            window.console.log('foo');
+            throw ExceptionForTesting();
+          }, onLog: logCalls.add);
+        }, throwsA(isA<ExceptionForTesting>()));
+
+        window.console.log('log after throw');
+
+        expect(logCalls, ['foo']);
+      });
     });
 
     group('printConsoleLogs', () {
+      test('returns the value returned by the callback', () {
+        expect(printConsoleLogs(() => 'return value'), 'return value');
+      });
+
       test('prints logs', () {
+        // This also tests functionally that the print call occurs in the right zone,
+        // which need to happen for them to be forwarded in the terminal in a test environment.
+        // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+        // the test package.
         final printCalls = recordPrintCalls(() {
           printConsoleLogs(() {
             window.console.log('foo');
