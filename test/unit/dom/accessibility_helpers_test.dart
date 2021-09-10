@@ -192,9 +192,8 @@ void main() {
         final rolePattern = RegExp(r'(\w*):\n\n((.|(\n(?!-)))*)\n\n---');
         final printCalls = recordPrintCalls(() => rtl.logRoles(dom, hidden: hidden));
         expect(printCalls, hasLength(1));
-        final matches = rolePattern.allMatches(printCalls[0]);
         return {
-          for (final match in matches) match[1]: match[2],
+          for (final match in rolePattern.allMatches(printCalls[0])) match[1]: match[2],
         };
       }
 

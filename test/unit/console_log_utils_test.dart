@@ -454,10 +454,11 @@ class _SampleComponent extends react.Component2 {
   void componentWillUnmount() {
     super.componentWillUnmount();
 
-    if (props['shouldErrorInUnmount'] as bool) throw Error();
+    if (props['shouldErrorInUnmount'] as bool) throw ExceptionForTesting();
   }
 }
 
+// ignore: type_annotate_public_apis
 final Sample = react.registerComponent2(() => _SampleComponent());
 
 class _Sample2Component extends react.Component2 {
@@ -487,4 +488,5 @@ class _Sample2Component extends react.Component2 {
   }
 }
 
+// ignore: type_annotate_public_apis
 final Sample2 = react.registerComponent2(() => _Sample2Component());
