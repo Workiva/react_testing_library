@@ -188,7 +188,6 @@ void main() {
         final printCalls = recordPrintCalls(
           () => rtl.render(testComponent({'name': '123456789012345678901'}) as ReactElement),
         );
-
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
             printCalls,

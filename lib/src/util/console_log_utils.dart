@@ -58,7 +58,7 @@ T spyOnConsoleLogs<T>(
   }
 }
 
-/// Starts spying on concole logs, calling [onLog] for each log that occurs until the
+/// Starts spying on console logs, calling [onLog] for each log that occurs until the
 /// returned function (`stopSpying`) is called.
 ///
 /// [onLog] is called in the same Zone as this function was called in, similar to a Stream subscription.
@@ -118,7 +118,7 @@ class ConsoleConfig {
   /// The type of log to capture, corresponding to a method on the JS `console` object,
   /// or `'all'` for all types.
   ///
-  /// Must be either `'all'` one of the values within [types].
+  /// Must be either `'all'` or one of the values within [types].
   final String logType;
 
   /// The possible console types that have different log contexts.
