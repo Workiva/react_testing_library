@@ -23,7 +23,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 import '../dom/queries/shared/scoped_queries_tests.dart';
-import '../util/print.dart';
+import '../util/prints_and_logs_recording.dart';
 import '../util/rendering.dart';
 import '../util/shadow_dom.dart';
 

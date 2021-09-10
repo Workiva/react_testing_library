@@ -24,6 +24,7 @@ import 'package:test/test.dart';
 
 import 'util/exception.dart';
 import 'util/over_react_stubs.dart';
+import 'util/prints_and_logs_recording.dart';
 
 // Returns whether `assert`s are enabled in the current runtime.
 //

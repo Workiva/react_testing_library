@@ -22,7 +22,7 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 import '../util/over_react_stubs.dart';
-import '../util/print.dart';
+import '../util/prints_and_logs_recording.dart';
 
 void main() {
   group('Accessibility Helpers', () {

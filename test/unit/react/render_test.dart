@@ -24,7 +24,7 @@ import 'package:test/test.dart';
 import '../console_log_utils_test.dart';
 import '../dom/queries/shared/scoped_queries_tests.dart';
 import '../util/exception.dart';
-import '../util/print.dart';
+import '../util/prints_and_logs_recording.dart';
 import '../util/rendering.dart';
 
 void main() {
