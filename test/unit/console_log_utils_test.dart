@@ -40,7 +40,57 @@ bool _assertsEnabled() {
 bool runtimeSupportsPropTypeWarnings() => _assertsEnabled();
 
 void main() {
-  group('recordConsoleLogs', () {
+  group('console log recording utilities', () {
+    group('startSpyingOnConsoleLogs', () {
+      test('stops recording logs once the returned function is called', () {
+        final logCalls = <String>[];
+        final stopSpying = startSpyingOnConsoleLogs(onLog: logCalls.add);
+
+        window.console.log('foo');
+        window.console.log('bar');
+        expect(logCalls, ['foo', 'bar']);
+
+        stopSpying();
+
+        logCalls.clear();
+        window.console.log('baz');
+        expect(logCalls, []);
+      });
+    });
+
+    group('spyOnConsoleLogs', () {
+      test('stops recording logs once the callback completes', () {
+        final logCalls = <String>[];
+        spyOnConsoleLogs(() {
+          window.console.log('foo');
+          window.console.log('bar');
+        }, onLog: logCalls.add);
+        expect(logCalls, ['foo', 'bar']);
+
+        logCalls.clear();
+        window.console.log('baz');
+        expect(logCalls, []);
+      });
+
+      test('does not swallow errors that occur in the callback', () {
+        expect(() {
+          spyOnConsoleLogs(() => throw ExceptionForTesting(), onLog: (_) {});
+        }, throwsA(isA<ExceptionForTesting>()));
+      });
+    });
+
+    group('printConsoleLogs', () {
+      test('prints logs', () {
+        final printCalls = recordPrintCalls(() {
+          printConsoleLogs(() {
+            window.console.log('foo');
+            window.console.log('bar');
+          });
+        });
+        expect(printCalls, ['foo', 'bar']);
+      });
+    });
+
     group('captures all logs correctly', () {
       test('when mounting', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement));
@@ -271,11 +321,23 @@ void main() {
       });
     });
 
-    test('does not swallow errors that occur in the function', () {
+    test('recordConsoleLogs does not swallow errors that occur in the callback', () {
       expect(() {
         recordConsoleLogs(() => throw ExceptionForTesting());
       }, throwsA(isA<ExceptionForTesting>()));
     });
+
+    if (runtimeSupportsPropTypeWarnings()) {
+      test('handles errors as expected when mounting', () {
+        // Don't use recordConsoleLogs since we can't get the returned logs if this throws
+        final logs = <String>[];
+        try {
+          spyOnConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
+              configuration: ConsoleConfig.error, onLog: logs.add);
+        } catch (_) {}
+        expect(logs, hasLength(2));
+      });
+    }
   });
 }
 

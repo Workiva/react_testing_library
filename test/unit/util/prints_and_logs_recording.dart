@@ -17,6 +17,8 @@ List<String> recordPrintCalls(void Function() callback) {
 /// Runs a provided [callback] and returns the logs captured during the runtime
 /// of that function.
 ///
+/// Not suitable for most usages outside of tests, since any exceptions that are thrown
+///
 /// Can be used to print logs, warnings, or errors based on [configuration].
 ///
 /// The function assumes that any `propType` warnings that occur during
