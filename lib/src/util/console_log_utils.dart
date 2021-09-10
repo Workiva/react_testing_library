@@ -30,6 +30,8 @@ import 'package:react/react_client/react_interop.dart';
 /// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
 /// is reset prior to calling the provided callback.
+///
+/// See also: [spyOnConsoleLogs], [startSpyingOnConsoleLogs]
 T printConsoleLogs<T>(
   T Function() callback, {
   ConsoleConfig configuration = ConsoleConfig.all,
@@ -45,6 +47,8 @@ T printConsoleLogs<T>(
 /// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
 /// is reset prior to calling the provided callback.
+///
+/// See also: [printConsoleLogs], [startSpyingOnConsoleLogs]
 T spyOnConsoleLogs<T>(
   T Function() callback, {
   @required void Function(String) onLog,
@@ -68,6 +72,8 @@ T spyOnConsoleLogs<T>(
 /// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
 /// is reset prior to calling the provided callback.
+///
+/// See also: [printConsoleLogs], [spyOnConsoleLogs]]
 void Function() startSpyingOnConsoleLogs({
   ConsoleConfig configuration = ConsoleConfig.all,
   @required void Function(String) onLog,

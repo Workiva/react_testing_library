@@ -219,10 +219,18 @@ void main() {
       });
     });
 
-    test('throws the original error when a component throws during mount', () {
+    test('when a component throws during mount, prints all relevant logs and also throws the error', () {
+      final printCalls = <String>[];
+
       expect(() {
-        rtl.render(TestFailComponent({}) as ReactElement);
+        spyOnPrintCalls(() {
+          rtl.render(TestFailComponent({}) as ReactElement);
+        }, onPrint: printCalls.add);
       }, throwsA(isA<ExceptionForTesting>()));
+
+      expect(printCalls, [
+        contains('⚠️  Warning: The above error occurred in one of your React components:')
+      ]);
     });
   });
 }
