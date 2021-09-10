@@ -61,7 +61,7 @@ void main() {
 
     group('spyOnConsoleLogs', () {
       test('returns the value returned by the callback', () {
-        expect(spyOnConsoleLogs(() => 'return value'), 'return value');
+        expect(spyOnConsoleLogs(() => 'return value', onLog: (_) {}), 'return value');
       });
 
       test('stops recording logs once the callback completes', () {
