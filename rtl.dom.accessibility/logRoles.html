@@ -577,7 +577,7 @@ nodes which match that role.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void logRoles(Node container, {bool hidden = false}) =&gt;
-    recordConsoleLogs(() =&gt; _logRoles(container, jsifyAndAllowInterop({&#39;hidden&#39;: hidden}) as JsMap)).forEach(print);</code></pre>
+    printConsoleLogs(() =&gt; _logRoles(container, jsifyAndAllowInterop({&#39;hidden&#39;: hidden}) as JsMap));</code></pre>
 </section>
 
 

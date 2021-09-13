@@ -671,11 +671,9 @@ At this time, the Dart API does not support them. If you have a use case for cus
     throw ArgumentError(&#39;onDidTearDown cannot be set when autoTearDown is false.&#39;);
   }
 
-  JsRenderResult jsResult;
-  recordConsoleLogs(
+  return spyOnConsoleLogs(
     () {
-      jsResult = _render(ui, renderOptions);
-
+      final jsResult = _render(ui, renderOptions);
       if (autoTearDown) {
         addTearDown(() {
           jsResult.unmount();
@@ -683,12 +681,12 @@ At this time, the Dart API does not support them. If you have a use case for cus
           onDidTearDown?.call();
         });
       }
+      return RenderResult._(jsResult, ui);
     },
     configuration: ConsoleConfig.error,
-  ).forEach((error) =&gt;
-      print(&#39;\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r&#39;^Warning:?\s?&#39;, caseSensitive: false), &#39;&#39;)}\x1B[0m&#39;));
-
-  return RenderResult._(jsResult, ui);
+    onLog: (error) =&gt;
+        print(&#39;\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r&#39;^Warning:?\s?&#39;, caseSensitive: false), &#39;&#39;)}\x1B[0m&#39;),
+  );
 }</code></pre>
 </section>
 
