@@ -74,7 +74,7 @@ T spyOnConsoleLogs<T>(
 /// the function runtime should be captured. Consequently, the `PropType` cache
 /// is reset prior to calling the provided callback.
 ///
-/// See also: [printConsoleLogs], [spyOnConsoleLogs]]
+/// See also: [printConsoleLogs], [spyOnConsoleLogs]
 void Function() startSpyingOnConsoleLogs({
   ConsoleConfig configuration = ConsoleConfig.all,
   @required void Function(String) onLog,
