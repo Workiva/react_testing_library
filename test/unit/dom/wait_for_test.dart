@@ -24,6 +24,7 @@ import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
 
 import '../util/constants.dart';
+import '../util/exception.dart';
 import '../util/init.dart';
 import '../util/matchers.dart';
 import '../util/rendering.dart';
@@ -60,8 +61,8 @@ void main() {
         });
 
         test('a function that throws an arbitrary error, rethrows the error thrown by the expectation', () async {
-          expect(() => rtl.waitFor(() => throw AssertionError('foo'), container: view.container),
-              throwsA(isA<AssertionError>()));
+          expect(() => rtl.waitFor(() => throw ExceptionForTesting(), container: view.container),
+              throwsA(isA<ExceptionForTesting>()));
         }, timeout: asyncQueryTestTimeout);
 
         group('a getBy* query', () {

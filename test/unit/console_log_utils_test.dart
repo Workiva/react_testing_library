@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
@@ -22,7 +23,9 @@ import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
+import 'util/exception.dart';
 import 'util/over_react_stubs.dart';
+import 'util/prints_and_logs_recording.dart';
 
 // Returns whether `assert`s are enabled in the current runtime.
 //
@@ -38,7 +41,96 @@ bool _assertsEnabled() {
 bool runtimeSupportsPropTypeWarnings() => _assertsEnabled();
 
 void main() {
-  group('recordConsoleLogs', () {
+  group('console log recording utilities', () {
+    group('startSpyingOnConsoleLogs', () {
+      test('stops recording logs once the returned function is called', () {
+        final logCalls = <String>[];
+        final stopSpying = startSpyingOnConsoleLogs(onLog: logCalls.add);
+
+        window.console.log('foo');
+        window.console.log('bar');
+        expect(logCalls, ['foo', 'bar']);
+
+        stopSpying();
+
+        logCalls.clear();
+        window.console.log('baz');
+        expect(logCalls, []);
+      });
+    });
+
+    group('spyOnConsoleLogs', () {
+      test('returns the value returned by the callback', () {
+        expect(spyOnConsoleLogs(() => 'return value', onLog: (_) {}), 'return value');
+      });
+
+      test('stops recording logs once the callback completes', () {
+        final logCalls = <String>[];
+        spyOnConsoleLogs(() {
+          window.console.log('foo');
+          window.console.log('bar');
+        }, onLog: logCalls.add);
+        expect(logCalls, ['foo', 'bar']);
+
+        logCalls.clear();
+        window.console.log('baz');
+        expect(logCalls, []);
+      });
+
+      test('does not swallow errors that occur in the callback', () {
+        expect(() {
+          spyOnConsoleLogs(() => throw ExceptionForTesting(), onLog: (_) {});
+        }, throwsA(isA<ExceptionForTesting>()));
+      });
+
+      test('calls onLog in the same zone as the spyOnConsoleLogs call', () {
+        final logCallZones = <Zone>[];
+        final testZone = Zone.current.fork()
+          ..run(() {
+            spyOnConsoleLogs(() {
+              window.console.log('foo');
+            }, onLog: (_) {
+              logCallZones.add(Zone.current);
+            });
+          });
+        expect(logCallZones, [same(testZone)]);
+      });
+
+      test('stops recording logs if the callback throws', () {
+        final logCalls = <String>[];
+        expect(() {
+          spyOnConsoleLogs(() {
+            window.console.log('foo');
+            throw ExceptionForTesting();
+          }, onLog: logCalls.add);
+        }, throwsA(isA<ExceptionForTesting>()));
+
+        window.console.log('log after throw');
+
+        expect(logCalls, ['foo']);
+      });
+    });
+
+    group('printConsoleLogs', () {
+      test('returns the value returned by the callback', () {
+        expect(printConsoleLogs(() => 'return value'), 'return value');
+      });
+
+      test('prints logs', () {
+        // This also tests functionally that the print call occurs in the right zone,
+        // which need to happen for them to be forwarded in the terminal in a test environment.
+        // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+        // the test package.
+        final printCalls = recordPrintCalls(() {
+          printConsoleLogs(() {
+            window.console.log('foo');
+            window.console.log('bar');
+          });
+        });
+        expect(printCalls, ['foo', 'bar']);
+      });
+    });
+
     group('captures all logs correctly', () {
       test('when mounting', () {
         final logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement));
@@ -269,11 +361,20 @@ void main() {
       });
     });
 
+    test('recordConsoleLogs does not swallow errors that occur in the callback', () {
+      expect(() {
+        recordConsoleLogs(() => throw ExceptionForTesting());
+      }, throwsA(isA<ExceptionForTesting>()));
+    });
+
     if (runtimeSupportsPropTypeWarnings()) {
       test('handles errors as expected when mounting', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
-            configuration: ConsoleConfig.error);
-
+        // Don't use recordConsoleLogs since we can't get the returned logs if this throws
+        final logs = <String>[];
+        try {
+          spyOnConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
+              configuration: ConsoleConfig.error, onLog: logs.add);
+        } catch (_) {}
         expect(logs, hasLength(2));
       });
     }
@@ -320,7 +421,7 @@ class _SampleComponent extends react.Component2 {
   @override
   void componentDidMount() {
     window.console.warn('Just a lil warning');
-    if (props['shouldErrorInMount'] as bool) throw Error();
+    if (props['shouldErrorInMount'] as bool) throw ExceptionForTesting();
     props['onComponentDidMount']?.call();
   }
 
@@ -328,7 +429,7 @@ class _SampleComponent extends react.Component2 {
   dynamic render() {
     window.console.warn('A second warning');
     if (props['shouldErrorInRender'] as bool) {
-      throw Error();
+      throw ExceptionForTesting();
     } else {
       if (props['addExtraLogAndWarn'] as bool) {
         window.console.log('Extra Log');
@@ -353,10 +454,11 @@ class _SampleComponent extends react.Component2 {
   void componentWillUnmount() {
     super.componentWillUnmount();
 
-    if (props['shouldErrorInUnmount'] as bool) throw Error();
+    if (props['shouldErrorInUnmount'] as bool) throw ExceptionForTesting();
   }
 }
 
+// ignore: type_annotate_public_apis
 final Sample = react.registerComponent2(() => _SampleComponent());
 
 class _Sample2Component extends react.Component2 {
@@ -386,4 +488,5 @@ class _Sample2Component extends react.Component2 {
   }
 }
 
+// ignore: type_annotate_public_apis
 final Sample2 = react.registerComponent2(() => _Sample2Component());

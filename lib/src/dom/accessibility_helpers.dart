@@ -48,7 +48,7 @@ Map<String, List> getRoles(Node container, {bool hidden = false}) =>
 ///
 /// {@category Accessibility}
 void logRoles(Node container, {bool hidden = false}) =>
-    recordConsoleLogs(() => _logRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)).forEach(print);
+    printConsoleLogs(() => _logRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap));
 
 @JS('rtl.getRoles')
 external JsMap _getRoles(

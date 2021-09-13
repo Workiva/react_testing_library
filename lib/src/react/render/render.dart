@@ -139,11 +139,9 @@ RenderResult render(
     throw ArgumentError('onDidTearDown cannot be set when autoTearDown is false.');
   }
 
-  JsRenderResult jsResult;
-  recordConsoleLogs(
+  return spyOnConsoleLogs(
     () {
-      jsResult = _render(ui, renderOptions);
-
+      final jsResult = _render(ui, renderOptions);
       if (autoTearDown) {
         addTearDown(() {
           jsResult.unmount();
@@ -151,12 +149,12 @@ RenderResult render(
           onDidTearDown?.call();
         });
       }
+      return RenderResult._(jsResult, ui);
     },
     configuration: ConsoleConfig.error,
-  ).forEach((error) =>
-      print('\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'));
-
-  return RenderResult._(jsResult, ui);
+    onLog: (error) =>
+        print('\x1B[33m⚠️  Warning: ${error.replaceFirst(RegExp(r'^Warning:?\s?', caseSensitive: false), '')}\x1B[0m'),
+  );
 }
 
 /// The model returned from [render], which includes all the `ScopedQueries` scoped to the
@@ -200,7 +198,7 @@ class RenderResult extends ScopedQueries {
     int maxLength,
     PrettyDomOptions options,
   ]) =>
-      recordConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options)).forEach(print);
+      printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options));
 
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///

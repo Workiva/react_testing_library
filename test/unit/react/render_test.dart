@@ -19,11 +19,12 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart';
 
 import '../console_log_utils_test.dart';
 import '../dom/queries/shared/scoped_queries_tests.dart';
+import '../util/exception.dart';
+import '../util/prints_and_logs_recording.dart';
 import '../util/rendering.dart';
 
 void main() {
@@ -71,22 +72,21 @@ void main() {
           })
         ]) as ReactElement);
 
-        final logs = recordConsoleLogs(view.debug);
-        expect(logs, equals([logs.first, logs.first]), reason: 'view.debug() both prints and console.logs the dom');
-        expect(
-            logs.first,
-            contains(
-              '    <div>\n'
-              '      <label\n'
-              '        for="number-input"\n'
-              '      />\n'
-              '      <input\n'
-              '        id="number-input"\n'
-              '        type="number"\n'
-              '        value="3"\n'
-              '      />\n'
-              '    </div>',
-            ));
+        final printCalls = recordPrintCalls(view.debug);
+        expect(printCalls, [
+          contains(
+            '    <div>\n'
+            '      <label\n'
+            '        for="number-input"\n'
+            '      />\n'
+            '      <input\n'
+            '        id="number-input"\n'
+            '        type="number"\n'
+            '        value="3"\n'
+            '      />\n'
+            '    </div>',
+          ),
+        ]);
       });
     });
 
@@ -185,13 +185,12 @@ void main() {
 
     group('prints react warnings', () {
       test('for custom component', () {
-        final logs = recordConsoleLogs(
+        final printCalls = recordPrintCalls(
           () => rtl.render(testComponent({'name': '123456789012345678901'}) as ReactElement),
-          configuration: ConsoleConfig.log,
         );
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
-            logs,
+            printCalls,
             unorderedEquals([
               contains('⚠️  Warning: Failed prop type: Invalid argument(s): (123456789012345678901) is too long.'),
               contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
@@ -199,7 +198,7 @@ void main() {
           );
         } else {
           expect(
-            logs,
+            printCalls,
             unorderedEquals([
               contains('⚠️  Warning: Each child in a list should have a unique "key" prop.'),
             ]),
@@ -208,17 +207,30 @@ void main() {
       });
 
       test('for dom elements', () {
-        final logs = recordConsoleLogs(
+        final printCalls = recordPrintCalls(
           () => rtl.render(react.input({'value': 'abc'}) as ReactElement),
-          configuration: ConsoleConfig.log,
         );
         expect(
-          logs,
+          printCalls,
           equals([
             contains('⚠️  Warning: You provided a `value` prop to a form field without an `onChange` handler.'),
           ]),
         );
       });
+    });
+
+    test('when a component throws during mount, prints all relevant logs and also throws the error', () {
+      final printCalls = <String>[];
+
+      expect(() {
+        spyOnPrintCalls(() {
+          rtl.render(TestFailComponent({}) as ReactElement);
+        }, onPrint: printCalls.add);
+      }, throwsA(isA<ExceptionForTesting>()));
+
+      expect(printCalls, [
+        contains('⚠️  Warning: The above error occurred in one of your React components:'),
+      ]);
     });
   });
 }
@@ -243,3 +255,8 @@ class _TestComponent extends react.Component2 {
 
 // ignore: type_annotate_public_apis
 final testComponent = react.registerComponent2(() => _TestComponent());
+
+// ignore: type_annotate_public_apis
+final TestFailComponent = react.registerFunctionComponent((props) {
+  throw ExceptionForTesting('Exception thrown during render');
+});

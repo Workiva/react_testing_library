@@ -19,10 +19,10 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:test/test.dart';
 
 import '../util/over_react_stubs.dart';
+import '../util/prints_and_logs_recording.dart';
 
 void main() {
   group('Accessibility Helpers', () {
@@ -190,11 +190,11 @@ void main() {
     group('getRoles', () {
       Map<String, String> _getLoggedRoleMatches(Node dom, {bool hidden = false}) {
         final rolePattern = RegExp(r'(\w*):\n\n((.|(\n(?!-)))*)\n\n---');
-        final logs = recordConsoleLogs(() => rtl.logRoles(dom, hidden: hidden));
-        expect(logs, equals([logs.first, logs.first]),
-            reason: 'logRoles prints the same roles in both the terminal and the console');
-
-        return rolePattern.allMatches(logs.first).toList().asMap().map((_, match) => MapEntry(match[1], match[2]));
+        final printCalls = recordPrintCalls(() => rtl.logRoles(dom, hidden: hidden));
+        expect(printCalls, hasLength(1));
+        return {
+          for (final match in rolePattern.allMatches(printCalls[0])) match[1]: match[2],
+        };
       }
 
       group('prints roles', () {

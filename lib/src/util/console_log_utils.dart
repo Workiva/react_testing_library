@@ -14,57 +14,96 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:js';
 
 import 'package:meta/meta.dart';
 import 'package:react/react_client/react_interop.dart';
 
-/// Runs a provided callback and returns the logs that occur during the runtime
+/// Runs a provided [callback] and [print]s each log that occurs during the runtime
 /// of that function.
 ///
-/// Can be used to capture logs, warnings, or errors as specified by setting
-/// the [configuration]. To set the [configuration], pass in the corresponding
-/// config class ([ConsoleConfig.log], [ConsoleConfig.warn], [ConsoleConfig.error], [ConsoleConfig.all]).
+/// [print] is called in the same Zone as this function was called in, similar to a Stream subscription.
+///
+/// Can be used to print logs, warnings, or errors based on [configuration].
 ///
 /// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
 /// is reset prior to calling the provided callback.
 ///
-/// If any errors are thrown during the callback, e.g. during a render that expects
-/// props that are not valid, the errors will be caught to allow the test to complete.
-List<String> recordConsoleLogs(
-  Function() callback, {
+/// See also: [spyOnConsoleLogs], [startSpyingOnConsoleLogs]
+T printConsoleLogs<T>(
+  T Function() callback, {
+  ConsoleConfig configuration = ConsoleConfig.all,
+}) =>
+    spyOnConsoleLogs(callback, configuration: configuration, onLog: print);
+
+/// Runs a provided [callback] and calls [onLog] for each log that occurs during the runtime
+/// of that function.
+///
+/// [onLog] is called in the same Zone as this function was called in, similar to a Stream subscription.
+///
+/// Can be used to capture logs, warnings, or errors based on [configuration].
+///
+/// The function assumes that any `propType` warnings that occur during
+/// the function runtime should be captured. Consequently, the `PropType` cache
+/// is reset prior to calling the provided callback.
+///
+/// See also: [printConsoleLogs], [startSpyingOnConsoleLogs]
+T spyOnConsoleLogs<T>(
+  T Function() callback, {
+  @required void Function(String) onLog,
   ConsoleConfig configuration = ConsoleConfig.all,
 }) {
-  final consoleLogs = <String>[];
+  final stopSpying = startSpyingOnConsoleLogs(configuration: configuration, onLog: onLog);
+  try {
+    return callback();
+  } finally {
+    stopSpying();
+  }
+}
+
+/// Starts spying on console logs, calling [onLog] for each log that occurs until the
+/// returned function (`stopSpying`) is called.
+///
+/// [onLog] is called in the same Zone as this function was called in, similar to a Stream subscription.
+///
+/// Can be used to capture logs, warnings, or errors based on [configuration].
+///
+/// The function assumes that any `propType` warnings that occur during
+/// the function runtime should be captured. Consequently, the `PropType` cache
+/// is reset prior to calling the provided callback.
+///
+/// See also: [printConsoleLogs], [spyOnConsoleLogs]
+void Function() startSpyingOnConsoleLogs({
+  ConsoleConfig configuration = ConsoleConfig.all,
+  @required void Function(String) onLog,
+}) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, JsFunction>{};
 
   _resetPropTypeWarningCache();
+
+  // Bind to the current zone so the callback isn't called in the top-level zone.
+  final boundOnLog = Zone.current.bindUnaryCallback(onLog);
 
   for (final config in logTypeToCapture) {
     consoleRefs[config] = context['console'][config] as JsFunction;
     context['console'][config] = JsFunction.withThis((self, [message, arg1, arg2, arg3, arg4, arg5]) {
       // NOTE: Using console.log or print within this function will cause an infinite
       // loop when the logType is set to `log`.
-      consoleLogs.add(message as String);
+      boundOnLog(message?.toString());
       consoleRefs[config].apply([message, arg1, arg2, arg3, arg4, arg5], thisArg: self);
     });
   }
 
-  try {
-    callback();
-  } catch (_) {
-    // No error handling is necessary. This catch is meant to catch errors that
-    // may occur if a render fails due to invalid props. It also ensures that the
-    // console is reset correctly, even if the callback is broken.
-  } finally {
+  void stopSpying() {
     for (final config in logTypeToCapture) {
       context['console'][config] = consoleRefs[config];
     }
   }
 
-  return consoleLogs;
+  return stopSpying;
 }
 
 /// Utility method that resets the `PropTypes` warning cache safely.
@@ -74,30 +113,33 @@ void _resetPropTypeWarningCache() {
   } catch (_) {}
 }
 
-/// Configuration class that sets options within [recordConsoleLogs].
+/// Configuration class that sets options within console-log-recording functions:
+///
+/// - [printConsoleLogs]
+/// - [spyOnConsoleLogs]
+/// - [startSpyingOnConsoleLogs]
 @sealed
 class ConsoleConfig {
   const ConsoleConfig._(this.logType);
 
-  /// The type of log to capture while running the callbacks within
-  /// [recordConsoleLogs].
+  /// The type of log to capture, corresponding to a method on the JS `console` object,
+  /// or `'all'` for all types.
   ///
-  /// Must be `'warn'`, `'error'`, `'log'` or `'all'`.
+  /// Must be either `'all'` or one of the values within [types].
   final String logType;
 
   /// The possible console types that have different log contexts.
   static const Set<String> types = {'error', 'log', 'warn'};
 
-  /// The configuration needed to capture logs while running [recordConsoleLogs].
+  /// Captures calls to `console.log`.
   static const ConsoleConfig log = ConsoleConfig._('log');
 
-  /// The configuration needed to capture warnings while running [recordConsoleLogs].
+  /// Captures calls to `console.warn`.
   static const ConsoleConfig warn = ConsoleConfig._('warn');
 
-  /// The configuration needed to capture errors while running [recordConsoleLogs].
+  /// Captures calls to `console.error`.
   static const ConsoleConfig error = ConsoleConfig._('error');
 
-  /// The configuration that will capture all logs, whether they be logs, warnings,
-  /// or errors.
+  /// Captures calls to `console.log`, `console.warn`, and `console.error`.
   static const ConsoleConfig all = ConsoleConfig._('all');
 }
