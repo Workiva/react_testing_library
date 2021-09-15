@@ -1,5 +1,8 @@
 # React Testing Library Changelog
 
+## 1.1.10
+*  Fix state error thrown by calls to `logRoles()` and `.debug()` (bug introduced in 1.1.9)
+
 ## 1.1.9
 *  Fix `render` swallowing errors on component mount
 
