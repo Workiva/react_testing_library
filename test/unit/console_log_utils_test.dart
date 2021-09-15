@@ -130,6 +130,18 @@ void main() {
         expect(printCalls, ['foo', 'bar']);
       });
 
+      test('prints even if the function throws partway through', () {
+        final printCalls = recordPrintCalls(() {
+          expect(() {
+            printConsoleLogs(() {
+              window.console.log('foo');
+              throw ExceptionForTesting();
+            });
+          }, throwsA(isA<ExceptionForTesting>()));
+        });
+        expect(printCalls, ['foo']);
+      });
+
       group('does not throw when printing logs in a non-print-spied zone:', () {
         // Failures for tehse tests might not show up as actual test failures, but rather uncaught
         // errors that look like:
