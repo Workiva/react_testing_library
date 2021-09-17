@@ -168,12 +168,14 @@ Future<T> waitFor<T>(
 Future<void> waitForElementToBeRemoved(
   Node Function() callback, {
   Node container,
-  Duration timeout = const Duration(seconds: 1),
+  Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
+  final config = getConfig();
   container ??= document.body;
+  timeout ??= Duration(milliseconds: config.asyncUtilTimeout);
 
   final el = callback();
   if (el == null) {
