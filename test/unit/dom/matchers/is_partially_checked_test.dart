@@ -31,9 +31,7 @@ void main() {
       });
 
       test('An element with role="checkbox"', () {
-        final cboxEl = DivElement()
-          ..setAttribute('role', 'checkbox')
-          ..setAttribute('aria-checked', 'mixed');
+        final cboxEl = DivElement()..setAttribute('role', 'checkbox')..setAttribute('aria-checked', 'mixed');
         shouldPass(cboxEl, isPartiallyChecked);
       });
     });
