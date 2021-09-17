@@ -201,6 +201,16 @@ void main() {
                 hasToStringValue(contains('The callback must return a non-null Element.')),
               )));
         }, timeout: asyncQueryTestTimeout);
+
+        test('throws a timeout error based on a provided waitForElementToBeRemoved() timeout duration', () async {
+          expect(
+              () => rtl.waitForElementToBeRemoved(() => elementThatWillBeRemovedAfterDelay, container: view.container, 
+                timeout: Duration(milliseconds: 1)),
+              throwsA(allOf(
+                isA<TimeoutException>(),
+                hasToStringValue(contains('The element returned from the callback was still present in the container after 1ms:')),
+              )));
+        }, timeout: asyncQueryTestTimeout);
       });
     });
 
