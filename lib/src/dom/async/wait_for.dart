@@ -168,7 +168,7 @@ Future<T> waitFor<T>(
 Future<void> waitForElementToBeRemoved(
   Node Function() callback, {
   Node container,
-  Duration timeout,
+  Duration timeout = const Duration(seconds: 1),
   Duration interval = const Duration(milliseconds: 50),
   QueryTimeoutFn onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
