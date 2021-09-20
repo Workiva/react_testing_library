@@ -130,6 +130,7 @@ void main() {
     group('waitForElementToBeRemoved()', () {
       Node elementThatWillBeRemovedAfterDelay;
       Node elementInDomButOutsideContainer;
+      Node elementThatWontBeRemoved;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
 
@@ -138,7 +139,9 @@ void main() {
 
         // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
         // ignore: unnecessary_cast
-        view = rtl.render(DelayedRenderOf(
+        view = rtl.render(
+          react.div({}, 'wontBeRemoved',
+          DelayedRenderOf(
           {
             'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
           },
@@ -146,9 +149,10 @@ void main() {
             {},
             react.div({}, 'willBeRemoved'),
             elementsForQuerying('waitForElementToBeRemoved'),
-          ),
+          ))
         ) as ReactElement);
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
+        elementThatWontBeRemoved = view.getByText('wontBeRemoved');
         elementInDomButOutsideContainer = document.body.append(DivElement()
           ..id = 'notInScope'
           ..text = 'notInScope');
@@ -202,13 +206,12 @@ void main() {
               )));
         }, timeout: asyncQueryTestTimeout);
 
-        test('throws a timeout error based on a provided waitForElementToBeRemoved() timeout duration', () async {
+        test('an element that is never removed, throws with default timeout value', () async {
           expect(
-              () => rtl.waitForElementToBeRemoved(() => elementThatWillBeRemovedAfterDelay, container: view.container, 
-                timeout: Duration(milliseconds: 1)),
+              () => rtl.waitForElementToBeRemoved(() => elementThatWontBeRemoved, container: view.container),
               throwsA(allOf(
                 isA<TimeoutException>(),
-                hasToStringValue(contains('The element returned from the callback was still present in the container after 1ms:')),
+                hasToStringValue(contains('The element returned from the callback was still present in the container after ${asyncQueryTimeout.inMilliseconds}ms:')),
               )));
         }, timeout: asyncQueryTestTimeout);
       });
