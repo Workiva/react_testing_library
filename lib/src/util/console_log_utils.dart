@@ -20,7 +20,7 @@ import 'dart:js';
 import 'package:meta/meta.dart';
 import 'package:react/react_client/react_interop.dart';
 
-/// Runs a provided [callback] and [print]s each log that occurs during the runtime
+/// Runs a provided [callback] and afterwards [print]s each log that occurs during the runtime
 /// of that function.
 ///
 /// [print] is called in the same Zone as this function was called in, similar to a Stream subscription.
@@ -35,8 +35,17 @@ import 'package:react/react_client/react_interop.dart';
 T printConsoleLogs<T>(
   T Function() callback, {
   ConsoleConfig configuration = ConsoleConfig.all,
-}) =>
-    spyOnConsoleLogs(callback, configuration: configuration, onLog: print);
+}) {
+  // Collect all the print calls and then print them at the end so that we don't hit
+  // StreamController state errors or stack overflows caused by calling `print` inside
+  // a `console.log` call called by print.
+  final printCalls = <String>[];
+  try {
+    return spyOnConsoleLogs(callback, configuration: configuration, onLog: printCalls.add);
+  } finally {
+    printCalls.forEach(print);
+  }
+}
 
 /// Runs a provided [callback] and calls [onLog] for each log that occurs during the runtime
 /// of that function.

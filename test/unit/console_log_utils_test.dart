@@ -129,6 +129,47 @@ void main() {
         });
         expect(printCalls, ['foo', 'bar']);
       });
+
+      test('prints even if the function throws partway through', () {
+        final printCalls = recordPrintCalls(() {
+          expect(() {
+            printConsoleLogs(() {
+              window.console.log('foo');
+              throw ExceptionForTesting();
+            });
+          }, throwsA(isA<ExceptionForTesting>()));
+        });
+        expect(printCalls, ['foo']);
+      });
+
+      group('does not throw when printing logs in a non-print-spied zone:', () {
+        // Failures for tehse tests might not show up as actual test failures, but rather uncaught
+        // errors that look like:
+        // "Bad state: Cannot fire new event. Controller is already firing an even"
+
+        void sharedTest(Zone parentZone) {
+          final onErrorCalls = <List<dynamic>>[];
+          parentZone.fork(specification: ZoneSpecification(
+            handleUncaughtError: (_, __, ___, e, st) {
+              onErrorCalls.add([e, st]);
+            },
+          )).runGuarded(() {
+            printConsoleLogs(() {
+              window.console.log('foo');
+              window.console.log('bar');
+            });
+          });
+          expect(onErrorCalls, isEmpty, reason: 'no errors should have been thrown by zone');
+        }
+
+        test('a test zone', () {
+          sharedTest(Zone.current);
+        });
+
+        test('a non-test zone', () {
+          sharedTest(Zone.root);
+        });
+      });
     });
 
     group('captures all logs correctly', () {
