@@ -130,6 +130,7 @@ void main() {
     group('waitForElementToBeRemoved()', () {
       Node elementThatWillBeRemovedAfterDelay;
       Node elementInDomButOutsideContainer;
+      Node elementThatWontBeRemoved;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
 
@@ -138,17 +139,20 @@ void main() {
 
         // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
         // ignore: unnecessary_cast
-        view = rtl.render(DelayedRenderOf(
-          {
-            'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
-          },
-          react.div(
+        view = rtl.render(react.div(
             {},
-            react.div({}, 'willBeRemoved'),
-            elementsForQuerying('waitForElementToBeRemoved'),
-          ),
-        ) as ReactElement);
+            'wontBeRemoved',
+            DelayedRenderOf(
+                {
+                  'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
+                },
+                react.div(
+                  {},
+                  react.div({}, 'willBeRemoved'),
+                  elementsForQuerying('waitForElementToBeRemoved'),
+                ))) as ReactElement);
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
+        elementThatWontBeRemoved = view.getByText('wontBeRemoved');
         elementInDomButOutsideContainer = document.body.append(DivElement()
           ..id = 'notInScope'
           ..text = 'notInScope');
@@ -199,6 +203,16 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('The callback must return a non-null Element.')),
+              )));
+        }, timeout: asyncQueryTestTimeout);
+
+        test('an element that is never removed, throws with default timeout value', () async {
+          expect(
+              () => rtl.waitForElementToBeRemoved(() => elementThatWontBeRemoved, container: view.container),
+              throwsA(allOf(
+                isA<TimeoutException>(),
+                hasToStringValue(contains(
+                    'The element returned from the callback was still present in the container after ${asyncQueryTimeout.inMilliseconds}ms:')),
               )));
         }, timeout: asyncQueryTestTimeout);
       });
