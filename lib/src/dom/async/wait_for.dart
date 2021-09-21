@@ -173,7 +173,9 @@ Future<void> waitForElementToBeRemoved(
   QueryTimeoutFn onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
+  final config = getConfig();
   container ??= document.body;
+  timeout ??= Duration(milliseconds: config.asyncUtilTimeout);
 
   final el = callback();
   if (el == null) {
