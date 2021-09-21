@@ -139,18 +139,18 @@ void main() {
 
         // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
         // ignore: unnecessary_cast
-        view = rtl.render(
-          react.div({}, 'wontBeRemoved',
-          DelayedRenderOf(
-          {
-            'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
-          },
-          react.div(
+        view = rtl.render(react.div(
             {},
-            react.div({}, 'willBeRemoved'),
-            elementsForQuerying('waitForElementToBeRemoved'),
-          ))
-        ) as ReactElement);
+            'wontBeRemoved',
+            DelayedRenderOf(
+                {
+                  'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
+                },
+                react.div(
+                  {},
+                  react.div({}, 'willBeRemoved'),
+                  elementsForQuerying('waitForElementToBeRemoved'),
+                ))) as ReactElement);
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
         elementThatWontBeRemoved = view.getByText('wontBeRemoved');
         elementInDomButOutsideContainer = document.body.append(DivElement()
@@ -211,7 +211,8 @@ void main() {
               () => rtl.waitForElementToBeRemoved(() => elementThatWontBeRemoved, container: view.container),
               throwsA(allOf(
                 isA<TimeoutException>(),
-                hasToStringValue(contains('The element returned from the callback was still present in the container after ${asyncQueryTimeout.inMilliseconds}ms:')),
+                hasToStringValue(contains(
+                    'The element returned from the callback was still present in the container after ${asyncQueryTimeout.inMilliseconds}ms:')),
               )));
         }, timeout: asyncQueryTestTimeout);
       });
