@@ -35,6 +35,10 @@ jobs:
         run: dart format . -l 120 --set-exit-if-changed
         if: ${{ always() && steps.install.outcome == 'success' && matrix.sdk == 'stable' }}
 
+      - name: Publish dry run
+        run: dart pub publish --dry-run
+        if: always() && steps.install.outcome == 'success'
+
       - name: Analyze project source
         run: dart analyze
         if: ${{ always() && steps.install.outcome == 'success' }}
