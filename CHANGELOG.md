@@ -1,5 +1,14 @@
 # React Testing Library Changelog
 
+## 1.1.13
+*  (CI-only change) Only check formatting on Dart 2.13.4
+
+## 1.1.12
+*  Add default timeout to `waitForElementToBeRemoved`
+
+## 1.1.11
+*  Raise the Dart SDK minimum to at least 2.11.0
+
 ## 1.1.10
 *  Fix state error thrown by calls to `logRoles()` and `.debug()` (bug introduced in 1.1.9)
 
