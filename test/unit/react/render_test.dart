@@ -47,22 +47,22 @@ void main() {
         expect(view.renderedElement, same(elementToRender));
       });
 
-      // group('that contains queries scoped to', () {
-      //   hasQueriesScopedTo('RenderResult.baseElement', (
-      //     scopeName, {
-      //     testAsyncQuery = false,
-      //     renderMultipleElsMatchingQuery,
-      //   }) {
-      //     final elsForQuerying =
-      //         elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-      //     final els = testAsyncQuery
-      //         // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-      //         // ignore: unnecessary_cast
-      //         ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
-      //         : elsForQuerying;
-      //     return ScopedQueriesTestWrapper(rtl.render(els));
-      //   });
-      // });
+      group('that contains queries scoped to', () {
+        hasQueriesScopedTo('RenderResult.baseElement', (
+          scopeName, {
+          testAsyncQuery = false,
+          renderMultipleElsMatchingQuery,
+        }) {
+          final elsForQuerying =
+              elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
+          final els = testAsyncQuery
+              // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+              // ignore: unnecessary_cast
+              ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+              : elsForQuerying;
+          return ScopedQueriesTestWrapper(rtl.render(els));
+        });
+      });
 
       test('that contains a debug method', () {
         final view = rtl.render(react.div({}, [
@@ -211,10 +211,11 @@ void main() {
 
       test('scopes queries to the body by default', () {
         final view = rtl.render(PortalComponent({}) as ReactElement);
-        // ignore: invalid_use_of_protected_member
-        expect(view.getContainerForScope(), document.body);
 
         expect(view.getByRole('tooltip'), isInTheDocument);
+
+        // ignore: invalid_use_of_protected_member
+        expect(view.getContainerForScope(), document.body);
       });
 
       test('for dom elements', () {
