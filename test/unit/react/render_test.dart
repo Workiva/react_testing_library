@@ -17,7 +17,10 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
+import 'package:react/react_client/react_interop.dart';
+import 'package:react/react_dom.dart' as react_dom;
 import 'package:react/react_client.dart' show ReactElement;
+import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -44,22 +47,22 @@ void main() {
         expect(view.renderedElement, same(elementToRender));
       });
 
-      group('that contains queries scoped to', () {
-        hasQueriesScopedTo('RenderResult.baseElement', (
-          scopeName, {
-          testAsyncQuery = false,
-          renderMultipleElsMatchingQuery,
-        }) {
-          final elsForQuerying =
-              elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-          final els = testAsyncQuery
-              // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-              // ignore: unnecessary_cast
-              ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
-              : elsForQuerying;
-          return ScopedQueriesTestWrapper(rtl.render(els));
-        });
-      });
+      // group('that contains queries scoped to', () {
+      //   hasQueriesScopedTo('RenderResult.baseElement', (
+      //     scopeName, {
+      //     testAsyncQuery = false,
+      //     renderMultipleElsMatchingQuery,
+      //   }) {
+      //     final elsForQuerying =
+      //         elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
+      //     final els = testAsyncQuery
+      //         // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+      //         // ignore: unnecessary_cast
+      //         ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+      //         : elsForQuerying;
+      //     return ScopedQueriesTestWrapper(rtl.render(els));
+      //   });
+      // });
 
       test('that contains a debug method', () {
         final view = rtl.render(react.div({}, [
@@ -206,6 +209,14 @@ void main() {
         }
       });
 
+      test('scopes queries to the body by default', () {
+        final view = rtl.render(PortalComponent({}) as ReactElement);
+        // ignore: invalid_use_of_protected_member
+        expect(view.getContainerForScope(), document.body);
+
+        expect(view.getByRole('tooltip'), isInTheDocument);
+      });
+
       test('for dom elements', () {
         final printCalls = recordPrintCalls(
           () => rtl.render(react.input({'value': 'abc'}) as ReactElement),
@@ -234,6 +245,23 @@ void main() {
     });
   });
 }
+
+class _PortalComponent extends react.Component2 {
+  @override
+  dynamic componentDidMount() {
+    final toolTip = react.div({'role': 'tooltip'}, ['I Am a Tooltip']);
+    final portal = ReactDom.createPortal(toolTip, document.body);
+    react_dom.render(portal, document.body);
+  }
+
+  @override
+  dynamic render() {
+    return react.div({}, ['abc', react.div({})]);
+  }
+}
+
+// ignore: type_annotate_public_apis
+final PortalComponent = react.registerComponent2(() => _PortalComponent());
 
 class _TestComponent extends react.Component2 {
   @override
