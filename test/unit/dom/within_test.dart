@@ -45,7 +45,7 @@ void main() {
         final view = rtl.render(els);
         final queries = rtl.within(view.container);
         return ScopedQueriesTestWrapper(queries, view);
-      });
+      }, isGloballyScoped: false);
     });
 
     test('supports querying within a shadowRoot', () {

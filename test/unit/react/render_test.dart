@@ -45,7 +45,7 @@ void main() {
       });
 
       group('that contains queries scoped to', () {
-        hasQueriesScopedTo('RenderResult.container', (
+        hasQueriesScopedTo('RenderResult.baseElement', (
           scopeName, {
           testAsyncQuery = false,
           renderMultipleElsMatchingQuery,

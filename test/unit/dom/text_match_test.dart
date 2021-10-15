@@ -38,11 +38,15 @@ void main() {
         const actualText = 'Johnny Be Good';
         const expectedText = 'William';
         const byAltTextSharedFailureExplanation = '''
-<div>
-  <img
-    alt="$actualText"
-  />
-</div>$stackTraceHeading''';
+<body>
+
+
+  <div>
+    <img
+      alt="$actualText"
+    />
+  </div>
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.img({'alt': actualText}) as ReactElement);
@@ -100,11 +104,15 @@ void main() {
         const actualValue = 'Johnny Be Good';
         const expectedValue = 'William';
         const byDisplayValueSharedFailureExplanation = '''
-<div>
-  <input
-    value="$actualValue"
-  />
-</div>$stackTraceHeading''';
+<body>
+
+
+  <div>
+    <input
+      value="$actualValue"
+    />
+  </div>
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.input({'defaultValue': actualValue}) as ReactElement);
@@ -162,12 +170,16 @@ void main() {
         const actualText = 'Johnny Be Good';
         const expectedText = 'William';
         const byLabelTextFailureExplanation = '''
-<div>
-  <label>
-    $actualText
-    <input />
-  </label>
-</div>$stackTraceHeading''';
+<body>
+
+
+  <div>
+    <label>
+      $actualText
+      <input />
+    </label>
+  </div>
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(
@@ -231,12 +243,16 @@ void main() {
         const actualText = 'Johnny Be Good';
         const expectedText = 'William';
         const byPlaceholderTextSharedFailureExplanation = '''
-<div>
-  <input
-    placeholder="$actualText"
-    type="text"
-  />
-</div>$stackTraceHeading''';
+<body>
+
+
+  <div>
+    <input
+      placeholder="$actualText"
+      type="text"
+    />
+  </div>
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.input({'type': 'text', 'placeholder': actualText}) as ReactElement);
@@ -293,11 +309,15 @@ void main() {
       group('ByRole query (role)', () {
         const expectedRole = 'search';
         const byRoleSharedFailureExplanation = '''
-<div>
-  <button>
-    Hello
-  </button>
-</div>$stackTraceHeading''';
+<body>
+
+
+  <div>
+    <button>
+      Hello
+    </button>
+  </div>
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.button({}, 'Hello') as ReactElement);
@@ -355,11 +375,15 @@ void main() {
         const actualName = 'Johnny Be Good';
         const expectedName = 'William';
         const byRoleSharedFailureExplanation = '''
-<div>
-  <button>
-    $actualName
-  </button>
-</div>$stackTraceHeading''';
+<body>
+
+
+  <div>
+    <button>
+      $actualName
+    </button>
+  </div>
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.button({}, actualName) as ReactElement);
@@ -417,13 +441,17 @@ void main() {
         const actualTestId = 'JohnnyBeGood';
         const expectedTestId = 'William';
         const byTestIdSharedFailureExplanation = '''
-<div>
-  <div
-    $defaultTestIdKey="$actualTestId"
-  >
-    Hello
+<body>
+
+
+  <div>
+    <div
+      $defaultTestIdKey="$actualTestId"
+    >
+      Hello
+    </div>
   </div>
-</div>$stackTraceHeading''';
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.div({defaultTestIdKey: actualTestId}, 'Hello') as ReactElement);
@@ -487,11 +515,15 @@ void main() {
         const byTextSharedFailureExplanation = '''
 This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
 
-<div>
+<body>
+
+
   <div>
-    $actualText
+    <div>
+      $actualText
+    </div>
   </div>
-</div>$stackTraceHeading''';
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.div({}, actualText) as ReactElement);
@@ -547,13 +579,17 @@ This could be because the text is broken up by multiple elements. In this case, 
         const actualTitle = 'Johnny Be Good';
         const expectedTitle = 'William';
         const byTitleSharedFailureExplanation = '''
-<div>
-  <div
-    title="$actualTitle"
-  >
-    Hello
+<body>
+
+
+  <div>
+    <div
+      title="$actualTitle"
+    >
+      Hello
+    </div>
   </div>
-</div>$stackTraceHeading''';
+</body>$stackTraceHeading''';
 
         setUp(() {
           view = rtl.render(react.div({'title': actualTitle}, 'Hello') as ReactElement);
