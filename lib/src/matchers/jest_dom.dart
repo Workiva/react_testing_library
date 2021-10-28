@@ -23,6 +23,7 @@ export 'jest_dom/has_description.dart' show hasDescription;
 export 'jest_dom/has_form_values.dart' show hasFormValues;
 export 'jest_dom/has_styles.dart' show hasStyles;
 export 'jest_dom/has_text_content.dart' show hasTextContent;
+export 'jest_dom/has_icon_glyph.dart' show hasIconGlyph;
 export 'jest_dom/has_value.dart' show hasDisplayValue, hasValue;
 export 'jest_dom/is_checked.dart' show isChecked;
 export 'jest_dom/is_disabled.dart' show isDisabled, isEnabled;
