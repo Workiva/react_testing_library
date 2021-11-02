@@ -42,14 +42,14 @@ dependencies:
   over_react: ^4.0.0
 
 dev_dependencies:
-  build_runner: ^1.7.1
+  build_runner: ">=1.7.1 <3.0.0"
   build_test: ">=0.10.9 <3.0.0"
-  build_web_compilers: ^2.9.0
-  react_testing_library: ^1.1.4
+  build_web_compilers: ">=2.12.0 <4.0.0"
+  react_testing_library: ^1.1.13
   test: ^1.14.4
   # This is not technically required, 
   # but makes the HTML portion of your test bootstrapping much easier!
-  test_html_builder: ^1.0.0 
+  test_html_builder: ^2.0.0
 ```
 </figure>
 
@@ -105,12 +105,13 @@ We *strongly* recommend using the [test_html_builder] library to create a templa
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <title>React Testing Library Unit Test</title>
+      <title>{{testName}}</title>
       <script src="packages/react/react.js"></script>
       <script src="packages/react/react_dom.js"></script>
       <script src="packages/react_testing_library/js/react-testing-library.js"></script>
 
-      {test}
+      {{testScript}}
+      <script src="packages/test/dart.js"></script>
   </head>
 </html>
 ```
