@@ -555,12 +555,12 @@
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.14.2/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-<span class="name ">waitFor</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="waitFor-param-expectation"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-async/FutureOr-class.html">FutureOr</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">expectation</span>(<ol class="parameter-list"></ol>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.14.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+<span class="name ">waitFor</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="waitFor-param-expectation"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-async/FutureOr-class.html">FutureOr</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">expectation</span>(<ol class="parameter-list"></ol>
 ), </span></li>
-<li><span class="parameter" id="waitFor-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
-<li><span class="parameter" id="waitFor-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span></li>
-<li><span class="parameter" id="waitFor-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span> = <span class="default-value">const Duration(milliseconds: 50)</span>, </span></li>
+<li><span class="parameter" id="waitFor-param-container">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<li><span class="parameter" id="waitFor-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span></li>
+<li><span class="parameter" id="waitFor-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span> = <span class="default-value">const Duration(milliseconds: 50)</span>, </span></li>
 <li><span class="parameter" id="waitFor-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span></li>
 <li><span class="parameter" id="waitFor-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span></li>
 </ol>)
@@ -572,14 +572,14 @@
 completing only if it does not <code>throw</code>, or by <code>throw</code>ing if
 the <code>timeout</code> expires before the <code>expectation</code> succeeds.</p>
 <p>Similar to <a href="https://testing-library.com/docs/dom-testing-library/api-async/#waitfor">testing-library.com/docs/dom-testing-library/api-async/#waitfor</a>, but designed to
-work with the <code>dart:test</code> package's <a href="https://pub.dev/documentation/test_api/0.2.19/test_api/expect.html">expect</a> function and Dart <a href="https://api.dart.dev/stable/2.14.2/dart-async/Future-class.html">Future</a>s instead of JS <code>Promise</code>s.</p>
+work with the <code>dart:test</code> package's <a href="https://pub.dev/documentation/test_api/0.2.19/test_api/expect.html">expect</a> function and Dart <a href="https://api.dart.dev/stable/2.14.4/dart-async/Future-class.html">Future</a>s instead of JS <code>Promise</code>s.</p>
 <ul>
 <li>If you're waiting for an element to exist in the DOM, use a <code>findBy*</code> query instead.</li>
 <li>If you're waiting for an element to be removed from the DOM, use <a href="../rtl.dom.async/waitForElementToBeRemoved.html">waitForElementToBeRemoved</a> instead.</li>
 </ul>
 <h2 id="options">Options</h2>
 <h3 id="container"><code>container</code></h3>
-<p>The DOM node to attach the <a href="https://api.dart.dev/stable/2.14.2/dart-html/MutationObserver-class.html">MutationObserver</a> to.</p>
+<p>The DOM node to attach the <a href="https://api.dart.dev/stable/2.14.4/dart-html/MutationObserver-class.html">MutationObserver</a> to.</p>
 <p>Defaults to <code>document.body</code>.</p>
 <h3 id="timeout"><code>timeout</code></h3>
 <p>How long to wait for the node to appear in the DOM before throwing a <code>TestFailure</code>, defaulting to <code>1000ms</code>.</p>

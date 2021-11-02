@@ -574,17 +574,20 @@
 <h3 id="1-add-the-necessary-dependencies-to-your-project">1. Add the necessary dependencies to your project</h3><figure>
 <figcaption>pubspec.yaml</figcaption>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
+  # This is not required to use this library, but it is assumed
+  # that you are testing OverReact UI components, so it is 
+  # shown here for completeness.
   over_react: ^4.0.0
 
 dev_dependencies:
-  build_runner: ^1.7.1
+  build_runner: "&gt;=1.7.1 &lt;3.0.0"
   build_test: "&gt;=0.10.9 &lt;3.0.0"
-  build_web_compilers: ^2.9.0
-  react_testing_library: ^1.1.4
+  build_web_compilers: "&gt;=2.12.0 &lt;4.0.0"
+  react_testing_library: ^1.1.13
   test: ^1.14.4
   # This is not technically required, 
   # but makes the HTML portion of your test bootstrapping much easier!
-  test_html_builder: ^1.0.0 
+  test_html_builder: ^2.0.0
 </code></pre></figure>
 <h3 id="2-configure-buildyaml-to-generate-test-outputs">2. Configure <code>build.yaml</code> to generate test outputs</h3><figure>
 <figcaption>build.yaml</figcaption>
@@ -621,12 +624,13 @@ paths:
 <pre class="language-html"><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
-      &lt;title&gt;React Testing Library Unit Test&lt;/title&gt;
+      &lt;title&gt;{{testName}}&lt;/title&gt;
       &lt;script src="packages/react/react.js"&gt;&lt;/script&gt;
       &lt;script src="packages/react/react_dom.js"&gt;&lt;/script&gt;
       &lt;script src="packages/react_testing_library/js/react-testing-library.js"&gt;&lt;/script&gt;
 
-      {test}
+      {{testScript}}
+      &lt;script src="packages/test/dart.js"&gt;&lt;/script&gt;
   &lt;/head&gt;
 &lt;/html&gt;
 </code></pre></figure>

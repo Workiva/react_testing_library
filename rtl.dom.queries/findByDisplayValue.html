@@ -557,15 +557,15 @@
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.14.2/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
-<span class="name ">findByDisplayValue</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="findByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.14.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">E</span>&gt;</span></span>
+<span class="name ">findByDisplayValue</span>&lt;<wbr><span class="type-parameter">E extends Element</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="findByDisplayValue-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span></li>
 <li><span class="parameter" id="findByDisplayValue-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span></li>
-<li><span class="parameter" id="findByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="findByDisplayValue-param-exact">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">exact</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="findByDisplayValue-param-normalizer"><span class="type-annotation"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a></span> <span class="parameter-name">normalizer</span>(<ol class="parameter-list"><li><span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span></li>
 </ol>
 ), </span></li>
-<li><span class="parameter" id="findByDisplayValue-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span></li>
-<li><span class="parameter" id="findByDisplayValue-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.2/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span></li>
+<li><span class="parameter" id="findByDisplayValue-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span>, </span></li>
+<li><span class="parameter" id="findByDisplayValue-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span>, </span></li>
 <li><span class="parameter" id="findByDisplayValue-param-onTimeout"><span class="type-annotation">QueryTimeoutFn</span> <span class="parameter-name">onTimeout</span>, </span></li>
 <li><span class="parameter" id="findByDisplayValue-param-mutationObserverOptions"><span class="type-annotation">MutationObserverOptions</span> <span class="parameter-name">mutationObserverOptions</span> = <span class="default-value">defaultMutationObserverOptions</span>}</span></li>
 </ol>)
@@ -573,7 +573,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>Returns a future with a single <a href="https://api.dart.dev/stable/2.14.2/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.14.2/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.14.2/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
+  <p>Returns a future with a single <a href="https://api.dart.dev/stable/2.14.4/dart-html/InputElement-class.html">InputElement</a>, <a href="https://api.dart.dev/stable/2.14.4/dart-html/TextAreaElement-class.html">TextAreaElement</a> or <a href="https://api.dart.dev/stable/2.14.4/dart-html/SelectElement-class.html">SelectElement</a> that has the matching <code>value</code> displayed,
 defaulting to an <code>exact</code> match after waiting 1000ms (or the provided <code>timeout</code> duration).</p>
 <p>If there is a specific condition you want to wait for other than the DOM node being on the page, wrap
 a non-async query like <a href="../rtl.dom.queries/getByDisplayValue.html">getByDisplayValue</a> or <a href="../rtl.dom.queries/queryByDisplayValue.html">queryByDisplayValue</a> in a <code>waitFor</code> function.</p>
