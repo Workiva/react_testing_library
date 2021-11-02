@@ -39,6 +39,9 @@ Rather than dealing with [OverReact] `UiComponent` instances, or React VDom `Rea
 
 ```yaml
 dependencies:
+  # This is not required to use this library, but it is assumed
+  # that you are testing OverReact UI components, so it is 
+  # shown here for completeness.
   over_react: ^4.0.0
 
 dev_dependencies:
