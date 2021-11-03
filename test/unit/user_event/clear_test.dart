@@ -43,5 +43,17 @@ void main() {
       UserEvent.clear(textarea);
       expect(textarea, hasValue(''));
     });
+
+    test('throws when error occurs in event handler', () {
+      final view = rtl.render(react.textarea({
+        'defaultValue': 'Hello, World!',
+        'onChange': (e) {
+          throw UnsupportedError('NO CHANGES ALLOWED!');
+        }
+      }) as ReactElement);
+      final textarea = view.getByRole('textbox') as TextAreaElement;
+
+      expect(() => UserEvent.clear(textarea), throwsA(isA<UnsupportedError>()));
+    });
   });
 }
