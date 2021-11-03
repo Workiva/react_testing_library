@@ -70,6 +70,29 @@ void main() {
         _verifyClickEvent();
       });
 
+      test('throws error from event handlers', () {
+        throwingHandler(event) => throw StateError('Mission Failed');
+
+        final elementToRender = react.button({'onClick': throwingHandler}, 'oh hai');
+        final rtlView = rtl.render(elementToRender as ReactElement);
+
+        expect(() => UserEvent.click(rtlView.getByRole('button')), throwsA(isA<StateError>()));
+      });
+
+      test('throws multiple error exception from event handlers', () {
+        throwingHandler(event) => throw StateError('Mission Failed');
+
+        final toRender = react.div({'onClick': throwingHandler}, react.button({'onClick': throwingHandler}, 'oh hai'));
+        final rtlView = rtl.render(toRender as ReactElement);
+
+        expect(
+          () => UserEvent.click(rtlView.getByRole('button')),
+          throwsA(predicate((e) {
+            return e is Exception && e.toString().contains('Multiple errors');
+          })),
+        );
+      });
+
       test('eventInit', () {
         UserEvent.click(
           view.getByRole('button'),

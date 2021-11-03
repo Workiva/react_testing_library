@@ -25,6 +25,7 @@ import 'package:meta/meta.dart';
 import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 
+import '../util/event_handler_error_catcher.dart';
 import '../dom/fire_event.dart';
 import 'special_chars.dart';
 
@@ -102,11 +103,13 @@ abstract class UserEvent {
     int clickCount = 0,
   }) {
     final options = {'skipHover': skipHover, 'clickCount': clickCount};
-    getProperty(_userEvent, 'click')(
-      element,
-      _jsifyEventData(eventInit),
-      jsifyAndAllowInterop(options),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'click')(
+        element,
+        _jsifyEventData(eventInit),
+        jsifyAndAllowInterop(options),
+      );
+    });
   }
 
   /// Clicks [element] twice, depending on what [element] is it can have
@@ -165,10 +168,12 @@ abstract class UserEvent {
   ///
   /// {@category UserActions}
   static void dblClick(Element element, {Map eventInit}) {
-    getProperty(_userEvent, 'dblClick')(
-      element,
-      _jsifyEventData(eventInit),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'dblClick')(
+        element,
+        _jsifyEventData(eventInit),
+      );
+    });
   }
 
   /// Writes [text] inside an input or textarea [element].
@@ -268,12 +273,13 @@ abstract class UserEvent {
       if (initialSelectionStart != null) 'initialSelectionStart': initialSelectionStart,
       if (initialSelectionEnd != null) 'initialSelectionEnd': initialSelectionEnd,
     };
-
-    getProperty(_userEvent, 'type')(
-      element,
-      text,
-      jsifyAndAllowInterop(options),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'type')(
+        element,
+        text,
+        jsifyAndAllowInterop(options),
+      );
+    });
   }
 
   /// Writes [text] inside an input or textarea [element] with a [delay] between
@@ -379,11 +385,13 @@ abstract class UserEvent {
       if (initialSelectionEnd != null) 'initialSelectionEnd': initialSelectionEnd,
     };
 
-    await promiseToFuture(getProperty(_userEvent, 'type')(
-      element,
-      text,
-      jsifyAndAllowInterop(options),
-    ));
+    await eventHandlerErrorCatcher(() async {
+      await promiseToFuture(getProperty(_userEvent, 'type')(
+        element,
+        text,
+        jsifyAndAllowInterop(options),
+      ));
+    });
   }
 
   /// Simulates the keyboard events described by [text].
@@ -465,10 +473,12 @@ abstract class UserEvent {
       if (keyboardState != null) 'keyboardState': keyboardState,
       if (keyboardMap != null) 'keyboardMap': keyboardMap,
     };
-    return getProperty(_userEvent, 'keyboard')(
-      text,
-      jsifyAndAllowInterop(options),
-    ) as KeyboardState;
+    return eventHandlerErrorCatcher(() {
+      return getProperty(_userEvent, 'keyboard')(
+        text,
+        jsifyAndAllowInterop(options),
+      ) as KeyboardState;
+    });
   }
 
   /// Simulates the keyboard events described by [text] with a [delay] between each keystroke.
@@ -555,10 +565,12 @@ abstract class UserEvent {
       if (keyboardState != null) 'keyboardState': keyboardState,
       if (keyboardMap != null) 'keyboardMap': keyboardMap,
     };
-    return promiseToFuture(getProperty(_userEvent, 'keyboard')(
-      text,
-      jsifyAndAllowInterop(options),
-    ));
+    return eventHandlerErrorCatcher(() {
+      return promiseToFuture(getProperty(_userEvent, 'keyboard')(
+        text,
+        jsifyAndAllowInterop(options),
+      ));
+    });
   }
 
   /// Uploads [files] to [element].
@@ -678,12 +690,14 @@ abstract class UserEvent {
       'changeInit': _jsifyEventData(changeInit),
     };
     final options = {'applyAccept': applyAccept};
-    getProperty(_userEvent, 'upload')(
-      element,
-      files,
-      _jsifyEventData(init),
-      jsifyAndAllowInterop(options),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'upload')(
+        element,
+        files,
+        _jsifyEventData(init),
+        jsifyAndAllowInterop(options),
+      );
+    });
 
     // Convert the `element.files` because the JS `upload` sets it equal to a
     // map with with an `item` method to access files.
@@ -737,7 +751,7 @@ abstract class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
-  static void clear(Element element) => getProperty(_userEvent, 'clear')(element);
+  static void clear(Element element) => eventHandlerErrorCatcher(() => getProperty(_userEvent, 'clear')(element));
 
   /// Selects the specified [values] of [selectElement].
   ///
@@ -810,11 +824,13 @@ abstract class UserEvent {
     List<dynamic> values, {
     Map clickInit,
   }) {
-    getProperty(_userEvent, 'selectOptions')(
-      selectElement,
-      values,
-      _jsifyEventData(clickInit),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'selectOptions')(
+        selectElement,
+        values,
+        _jsifyEventData(clickInit),
+      );
+    });
   }
 
   /// Removes the selection for the specified [values] of [selectElement].
@@ -890,11 +906,13 @@ abstract class UserEvent {
     List values, {
     Map clickInit,
   }) {
-    getProperty(_userEvent, 'deselectOptions')(
-      selectElement,
-      values,
-      _jsifyEventData(clickInit),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'deselectOptions')(
+        selectElement,
+        values,
+        _jsifyEventData(clickInit),
+      );
+    });
   }
 
   /// Fires a tab event changing the document.activeElement in the same way the browser does.
@@ -984,9 +1002,11 @@ abstract class UserEvent {
   /// {@category UserActions}
   static void tab({bool shift = false, Element focusTrap}) {
     final options = {'shift': shift, 'focusTrap': focusTrap};
-    getProperty(_userEvent, 'tab')(
-      jsifyAndAllowInterop(options),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'tab')(
+        jsifyAndAllowInterop(options),
+      );
+    });
   }
 
   /// Hovers over [element].
@@ -1052,7 +1072,9 @@ abstract class UserEvent {
   ///
   /// {@category UserActions}
   static void hover(Element element, {Map eventInit}) {
-    getProperty(_userEvent, 'hover')(element, _jsifyEventData(eventInit));
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'hover')(element, _jsifyEventData(eventInit));
+    });
   }
 
   /// Unhovers out of [element].
@@ -1124,7 +1146,9 @@ abstract class UserEvent {
   ///
   /// {@category UserActions}
   static void unhover(Element element, {Map eventInit}) {
-    getProperty(_userEvent, 'unhover')(element, _jsifyEventData(eventInit));
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'unhover')(element, _jsifyEventData(eventInit));
+    });
   }
 
   /// Simulates pasting [text] into [element].
@@ -1196,12 +1220,14 @@ abstract class UserEvent {
       if (initialSelectionStart != null) 'initialSelectionStart': initialSelectionStart,
       if (initialSelectionEnd != null) 'initialSelectionEnd': initialSelectionEnd,
     };
-    getProperty(_userEvent, 'paste')(
-      element,
-      text,
-      _jsifyEventData(eventInit),
-      jsifyAndAllowInterop(options),
-    );
+    eventHandlerErrorCatcher(() {
+      getProperty(_userEvent, 'paste')(
+        element,
+        text,
+        _jsifyEventData(eventInit),
+        jsifyAndAllowInterop(options),
+      );
+    });
   }
 }
 
