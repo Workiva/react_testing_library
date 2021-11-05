@@ -24,6 +24,8 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+
 void main() {
   group('UserEvent.hover and UserEvent.unhover', () {
     List<MouseEvent> calls;
@@ -89,5 +91,12 @@ void main() {
       expect(view.queryByText('Hello!'), isNull);
       _verifyHoverEvent(hasEventInit: true);
     });
+
+    testEventHandlerErrors(
+      ['onMouseOver', 'onMouseOut'],
+      UserEvent.hover,
+      react.button,
+      children: 'well hello there'
+    );
   });
 }

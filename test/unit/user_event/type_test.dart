@@ -24,6 +24,8 @@ import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+
 void main() {
   group('UserEvent.type', () {
     group('in InputElement', _typeTestHelper);
@@ -137,9 +139,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
     test('skipClick', () async {
       // Manually focus the element since click will be skipped.
       element.focus();
-      hasDelay
-          ? await _verifyTypeWithDelay('hello world!', 50, skipClick: true)
-          : UserEvent.type(element, 'hello world!', skipClick: true);
+      hasDelay ? await _verifyTypeWithDelay('hello world!', 50, skipClick: true) : UserEvent.type(element, 'hello world!', skipClick: true);
       expect(element, hasValue('hello world!'));
       _verifyTypeEvent(skipClick: true);
     });
@@ -194,6 +194,12 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
         _verifyTypeEvent();
       });
     });
+
+    testEventHandlerErrors(
+      ['onInput'],
+      (el) => hasDelay ? UserEvent.typeWithDelay(el, 'K', Duration(hours: 500)) : UserEvent.type(el, 'K'),
+      isTextArea ? react.textarea : react.input,
+    );
   });
 
   group('with default value in the input', () {
@@ -378,9 +384,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
     test('two keyboard events back to back with setting state', () async {
       input.focus();
       final state = hasDelay ? await _verifyKeyboardWithDelay(text1, 50, charsTyped: 1) : UserEvent.keyboard(text1);
-      hasDelay
-          ? await _verifyKeyboardWithDelay(text2, 50, keyboardState: state, charsTyped: 2)
-          : UserEvent.keyboard(text2, keyboardState: state);
+      hasDelay ? await _verifyKeyboardWithDelay(text2, 50, keyboardState: state, charsTyped: 2) : UserEvent.keyboard(text2, keyboardState: state);
       expect(input, hasValue('F'));
       expect(
           calls,
@@ -391,6 +395,17 @@ void _keyboardTestHelper({bool hasDelay = false}) {
             'keyUp: Shift',
           ]));
     });
+
+    testEventHandlerErrors(
+      ['onKeyDown'],
+      (el) {
+        el.focus();
+        hasDelay ? UserEvent.keyboardWithDelay(
+      'K',
+      Duration(milliseconds: 500),
+    ) : UserEvent.keyboard('K');},
+      react.input,
+    );
   });
 
   test('keyboardMap', () async {
@@ -399,9 +414,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
       {'code': 'KeyA', 'key': 'z'},
     ];
     input.focus();
-    hasDelay
-        ? await _verifyKeyboardWithDelay(text, 50, keyboardMap: keyboardMap, charsTyped: 1)
-        : UserEvent.keyboard(text, keyboardMap: keyboardMap);
+    hasDelay ? await _verifyKeyboardWithDelay(text, 50, keyboardMap: keyboardMap, charsTyped: 1) : UserEvent.keyboard(text, keyboardMap: keyboardMap);
     expect(input, hasValue('z'));
   });
 }

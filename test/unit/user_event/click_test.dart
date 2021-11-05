@@ -22,6 +22,8 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+
 void main() {
   group('User click events:', () {
     List<Event> calls;
@@ -70,29 +72,6 @@ void main() {
         _verifyClickEvent();
       });
 
-      test('throws error from event handlers', () {
-        throwingHandler(event) => throw StateError('Mission Failed');
-
-        final elementToRender = react.button({'onClick': throwingHandler}, 'oh hai');
-        final rtlView = rtl.render(elementToRender as ReactElement);
-
-        expect(() => UserEvent.click(rtlView.getByRole('button')), throwsA(isA<StateError>()));
-      });
-
-      test('throws multiple error exception from event handlers', () {
-        throwingHandler(event) => throw StateError('Mission Failed');
-
-        final toRender = react.div({'onClick': throwingHandler}, react.button({'onClick': throwingHandler}, 'oh hai'));
-        final rtlView = rtl.render(toRender as ReactElement);
-
-        expect(
-          () => UserEvent.click(rtlView.getByRole('button')),
-          throwsA(predicate((e) {
-            return e is Exception && e.toString().contains('Multiple errors');
-          })),
-        );
-      });
-
       test('eventInit', () {
         UserEvent.click(
           view.getByRole('button'),
@@ -117,6 +96,13 @@ void main() {
         );
         _verifyClickEvent(clickCount: clickCount);
       });
+
+      testEventHandlerErrors(
+        ['onClick'],
+        UserEvent.click,
+        react.button,
+        children: 'click then on uip'
+      );
     });
 
     group('UserEvent.dblClick', () {
@@ -150,6 +136,13 @@ void main() {
         );
         _verifyDblClickEvent(hasEventInit: true);
       });
+
+      testEventHandlerErrors(
+        ['onDoubleClick'],
+        UserEvent.dblClick,
+        react.button,
+        children: 'That was SKABGJ'
+      );
     });
   });
 }

@@ -23,10 +23,11 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
 import '../util/over_react_stubs.dart';
 
 void main() {
-  group('User click events:', () {
+  group('UserEvent.tab events:', () {
     rtl.RenderResult view;
     List<InputElement> inputs;
 
@@ -92,5 +93,11 @@ void main() {
       UserEvent.tab(focusTrap: container);
       expect(inputs[1], isFocused, reason: 'Cycle goes back to first element in container.');
     });
+
+    testEventHandlerErrors(
+        ['onBlur'],
+        (el) { UserEvent.tab(); UserEvent.tab(); UserEvent.tab(); },
+        react.input,
+      );
   });
 }

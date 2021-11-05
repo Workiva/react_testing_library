@@ -22,6 +22,8 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+
 void main() {
   group('UserEvent.upload', () {
     void _uploadTestHelper({bool isMultiple = false}) {
@@ -130,6 +132,17 @@ void main() {
         UserEvent.upload(input, files);
         expect(input.files, hasLength(0), reason: 'files not added on disabled element');
       });
+
+      testEventHandlerErrors(
+        ['onChange'],
+        (el) => UserEvent.upload(el, files),
+        react.input,
+        additionalProps: {
+            'type': 'file',
+            'multiple': isMultiple,
+            'accept': '.png,.jpeg',
+          }
+      );
     }
 
     group('on single file input', _uploadTestHelper);
