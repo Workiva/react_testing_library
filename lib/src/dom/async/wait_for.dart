@@ -107,8 +107,7 @@ Future<T> waitFor<T>(
       if (result is Future) {
         isPending = true;
         (result as Future)
-            .then((resolvedValue) => onDone(null, resolvedValue as T),
-                onError: (e) => lastError = e)
+            .then((resolvedValue) => onDone(null, resolvedValue as T), onError: (e) => lastError = e)
             .whenComplete(() => isPending = false);
       } else {
         onDone(null, result as T);

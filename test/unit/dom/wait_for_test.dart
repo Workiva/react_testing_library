@@ -157,8 +157,7 @@ void main() {
               expect(view.queryByAltText('waitFor'), isNull, reason: 'test setup sanity check');
               expect(
                   () => rtl.waitFor(
-                      () => view.findByAltText('somethingThatDoesNotExist',
-                          timeout: asyncQueryTimeout ~/ 2),
+                      () => view.findByAltText('somethingThatDoesNotExist', timeout: asyncQueryTimeout ~/ 2),
                       container: view.container),
                   throwsA(allOf(
                     isA<TestingLibraryElementError>(),
