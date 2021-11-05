@@ -98,11 +98,7 @@ void main() {
 
     testEventHandlerErrors(
         ['onFocus'],
-        (el) {
-          rtl.screen.debug();
-          // ... but, why?
-          UserEvent.tab();
-        },
+        (_) => UserEvent.tab(),
         react.input,
       );
   });
