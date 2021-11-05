@@ -113,10 +113,13 @@ void main() {
           }, timeout: asyncQueryTestTimeout);
 
           group('that fails, throws the error returned from the expectation', () {
-            test('', () async {
+            test('when it completes sooner than the timeout', () async {
               expect(view.queryByAltText('waitFor'), isNull, reason: 'test setup sanity check');
               expect(
-                  () => rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'), container: view.container),
+                  () => rtl.waitFor(
+                      () => view.findByAltText('somethingThatDoesNotExist',
+                          timeout: asyncQueryTimeout ~/ 2),
+                      container: view.container),
                   throwsA(allOf(
                     isA<TestingLibraryElementError>(),
                     hasToStringValue(contains('alt text: somethingThatDoesNotExist')),
@@ -126,7 +129,7 @@ void main() {
             test('unless the timeout duration is less than the timeout duration of the query', () async {
               expect(view.queryByAltText('waitFor'), isNull, reason: 'test setup sanity check');
               expect(
-                  () => rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'),
+                  rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'),
                       container: view.container, timeout: asyncQueryTimeout ~/ 2),
                   throwsA(allOf(
                     isA<TimeoutException>(),
