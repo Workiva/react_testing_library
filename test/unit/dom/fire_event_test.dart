@@ -21,6 +21,7 @@ import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
 import '../util/matchers.dart';
 
 void main() {
@@ -67,5 +68,26 @@ void main() {
             hasToStringValue(contains('Invalid argument (eventName): "definitelyNotValid"')),
           )));
     });
+  });
+
+  group('fireEvent()', () {
+    testEventHandlerErrors(
+      ['onClick'],
+      (el) {
+        final event = MouseEvent('click');
+        rtl.fireEvent(el, event);
+      },
+      react.button,
+      children: 'well hello there'
+    );
+  });
+
+  group('fireEventByName()', () {
+    testEventHandlerErrors(
+      ['onClick'],
+      (el) => rtl.fireEventByName('click', el),
+      react.button,
+      children: 'well hello there'
+    );
   });
 }

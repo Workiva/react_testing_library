@@ -31,72 +31,78 @@ void main() {
     rtl.RenderResult view;
     List<InputElement> inputs;
 
-    setUp(() {
-      final elementToRender = react.div({}, [
-        react.input({}),
-        react.div({
-          defaultTestIdKey: 'container'
-        }, [
+    group('', (){
+      setUp(() {
+        final elementToRender = react.div({}, [
           react.input({}),
-          react.input({}),
-        ]),
-      ]);
+          react.div({
+            defaultTestIdKey: 'container'
+          }, [
+            react.input({}),
+            react.input({}),
+          ]),
+        ]);
 
-      view = rtl.render(elementToRender as ReactElement);
-      inputs = view.getAllByRole('textbox');
-      expect(inputs, hasLength(3), reason: 'sanity check');
-    });
+        view = rtl.render(elementToRender as ReactElement);
+        inputs = view.getAllByRole('textbox');
+        expect(inputs, hasLength(3), reason: 'sanity check');
+      });
 
-    test('', () {
-      expect(document.body, isFocused);
+      test('', () {
+        expect(document.body, isFocused);
 
-      UserEvent.tab();
-      expect(inputs.first, isFocused);
+        UserEvent.tab();
+        expect(inputs.first, isFocused);
 
-      UserEvent.tab();
-      expect(inputs[1], isFocused);
+        UserEvent.tab();
+        expect(inputs[1], isFocused);
 
-      UserEvent.tab();
-      expect(inputs[2], isFocused);
+        UserEvent.tab();
+        expect(inputs[2], isFocused);
 
-      UserEvent.tab();
-      expect(document.body, isFocused, reason: 'Cycle goes back to the body element.');
-    });
+        UserEvent.tab();
+        expect(document.body, isFocused, reason: 'Cycle goes back to the body element.');
+      });
 
-    test('shift', () {
-      expect(document.body, isFocused);
+      test('shift', () {
+        expect(document.body, isFocused);
 
-      // Tab direction goes backwards.
-      UserEvent.tab(shift: true);
-      expect(inputs[2], isFocused);
+        // Tab direction goes backwards.
+        UserEvent.tab(shift: true);
+        expect(inputs[2], isFocused);
 
-      UserEvent.tab(shift: true);
-      expect(inputs[1], isFocused);
+        UserEvent.tab(shift: true);
+        expect(inputs[1], isFocused);
 
-      UserEvent.tab(shift: true);
-      expect(inputs.first, isFocused);
+        UserEvent.tab(shift: true);
+        expect(inputs.first, isFocused);
 
-      UserEvent.tab(shift: true);
-      expect(document.body, isFocused, reason: 'Cycle goes back to the body element.');
-    });
+        UserEvent.tab(shift: true);
+        expect(document.body, isFocused, reason: 'Cycle goes back to the body element.');
+      });
 
-    test('focusTrap', () {
-      final container = view.getByTestId('container');
-      expect(document.body, isFocused);
+      test('focusTrap', () {
+        final container = view.getByTestId('container');
+        expect(document.body, isFocused);
 
-      UserEvent.tab(focusTrap: container);
-      expect(inputs[1], isFocused, reason: 'Focused element is the first inside the container.');
+        UserEvent.tab(focusTrap: container);
+        expect(inputs[1], isFocused, reason: 'Focused element is the first inside the container.');
 
-      UserEvent.tab(focusTrap: container);
-      expect(inputs[2], isFocused);
+        UserEvent.tab(focusTrap: container);
+        expect(inputs[2], isFocused);
 
-      UserEvent.tab(focusTrap: container);
-      expect(inputs[1], isFocused, reason: 'Cycle goes back to first element in container.');
+        UserEvent.tab(focusTrap: container);
+        expect(inputs[1], isFocused, reason: 'Cycle goes back to first element in container.');
+      });
     });
 
     testEventHandlerErrors(
-        ['onBlur'],
-        (el) { UserEvent.tab(); UserEvent.tab(); UserEvent.tab(); },
+        ['onFocus'],
+        (el) {
+          rtl.screen.debug();
+          // ... but, why?
+          UserEvent.tab();
+        },
         react.input,
       );
   });
