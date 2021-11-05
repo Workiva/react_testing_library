@@ -122,7 +122,7 @@ bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
       JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [/*JsObject*/ dynamic]);
 
   if (eventProperties == null) {
-    return jsFireEventByNameFn(element);
+    return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element));
   }
 
   return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties)));
