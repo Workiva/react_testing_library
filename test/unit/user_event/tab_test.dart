@@ -31,7 +31,7 @@ void main() {
     rtl.RenderResult view;
     List<InputElement> inputs;
 
-    group('', (){
+    group('', () {
       setUp(() {
         final elementToRender = react.div({}, [
           react.input({}),
@@ -97,9 +97,9 @@ void main() {
     });
 
     testEventHandlerErrors(
-        ['onFocus'],
-        (_) => UserEvent.tab(),
-        react.input,
-      );
+      ['onFocus'],
+      (_) => UserEvent.tab(),
+      react.input,
+    );
   });
 }

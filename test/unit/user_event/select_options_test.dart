@@ -110,7 +110,7 @@ void main() {
           react.option({'value': '1'}, 'A'),
           react.option({'value': '2'}, 'B'),
           react.option({'value': '3'}, 'C'),
-        ]
+        ],
       );
     });
 
@@ -188,7 +188,10 @@ void main() {
           react.option({'value': '2'}, 'B'),
           react.option({'value': '3'}, 'C'),
         ],
-        additionalProps: {'multiple': true, 'defaultValue': ['1', '2', '3']}
+        additionalProps: {
+          'multiple': true,
+          'defaultValue': ['1', '2', '3']
+        },
       );
     });
   });

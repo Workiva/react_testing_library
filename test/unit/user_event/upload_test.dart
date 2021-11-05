@@ -138,10 +138,10 @@ void main() {
         (el) => UserEvent.upload(el, files),
         react.input,
         additionalProps: {
-            'type': 'file',
-            'multiple': isMultiple,
-            'accept': '.png,.jpeg',
-          }
+          'type': 'file',
+          'multiple': isMultiple,
+          'accept': '.png,.jpeg',
+        },
       );
     }
 

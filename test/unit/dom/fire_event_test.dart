@@ -78,7 +78,7 @@ void main() {
         rtl.fireEvent(el, event);
       },
       react.button,
-      children: 'well hello there'
+      children: 'well hello there',
     );
   });
 
@@ -87,7 +87,7 @@ void main() {
       ['onClick'],
       (el) => rtl.fireEventByName('click', el),
       react.button,
-      children: 'well hello there'
+      children: 'well hello there',
     );
   });
 }

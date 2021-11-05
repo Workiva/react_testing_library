@@ -101,7 +101,7 @@ void main() {
         ['onClick'],
         UserEvent.click,
         react.button,
-        children: 'click then on uip'
+        children: 'click then on uip',
       );
     });
 
@@ -141,7 +141,7 @@ void main() {
         ['onDoubleClick'],
         UserEvent.dblClick,
         react.button,
-        children: 'That was SKABGJ'
+        children: 'That was SKABGJ',
       );
     });
   });

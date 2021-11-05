@@ -108,9 +108,9 @@ void main() {
     });
 
     testEventHandlerErrors(
-        ['onPaste'],
-        (el) => UserEvent.paste(el, 'something!'),
-        react.input,
-      );
+      ['onPaste'],
+      (el) => UserEvent.paste(el, 'something!'),
+      react.input,
+    );
   });
 }

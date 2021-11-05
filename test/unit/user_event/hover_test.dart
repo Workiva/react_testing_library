@@ -96,7 +96,7 @@ void main() {
       ['onMouseOver', 'onMouseOut'],
       UserEvent.hover,
       react.button,
-      children: 'well hello there'
+      children: 'well hello there',
     );
   });
 }

@@ -62,7 +62,7 @@ void main() {
       ['onChange'],
       UserEvent.clear,
       react.input,
-      additionalProps: {'defaultValue': 'Aaron told Sydney, Joe, Brian, and Greg that Keal was Awesome. They agreed.'}
+      additionalProps: {'defaultValue': 'Aaron told Sydney, Joe, Brian, and Greg that Keal was Awesome. They agreed.'},
     );
   });
 }
