@@ -71,16 +71,15 @@ Future<T> waitFor<T>(
   MutationObserver observer;
   Timer intervalTimer;
   Timer overallTimeoutTimer;
-  bool resultPending;
+  var isPending = false;
   final doneCompleter = Completer<T>();
 
-  void onDone(dynamic error, [FutureOr<T> result]) {
+  void onDone(Object error, T result) {
+    if (doneCompleter.isCompleted) return;
+
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
     observer.disconnect();
-    if (resultPending != null) {
-      resultPending = false;
-    }
 
     if (error != null) {
       doneCompleter.completeError(error);
@@ -91,8 +90,7 @@ Future<T> waitFor<T>(
     }
   }
 
-  // ignore: prefer_void_to_null
-  FutureOr<Null> handleTimeout() {
+  void handleTimeout() {
     /*Error*/ dynamic error;
     if (lastError != null) {
       error = lastError;
@@ -102,22 +100,17 @@ Future<T> waitFor<T>(
     onDone(onTimeout(error), null);
   }
 
-  FutureOr checkCallback([_]) async {
-    if (resultPending == false) return;
-
+  void checkCallback() {
+    if (isPending) return;
     try {
       final result = expectation();
       if (result is Future) {
-        // Since we'll time out the expectation's future using the same `timeout` duration,
-        // cancel the `overallTimeoutTimer` so that we don't fail with a generic `TestingLibraryAsyncTimeout`
-        // before the specified `expectation` has a chance to fail with a more useful / contextual error.
-        overallTimeoutTimer.cancel();
-        resultPending = true;
-        await (result as Future).then((resolvedValue) {
-          onDone(null, resolvedValue as T);
-        }, onError: onDone).timeout(timeout, onTimeout: handleTimeout);
+        isPending = true;
+        (result as Future)
+            .then((resolvedValue) => onDone(null, resolvedValue as T), onError: (e) => lastError = e)
+            .whenComplete(() => isPending = false);
       } else {
-        onDone(null, result);
+        onDone(null, result as T);
       }
       // If `callback` throws, wait for the next mutation, interval, or timeout.
     } catch (error) {
@@ -127,8 +120,7 @@ Future<T> waitFor<T>(
   }
 
   overallTimeoutTimer = Timer(timeout, handleTimeout);
-
-  intervalTimer = Timer.periodic(interval, checkCallback);
+  intervalTimer = Timer.periodic(interval, (_) => checkCallback());
   observer = MutationObserver((_, __) => checkCallback())
     ..observe(
       container,
@@ -138,7 +130,7 @@ Future<T> waitFor<T>(
       subtree: mutationObserverOptions.subtree,
       attributeFilter: mutationObserverOptions.attributeFilter,
     );
-  await checkCallback();
+  checkCallback();
 
   return doneCompleter.future;
 }

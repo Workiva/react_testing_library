@@ -58,6 +58,70 @@ void main() {
                     rtl.waitFor(() => expect(view.container.contains(rootElement), isFalse), container: view.container),
                 throwsA(isA<TestFailure>()));
           }, timeout: asyncQueryTestTimeout);
+
+          group('that is placed within an asynchronous function body', () {
+            test('and succeeds before timeout', () async {
+              var numRuns = 0;
+              await rtl.waitFor(() async {
+                numRuns++;
+                expect(numRuns, 5);
+              });
+            }, timeout: asyncQueryTestTimeout);
+
+            test(
+                'and never succeeds before timeout, throwing the consumer TestFailure instead of a generic TimeoutException',
+                () async {
+              var numRuns = 0;
+              expect(
+                  () => rtl.waitFor(() async {
+                        if (numRuns < 4) {
+                          numRuns++;
+                        }
+                        expect(numRuns, 5);
+                      }),
+                  throwsA(isA<TestFailure>()));
+            }, timeout: asyncQueryTestTimeout);
+          });
+        });
+
+        test('waits for async callbacks to complete before checking again', () async {
+          const interval = Duration(milliseconds: 1);
+          const delay = Duration(milliseconds: 100);
+          final timeout = delay * 3;
+
+          var runCount = 0;
+          await rtl.waitFor(() async {
+            runCount++;
+            if (runCount == 1) {
+              await Future.delayed(delay);
+              throw Exception();
+            }
+          }, timeout: timeout, interval: interval);
+          expect(runCount, 2);
+        }, timeout: asyncQueryTestTimeout);
+
+        group('gracefully ignores when the timeout occurs before the async callbacks', () {
+          test('completes', () async {
+            final completer = Completer();
+            // Use expectLater so we can wait for the waitFor call to complete before we complete the completer.
+            await expectLater(() => rtl.waitFor(() async => completer.future, timeout: Duration.zero),
+                throwsA(isA<TimeoutException>()));
+            completer.complete();
+
+            // Give uncaught async errors time to get handled by the test zone, failing this test
+            await pumpEventQueue();
+          }, timeout: asyncQueryTestTimeout);
+
+          test('errors', () async {
+            final completer = Completer();
+            // Use expectLater so we can wait for the waitFor call to complete before we complete the completer.
+            await expectLater(() => rtl.waitFor(() async => completer.future, timeout: Duration.zero),
+                throwsA(isA<TimeoutException>()));
+            completer.completeError(Exception());
+
+            // Give uncaught async errors time to get handled by the test zone, failing this test
+            await pumpEventQueue();
+          }, timeout: asyncQueryTestTimeout);
         });
 
         test('a function that throws an arbitrary error, rethrows the error thrown by the expectation', () async {
@@ -89,10 +153,12 @@ void main() {
           }, timeout: asyncQueryTestTimeout);
 
           group('that fails, throws the error returned from the expectation', () {
-            test('', () async {
+            test('when it completes sooner than the timeout', () async {
               expect(view.queryByAltText('waitFor'), isNull, reason: 'test setup sanity check');
               expect(
-                  () => rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'), container: view.container),
+                  () => rtl.waitFor(
+                      () => view.findByAltText('somethingThatDoesNotExist', timeout: asyncQueryTimeout ~/ 2),
+                      container: view.container),
                   throwsA(allOf(
                     isA<TestingLibraryElementError>(),
                     hasToStringValue(contains('alt text: somethingThatDoesNotExist')),
@@ -102,7 +168,7 @@ void main() {
             test('unless the timeout duration is less than the timeout duration of the query', () async {
               expect(view.queryByAltText('waitFor'), isNull, reason: 'test setup sanity check');
               expect(
-                  () => rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'),
+                  rtl.waitFor(() => view.findByAltText('somethingThatDoesNotExist'),
                       container: view.container, timeout: asyncQueryTimeout ~/ 2),
                   throwsA(allOf(
                     isA<TimeoutException>(),
