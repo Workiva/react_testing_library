@@ -71,12 +71,14 @@ Future<T> waitFor<T>(
   MutationObserver observer;
   Timer intervalTimer;
   Timer overallTimeoutTimer;
+  Stopwatch stopwatch;
   bool resultPending;
   final doneCompleter = Completer<T>();
 
   void onDone(dynamic error, [FutureOr<T> result]) {
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
+    stopwatch.reset();
     observer.disconnect();
     if (resultPending != null) {
       resultPending = false;
@@ -115,7 +117,25 @@ Future<T> waitFor<T>(
         resultPending = true;
         await (result as Future).then((resolvedValue) {
           onDone(null, resolvedValue as T);
-        }, onError: onDone).timeout(timeout, onTimeout: handleTimeout);
+        }).catchError((error) {
+          onDone(error, result);
+        }, test: (error) {
+          if (error is TestFailure) {
+            // There was a test `expect()` within an async function body that threw, not an
+            // *actual* future that completed with an error. In this case, wait for the next mutation,
+            // interval, or timeout by restarting the `overallTimeoutTimer` that was cancelled above
+            // (when we thought there was actually a Future being awaited) using the time remaining.
+            overallTimeoutTimer = Timer(timeout - stopwatch.elapsed, handleTimeout);
+            // Save the most recent test failure so we can throw it in the event of a timeout.
+            lastError = error;
+            // Do not call `catchError` since we want to keep retrying.
+            return false;
+          }
+
+          // The error was not a TestFailure coming from an `expect()` within an async
+          // function body, so return true to cause `catchError` to be called.
+          return true;
+        }).timeout(timeout, onTimeout: handleTimeout);
       } else {
         onDone(null, result);
       }
@@ -127,6 +147,7 @@ Future<T> waitFor<T>(
   }
 
   overallTimeoutTimer = Timer(timeout, handleTimeout);
+  stopwatch = Stopwatch()..start();
 
   intervalTimer = Timer.periodic(interval, checkCallback);
   observer = MutationObserver((_, __) => checkCallback())

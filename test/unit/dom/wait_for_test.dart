@@ -58,6 +58,30 @@ void main() {
                     rtl.waitFor(() => expect(view.container.contains(rootElement), isFalse), container: view.container),
                 throwsA(isA<TestFailure>()));
           }, timeout: asyncQueryTestTimeout);
+
+          group('that is placed within an asynchronous function body', () {
+            test('and succeeds before timeout', () async {
+              var numRuns = 0;
+              await rtl.waitFor(() async {
+                numRuns++;
+                expect(numRuns, 5);
+              });
+            }, timeout: asyncQueryTestTimeout);
+
+            test(
+                'and never succeeds before timeout, throwing the consumer TestFailure instead of a generic TimeoutException',
+                () async {
+              var numRuns = 0;
+              expect(
+                  () => rtl.waitFor(() async {
+                        if (numRuns < 4) {
+                          numRuns++;
+                        }
+                        expect(numRuns, 5);
+                      }),
+                  throwsA(isA<TestFailure>()));
+            }, timeout: asyncQueryTestTimeout);
+          });
         });
 
         test('a function that throws an arbitrary error, rethrows the error thrown by the expectation', () async {
