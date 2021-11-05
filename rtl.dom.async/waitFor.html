@@ -618,16 +618,15 @@ it will re-run the callback.</p>
   MutationObserver observer;
   Timer intervalTimer;
   Timer overallTimeoutTimer;
-  bool resultPending;
+  var isPending = false;
   final doneCompleter = Completer&lt;T&gt;();
 
-  void onDone(dynamic error, [FutureOr&lt;T&gt; result]) {
+  void onDone(Object error, T result) {
+    if (doneCompleter.isCompleted) return;
+
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
     observer.disconnect();
-    if (resultPending != null) {
-      resultPending = false;
-    }
 
     if (error != null) {
       doneCompleter.completeError(error);
@@ -638,8 +637,7 @@ it will re-run the callback.</p>
     }
   }
 
-  &#47;&#47; ignore: prefer_void_to_null
-  FutureOr&lt;Null&gt; handleTimeout() {
+  void handleTimeout() {
     &#47;*Error*&#47; dynamic error;
     if (lastError != null) {
       error = lastError;
@@ -649,22 +647,17 @@ it will re-run the callback.</p>
     onDone(onTimeout(error), null);
   }
 
-  FutureOr checkCallback([_]) async {
-    if (resultPending == false) return;
-
+  void checkCallback() {
+    if (isPending) return;
     try {
       final result = expectation();
       if (result is Future) {
-        &#47;&#47; Since we&#39;ll time out the expectation&#39;s future using the same `timeout` duration,
-        &#47;&#47; cancel the `overallTimeoutTimer` so that we don&#39;t fail with a generic `TestingLibraryAsyncTimeout`
-        &#47;&#47; before the specified `expectation` has a chance to fail with a more useful &#47; contextual error.
-        overallTimeoutTimer.cancel();
-        resultPending = true;
-        await (result as Future).then((resolvedValue) {
-          onDone(null, resolvedValue as T);
-        }, onError: onDone).timeout(timeout, onTimeout: handleTimeout);
+        isPending = true;
+        (result as Future)
+            .then((resolvedValue) =&gt; onDone(null, resolvedValue as T), onError: (e) =&gt; lastError = e)
+            .whenComplete(() =&gt; isPending = false);
       } else {
-        onDone(null, result);
+        onDone(null, result as T);
       }
       &#47;&#47; If `callback` throws, wait for the next mutation, interval, or timeout.
     } catch (error) {
@@ -674,8 +667,7 @@ it will re-run the callback.</p>
   }
 
   overallTimeoutTimer = Timer(timeout, handleTimeout);
-
-  intervalTimer = Timer.periodic(interval, checkCallback);
+  intervalTimer = Timer.periodic(interval, (_) =&gt; checkCallback());
   observer = MutationObserver((_, __) =&gt; checkCallback())
     ..observe(
       container,
@@ -685,7 +677,7 @@ it will re-run the callback.</p>
       subtree: mutationObserverOptions.subtree,
       attributeFilter: mutationObserverOptions.attributeFilter,
     );
-  await checkCallback();
+  checkCallback();
 
   return doneCompleter.future;
 }</code></pre>
