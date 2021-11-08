@@ -22,6 +22,8 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+
 void main() {
   group('User click events:', () {
     List<Event> calls;
@@ -94,6 +96,13 @@ void main() {
         );
         _verifyClickEvent(clickCount: clickCount);
       });
+
+      testEventHandlerErrors(
+        ['onClick'],
+        UserEvent.click,
+        react.button,
+        children: 'click then on uip',
+      );
     });
 
     group('UserEvent.dblClick', () {
@@ -127,6 +136,13 @@ void main() {
         );
         _verifyDblClickEvent(hasEventInit: true);
       });
+
+      testEventHandlerErrors(
+        ['onDoubleClick'],
+        UserEvent.dblClick,
+        react.button,
+        children: 'That was SKABGJ',
+      );
     });
   });
 }

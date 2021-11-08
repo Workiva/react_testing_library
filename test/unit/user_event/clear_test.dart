@@ -23,6 +23,8 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+
 void main() {
   group('UserEvent.clear', () {
     test('on an InputElement', () {
@@ -43,5 +45,12 @@ void main() {
       UserEvent.clear(textarea);
       expect(textarea, hasValue(''));
     });
+
+    testEventHandlerErrors(
+      ['onChange'],
+      UserEvent.clear,
+      react.input,
+      additionalProps: {'defaultValue': 'Aaron told Sydney, Joe, Brian, and Greg that Keal is awesome. They agreed.'},
+    );
   });
 }

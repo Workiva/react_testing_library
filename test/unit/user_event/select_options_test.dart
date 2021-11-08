@@ -22,6 +22,8 @@ import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+
 void main() {
   group('User select/deselect events:', () {
     group('UserEvent.selectOptions', () {
@@ -99,6 +101,17 @@ void main() {
       group('multi-select', () {
         _selectOptionsTestHelper(isMultiSelect: true);
       });
+
+      testEventHandlerErrors(
+        ['onChange'],
+        (el) => UserEvent.selectOptions(el as SelectElement, ['3']),
+        react.select,
+        children: [
+          react.option({'value': '1'}, 'A'),
+          react.option({'value': '2'}, 'B'),
+          react.option({'value': '3'}, 'C'),
+        ],
+      );
     });
 
     group('UserEvent.deselectOptions', () {
@@ -165,6 +178,21 @@ void main() {
         );
         _verifyDeselectEvent(hasClickInit: true);
       });
+
+      testEventHandlerErrors(
+        ['onChange'],
+        (el) => UserEvent.deselectOptions(el as SelectElement, ['3']),
+        react.select,
+        children: [
+          react.option({'value': '1'}, 'A'),
+          react.option({'value': '2'}, 'B'),
+          react.option({'value': '3'}, 'C'),
+        ],
+        additionalProps: {
+          'multiple': true,
+          'defaultValue': ['1', '2', '3']
+        },
+      );
     });
   });
 }

@@ -23,6 +23,7 @@ import 'package:js/js.dart';
 import 'package:react/react_client/js_backed_map.dart';
 import 'package:react/react_client/js_interop_helpers.dart';
 
+import '../util/event_handler_error_catcher.dart';
 import '../user_event/user_event.dart';
 
 /// Fires a DOM [event] on the provided [element].
@@ -62,6 +63,12 @@ import '../user_event/user_event.dart';
 /// }
 /// ```
 ///
+/// ## Warning About Errors
+///
+/// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+/// This helps surface errors that could otherwise go unnoticed since they aren't printed
+/// to the terminal when running tests.
+///
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// Related: [fireEventByName]
@@ -69,8 +76,10 @@ import '../user_event/user_event.dart';
 /// See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireevent>
 ///
 /// {@category UserActions}
+bool fireEvent(Element element, Event event) => eventHandlerErrorCatcher(() => _fireEvent(element, event));
+
 @JS('rtl.fireEvent')
-external bool fireEvent(
+external bool _fireEvent(
   Element element,
   Event event,
 );
@@ -107,6 +116,12 @@ external JsMap get _fireEventObj;
 /// fireEventByName('click', someElement, {'button': 2});
 /// ```
 ///
+/// ### Warning About Errors
+///
+/// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+/// This helps surface errors that could otherwise go unnoticed since they aren't printed
+/// to the terminal when running tests.
+///
 /// See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 ///
 /// {@category UserActions}
@@ -119,10 +134,10 @@ bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
       JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [/*JsObject*/ dynamic]);
 
   if (eventProperties == null) {
-    return jsFireEventByNameFn(element);
+    return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element));
   }
 
-  return jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties));
+  return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties)));
 }
 
 @JS('rtl.eventMap')

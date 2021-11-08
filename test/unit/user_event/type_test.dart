@@ -24,6 +24,10 @@ import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
+import '../util/event_handler_error.dart';
+import '../util/exception.dart';
+import '../util/over_react_stubs.dart';
+
 void main() {
   group('UserEvent.type', () {
     group('in InputElement', _typeTestHelper);
@@ -195,6 +199,32 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       });
     });
   });
+
+  group('', () {
+    testEventHandlerErrors(
+      ['onInput'],
+      (el) => hasDelay ? UserEvent.typeWithDelay(el, 'K', Duration(hours: 500)) : UserEvent.type(el, 'K'),
+      isTextArea ? react.textarea : react.input,
+    );
+
+    test('throws event handler errors that occur on delayed keystrokes', () {
+      const stringToTest = 'Hello There';
+      final view = rtl.render((isTextArea ? react.textarea : react.input)({
+        defaultTestIdKey: 'event-handle-error-tester',
+        'onKeyUp': (e) => throw ExceptionForTesting('ow'),
+      }) as ReactElement);
+
+      expect(
+        () async {
+          await UserEvent.typeWithDelay(
+              view.getByTestId('event-handle-error-tester'), stringToTest, Duration(milliseconds: 250));
+        },
+        throwsA(predicate((e) {
+          return e is Exception && e.toString().contains('Multiple errors (${stringToTest.length})');
+        })),
+      );
+    });
+  }, tags: 'run-alone');
 
   group('with default value in the input', () {
     // ignore: unused_element
