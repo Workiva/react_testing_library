@@ -547,7 +547,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L740"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L802"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">clear</span> method 
 </h1></div>
 
@@ -596,6 +596,10 @@ void main() {
   });
 }
 </code></pre>
+<h2 id="warning-about-errors">Warning About Errors</h2>
+<p>Unlike the JS API, <em>any uncaught errors thrown during event propagation will get rethrown.</em>
+This helps surface errors that could otherwise go unnoticed since they aren't printed
+to the terminal when running tests.</p>
 <blockquote>
 <p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
   <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
@@ -609,7 +613,7 @@ void main() {
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static void clear(Element element) =&gt; getProperty(_userEvent, &#39;clear&#39;)(element);</code></pre>
+  <pre class="language-dart"><code class="language-dart">static void clear(Element element) =&gt; eventHandlerErrorCatcher(() =&gt; getProperty(_userEvent, &#39;clear&#39;)(element));</code></pre>
 </section>
 
 

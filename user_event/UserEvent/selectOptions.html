@@ -547,7 +547,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L808"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L876"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">selectOptions</span> method 
 </h1></div>
 
@@ -620,6 +620,10 @@ void main() {
   });
 }
 </code></pre>
+<h2 id="warning-about-errors">Warning About Errors</h2>
+<p>Unlike the JS API, <em>any uncaught errors thrown during event propagation will get rethrown.</em>
+This helps surface errors that could otherwise go unnoticed since they aren't printed
+to the terminal when running tests.</p>
 <blockquote>
 <p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
   <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
@@ -638,11 +642,13 @@ void main() {
   List&lt;dynamic&gt; values, {
   Map clickInit,
 }) {
-  getProperty(_userEvent, &#39;selectOptions&#39;)(
-    selectElement,
-    values,
-    _jsifyEventData(clickInit),
-  );
+  eventHandlerErrorCatcher(() {
+    getProperty(_userEvent, &#39;selectOptions&#39;)(
+      selectElement,
+      values,
+      _jsifyEventData(clickInit),
+    );
+  });
 }</code></pre>
 </section>
 

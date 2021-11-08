@@ -547,7 +547,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L457"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L495"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">keyboard</span> method 
 </h1></div>
 
@@ -622,6 +622,10 @@ portraying a "default" US-keyboard. You can provide your own local keyboard mapp
 printable key on the keyboard. E.g. Automatically pressing {Shift} when
 CapsLock is not active and A is referenced. If you don't wish this behavior,
 set <code>autoModify</code> to <code>false</code> (this is <code>false</code> by default).</p>
+<h2 id="warning-about-errors">Warning About Errors</h2>
+<p>Unlike the JS API, <em>any uncaught errors thrown during event propagation will get rethrown.</em>
+This helps surface errors that could otherwise go unnoticed since they aren't printed
+to the terminal when running tests.</p>
 <p>{@category UserActions}</p>
 </section>
 
@@ -640,10 +644,12 @@ set <code>autoModify</code> to <code>false</code> (this is <code>false</code> by
     if (keyboardState != null) &#39;keyboardState&#39;: keyboardState,
     if (keyboardMap != null) &#39;keyboardMap&#39;: keyboardMap,
   };
-  return getProperty(_userEvent, &#39;keyboard&#39;)(
-    text,
-    jsifyAndAllowInterop(options),
-  ) as KeyboardState;
+  return eventHandlerErrorCatcher(() {
+    return getProperty(_userEvent, &#39;keyboard&#39;)(
+      text,
+      jsifyAndAllowInterop(options),
+    ) as KeyboardState;
+  });
 }</code></pre>
 </section>
 

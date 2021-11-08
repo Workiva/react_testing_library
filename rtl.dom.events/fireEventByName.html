@@ -546,7 +546,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/fire_event.dart#L113"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/fire_event.dart#L128"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-function">fireEventByName</span> function 
  
     <span class="category useractions cp-14 linked" title="This is part of the UserActions Topic."><a href="../topics/UserActions-topic.html">UserActions</a></span>
@@ -583,6 +583,10 @@ fireEvent.click(someElement, {'button': 2});
 <pre class="language-dart"><code class="language-dart">// Dart API
 fireEventByName('click', someElement, {'button': 2});
 </code></pre>
+<h3 id="warning-about-errors">Warning About Errors</h3>
+<p>Unlike the JS API, <em>any uncaught errors thrown during event propagation will get rethrown.</em>
+This helps surface errors that could otherwise go unnoticed since they aren't printed
+to the terminal when running tests.</p>
 <p>See: <a href="https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname">testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname</a></p>
 </section>
 
@@ -599,10 +603,10 @@ fireEventByName('click', someElement, {'button': 2});
       JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [&#47;*JsObject*&#47; dynamic]);
 
   if (eventProperties == null) {
-    return jsFireEventByNameFn(element);
+    return eventHandlerErrorCatcher(() =&gt; jsFireEventByNameFn(element));
   }
 
-  return jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties));
+  return eventHandlerErrorCatcher(() =&gt; jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties)));
 }</code></pre>
 </section>
 

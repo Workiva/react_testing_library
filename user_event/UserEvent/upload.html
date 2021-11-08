@@ -547,7 +547,7 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L669"><i class="material-icons">description</i></a></div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/user_event/user_event.dart#L723"><i class="material-icons">description</i></a></div>
 <h1><span class="kind-method">upload</span> method 
 </h1></div>
 
@@ -656,6 +656,10 @@ void main() {
   });
 }
 </code></pre>
+<h2 id="warning-about-errors">Warning About Errors</h2>
+<p>Unlike the JS API, <em>any uncaught errors thrown during event propagation will get rethrown.</em>
+This helps surface errors that could otherwise go unnoticed since they aren't printed
+to the terminal when running tests.</p>
 <blockquote>
 <p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
   <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
@@ -681,12 +685,14 @@ void main() {
     &#39;changeInit&#39;: _jsifyEventData(changeInit),
   };
   final options = {&#39;applyAccept&#39;: applyAccept};
-  getProperty(_userEvent, &#39;upload&#39;)(
-    element,
-    files,
-    _jsifyEventData(init),
-    jsifyAndAllowInterop(options),
-  );
+  eventHandlerErrorCatcher(() {
+    getProperty(_userEvent, &#39;upload&#39;)(
+      element,
+      files,
+      _jsifyEventData(init),
+      jsifyAndAllowInterop(options),
+    );
+  });
 
   &#47;&#47; Convert the `element.files` because the JS `upload` sets it equal to a
   &#47;&#47; map with with an `item` method to access files.
