@@ -14,6 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
 import 'dart:html';
 
 import 'package:meta/meta.dart';
@@ -29,23 +30,37 @@ import 'package:react/react_client/react_interop.dart' show throwErrorFromJS;
 /// fireEvent in order to surface the errors.
 @internal
 T eventHandlerErrorCatcher<T>(T Function() callback) {
-  T result;
   final errors = <dynamic>{};
   final errorSub = window.onError.cast<ErrorEvent>().listen((event) {
     errors.add(event.error);
   });
-  try {
-    result = callback();
-  } finally {
-    errorSub.cancel();
-  }
 
-  if (errors.isNotEmpty) {
-    if (errors.length == 1) {
-      throwErrorFromJS(errors.first);
-    } else {
-      throw Exception('Multiple errors: $errors');
+  void checkErrors() {
+    if (errors.isNotEmpty) {
+      if (errors.length == 1) {
+        throwErrorFromJS(errors.first);
+      } else {
+        throw Exception('Multiple errors (${errors.length}): $errors');
+      }
     }
   }
-  return result;
+
+  T result;
+  try {
+    result = callback();
+  } catch (_) {
+    errorSub.cancel();
+    rethrow;
+  }
+
+  if (result is Future) {
+    return result.whenComplete(() {
+      errorSub.cancel();
+      checkErrors();
+    }) as T;
+  } else {
+    errorSub.cancel();
+    checkErrors();
+    return result;
+  }
 }

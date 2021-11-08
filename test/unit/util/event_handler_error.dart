@@ -35,17 +35,18 @@ void testEventHandlerErrors(
         ...additionalProps,
         ...{defaultTestIdKey: targetTestId}
       };
-  final targetElement =
+  buildTargetElement() =>
       react.div({}, children == null ? elementTypeToRender(buildProps()) : elementTypeToRender(buildProps(), children));
+
   group('will rethrow', () {
     test('event handler error', () {
-      final view = rtl.render(targetElement as ReactElement);
+      final view = rtl.render(buildTargetElement() as ReactElement);
 
       expect(() => userEventTrigger(view.getByTestId(targetTestId)), throwsA(isA<ExceptionForTesting>()));
     });
 
     test('multiple event handler errors as an exception', () {
-      final toRender = react.div(buildEventHandlers(), targetElement);
+      final toRender = react.div(buildEventHandlers(), buildTargetElement());
       final view = rtl.render(toRender as ReactElement);
 
       expect(
