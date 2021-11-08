@@ -43,7 +43,8 @@ class ScopedQueriesTestWrapper {
 void hasQueriesScopedTo(
     String scopeName,
     ScopedQueriesTestWrapper Function(String scopeName, {bool testAsyncQuery, bool renderMultipleElsMatchingQuery})
-        getWrapper) {
+        getWrapper,
+    {bool isGloballyScoped = true}) {
   group('$scopeName:', () {
     ScopedQueries queries;
     String expectedPrettyDom;
@@ -57,15 +58,15 @@ void hasQueriesScopedTo(
       bool renderMultipleElsMatchingQuery,
     }) {
       rtl.RenderResult renderResult;
-      final wrapper = getWrapper(scopeName,
-          testAsyncQuery: testAsyncQuery, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-
-      queries ??= wrapper.queries;
-      renderResult = wrapper.renderResult;
-
-      expectedPrettyDom = prettyDOM(renderResult.container);
+      Node getQueryContainer(rtl.RenderResult result) => isGloballyScoped ? result.baseElement : result.container;
 
       if (testAsyncQuery) {
+        // Create a temp baseline result that can be cloned but removed
+        // before capturing the DOM
+        final tmpBaselineRenderResult = getWrapper(scopeName,
+                testAsyncQuery: testAsyncQuery, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
+            .renderResult;
+
         final delayedRenderOfRootNode = querySelector('[$defaultTestIdKey="delayed-render-of-root"]');
         expect(delayedRenderOfRootNode, isNotNull,
             reason: 'Async queries should be tested on DOM wrapped by / controlled by the DelayedRenderOf component.');
@@ -76,11 +77,29 @@ void hasQueriesScopedTo(
         // DelayedRenderOf wrapper that async tests use, but with the `delay` hardcoded
         // to zero so we can see what DOM to expect when the future completes in the
         // actual query test.
-        final tempRenderResult =
-            rtl.render(cloneElement(renderResult.renderedElement, {'delay': Duration.zero}), autoTearDown: false);
-        expectedPrettyDom = prettyDOM(tempRenderResult.container);
+        final tempRenderResult = rtl.render(
+            cloneElement(tmpBaselineRenderResult.renderedElement, {'delay': Duration.zero}),
+            autoTearDown: false);
+
+        // Remove the extraneous node because otherwise, there will be an extra
+        // render result container when capturing the DOM snapshot
+        tmpBaselineRenderResult.unmount();
+
+        expectedPrettyDom = prettyDOM(getQueryContainer(tempRenderResult));
         tempRenderResult.unmount();
         tempRenderResult.container?.remove();
+      }
+
+      // Only render this after the async snapshot is taken to ensure
+      // no extra nodes are in the snapshot
+      final wrapper = getWrapper(scopeName,
+          testAsyncQuery: testAsyncQuery, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
+
+      queries ??= wrapper.queries;
+      renderResult = wrapper.renderResult;
+
+      if (!testAsyncQuery) {
+        expectedPrettyDom = prettyDOM(getQueryContainer(renderResult));
       }
 
       return queries;

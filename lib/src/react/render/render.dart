@@ -165,7 +165,7 @@ RenderResult render(
 /// {@category Queries}
 @sealed
 class RenderResult extends ScopedQueries {
-  RenderResult._(this._jsRenderResult, this._renderedElement) : super(() => _jsRenderResult.container);
+  RenderResult._(this._jsRenderResult, this._renderedElement) : super(() => _jsRenderResult.baseElement);
 
   final JsRenderResult _jsRenderResult;
 

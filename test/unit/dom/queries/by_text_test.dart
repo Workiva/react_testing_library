@@ -86,7 +86,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -103,7 +103,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -119,7 +119,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -136,7 +136,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element with the text: Foo')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -190,7 +190,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -207,7 +207,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -223,7 +223,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -240,7 +240,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an element with the text: Bar')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });

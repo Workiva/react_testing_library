@@ -66,7 +66,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
 
@@ -76,7 +76,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -96,7 +96,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -116,7 +116,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
 
@@ -154,7 +154,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
 
@@ -164,7 +164,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -184,7 +184,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -201,7 +201,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -223,7 +223,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -245,7 +245,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -290,7 +290,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-3"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
 
@@ -300,7 +300,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -324,7 +324,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -344,7 +344,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-3"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
 
@@ -386,7 +386,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="testId-2"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
 
@@ -396,7 +396,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -420,7 +420,7 @@ void main() {
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('Unable to find an element by: [$defaultTestIdKey="fail"]')),
-                hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
               )));
         });
       });
@@ -437,7 +437,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -461,7 +461,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
@@ -485,7 +485,7 @@ void main() {
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Found multiple elements by: [$defaultTestIdKey="estid-2"]')),
-                  hasToStringValue(contains(rtl.prettyDOM(view.container))),
+                  hasToStringValue(contains(rtl.prettyDOM(view.baseElement))),
                 )));
           });
         });
