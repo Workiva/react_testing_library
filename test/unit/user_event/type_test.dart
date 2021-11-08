@@ -198,7 +198,6 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
         _verifyTypeEvent();
       });
     });
-
   });
 
   group('', () {
@@ -208,7 +207,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       isTextArea ? react.textarea : react.input,
     );
 
-    test('multiple event handler errors on every letter', () {
+    test('throws event handler errors that occur on delayed keystrokes', () {
       const stringToTest = 'Hello There';
       final view = rtl.render((isTextArea ? react.textarea : react.input)({
         defaultTestIdKey: 'event-handle-error-tester',
@@ -217,7 +216,8 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
 
       expect(
         () async {
-          await UserEvent.typeWithDelay(view.getByTestId('event-handle-error-tester'), stringToTest, Duration(milliseconds: 250));
+          await UserEvent.typeWithDelay(
+              view.getByTestId('event-handle-error-tester'), stringToTest, Duration(milliseconds: 250));
         },
         throwsA(predicate((e) {
           return e is Exception && e.toString().contains('Multiple errors (${stringToTest.length})');
