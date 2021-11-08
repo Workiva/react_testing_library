@@ -16,9 +16,11 @@
 
 import 'dart:html';
 
+import 'package:meta/meta.dart';
 import 'package:react/react_client/react_interop.dart' show throwErrorFromJS;
 
-/// INTENDED FOR INTERNAL USE IN REACT_TESTING_LIBRARY ONLY.
+
+/// Calls [callback] and throws if any `window.onError` errors occur during its execution.
 ///
 /// Event Handlers triggered by a UserEvent or fireEvent may throw errors
 /// but due to how the DOM natively works with Events, the point that dispatched
@@ -26,14 +28,19 @@ import 'package:react/react_client/react_interop.dart' show throwErrorFromJS;
 ///
 /// This function wraps around the call to the JS RTL within UserEvent and
 /// fireEvent in order to surface the errors.
-T eventHandlerErrorCatcher<T>(T Function() cb) {
+@internal
+T eventHandlerErrorCatcher<T>(T Function() callback) {
   T result;
   final errors = <dynamic>{};
-  final errorStream = window.onError.cast<ErrorEvent>().listen((event) {
+  final errorSub = window.onError.cast<ErrorEvent>().listen((event) {
     errors.add(event.error);
   });
-  result = cb();
-  errorStream.cancel();
+  try {
+    result = callback();
+  } finally {
+    errorSub.cancel();
+  }
+
   if (errors.isNotEmpty) {
     if (errors.length == 1) {
       throwErrorFromJS(errors.first);
