@@ -1,5 +1,11 @@
 # React Testing Library Changelog
 
+## 2.0.0
+* **BREAKING CHANGE**: `UserEvent.*` and `fireEvent[ByName]` will now rethrow uncaught errors that occur in event propagation.
+  * This helps surface errors that could otherwise go unnoticed since they aren't printed to the terminal when running tests.
+* **BREAKING CHANGE**: Change default query bindings (`get[All]By...`, `find[All]By...`, `query[All]By...`) to be the render result's `baseElement` instead of `container`.
+  * This was an unintended deviation from the JS API that prevented access to portals. It is now aligned to match JS behavior.
+
 ## 1.1.13
 *  (CI-only change) Only check formatting on Dart 2.13.4
 
