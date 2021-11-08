@@ -19,7 +19,6 @@ import 'dart:html';
 import 'package:meta/meta.dart';
 import 'package:react/react_client/react_interop.dart' show throwErrorFromJS;
 
-
 /// Calls [callback] and throws if any `window.onError` errors occur during its execution.
 ///
 /// Event Handlers triggered by a UserEvent or fireEvent may throw errors

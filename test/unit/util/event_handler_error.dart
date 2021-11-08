@@ -27,16 +27,16 @@ import 'over_react_stubs.dart';
 void testEventHandlerErrors(
     List<String> events, void Function(Element element) userEventTrigger, dynamic elementTypeToRender,
     {dynamic children, Map<String, dynamic> additionalProps = const {}}) {
-      const targetTestId = 'test-subject-11';
-      throwingHandler(event) => throw ExceptionForTesting('Mission Failed');
-      buildEventHandlers() => {for (final value in events) value: throwingHandler};
-      buildProps() => {
-            ...buildEventHandlers(),
-            ...additionalProps,
-            ...{defaultTestIdKey: targetTestId}
-          };
-      final targetElement = react
-          .div({}, children == null ? elementTypeToRender(buildProps()) : elementTypeToRender(buildProps(), children));
+  const targetTestId = 'test-subject-11';
+  throwingHandler(event) => throw ExceptionForTesting('Mission Failed');
+  buildEventHandlers() => {for (final value in events) value: throwingHandler};
+  buildProps() => {
+        ...buildEventHandlers(),
+        ...additionalProps,
+        ...{defaultTestIdKey: targetTestId}
+      };
+  final targetElement =
+      react.div({}, children == null ? elementTypeToRender(buildProps()) : elementTypeToRender(buildProps(), children));
   group('will rethrow', () {
     test('event handler error', () {
       final view = rtl.render(targetElement as ReactElement);
