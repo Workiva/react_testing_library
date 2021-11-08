@@ -63,6 +63,12 @@ import '../user_event/user_event.dart';
 /// }
 /// ```
 ///
+/// ## Warning About Errors
+///
+/// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+/// This helps surface errors that could otherwise go unnoticed since they aren't printed
+/// to the terminal when running tests.
+///
 /// {@macro RenderSupportsReactAndOverReactCallout}
 ///
 /// Related: [fireEventByName]
@@ -109,6 +115,12 @@ external JsMap get _fireEventObj;
 /// // Dart API
 /// fireEventByName('click', someElement, {'button': 2});
 /// ```
+///
+/// ### Warning About Errors
+///
+/// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+/// This helps surface errors that could otherwise go unnoticed since they aren't printed
+/// to the terminal when running tests.
 ///
 /// See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 ///

@@ -93,6 +93,12 @@ abstract class UserEvent {
   /// }
   /// ```
   ///
+  /// ### Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
+  ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
@@ -163,6 +169,12 @@ abstract class UserEvent {
   ///   });
   /// }
   /// ```
+  ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
@@ -254,6 +266,12 @@ abstract class UserEvent {
   ///   });
   /// }
   /// ```
+  ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
@@ -365,6 +383,12 @@ abstract class UserEvent {
   /// }
   /// ```
   ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
+  ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
@@ -461,6 +485,12 @@ abstract class UserEvent {
   /// CapsLock is not active and A is referenced. If you don't wish this behavior,
   /// set [autoModify] to `false` (this is `false` by default).
   ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
+  ///
   /// {@category UserActions}
   static KeyboardState keyboard(
     String text, {
@@ -550,6 +580,12 @@ abstract class UserEvent {
   /// printable key on the keyboard. E.g. Automatically pressing {Shift} when
   /// CapsLock is not active and A is referenced. If you don't wish this behavior,
   /// set [autoModify] to `false` (this is `false` by default).
+  ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
   ///
   /// {@category UserActions}
   static Future<KeyboardState> keyboardWithDelay(
@@ -675,6 +711,12 @@ abstract class UserEvent {
   /// }
   /// ```
   ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
+  ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
@@ -748,6 +790,12 @@ abstract class UserEvent {
   /// }
   /// ```
   ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
+  ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
@@ -815,6 +863,12 @@ abstract class UserEvent {
   ///   });
   /// }
   /// ```
+  ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
@@ -897,6 +951,12 @@ abstract class UserEvent {
   ///   });
   /// }
   /// ```
+  ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
@@ -997,6 +1057,12 @@ abstract class UserEvent {
   /// }
   /// ```
   ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
+  ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
@@ -1067,6 +1133,12 @@ abstract class UserEvent {
   ///   });
   /// }
   /// ```
+  ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
@@ -1142,6 +1214,12 @@ abstract class UserEvent {
   /// }
   /// ```
   ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
+  ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
@@ -1205,6 +1283,12 @@ abstract class UserEvent {
   ///   });
   /// }
   /// ```
+  ///
+  /// ## Warning About Errors
+  ///
+  /// Unlike the JS API, _any uncaught errors thrown during event propagation will get rethrown._
+  /// This helps surface errors that could otherwise go unnoticed since they aren't printed
+  /// to the terminal when running tests.
   ///
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
