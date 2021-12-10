@@ -456,5 +456,6 @@ void main() {
         }, timeout: asyncQueryTestTimeout);
       });
     });
-  });
+    // Attempt to fix flaky timeout failures in CI
+  }, tags: 'run-alone');
 }

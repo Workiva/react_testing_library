@@ -189,6 +189,16 @@ void main() {
         });
       });
 
+      test(
+          'works when test IDs contain regular expression syntax'
+          ' (by properly escaping the test ID when incorporating it into a RegExp)', () {
+        final view = rtl.render(react.span({
+          'data-test-id': 'testId(1)',
+        }) as ReactElement);
+
+        expect(view.getByTestId('testId(1)'), isA<SpanElement>());
+      });
+
       group('with the "exact: false" argument', () {
         group('getByTestId', () {
           test('[non-exact string match]', () {
@@ -254,6 +264,16 @@ void main() {
           test('[non-exact string match]', () async {
             expect(await view.findAllByTestId('estid-2', exact: false), hasLength(2));
           });
+        });
+
+        test(
+            'works when test IDs contain regular expression syntax'
+            ' (by properly escaping the test ID when incorporating it into a RegExp)', () {
+          final view = rtl.render(react.span({
+            'data-test-id': 'testId(1)',
+          }) as ReactElement);
+
+          expect(view.getByTestId('estId(1)', exact: false), isA<SpanElement>());
         });
       });
     });
