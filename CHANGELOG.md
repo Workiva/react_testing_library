@@ -1,5 +1,8 @@
 # React Testing Library Changelog
 
+## 2.0.1
+- Fix test ID queries using test IDs in RegExps without escaping them
+
 ## 2.0.0
 * **BREAKING CHANGE**: `UserEvent.*` and `fireEvent[ByName]` will now rethrow uncaught errors that occur in event propagation.
   * This helps surface errors that could otherwise go unnoticed since they aren't printed to the terminal when running tests.
