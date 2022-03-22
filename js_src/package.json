@@ -1,24 +1,26 @@
 {
-  "name": "react_testing_library_src",
+  "name": "rtl",
   "description": "A package to generate the .js bundle used by the react_testing_library Dart package.",
   "version": "1.0.0-alpha.0",
   "private": true,
   "license": "UNLICENSED",
-  "main": "src/_react-testing-library.js",
+  "main": "src/index.js",
   "files": [
     "src"
   ],
-  "module": "src/_react-testing-library.js",
+  "module": "src/index.js",
   "prodBundle": "../lib/js/react-testing-library.js",
   "scripts": {
+    "format": "yarn prettier --write .",
+    "lint": "yarn eslint .",
     "build": "yarn build:bundle",
     "build:bundle": "rollup -c"
   },
   "dependencies": {
-    "core-js": "3",
     "@testing-library/dom": "^7.30.0",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^13.1.9",
+    "core-js": "3",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
@@ -28,11 +30,14 @@
     "@babel/plugin-transform-runtime": "^7.12.15",
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "@rollup/plugin-babel": "^5.2.3",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.1.1",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.4",
+    "prettier": "2.6.0",
     "rollup": "^2.38.5",
     "rollup-plugin-filesize": "^9.1.0",
     "rollup-plugin-node-builtins": "^2.1.2",

@@ -11,25 +11,33 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import {
+  configure,
+  fireEvent,
+  render as testingLibraryRender,
+} from '@testing-library/react';
+import { buildJsGetElementError } from './dartHelpers';
 
-import {configure, fireEvent} from '@testing-library/react';
-import {buildJsGetElementError} from './_dart-helpers';
-import userEvent from '@testing-library/user-event';
+import { queries } from './customQueries';
 
-// Configure the test id to match what the OverReact ecosystem defaults to.
 configure({
-  testIdAttribute: 'data-test-id',
   getElementError: buildJsGetElementError,
 });
 
+// Configure the test id queries to work with OverReact ecosystem's `data-test-id` AND MUI's `data-testid`.
+
 // In order to allow us to interop `fireEvent` as both a function, and an object with function values,
 // we need two vars exported so we can `@JS()` annotate each one separately with the type Dart expects.
-const fireEventObj = fireEvent;
+export const fireEventObj = fireEvent;
+
+export const render = (element, configuration) => {
+  return testingLibraryRender(element, {
+    queries: { ...queries },
+    ...configuration,
+  });
+};
 
 export * from '@testing-library/react';
-export {eventMap} from '@testing-library/dom/dist/event-map';
-export {
-  buildJsGetElementError,
-  fireEventObj,
-  userEvent,
-};
+export * from '@testing-library/user-event';
+export { screen, within, queries } from './customQueries';
+export { buildJsGetElementError };

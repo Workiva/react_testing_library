@@ -41,6 +41,9 @@ void main() {
         view = rtl.render(react.section(
             {},
             react.span({
+              'data-testid': 'testId-5',
+            }, 'Testing single'),
+            react.span({
               'data-test-id': 'testId-1',
             }, 'Testing single'),
             react.span({
@@ -52,6 +55,10 @@ void main() {
       });
 
       group('getByTestId', () {
+        test('[string match]', () {
+          expect(view.getByTestId('testId-5'), isA<SpanElement>());
+        });
+
         test('[string match]', () {
           expect(view.getByTestId('testId-1'), isA<SpanElement>());
         });
