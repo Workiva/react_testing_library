@@ -24,8 +24,8 @@ import json from '@rollup/plugin-json';
 
 import pkg from './package.json';
 
-const input = 'src/_react-testing-library.js';
-const jsPackageName = 'rtl';
+const input = pkg.main || pkg.module;
+const jsPackageName = pkg.name;
 
 const globals = {
   react: 'React',
@@ -67,10 +67,7 @@ export default (commandFlags) => {
         format: 'umd',
         globals,
       },
-      plugins: [
-        ...commonPlugins,
-        filesize(),
-      ],
+      plugins: [...commonPlugins, filesize()],
     },
   ];
 };
