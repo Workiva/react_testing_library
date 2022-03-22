@@ -33,7 +33,6 @@ const globals = {
 };
 
 const commonjsOptions = {
-  ignoreGlobal: true,
   include: /node_modules/,
 };
 
