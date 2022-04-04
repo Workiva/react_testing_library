@@ -96,8 +96,13 @@ void main() {
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-        final els = testAsyncQuery ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
-        final view = rtl.render(els);
+        final els = testAsyncQuery!
+            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+            // ignore: unnecessary_cast
+            ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+            : elsForQuerying;
+        // TODO: Someday, we should update the logic when `testAsyncQuery` is true to not rely on legacyRoot. Currently it does not work - most likely due to timing differences.
+        final view = rtl.render(els, legacyRoot: testAsyncQuery);
         container = view.container;
         expectedPrettyDom = rtl.prettyDOM(container);
 
@@ -113,8 +118,8 @@ void main() {
           // DelayedRenderOf wrapper that async tests use, but with the `delay` hardcoded
           // to zero so we can see what DOM to expect when the future completes in the
           // actual query test.
-          final tempRenderResult =
-              rtl.render(cloneElement(view.renderedElement, {'delay': Duration.zero}), autoTearDown: false);
+          final tempRenderResult = rtl.render(cloneElement(view.renderedElement, {'delay': Duration.zero}),
+              autoTearDown: false, legacyRoot: true);
           expectedPrettyDom = rtl.prettyDOM(tempRenderResult.container);
           tempRenderResult.unmount();
           tempRenderResult.container.remove();

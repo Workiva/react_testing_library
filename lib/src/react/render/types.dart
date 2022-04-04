@@ -65,4 +65,7 @@ class RenderOptions {
 
   external JsMap? get queries;
   external set queries(JsMap? value);
+
+  external bool? get legacyRoot;
+  external set legacyRoot(bool? value);
 }

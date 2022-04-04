@@ -52,9 +52,13 @@ void main() {
         }) {
           final elsForQuerying =
               elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-          final els =
-              testAsyncQuery! ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
-          return ScopedQueriesTestWrapper(rtl.render(els));
+          final els = testAsyncQuery!
+              // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
+              // ignore: unnecessary_cast
+              ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+              : elsForQuerying;
+          // TODO: Someday, we should update `renderAndGetQueries` logic when `testAsyncQuery` is true to not rely on legacyRoot. Currently it does not work - most likely due to timing differences.
+          return ScopedQueriesTestWrapper(rtl.render(els, legacyRoot: testAsyncQuery));
         });
       });
 
