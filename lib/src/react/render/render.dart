@@ -196,7 +196,7 @@ class RenderResult extends ScopedQueries {
     int? maxLength,
     PrettyDomOptions? options,
   ]) =>
-      printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options));
+      printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options ?? PrettyDomOptions()));
 
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///

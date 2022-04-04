@@ -47,6 +47,7 @@ import 'package:js/js.dart';
 /// {@macro prettyDomOptionsIndent}
 /// {@macro prettyDomOptionsMaxDepth}
 /// {@macro prettyDomOptionsMin}
+/// {@macro prettyDomOptionsFilterNode}
 ///
 /// > **At this time, formatting plugins and syntax highlighting are not supported.**
 ///
@@ -57,11 +58,13 @@ String prettyDOM(
   int? indent,
   int? maxDepth,
   bool? min,
+  bool? Function(Node?)? filterNode,
 }) {
   final options = PrettyDomOptions();
   if (indent != null) options.indent = indent;
   if (maxDepth != null) options.maxDepth = maxDepth;
   if (min != null) options.min = min;
+  if (filterNode != null) options.filterNode = filterNode;
 
   return _jsPrettyDOM(node, maxLength, options);
 }
@@ -98,4 +101,13 @@ class PrettyDomOptions {
   /// {@endtemplate}
   external bool? get min;
   external set min(bool? value);
+
+  /// {@template prettyDomOptionsFilterNode}
+  /// ### [filterNode]
+  /// By default, `<style />`, `<script />` and comment nodes are ignored.
+  /// You can configure this behavior by passing a custom `filterNode` function that should return true for every
+  /// node that you wish to include in the output.
+  /// {@endtemplate}
+  external bool? Function(Node?)? get filterNode;
+  external set filterNode(bool? Function(Node?) value);
 }
