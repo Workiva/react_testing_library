@@ -30,6 +30,7 @@ const jsPackageName = 'rtl';
 const globals = {
   react: 'React',
   'react-dom': 'ReactDOM',
+  'react-dom/client': 'ReactDOMClient',
 };
 
 const commonjsOptions = {

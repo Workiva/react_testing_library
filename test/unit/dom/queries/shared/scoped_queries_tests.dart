@@ -79,7 +79,8 @@ void hasQueriesScopedTo(
         // actual query test.
         final tempRenderResult = rtl.render(
             cloneElement(tmpBaselineRenderResult.renderedElement, {'delay': Duration.zero}),
-            autoTearDown: false);
+            autoTearDown: false,
+            legacyRoot: true);
 
         // Remove the extraneous node because otherwise, there will be an extra
         // render result container when capturing the DOM snapshot

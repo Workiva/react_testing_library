@@ -20,3 +20,11 @@ dev_dependencies:
   build_web_compilers: ">=2.12.0 <4.0.0"
   test_html_builder: '>=2.2.2 <4.0.0'
   workiva_analysis_options: ^1.0.0
+
+
+dependency_overrides:
+  react:
+    git:
+      url: https://github.com/workiva/react-dart.git
+      ref: react-18-rc-test
+

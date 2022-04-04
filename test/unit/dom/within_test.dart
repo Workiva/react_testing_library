@@ -42,7 +42,8 @@ void main() {
             // ignore: unnecessary_cast
             ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
             : elsForQuerying;
-        final view = rtl.render(els);
+        // TODO: Someday, we should update `renderAndGetQueries` logic when `testAsyncQuery` is true to not rely on legacyRoot. Currently it does not work - most likely due to timing differences.
+        final view = rtl.render(els, legacyRoot: testAsyncQuery);
         final queries = rtl.within(view.container);
         return ScopedQueriesTestWrapper(queries, view);
       }, isGloballyScoped: false);
