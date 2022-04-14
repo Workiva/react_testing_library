@@ -25,7 +25,7 @@ jobs:
 
       - id: build-docs
         name: Build Docs
-        run: pub global activate dartdoc && dartdoc --show-undocumented-categories
+        run: pub global activate dartdoc 3.1.0 && dartdoc --show-undocumented-categories
         if: ${{ matrix.sdk == 'stable' }}
 
       - id: deploy-docs
