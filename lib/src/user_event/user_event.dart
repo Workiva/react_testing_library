@@ -65,10 +65,12 @@ abstract class UserEvent {
   ///
   /// ### [skipPointerEventsCheck]
   ///
-  /// Use [skipPointerEventsCheck] to skip checking if any element
-  /// in the DOM-tree has `'pointer-events: none'` set. This check is
-  /// costly in general and very costly when rendering large DOM-trees.
-  /// Can be used to speed up tests.
+  /// Attempting to interact with an element that has `'pointer-events: none'`
+  /// set will throw an error. Use [skipPointerEventsCheck] to prevent that error
+  /// from being thrown by skipping the check of whether any element in the
+  /// DOM-tree has `'pointer-events: none'` set. In addition, the underlying
+  /// check for pointer events is costly in general and very costly when rendering
+  /// large DOM-trees. Can be used to speed up tests.
   ///
   /// ## Example
   ///
@@ -141,16 +143,18 @@ abstract class UserEvent {
   ///
   /// Use [eventInit] to set options on the initial [MouseEvent]. For example,
   ///
-  /// ### [skipPointerEventsCheck]
-  ///
-  /// Use [skipPointerEventsCheck] to skip checking if any element
-  /// in the DOM-tree has `'pointer-events: none'` set. This check is
-  /// costly in general and very costly when rendering large DOM-trees.
-  /// Can be used to speed up tests.
-  ///
   /// ```dart
   /// UserEvent.dblClick(element, eventInit: {'shiftKey': true});
   /// ```
+  ///
+  /// ### [skipPointerEventsCheck]
+  ///
+  /// Attempting to interact with an element that has `'pointer-events: none'`
+  /// set will throw an error. Use [skipPointerEventsCheck] to prevent that error
+  /// from being thrown by skipping the check of whether any element in the
+  /// DOM-tree has `'pointer-events: none'` set. In addition, the underlying
+  /// check for pointer events is costly in general and very costly when rendering
+  /// large DOM-trees. Can be used to speed up tests.
   ///
   /// ## Example
   ///
@@ -839,6 +843,15 @@ abstract class UserEvent {
   ///
   /// Use [clickInit] to initialize the click events that occur as a part of the selection.
   ///
+  /// ### [skipPointerEventsCheck]
+  ///
+  /// Attempting to interact with an element that has `'pointer-events: none'`
+  /// set will throw an error. Use [skipPointerEventsCheck] to prevent that error
+  /// from being thrown by skipping the check of whether any element in the
+  /// DOM-tree has `'pointer-events: none'` set. In addition, the underlying
+  /// check for pointer events is costly in general and very costly when rendering
+  /// large DOM-trees. Can be used to speed up tests.
+  ///
   /// ## Example
   ///
   /// ```html
@@ -901,12 +914,18 @@ abstract class UserEvent {
     SelectElement selectElement,
     List<dynamic> values, {
     Map clickInit,
+    bool skipPointerEventsCheck = false,
   }) {
+    final options = {
+      'skipPointerEventsCheck': skipPointerEventsCheck,
+    };
+
     eventHandlerErrorCatcher(() {
       getProperty(_userEvent, 'selectOptions')(
         selectElement,
         values,
         _jsifyEventData(clickInit),
+        jsifyAndAllowInterop(options),
       );
     });
   }
@@ -926,6 +945,15 @@ abstract class UserEvent {
   /// ### [clickInit]
   ///
   /// Use [clickInit] to initialize the click events that occur as a part of the selection.
+  ///
+  /// ### [skipPointerEventsCheck]
+  ///
+  /// Attempting to interact with an element that has `'pointer-events: none'`
+  /// set will throw an error. Use [skipPointerEventsCheck] to prevent that error
+  /// from being thrown by skipping the check of whether any element in the
+  /// DOM-tree has `'pointer-events: none'` set. In addition, the underlying
+  /// check for pointer events is costly in general and very costly when rendering
+  /// large DOM-trees. Can be used to speed up tests.
   ///
   /// ## Example:
   ///
@@ -989,12 +1017,18 @@ abstract class UserEvent {
     SelectElement selectElement,
     List values, {
     Map clickInit,
+    bool skipPointerEventsCheck = false,
   }) {
+    final options = {
+      'skipPointerEventsCheck': skipPointerEventsCheck,
+    };
+
     eventHandlerErrorCatcher(() {
       getProperty(_userEvent, 'deselectOptions')(
         selectElement,
         values,
         _jsifyEventData(clickInit),
+        jsifyAndAllowInterop(options),
       );
     });
   }
@@ -1111,6 +1145,15 @@ abstract class UserEvent {
   ///
   /// Use [eventInit] to initialize the `onMouseOver` event.
   ///
+  /// ### [skipPointerEventsCheck]
+  ///
+  /// Attempting to interact with an element that has `'pointer-events: none'`
+  /// set will throw an error. Use [skipPointerEventsCheck] to prevent that error
+  /// from being thrown by skipping the check of whether any element in the
+  /// DOM-tree has `'pointer-events: none'` set. In addition, the underlying
+  /// check for pointer events is costly in general and very costly when rendering
+  /// large DOM-trees. Can be used to speed up tests.
+  ///
   /// ## Example
   ///
   /// ```html
@@ -1167,9 +1210,21 @@ abstract class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
-  static void hover(Element element, {Map eventInit}) {
+  static void hover(
+    Element element, {
+    Map eventInit,
+    bool skipPointerEventsCheck = false,
+  }) {
+    final options = {
+      'skipPointerEventsCheck': skipPointerEventsCheck,
+    };
+
     eventHandlerErrorCatcher(() {
-      getProperty(_userEvent, 'hover')(element, _jsifyEventData(eventInit));
+      getProperty(_userEvent, 'hover')(
+        element,
+        _jsifyEventData(eventInit),
+        jsifyAndAllowInterop(options),
+      );
     });
   }
 
@@ -1184,6 +1239,15 @@ abstract class UserEvent {
   /// ### [eventInit]
   ///
   /// Use [eventInit] to initialize the `onMouseOut` event.
+  ///
+  /// ### [skipPointerEventsCheck]
+  ///
+  /// Attempting to interact with an element that has `'pointer-events: none'`
+  /// set will throw an error. Use [skipPointerEventsCheck] to prevent that error
+  /// from being thrown by skipping the check of whether any element in the
+  /// DOM-tree has `'pointer-events: none'` set. In addition, the underlying
+  /// check for pointer events is costly in general and very costly when rendering
+  /// large DOM-trees. Can be used to speed up tests.
   ///
   /// ## Example
   ///
@@ -1247,9 +1311,17 @@ abstract class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
-  static void unhover(Element element, {Map eventInit}) {
+  static void unhover(Element element, {Map eventInit, bool skipPointerEventsCheck = false}) {
+    final options = {
+      'skipPointerEventsCheck': skipPointerEventsCheck,
+    };
+
     eventHandlerErrorCatcher(() {
-      getProperty(_userEvent, 'unhover')(element, _jsifyEventData(eventInit));
+      getProperty(_userEvent, 'unhover')(
+        element,
+        _jsifyEventData(eventInit),
+        jsifyAndAllowInterop(options),
+      );
     });
   }
 

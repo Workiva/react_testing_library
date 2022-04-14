@@ -18,7 +18,7 @@ import 'dart:html';
 
 import 'package:react/hooks.dart' show useState;
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
+import 'package:react/react_client.dart' show ReactDartFunctionComponentFactoryProxy, ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
@@ -33,27 +33,9 @@ void main() {
 
     setUp(() {
       calls = [];
-
-      final HoverTestComponent = react.registerFunctionComponent((props) {
-        final isShown = useState(false);
-        return react.div({}, [
-          react.button({
-            'onMouseOver': (e) {
-              isShown.set(true);
-              calls.add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
-            },
-            'onMouseOut': (e) {
-              isShown.set(false);
-              calls.add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
-            }
-          }, [
-            'Hover over me!'
-          ]),
-          if (isShown.value) react.span({}, ['Hello!']) else null,
-        ]);
-      });
-
-      view = rtl.render(react.div({}, [HoverTestComponent({})]) as ReactElement);
+      view = rtl.render(react.div({}, [
+        HoverTestComponent({'calls': calls})
+      ]) as ReactElement);
       // Sanity check.
       expect(view.queryByText('Hello!'), isNull);
     });
@@ -92,6 +74,20 @@ void main() {
       _verifyHoverEvent(hasEventInit: true);
     });
 
+    test('skipPointerEventsCheck', () {
+      view.rerender(react.div({
+        'style': {'pointerEvents': 'none'}
+      }, [
+        HoverTestComponent({'calls': calls})
+      ]) as ReactElement);
+
+      UserEvent.hover(view.getByRole('button'), skipPointerEventsCheck: true);
+      expect(view.getByText('Hello!'), isInTheDocument);
+
+      UserEvent.unhover(view.getByRole('button'), skipPointerEventsCheck: true);
+      expect(view.queryByText('Hello!'), isNull);
+    });
+
     testEventHandlerErrors(
       ['onMouseOver', 'onMouseOut'],
       UserEvent.hover,
@@ -100,3 +96,22 @@ void main() {
     );
   });
 }
+
+ReactDartFunctionComponentFactoryProxy HoverTestComponent = react.registerFunctionComponent((props) {
+  final isShown = useState(false);
+  return react.div({}, [
+    react.button({
+      'onMouseOver': (e) {
+        isShown.set(true);
+        props['calls'].add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
+      },
+      'onMouseOut': (e) {
+        isShown.set(false);
+        props['calls'].add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
+      }
+    }, [
+      'Hover over me!'
+    ]),
+    if (isShown.value) react.span({}, ['Hello!']) else null,
+  ]);
+});

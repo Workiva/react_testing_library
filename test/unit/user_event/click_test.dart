@@ -100,10 +100,7 @@ void main() {
       test('skipPointerEventsCheck', () {
         var wasClicked = false;
 
-        // Render into a local view because there isn't a great
-        // way to test pointer events with shared test logic
-        final localView = rtl.render(react.button({
-          'data-test-id': 'the-local-button',
+        view.rerender(react.button({
           'style': {'pointerEvents': 'none'},
           'onClick': (_) {
             wasClicked = true;
@@ -111,7 +108,7 @@ void main() {
         }, 'oh hai') as ReactElement);
 
         UserEvent.click(
-          localView.getByTestId('the-local-button'),
+          view.getByRole('button'),
           skipPointerEventsCheck: true,
         );
 
@@ -161,9 +158,7 @@ void main() {
       test('skipPointerEventsCheck', () {
         var wasClicked = false;
 
-        // Render into a local view because there isn't a great
-        // way to test pointer events with shared test logic
-        final localView = rtl.render(react.button({
+        view.rerender(react.button({
           'data-test-id': 'the-local-button',
           'style': {'pointerEvents': 'none'},
           'onDoubleClick': (_) {
@@ -172,7 +167,7 @@ void main() {
         }, 'oh hai') as ReactElement);
 
         UserEvent.dblClick(
-          localView.getByTestId('the-local-button'),
+          view.getByRole('button'),
           skipPointerEventsCheck: true,
         );
 
