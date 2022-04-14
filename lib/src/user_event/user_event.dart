@@ -63,6 +63,13 @@ abstract class UserEvent {
   /// [UIEvent.detail](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/detail)
   /// for more information.
   ///
+  /// ### [skipPointerEventsCheck]
+  ///
+  /// Use [skipPointerEventsCheck] to skip checking if any element
+  /// in the DOM-tree has `'pointer-events: none'` set. This check is
+  /// costly in general and very costly when rendering large DOM-trees.
+  /// Can be used to speed up tests.
+  ///
   /// ## Example
   ///
   /// ```html
@@ -133,6 +140,13 @@ abstract class UserEvent {
   /// ### [eventInit]
   ///
   /// Use [eventInit] to set options on the initial [MouseEvent]. For example,
+  ///
+  /// ### [skipPointerEventsCheck]
+  ///
+  /// Use [skipPointerEventsCheck] to skip checking if any element
+  /// in the DOM-tree has `'pointer-events: none'` set. This check is
+  /// costly in general and very costly when rendering large DOM-trees.
+  /// Can be used to speed up tests.
   ///
   /// ```dart
   /// UserEvent.dblClick(element, eventInit: {'shiftKey': true});
