@@ -51,7 +51,6 @@ void main() {
         bool hasEventInit = false,
         bool skipHover = false,
         int clickCount = 0,
-        bool skipPointerEventsCheck = false,
       }) {
         // Sanity check.
         expect(calls, hasLength(1));
