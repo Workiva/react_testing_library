@@ -51,6 +51,7 @@ void main() {
         bool hasEventInit = false,
         bool skipHover = false,
         int clickCount = 0,
+        bool skipPointerEventsCheck = false,
       }) {
         // Sanity check.
         expect(calls, hasLength(1));
@@ -97,6 +98,27 @@ void main() {
         _verifyClickEvent(clickCount: clickCount);
       });
 
+      test('skipPointerEventsCheck', () {
+        var wasClicked = false;
+
+        // Render into a local view because there isn't a great
+        // way to test pointer events with shared test logic
+        final localView = rtl.render(react.button({
+          'data-test-id': 'the-local-button',
+          'style': {'pointerEvents': 'none'},
+          'onClick': (_) {
+            wasClicked = true;
+          }
+        }, 'oh hai') as ReactElement);
+
+        UserEvent.click(
+          localView.getByTestId('the-local-button'),
+          skipPointerEventsCheck: true,
+        );
+
+        expect(wasClicked, isTrue);
+      });
+
       testEventHandlerErrors(
         ['onClick'],
         UserEvent.click,
@@ -135,6 +157,27 @@ void main() {
           eventInit: {'shiftKey': true},
         );
         _verifyDblClickEvent(hasEventInit: true);
+      });
+
+      test('skipPointerEventsCheck', () {
+        var wasClicked = false;
+
+        // Render into a local view because there isn't a great
+        // way to test pointer events with shared test logic
+        final localView = rtl.render(react.button({
+          'data-test-id': 'the-local-button',
+          'style': {'pointerEvents': 'none'},
+          'onDoubleClick': (_) {
+            wasClicked = true;
+          }
+        }, 'oh hai') as ReactElement);
+
+        UserEvent.dblClick(
+          localView.getByTestId('the-local-button'),
+          skipPointerEventsCheck: true,
+        );
+
+        expect(wasClicked, isTrue);
       });
 
       testEventHandlerErrors(

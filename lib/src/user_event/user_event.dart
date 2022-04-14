@@ -107,8 +107,13 @@ abstract class UserEvent {
     Map eventInit,
     bool skipHover = false,
     int clickCount = 0,
+    bool skipPointerEventsCheck = false,
   }) {
-    final options = {'skipHover': skipHover, 'clickCount': clickCount};
+    final options = {
+      'skipHover': skipHover,
+      'clickCount': clickCount,
+      'skipPointerEventsCheck': skipPointerEventsCheck,
+    };
     eventHandlerErrorCatcher(() {
       getProperty(_userEvent, 'click')(
         element,
@@ -179,13 +184,16 @@ abstract class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
-  static void dblClick(Element element, {Map eventInit}) {
-    eventHandlerErrorCatcher(() {
-      getProperty(_userEvent, 'dblClick')(
-        element,
-        _jsifyEventData(eventInit),
-      );
-    });
+  static void dblClick(Element element, {Map eventInit, bool skipPointerEventsCheck = false}) {
+    final options = {
+      'skipPointerEventsCheck': skipPointerEventsCheck,
+    };
+
+    eventHandlerErrorCatcher(() {getProperty(_userEvent, 'dblClick')(
+      element,
+      _jsifyEventData(eventInit),
+      jsifyAndAllowInterop(options),
+    );});
   }
 
   /// Writes [text] inside an input or textarea [element].
