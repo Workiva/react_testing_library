@@ -1,5 +1,5 @@
 name: validate_js_bundle
-description: Verifies the JS bundle exists
+description: Verifies the JS bundle is checked in - this check is mainly in place so we have at least one Skynet config
 image: drydock.workiva.net/workiva/skynet-images:node-test-image-latest
 size: large
 timeout: 900
