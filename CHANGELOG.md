@@ -1,5 +1,8 @@
 # React Testing Library Changelog
 
+## 2.1.0
+- [#48](https://github.com/Workiva/react_testing_library/pull/48) Expose the `skipPointerEventsCheck` check
+
 ## 2.0.1
 - Fix test ID queries using test IDs in RegExps without escaping them
 
