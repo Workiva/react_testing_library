@@ -12,10 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <link rel="stylesheet" href="../static-assets/github.css?v1">
-  <link rel="stylesheet" href="../static-assets/styles.css?v1">
-  <link rel="icon" href="../static-assets/favicon.png?v1">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -544,45 +543,6 @@
 <main>
 
 
-  <div id="dartdoc-main-content" class="main-content">
-      <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/matches/get_default_normalizer.dart#L29"><i class="material-icons">description</i></a></div>
-<h1><span class="kind-function">getDefaultNormalizer</span> function 
- 
-</h1></div>
-
-    <section class="multi-line-signature">
-        
-
-<span class="returntype"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a> Function<span class="signature">(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)</span></span>
-<span class="name ">getDefaultNormalizer</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getDefaultNormalizer-param-options">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span> <span class="parameter-name">options</span>]</span></li>
-</ol>)
-
-    </section>
-    
-<section class="desc markdown">
-  <p>The default "normalizer" used to normalize the string query value provided
-to a query by trimming whitespace from the start and end of text, and collapsing
-multiple adjacent whitespace characters into a single space.</p>
-<blockquote>
-<p>See: <a href="https://testing-library.com/docs/queries/about#normalization">testing-library.com/docs/queries/about#normalization</a></p>
-</blockquote>
-</section>
-
-
-    
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">NormalizerFn Function([NormalizerOptions]) getDefaultNormalizer([NormalizerOptions options]) {
-  return _jsGetDefaultNormalizer(NormalizerOptions()
-    ..trim = options?.trim ?? true
-    ..collapseWhitespace = options?.collapseWhitespace ?? true);
-}</code></pre>
-</section>
-
-
-  </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
@@ -670,6 +630,45 @@ multiple adjacent whitespace characters into a single space.</p>
 
   </div><!--/.sidebar-offcanvas-left-->
 
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/dom/matches/get_default_normalizer.dart#L29"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">getDefaultNormalizer</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype"><a href="../rtl.dom.queries/NormalizerFn.html">NormalizerFn</a> Function<span class="signature">(<span class="parameter" id="param-">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span>]</span>)</span></span>
+<span class="name ">getDefaultNormalizer</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getDefaultNormalizer-param-options">[<span class="type-annotation"><a href="../rtl.dom.queries/NormalizerOptions-class.html">NormalizerOptions</a></span> <span class="parameter-name">options</span>]</span></li>
+</ol>)
+
+    </section>
+    
+<section class="desc markdown">
+  <p>The default "normalizer" used to normalize the string query value provided
+to a query by trimming whitespace from the start and end of text, and collapsing
+multiple adjacent whitespace characters into a single space.</p>
+<blockquote>
+<p>See: <a href="https://testing-library.com/docs/queries/about#normalization">testing-library.com/docs/queries/about#normalization</a></p>
+</blockquote>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">NormalizerFn Function([NormalizerOptions]) getDefaultNormalizer([NormalizerOptions options]) {
+  return _jsGetDefaultNormalizer(NormalizerOptions()
+    ..trim = options?.trim ?? true
+    ..collapseWhitespace = options?.collapseWhitespace ?? true);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
 
@@ -685,9 +684,8 @@ multiple adjacent whitespace characters into a single space.</p>
 </footer>
 
 
-
-<script src="../static-assets/highlight.pack.js?v1"></script>
-<script src="../static-assets/script.js?v1"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
 
 
 

@@ -12,10 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <link rel="stylesheet" href="../static-assets/github.css?v1">
-  <link rel="stylesheet" href="../static-assets/styles.css?v1">
-  <link rel="icon" href="../static-assets/favicon.png?v1">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -543,82 +542,6 @@
 <main>
 
 
-<div id="dartdoc-main-content" class="main-content">
-  <h1><span class="kind-category">Accessibility</span> Topic</h1>
-  
-<section class="desc markdown">
-  <p>One of the <a href="https://testing-library.com/docs/guiding-principles">guiding principles</a> of the Testing Library APIs is that 
-they should enable you to test your app the way your users use it, including through accessibility interfaces like screen readers.</p>
-<p>See the page on <a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">queries</a> for details on how using 
-a semantic HTML query can make sure your app works with browser accessibility APIs.</p>
-<blockquote>
-<p>Learn more: <a href="https://testing-library.com/docs/dom-testing-library/api-accessibility/">testing-library.com/docs/dom-testing-library/api-accessibility/</a></p>
-</blockquote>
-</section>
-
-
-
-
-
-
-
-  <section class="summary offset-anchor" id="functions">
-    <h2>Functions</h2>
-
-    <dl class="callables">
-      <dt id="getRoles" class="callable">
-  <span class="name"><a href="../rtl.dom.accessibility/getRoles.html">getRoles</a></span><span class="signature">(<wbr><span class="parameter" id="getRoles-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getRoles-param-hidden">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.15.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.15.1/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/2.15.1/dart-core/List-class.html">List</a></span>&gt;</span></span>
-  </span>
-  
-    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
-
-</dt>
-<dd>
-  Returns a map, indexed by role name, with each value being an array of
-elements in <code>container</code> which have that implicit ARIA role. <a href="../rtl.dom.accessibility/getRoles.html">[...]</a>
-  
-
-</dd>
-
-      <dt id="isInaccessible" class="callable">
-  <span class="name"><a href="../rtl.dom.accessibility/isInaccessible.html">isInaccessible</a></span><span class="signature">(<wbr><span class="parameter" id="isInaccessible-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.15.1/dart-core/bool-class.html">bool</a></span>
-  </span>
-  
-    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
-
-</dt>
-<dd>
-  Returns whether or not <code>element</code> should be excluded from the accessibility
-API by the browser. <a href="../rtl.dom.accessibility/isInaccessible.html">[...]</a>
-  <div class="features">@<a href="https://pub.dev/documentation/js/0.6.3/js/JS-class.html">JS</a>(&#39;rtl.isInaccessible&#39;)</div>
-
-</dd>
-
-      <dt id="logRoles" class="callable">
-  <span class="name"><a href="../rtl.dom.accessibility/logRoles.html">logRoles</a></span><span class="signature">(<wbr><span class="parameter" id="logRoles-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="logRoles-param-hidden">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>}</span>)
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
-
-</dt>
-<dd>
-  Prints a list of all the implicit ARIA roles within <code>container</code>, each role containing a list of all of the
-nodes which match that role. <a href="../rtl.dom.accessibility/logRoles.html">[...]</a>
-  
-
-</dd>
-
-    </dl>
-  </section>
-
-
-
-
-</div> <!-- /.main-content -->
-
 <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
   <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
@@ -666,6 +589,81 @@ nodes which match that role. <a href="../rtl.dom.accessibility/logRoles.html">[.
 
 </div>
 
+<div id="dartdoc-main-content" class="main-content">
+  <h1><span class="kind-category">Accessibility</span> Topic</h1>
+  
+<section class="desc markdown">
+  <p>One of the <a href="https://testing-library.com/docs/guiding-principles">guiding principles</a> of the Testing Library APIs is that 
+they should enable you to test your app the way your users use it, including through accessibility interfaces like screen readers.</p>
+<p>See the page on <a href="https://workiva.github.io/react_testing_library/topics/Queries-topic.html">queries</a> for details on how using 
+a semantic HTML query can make sure your app works with browser accessibility APIs.</p>
+<blockquote>
+<p>Learn more: <a href="https://testing-library.com/docs/dom-testing-library/api-accessibility/">testing-library.com/docs/dom-testing-library/api-accessibility/</a></p>
+</blockquote>
+</section>
+
+
+
+
+
+
+
+  <section class="summary offset-anchor" id="functions">
+    <h2>Functions</h2>
+
+    <dl class="callables">
+      <dt id="getRoles" class="callable">
+  <span class="name"><a href="../rtl.dom.accessibility/getRoles.html">getRoles</a></span><span class="signature">(<wbr><span class="parameter" id="getRoles-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="getRoles-param-hidden">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.13.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/2.13.4/dart-core/List-class.html">List</a></span>&gt;</span></span>
+  </span>
+  
+    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
+
+</dt>
+<dd>
+  Returns a map, indexed by role name, with each value being an array of
+elements in <code>container</code> which have that implicit ARIA role. <a href="../rtl.dom.accessibility/getRoles.html">[...]</a>
+  
+
+</dd>
+
+      <dt id="isInaccessible" class="callable">
+  <span class="name"><a href="../rtl.dom.accessibility/isInaccessible.html">isInaccessible</a></span><span class="signature">(<wbr><span class="parameter" id="isInaccessible-param-element"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">element</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
+
+</dt>
+<dd>
+  Returns whether or not <code>element</code> should be excluded from the accessibility
+API by the browser. <a href="../rtl.dom.accessibility/isInaccessible.html">[...]</a>
+  <div class="features">@<a href="https://pub.dev/documentation/js/0.6.3/js/JS-class.html">JS</a>(&#39;rtl.isInaccessible&#39;)</div>
+
+</dd>
+
+      <dt id="logRoles" class="callable">
+  <span class="name"><a href="../rtl.dom.accessibility/logRoles.html">logRoles</a></span><span class="signature">(<wbr><span class="parameter" id="logRoles-param-container"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Node-class.html">Node</a></span> <span class="parameter-name">container</span>, </span><span class="parameter" id="logRoles-param-hidden">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hidden</span> = <span class="default-value">false</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+    <span class="category accessibility cp-0 linked" title="This is part of the Accessibility Topic."><a href="../topics/Accessibility-topic.html">Accessibility</a></span>
+
+</dt>
+<dd>
+  Prints a list of all the implicit ARIA roles within <code>container</code>, each role containing a list of all of the
+nodes which match that role. <a href="../rtl.dom.accessibility/logRoles.html">[...]</a>
+  
+
+</dd>
+
+    </dl>
+  </section>
+
+
+
+
+</div> <!-- /.main-content -->
 <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   <h5>Accessibility Topic</h5>
   <ol>
@@ -674,10 +672,10 @@ nodes which match that role. <a href="../rtl.dom.accessibility/logRoles.html">[.
 
 
 
-  <li class="section-title"><a href="../topics/Accessibility-topic.html#functions">Functions</a></li>
   <li><a href="../rtl.dom.accessibility/getRoles.html">getRoles</a></li>
   <li><a href="../rtl.dom.accessibility/isInaccessible.html">isInaccessible</a></li>
   <li><a href="../rtl.dom.accessibility/logRoles.html">logRoles</a></li>
+  <li class="section-title"><a href="../topics/Accessibility-topic.html#functions">Functions</a></li>
 
 
 
@@ -697,9 +695,8 @@ nodes which match that role. <a href="../rtl.dom.accessibility/logRoles.html">[.
 </footer>
 
 
-
-<script src="../static-assets/highlight.pack.js?v1"></script>
-<script src="../static-assets/script.js?v1"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
 
 
 

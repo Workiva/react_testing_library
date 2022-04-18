@@ -1,6 +1,6 @@
 # highlight.js
 
-Generated from https://highlightjs.org/download/ on 2021-07-13
+Generated from https://highlightjs.org/download/ on 2021-03-07
 
 **Included languages:**
 
@@ -8,7 +8,6 @@ Generated from https://highlightjs.org/download/ on 2021-07-13
 * c  
 * css
 * dart
-* diff
 * html, xml
 * java
 * javascript

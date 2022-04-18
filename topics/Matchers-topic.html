@@ -12,10 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <link rel="stylesheet" href="../static-assets/github.css?v1">
-  <link rel="stylesheet" href="../static-assets/styles.css?v1">
-  <link rel="icon" href="../static-assets/favicon.png?v1">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -543,6 +542,53 @@
 <main>
 
 
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">react_testing_library</a></li>
+  <li class="self-crumb">Matchers Topic</li>
+</ol>
+
+
+  <h5><span class="package-name">react_testing_library</span> <span class="package-kind">package</span></h5>
+  <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Accessibility-topic.html">Accessibility</a></li>
+        <li><a href="../topics/Async-topic.html">Async</a></li>
+        <li><a href="../topics/ByAltText-topic.html">ByAltText</a></li>
+        <li><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></li>
+        <li><a href="../topics/ByLabelText-topic.html">ByLabelText</a></li>
+        <li><a href="../topics/ByPlaceholderText-topic.html">ByPlaceholderText</a></li>
+        <li><a href="../topics/ByRole-topic.html">ByRole</a></li>
+        <li><a href="../topics/ByTestId-topic.html">ByTestId</a></li>
+        <li><a href="../topics/ByText-topic.html">ByText</a></li>
+        <li><a href="../topics/ByTitle-topic.html">ByTitle</a></li>
+        <li><a href="../topics/Matchers-topic.html">Matchers</a></li>
+        <li><a href="../topics/Queries-topic.html">Queries</a></li>
+        <li><a href="../topics/UserActions-topic.html">UserActions</a></li>
+      <li class="section-title">Libraries</li>
+      <li class="section-subtitle">Dom</li>
+        <li class="section-subitem"><a href="../rtl.dom.accessibility/rtl.dom.accessibility-library.html">rtl.dom.accessibility</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.configure/rtl.dom.configure-library.html">rtl.dom.configure</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
+        <li class="section-subitem"><a href="../rtl.dom.queries/rtl.dom.queries-library.html">rtl.dom.queries</a></li>
+      <li class="section-subtitle">Matchers</li>
+        <li class="section-subitem"><a href="../matchers/matchers-library.html">matchers</a></li>
+      <li class="section-subtitle">React</li>
+        <li class="section-subitem"><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
+      <li class="section-subtitle">UserActions</li>
+        <li class="section-subitem"><a href="../user_event/user_event-library.html">user_event</a></li>
+</ol>
+
+</div>
+
 <div id="dartdoc-main-content" class="main-content">
   <h1><span class="kind-category">Matchers</span> Topic</h1>
   
@@ -660,7 +706,7 @@
 
 </dt>
 <dd>
-  Allows you to assert whether an element is present in the <a href="https://api.dart.dev/stable/2.15.1/dart-html/document.html">document</a> or not. <a href="../matchers/isInTheDocument-constant.html">[...]</a>
+  Allows you to assert whether an element is present in the <a href="https://api.dart.dev/stable/2.13.4/dart-html/document.html">document</a> or not. <a href="../matchers/isInTheDocument-constant.html">[...]</a>
   
 
   <div>
@@ -693,7 +739,7 @@
 
     <dl class="callables">
       <dt id="containsElement" class="callable">
-  <span class="name"><a href="../matchers/containsElement.html">containsElement</a></span><span class="signature">(<wbr><span class="parameter" id="containsElement-param-descendant"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">descendant</span></span>)
+  <span class="name"><a href="../matchers/containsElement.html">containsElement</a></span><span class="signature">(<wbr><span class="parameter" id="containsElement-param-descendant"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a></span> <span class="parameter-name">descendant</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
   </span>
   
@@ -715,13 +761,13 @@
 
 </dt>
 <dd>
-  Allows you to check whether an <a href="https://api.dart.dev/stable/2.15.1/dart-html/Element-class.html">Element</a> does not have certain <code>classes</code> within its HTML <code>class</code> attribute. <a href="../matchers/excludesClasses.html">[...]</a>
+  Allows you to check whether an <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a> does not have certain <code>classes</code> within its HTML <code>class</code> attribute. <a href="../matchers/excludesClasses.html">[...]</a>
   
 
 </dd>
 
       <dt id="hasAttribute" class="callable">
-  <span class="name"><a href="../matchers/hasAttribute.html">hasAttribute</a></span><span class="signature">(<wbr><span class="parameter" id="hasAttribute-param-attribute"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">attribute</span>, </span><span class="parameter" id="hasAttribute-param-valueOrMatcher">[<span class="type-annotation">dynamic</span> <span class="parameter-name">valueOrMatcher</span> = <span class="default-value">isNotNull</span>]</span>)
+  <span class="name"><a href="../matchers/hasAttribute.html">hasAttribute</a></span><span class="signature">(<wbr><span class="parameter" id="hasAttribute-param-attribute"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">attribute</span>, </span><span class="parameter" id="hasAttribute-param-valueOrMatcher">[<span class="type-annotation">dynamic</span> <span class="parameter-name">valueOrMatcher</span> = <span class="default-value">isNotNull</span>]</span>)
     <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
   </span>
   
@@ -743,13 +789,13 @@
 
 </dt>
 <dd>
-  Allows you to check whether an <a href="https://api.dart.dev/stable/2.15.1/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute. <a href="../matchers/hasClasses.html">[...]</a>
+  Allows you to check whether an <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute. <a href="../matchers/hasClasses.html">[...]</a>
   
 
 </dd>
 
       <dt id="hasDescription" class="callable">
-  <span class="name"><a href="../matchers/hasDescription.html">hasDescription</a></span><span class="signature">(<wbr><span class="parameter" id="hasDescription-param-expectedDescription">[<span class="type-annotation">dynamic</span> <span class="parameter-name">expectedDescription</span>, </span><span class="parameter" id="hasDescription-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span>)
+  <span class="name"><a href="../matchers/hasDescription.html">hasDescription</a></span><span class="signature">(<wbr><span class="parameter" id="hasDescription-param-expectedDescription">[<span class="type-annotation">dynamic</span> <span class="parameter-name">expectedDescription</span>, </span><span class="parameter" id="hasDescription-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span>)
     <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
   </span>
   
@@ -786,14 +832,14 @@
 
 </dt>
 <dd>
-  Allows you to check whether an <a href="https://api.dart.dev/stable/2.15.1/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute,
+  Allows you to check whether an <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute,
 with no additional or duplicated classes like the <a href="../matchers/hasClasses.html">hasClasses</a> matcher allows. <a href="../matchers/hasExactClasses.html">[...]</a>
   
 
 </dd>
 
       <dt id="hasFormValues" class="callable">
-  <span class="name"><a href="../matchers/hasFormValues.html">hasFormValues</a></span><span class="signature">(<wbr><span class="parameter" id="hasFormValues-param-valuesMap"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.15.1/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">valuesMap</span></span>)
+  <span class="name"><a href="../matchers/hasFormValues.html">hasFormValues</a></span><span class="signature">(<wbr><span class="parameter" id="hasFormValues-param-valuesMap"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.13.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">valuesMap</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
   </span>
   
@@ -801,14 +847,14 @@ with no additional or duplicated classes like the <a href="../matchers/hasClasse
 
 </dt>
 <dd>
-  Allows you to check if a <a href="https://api.dart.dev/stable/2.15.1/dart-html/FormElement-class.html">FormElement</a> or <a href="https://api.dart.dev/stable/2.15.1/dart-html/FieldSetElement-class.html">FieldSetElement</a> contains form controls for each given name
+  Allows you to check if a <a href="https://api.dart.dev/stable/2.13.4/dart-html/FormElement-class.html">FormElement</a> or <a href="https://api.dart.dev/stable/2.13.4/dart-html/FieldSetElement-class.html">FieldSetElement</a> contains form controls for each given name
 in the provided <code>valuesMap</code> with the corresponding value. <a href="../matchers/hasFormValues.html">[...]</a>
   
 
 </dd>
 
       <dt id="hasStyles" class="callable">
-  <span class="name"><a href="../matchers/hasStyles.html">hasStyles</a></span><span class="signature">(<wbr><span class="parameter" id="hasStyles-param-styles"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.15.1/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">styles</span></span>)
+  <span class="name"><a href="../matchers/hasStyles.html">hasStyles</a></span><span class="signature">(<wbr><span class="parameter" id="hasStyles-param-styles"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.13.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">styles</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
   </span>
   
@@ -822,7 +868,7 @@ in the provided <code>valuesMap</code> with the corresponding value. <a href="..
 </dd>
 
       <dt id="hasTextContent" class="callable">
-  <span class="name"><a href="../matchers/hasTextContent.html">hasTextContent</a></span><span class="signature">(<wbr><span class="parameter" id="hasTextContent-param-expected">[<span class="type-annotation">dynamic</span> <span class="parameter-name">expected</span>, </span><span class="parameter" id="hasTextContent-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.15.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span>)
+  <span class="name"><a href="../matchers/hasTextContent.html">hasTextContent</a></span><span class="signature">(<wbr><span class="parameter" id="hasTextContent-param-expected">[<span class="type-annotation">dynamic</span> <span class="parameter-name">expected</span>, </span><span class="parameter" id="hasTextContent-param-normalizeWhitespace"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.13.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">normalizeWhitespace</span> = <span class="default-value">true</span>]</span>)
     <span class="returntype parameter">&#8594; <a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
   </span>
   
@@ -856,63 +902,14 @@ in the provided <code>valuesMap</code> with the corresponding value. <a href="..
 
 
 </div> <!-- /.main-content -->
-
-<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-  <header id="header-search-sidebar" class="hidden-l">
-  <form class="search-sidebar" role="search">
-    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
-  </form>
-</header>
-
-<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">react_testing_library</a></li>
-  <li class="self-crumb">Matchers Topic</li>
-</ol>
-
-
-  <h5><span class="package-name">react_testing_library</span> <span class="package-kind">package</span></h5>
-  <ol>
-      <li class="section-title">Topics</li>
-        <li><a href="../topics/Accessibility-topic.html">Accessibility</a></li>
-        <li><a href="../topics/Async-topic.html">Async</a></li>
-        <li><a href="../topics/ByAltText-topic.html">ByAltText</a></li>
-        <li><a href="../topics/ByDisplayValue-topic.html">ByDisplayValue</a></li>
-        <li><a href="../topics/ByLabelText-topic.html">ByLabelText</a></li>
-        <li><a href="../topics/ByPlaceholderText-topic.html">ByPlaceholderText</a></li>
-        <li><a href="../topics/ByRole-topic.html">ByRole</a></li>
-        <li><a href="../topics/ByTestId-topic.html">ByTestId</a></li>
-        <li><a href="../topics/ByText-topic.html">ByText</a></li>
-        <li><a href="../topics/ByTitle-topic.html">ByTitle</a></li>
-        <li><a href="../topics/Matchers-topic.html">Matchers</a></li>
-        <li><a href="../topics/Queries-topic.html">Queries</a></li>
-        <li><a href="../topics/UserActions-topic.html">UserActions</a></li>
-      <li class="section-title">Libraries</li>
-      <li class="section-subtitle">Dom</li>
-        <li class="section-subitem"><a href="../rtl.dom.accessibility/rtl.dom.accessibility-library.html">rtl.dom.accessibility</a></li>
-        <li class="section-subitem"><a href="../rtl.dom.async/rtl.dom.async-library.html">rtl.dom.async</a></li>
-        <li class="section-subitem"><a href="../rtl.dom.configure/rtl.dom.configure-library.html">rtl.dom.configure</a></li>
-        <li class="section-subitem"><a href="../rtl.dom.debugging/rtl.dom.debugging-library.html">rtl.dom.debugging</a></li>
-        <li class="section-subitem"><a href="../rtl.dom.events/rtl.dom.events-library.html">rtl.dom.events</a></li>
-        <li class="section-subitem"><a href="../rtl.dom.queries/rtl.dom.queries-library.html">rtl.dom.queries</a></li>
-      <li class="section-subtitle">Matchers</li>
-        <li class="section-subitem"><a href="../matchers/matchers-library.html">matchers</a></li>
-      <li class="section-subtitle">React</li>
-        <li class="section-subitem"><a href="../rtl.react/rtl.react-library.html">rtl.react</a></li>
-      <li class="section-subtitle">UserActions</li>
-        <li class="section-subitem"><a href="../user_event/user_event-library.html">user_event</a></li>
-</ol>
-
-</div>
-
 <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   <h5>Matchers Topic</h5>
   <ol>
-  <li class="section-title"><a href="../topics/Matchers-topic.html#libraries">Libraries</a></li>
   <li><a href="../matchers/matchers-library.html">matchers</a></li>
+  <li class="section-title"><a href="../topics/Matchers-topic.html#libraries">Libraries</a></li>
 
 
 
-  <li class="section-title"><a href="../topics/Matchers-topic.html#constants">Constants</a></li>
   <li><a href="../matchers/isChecked-constant.html">isChecked</a></li>
   <li><a href="../matchers/isDisabled-constant.html">isDisabled</a></li>
   <li><a href="../matchers/isEmptyDomElement-constant.html">isEmptyDomElement</a></li>
@@ -920,9 +917,9 @@ in the provided <code>valuesMap</code> with the corresponding value. <a href="..
   <li><a href="../matchers/isFocused-constant.html">isFocused</a></li>
   <li><a href="../matchers/isInTheDocument-constant.html">isInTheDocument</a></li>
   <li><a href="../matchers/isPartiallyChecked-constant.html">isPartiallyChecked</a></li>
+  <li class="section-title"><a href="../topics/Matchers-topic.html#constants">Constants</a></li>
 
 
-  <li class="section-title"><a href="../topics/Matchers-topic.html#functions">Functions</a></li>
   <li><a href="../matchers/containsElement.html">containsElement</a></li>
   <li><a href="../matchers/excludesClasses.html">excludesClasses</a></li>
   <li><a href="../matchers/hasAttribute.html">hasAttribute</a></li>
@@ -934,6 +931,7 @@ in the provided <code>valuesMap</code> with the corresponding value. <a href="..
   <li><a href="../matchers/hasStyles.html">hasStyles</a></li>
   <li><a href="../matchers/hasTextContent.html">hasTextContent</a></li>
   <li><a href="../matchers/hasValue.html">hasValue</a></li>
+  <li class="section-title"><a href="../topics/Matchers-topic.html#functions">Functions</a></li>
 
 
 
@@ -953,9 +951,8 @@ in the provided <code>valuesMap</code> with the corresponding value. <a href="..
 </footer>
 
 
-
-<script src="../static-assets/highlight.pack.js?v1"></script>
-<script src="../static-assets/script.js?v1"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
 
 
 

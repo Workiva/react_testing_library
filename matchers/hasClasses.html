@@ -12,10 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <link rel="stylesheet" href="../static-assets/github.css?v1">
-  <link rel="stylesheet" href="../static-assets/styles.css?v1">
-  <link rel="icon" href="../static-assets/favicon.png?v1">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
 
   <style id="gh_markdown">
     /*NOTE: None of these styles should be necessary once our docs are published to pub.dev*/
@@ -544,74 +543,6 @@
 <main>
 
 
-  <div id="dartdoc-main-content" class="main-content">
-      <div>
-  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/css_class_matchers.dart#L65"><i class="material-icons">description</i></a></div>
-<h1><span class="kind-function">hasClasses</span> function 
- 
-    <span class="category matchers cp-11 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
-</h1></div>
-
-    <section class="multi-line-signature">
-        
-
-<span class="returntype"><a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
-<span class="name ">hasClasses</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="hasClasses-param-classes"><span class="type-annotation">dynamic</span> <span class="parameter-name">classes</span></span></li>
-</ol>)
-
-    </section>
-    
-<section class="desc markdown">
-  <p>Allows you to check whether an <a href="https://api.dart.dev/stable/2.15.1/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute.</p>
-<p><code>classes</code> can be a String of space-separated CSS classes, or an <a href="https://api.dart.dev/stable/2.15.1/dart-core/Iterable-class.html">Iterable</a> of String CSS classes.</p>
-<p>Similar to <a href="https://github.com/testing-library/jest-dom#tohaveclass">jest-dom's <code>toHaveClass</code> matcher</a>.
-However, instead of the JS <code>.not.toHaveClass()</code> pattern, you should use <a href="../matchers/excludesClasses.html">excludesClasses</a>, and instead of
-using the <code>{exact: true}</code> option as you do in JS, you should use <a href="../matchers/hasExactClasses.html">hasExactClasses</a>.</p>
-<h2 id="examples">Examples</h2>
-<pre class="language-html"><code class="language-html">&lt;button class="btn extra btn-danger"&gt;Delete&lt;/button&gt;
-</code></pre>
-<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
-import 'package:react_testing_library/matchers.dart' show hasClasses;
-import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:test/test.dart';
-
-main() {
-  test('', () {
-    // Render the DOM shown in the example snippet above
-    final view = rtl.render(
-      react.button({'className': 'btn extra btn-danger'},
-        'Delete',
-      ),
-    );
-
-    // Use react_testing_library queries to store references to the node(s)
-    final deleteButton = view.getByRole('button', name: 'Delete');
-
-    // Use the `hasClasses` matcher as the second argument of `expect()`
-    expect(deleteButton, hasClasses('extra'));
-    expect(deleteButton, hasClasses('btn-danger btn'));
-    expect(deleteButton, hasClasses(['btn-danger', 'btn']));
-  });
-}
-</code></pre>
-<blockquote>
-<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
-  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
-<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
-  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
-</blockquote>
-</section>
-
-
-    
-<section class="summary source-code" id="source">
-  <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Matcher hasClasses(dynamic classes) =&gt; _ElementClassNameMatcher(_ClassNameMatcher.expected(classes));</code></pre>
-</section>
-
-
-  </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
@@ -660,6 +591,74 @@ main() {
 
   </div><!--/.sidebar-offcanvas-left-->
 
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+  <div id="external-links" class="btn-group"><a title="View source code" class="source-link" href="https://github.com/Workiva/react_testing_library/blob/master/lib/src/matchers/jest_dom/css_class_matchers.dart#L65"><i class="material-icons">description</i></a></div>
+<h1><span class="kind-function">hasClasses</span> function 
+ 
+    <span class="category matchers cp-11 linked" title="This is part of the Matchers Topic."><a href="../topics/Matchers-topic.html">Matchers</a></span>
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype"><a href="https://pub.dev/documentation/matcher/0.12.11/matcher/Matcher-class.html">Matcher</a></span>
+<span class="name ">hasClasses</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="hasClasses-param-classes"><span class="type-annotation">dynamic</span> <span class="parameter-name">classes</span></span></li>
+</ol>)
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Allows you to check whether an <a href="https://api.dart.dev/stable/2.13.4/dart-html/Element-class.html">Element</a> has certain <code>classes</code> within its HTML <code>class</code> attribute.</p>
+<p><code>classes</code> can be a String of space-separated CSS classes, or an <a href="https://api.dart.dev/stable/2.13.4/dart-core/Iterable-class.html">Iterable</a> of String CSS classes.</p>
+<p>Similar to <a href="https://github.com/testing-library/jest-dom#tohaveclass">jest-dom's <code>toHaveClass</code> matcher</a>.
+However, instead of the JS <code>.not.toHaveClass()</code> pattern, you should use <a href="../matchers/excludesClasses.html">excludesClasses</a>, and instead of
+using the <code>{exact: true}</code> option as you do in JS, you should use <a href="../matchers/hasExactClasses.html">hasExactClasses</a>.</p>
+<h2 id="examples">Examples</h2>
+<pre class="language-html"><code class="language-html">&lt;button class="btn extra btn-danger"&gt;Delete&lt;/button&gt;
+</code></pre>
+<pre class="language-dart"><code class="language-dart">import 'package:react/react.dart' as react;
+import 'package:react_testing_library/matchers.dart' show hasClasses;
+import 'package:react_testing_library/react_testing_library.dart' as rtl;
+import 'package:test/test.dart';
+
+main() {
+  test('', () {
+    // Render the DOM shown in the example snippet above
+    final view = rtl.render(
+      react.button({'className': 'btn extra btn-danger'},
+        'Delete',
+      ),
+    );
+
+    // Use react_testing_library queries to store references to the node(s)
+    final deleteButton = view.getByRole('button', name: 'Delete');
+
+    // Use the `hasClasses` matcher as the second argument of `expect()`
+    expect(deleteButton, hasClasses('extra'));
+    expect(deleteButton, hasClasses('btn-danger btn'));
+    expect(deleteButton, hasClasses(['btn-danger', 'btn']));
+  });
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> <code>render()</code> supports React vDom elements / custom components created using either the
+  <a href="https://pub.dev/packages/react">react</a> or <a href="https://pub.dev/packages/over_react">over_react</a> packages.</p>
+<p>The examples shown here use the <code>react</code> package since the <code>react_testing_library</code> does not have a direct
+  dependency on <code>over_react</code> - but both libraries are fully supported.</p>
+</blockquote>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Matcher hasClasses(dynamic classes) =&gt; _ElementClassNameMatcher(_ClassNameMatcher.expected(classes));</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
 
@@ -675,9 +674,8 @@ main() {
 </footer>
 
 
-
-<script src="../static-assets/highlight.pack.js?v1"></script>
-<script src="../static-assets/script.js?v1"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
 
 
 
