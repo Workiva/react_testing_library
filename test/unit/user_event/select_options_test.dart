@@ -94,6 +94,26 @@ void main() {
           );
           _verifySelectEvent(hasClickInit: true);
         });
+
+        test('skipPointerEventsCheck', () {
+          var wasClicked = false;
+          view.rerender(react.select({
+            'style': {'pointer-events': 'none'},
+            'id': 'root',
+            'onClick': (event) {
+              wasClicked = true;
+            },
+            'multiple': isMultiSelect,
+          }, [
+            react.option({'value': '1'}, 'A'),
+            react.option({'value': '2'}, 'B'),
+            react.option({'value': '3'}, 'C'),
+          ]) as ReactElement);
+
+          UserEvent.selectOptions(select, isMultiSelect ? ['1', '3'] : ['3'], skipPointerEventsCheck: true);
+
+          expect(wasClicked, isTrue);
+        });
       }
 
       group('single select', _selectOptionsTestHelper);
@@ -177,6 +197,31 @@ void main() {
           clickInit: {'shiftKey': true},
         );
         _verifyDeselectEvent(hasClickInit: true);
+      });
+
+      test('skipPointerEventsCheck', () {
+        var wasClicked = false;
+        view.rerender(react.select({
+          'style': {'pointer-events': 'none'},
+          'id': 'root',
+          'onClick': (event) {
+            wasClicked = true;
+          },
+          'multiple': true,
+          'defaultValue': ['1', '2', '3'],
+        }, [
+          react.option({'value': '1'}, 'A'),
+          react.option({'value': '2'}, 'B'),
+          react.option({'value': '3'}, 'C'),
+        ]) as ReactElement);
+
+        UserEvent.deselectOptions(
+          select,
+          [view.getByText('A'), view.getByText('C')],
+          skipPointerEventsCheck: true,
+        );
+
+        expect(wasClicked, isTrue);
       });
 
       testEventHandlerErrors(

@@ -97,6 +97,24 @@ void main() {
         _verifyClickEvent(clickCount: clickCount);
       });
 
+      test('skipPointerEventsCheck', () {
+        var wasClicked = false;
+
+        view.rerender(react.button({
+          'style': {'pointerEvents': 'none'},
+          'onClick': (_) {
+            wasClicked = true;
+          }
+        }, 'oh hai') as ReactElement);
+
+        UserEvent.click(
+          view.getByRole('button'),
+          skipPointerEventsCheck: true,
+        );
+
+        expect(wasClicked, isTrue);
+      });
+
       testEventHandlerErrors(
         ['onClick'],
         UserEvent.click,
@@ -135,6 +153,25 @@ void main() {
           eventInit: {'shiftKey': true},
         );
         _verifyDblClickEvent(hasEventInit: true);
+      });
+
+      test('skipPointerEventsCheck', () {
+        var wasClicked = false;
+
+        view.rerender(react.button({
+          'data-test-id': 'the-local-button',
+          'style': {'pointerEvents': 'none'},
+          'onDoubleClick': (_) {
+            wasClicked = true;
+          }
+        }, 'oh hai') as ReactElement);
+
+        UserEvent.dblClick(
+          view.getByRole('button'),
+          skipPointerEventsCheck: true,
+        );
+
+        expect(wasClicked, isTrue);
       });
 
       testEventHandlerErrors(

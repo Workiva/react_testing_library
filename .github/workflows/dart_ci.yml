@@ -37,15 +37,15 @@ jobs:
 
       - name: Run tests (DDC)
         run: |
-          pub run build_runner test -- -P concurrent-tests
-          pub run build_runner test -- -P non-concurrent-tests
+          dart run build_runner test -- -P concurrent-tests
+          dart run build_runner test -- -P non-concurrent-tests
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
         run: |
-          pub run build_runner test -r -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/concurrent/test-results.json
-          pub run build_runner test -r -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/non-concurrent/test-results.json
+          dart run build_runner test -r -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/concurrent/test-results.json
+          dart run build_runner test -r -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/non-concurrent/test-results.json
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 

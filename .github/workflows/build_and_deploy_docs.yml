@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ stable ]
+        sdk: [ 2.13.4 ]
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
@@ -26,7 +26,7 @@ jobs:
       - id: build-docs
         name: Build Docs
         run: pub global activate dartdoc && dartdoc --show-undocumented-categories
-        if: ${{ matrix.sdk == 'stable' }}
+        if: ${{ matrix.sdk == '2.13.4' }}
 
       - id: deploy-docs
         name: Deploy Docs 🚀
