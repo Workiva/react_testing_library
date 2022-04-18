@@ -14,7 +14,10 @@ RUN eval "$(ssh-agent -s)" && \
 	ssh-add /root/.ssh/id_rsa
 
 WORKDIR /build/
-ADD pubspec.yaml /build
-RUN pub get
+COPY pubspec.yaml .
+RUN dart pub get
+COPY /lib ./lib/
 ARG BUILD_ARTIFACTS_AUDIT=/build/pubspec.lock
+# Output the bundle to be verified in Skynet runs.
+ARG BUILD_ARTIFACTS_RTL_JS_BUNDLE=/build/lib/js/react-testing-library.js
 FROM scratch
