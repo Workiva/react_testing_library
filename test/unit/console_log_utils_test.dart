@@ -138,10 +138,10 @@ void main() {
         // the test package.
         final printCalls = recordPrintCalls(() {
           printConsoleLogs(() {
-            callMethod(getProperty(window, 'console'), 'log', ['%s World!', 'Hello']);
+            callMethod(getProperty(window, 'console'), 'log', ['%s World Number %d! %j', 'Hello', 5, jsify({'doWeComeInPeace':false}), 'additional']);
           });
         });
-        expect(printCalls, ['Hello World']);
+        expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
       });
 
       test('prints even if the function throws partway through', () {
