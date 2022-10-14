@@ -16,6 +16,7 @@
 
 import 'dart:async';
 import 'dart:html';
+import 'dart:js_util';
 
 import 'package:react/react.dart' as react;
 import 'package:react/react_client/react_interop.dart';
@@ -128,6 +129,19 @@ void main() {
           });
         });
         expect(printCalls, ['foo', 'bar']);
+      });
+
+      test('prints logs that use formatter syntax', () {
+        // This also tests functionally that the print call occurs in the right zone,
+        // which need to happen for them to be forwarded in the terminal in a test environment.
+        // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+        // the test package.
+        final printCalls = recordPrintCalls(() {
+          printConsoleLogs(() {
+            callMethod(getProperty(window, 'console'), 'log', ['%s World!', 'Hello']);
+          });
+        });
+        expect(printCalls, ['Hello World']);
       });
 
       test('prints even if the function throws partway through', () {
