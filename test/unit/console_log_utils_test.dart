@@ -131,30 +131,50 @@ void main() {
         expect(printCalls, ['foo', 'bar']);
       });
 
-      test('prints logs that use formatter syntax', () {
-        // This also tests functionally that the print call occurs in the right zone,
-        // which need to happen for them to be forwarded in the terminal in a test environment.
-        // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
-        // the test package.
-        final printCalls = recordPrintCalls(() {
-          printConsoleLogs(() {
-            callMethod(getProperty(window, 'console'), 'log', ['%s World Number %d! %j', 'Hello', 5, jsify({'doWeComeInPeace':false}), 'additional']);
+      group('prints logs that use formatter syntax', () {
+        test('with exact amount of args', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              callMethod(getProperty(window, 'console'), 'log', ['%s World Number %d! %j', 'Hello']);
+            });
           });
+          expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
         });
-        expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
-      });
 
-      test('prints logs that use formatter syntax without enough args', () {
-        // This also tests functionally that the print call occurs in the right zone,
-        // which need to happen for them to be forwarded in the terminal in a test environment.
-        // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
-        // the test package.
-        final printCalls = recordPrintCalls(() {
-          printConsoleLogs(() {
-            callMethod(getProperty(window, 'console'), 'log', ['%s World Number %d! %j', 'Hello']);
+        test('with too many args', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              callMethod(getProperty(window, 'console'), 'log', [
+                '%s World Number %d! %j',
+                'Hello',
+                5,
+                jsify({'doWeComeInPeace': false})
+              ]);
+            });
           });
+          expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
         });
-        expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
+
+        test('without enough args', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              callMethod(getProperty(window, 'console'), 'log', ['%s World Number %d! %j', 'Hello']);
+            });
+          });
+          expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
+        });
       });
 
       test('prints even if the function throws partway through', () {
@@ -210,10 +230,7 @@ void main() {
         ];
 
         if (runtimeSupportsPropTypeWarnings()) {
-          expect(
-              logs,
-              unorderedEquals(
-                  [...expectedLogs, contains('shouldNeverBeNull is necessary.'), contains('⚠️  Warning:')]));
+          expect(logs, unorderedEquals([...expectedLogs, contains('shouldNeverBeNull is necessary.'), contains('⚠️  Warning:')]));
         } else {
           expect(logs, unorderedEquals(expectedLogs));
         }
@@ -250,8 +267,7 @@ void main() {
     if (runtimeSupportsPropTypeWarnings()) {
       group('captures errors correctly', () {
         test('when mounting', () {
-          final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement),
-              configuration: ConsoleConfig.error);
+          final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement), configuration: ConsoleConfig.error);
 
           expect(
               logs,
@@ -266,15 +282,14 @@ void main() {
           final view = rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement);
 
           // Should clear the error from mounting and not create any more
-          final logs = recordConsoleLogs(() => view.rerender(Sample({'shouldNeverBeNull': true}) as ReactElement),
-              configuration: ConsoleConfig.error);
+          final logs =
+              recordConsoleLogs(() => view.rerender(Sample({'shouldNeverBeNull': true}) as ReactElement), configuration: ConsoleConfig.error);
 
           expect(logs, hasLength(0));
         });
 
         test('with nested components', () {
-          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
-              configuration: ConsoleConfig.error);
+          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement), configuration: ConsoleConfig.error);
 
           expect(
               logs,
@@ -285,8 +300,7 @@ void main() {
         });
 
         test('with nested components that are the same', () {
-          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
-              configuration: ConsoleConfig.error);
+          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement), configuration: ConsoleConfig.error);
 
           expect(
               logs,
@@ -321,8 +335,7 @@ void main() {
         final view = rtl.render(Sample({}) as ReactElement);
 
         // Should clear the previous log and result in there being two
-        final logs = recordConsoleLogs(() => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
-            configuration: ConsoleConfig.log);
+        final logs = recordConsoleLogs(() => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement), configuration: ConsoleConfig.log);
 
         expect(
             logs,
@@ -333,8 +346,7 @@ void main() {
       });
 
       test('with nested components', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
-            configuration: ConsoleConfig.log);
+        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement), configuration: ConsoleConfig.log);
 
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
@@ -359,8 +371,7 @@ void main() {
       });
 
       test('with nested components that are the same', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
-            configuration: ConsoleConfig.log);
+        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement), configuration: ConsoleConfig.log);
 
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
@@ -402,8 +413,7 @@ void main() {
         final view = rtl.render(Sample({}) as ReactElement);
 
         // Should clear the previous warnings and result in there being 3
-        final logs = recordConsoleLogs(() => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
-            configuration: ConsoleConfig.warn);
+        final logs = recordConsoleLogs(() => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement), configuration: ConsoleConfig.warn);
 
         expect(
             logs,
@@ -415,15 +425,13 @@ void main() {
       });
 
       test('with nested components', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
-            configuration: ConsoleConfig.warn);
+        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement), configuration: ConsoleConfig.warn);
 
         expect(logs, hasLength(6));
       });
 
       test('with nested components that are the same', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
-            configuration: ConsoleConfig.warn);
+        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement), configuration: ConsoleConfig.warn);
 
         expect(logs, hasLength(6));
       });
