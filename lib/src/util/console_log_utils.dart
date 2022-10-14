@@ -16,6 +16,7 @@
 
 import 'dart:async';
 import 'dart:js';
+import 'dart:js_util';
 
 import 'package:meta/meta.dart';
 import 'package:react/react_client/react_interop.dart';
@@ -101,7 +102,7 @@ void Function() startSpyingOnConsoleLogs({
     context['console'][config] = JsFunction.withThis((self, [message, arg1, arg2, arg3, arg4, arg5]) {
       // NOTE: Using console.log or print within this function will cause an infinite
       // loop when the logType is set to `log`.
-      boundOnLog(message?.toString());
+      boundOnLog(format(message?.toString(), [arg1, arg2, arg3, arg4, arg5]));
       consoleRefs[config].apply([message, arg1, arg2, arg3, arg4, arg5], thisArg: self);
     });
   }
@@ -151,4 +152,52 @@ class ConsoleConfig {
 
   /// Captures calls to `console.log`, `console.warn`, and `console.error`.
   static const ConsoleConfig all = ConsoleConfig._('all');
+}
+
+final formatRegExp = RegExp('%[sdj%]');
+String format(dynamic f, List<dynamic> arguments) {
+  if (f is! String) {
+    final objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.add(arguments[i]);
+    }
+    return objects.join(' ');
+  }
+
+  var str = '';
+  if (f is String) {
+    if (!f.contains('%')) return f;
+
+    var i = 0;
+    final args = arguments;
+    final len = args.length;
+    str += f.replaceAllMapped(formatRegExp, (m) {
+      final x = m[0].toString();
+      if (x == '%%') return '%';
+      if (i >= len) return x;
+      switch (x) {
+        case '%s':
+          return args[i++].toString();
+        case '%d':
+          return num.tryParse(args[i++].toString()).toString();
+        case '%j':
+          try {
+            return callMethod(context['JSON'], 'stringify', [args[i++]]).toString();
+          } catch (_) {
+            return '[Circular]';
+          }
+          break;
+        default:
+          return x;
+      }
+    });
+
+    if (i < len) {
+      for (var x = args[i]; i < len; x = args[i++]) {
+        str += ' $x';
+      }
+    }
+  }
+
+  return str;
 }
