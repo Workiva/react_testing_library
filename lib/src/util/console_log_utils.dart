@@ -15,6 +15,7 @@
 // limitations under the License.
 
 import 'dart:async';
+import 'dart:html';
 import 'dart:js';
 import 'dart:js_util';
 
@@ -182,7 +183,7 @@ String format(dynamic f, List<dynamic> arguments) {
           return num.tryParse(args[i++].toString()).toString();
         case '%j':
           try {
-            return callMethod(context['JSON'], 'stringify', [args[i++]]).toString();
+            return callMethod(getProperty(window,'JSON'), 'stringify', [args[i++]]).toString();
           } catch (_) {
             return '[Circular]';
           }
