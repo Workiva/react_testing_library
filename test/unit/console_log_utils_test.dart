@@ -144,6 +144,19 @@ void main() {
         expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
       });
 
+      test('prints logs that use formatter syntax without enough args', () {
+        // This also tests functionally that the print call occurs in the right zone,
+        // which need to happen for them to be forwarded in the terminal in a test environment.
+        // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+        // the test package.
+        final printCalls = recordPrintCalls(() {
+          printConsoleLogs(() {
+            callMethod(getProperty(window, 'console'), 'log', ['%s World Number %d! %j', 'Hello']);
+          });
+        });
+        expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
+      });
+
       test('prints even if the function throws partway through', () {
         final printCalls = recordPrintCalls(() {
           expect(() {

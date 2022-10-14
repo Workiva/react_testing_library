@@ -15,12 +15,12 @@
 // limitations under the License.
 
 import 'dart:async';
-import 'dart:html';
 import 'dart:js';
-import 'dart:js_util';
 
 import 'package:meta/meta.dart';
 import 'package:react/react_client/react_interop.dart';
+
+import 'console_log_formatter.dart';
 
 /// Runs a provided [callback] and afterwards [print]s each log that occurs during the runtime
 /// of that function.
@@ -153,52 +153,4 @@ class ConsoleConfig {
 
   /// Captures calls to `console.log`, `console.warn`, and `console.error`.
   static const ConsoleConfig all = ConsoleConfig._('all');
-}
-
-final formatRegExp = RegExp('%[sdj%]');
-String format(dynamic f, List<dynamic> arguments) {
-  if (f is! String) {
-    final objects = [];
-    for (var i = 0; i < arguments.length; i++) {
-      objects.add(arguments[i]);
-    }
-    return objects.join(' ');
-  }
-
-  var str = '';
-  if (f is String) {
-    if (!f.contains('%')) return f;
-
-    var i = 0;
-    final args = arguments;
-    final len = args.length;
-    str += f.replaceAllMapped(formatRegExp, (m) {
-      final x = m[0].toString();
-      if (x == '%%') return '%';
-      if (i >= len) return x;
-      switch (x) {
-        case '%s':
-          return args[i++].toString();
-        case '%d':
-          return num.tryParse(args[i++].toString()).toString();
-        case '%j':
-          try {
-            return callMethod(getProperty(window,'JSON'), 'stringify', [args[i++]]).toString();
-          } catch (_) {
-            return '[Circular]';
-          }
-          break;
-        default:
-          return x;
-      }
-    });
-
-    if (i < len) {
-      for (var x = args[i]; i < len; x = args[i++]) {
-        str += ' $x';
-      }
-    }
-  }
-
-  return str;
 }
