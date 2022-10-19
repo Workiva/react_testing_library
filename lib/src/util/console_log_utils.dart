@@ -80,8 +80,6 @@ T spyOnConsoleLogs<T>(
   }
 }
 
-get _console => getProperty(window, 'console');
-
 /// Starts spying on console logs, calling [onLog] for each log that occurs until the
 /// returned function (`stopSpying`) is called.
 ///
@@ -101,6 +99,7 @@ void Function() startSpyingOnConsoleLogs({
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, dynamic>{};
   final consolePropertyDescriptors = <String, dynamic>{};
+  final _console = getProperty(window, 'console');
 
   _resetPropTypeWarningCache();
 
