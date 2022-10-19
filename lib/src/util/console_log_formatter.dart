@@ -25,16 +25,22 @@
 @JS()
 library console_log_formatter;
 
-import 'dart:developer';
-
 import 'package:js/js.dart';
 
 @JS('JSON.stringify')
 external String _jsonStringify(dynamic object);
 
-final _formatRegExp = RegExp('%[sdj%]');
+final _formatRegExp = RegExp('%[sdifoOj%]');
 
-/// A doc comment
+/// A simple formatter implementation for dart.
+///
+/// If specifier is:
+/// - `%s` (String): results in `arg.toString()`.
+/// - `%d` or `%i` (Number): results in `num.tryParse(arg)`.
+/// - `%f` (Float/Double): results in `double.tryParse(arg)`.
+/// - `%o` or '%O' or '%j' (object/JSON): results in `JSON.stringify(arg)`.
+///
+/// see: https://console.spec.whatwg.org/#formatter
 String format(dynamic f, List<dynamic> arguments) {
   if (f is! String) {
     return [f, ...arguments].join(' ');
@@ -51,15 +57,18 @@ String format(dynamic f, List<dynamic> arguments) {
       switch (x) {
         case '%s':
           return arguments[i++].toString();
+        case '%i':
         case '%d':
+        case '%f':
           return num.tryParse(arguments[i++].toString()).toString();
+        case '%o':
+        case '%O':
         case '%j':
           try {
             final argToStringify = arguments[i++];
-            debugger();
             return _jsonStringify(argToStringify);
           } catch (_) {
-            return x;
+            return '[Circular]';
           }
           break;
         default:

@@ -114,11 +114,24 @@ void Function() startSpyingOnConsoleLogs({
       newObject(),
       consolePropertyDescriptors[config],
       jsify({
-        'value': allowInteropCaptureThis((self,
-            [message, arg1 = _undefined, arg2 = _undefined, arg3 = _undefined, arg4 = _undefined, arg5 = _undefined]) {
+        'value': allowInteropCaptureThis((
+          self, [
+          message,
+          arg1 = _undefined,
+          arg2 = _undefined,
+          arg3 = _undefined,
+          arg4 = _undefined,
+          arg5 = _undefined,
+          arg6 = _undefined,
+          arg7 = _undefined,
+          arg8 = _undefined,
+          arg9 = _undefined,
+          arg10 = _undefined,
+        ]) {
           // NOTE: Using console.log or print within this function will cause an infinite
           // loop when the logType is set to `log`.
-          final args = [arg1, arg2, arg3, arg4, arg5]..removeWhere((arg) => arg == _undefined);
+          final args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+            ..removeWhere((arg) => arg == _undefined);
           boundOnLog(format(message?.toString(), args));
           consoleRefs[config].apply([message, ...args], thisArg: self);
         })

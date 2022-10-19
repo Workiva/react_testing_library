@@ -131,7 +131,20 @@ void main() {
         expect(printCalls, ['foo', 'bar']);
       });
 
-      group('prints logs that use formatter syntax', () {
+      group('prints logs with formatter syntax', () {
+        test('handles all formatter %[sdifoOj%] syntax', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final object = jsify({'foo': true});
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              consoleLog(['%s %d %i %f %o %O %j %%', 'Hello', 5, '-NaN', 3.14, object, object, object]);
+            });
+          });
+          expect(printCalls, ['Hello 5 NaN 3.14 {"foo":true} {"foo":true} {"foo":true} %']);
+        });
         test('with exact amount of args', () {
           // This also tests functionally that the print call occurs in the right zone,
           // which need to happen for them to be forwarded in the terminal in a test environment.
