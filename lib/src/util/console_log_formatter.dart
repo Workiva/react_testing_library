@@ -25,6 +25,8 @@
 @JS()
 library console_log_formatter;
 
+import 'dart:developer';
+
 import 'package:js/js.dart';
 
 @JS('JSON.stringify')
@@ -53,7 +55,9 @@ String format(dynamic f, List<dynamic> arguments) {
           return num.tryParse(arguments[i++].toString()).toString();
         case '%j':
           try {
-            return _jsonStringify([arguments[i++]]);
+            final argToStringify = arguments[i++];
+            debugger();
+            return _jsonStringify(argToStringify);
           } catch (_) {
             return x;
           }
