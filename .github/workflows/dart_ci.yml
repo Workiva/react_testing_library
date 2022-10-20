@@ -44,25 +44,10 @@ jobs:
 
       - name: Run tests (dart2js)
         run: |
-          dart run build_runner test -r -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/concurrent/test-results.json
-          dart run build_runner test -r -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/non-concurrent/test-results.json
+          dart run build_runner test -r -- -P concurrent-tests
+          dart run build_runner test -r -- -P non-concurrent-tests
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
-
-      - name: Upload Unit Test Results
-        uses: actions/upload-artifact@v2
-        if: ${{ steps.install.outcome == 'success' && (success() || failure()) }} # run this step even if previous step failed, but not if it was skipped
-        with:
-          name: test-results@${{ matrix.sdk }}
-          path: reports/${{ matrix.sdk }}/**/*.json
-
-      - name: Report Unit Test Results
-        uses: dorny/test-reporter@v1
-        if: ${{ always() && steps.install.outcome == 'success' }}
-        with:
-          name: Unit Test Results (${{ matrix.sdk }})
-          path: 'reports/**/test-results.json'
-          reporter: dart-json
 
   build_legacy:
     runs-on: ubuntu-latest
@@ -98,22 +83,7 @@ jobs:
 
       - name: Run tests (dart2js)
         run: |
-          pub run build_runner test -r -- -P concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/concurrent/test-results.json
-          pub run build_runner test -r -- -P non-concurrent-tests --file-reporter json:reports/${{ matrix.sdk }}/dart2js/non-concurrent/test-results.json
+          pub run build_runner test -r -- -P concurrent-tests
+          pub run build_runner test -r -- -P non-concurrent-tests
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
-
-      - name: Upload Unit Test Results
-        uses: actions/upload-artifact@v2
-        if: ${{ steps.install.outcome == 'success' && (success() || failure()) }} # run this step even if previous step failed, but not if it was skipped
-        with:
-          name: test-results@${{ matrix.sdk }}
-          path: reports/${{ matrix.sdk }}/**/*.json
-
-      - name: Report Unit Test Results
-        uses: dorny/test-reporter@v1
-        if: ${{ always() && steps.install.outcome == 'success' }}
-        with:
-          name: Unit Test Results (${{ matrix.sdk }})
-          path: 'reports/**/test-results.json'
-          reporter: dart-json
