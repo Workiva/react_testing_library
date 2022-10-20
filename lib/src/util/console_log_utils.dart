@@ -113,7 +113,8 @@ void Function() startSpyingOnConsoleLogs({
       newObject(),
       consolePropertyDescriptors[config],
       jsify({
-        'value': allowInterop(([
+        'value': allowInteropCaptureThis((
+          self, [
           message,
           arg1 = _undefined,
           arg2 = _undefined,
@@ -131,7 +132,7 @@ void Function() startSpyingOnConsoleLogs({
           final args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
             ..removeWhere((arg) => arg == _undefined);
           boundOnLog(format(message, args));
-          _jsFunctionApply(consoleRefs[config], [message, ...args]);
+          _jsFunctionApply(consoleRefs[config], [message, ...args], thisArg: self);
         })
       }),
     );
@@ -185,8 +186,8 @@ class ConsoleConfig {
   static const ConsoleConfig all = ConsoleConfig._('all');
 }
 
-dynamic _jsFunctionApply(dynamic jsFunction, List<dynamic> args) {
-  return callMethod(jsFunction, 'apply', [null, jsify(args)]);
+dynamic _jsFunctionApply(dynamic jsFunction, List<dynamic> args, {dynamic thisArg}) {
+  return callMethod(jsFunction, 'apply', [thisArg, jsify(args)]);
 }
 
 const _undefined = _Undefined();
