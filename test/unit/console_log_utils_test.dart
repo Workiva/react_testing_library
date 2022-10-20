@@ -16,6 +16,7 @@
 
 import 'dart:async';
 import 'dart:html';
+import 'dart:js_util';
 
 import 'package:react/react.dart' as react;
 import 'package:react/react_client/react_interop.dart';
@@ -130,6 +131,66 @@ void main() {
         expect(printCalls, ['foo', 'bar']);
       });
 
+      group('prints logs with formatter syntax', () {
+        test('handles all formatter %[sdifoOj%] syntax', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final object = jsify({'foo': true});
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              consoleLog(['%s %d %i %f %o %O %j %%', 'Hello', 5, '-NaN', 3.14, object, object, object]);
+            });
+          });
+          expect(printCalls, ['Hello 5 NaN 3.14 {"foo":true} {"foo":true} {"foo":true} %']);
+        });
+        test('with exact amount of args', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              consoleLog(['%s World Number %d!', 'Hello', 5]);
+            });
+          });
+          expect(printCalls, ['Hello World Number 5!']);
+        });
+
+        test('with too many args', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              consoleLog([
+                '%s World Number %d! %j',
+                'Hello',
+                5,
+                jsify({'doWeComeInPeace': false}),
+                'additional'
+              ]);
+            });
+          });
+          expect(printCalls, ['Hello World Number 5! {"doWeComeInPeace":false} additional']);
+        });
+
+        test('without enough args', () {
+          // This also tests functionally that the print call occurs in the right zone,
+          // which need to happen for them to be forwarded in the terminal in a test environment.
+          // If it wasn't in the right zone, we wouldn't be able to record it, and neither would
+          // the test package.
+          final printCalls = recordPrintCalls(() {
+            printConsoleLogs(() {
+              consoleLog(['%s World Number %d! %j', 'Hello']);
+            });
+          });
+          expect(printCalls, ['Hello World Number %d! %j']);
+        });
+      });
+
       test('prints even if the function throws partway through', () {
         final printCalls = recordPrintCalls(() {
           expect(() {
@@ -184,9 +245,15 @@ void main() {
 
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
-              logs,
-              unorderedEquals(
-                  [...expectedLogs, contains('shouldNeverBeNull is necessary.'), contains('⚠️  Warning:')]));
+            logs,
+            unorderedEquals(
+              [
+                ...expectedLogs,
+                contains('shouldNeverBeNull is necessary.'),
+                contains('⚠️  Warning:'),
+              ],
+            ),
+          );
         } else {
           expect(logs, unorderedEquals(expectedLogs));
         }
@@ -223,8 +290,10 @@ void main() {
     if (runtimeSupportsPropTypeWarnings()) {
       group('captures errors correctly', () {
         test('when mounting', () {
-          final logs = recordConsoleLogs(() => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement),
-              configuration: ConsoleConfig.error);
+          final logs = recordConsoleLogs(
+            () => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement),
+            configuration: ConsoleConfig.error,
+          );
 
           expect(
               logs,
@@ -239,8 +308,10 @@ void main() {
           final view = rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement);
 
           // Should clear the error from mounting and not create any more
-          final logs = recordConsoleLogs(() => view.rerender(Sample({'shouldNeverBeNull': true}) as ReactElement),
-              configuration: ConsoleConfig.error);
+          final logs = recordConsoleLogs(
+            () => view.rerender(Sample({'shouldNeverBeNull': true}) as ReactElement),
+            configuration: ConsoleConfig.error,
+          );
 
           expect(logs, hasLength(0));
         });
@@ -258,8 +329,10 @@ void main() {
         });
 
         test('with nested components that are the same', () {
-          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
-              configuration: ConsoleConfig.error);
+          final logs = recordConsoleLogs(
+            () => rtl.render(Sample({}, Sample({})) as ReactElement),
+            configuration: ConsoleConfig.error,
+          );
 
           expect(
               logs,
@@ -294,8 +367,10 @@ void main() {
         final view = rtl.render(Sample({}) as ReactElement);
 
         // Should clear the previous log and result in there being two
-        final logs = recordConsoleLogs(() => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
-            configuration: ConsoleConfig.log);
+        final logs = recordConsoleLogs(
+          () => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
+          configuration: ConsoleConfig.log,
+        );
 
         expect(
             logs,
@@ -306,8 +381,10 @@ void main() {
       });
 
       test('with nested components', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
-            configuration: ConsoleConfig.log);
+        final logs = recordConsoleLogs(
+          () => rtl.render(Sample({}, Sample2({})) as ReactElement),
+          configuration: ConsoleConfig.log,
+        );
 
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
@@ -332,8 +409,10 @@ void main() {
       });
 
       test('with nested components that are the same', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
-            configuration: ConsoleConfig.log);
+        final logs = recordConsoleLogs(
+          () => rtl.render(Sample({}, Sample({})) as ReactElement),
+          configuration: ConsoleConfig.log,
+        );
 
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
@@ -375,8 +454,10 @@ void main() {
         final view = rtl.render(Sample({}) as ReactElement);
 
         // Should clear the previous warnings and result in there being 3
-        final logs = recordConsoleLogs(() => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
-            configuration: ConsoleConfig.warn);
+        final logs = recordConsoleLogs(
+          () => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
+          configuration: ConsoleConfig.warn,
+        );
 
         expect(
             logs,
@@ -388,15 +469,19 @@ void main() {
       });
 
       test('with nested components', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
-            configuration: ConsoleConfig.warn);
+        final logs = recordConsoleLogs(
+          () => rtl.render(Sample({}, Sample2({})) as ReactElement),
+          configuration: ConsoleConfig.warn,
+        );
 
         expect(logs, hasLength(6));
       });
 
       test('with nested components that are the same', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement),
-            configuration: ConsoleConfig.warn);
+        final logs = recordConsoleLogs(
+          () => rtl.render(Sample({}, Sample({})) as ReactElement),
+          configuration: ConsoleConfig.warn,
+        );
 
         expect(logs, hasLength(6));
       });
@@ -531,3 +616,5 @@ class _Sample2Component extends react.Component2 {
 
 // ignore: type_annotate_public_apis
 final Sample2 = react.registerComponent2(() => _Sample2Component());
+
+void consoleLog(List<dynamic> args) => callMethod(getProperty(window, 'console'), 'log', args);

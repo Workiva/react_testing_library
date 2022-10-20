@@ -14,11 +14,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:async';
-import 'dart:js';
+@JS()
+library console_log_utils;
 
+import 'dart:async';
+import 'dart:html';
+import 'dart:js';
+import 'dart:js_util';
+
+import 'package:js/js.dart';
 import 'package:meta/meta.dart';
 import 'package:react/react_client/react_interop.dart';
+
+import 'console_log_formatter.dart';
 
 /// Runs a provided [callback] and afterwards [print]s each log that occurs during the runtime
 /// of that function.
@@ -89,7 +97,9 @@ void Function() startSpyingOnConsoleLogs({
   @required void Function(String) onLog,
 }) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
-  final consoleRefs = <String, JsFunction>{};
+  final consoleRefs = <String, /* JavascriptFunction */ dynamic>{};
+  final consolePropertyDescriptors = <String, dynamic>{};
+  final _console = getProperty(window, 'console');
 
   _resetPropTypeWarningCache();
 
@@ -97,18 +107,41 @@ void Function() startSpyingOnConsoleLogs({
   final boundOnLog = Zone.current.bindUnaryCallback(onLog);
 
   for (final config in logTypeToCapture) {
-    consoleRefs[config] = context['console'][config] as JsFunction;
-    context['console'][config] = JsFunction.withThis((self, [message, arg1, arg2, arg3, arg4, arg5]) {
-      // NOTE: Using console.log or print within this function will cause an infinite
-      // loop when the logType is set to `log`.
-      boundOnLog(message?.toString());
-      consoleRefs[config].apply([message, arg1, arg2, arg3, arg4, arg5], thisArg: self);
-    });
+    consolePropertyDescriptors[config] = _getOwnPropertyDescriptor(_console, config);
+    consoleRefs[config] = getProperty(_console, config);
+    final newDescriptor = _assign(
+      newObject(),
+      consolePropertyDescriptors[config],
+      jsify({
+        'value': allowInteropCaptureThis((
+          self, [
+          message,
+          arg1 = _undefined,
+          arg2 = _undefined,
+          arg3 = _undefined,
+          arg4 = _undefined,
+          arg5 = _undefined,
+          arg6 = _undefined,
+          arg7 = _undefined,
+          arg8 = _undefined,
+          arg9 = _undefined,
+          arg10 = _undefined,
+        ]) {
+          // NOTE: Using console.log or print within this function will cause an infinite
+          // loop when the logType is set to `log`.
+          final args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
+            ..removeWhere((arg) => arg == _undefined);
+          boundOnLog(format(message, args));
+          _jsFunctionApply(consoleRefs[config], [message, ...args], thisArg: self);
+        })
+      }),
+    );
+    _defineProperty(_console, config, newDescriptor);
   }
 
   void stopSpying() {
     for (final config in logTypeToCapture) {
-      context['console'][config] = consoleRefs[config];
+      _defineProperty(_console, config, consolePropertyDescriptors[config]);
     }
   }
 
@@ -152,3 +185,30 @@ class ConsoleConfig {
   /// Captures calls to `console.log`, `console.warn`, and `console.error`.
   static const ConsoleConfig all = ConsoleConfig._('all');
 }
+
+dynamic _jsFunctionApply(dynamic jsFunction, List<dynamic> args, {dynamic thisArg}) {
+  return callMethod(jsFunction, 'apply', [thisArg, jsify(args)]);
+}
+
+const _undefined = _Undefined();
+
+/// Represents and unused argument
+class _Undefined {
+  const _Undefined();
+}
+
+@JS('Object.assign')
+external dynamic _assign(dynamic object, dynamic otherObject, [dynamic anotherObject]);
+
+@JS('Object.getOwnPropertyDescriptor')
+external _PropertyDescriptor _getOwnPropertyDescriptor(dynamic object, String propertyName);
+
+@JS('Object.defineProperty')
+external void _defineProperty(dynamic object, String propertyName, dynamic descriptor);
+
+@JS('Object.prototype.hasOwnProperty')
+external bool _hasOwnProperty(dynamic object, String name);
+
+@JS()
+@anonymous
+class _PropertyDescriptor {}
