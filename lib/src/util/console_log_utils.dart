@@ -97,7 +97,7 @@ void Function() startSpyingOnConsoleLogs({
   @required void Function(String) onLog,
 }) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
-  final consoleRefs = <String, dynamic>{};
+  final consoleRefs = <String, JsFunction>{};
   final consolePropertyDescriptors = <String, dynamic>{};
   final _console = getProperty(window, 'console');
 
@@ -108,7 +108,7 @@ void Function() startSpyingOnConsoleLogs({
 
   for (final config in logTypeToCapture) {
     consolePropertyDescriptors[config] = _getOwnPropertyDescriptor(_console, config);
-    consoleRefs[config] = context['console'][config];
+    consoleRefs[config] = context['console'][config] as JsFunction;
     final newDescriptor = _assign(
       newObject(),
       consolePropertyDescriptors[config],
