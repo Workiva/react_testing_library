@@ -97,7 +97,7 @@ void Function() startSpyingOnConsoleLogs({
   @required void Function(String) onLog,
 }) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
-  final consoleRefs = <String, JsFunction>{};
+  final consoleRefs = <String, /* JavascriptFunction */ dynamic>{};
   final consolePropertyDescriptors = <String, dynamic>{};
   final _console = getProperty(window, 'console');
 
@@ -108,13 +108,12 @@ void Function() startSpyingOnConsoleLogs({
 
   for (final config in logTypeToCapture) {
     consolePropertyDescriptors[config] = _getOwnPropertyDescriptor(_console, config);
-    consoleRefs[config] = context['console'][config] as JsFunction;
+    consoleRefs[config] = getProperty(_console, config);
     final newDescriptor = _assign(
       newObject(),
       consolePropertyDescriptors[config],
       jsify({
-        'value': allowInteropCaptureThis((
-          self, [
+        'value': allowInterop(([
           message,
           arg1 = _undefined,
           arg2 = _undefined,
@@ -131,8 +130,8 @@ void Function() startSpyingOnConsoleLogs({
           // loop when the logType is set to `log`.
           final args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
             ..removeWhere((arg) => arg == _undefined);
-          boundOnLog(format(message?.toString(), args));
-          consoleRefs[config].apply([message, ...args], thisArg: self);
+          boundOnLog(format(message, args));
+          _jsFunctionApply(consoleRefs[config], [message, ...args]);
         })
       }),
     );
@@ -186,10 +185,15 @@ class ConsoleConfig {
   static const ConsoleConfig all = ConsoleConfig._('all');
 }
 
-const _undefined = Undefined();
+dynamic _jsFunctionApply(dynamic jsFunction, List<dynamic> args) {
+  return callMethod(jsFunction, 'apply', [null, jsify(args)]);
+}
 
-class Undefined {
-  const Undefined();
+const _undefined = _Undefined();
+
+/// Represents and unused argument
+class _Undefined {
+  const _Undefined();
 }
 
 @JS('Object.assign')
