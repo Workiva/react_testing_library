@@ -1,10 +1,16 @@
 # React Testing Library Changelog
 
+## 2.1.1
+* [#53](https://github.com/Workiva/react_testing_library/pull/53) Remove a CI check that was no longer working properly
+* [#52](https://github.com/Workiva/react_testing_library/pull/52) Fix missing arguments in formatted output from forwarded console logs
+* [#51](https://github.com/Workiva/react_testing_library/pull/51) Update references to the previous team name with Frontend Frameworks Design
+* [#49](https://github.com/Workiva/react_testing_library/pull/49) Add changelog for 2.1.0 release, add de-facto skynet plan -
+
 ## 2.1.0
-- [#48](https://github.com/Workiva/react_testing_library/pull/48) Expose the `skipPointerEventsCheck` check
+* [#48](https://github.com/Workiva/react_testing_library/pull/48) Expose the `skipPointerEventsCheck` check
 
 ## 2.0.1
-- Fix test ID queries using test IDs in RegExps without escaping them
+* Fix test ID queries using test IDs in RegExps without escaping them
 
 ## 2.0.0
 * **BREAKING CHANGE**: `UserEvent.*` and `fireEvent[ByName]` will now rethrow uncaught errors that occur in event propagation.
