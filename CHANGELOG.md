@@ -1,6 +1,7 @@
 # React Testing Library Changelog
 
 ## 2.1.1
+* [#54](https://github.com/Workiva/react_testing_library/pull/54) Update CHANGELOG for 2.1.1 Release
 * [#53](https://github.com/Workiva/react_testing_library/pull/53) Remove a CI check that was no longer working properly
 * [#52](https://github.com/Workiva/react_testing_library/pull/52) Fix missing arguments in formatted output from forwarded console logs
 * [#51](https://github.com/Workiva/react_testing_library/pull/51) Update references to the previous team name with Frontend Frameworks Design
