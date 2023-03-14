@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ 2.13.4 ]
+        sdk: [ 2.18.7 ]
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
@@ -31,7 +31,7 @@ jobs:
       - id: build-docs
         name: Build Docs
         run: dart pub global activate dartdoc && dartdoc --show-undocumented-categories
-        if: ${{ matrix.sdk == '2.13.4' }}
+        if: ${{ matrix.sdk == '2.18.7' }}
 
       # Upload the artifact as required by actions/deploy-pages
       - name: Archive Dartdoc Artifact
