@@ -35,7 +35,7 @@ jobs:
 
       # Upload the artifact as required by actions/deploy-pages
       - name: Archive Dartdoc Artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v1.0.7
         with:
           name: dartdoc
           path: doc/api/
