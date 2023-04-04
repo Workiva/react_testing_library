@@ -46,7 +46,7 @@ jobs:
           dart run build_runner test -r -- -P concurrent-tests
           dart run build_runner test -r -- -P non-concurrent-tests
         timeout-minutes: 10
-  if: ${{ always() && steps.install.outcome == 'success' }}
+        if: ${{ always() && steps.install.outcome == 'success' }}
 
   build_legacy:
     runs-on: ubuntu-latest
