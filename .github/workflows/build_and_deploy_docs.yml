@@ -9,13 +9,18 @@ on:
 
 jobs:
   main:
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ 2.13.4 ]
+        sdk: [ 2.18.7 ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: ${{ matrix.sdk }}
@@ -25,20 +30,22 @@ jobs:
 
       - id: build-docs
         name: Build Docs
-        run: pub global activate dartdoc && dartdoc --show-undocumented-categories
-        if: ${{ matrix.sdk == '2.13.4' }}
+        run: dart pub get && dart doc .
+        if: ${{ matrix.sdk == '2.18.7' }}
 
-      - id: deploy-docs
-        name: Deploy Docs 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: gh-pages
-          folder: doc/api # Where the build step stores the dartdoc output
-        if: ${{ steps.build-docs.outcome == 'success' && github.event_name == 'push' }}
-
+      # Upload the artifact as required by actions/deploy-pages
       - name: Archive Dartdoc Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-pages-artifact@v1.0.7
         with:
           name: dartdoc
           path: doc/api/
         if: ${{ steps.build-docs.outcome == 'success' && steps.deploy-docs.outcome == 'skipped' }}
+
+      - id: deploy-docs
+        name: Deploy Docs 🚀
+        uses: actions/deploy-pages@v1
+        with:
+          artifact-name: dartdoc
+        if: ${{ steps.build-docs.outcome == 'success' && github.event_name == 'push' }}
+
+      

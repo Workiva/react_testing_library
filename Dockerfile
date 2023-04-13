@@ -1,4 +1,5 @@
-FROM google/dart:2.13
+#Use the new dart image as per: https://hub.docker.com/r/google/dart
+FROM dart:2.18.4
 
 # Expose env vars for git ssh access
 ARG GIT_SSH_KEY
