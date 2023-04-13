@@ -35,17 +35,18 @@ jobs:
 
       # Upload the artifact as required by actions/deploy-pages
       - name: Archive Dartdoc Artifact
+        id: archive-dartdoc-artifact
         uses: actions/upload-pages-artifact@v1.0.7
         with:
           name: dartdoc
           path: doc/api/
-        if: ${{ steps.build-docs.outcome == 'success' && steps.deploy-docs.outcome == 'skipped' }}
+        if: ${{ steps.build-docs.outcome == 'success' }}
 
       - id: deploy-docs
         name: Deploy Docs 🚀
         uses: actions/deploy-pages@v1
         with:
-          artifact-name: dartdoc
-        if: ${{ steps.build-docs.outcome == 'success' && github.event_name == 'push' }}
+          artifact_name: dartdoc
+        if: ${{ steps.build-docs.outcome == 'success' && steps.archive-dartdoc-artifact.outcome == 'success' && github.event_name == 'push' }}
 
       
