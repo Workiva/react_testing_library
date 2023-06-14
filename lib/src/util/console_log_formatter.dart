@@ -1,4 +1,3 @@
-// @dart = 2.7
 
 // This code was adapted to Dart from
 // https://github.com/nodejs/node-v0.x-archive/blob/master/lib/util.js
