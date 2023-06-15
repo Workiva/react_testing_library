@@ -37,7 +37,7 @@ void main() {
           view = rtl.render(react.select({
             'id': 'root',
             'onClick': (event) {
-              calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
+              calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
             },
             'multiple': isMultiSelect,
           }, [
@@ -144,7 +144,7 @@ void main() {
         view = rtl.render(react.select({
           'id': 'root',
           'onClick': (event) {
-            calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
+            calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
           },
           'multiple': true,
           'defaultValue': ['1', '2', '3'],

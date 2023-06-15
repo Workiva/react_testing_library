@@ -30,12 +30,9 @@ void main() {
 
 @isTestGroup
 void sharedHasValueTests(String description,
-    {Matcher Function([dynamic]) matcherFn, String valueDescription = 'value'}) {
+    {@required Matcher Function([dynamic]) matcherFn, String valueDescription = 'value'}) {
   group(description, () {
     RenderResult view;
-    tearDown(() {
-      view = null;
-    });
 
     group('passes when the provided value matches the value found in a', () {
       group('TextInputElement', () {

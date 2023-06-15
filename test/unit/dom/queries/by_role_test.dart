@@ -30,10 +30,7 @@ void main() {
     initConfigForInternalTesting();
 
     rtl.RenderResult view;
-    Ref<Element> emptyElementRef;
-    tearDown(() {
-      view = null;
-    });
+    Ref<Element>/*!*/ emptyElementRef;
 
     group('when more than one element has the same role,', () {
       setUp(() {
@@ -768,14 +765,14 @@ ReactElement renderButton({bool pressed = false, bool expanded = false}) {
       'aria-expanded': expanded,
     },
     'Click me',
-  ) as ReactElement;
+  ) as ReactElement/*!*/;
 }
 
 ReactElement renderDialog() {
   return react.div(
     {'role': 'dialog'},
     'Read me',
-  ) as ReactElement;
+  ) as ReactElement/*!*/;
 }
 
 ReactElement renderTab({bool selected = false}) {
@@ -786,7 +783,7 @@ ReactElement renderTab({bool selected = false}) {
       'aria-selected': selected,
     },
     'Select me',
-  ) as ReactElement;
+  ) as ReactElement/*!*/;
 }
 
 ReactElement renderCheckbox({bool checked = false}) {
@@ -797,7 +794,7 @@ ReactElement renderCheckbox({bool checked = false}) {
       'aria-checked': checked,
     },
     'Check me out',
-  ) as ReactElement;
+  ) as ReactElement/*!*/;
 }
 
 ReactElement renderCheckboxWithSwitchAsFallback({bool checked = false}) {
@@ -808,5 +805,5 @@ ReactElement renderCheckboxWithSwitchAsFallback({bool checked = false}) {
       'aria-checked': checked,
     },
     'Check me out',
-  ) as ReactElement;
+  ) as ReactElement/*!*/;
 }

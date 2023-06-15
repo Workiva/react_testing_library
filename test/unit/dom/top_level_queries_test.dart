@@ -15,7 +15,6 @@
 
 import 'dart:html';
 
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -83,12 +82,8 @@ void main() {
 
     group('contains queries that can be scoped to the specified container', () {
       const scopeName = 'top level';
-      Node container;
-      String expectedPrettyDom;
-
-      tearDown(() {
-        container = null;
-      });
+      Node/*!*/ container;
+      String/*!*/ expectedPrettyDom;
 
       Function _renderForQuery(
         Function query, {
@@ -98,9 +93,7 @@ void main() {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
         final els = testAsyncQuery
-            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-            // ignore: unnecessary_cast
-            ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
+            ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying})
             : elsForQuerying;
         final view = rtl.render(els);
         container = view.container;

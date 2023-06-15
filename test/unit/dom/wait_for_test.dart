@@ -33,7 +33,7 @@ void main() {
     initConfigForInternalTesting();
 
     rtl.RenderResult view;
-    Element rootElement;
+    Element/*!*/ rootElement;
 
     group('waitFor()', () {
       setUp(() {

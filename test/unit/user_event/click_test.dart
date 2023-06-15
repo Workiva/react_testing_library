@@ -36,7 +36,7 @@ void main() {
       final elementToRender = react.button({
         'id': 'root',
         'onClick': (event) {
-          calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
+          calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
         },
         // Count mouseover events to find out how many hover events occur.
         'onMouseOver': (_) => hoverEventCount++,

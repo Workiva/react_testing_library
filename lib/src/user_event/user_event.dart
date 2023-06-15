@@ -304,7 +304,7 @@ abstract class UserEvent {
   ///
   /// {@category UserActions}
   static void type(
-    Element element,
+    Element/*!*/ element,
     String text, {
     bool skipClick = false,
     bool skipAutoClose = false,
@@ -420,7 +420,7 @@ abstract class UserEvent {
   ///
   /// {@category UserActions}
   static Future<void> typeWithDelay(
-    Element element,
+    Element/*!*/ element,
     String text,
     Duration delay, {
     bool skipClick = false,
@@ -534,7 +534,7 @@ abstract class UserEvent {
       return getProperty(_userEvent, 'keyboard')(
         text,
         jsifyAndAllowInterop(options),
-      ) as KeyboardState;
+      ) as KeyboardState/*!*/;
     });
   }
 
@@ -1389,7 +1389,7 @@ abstract class UserEvent {
   ///
   /// {@category UserActions}
   static void paste(
-    Element element,
+    Element/*!*/ element,
     String text, {
     Map eventInit,
     int initialSelectionStart,
@@ -1427,10 +1427,13 @@ dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData ?? cons
 List<File> _unjsifyFileList(List<File> fileList) {
   if (fileList is FileList) return fileList;
 
-  final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
+  final jsFileList = JsBackedMap.fromJs((fileList ?? []) as JsMap);
   final convertedFiles = <File>[];
   for (var i = 0; i < (jsFileList['length'] as int); i++) {
-    convertedFiles.add(jsFileList['item'](i) as File);
+    final file = jsFileList['item'](i);
+    if(file is File) {
+      convertedFiles.add(file);
+    }
   }
   return convertedFiles;
 }

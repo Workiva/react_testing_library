@@ -46,10 +46,6 @@ void main() {
       ) as ReactElement);
     });
 
-    tearDown(() {
-      view = null;
-    });
-
     group('[element with a single id as its aria-describedby attribute value]', () {
       Element closeButtonElement;
       setUp(() {

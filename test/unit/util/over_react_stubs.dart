@@ -70,6 +70,13 @@ dynamic preparePropsChangeset(ReactElement element, Map newProps, [Iterable newC
   final type = element.type;
   final dartComponentVersion = ReactDartComponentVersion.fromType(type); // ignore: invalid_use_of_protected_member
 
+  if (newProps == null) {
+    // Only pre-Component2 Dart components need changesets if props aren't null,
+    // since the new children need to be stored on the props.internal.
+    // Otherwise, we can pass `null` straight through to React.
+    return null;
+  }
+
   // ignore: invalid_use_of_protected_member
   if (dartComponentVersion == ReactDartComponentVersion.component2) {
     // ignore: invalid_use_of_protected_member

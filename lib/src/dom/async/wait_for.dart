@@ -157,7 +157,7 @@ Future<T> waitFor<T>(
 ///
 /// {@category Async}
 Future<void> waitForElementToBeRemoved(
-  Node Function() callback, {
+  Node/*!*/ Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),
@@ -214,7 +214,7 @@ Future<void> waitForElementToBeRemoved(
 ///
 /// {@category Async}
 Future<void> waitForElementsToBeRemoved(
-  List<Node> Function() callback, {
+  List<Node>/*!*/ Function() callback, {
   Node container,
   Duration timeout,
   Duration interval = const Duration(milliseconds: 50),

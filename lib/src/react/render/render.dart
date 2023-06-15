@@ -106,7 +106,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// At this time, the Dart API does not support them. If you have a use case for custom queries -
 /// [we would love to hear more about it!](https://github.com/Workiva/react_testing_library/issues/new)
 RenderResult render(
-  ReactElement ui, {
+  ReactElement/*!*/ ui, {
   Node container,
   Node baseElement,
   bool hydrate = false,
@@ -202,7 +202,7 @@ class RenderResult extends ScopedQueries {
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#rerender>
-  void rerender(ReactElement ui) {
+  void rerender(ReactElement/*!*/ ui) {
     _renderedElement = ui;
     _jsRenderResult.rerender(ui);
   }

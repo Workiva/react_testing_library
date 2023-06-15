@@ -34,7 +34,7 @@ import 'package:react_testing_library/src/util/console_log_utils.dart';
 ///
 /// {@category Accessibility}
 Map<String, List> getRoles(Node container, {bool hidden = false}) =>
-    Map.from(JsBackedMap.fromJs(_getRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)));
+    Map.from(JsBackedMap.fromJs(_getRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap/*!*/)));
 
 /// Prints a list of all the implicit ARIA roles within [container], each role containing a list of all of the
 /// nodes which match that role.
@@ -47,7 +47,7 @@ Map<String, List> getRoles(Node container, {bool hidden = false}) =>
 ///
 /// {@category Accessibility}
 void logRoles(Node container, {bool hidden = false}) =>
-    printConsoleLogs(() => _logRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap));
+    printConsoleLogs(() => _logRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap/*!*/));
 
 @JS('rtl.getRoles')
 external JsMap _getRoles(

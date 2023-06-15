@@ -91,7 +91,7 @@ void testTextMatchTypes<E extends Element>(
     assert(getContainerForTopLevelQueries != null);
   }
 
-  Matcher toThrowErrorMatchingInlineSnapshotPattern(String valueExpectedButNotFound) {
+  Matcher toThrowErrorMatchingInlineSnapshotPattern(String/*!*/ valueExpectedButNotFound) {
     Matcher containsMatcher;
     if (failureSnapshotPattern != null) {
       containsMatcher = buildContainsPatternUsing(failureSnapshotPattern, valueExpectedButNotFound);
@@ -140,7 +140,7 @@ void testTextMatchTypes<E extends Element>(
     }
 
     test('$queryName query', () async {
-      String queryFnString;
+      String/*!*/ queryFnString;
       final queryFn = queryGetter();
       final container = getContainerForTopLevelQueries?.call();
       dynamic Function() getQueryResult;
@@ -203,9 +203,9 @@ void testTextMatchTypes<E extends Element>(
     NormalizerFn Function([NormalizerOptions]) normalizer,
     bool containerArgRequired = false,
   }) {
-    String queryFnString;
+    String/*!*/ queryFnString;
     Function queryFn;
-    Node container;
+    Node/*!*/ container;
     dynamic Function() getQueryResult;
 
     void sharedSetup({bool renderMultipleElsMatchingQuery = false}) {
@@ -250,13 +250,6 @@ void testTextMatchTypes<E extends Element>(
         }
       }
     }
-
-    tearDown(() {
-      queryFnString = null;
-      queryFn = null;
-      container = null;
-      getQueryResult = null;
-    });
 
     test('$queryName query [single element matched]', () async {
       sharedSetup(renderMultipleElsMatchingQuery: false);

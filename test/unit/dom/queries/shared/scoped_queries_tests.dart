@@ -45,12 +45,9 @@ void hasQueriesScopedTo(
         getWrapper,
     {bool isGloballyScoped = true}) {
   group('$scopeName:', () {
-    ScopedQueries queries;
-    String expectedPrettyDom;
+    String/*!*/ expectedPrettyDom;
 
-    initConfigForInternalTesting(() {
-      queries = null;
-    });
+    initConfigForInternalTesting();
 
     ScopedQueries renderAndGetQueries({
       bool testAsyncQuery = false,
@@ -94,18 +91,17 @@ void hasQueriesScopedTo(
       final wrapper = getWrapper(scopeName,
           testAsyncQuery: testAsyncQuery, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
 
-      queries ??= wrapper.queries;
       renderResult = wrapper.renderResult;
 
       if (!testAsyncQuery) {
         expectedPrettyDom = prettyDOM(getQueryContainer(renderResult));
       }
 
-      return queries;
+      return wrapper.queries;
     }
 
     test('exposes all the expected queries', () {
-      queries = renderAndGetQueries();
+      final queries = renderAndGetQueries();
 
       expect(queries.getByAltText, isA<Function>(), reason: 'getByAltText');
       expect(queries.getAllByAltText, isA<Function>(), reason: 'getAllByAltText');
@@ -422,7 +418,7 @@ void hasQueriesScopedTo(
       document.body.append(outOfScopeElement);
       addTearDown(outOfScopeElement.remove);
 
-      queries = renderAndGetQueries();
+      final queries = renderAndGetQueries();
       if (queries.getContainerForScope() != document.body) {
         expect(queries.queryByText('out-of-scope'), isNull,
             reason: 'The scoped query should not return elements that are not found within the scoped container.');

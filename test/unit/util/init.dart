@@ -22,7 +22,7 @@ import 'package:test/test.dart';
 import 'constants.dart';
 
 void initConfigForInternalTesting([Function() additionalSetup]) {
-  JsConfig initialConfig;
+  JsConfig/*!*/ initialConfig;
 
   setUpAll(() {
     initialConfig = rtl.getConfig();

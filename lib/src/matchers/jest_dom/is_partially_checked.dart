@@ -98,7 +98,7 @@ class _IsPartiallyChecked extends Matcher {
   bool isElementThatCanBePartiallyChecked(dynamic item, Map matchState) =>
       item != null && matchState['isElement'] as bool && matchState['canBePartiallyChecked'] as bool;
 
-  bool isElementPartiallyChecked(dynamic item, Map matchState) {
+  bool/*!*/ isElementPartiallyChecked(dynamic item, Map matchState) {
     if (item is! Element) return false;
 
     if (item is InputElement) {

@@ -31,9 +31,6 @@ void main() {
     initConfigForInternalTesting();
 
     rtl.RenderResult view;
-    tearDown(() {
-      view = null;
-    });
 
     group('basic functionality', () {
       setUp(() {

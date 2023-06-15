@@ -61,7 +61,7 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
         {},
         react.button({'type': 'button'}, _uniqueName),
       ),
-    ) as ReactElement;
+    ) as ReactElement/*!*/;
   }
 
   renderMultipleElsMatchingQuery ??= false;
@@ -71,7 +71,7 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
       {},
       renderEls(uniqueName),
       renderEls('2$uniqueName'),
-    ) as ReactElement;
+    ) as ReactElement/*!*/;
   }
 
   return renderEls(uniqueName);

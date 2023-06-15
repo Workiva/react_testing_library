@@ -30,9 +30,7 @@ void main() {
     StyleElement externalStyleSheet;
 
     tearDown(() {
-      view = null;
       externalStyleSheet?.remove();
-      externalStyleSheet = null;
     });
 
     setUp(() {

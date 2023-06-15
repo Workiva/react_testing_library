@@ -30,9 +30,6 @@ void main() {
     initConfigForInternalTesting();
 
     rtl.RenderResult view;
-    tearDown(() {
-      view = null;
-    });
 
     group(
         'the selector argument can be specified to target only matching '

@@ -35,10 +35,6 @@ void main() {
       rootElement = view.getByTestId('root');
     });
 
-    tearDown(() {
-      rootElement = null;
-    });
-
     group('passes when provided a', () {
       group('String that is an exact match of the element text content', () {
         test('when normalizeWhitespace = true (default)', () {

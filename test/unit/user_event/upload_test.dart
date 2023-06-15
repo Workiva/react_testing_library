@@ -49,10 +49,10 @@ void main() {
             'id': 'file-uploader',
             'type': 'file',
             'onClick': (e) {
-              clickEventCalls.add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
+              clickEventCalls.add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
             },
             'onChange': (e) {
-              changeEventCalls.add((e as react.SyntheticFormEvent).nativeEvent as Event);
+              changeEventCalls.add((e as react.SyntheticFormEvent).nativeEvent as Event/*!*/);
             },
             'multiple': isMultiple,
             'accept': '.png,.jpeg',

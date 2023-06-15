@@ -33,7 +33,7 @@ void main() {
       final elementToRender = react.button({
         'id': 'root',
         'onClick': (event) {
-          calls.add((event as react.SyntheticMouseEvent).nativeEvent as Event);
+          calls.add((event as react.SyntheticMouseEvent).nativeEvent as Event/*!*/);
         }
       }, 'oh hai') as ReactElement;
       view = rtl.render(elementToRender);

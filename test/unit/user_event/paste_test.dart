@@ -28,7 +28,7 @@ void main() {
   group('UserEvent.paste', () {
     List<ClipboardEvent> calls;
     rtl.RenderResult view;
-    InputElement input;
+    InputElement/*!*/ input;
 
     setUp(() {
       calls = [];
@@ -44,7 +44,7 @@ void main() {
       setUp(() {
         final elementToRender = react.input({
           'onPaste': (event) {
-            calls.add((event as react.SyntheticClipboardEvent).nativeEvent as ClipboardEvent);
+            calls.add((event as react.SyntheticClipboardEvent).nativeEvent as ClipboardEvent/*!*/);
           },
         });
 
@@ -70,7 +70,7 @@ void main() {
       setUp(() {
         final elementToRender = react.input({
           'onPaste': (event) {
-            calls.add((event as react.SyntheticClipboardEvent).nativeEvent as ClipboardEvent);
+            calls.add((event as react.SyntheticClipboardEvent).nativeEvent as ClipboardEvent/*!*/);
           },
           'defaultValue': 'this is a bad example',
         });

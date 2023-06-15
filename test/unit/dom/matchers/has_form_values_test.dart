@@ -57,9 +57,6 @@ void main() {
     }
 
     RenderResult view;
-    tearDown(() {
-      view = null;
-    });
 
     group('passes when provided with a valid name/value combination for a', () {
       final unTestedChildFormElemThatShouldNotCauseFailure = _FormElemDefinition(react.input, {
