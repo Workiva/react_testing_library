@@ -48,7 +48,6 @@ String format(dynamic f, List<dynamic> arguments) {
   }
 
   var str = '';
-  if (f is String) {
     var i = 0;
     final len = arguments.length;
     str += f.replaceAllMapped(_formatRegExp, (m) {
@@ -71,7 +70,6 @@ String format(dynamic f, List<dynamic> arguments) {
           } catch (_) {
             return '[Circular]';
           }
-          break;
         default:
           return x!;
       }
@@ -80,7 +78,6 @@ String format(dynamic f, List<dynamic> arguments) {
     if (i < len) {
       str += ' ${arguments.skip(i).join(' ')}';
     }
-  }
 
   return str;
 }

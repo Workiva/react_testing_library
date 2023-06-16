@@ -34,7 +34,6 @@ library react_testing_library.src.dom.queries.by_testid;
 import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
-import 'package:meta/meta.dart';
 
 import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/async/wait_for.dart';

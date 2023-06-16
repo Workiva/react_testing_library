@@ -89,7 +89,7 @@ class _IsDisabled extends Matcher {
     if (!isElementThatCanBeDisabled(item, matchState)) return false;
     final formAncestor = (item as Element).closest('form');
     if (formAncestor != null && (formAncestor as FormElement).hasAttribute('disabled')) return true;
-    return item.disabled as bool;
+    return (item as ButtonElement).disabled;
   }
 
   void setMatchState(dynamic item, Map matchState) {

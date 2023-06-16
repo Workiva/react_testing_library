@@ -77,6 +77,7 @@ class _IsInTheDocument extends Matcher {
   @override
   bool matches(dynamic item, Map matchState) {
     if (item is! Element) return false;
+    // ignore: unnecessary_null_comparison
     return item != null && item.ownerDocument == item.getRootNode({'composed': true});
   }
 

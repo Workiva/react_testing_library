@@ -144,7 +144,7 @@ RenderResult render(
       if (autoTearDown) {
         addTearDown(() {
           jsResult.unmount();
-          jsResult.container?.remove();
+          jsResult.container.remove();
           onDidTearDown?.call();
         });
       }

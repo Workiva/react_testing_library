@@ -60,10 +60,10 @@ void main() {
 }
 
 void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
-  int clickEventCount;
-  Element element;
+  late int clickEventCount;
+  late Element element;
   late List<String> keyUpCalls;
-  rtl.RenderResult view;
+  late rtl.RenderResult view;
 
   void _verifyTypeEvent({
     bool skipClick = false,

@@ -15,7 +15,6 @@
 
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasFormValues;

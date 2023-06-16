@@ -28,7 +28,6 @@ const validRoleNotInDom = 'tablist';
 
 ReactElement elementsForQuerying(String uniqueName, {bool? renderMultipleElsMatchingQuery}) {
   ReactElement renderEls(String _uniqueName) {
-    _uniqueName ??= uniqueName;
     return react.div(
       {
         defaultTestIdKey: _uniqueName,

@@ -44,6 +44,7 @@ external ReactElement _cloneElement(element, [props, children]);
 /// > There is no special behavior for merging any props (unlike cloneWithProps).
 /// > See the [v0.13 RC2 blog post](https://facebook.github.io/react/blog/2015/03/03/react-v0.13-rc2.html) for additional details.
 ReactElement cloneElement(ReactElement element, [Map? props, Iterable? children]) {
+  // ignore: unnecessary_null_comparison
   if (element == null) throw ArgumentError.notNull('element');
 
   final propsChangeset = preparePropsChangeset(element, props, children);

@@ -28,7 +28,7 @@ void main() {
   group('UserEvent.paste', () {
     late List<ClipboardEvent> calls;
     rtl.RenderResult view;
-    InputElement input;
+    late InputElement input;
 
     setUp(() {
       calls = [];

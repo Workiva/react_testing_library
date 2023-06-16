@@ -169,6 +169,7 @@ Future<void> waitForElementToBeRemoved(
   timeout ??= Duration(milliseconds: config.asyncUtilTimeout);
 
   final el = callback();
+  // ignore: unnecessary_null_comparison
   if (el == null) {
     throw TestingLibraryElementError('The callback must return a non-null Element.');
   }
@@ -224,6 +225,7 @@ Future<void> waitForElementsToBeRemoved(
   container ??= document.body;
   final els = callback();
 
+  // ignore: unnecessary_null_comparison
   if (els == null || els.isEmpty) {
     throw TestingLibraryElementError('The callback must return one or more non-null Elements.');
   }

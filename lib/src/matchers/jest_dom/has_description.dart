@@ -106,7 +106,7 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
   dynamic featureValueOf(dynamic item) {
     final elementsWithDescriptions = _elementsThatDescribe(item);
 
-    if (elementsWithDescriptions?.isEmpty ?? true) return null;
+    if (elementsWithDescriptions.isEmpty) return null;
     return elementsWithDescriptions
         .map((el) =>
             ElementTextContentMatcherMixin.getNormalizedTextContentOf(el, normalizeWhitespace: normalizeWhitespace))

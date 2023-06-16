@@ -82,8 +82,8 @@ void main() {
 
     group('contains queries that can be scoped to the specified container', () {
       const scopeName = 'top level';
-      Node container;
-      String expectedPrettyDom;
+      late Node container;
+      late String expectedPrettyDom;
 
       Function _renderForQuery(
         Function query, {
@@ -115,7 +115,7 @@ void main() {
               rtl.render(cloneElement(view.renderedElement, {'delay': Duration.zero}), autoTearDown: false);
           expectedPrettyDom = rtl.prettyDOM(tempRenderResult.container);
           tempRenderResult.unmount();
-          tempRenderResult.container?.remove();
+          tempRenderResult.container.remove();
         }
 
         return query;

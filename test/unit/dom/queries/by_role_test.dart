@@ -30,7 +30,7 @@ void main() {
     initConfigForInternalTesting();
 
     late rtl.RenderResult view;
-    Ref<Element> emptyElementRef;
+    late Ref<Element> emptyElementRef;
 
     group('when more than one element has the same role,', () {
       setUp(() {

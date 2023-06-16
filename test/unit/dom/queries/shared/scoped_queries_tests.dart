@@ -45,7 +45,7 @@ void hasQueriesScopedTo(
         getWrapper,
     {bool isGloballyScoped = true}) {
   group('$scopeName:', () {
-    String expectedPrettyDom;
+    late String expectedPrettyDom;
 
     initConfigForInternalTesting();
 
@@ -83,7 +83,7 @@ void hasQueriesScopedTo(
 
         expectedPrettyDom = prettyDOM(getQueryContainer(tempRenderResult));
         tempRenderResult.unmount();
-        tempRenderResult.container?.remove();
+        tempRenderResult.container.remove();
       }
 
       // Only render this after the async snapshot is taken to ensure

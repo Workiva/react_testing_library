@@ -18,7 +18,6 @@ import 'dart:html';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client/react_interop.dart';
 import 'package:react/react_dom.dart' as react_dom;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
@@ -186,7 +185,7 @@ void main() {
     group('prints react warnings', () {
       test('for custom component', () {
         final printCalls = recordPrintCalls(
-          () => rtl.render(testComponent({'name': '123456789012345678901'}) as ReactElement),
+          () => rtl.render(testComponent({'name': '123456789012345678901'})),
         );
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
@@ -207,7 +206,7 @@ void main() {
       });
 
       test('scopes queries to the body by default', () {
-        final view = rtl.render(PortalComponent({}) as ReactElement);
+        final view = rtl.render(PortalComponent({}));
 
         expect(view.getByRole('tooltip'), isInTheDocument);
 
@@ -233,7 +232,7 @@ void main() {
 
       expect(() {
         spyOnPrintCalls(() {
-          rtl.render(TestFailComponent({}) as ReactElement);
+          rtl.render(TestFailComponent({}));
         }, onPrint: printCalls.add);
       }, throwsA(isA<ExceptionForTesting>()));
 

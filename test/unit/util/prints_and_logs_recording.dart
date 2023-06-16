@@ -15,7 +15,6 @@
 
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:react_testing_library/src/util/console_log_utils.dart';
 
 /// Runs a provided [callback] and returns the print statements captured during the runtime

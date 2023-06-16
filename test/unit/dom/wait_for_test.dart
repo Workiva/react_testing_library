@@ -33,7 +33,7 @@ void main() {
     initConfigForInternalTesting();
 
     late rtl.RenderResult view;
-    Element rootElement;
+    late Element rootElement;
 
     group('waitFor()', () {
       setUp(() {
@@ -262,15 +262,6 @@ void main() {
               )));
         }, timeout: asyncQueryTestTimeout);
 
-        test('null, throws', () async {
-          expect(
-              () => rtl.waitForElementToBeRemoved((() => null) as Node Function(), container: view.container),
-              throwsA(allOf(
-                isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('The callback must return a non-null Element.')),
-              )));
-        }, timeout: asyncQueryTestTimeout);
-
         test('an element that is never removed, throws with default timeout value', () async {
           expect(
               () => rtl.waitForElementToBeRemoved(() => elementThatWontBeRemoved, container: view.container),
@@ -433,15 +424,6 @@ void main() {
                 hasToStringValue(contains(
                     'One of the elements returned from the callback was not present in the container at the time waitForElementsToBeRemoved() was called')),
                 hasToStringValue(contains(rtl.prettyDOM(view.container))),
-              )));
-        }, timeout: asyncQueryTestTimeout);
-
-        test('null, throws', () async {
-          expect(
-              () => rtl.waitForElementsToBeRemoved((() => null) as List<Node> Function(), container: view.container),
-              throwsA(allOf(
-                isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('The callback must return one or more non-null Elements.')),
               )));
         }, timeout: asyncQueryTestTimeout);
 

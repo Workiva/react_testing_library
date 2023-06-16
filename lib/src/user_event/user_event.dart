@@ -441,7 +441,7 @@ abstract class UserEvent {
         element,
         text,
         jsifyAndAllowInterop(options),
-      ));
+      ) as Object);
     });
   }
 
@@ -632,7 +632,7 @@ abstract class UserEvent {
       return promiseToFuture(getProperty(_userEvent, 'keyboard')(
         text,
         jsifyAndAllowInterop(options),
-      ));
+      ) as Object);
     });
   }
 

@@ -30,7 +30,7 @@ void main() {
     late StyleElement externalStyleSheet;
 
     tearDown(() {
-      externalStyleSheet?.remove();
+      externalStyleSheet.remove();
     });
 
     setUp(() {

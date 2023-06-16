@@ -58,15 +58,6 @@ void main() {
         final descendant = view.getByTestId('descendant');
         shouldFail(descendant, containsElement(ancestor), contains('Which: does not contain $ancestor.'));
       });
-
-      test('the descendant argument is null', () {
-        expect(
-            () => containsElement(null),
-            throwsA(allOf(
-              isA<ArgumentError>(),
-              hasToStringValue(contains('Invalid argument(s) (descendant): Must not be null')),
-            )));
-      });
     });
   });
 }

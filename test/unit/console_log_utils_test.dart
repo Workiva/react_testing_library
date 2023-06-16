@@ -18,7 +18,6 @@ import 'dart:html';
 import 'dart:js_util';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client/react_interop.dart';
 import 'package:react_testing_library/src/util/console_log_utils.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
@@ -234,7 +233,7 @@ void main() {
 
     group('captures all logs correctly', () {
       test('when mounting', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement));
+        final logs = recordConsoleLogs(() => rtl.render(Sample({})));
         final expectedLogs = [
           contains('Logging a standard log'),
           contains('A second warning'),
@@ -259,9 +258,9 @@ void main() {
       });
 
       test('when re-rendering', () {
-        final view = rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement);
+        final view = rtl.render(Sample({'shouldAlwaysBeFalse': true}));
 
-        final logs = recordConsoleLogs(() => view.rerender(Sample({}) as ReactElement));
+        final logs = recordConsoleLogs(() => view.rerender(Sample({})));
         final expectedLogs = [
           contains('Logging a standard log'),
           contains('A second warning'),
@@ -276,12 +275,12 @@ void main() {
       });
 
       test('with nested components', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement));
+        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({}))));
         expect(logs, hasLength(runtimeSupportsPropTypeWarnings() ? 12 : 8));
       });
 
       test('with nested components that are the same', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({})) as ReactElement));
+        final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample({}))));
         expect(logs, hasLength(runtimeSupportsPropTypeWarnings() ? 10 : 8));
       });
     });
@@ -290,7 +289,7 @@ void main() {
       group('captures errors correctly', () {
         test('when mounting', () {
           final logs = recordConsoleLogs(
-            () => rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement),
+            () => rtl.render(Sample({'shouldAlwaysBeFalse': true})),
             configuration: ConsoleConfig.error,
           );
 
@@ -304,11 +303,11 @@ void main() {
 
         test('when re-rendering', () {
           // Will cause one error
-          final view = rtl.render(Sample({'shouldAlwaysBeFalse': true}) as ReactElement);
+          final view = rtl.render(Sample({'shouldAlwaysBeFalse': true}));
 
           // Should clear the error from mounting and not create any more
           final logs = recordConsoleLogs(
-            () => view.rerender(Sample({'shouldNeverBeNull': true}) as ReactElement),
+            () => view.rerender(Sample({'shouldNeverBeNull': true})),
             configuration: ConsoleConfig.error,
           );
 
@@ -316,7 +315,7 @@ void main() {
         });
 
         test('with nested components', () {
-          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({})) as ReactElement),
+          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({}))),
               configuration: ConsoleConfig.error);
 
           expect(
@@ -329,7 +328,7 @@ void main() {
 
         test('with nested components that are the same', () {
           final logs = recordConsoleLogs(
-            () => rtl.render(Sample({}, Sample({})) as ReactElement),
+            () => rtl.render(Sample({}, Sample({}))),
             configuration: ConsoleConfig.error,
           );
 
@@ -345,7 +344,7 @@ void main() {
 
     group('captures logs correctly', () {
       test('when mounting', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.log);
+        final logs = recordConsoleLogs(() => rtl.render(Sample({})), configuration: ConsoleConfig.log);
 
         if (runtimeSupportsPropTypeWarnings()) {
           expect(
@@ -363,11 +362,11 @@ void main() {
 
       test('when re-rendering', () {
         // Will cause one log
-        final view = rtl.render(Sample({}) as ReactElement);
+        final view = rtl.render(Sample({}));
 
         // Should clear the previous log and result in there being two
         final logs = recordConsoleLogs(
-          () => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
+          () => view.rerender(Sample({'addExtraLogAndWarn': true})),
           configuration: ConsoleConfig.log,
         );
 
@@ -381,7 +380,7 @@ void main() {
 
       test('with nested components', () {
         final logs = recordConsoleLogs(
-          () => rtl.render(Sample({}, Sample2({})) as ReactElement),
+          () => rtl.render(Sample({}, Sample2({}))),
           configuration: ConsoleConfig.log,
         );
 
@@ -409,7 +408,7 @@ void main() {
 
       test('with nested components that are the same', () {
         final logs = recordConsoleLogs(
-          () => rtl.render(Sample({}, Sample({})) as ReactElement),
+          () => rtl.render(Sample({}, Sample({}))),
           configuration: ConsoleConfig.log,
         );
 
@@ -437,7 +436,7 @@ void main() {
 
     group('captures warnings correctly', () {
       test('when mounting', () {
-        final logs = recordConsoleLogs(() => rtl.render(Sample({}) as ReactElement), configuration: ConsoleConfig.warn);
+        final logs = recordConsoleLogs(() => rtl.render(Sample({})), configuration: ConsoleConfig.warn);
 
         expect(
             logs,
@@ -450,11 +449,11 @@ void main() {
 
       test('when re-rendering', () {
         // Will three warnings
-        final view = rtl.render(Sample({}) as ReactElement);
+        final view = rtl.render(Sample({}));
 
         // Should clear the previous warnings and result in there being 3
         final logs = recordConsoleLogs(
-          () => view.rerender(Sample({'addExtraLogAndWarn': true}) as ReactElement),
+          () => view.rerender(Sample({'addExtraLogAndWarn': true})),
           configuration: ConsoleConfig.warn,
         );
 
@@ -469,7 +468,7 @@ void main() {
 
       test('with nested components', () {
         final logs = recordConsoleLogs(
-          () => rtl.render(Sample({}, Sample2({})) as ReactElement),
+          () => rtl.render(Sample({}, Sample2({}))),
           configuration: ConsoleConfig.warn,
         );
 
@@ -478,7 +477,7 @@ void main() {
 
       test('with nested components that are the same', () {
         final logs = recordConsoleLogs(
-          () => rtl.render(Sample({}, Sample({})) as ReactElement),
+          () => rtl.render(Sample({}, Sample({}))),
           configuration: ConsoleConfig.warn,
         );
 
@@ -497,7 +496,7 @@ void main() {
         // Don't use recordConsoleLogs since we can't get the returned logs if this throws
         final logs = <String>[];
         try {
-          spyOnConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true}) as ReactElement),
+          spyOnConsoleLogs(() => rtl.render(Sample({'shouldErrorInRender': true})),
               configuration: ConsoleConfig.error, onLog: logs.add);
         } catch (_) {}
         expect(logs, hasLength(2));

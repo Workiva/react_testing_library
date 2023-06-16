@@ -102,7 +102,7 @@ void testTextMatchTypes<E extends Element>(
     // When running only a single test, if the query is an async one,
     // RenderResult.container will not be accurate when called - so `expectedPrettyDom` will be null.
     final expectedPrettyDom = getExpectedPrettyDom();
-    final stringPrettyDomMatcher = expectedPrettyDom != null ? contains(expectedPrettyDom) : null;
+    final stringPrettyDomMatcher = contains(expectedPrettyDom);
     return toThrowErrorMatchingInlineSnapshot(
         containsMatcher, stringPrettyDomMatcher, isNot(contains('return dart.dcall')));
   }
@@ -205,7 +205,7 @@ void testTextMatchTypes<E extends Element>(
   }) {
     late String queryFnString;
     Function queryFn;
-    Node container;
+    Node? container;
     late dynamic Function() getQueryResult;
 
     void sharedSetup({bool renderMultipleElsMatchingQuery = false}) {

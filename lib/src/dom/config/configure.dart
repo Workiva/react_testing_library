@@ -37,7 +37,7 @@ void configure({
   TestingLibraryElementError Function(Object message, Element container)? getElementError,
 }) {
   JsError _getJsGetElementError(Object message, Element container) {
-    final dartError = allowInterop(getElementError)!(message, container);
+    final dartError = allowInterop(getElementError!)(message, container);
     return buildJsGetElementError(dartError.message, container);
   }
 
