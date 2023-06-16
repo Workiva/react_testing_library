@@ -25,5 +25,5 @@ dev_dependencies:
 dependency_overrides:
   react:
     git:
-      url: git@github.com:Workiva/react-dart.git
+      url: https://github.com/Workiva/react-dart
       ref: null-safety-manual
