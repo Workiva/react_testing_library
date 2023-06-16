@@ -1,4 +1,4 @@
-// @dart = 2.18
+// @dart = 2.12
 
 // Copyright 2021 Workiva Inc.
 //

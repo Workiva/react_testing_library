@@ -1,4 +1,4 @@
-// @dart = 2.18
+// @dart = 2.12
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 // Copyright 2021 Workiva Inc.
