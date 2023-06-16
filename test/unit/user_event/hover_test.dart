@@ -27,8 +27,8 @@ import '../util/event_handler_error.dart';
 
 void main() {
   group('UserEvent.hover and UserEvent.unhover', () {
-    List<MouseEvent> calls;
-    rtl.RenderResult view;
+    late List<MouseEvent> calls;
+    late rtl.RenderResult view;
 
     setUp(() {
       calls = [];
@@ -102,11 +102,11 @@ ReactDartFunctionComponentFactoryProxy HoverTestComponent = react.registerFuncti
     react.button({
       'onMouseOver': (e) {
         isShown.set(true);
-        props['calls'].add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
+        props['calls'].add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
       },
       'onMouseOut': (e) {
         isShown.set(false);
-        props['calls'].add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
+        props['calls'].add((e as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
       }
     }, [
       'Hover over me!'

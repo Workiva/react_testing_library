@@ -26,7 +26,7 @@ import '../../util/matchers.dart';
 
 void main() {
   group('hasDescription matcher', () {
-    RenderResult view;
+    late RenderResult view;
 
     setUp(() {
       view = render(react.div(
@@ -47,7 +47,7 @@ void main() {
     });
 
     group('[element with a single id as its aria-describedby attribute value]', () {
-      Element closeButtonElement;
+      late Element closeButtonElement;
       setUp(() {
         closeButtonElement = view.getByRole('button', name: 'Close');
       });
@@ -76,7 +76,7 @@ void main() {
     });
 
     group('[element with multiple, space-separated ids as its aria-describedby attribute value]', () {
-      Element buttonElementWithMultipleDescriptions;
+      late Element buttonElementWithMultipleDescriptions;
       setUp(() {
         buttonElementWithMultipleDescriptions = view.getByRole('button', name: 'Has Multiple Descriptions');
       });

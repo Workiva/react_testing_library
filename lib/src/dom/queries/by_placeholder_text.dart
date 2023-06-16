@@ -89,7 +89,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   E getByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetByPlaceholderText(
@@ -123,7 +123,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   List<E> getAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetAllByPlaceholderText(
@@ -157,7 +157,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   E queryByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryByPlaceholderText(
         getContainerForScope(),
@@ -189,7 +189,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   List<E> queryAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryAllByPlaceholderText(
         getContainerForScope(),
@@ -230,11 +230,11 @@ mixin ByPlaceholderTextQueries on IQueries {
   Future<E> findByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByPlaceholderText` instead of an
     // interop like `_jsFindByPlaceholderText` to give consumers better async stack traces.
@@ -285,11 +285,11 @@ mixin ByPlaceholderTextQueries on IQueries {
   Future<List<E>> findAllByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByPlaceholderText` instead of an
     // interop like `_jsFindAllByPlaceholderText` to give consumers better async stack traces.
@@ -310,28 +310,28 @@ mixin ByPlaceholderTextQueries on IQueries {
 
 @JS('rtl.getByPlaceholderText')
 external Element _jsGetByPlaceholderText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByPlaceholderText')
 external List< /*Element*/ dynamic> _jsGetAllByPlaceholderText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByPlaceholderText')
 external Element _jsQueryByPlaceholderText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByPlaceholderText')
 external List< /*Element*/ dynamic> _jsQueryAllByPlaceholderText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

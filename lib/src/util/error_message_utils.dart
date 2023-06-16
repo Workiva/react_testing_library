@@ -26,7 +26,7 @@ import 'package:react_testing_library/src/dom/config/configure.dart' show config
 /// if any queries fail in the current test.
 void setEphemeralElementErrorMessage(
     Object Function(Object originalMessage, Element container) customErrorMessageBuilder,
-    {StackTrace jsStackTrace}) {
+    {StackTrace? jsStackTrace}) {
   TestingLibraryElementError buildCustomDartGetElementError(Object originalMessage, Element container) {
     return TestingLibraryElementError.fromJs(
         buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container), jsStackTrace);
@@ -53,13 +53,13 @@ T withErrorInterop<T>(T Function() getJsQueryResult) {
 class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
-  factory TestingLibraryElementError.fromJs(/*JsError*/ dynamic jsError, [StackTrace jsStackTrace]) {
+  factory TestingLibraryElementError.fromJs(/*JsError*/ dynamic jsError, [StackTrace? jsStackTrace]) {
     final stack = jsError is JsError ? jsStackTrace ?? StackTrace.fromString(jsError.stack) : null;
     return TestingLibraryElementError(jsError.toString(), stack);
   }
 
   final String message;
-  final StackTrace jsStackTrace;
+  final StackTrace? jsStackTrace;
 
   @override
   String toString() => '$message\n\n'

@@ -54,7 +54,7 @@ String format(dynamic f, List<dynamic> arguments) {
     str += f.replaceAllMapped(_formatRegExp, (m) {
       final x = m[0];
       if (x == '%%') return '%';
-      if (i >= len) return x;
+      if (i >= len) return x!;
       switch (x) {
         case '%s':
           return arguments[i++].toString();
@@ -73,7 +73,7 @@ String format(dynamic f, List<dynamic> arguments) {
           }
           break;
         default:
-          return x;
+          return x!;
       }
     });
 

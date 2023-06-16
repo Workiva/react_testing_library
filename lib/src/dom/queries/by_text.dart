@@ -95,8 +95,8 @@ mixin ByTextQueries on IQueries {
   E getByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       withErrorInterop(
@@ -132,8 +132,8 @@ mixin ByTextQueries on IQueries {
   List<E> getAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       withErrorInterop(
@@ -169,8 +169,8 @@ mixin ByTextQueries on IQueries {
   E queryByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       _jsQueryByText(
@@ -204,8 +204,8 @@ mixin ByTextQueries on IQueries {
   List<E> queryAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       _jsQueryAllByText(
@@ -249,13 +249,13 @@ mixin ByTextQueries on IQueries {
   Future<E> findByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByText` instead of an
     // interop like `_jsFindByText` to give consumers better async stack traces.
@@ -310,13 +310,13 @@ mixin ByTextQueries on IQueries {
   Future<List<E>> findAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByText` instead of an
     // interop like `_jsFindAllByText` to give consumers better async stack traces.
@@ -339,28 +339,28 @@ mixin ByTextQueries on IQueries {
 
 @JS('rtl.getByText')
 external Element _jsGetByText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByText')
 external List< /*Element*/ dynamic> _jsGetAllByText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByText')
 external Element _jsQueryByText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByText')
 external List< /*Element*/ dynamic> _jsQueryAllByText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

@@ -36,7 +36,7 @@ void main() {
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-        final els = testAsyncQuery
+        final els = testAsyncQuery!
             ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying})
             : elsForQuerying;
         final view = rtl.render(els);

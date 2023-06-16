@@ -53,11 +53,11 @@ import 'package:js/js.dart';
 ///
 /// See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom) for more details and examples.
 String prettyDOM(
-  Node node, {
-  int maxLength,
-  int indent,
-  int maxDepth,
-  bool min,
+  Node? node, {
+  int? maxLength,
+  int? indent,
+  int? maxDepth,
+  bool? min,
 }) {
   final options = PrettyDomOptions();
   if (indent != null) options.indent = indent;
@@ -69,9 +69,9 @@ String prettyDOM(
 
 @JS('rtl.prettyDOM')
 external String _jsPrettyDOM([
-  Node dom,
-  int maxLength,
-  PrettyDomOptions options,
+  Node? dom,
+  int? maxLength,
+  PrettyDomOptions? options,
 ]);
 
 /// A subset of <https://github.com/facebook/jest/tree/master/packages/pretty-format#usage-with-options>

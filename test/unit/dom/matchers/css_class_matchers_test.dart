@@ -23,7 +23,7 @@ import '../../util/matchers.dart';
 
 void main() {
   group('', () {
-    Element testElement;
+    late Element testElement;
 
     setUp(() {
       testElement = Element.div();

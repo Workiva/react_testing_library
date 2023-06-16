@@ -55,18 +55,18 @@ String getStringThatFuzzyMatches(String exactValue) => exactValue.substring(2);
 @isTestGroup
 void testTextMatchTypes<E extends Element>(
   QueryType queryType, {
-  @required TextMatchArgName textMatchArgName,
-  @required String queryShouldMatchOn,
-  @required String Function() getExpectedPrettyDom,
-  Map<String, Function Function({bool renderMultipleElsMatchingQuery})> scopedQueryQueriesByName = const {},
-  Map<String, Function Function({bool renderMultipleElsMatchingQuery})> scopedGetQueriesByName = const {},
-  Map<String, Function Function({bool renderMultipleElsMatchingQuery})> scopedFindQueriesByName = const {},
-  Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelQueryQueriesByName = const {},
-  Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelGetQueriesByName = const {},
-  Map<String, Function Function({bool renderMultipleElsMatchingQuery})> topLevelFindQueriesByName = const {},
-  Node Function() getContainerForTopLevelQueries,
+  required TextMatchArgName textMatchArgName,
+  required String queryShouldMatchOn,
+  required String Function() getExpectedPrettyDom,
+  Map<String, Function Function({bool? renderMultipleElsMatchingQuery})> scopedQueryQueriesByName = const {},
+  Map<String, Function Function({bool? renderMultipleElsMatchingQuery})> scopedGetQueriesByName = const {},
+  Map<String, Function Function({bool? renderMultipleElsMatchingQuery})> scopedFindQueriesByName = const {},
+  Map<String, Function Function({bool? renderMultipleElsMatchingQuery})> topLevelQueryQueriesByName = const {},
+  Map<String, Function Function({bool? renderMultipleElsMatchingQuery})> topLevelGetQueriesByName = const {},
+  Map<String, Function Function({bool? renderMultipleElsMatchingQuery})> topLevelFindQueriesByName = const {},
+  Node Function()? getContainerForTopLevelQueries,
   bool textMatchArgSupportsFuzzyMatching = true,
-  String failureSnapshotPattern,
+  String? failureSnapshotPattern,
 }) {
   const queryShouldNotMatchOn = 'somethingDifferentThatDoesNotMatch';
 
@@ -91,7 +91,7 @@ void testTextMatchTypes<E extends Element>(
     assert(getContainerForTopLevelQueries != null);
   }
 
-  Matcher toThrowErrorMatchingInlineSnapshotPattern(String/*!*/ valueExpectedButNotFound) {
+  Matcher toThrowErrorMatchingInlineSnapshotPattern(String valueExpectedButNotFound) {
     Matcher containsMatcher;
     if (failureSnapshotPattern != null) {
       containsMatcher = buildContainsPatternUsing(failureSnapshotPattern, valueExpectedButNotFound);
@@ -125,12 +125,12 @@ void testTextMatchTypes<E extends Element>(
   @isTest
   void textMatchShouldFailFor< /*TextMatch*/ T>(
     String queryName,
-    Function Function({bool renderMultipleElsMatchingQuery}) queryGetter, {
-    @required T valueThatShouldCauseFailure,
+    Function Function({bool? renderMultipleElsMatchingQuery}) queryGetter, {
+    required T valueThatShouldCauseFailure,
     bool exact = true,
     bool containerArgRequired = false,
-    String snapshotPatternForFailureMatcher,
-    Matcher failureMatcher,
+    String? snapshotPatternForFailureMatcher,
+    Matcher? failureMatcher,
   }) {
     if (valueThatShouldCauseFailure is String) {
       snapshotPatternForFailureMatcher ??= valueThatShouldCauseFailure;
@@ -140,10 +140,10 @@ void testTextMatchTypes<E extends Element>(
     }
 
     test('$queryName query', () async {
-      String/*!*/ queryFnString;
+      late String queryFnString;
       final queryFn = queryGetter();
       final container = getContainerForTopLevelQueries?.call();
-      dynamic Function() getQueryResult;
+      late dynamic Function() getQueryResult;
 
       if (queryType != QueryType.Role) {
         getQueryResult = () => containerArgRequired
@@ -188,7 +188,7 @@ void testTextMatchTypes<E extends Element>(
       } else {
         // getBy* / findBy* queries should throw in a failure scenario
         expect(() => getQueryResult(),
-            failureMatcher ?? toThrowErrorMatchingInlineSnapshotPattern(snapshotPatternForFailureMatcher),
+            failureMatcher ?? toThrowErrorMatchingInlineSnapshotPattern(snapshotPatternForFailureMatcher!),
             reason: '\nCalling the following query should have thrown:\n\n$queryFnString');
       }
     }, timeout: asyncQueryTestTimeout);
@@ -197,16 +197,16 @@ void testTextMatchTypes<E extends Element>(
   @isTest
   void textMatchShouldSucceedFor< /*TextMatch*/ T>(
     String queryName,
-    Function Function({bool renderMultipleElsMatchingQuery}) queryGetter, {
-    @required T valueThatShouldCauseSuccess,
+    Function Function({bool? renderMultipleElsMatchingQuery}) queryGetter, {
+    required T valueThatShouldCauseSuccess,
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool containerArgRequired = false,
   }) {
-    String/*!*/ queryFnString;
+    late String queryFnString;
     Function queryFn;
-    Node/*!*/ container;
-    dynamic Function() getQueryResult;
+    Node container;
+    late dynamic Function() getQueryResult;
 
     void sharedSetup({bool renderMultipleElsMatchingQuery = false}) {
       queryFn = queryGetter(renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);

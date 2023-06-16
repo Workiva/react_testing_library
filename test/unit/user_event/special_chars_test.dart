@@ -24,10 +24,10 @@ import 'package:test/test.dart';
 
 void main() {
   group('SpecialChars', () {
-    InputElement input;
-    TextAreaElement textArea;
+    late InputElement input;
+    late TextAreaElement textArea;
     rtl.RenderResult view;
-    List<String> keyDownCalls;
+    late List<String> keyDownCalls;
 
     setUp(() {
       keyDownCalls = [];

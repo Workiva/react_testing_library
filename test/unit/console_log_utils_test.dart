@@ -524,11 +524,11 @@ class _SampleComponent extends react.Component2 {
             return ArgumentError('${info.propName} is necessary.');
           }
 
-          if ((props as Map)['shouldLog'] == false && (props as Map)['shouldAlwaysBeFalse'] == false) {
+          if (props['shouldLog'] == false && props['shouldAlwaysBeFalse'] == false) {
             return ArgumentError('logging is required.');
           }
 
-          if ((props as Map)['shouldNeverBeNull'] == false) {
+          if (props['shouldNeverBeNull'] == false) {
             return ArgumentError('${info.propName} should not be false.');
           }
 

@@ -119,7 +119,7 @@ mixin ByDisplayValueQueries on IQueries {
   E getByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetByDisplayValue(
@@ -153,7 +153,7 @@ mixin ByDisplayValueQueries on IQueries {
   List<E> getAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetAllByDisplayValue(
@@ -187,7 +187,7 @@ mixin ByDisplayValueQueries on IQueries {
   E queryByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryByDisplayValue(
         getContainerForScope(),
@@ -219,7 +219,7 @@ mixin ByDisplayValueQueries on IQueries {
   List<E> queryAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryAllByDisplayValue(
         getContainerForScope(),
@@ -260,11 +260,11 @@ mixin ByDisplayValueQueries on IQueries {
   Future<E> findByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByDisplayValue` instead of an
     // interop like `_jsFindByDisplayValue` to give consumers better async stack traces.
@@ -315,11 +315,11 @@ mixin ByDisplayValueQueries on IQueries {
   Future<List<E>> findAllByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByDisplayValue` instead of an
     // interop like `_jsFindAllByDisplayValue` to give consumers better async stack traces.
@@ -340,28 +340,28 @@ mixin ByDisplayValueQueries on IQueries {
 
 @JS('rtl.getByDisplayValue')
 external Element _jsGetByDisplayValue(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic value, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByDisplayValue')
 external List< /*Element*/ dynamic> _jsGetAllByDisplayValue(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic value, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByDisplayValue')
 external Element _jsQueryByDisplayValue(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic value, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByDisplayValue')
 external List< /*Element*/ dynamic> _jsQueryAllByDisplayValue(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic value, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

@@ -50,7 +50,7 @@ void testEventHandlerErrors(
 
       expect(
         () => userEventTrigger(view.getByTestId(targetTestId)),
-        throwsA(predicate((e) {
+        throwsA(predicate((dynamic e) {
           return e is Exception && e.toString().contains('Multiple errors');
         })),
       );

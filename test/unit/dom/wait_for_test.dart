@@ -32,8 +32,8 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult view;
-    Element/*!*/ rootElement;
+    late rtl.RenderResult view;
+    Element rootElement;
 
     group('waitFor()', () {
       setUp(() {
@@ -193,9 +193,9 @@ void main() {
     });
 
     group('waitForElementToBeRemoved()', () {
-      Node elementThatWillBeRemovedAfterDelay;
-      Node elementInDomButOutsideContainer;
-      Node elementThatWontBeRemoved;
+      late Node elementThatWillBeRemovedAfterDelay;
+      late Node elementInDomButOutsideContainer;
+      late Node elementThatWontBeRemoved;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
 
@@ -218,7 +218,7 @@ void main() {
                 ))) as ReactElement);
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
         elementThatWontBeRemoved = view.getByText('wontBeRemoved');
-        elementInDomButOutsideContainer = document.body.append(DivElement()
+        elementInDomButOutsideContainer = document.body!.append(DivElement()
           ..id = 'notInScope'
           ..text = 'notInScope');
       });
@@ -264,7 +264,7 @@ void main() {
 
         test('null, throws', () async {
           expect(
-              () => rtl.waitForElementToBeRemoved(() => null, container: view.container),
+              () => rtl.waitForElementToBeRemoved((() => null) as Node Function(), container: view.container),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('The callback must return a non-null Element.')),
@@ -284,11 +284,11 @@ void main() {
     });
 
     group('waitForElementsToBeRemoved()', () {
-      Node elementThatWillBeRemovedAfterDelay;
-      Node anotherElementThatWillBeRemovedAfterDelay;
-      Node elementThatWillNotBeRemovedAfterDelay;
-      Node elementInDomButOutsideContainer;
-      Node anotherElementInDomButOutsideContainer;
+      late Node elementThatWillBeRemovedAfterDelay;
+      late Node anotherElementThatWillBeRemovedAfterDelay;
+      late Node elementThatWillNotBeRemovedAfterDelay;
+      late Node elementInDomButOutsideContainer;
+      late Node anotherElementInDomButOutsideContainer;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
 
@@ -312,10 +312,10 @@ void main() {
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
         anotherElementThatWillBeRemovedAfterDelay = view.getByText('willAlsoBeRemoved');
         elementThatWillNotBeRemovedAfterDelay = view.getByText('willNotBeRemoved');
-        elementInDomButOutsideContainer = document.body.append(DivElement()
+        elementInDomButOutsideContainer = document.body!.append(DivElement()
           ..id = 'notInScope'
           ..text = 'notInScope');
-        anotherElementInDomButOutsideContainer = document.body.append(DivElement()
+        anotherElementInDomButOutsideContainer = document.body!.append(DivElement()
           ..id = 'alsoNotInScope'
           ..text = 'alsoNotInScope');
       });
@@ -438,7 +438,7 @@ void main() {
 
         test('null, throws', () async {
           expect(
-              () => rtl.waitForElementsToBeRemoved(() => null, container: view.container),
+              () => rtl.waitForElementsToBeRemoved((() => null) as List<Node> Function(), container: view.container),
               throwsA(allOf(
                 isA<TestingLibraryElementError>(),
                 hasToStringValue(contains('The callback must return one or more non-null Elements.')),

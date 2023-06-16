@@ -27,14 +27,14 @@ void main() {
       final allAttachedNodes = <Element>[];
       Element makeAttachedNode() {
         final node = DivElement()..tabIndex = 1;
-        document.body.append(node);
+        document.body!.append(node);
 
         allAttachedNodes.add(node);
 
         return node;
       }
 
-      Element attachedNode;
+      late Element attachedNode;
 
       setUp(() {
         attachedNode = makeAttachedNode();

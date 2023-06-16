@@ -54,7 +54,7 @@ void main() {
         }) {
           final elsForQuerying =
               elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-          final els = testAsyncQuery
+          final els = testAsyncQuery!
               ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying})
               : elsForQuerying;
           return ScopedQueriesTestWrapper(rtl.render(els));
@@ -93,14 +93,14 @@ void main() {
     group('renders the provided element in a default container', () {
       test('', () {
         final view = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement);
-        expect(document.body.contains(view.container), isTrue);
+        expect(document.body!.contains(view.container), isTrue);
         expect(view.container.childNodes, hasLength(1));
         expect(view.container.childNodes.single.text, 'oh hai');
       });
 
       test('wrapped in a wrapper when specified', () {
         rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, wrapper: react.aside);
-        final wrapperElement = querySelector('aside');
+        final wrapperElement = querySelector('aside')!;
         expect(wrapperElement, isNotNull);
         expect(wrapperElement.querySelector('#root'), isNotNull);
       });
@@ -117,7 +117,7 @@ void main() {
       group('and then unmounts / removes it by default, also calling the provided autoTearDownCallback', () {
         test('', () {
           addTearDown(() {
-            expect(document.body.children, isEmpty);
+            expect(document.body!.children, isEmpty);
             expect(calls, ['autoTearDownCallback']);
             calls.clear();
           });
@@ -128,7 +128,7 @@ void main() {
         });
 
         group('unless autoTearDown is false', () {
-          rtl.RenderResult view;
+          late rtl.RenderResult view;
 
           tearDownAll(() {
             view.unmount();
@@ -140,42 +140,42 @@ void main() {
           });
 
           test('', () {
-            expect(document.body.children.contains(view.container), isTrue);
+            expect(document.body!.children.contains(view.container), isTrue);
           });
         });
       });
     });
 
     group('renders the provided element in the provided container', () {
-      Node customContainer;
+      Node? customContainer;
 
       test('', () {
-        customContainer = document.body.append(DivElement()..id = 'custom-container');
+        customContainer = document.body!.append(DivElement()..id = 'custom-container');
         final renderedResult =
             rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement, container: customContainer);
         expect(renderedResult.container, same(customContainer));
-        expect(document.body.contains(renderedResult.container), isTrue);
+        expect(document.body!.contains(renderedResult.container), isTrue);
         expect(renderedResult.container.childNodes, hasLength(1));
         expect(renderedResult.container.childNodes.single.text, 'oh hai');
       });
 
       group('and then unmounts / removes it by default', () {
         test('', () {
-          expect(document.body.children, isEmpty);
+          expect(document.body!.children, isEmpty);
         });
 
         group('unless autoTearDown is false', () {
-          rtl.RenderResult view;
+          late rtl.RenderResult view;
 
           tearDown(() {
-            expect(document.body.children.contains(view.container), isTrue);
+            expect(document.body!.children.contains(view.container), isTrue);
             view.unmount();
             view.container.remove();
             customContainer = null;
           });
 
           test('', () {
-            customContainer = document.body.append(DivElement()..id = 'custom-container');
+            customContainer = document.body!.append(DivElement()..id = 'custom-container');
             view = rtl.render(react.div({'id': 'root'}, 'oh hai') as ReactElement,
                 container: customContainer, autoTearDown: false);
           });
@@ -248,7 +248,7 @@ class _PortalComponent extends react.Component2 {
   @override
   dynamic componentDidMount() {
     final toolTip = react.div({'role': 'tooltip'}, ['I Am a Tooltip']);
-    final portal = ReactDom.createPortal(toolTip, document.body);
+    final portal = ReactDom.createPortal(toolTip, document.body!);
     react_dom.render(portal, document.body);
   }
 

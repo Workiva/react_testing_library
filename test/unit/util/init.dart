@@ -21,8 +21,8 @@ import 'package:test/test.dart';
 
 import 'constants.dart';
 
-void initConfigForInternalTesting([Function() additionalSetup]) {
-  JsConfig/*!*/ initialConfig;
+void initConfigForInternalTesting([Function()? additionalSetup]) {
+  JsConfig initialConfig;
 
   setUpAll(() {
     initialConfig = rtl.getConfig();
@@ -38,6 +38,6 @@ void initConfigForInternalTesting([Function() additionalSetup]) {
       throwSuggestions: false,
       asyncUtilTimeout: asyncQueryTimeout.inMilliseconds,
     );
-    expect(document.body.children, isEmpty);
+    expect(document.body!.children, isEmpty);
   });
 }

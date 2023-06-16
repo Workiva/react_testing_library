@@ -23,7 +23,7 @@ import '../../util/matchers.dart';
 
 void main() {
   group('hasAttribute matcher', () {
-    DivElement testElement;
+    late DivElement testElement;
 
     setUp(() {
       testElement = DivElement();

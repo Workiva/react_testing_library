@@ -23,7 +23,7 @@ import 'package:test/test.dart';
 void main() {
   group('prettyDOM', () {
     group('returns a formatted string of the HTML produced by the node provided', () {
-      Ref<DivElement> vDomRootRef;
+      late Ref<DivElement> vDomRootRef;
       setUp(() {
         vDomRootRef = react.createRef();
         final vDom = react.div(

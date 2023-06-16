@@ -86,7 +86,7 @@ class _HasStyles extends CustomMatcher {
     // If it's not a Element, the mismatch description will say so.
     if (item is! Element) return null;
 
-    final element = item as Element;
+    final element = item;
 
     final allComputedStyles = element.getComputedStyle();
     final stylesToCompare = <String, dynamic>{};
@@ -130,11 +130,11 @@ class _HasStyles extends CustomMatcher {
     normalizedValue = normalizedValue.toString().replaceAllMapped(RegExp(r',(\S)'), (match) {
       return ', ${match.group(1)}';
     }).replaceAllMapped(RegExp(r'(?<=\D)0(\.\d)'), (match) {
-      return match.group(1);
+      return match.group(1)!;
     });
 
     if (normalizedValue is String) {
-      normalizedValue = num.tryParse(normalizedValue as String) ?? normalizedValue;
+      normalizedValue = num.tryParse(normalizedValue) as String? ?? normalizedValue;
     }
 
     return normalizedValue;
@@ -146,7 +146,7 @@ class _HasStyles extends CustomMatcher {
     final valueAsColor = ColorParser().parse(possibleColorValue.toString());
     if (valueAsColor != null) {
       if (RgbColor.namedColors.containsKey(possibleColorValue)) {
-        return RgbColor.namedColors[possibleColorValue].toCssString();
+        return RgbColor.namedColors[possibleColorValue]!.toCssString();
       }
 
       final rgbColor = valueAsColor.toRgbColor();
@@ -158,5 +158,5 @@ class _HasStyles extends CustomMatcher {
 }
 
 String _camelToDashCase(String camel) {
-  return camel.replaceAllMapped(RegExp(r'[A-Z]'), (match) => '-${match[0].toLowerCase()}');
+  return camel.replaceAllMapped(RegExp(r'[A-Z]'), (match) => '-${match[0]!.toLowerCase()}');
 }

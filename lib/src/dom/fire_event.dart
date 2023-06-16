@@ -124,19 +124,19 @@ external JsMap get _fireEventObj;
 /// See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 ///
 /// {@category UserActions}
-bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
+bool fireEventByName(String eventName, Element element, [Map? eventProperties]) {
   if (!JsBackedMap.fromJs(_jsEventMap).keys.contains(eventName)) {
     throw ArgumentError.value(eventName, 'eventName');
   }
 
   final jsFireEventByNameFn =
-      JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [/*JsObject*/ dynamic]);
+      JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [/*JsObject*/ dynamic])?;
 
   if (eventProperties == null) {
-    return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element));
+    return eventHandlerErrorCatcher(() => jsFireEventByNameFn!(element));
   }
 
-  return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties)));
+  return eventHandlerErrorCatcher(() => jsFireEventByNameFn!(element, jsifyAndAllowInterop(eventProperties)));
 }
 
 @JS('rtl.eventMap')

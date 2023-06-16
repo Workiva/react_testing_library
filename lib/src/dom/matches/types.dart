@@ -82,17 +82,17 @@ abstract class TextMatch {
 
     return (originalMessage, container) {
       final newMessage = originalMessage.toString().replaceAllMapped(dartInteropFunctionValueRegex, (match) {
-        final optionalOpeningQuoteOrBacktick = match.group(1);
+        final optionalOpeningQuoteOrBacktick = match.group(1)!;
         final optionalClosingQuoteOrBacktick = match.group(3);
         final newValueLines = newValue.toString().split('\n');
         var restOfMessageBeforePrettyDomOrAccessibleRolesPrintout = match.group(4);
         if (newValueLines.length > 1) {
           // Prevent the first sentence after the multiline function signature from starting with "  . ".
           restOfMessageBeforePrettyDomOrAccessibleRolesPrintout =
-              restOfMessageBeforePrettyDomOrAccessibleRolesPrintout.replaceFirst(RegExp(r'^\s*\.*\s*'), '');
+              restOfMessageBeforePrettyDomOrAccessibleRolesPrintout!.replaceFirst(RegExp(r'^\s*\.*\s*'), '');
         }
         var returnValue = '${newValueLines.join('\n')}$restOfMessageBeforePrettyDomOrAccessibleRolesPrintout';
-        if (optionalOpeningQuoteOrBacktick.isNotEmpty || optionalClosingQuoteOrBacktick.isNotEmpty) {
+        if (optionalOpeningQuoteOrBacktick.isNotEmpty || optionalClosingQuoteOrBacktick!.isNotEmpty) {
           // Restore quotes around the function/regexp portion of the new value if they were previously found around
           // the `function...` dart interop portion of the original message.
           returnValue = returnValue.replaceAllMapped(
@@ -188,4 +188,4 @@ class NormalizerOptions {
 }
 
 /// The function signature for a custom `normalizer` argument in a query.
-typedef NormalizerFn = String Function(String);
+typedef NormalizerFn = String Function(String?);

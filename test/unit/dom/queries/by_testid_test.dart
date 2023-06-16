@@ -30,7 +30,7 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult view;
+    late rtl.RenderResult view;
 
     group('basic functionality', () {
       setUp(() {

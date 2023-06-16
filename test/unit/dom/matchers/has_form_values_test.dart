@@ -56,7 +56,7 @@ void main() {
       return render(vDom);
     }
 
-    RenderResult view;
+    late RenderResult view;
 
     group('passes when provided with a valid name/value combination for a', () {
       final unTestedChildFormElemThatShouldNotCauseFailure = _FormElemDefinition(react.input, {
@@ -472,7 +472,7 @@ void main() {
       });
 
       group('provided with a valid name/value combination for a', () {
-        Matcher getMatcherForExpectedCustomMatcherMessage({@required Map expected, @required Map actual}) {
+        Matcher getMatcherForExpectedCustomMatcherMessage({required Map expected, required Map actual}) {
           final expectedFormValuesAsMatcherToStringValue = json
               .encode(expected)
               .replaceAll(',', ', ')

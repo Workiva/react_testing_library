@@ -43,7 +43,7 @@ external ReactElement _cloneElement(element, [props, children]);
 /// > Unlike React.addons.cloneWithProps, key and ref from the original element will be preserved.
 /// > There is no special behavior for merging any props (unlike cloneWithProps).
 /// > See the [v0.13 RC2 blog post](https://facebook.github.io/react/blog/2015/03/03/react-v0.13-rc2.html) for additional details.
-ReactElement cloneElement(ReactElement element, [Map props, Iterable children]) {
+ReactElement cloneElement(ReactElement element, [Map? props, Iterable? children]) {
   if (element == null) throw ArgumentError.notNull('element');
 
   final propsChangeset = preparePropsChangeset(element, props, children);
@@ -66,7 +66,7 @@ ReactElement cloneElement(ReactElement element, [Map props, Iterable children]) 
 /// * Children are likewise copied and potentially overwritten with [newChildren] as expected.
 /// * For JS components, a JS copy of [newProps] is returned, since React will merge the props without any special handling.
 ///   If these values might contain event handlers
-dynamic preparePropsChangeset(ReactElement element, Map newProps, [Iterable newChildren]) {
+dynamic preparePropsChangeset(ReactElement element, Map? newProps, [Iterable? newChildren]) {
   final type = element.type;
   final dartComponentVersion = ReactDartComponentVersion.fromType(type); // ignore: invalid_use_of_protected_member
 

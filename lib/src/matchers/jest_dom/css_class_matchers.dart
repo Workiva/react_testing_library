@@ -16,6 +16,7 @@
 import 'dart:html';
 import 'dart:svg' show AnimatedString;
 
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
 
@@ -170,7 +171,7 @@ class _ClassNameMatcher extends Matcher {
   static Iterable getClassIterable(dynamic classNames) {
     Iterable classes;
     if (classNames is Iterable<String>) {
-      classes = classNames.where((className) => className != null).expand(_splitSpaceDelimitedString);
+      classes = classNames.whereNotNull().expand(_splitSpaceDelimitedString);
     } else if (classNames is String) {
       classes = _splitSpaceDelimitedString(classNames);
     } else {
@@ -185,7 +186,7 @@ class _ClassNameMatcher extends Matcher {
     // There's a bug in DDC where, though the docs say `className` should
     // return `String`, it will return `AnimatedString` for `SvgElement`s. See
     // https://github.com/dart-lang/sdk/issues/36200.
-    String castClassName;
+    String? castClassName;
     if (className is String) {
       castClassName = className;
     } else if (className is AnimatedString) {
@@ -233,16 +234,16 @@ class _ClassNameMatcher extends Matcher {
   @override
   Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     final missingClasses = matchState['missingClasses'] as Set;
-    final unwantedClasses = matchState['unwantedClasses'] as Set;
-    final extraneousClasses = matchState['extraneousClasses'] as List;
+    final unwantedClasses = matchState['unwantedClasses'] as Set?;
+    final extraneousClasses = matchState['extraneousClasses'] as List?;
 
     final descriptionParts = <String>[];
     if (allowExtraneous) {
-      if (unwantedClasses.isNotEmpty) {
+      if (unwantedClasses!.isNotEmpty) {
         descriptionParts.add('has unwanted classes: $unwantedClasses');
       }
     } else {
-      if (extraneousClasses.isNotEmpty) {
+      if (extraneousClasses!.isNotEmpty) {
         descriptionParts.add('has extraneous classes: $extraneousClasses');
       }
     }

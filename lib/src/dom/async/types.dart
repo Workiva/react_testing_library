@@ -22,7 +22,7 @@ import 'package:meta/meta.dart';
 /// A function typedef used by `onTimeout` parameters in asynchronous `find*` / `waitFor` queries.
 ///
 /// Returns either an `Error` or a `TestFailure` when provided with the [originalError].
-typedef QueryTimeoutFn = /*Error || TestFailure*/ Object Function(/*Error*/ Object originalError);
+typedef QueryTimeoutFn = /*Error || TestFailure*/ Object? Function(/*Error*/ Object? originalError);
 
 @JS()
 @anonymous

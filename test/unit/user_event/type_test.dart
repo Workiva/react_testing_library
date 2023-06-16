@@ -60,9 +60,9 @@ void main() {
 }
 
 void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
-  int/*!*/ clickEventCount;
-  Element/*!*/ element;
-  List<String> keyUpCalls;
+  int clickEventCount;
+  Element element;
+  late List<String> keyUpCalls;
   rtl.RenderResult view;
 
   void _verifyTypeEvent({
@@ -77,9 +77,9 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
     int delay, {
     bool skipClick = false,
     bool skipAutoClose = false,
-    int initialSelectionStart,
-    int initialSelectionEnd,
-    int charsTyped,
+    int? initialSelectionStart,
+    int? initialSelectionEnd,
+    int? charsTyped,
   }) async {
     charsTyped ??= text.length;
     final timer = Stopwatch();
@@ -218,7 +218,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
           await UserEvent.typeWithDelay(
               view.getByTestId('event-handle-error-tester'), stringToTest, Duration(milliseconds: 250));
         },
-        throwsA(predicate((e) {
+        throwsA(predicate((dynamic e) {
           return e is Exception && e.toString().contains('Multiple errors (${stringToTest.length})');
         })),
       );
@@ -287,9 +287,9 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
 }
 
 void _keyboardTestHelper({bool hasDelay = false}) {
-  List<String> calls;
+  late List<String> calls;
   rtl.RenderResult view;
-  InputElement input;
+  late InputElement input;
 
   setUp(() {
     calls = [];
@@ -298,9 +298,9 @@ void _keyboardTestHelper({bool hasDelay = false}) {
   Future<KeyboardState> _verifyKeyboardWithDelay(
     String text,
     int delay, {
-    KeyboardState keyboardState,
-    List<Map> keyboardMap,
-    int charsTyped,
+    KeyboardState? keyboardState,
+    List<Map>? keyboardMap,
+    int? charsTyped,
   }) async {
     charsTyped ??= text.length;
     final timer = Stopwatch();

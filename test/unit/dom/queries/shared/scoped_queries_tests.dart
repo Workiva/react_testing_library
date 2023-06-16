@@ -31,7 +31,7 @@ import '../../../util/rendering.dart';
 import 'text_match_type_parsing_tests.dart';
 
 class ScopedQueriesTestWrapper {
-  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult renderResult])
+  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult? renderResult])
       : renderResult = renderResult ?? queries as rtl.RenderResult;
 
   final ScopedQueries queries;
@@ -41,17 +41,17 @@ class ScopedQueriesTestWrapper {
 @isTestGroup
 void hasQueriesScopedTo(
     String scopeName,
-    ScopedQueriesTestWrapper Function(String scopeName, {bool testAsyncQuery, bool renderMultipleElsMatchingQuery})
+    ScopedQueriesTestWrapper Function(String scopeName, {bool? testAsyncQuery, bool? renderMultipleElsMatchingQuery})
         getWrapper,
     {bool isGloballyScoped = true}) {
   group('$scopeName:', () {
-    String/*!*/ expectedPrettyDom;
+    String expectedPrettyDom;
 
     initConfigForInternalTesting();
 
     ScopedQueries renderAndGetQueries({
       bool testAsyncQuery = false,
-      bool renderMultipleElsMatchingQuery,
+      bool? renderMultipleElsMatchingQuery,
     }) {
       rtl.RenderResult renderResult;
       Node getQueryContainer(rtl.RenderResult result) => isGloballyScoped ? result.baseElement : result.container;
@@ -63,7 +63,7 @@ void hasQueriesScopedTo(
                 testAsyncQuery: testAsyncQuery, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
             .renderResult;
 
-        final delayedRenderOfRootNode = querySelector('[$defaultTestIdKey="delayed-render-of-root"]');
+        final delayedRenderOfRootNode = querySelector('[$defaultTestIdKey="delayed-render-of-root"]')!;
         expect(delayedRenderOfRootNode, isNotNull,
             reason: 'Async queries should be tested on DOM wrapped by / controlled by the DelayedRenderOf component.');
         expect(delayedRenderOfRootNode.children, isEmpty,
@@ -415,7 +415,7 @@ void hasQueriesScopedTo(
 
     test('limiting the scope of the query as expected', () {
       final outOfScopeElement = DivElement()..text = 'out-of-scope';
-      document.body.append(outOfScopeElement);
+      document.body!.append(outOfScopeElement);
       addTearDown(outOfScopeElement.remove);
 
       final queries = renderAndGetQueries();

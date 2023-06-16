@@ -80,7 +80,7 @@ void main() {
       });
 
       group('with hidden elements', () {
-        rtl.RenderResult view;
+        late rtl.RenderResult view;
 
         setUp(() {
           view = rtl.render(react.div({}, [
@@ -130,7 +130,7 @@ void main() {
     });
 
     group('isInaccessible', () {
-      rtl.RenderResult view;
+      late rtl.RenderResult view;
 
       setUp(() {
         view = rtl.render(react.div({}, [
@@ -187,12 +187,12 @@ void main() {
     });
 
     group('getRoles', () {
-      Map<String/*!*/, String/*!*/> _getLoggedRoleMatches(Node dom, {bool hidden = false}) {
+      Map<String, String> _getLoggedRoleMatches(Node? dom, {bool hidden = false}) {
         final rolePattern = RegExp(r'(\w*):\n\n((.|(\n(?!-)))*)\n\n---');
         final printCalls = recordPrintCalls(() => rtl.logRoles(dom, hidden: hidden));
         expect(printCalls, hasLength(1));
         return {
-          for (final match in rolePattern.allMatches(printCalls[0])) match[1]: match[2],
+          for (final match in rolePattern.allMatches(printCalls[0])) match[1]!: match[2]!,
         };
       }
 
@@ -270,7 +270,7 @@ void main() {
       });
 
       group('with hidden elements', () {
-        rtl.RenderResult view;
+        late rtl.RenderResult view;
 
         setUp(() {
           view = rtl.render(react.div({}, [

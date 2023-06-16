@@ -68,7 +68,7 @@ T printConsoleLogs<T>(
 /// See also: [printConsoleLogs], [startSpyingOnConsoleLogs]
 T spyOnConsoleLogs<T>(
   T Function() callback, {
-  @required void Function(String) onLog,
+  required void Function(String) onLog,
   ConsoleConfig configuration = ConsoleConfig.all,
 }) {
   final stopSpying = startSpyingOnConsoleLogs(configuration: configuration, onLog: onLog);
@@ -93,7 +93,7 @@ T spyOnConsoleLogs<T>(
 /// See also: [printConsoleLogs], [spyOnConsoleLogs]
 void Function() startSpyingOnConsoleLogs({
   ConsoleConfig configuration = ConsoleConfig.all,
-  @required void Function(String) onLog,
+  required void Function(String) onLog,
 }) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, /* JavascriptFunction */ dynamic>{};

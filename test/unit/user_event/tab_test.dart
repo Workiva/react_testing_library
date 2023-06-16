@@ -27,8 +27,8 @@ import '../util/over_react_stubs.dart';
 
 void main() {
   group('UserEvent.tab events:', () {
-    rtl.RenderResult view;
-    List<InputElement>/*!*/ inputs;
+    late rtl.RenderResult view;
+    List<InputElement> inputs;
 
     group('', () {
       setUp(() {

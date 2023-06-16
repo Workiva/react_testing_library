@@ -31,7 +31,7 @@ void main() {
 
           ------------------------------
           Query Failure Stack Trace:''';
-      rtl.RenderResult view;
+      late rtl.RenderResult view;
 
       group('ByAltText query', () {
         const actualText = 'Johnny Be Good';

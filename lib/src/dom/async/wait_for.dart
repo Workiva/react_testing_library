@@ -54,11 +54,11 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 ///
 /// {@category Async}
 Future<T> waitFor<T>(
-  FutureOr<T> Function() expectation, {
-  Node container,
-  Duration timeout,
+  FutureOr<T>? Function() expectation, {
+  Node? container,
+  Duration? timeout,
   Duration interval = const Duration(milliseconds: 50),
-  QueryTimeoutFn onTimeout,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   final config = getConfig();
@@ -67,13 +67,13 @@ Future<T> waitFor<T>(
   onTimeout ??= (error) => error;
 
   /*Error*/ dynamic lastError;
-  MutationObserver observer;
-  Timer intervalTimer;
-  Timer overallTimeoutTimer;
+  late MutationObserver observer;
+  late Timer intervalTimer;
+  late Timer overallTimeoutTimer;
   var isPending = false;
   final doneCompleter = Completer<T>();
 
-  void onDone(Object error, T result) {
+  void onDone(Object? error, T? result) {
     if (doneCompleter.isCompleted) return;
 
     overallTimeoutTimer.cancel();
@@ -94,9 +94,9 @@ Future<T> waitFor<T>(
     if (lastError != null) {
       error = lastError;
     } else {
-      error = TimeoutException('Timed out in waitFor after ${timeout.inMilliseconds}ms.');
+      error = TimeoutException('Timed out in waitFor after ${timeout!.inMilliseconds}ms.');
     }
-    onDone(onTimeout(error), null);
+    onDone(onTimeout!(error), null);
   }
 
   void checkCallback() {
@@ -109,7 +109,7 @@ Future<T> waitFor<T>(
             .then((resolvedValue) => onDone(null, resolvedValue as T), onError: (e) => lastError = e)
             .whenComplete(() => isPending = false);
       } else {
-        onDone(null, result as T);
+        onDone(null, result);
       }
       // If `callback` throws, wait for the next mutation, interval, or timeout.
     } catch (error) {
@@ -122,7 +122,7 @@ Future<T> waitFor<T>(
   intervalTimer = Timer.periodic(interval, (_) => checkCallback());
   observer = MutationObserver((_, __) => checkCallback())
     ..observe(
-      container,
+      container!,
       childList: mutationObserverOptions.childList,
       attributes: mutationObserverOptions.attributes,
       characterData: mutationObserverOptions.characterData,
@@ -157,11 +157,11 @@ Future<T> waitFor<T>(
 ///
 /// {@category Async}
 Future<void> waitForElementToBeRemoved(
-  Node/*!*/ Function() callback, {
-  Node container,
-  Duration timeout,
+  Node Function() callback, {
+  Node? container,
+  Duration? timeout,
   Duration interval = const Duration(milliseconds: 50),
-  QueryTimeoutFn onTimeout,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   final config = getConfig();
@@ -173,21 +173,21 @@ Future<void> waitForElementToBeRemoved(
     throw TestingLibraryElementError('The callback must return a non-null Element.');
   }
 
-  if (!container.contains(el)) {
+  if (!container!.contains(el)) {
     throw TestingLibraryElementError(
         'The element returned from the callback was not present in the container at the time waitForElementToBeRemoved() was called:\n\n'
         '${prettyDOM(container)}');
   }
 
   await waitFor(
-    () => expect(container.contains(el), isFalse),
+    () => expect(container!.contains(el), isFalse),
     container: container,
     timeout: timeout,
     interval: interval,
     onTimeout: onTimeout ??
         (error) {
           return TimeoutException(
-              'The element returned from the callback was still present in the container after ${timeout.inMilliseconds}ms:\n\n'
+              'The element returned from the callback was still present in the container after ${timeout!.inMilliseconds}ms:\n\n'
               '${prettyDOM(container)}');
         },
     mutationObserverOptions: mutationObserverOptions,
@@ -214,11 +214,11 @@ Future<void> waitForElementToBeRemoved(
 ///
 /// {@category Async}
 Future<void> waitForElementsToBeRemoved(
-  List<Node>/*!*/ Function() callback, {
-  Node container,
-  Duration timeout,
+  List<Node> Function() callback, {
+  Node? container,
+  Duration? timeout,
   Duration interval = const Duration(milliseconds: 50),
-  QueryTimeoutFn onTimeout,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   container ??= document.body;
@@ -229,7 +229,7 @@ Future<void> waitForElementsToBeRemoved(
   }
 
   for (final el in els) {
-    if (!container.contains(el)) {
+    if (!container!.contains(el)) {
       throw TestingLibraryElementError(
           'One of the elements returned from the callback was not present in the container at the time waitForElementsToBeRemoved() was called:\n\n'
           '${prettyDOM(container)}');

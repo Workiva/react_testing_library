@@ -24,14 +24,14 @@ import 'package:react_testing_library/src/dom/matches/types.dart';
 mixin IQueries {
   /// @nodoc
   @protected
-  Node Function() get getContainerForScope;
+  Node? Function() get getContainerForScope;
 
   /// @nodoc
   @protected
   MatcherOptions buildMatcherOptions({
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) {
     final matcherOptions = MatcherOptions()..exact = exact;
@@ -45,9 +45,9 @@ mixin IQueries {
   /// @nodoc
   @protected
   SharedJsWaitForOptions buildWaitForOptions({
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     final waitForOptions = SharedJsWaitForOptions();

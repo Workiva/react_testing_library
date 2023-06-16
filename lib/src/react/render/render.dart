@@ -106,15 +106,15 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// At this time, the Dart API does not support them. If you have a use case for custom queries -
 /// [we would love to hear more about it!](https://github.com/Workiva/react_testing_library/issues/new)
 RenderResult render(
-  ReactElement/*!*/ ui, {
-  Node container,
-  Node baseElement,
+  ReactElement ui, {
+  Node? container,
+  Node? baseElement,
   bool hydrate = false,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
   /*UiFactory || ReactComponentFactoryProxy*/ dynamic wrapper,
   bool autoTearDown = true,
-  void Function() onDidTearDown,
+  void Function()? onDidTearDown,
 }) {
   // ignore: invalid_use_of_visible_for_testing_member
   componentZone = Zone.current;
@@ -193,16 +193,16 @@ class RenderResult extends ScopedQueries {
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([
-    Node baseElement,
-    int maxLength,
-    PrettyDomOptions options,
+    Node? baseElement,
+    int? maxLength,
+    PrettyDomOptions? options,
   ]) =>
       printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options));
 
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#rerender>
-  void rerender(ReactElement/*!*/ ui) {
+  void rerender(ReactElement ui) {
     _renderedElement = ui;
     _jsRenderResult.rerender(ui);
   }

@@ -98,7 +98,7 @@ mixin ByTitleQueries on IQueries {
   E getByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetByTitle(
@@ -132,7 +132,7 @@ mixin ByTitleQueries on IQueries {
   List<E> getAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetAllByTitle(
@@ -166,7 +166,7 @@ mixin ByTitleQueries on IQueries {
   E queryByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryByTitle(
         getContainerForScope(),
@@ -198,7 +198,7 @@ mixin ByTitleQueries on IQueries {
   List<E> queryAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryAllByTitle(
         getContainerForScope(),
@@ -239,11 +239,11 @@ mixin ByTitleQueries on IQueries {
   Future<E> findByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTitle` instead of an
     // interop like `_jsFindByTitle` to give consumers better async stack traces.
@@ -294,11 +294,11 @@ mixin ByTitleQueries on IQueries {
   Future<List<E>> findAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTitle` instead of an
     // interop like `_jsFindAllByTitle` to give consumers better async stack traces.
@@ -319,28 +319,28 @@ mixin ByTitleQueries on IQueries {
 
 @JS('rtl.getByTitle')
 external Element _jsGetByTitle(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByTitle')
 external List< /*Element*/ dynamic> _jsGetAllByTitle(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByTitle')
 external Element _jsQueryByTitle(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByTitle')
 external List< /*Element*/ dynamic> _jsQueryAllByTitle(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

@@ -111,8 +111,8 @@ mixin ByLabelTextQueries on IQueries {
   E getByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
   }) =>
       withErrorInterop(
         () => _jsGetByLabelText(
@@ -145,8 +145,8 @@ mixin ByLabelTextQueries on IQueries {
   List<E> getAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
   }) =>
       withErrorInterop(
         () => _jsGetAllByLabelText(
@@ -179,8 +179,8 @@ mixin ByLabelTextQueries on IQueries {
   E queryByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
   }) =>
       _jsQueryByLabelText(
         getContainerForScope(),
@@ -211,8 +211,8 @@ mixin ByLabelTextQueries on IQueries {
   List<E> queryAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
   }) =>
       _jsQueryAllByLabelText(
         getContainerForScope(),
@@ -252,12 +252,12 @@ mixin ByLabelTextQueries on IQueries {
   Future<E> findByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByLabelText` instead of an
     // interop like `_jsFindByLabelText` to give consumers better async stack traces.
@@ -308,12 +308,12 @@ mixin ByLabelTextQueries on IQueries {
   Future<List<E>> findAllByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByAltText` instead of an
     // interop like `_jsFindAllByAltText` to give consumers better async stack traces.
@@ -335,28 +335,28 @@ mixin ByLabelTextQueries on IQueries {
 
 @JS('rtl.getByLabelText')
 external Element _jsGetByLabelText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByLabelText')
 external List< /*Element*/ dynamic> _jsGetAllByLabelText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByLabelText')
 external Element _jsQueryByLabelText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByLabelText')
 external List< /*Element*/ dynamic> _jsQueryAllByLabelText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

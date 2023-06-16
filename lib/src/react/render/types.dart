@@ -35,9 +35,9 @@ class JsRenderResult {
   external Node get baseElement;
 
   external void debug([
-    Node baseElement,
-    int maxLength,
-    PrettyDomOptions options,
+    Node? baseElement,
+    int? maxLength,
+    PrettyDomOptions? options,
   ]);
 
   external void rerender(ReactElement ui);

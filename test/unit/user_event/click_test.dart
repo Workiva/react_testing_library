@@ -25,9 +25,9 @@ import '../util/event_handler_error.dart';
 
 void main() {
   group('User click events:', () {
-    List<Event> calls;
-    int hoverEventCount;
-    rtl.RenderResult view;
+    late List<Event> calls;
+    late int hoverEventCount;
+    late rtl.RenderResult view;
 
     setUp(() {
       calls = [];
@@ -36,7 +36,7 @@ void main() {
       final elementToRender = react.button({
         'id': 'root',
         'onClick': (event) {
-          calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
+          calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
         },
         // Count mouseover events to find out how many hover events occur.
         'onMouseOver': (_) => hoverEventCount++,

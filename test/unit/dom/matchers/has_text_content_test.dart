@@ -27,7 +27,7 @@ import '../../util/over_react_stubs.dart';
 
 void main() {
   group('hasTextContent matcher', () {
-    Element rootElement;
+    late Element rootElement;
 
     setUp(() {
       final view = render(

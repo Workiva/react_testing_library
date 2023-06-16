@@ -94,11 +94,11 @@ class _IsChecked extends Matcher {
   bool isElementThatCanBeChecked(dynamic item, Map matchState) =>
       item != null && matchState['isElement'] as bool && matchState['canBeChecked'] as bool;
 
-  bool/*!*/ isElementChecked(Element item, Map matchState) {
+  bool isElementChecked(Element item, Map matchState) {
     if (item is InputElement) {
       final type = item.getAttribute('type');
       if (_validTypes.contains(type)) {
-        return item.checked;
+        return item.checked!;
       }
     }
 
@@ -125,7 +125,7 @@ class _IsChecked extends Matcher {
 
     if (!isElementThatCanBeChecked(item, matchState)) return false;
 
-    return isElementChecked(item as Element/*!*/, matchState);
+    return isElementChecked(item as Element, matchState);
   }
 
   @override

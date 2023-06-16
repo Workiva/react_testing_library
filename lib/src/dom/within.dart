@@ -33,7 +33,7 @@ class WithinQueries extends ScopedQueries {
   WithinQueries._(this.container) : super(() => container);
 
   /// The node within which the queries are scoped.
-  final Node container;
+  final Node? container;
 }
 
 /// Takes a DOM [node] and binds it to the raw query functions.
@@ -49,12 +49,12 @@ class WithinQueries extends ScopedQueries {
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-within>
 ///
 /// {@category Queries}
-WithinQueries within(Node node) {
+WithinQueries within(Node? node) {
   if (node == null) {
     throw ArgumentError.notNull('node');
   }
 
-  if (node is! ShadowRoot && !isOrContains(document.body, node)) {
+  if (node is! ShadowRoot && !isOrContains(document.body!, node)) {
     throw ArgumentError.value(
         node,
         'node',
@@ -73,9 +73,9 @@ class ScreenQueries extends WithinQueries {
   ///
   /// > See: <https://testing-library.com/docs/queries/about/#screendebug>
   void debug([
-    Node baseElement,
-    int maxLength,
-    PrettyDomOptions options,
+    Node? baseElement,
+    int? maxLength,
+    PrettyDomOptions? options,
   ]) =>
       printConsoleLogs(() => _screen.debug(baseElement, maxLength, options));
 }

@@ -23,7 +23,7 @@ class _HasToStringValue extends CustomMatcher {
   _HasToStringValue(matcher) : super('Object with toString() value', 'toString()', matcher);
 
   @override
-  dynamic featureValueOf(Object item) => item.toString();
+  dynamic featureValueOf(Object? item) => item.toString();
 }
 
 /// Returns a matcher that matches an object whose `toString` value matches [value].
@@ -32,9 +32,9 @@ Matcher hasToStringValue(dynamic value) => _HasToStringValue(value);
 Matcher toThrowErrorMatchingInlineSnapshot(
   Matcher stringSnapshotMatcher,
   Matcher stringPrettyDomMatcher, [
-  Matcher arbitraryMatcher1,
-  Matcher arbitraryMatcher2,
-  Matcher arbitraryMatcher3,
+  Matcher? arbitraryMatcher1,
+  Matcher? arbitraryMatcher2,
+  Matcher? arbitraryMatcher3,
 ]) {
   final errorNameMatcher = hasToStringValue(contains('TestingLibraryElementError'));
   final snapshotMatcher = hasToStringValue(stringSnapshotMatcher);
@@ -123,7 +123,7 @@ void shouldFail(dynamic value, Matcher matcher, dynamic expected, {bool useDoubl
     if (expected is String) {
       expect(_errorString, equalsIgnoringWhitespace(expected));
     } else {
-      var escapedErrorString = _errorString.replaceAll(RegExp(r'[\s\n]+'), ' ');
+      var escapedErrorString = _errorString!.replaceAll(RegExp(r'[\s\n]+'), ' ');
       if (useDoubleQuotes) {
         escapedErrorString = escapedErrorString.replaceAll("\'", '"');
       }
@@ -137,6 +137,6 @@ void shouldFail(dynamic value, Matcher matcher, dynamic expected, {bool useDoubl
 /// Utility for asserting that [matcher] will pass on [value].
 ///
 /// Copyright (c) 2012, the Dart project authors.
-void shouldPass(dynamic value, Matcher matcher, {String reason}) {
+void shouldPass(dynamic value, Matcher matcher, {String? reason}) {
   expect(value, matcher, reason: reason);
 }

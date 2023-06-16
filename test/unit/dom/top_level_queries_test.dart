@@ -82,13 +82,13 @@ void main() {
 
     group('contains queries that can be scoped to the specified container', () {
       const scopeName = 'top level';
-      Node/*!*/ container;
-      String/*!*/ expectedPrettyDom;
+      Node container;
+      String expectedPrettyDom;
 
       Function _renderForQuery(
         Function query, {
         bool testAsyncQuery = false,
-        bool renderMultipleElsMatchingQuery,
+        bool? renderMultipleElsMatchingQuery,
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
@@ -100,7 +100,7 @@ void main() {
         expectedPrettyDom = rtl.prettyDOM(container);
 
         if (testAsyncQuery) {
-          final delayedRenderOfRootNode = querySelector('[$defaultTestIdKey="delayed-render-of-root"]');
+          final delayedRenderOfRootNode = querySelector('[$defaultTestIdKey="delayed-render-of-root"]')!;
           expect(delayedRenderOfRootNode, isNotNull,
               reason:
                   'Async queries should be tested on DOM wrapped by / controlled by the DelayedRenderOf component.');

@@ -19,11 +19,11 @@ import 'package:matcher/matcher.dart';
 
 /// A mixin with utilities for matchers that match [Element] text content.
 mixin ElementTextContentMatcherMixin on CustomMatcher {
-  static String getNormalizedTextContentOf(dynamic item, {bool normalizeWhitespace = true}) {
+  static String? getNormalizedTextContentOf(dynamic item, {bool normalizeWhitespace = true}) {
     if (item is! Element) return null;
-    if (!normalizeWhitespace) return (item as Element).text;
+    if (!normalizeWhitespace) return item.text;
 
-    return (item as Element).text.replaceAll(RegExp(r'\s+'), ' ');
+    return item.text!.replaceAll(RegExp(r'\s+'), ' ');
   }
 
   /// Returns a normalized [String] or [Matcher] based on the provided [userExpectedTextContent]

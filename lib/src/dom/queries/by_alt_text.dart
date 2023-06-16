@@ -93,7 +93,7 @@ mixin ByAltTextQueries on IQueries {
   E getByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetByAltText(
@@ -127,7 +127,7 @@ mixin ByAltTextQueries on IQueries {
   List<E> getAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetAllByAltText(
@@ -161,7 +161,7 @@ mixin ByAltTextQueries on IQueries {
   E queryByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryByAltText(
         getContainerForScope(),
@@ -193,7 +193,7 @@ mixin ByAltTextQueries on IQueries {
   List<E> queryAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryAllByAltText(
         getContainerForScope(),
@@ -235,11 +235,11 @@ mixin ByAltTextQueries on IQueries {
   Future<E> findByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByAltText` instead of an
     // interop like `_jsFindByAltText` to give consumers better async stack traces.
@@ -291,11 +291,11 @@ mixin ByAltTextQueries on IQueries {
   Future<List<E>> findAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions? mutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByAltText` instead of an
     // interop like `_jsFindAllByAltText` to give consumers better async stack traces.
@@ -316,28 +316,28 @@ mixin ByAltTextQueries on IQueries {
 
 @JS('rtl.getByAltText')
 external Element _jsGetByAltText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByAltText')
 external List< /*Element*/ dynamic> _jsGetAllByAltText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByAltText')
 external Element _jsQueryByAltText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByAltText')
 external List< /*Element*/ dynamic> _jsQueryAllByAltText(
-  Node container,
+  Node? container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

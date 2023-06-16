@@ -26,8 +26,8 @@ import '../../util/matchers.dart';
 
 void main() {
   group('hasStyles matcher', () {
-    RenderResult view;
-    StyleElement externalStyleSheet;
+    late RenderResult view;
+    late StyleElement externalStyleSheet;
 
     tearDown(() {
       externalStyleSheet?.remove();
@@ -43,7 +43,7 @@ void main() {
           content: attr(title);
         }
       ''';
-      document.head.append(externalStyleSheet);
+      document.head!.append(externalStyleSheet);
 
       view = render(react.button({
         'className': 'foo',

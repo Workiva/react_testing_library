@@ -26,7 +26,7 @@ import 'shadow_dom.dart';
 const validRoleInDom = 'button';
 const validRoleNotInDom = 'tablist';
 
-ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatchingQuery}) {
+ReactElement elementsForQuerying(String uniqueName, {bool? renderMultipleElsMatchingQuery}) {
   ReactElement renderEls(String _uniqueName) {
     _uniqueName ??= uniqueName;
     return react.div(
@@ -61,7 +61,7 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
         {},
         react.button({'type': 'button'}, _uniqueName),
       ),
-    ) as ReactElement/*!*/;
+    ) as ReactElement;
   }
 
   renderMultipleElsMatchingQuery ??= false;
@@ -71,7 +71,7 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
       {},
       renderEls(uniqueName),
       renderEls('2$uniqueName'),
-    ) as ReactElement/*!*/;
+    ) as ReactElement;
   }
 
   return renderEls(uniqueName);
@@ -81,8 +81,8 @@ ReactElement elementsForQuerying(String uniqueName, {bool renderMultipleElsMatch
 final DelayedRenderOf = react.registerFunctionComponent(_DelayedRenderOf, displayName: 'DelayedRenderOf');
 
 _DelayedRenderOf(Map props) {
-  final delay = props['delay'] as Duration ?? asyncQueryTimeout;
-  final onDidRenderAfterDelay = props['onDidRenderAfterDelay'] as void Function();
+  final delay = props['delay'] as Duration? ?? asyncQueryTimeout;
+  final onDidRenderAfterDelay = props['onDidRenderAfterDelay'] as void Function()?;
   final shouldRenderUpdatedChildren = useState(delay == Duration.zero);
 
   useEffect(() {

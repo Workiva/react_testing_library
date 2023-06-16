@@ -27,9 +27,9 @@ void main() {
   group('User select/deselect events:', () {
     group('UserEvent.selectOptions', () {
       void _selectOptionsTestHelper({bool isMultiSelect = false}) {
-        List<MouseEvent> calls;
-        SelectElement select;
-        rtl.RenderResult view;
+        late List<MouseEvent> calls;
+        late SelectElement select;
+        late rtl.RenderResult view;
 
         setUp(() {
           calls = [];
@@ -37,7 +37,7 @@ void main() {
           view = rtl.render(react.select({
             'id': 'root',
             'onClick': (event) {
-              calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
+              calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
             },
             'multiple': isMultiSelect,
           }, [
@@ -134,9 +134,9 @@ void main() {
     });
 
     group('UserEvent.deselectOptions', () {
-      List<MouseEvent> calls;
-      SelectElement select;
-      rtl.RenderResult view;
+      late List<MouseEvent> calls;
+      late SelectElement select;
+      late rtl.RenderResult view;
 
       setUp(() {
         calls = [];
@@ -144,7 +144,7 @@ void main() {
         view = rtl.render(react.select({
           'id': 'root',
           'onClick': (event) {
-            calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent/*!*/);
+            calls.add((event as react.SyntheticMouseEvent).nativeEvent as MouseEvent);
           },
           'multiple': true,
           'defaultValue': ['1', '2', '3'],
