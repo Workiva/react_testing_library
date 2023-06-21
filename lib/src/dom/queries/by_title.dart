@@ -163,7 +163,7 @@ mixin ByTitleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByTitle<E extends Element>(
+  E? queryByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
@@ -172,7 +172,7 @@ mixin ByTitleQueries on IQueries {
         getContainerForScope(),
         TextMatch.toJs(title),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match.
@@ -332,7 +332,7 @@ external List< /*Element*/ dynamic> _jsGetAllByTitle(
 ]);
 
 @JS('rtl.queryByTitle')
-external Element _jsQueryByTitle(
+external Element? _jsQueryByTitle(
   Node? container,
   /*TextMatch*/ dynamic title, [
   MatcherOptions? options,

@@ -176,7 +176,7 @@ mixin ByLabelTextQueries on IQueries {
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
-  E queryByLabelText<E extends Element>(
+  E? queryByLabelText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
@@ -186,7 +186,7 @@ mixin ByLabelTextQueries on IQueries {
         getContainerForScope(),
         TextMatch.toJs(text),
         buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements that are associated with a [LabelElement] with the given [text],
   /// defaulting to an [exact] match.
@@ -348,7 +348,7 @@ external List< /*Element*/ dynamic> _jsGetAllByLabelText(
 ]);
 
 @JS('rtl.queryByLabelText')
-external Element _jsQueryByLabelText(
+external Element? _jsQueryByLabelText(
   Node? container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,

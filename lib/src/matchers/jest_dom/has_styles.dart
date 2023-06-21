@@ -134,7 +134,7 @@ class _HasStyles extends CustomMatcher {
     });
 
     if (normalizedValue is String) {
-      normalizedValue = num.tryParse(normalizedValue) as String? ?? normalizedValue;
+      normalizedValue = num.tryParse(normalizedValue) ?? normalizedValue;
     }
 
     return normalizedValue;

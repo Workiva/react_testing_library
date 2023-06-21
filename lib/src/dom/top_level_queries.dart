@@ -113,7 +113,7 @@ List<E> getAllByAltText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByAltText}
-E queryByAltText<E extends Element>(
+E? queryByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -351,7 +351,7 @@ List<E> getAllByDisplayValue<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByDisplayValue}
-E queryByDisplayValue<E extends Element>(
+E? queryByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
@@ -586,7 +586,7 @@ List<E> getAllByLabelText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByLabelText}
-E queryByLabelText<E extends Element>(
+E? queryByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -825,7 +825,7 @@ List<E> getAllByPlaceholderText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByPlaceholderText}
-E queryByPlaceholderText<E extends Element>(
+E? queryByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -1112,7 +1112,7 @@ List<E> getAllByRole<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByRole}
-E queryByRole<E extends Element>(
+E? queryByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
@@ -1436,7 +1436,7 @@ List<E> getAllByTestId<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByTestId}
-E queryByTestId<E extends Element>(
+E? queryByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
@@ -1679,7 +1679,7 @@ List<E> getAllByText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByText}
-E queryByText<E extends Element>(
+E? queryByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
@@ -1932,7 +1932,7 @@ List<E> getAllByTitle<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByTitle}
-E queryByTitle<E extends Element>(
+E? queryByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,

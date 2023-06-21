@@ -184,16 +184,17 @@ mixin ByDisplayValueQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByDisplayValue<E extends Element>(
+  E? queryByDisplayValue<E extends Element>(
     /*TextMatch*/ dynamic value, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
-  }) =>
-      _jsQueryByDisplayValue(
+  }) {
+    return _jsQueryByDisplayValue(
         getContainerForScope(),
         TextMatch.toJs(value),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E;
+      ) as E?;
+  }
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
   /// defaulting to an [exact] match.
@@ -353,7 +354,7 @@ external List< /*Element*/ dynamic> _jsGetAllByDisplayValue(
 ]);
 
 @JS('rtl.queryByDisplayValue')
-external Element _jsQueryByDisplayValue(
+external Element? _jsQueryByDisplayValue(
   Node? container,
   /*TextMatch*/ dynamic value, [
   MatcherOptions? options,

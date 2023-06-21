@@ -40,7 +40,7 @@ import 'package:react_testing_library/src/dom/async/wait_for.dart';
 import 'package:react_testing_library/src/dom/matches/types.dart';
 import 'package:react_testing_library/src/dom/queries/interface.dart';
 import 'package:react_testing_library/src/util/error_message_utils.dart'
-    show TestingLibraryElementError, withErrorInterop;
+    show TestingLibraryElementError, withErrorInterop, withErrorInterop2;
 
 /// PRIVATE. Do not export from this library.
 ///
@@ -206,20 +206,20 @@ mixin ByTestIdQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByTestId<E extends Element>(
+  E? queryByTestId<E extends Element?>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) {
     // For strings, we need to jump through a few more hoops to ensure that we support matching a single
     // test id value on an element that may have more than one.
-    E jsQuery(dynamic testIdTextMatchValue) {
+    E? jsQuery(dynamic testIdTextMatchValue) {
       return withErrorInterop(
         () => _jsQueryByTestId(
           getContainerForScope(),
           testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
-        ) as E,
+        ) as E?,
       );
     }
 
@@ -423,7 +423,7 @@ external List< /*Element*/ dynamic> _jsGetAllByTestId(
 ]);
 
 @JS('rtl.queryByTestId')
-external Element _jsQueryByTestId(
+external Element? _jsQueryByTestId(
   Node? container,
   /*TextMatch*/ dynamic testId, [
   MatcherOptions? options,

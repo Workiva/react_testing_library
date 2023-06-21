@@ -27,9 +27,9 @@ import 'package:react_testing_library/src/dom/config/configure.dart' show config
 void setEphemeralElementErrorMessage(
     Object Function(Object originalMessage, Element container) customErrorMessageBuilder,
     {StackTrace? jsStackTrace}) {
-  TestingLibraryElementError buildCustomDartGetElementError(Object originalMessage, Element container) {
+  TestingLibraryElementError buildCustomDartGetElementError(Object? originalMessage, Element container) {
     return TestingLibraryElementError.fromJs(
-        buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container), jsStackTrace);
+        buildJsGetElementError(customErrorMessageBuilder(originalMessage ?? '', container), container), jsStackTrace);
   }
 
   configure(getElementError: buildCustomDartGetElementError);

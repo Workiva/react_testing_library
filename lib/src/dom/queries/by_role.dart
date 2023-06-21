@@ -238,7 +238,7 @@ mixin ByRoleQueries on IQueries {
   /// {@macro byRoleOptionsExpanded}
   /// {@macro byRoleOptionsQueryFallbacks}
   /// {@macro byRoleOptionsLevel}
-  E queryByRole<E extends Element>(
+  E? queryByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
@@ -266,7 +266,7 @@ mixin ByRoleQueries on IQueries {
           queryFallbacks: queryFallbacks,
           level: level,
         ),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements with the given [role] value, defaulting to an [exact] match.
   ///
@@ -497,7 +497,7 @@ external List< /*Element*/ dynamic> _jsGetAllByRole(
 ]);
 
 @JS('rtl.queryByRole')
-external Element _jsQueryByRole(
+external Element? _jsQueryByRole(
   Node? container,
   /*TextMatch*/ dynamic role, [
   ByRoleOptions? options,

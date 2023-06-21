@@ -166,7 +166,7 @@ mixin ByTextQueries on IQueries {
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsIgnoreArgDescription}
-  E queryByText<E extends Element>(
+  E? queryByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
@@ -177,7 +177,7 @@ mixin ByTextQueries on IQueries {
         getContainerForScope(),
         TextMatch.toJs(text),
         buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
   ///
@@ -352,7 +352,7 @@ external List< /*Element*/ dynamic> _jsGetAllByText(
 ]);
 
 @JS('rtl.queryByText')
-external Element _jsQueryByText(
+external Element? _jsQueryByText(
   Node? container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,

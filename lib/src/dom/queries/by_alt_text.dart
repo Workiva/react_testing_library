@@ -158,7 +158,7 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByAltText<E extends Element>(
+  E? queryByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
@@ -167,7 +167,7 @@ mixin ByAltTextQueries on IQueries {
         getContainerForScope(),
         TextMatch.toJs(text),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
   /// the `alt` attribute, defaulting to an [exact] match.
@@ -329,7 +329,7 @@ external List< /*Element*/ dynamic> _jsGetAllByAltText(
 ]);
 
 @JS('rtl.queryByAltText')
-external Element _jsQueryByAltText(
+external Element? _jsQueryByAltText(
   Node? container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,

@@ -154,7 +154,7 @@ mixin ByPlaceholderTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByPlaceholderText<E extends Element>(
+  E? queryByPlaceholderText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
@@ -163,7 +163,7 @@ mixin ByPlaceholderTextQueries on IQueries {
         getContainerForScope(),
         TextMatch.toJs(text),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements with the given [text] as the value of the `placeholder` attribute,
   /// defaulting to an [exact] match.
@@ -323,7 +323,7 @@ external List< /*Element*/ dynamic> _jsGetAllByPlaceholderText(
 ]);
 
 @JS('rtl.queryByPlaceholderText')
-external Element _jsQueryByPlaceholderText(
+external Element? _jsQueryByPlaceholderText(
   Node? container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,

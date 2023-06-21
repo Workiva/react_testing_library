@@ -34,10 +34,10 @@ void configure({
   bool? defaultHidden,
   bool? showOriginalStackTrace,
   bool? throwSuggestions,
-  TestingLibraryElementError Function(Object message, Element container)? getElementError,
+  TestingLibraryElementError Function(Object? message, Element container)? getElementError,
 }) {
-  JsError _getJsGetElementError(Object message, Element container) {
-    final dartError = allowInterop(getElementError!)(message, container);
+  JsError _getJsGetElementError(Object? message, Element container) {
+    final dartError = allowInterop(getElementError!)(message ?? '', container);
     return buildJsGetElementError(dartError.message, container);
   }
 
