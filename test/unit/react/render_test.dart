@@ -1,4 +1,3 @@
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,9 +52,8 @@ void main() {
         }) {
           final elsForQuerying =
               elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-          final els = testAsyncQuery!
-              ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying})
-              : elsForQuerying;
+          final els =
+              testAsyncQuery! ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
           return ScopedQueriesTestWrapper(rtl.render(els));
         });
       });

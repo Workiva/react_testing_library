@@ -1,4 +1,3 @@
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -1431,7 +1430,7 @@ List<File> _unjsifyFileList(List<File>? fileList) {
   final convertedFiles = <File>[];
   for (var i = 0; i < (jsFileList['length'] as int); i++) {
     final file = jsFileList['item'](i);
-    if(file is File) {
+    if (file is File) {
       convertedFiles.add(file);
     }
   }

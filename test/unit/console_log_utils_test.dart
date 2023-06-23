@@ -1,4 +1,3 @@
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -315,8 +314,7 @@ void main() {
         });
 
         test('with nested components', () {
-          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({}))),
-              configuration: ConsoleConfig.error);
+          final logs = recordConsoleLogs(() => rtl.render(Sample({}, Sample2({}))), configuration: ConsoleConfig.error);
 
           expect(
               logs,

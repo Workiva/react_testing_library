@@ -1,4 +1,3 @@
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +38,7 @@ Matcher toThrowErrorMatchingInlineSnapshot(
   final errorNameMatcher = hasToStringValue(contains('TestingLibraryElementError'));
   final snapshotMatcher = hasToStringValue(stringSnapshotMatcher);
   final prettyDomMatcher =
-  // ignore: unnecessary_null_comparison
+      // ignore: unnecessary_null_comparison
       stringPrettyDomMatcher != null ? hasToStringValue(stringPrettyDomMatcher) : hasToStringValue(endsWith('</div>'));
 
   return throwsA(allOf(isA<TestingLibraryElementError>(), errorNameMatcher, snapshotMatcher, prettyDomMatcher,

@@ -1,4 +1,3 @@
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -190,10 +189,10 @@ mixin ByDisplayValueQueries on IQueries {
     NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) {
     return _jsQueryByDisplayValue(
-        getContainerForScope(),
-        TextMatch.toJs(value),
-        buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E?;
+      getContainerForScope(),
+      TextMatch.toJs(value),
+      buildMatcherOptions(exact: exact, normalizer: normalizer),
+    ) as E?;
   }
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
