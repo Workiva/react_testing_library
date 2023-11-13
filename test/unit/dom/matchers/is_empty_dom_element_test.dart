@@ -36,8 +36,7 @@ void main() {
       });
 
       test('the matched item has empty children', () {
-        final view = render(
-            react.span({defaultTestIdKey: 'not-empty'}, react.span({defaultTestIdKey: 'empty'})));
+        final view = render(react.span({defaultTestIdKey: 'not-empty'}, react.span({defaultTestIdKey: 'empty'})));
         shouldFail(view.getByTestId('not-empty'), isEmptyDomElement, contains('Which: is not an empty DOM Element.'));
       });
 

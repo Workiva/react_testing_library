@@ -50,8 +50,7 @@ void main() {
       });
 
       test('the matched item does not have a matching descendant', () {
-        final view = render(
-            react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})));
+        final view = render(react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})));
         final ancestor = view.getByTestId('ancestor');
         final descendant = view.getByTestId('descendant');
         shouldFail(descendant, containsElement(ancestor), contains('Which: does not contain $ancestor.'));

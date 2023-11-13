@@ -28,8 +28,7 @@ void main() {
     late Element rootElement;
 
     setUp(() {
-      final view = render(
-          react.span({defaultTestIdKey: 'root'}, 'The quick brown fox jumps over the (lazy)    dog'));
+      final view = render(react.span({defaultTestIdKey: 'root'}, 'The quick brown fox jumps over the (lazy)    dog'));
       rootElement = view.getByTestId('root');
     });
 

@@ -28,8 +28,7 @@ void main() {
     group('passes when provided a valid Element that can be disabled', () {
       test('is disabled', () {
         shouldPass(InputElement()..disabled = true, isDisabled);
-        final view = render(
-            react.form({'disabled': true, defaultTestIdKey: 'form'}, react.button({'type': 'submit'})));
+        final view = render(react.form({'disabled': true, defaultTestIdKey: 'form'}, react.button({'type': 'submit'})));
         shouldPass(view.getByTestId('form'), isDisabled);
       });
 

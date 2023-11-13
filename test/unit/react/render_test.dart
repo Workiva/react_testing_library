@@ -148,8 +148,7 @@ void main() {
 
       test('', () {
         customContainer = document.body!.append(DivElement()..id = 'custom-container');
-        final renderedResult =
-            rtl.render(react.div({'id': 'root'}, 'oh hai'), container: customContainer);
+        final renderedResult = rtl.render(react.div({'id': 'root'}, 'oh hai'), container: customContainer);
         expect(renderedResult.container, same(customContainer));
         expect(document.body!.contains(renderedResult.container), isTrue);
         expect(renderedResult.container.childNodes, hasLength(1));
@@ -173,8 +172,7 @@ void main() {
 
           test('', () {
             customContainer = document.body!.append(DivElement()..id = 'custom-container');
-            view = rtl.render(react.div({'id': 'root'}, 'oh hai'),
-                container: customContainer, autoTearDown: false);
+            view = rtl.render(react.div({'id': 'root'}, 'oh hai'), container: customContainer, autoTearDown: false);
           });
         });
       });
