@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/dom/queries.dart' show WithinQueries;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
@@ -66,7 +65,7 @@ void main() {
           'defaultValue': '3',
           'key': 2,
         })
-      ]) as ReactElement);
+      ]));
 
       final printCalls = recordPrintCalls(rtl.screen.debug);
       expect(printCalls, [

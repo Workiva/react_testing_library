@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -46,7 +45,7 @@ void main() {
             'Username',
             react.textarea({}),
           ),
-        ) as ReactElement);
+        ));
 
         expect(view.queryAllByLabelText('Username'), hasLength(2));
       });

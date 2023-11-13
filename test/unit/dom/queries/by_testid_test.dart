@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -43,7 +42,7 @@ void main() {
             }, 'Testing multiple'),
             react.span({
               'data-test-id': 'testId-2',
-            }, 'Testing duplicate')) as ReactElement);
+            }, 'Testing duplicate')));
       });
 
       group('getByTestId', () {
@@ -189,7 +188,7 @@ void main() {
           ' (by properly escaping the test ID when incorporating it into a RegExp)', () {
         final view = rtl.render(react.span({
           'data-test-id': 'testId(1)',
-        }) as ReactElement);
+        }));
 
         expect(view.getByTestId('testId(1)'), isA<SpanElement>());
       });
@@ -266,7 +265,7 @@ void main() {
             ' (by properly escaping the test ID when incorporating it into a RegExp)', () {
           final view = rtl.render(react.span({
             'data-test-id': 'testId(1)',
-          }) as ReactElement);
+          }));
 
           expect(view.getByTestId('estId(1)', exact: false), isA<SpanElement>());
         });
@@ -287,7 +286,7 @@ void main() {
             }, 'Testing single'),
             react.span({
               'data-test-id': 'testId-3 testId-2 testId-1',
-            }, 'Testing single')) as ReactElement);
+            }, 'Testing single')));
       });
 
       group('getByTestId', () {

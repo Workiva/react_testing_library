@@ -39,7 +39,7 @@ import 'package:react_testing_library/src/dom/async/wait_for.dart';
 import 'package:react_testing_library/src/dom/matches/types.dart';
 import 'package:react_testing_library/src/dom/queries/interface.dart';
 import 'package:react_testing_library/src/util/error_message_utils.dart'
-    show TestingLibraryElementError, withErrorInterop, withErrorInterop2;
+    show TestingLibraryElementError, withErrorInterop;
 
 /// PRIVATE. Do not export from this library.
 ///

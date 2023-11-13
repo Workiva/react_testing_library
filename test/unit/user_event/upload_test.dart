@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -58,7 +57,7 @@ void main() {
           }),
         ]);
 
-        final view = rtl.render(elementToRender as ReactElement);
+        final view = rtl.render(elementToRender);
         input = view.getByLabelText('Upload file:');
         label = view.getByText('Upload file:');
         expect(input.files, hasLength(0), reason: 'sanity check');

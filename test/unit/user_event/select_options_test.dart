@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -43,7 +42,7 @@ void main() {
             react.option({'value': '1'}, 'A'),
             react.option({'value': '2'}, 'B'),
             react.option({'value': '3'}, 'C'),
-          ]) as ReactElement);
+          ]));
 
           select = view.getByRole(isMultiSelect ? 'listbox' : 'combobox');
 
@@ -106,7 +105,7 @@ void main() {
             react.option({'value': '1'}, 'A'),
             react.option({'value': '2'}, 'B'),
             react.option({'value': '3'}, 'C'),
-          ]) as ReactElement);
+          ]));
 
           UserEvent.selectOptions(select, isMultiSelect ? ['1', '3'] : ['3'], skipPointerEventsCheck: true);
 
@@ -151,7 +150,7 @@ void main() {
           react.option({'value': '1'}, 'A'),
           react.option({'value': '2'}, 'B'),
           react.option({'value': '3'}, 'C'),
-        ]) as ReactElement);
+        ]));
 
         select = view.getByRole('listbox');
 
@@ -211,7 +210,7 @@ void main() {
           react.option({'value': '1'}, 'A'),
           react.option({'value': '2'}, 'B'),
           react.option({'value': '3'}, 'C'),
-        ]) as ReactElement);
+        ]));
 
         UserEvent.deselectOptions(
           select,

@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
@@ -41,7 +40,7 @@ void main() {
           ]),
         ]);
 
-        view = rtl.render(elementToRender as ReactElement);
+        view = rtl.render(elementToRender);
         inputs = view.getAllByRole('textbox');
         expect(inputs, hasLength(3), reason: 'sanity check');
       });

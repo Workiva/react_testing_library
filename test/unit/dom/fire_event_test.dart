@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -34,7 +33,7 @@ void main() {
         'onClick': (event) {
           calls.add((event as react.SyntheticMouseEvent).nativeEvent as Event);
         }
-      }, 'oh hai') as ReactElement;
+      }, 'oh hai');
       view = rtl.render(elementToRender);
     });
 

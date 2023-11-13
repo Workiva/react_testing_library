@@ -28,7 +28,7 @@ import '../../util/shadow_dom.dart';
 void main() {
   group('isInTheDocument matcher', () {
     test('passes when provided an element found in the document', () {
-      final view = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
+      final view = render(react.span({defaultTestIdKey: 'empty'}));
       shouldPass(view.getByTestId('empty'), isInTheDocument);
     });
 

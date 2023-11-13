@@ -15,7 +15,6 @@
 import 'dart:html' show Element, querySelector;
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasDescription;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -42,7 +41,7 @@ void main() {
         react.button({'aria-describedby': 'not-found'}, 'Has id not found'),
         react.div({'id': 'description-close'}, 'Closing will discard   any changes'),
         react.div({'id': 'some-other-description'}, 'Some other  description'),
-      ) as ReactElement);
+      ));
     });
 
     group('[element with a single id as its aria-describedby attribute value]', () {

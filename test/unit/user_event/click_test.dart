@@ -15,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -41,7 +40,7 @@ void main() {
         'onMouseOver': (_) => hoverEventCount++,
       }, 'oh hai');
 
-      view = rtl.render(elementToRender as ReactElement);
+      view = rtl.render(elementToRender);
     });
 
     group('UserEvent.click', () {
@@ -103,7 +102,7 @@ void main() {
           'onClick': (_) {
             wasClicked = true;
           }
-        }, 'oh hai') as ReactElement);
+        }, 'oh hai'));
 
         UserEvent.click(
           view.getByRole('button'),
@@ -162,7 +161,7 @@ void main() {
           'onDoubleClick': (_) {
             wasClicked = true;
           }
-        }, 'oh hai') as ReactElement);
+        }, 'oh hai'));
 
         UserEvent.dblClick(
           view.getByRole('button'),
