@@ -29,11 +29,11 @@ void main() {
     initConfigForInternalTesting();
 
     late rtl.RenderResult view;
-    late Ref<Element> emptyElementRef;
+    late Ref<Element?> emptyElementRef;
 
     group('when more than one element has the same role,', () {
       setUp(() {
-        emptyElementRef = react.createRef<Element>();
+        emptyElementRef = react.createRef();
         view = rtl.render(react.article(
           {},
           react.h1({}, 'Heading'),
