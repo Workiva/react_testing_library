@@ -770,8 +770,8 @@ abstract class UserEvent {
     // Convert the `element.files` because the JS `upload` sets it equal to a
     // map with with an `item` method to access files.
     if (element is LabelElement && element.control is FileUploadInputElement) {
-      (element.control as FileUploadInputElement).files =
-          _unjsifyFileList((element.control as FileUploadInputElement).files);
+      (element.control! as FileUploadInputElement).files =
+          _unjsifyFileList((element.control! as FileUploadInputElement).files);
     } else if (element is FileUploadInputElement) {
       element.files = _unjsifyFileList(element.files);
     }

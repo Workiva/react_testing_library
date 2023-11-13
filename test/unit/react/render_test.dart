@@ -260,9 +260,9 @@ final PortalComponent = react.registerComponent2(() => _PortalComponent());
 
 class _TestComponent extends react.Component2 {
   @override
-  Map<String, react.PropValidator<void>> get propTypes => {
+  Map<String, react.PropValidator<Map>> get propTypes => {
         'name': (props, info) {
-          final propValue = (props as Map)[info.propName] as String;
+          final propValue = props[info.propName] as String;
           if (propValue.length > 20) {
             return ArgumentError('($propValue) is too long. $propValue has a max length of 20 characters.');
           }

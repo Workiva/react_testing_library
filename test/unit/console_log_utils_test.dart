@@ -515,9 +515,9 @@ class _SampleComponent extends react.Component2 {
       };
 
   @override
-  Map<String, react.PropValidator<void>> get propTypes => {
+  Map<String, react.PropValidator<Map>> get propTypes => {
         'shouldNeverBeNull': (props, info) {
-          if ((props as Map)['shouldNeverBeNull'] == null) {
+          if (props['shouldNeverBeNull'] == null) {
             return ArgumentError('${info.propName} is necessary.');
           }
 
@@ -532,7 +532,7 @@ class _SampleComponent extends react.Component2 {
           return null;
         },
         'shouldAlwaysBeFalse': (props, info) {
-          if ((props as Map)['shouldAlwaysBeFalse'] as bool) {
+          if (props['shouldAlwaysBeFalse'] as bool) {
             return ArgumentError('${info.propName} should never equal true.');
           }
 
@@ -585,9 +585,9 @@ final Sample = react.registerComponent2(() => _SampleComponent());
 
 class _Sample2Component extends react.Component2 {
   @override
-  Map<String, react.PropValidator<void>> get propTypes => {
+  Map<String, react.PropValidator<Map>> get propTypes => {
         'shouldNeverBeNull': (props, info) {
-          if ((props as Map)['shouldNeverBeNull'] == null) {
+          if (props['shouldNeverBeNull'] == null) {
             return ArgumentError('shouldNeverBeNull is required.');
           }
 
