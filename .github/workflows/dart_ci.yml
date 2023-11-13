@@ -15,44 +15,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [stable]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: ${{ matrix.sdk }}
-
-      - name: Use pubspec.next deps
-        run: rm -rf pubspec.yaml && mv pubspec.next.yaml pubspec.yaml
-
-      - id: install
-        name: Install dependencies
-        run: dart pub get
-        timeout-minutes: 2
-
-      - name: Analyze project source
-        run: dart analyze
-        if: ${{ always() && steps.install.outcome == 'success' }}
-
-      - name: Run tests (DDC)
-        run: |
-          dart run build_runner test -- -P concurrent-tests
-          dart run build_runner test -- -P non-concurrent-tests
-        timeout-minutes: 10
-        if: ${{ always() && steps.install.outcome == 'success' }}
-
-      - name: Run tests (dart2js)
-        run: |
-          dart run build_runner test -r -- -P concurrent-tests
-          dart run build_runner test -r -- -P non-concurrent-tests
-        timeout-minutes: 10
-        if: ${{ always() && steps.install.outcome == 'success' }}
-
-  build_legacy:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
         sdk: [ 2.18.7 ]
     steps:
       - uses: actions/checkout@v2
