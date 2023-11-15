@@ -19,7 +19,6 @@ import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactDartFunctionComponentFactoryProxy;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
-import 'package:react_testing_library/src/dom/queries/by_role.dart';
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
 
@@ -56,8 +55,6 @@ void main() {
       UserEvent.unhover(view.getByRole('button'));
       expect(view.queryByText('Hello!'), isNull);
       _verifyHoverEvent();
-
-      jsGetByRole(null, 'abc');
     });
 
     test('eventInit', () {

@@ -36,10 +36,7 @@ void main() {
 
     group('waitFor()', () {
       setUp(() {
-        view =
-            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-            // ignore: unnecessary_cast
-            rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}) as ReactElement);
+        view = rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}));
         rootElement = view.getByTestId('delayed-render-of-root');
       });
 
@@ -201,8 +198,6 @@ void main() {
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
 
-        // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-        // ignore: unnecessary_cast
         view = rtl.render(react.div(
             {},
             'wontBeRemoved',
@@ -214,7 +209,7 @@ void main() {
                   {},
                   react.div({}, 'willBeRemoved'),
                   elementsForQuerying('waitForElementToBeRemoved'),
-                ))) as ReactElement);
+                ))));
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
         elementThatWontBeRemoved = view.getByText('wontBeRemoved');
         elementInDomButOutsideContainer = document.body!.append(DivElement()
@@ -285,8 +280,6 @@ void main() {
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
 
-        // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-        // ignore: unnecessary_cast
         view = rtl.render(DelayedRenderOf(
           {
             'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
@@ -298,7 +291,7 @@ void main() {
             react.div({}, 'willNotBeRemoved'),
             elementsForQuerying('waitForElementToBeRemoved'),
           ),
-        ) as ReactElement);
+        ));
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
         anotherElementThatWillBeRemovedAfterDelay = view.getByText('willAlsoBeRemoved');
         elementThatWillNotBeRemovedAfterDelay = view.getByText('willNotBeRemoved');

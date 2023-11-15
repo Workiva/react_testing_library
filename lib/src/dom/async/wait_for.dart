@@ -53,7 +53,7 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 ///
 /// {@category Async}
 Future<T> waitFor<T>(
-  FutureOr<T>? Function() expectation, {
+  FutureOr<T> Function() expectation, {
   Node? container,
   Duration? timeout,
   Duration interval = const Duration(milliseconds: 50),
@@ -61,41 +61,45 @@ Future<T> waitFor<T>(
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   final config = getConfig();
-  container ??= document.body;
+  container ??= document.body!;
   timeout ??= Duration(milliseconds: config.asyncUtilTimeout);
   onTimeout ??= (error) => error;
 
-  /*Error*/ dynamic lastError;
+  /*Error*/ Object? lastError;
   late MutationObserver observer;
   late Timer intervalTimer;
   late Timer overallTimeoutTimer;
   var isPending = false;
   final doneCompleter = Completer<T>();
 
-  void onDone(Object? error, T? result) {
+  void onDone(T result) {
     if (doneCompleter.isCompleted) return;
 
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
     observer.disconnect();
 
-    if (error != null) {
-      doneCompleter.completeError(error);
-    } else if (result is TestFailure) {
+    if (result is TestFailure) {
       doneCompleter.completeError(result);
     } else {
       doneCompleter.complete(result);
     }
   }
 
+  // Separate error handling to enforce non-nullability of the result.
+  void onDoneWithError(Object error) {
+    if (doneCompleter.isCompleted) return;
+
+    overallTimeoutTimer.cancel();
+    intervalTimer.cancel();
+    observer.disconnect();
+
+    doneCompleter.completeError(error);
+  }
+
   void handleTimeout() {
-    /*Error*/ dynamic error;
-    if (lastError != null) {
-      error = lastError;
-    } else {
-      error = TimeoutException('Timed out in waitFor after ${timeout!.inMilliseconds}ms.');
-    }
-    onDone(onTimeout!(error), null);
+    final error = lastError ?? TimeoutException('Timed out in waitFor after ${timeout!.inMilliseconds}ms.');
+    onDoneWithError(onTimeout!(error));
   }
 
   void checkCallback() {
@@ -105,10 +109,10 @@ Future<T> waitFor<T>(
       if (result is Future) {
         isPending = true;
         (result! as Future)
-            .then((resolvedValue) => onDone(null, resolvedValue as T), onError: (e) => lastError = e)
+            .then((resolvedValue) => onDone(resolvedValue as T), onError: (e) => lastError = e)
             .whenComplete(() => isPending = false);
       } else {
-        onDone(null, result);
+        onDone(result);
       }
       // If `callback` throws, wait for the next mutation, interval, or timeout.
     } catch (error) {
@@ -121,7 +125,7 @@ Future<T> waitFor<T>(
   intervalTimer = Timer.periodic(interval, (_) => checkCallback());
   observer = MutationObserver((_, __) => checkCallback())
     ..observe(
-      container!,
+      container,
       childList: mutationObserverOptions.childList,
       attributes: mutationObserverOptions.attributes,
       characterData: mutationObserverOptions.characterData,
@@ -164,16 +168,14 @@ Future<void> waitForElementToBeRemoved(
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   final config = getConfig();
-  container ??= document.body;
+  container ??= document.body!;
   timeout ??= Duration(milliseconds: config.asyncUtilTimeout);
 
   final el = callback();
-  // ignore: unnecessary_null_comparison
-  if (el == null) {
-    throw TestingLibraryElementError('The callback must return a non-null Element.');
-  }
+  // Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+  ArgumentError.checkNotNull(el);
 
-  if (!container!.contains(el)) {
+  if (!container.contains(el)) {
     throw TestingLibraryElementError(
         'The element returned from the callback was not present in the container at the time waitForElementToBeRemoved() was called:\n\n'
         '${prettyDOM(container)}');
@@ -221,16 +223,18 @@ Future<void> waitForElementsToBeRemoved(
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
-  container ??= document.body;
+  container ??= document.body!;
   final els = callback();
 
-  // ignore: unnecessary_null_comparison
-  if (els == null || els.isEmpty) {
+  // Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+  ArgumentError.checkNotNull(els);
+
+  if (els.isEmpty) {
     throw TestingLibraryElementError('The callback must return one or more non-null Elements.');
   }
 
   for (final el in els) {
-    if (!container!.contains(el)) {
+    if (!container.contains(el)) {
       throw TestingLibraryElementError(
           'One of the elements returned from the callback was not present in the container at the time waitForElementsToBeRemoved() was called:\n\n'
           '${prettyDOM(container)}');
