@@ -23,7 +23,7 @@ import 'package:react_testing_library/src/dom/matches/types.dart';
 mixin IQueries {
   /// @nodoc
   @protected
-  Node? Function() get getContainerForScope;
+  Node Function() get getContainerForScope;
 
   /// @nodoc
   @protected

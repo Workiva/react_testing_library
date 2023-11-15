@@ -45,7 +45,7 @@ void main() {
       final elsForQuerying = elementsForQuerying('<container>');
       final view = rtl.render(elsForQuerying);
       final nodeWithShadowRoot = view.getByTestId(nodeWithShadowRootDefaultTestId);
-      expect(rtl.within(nodeWithShadowRoot.shadowRoot).getByRole('button'), isA<ButtonElement>());
+      expect(rtl.within(nodeWithShadowRoot.shadowRoot!).getByRole('button'), isA<ButtonElement>());
     });
   });
 

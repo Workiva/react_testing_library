@@ -338,28 +338,28 @@ mixin ByTextQueries on IQueries {
 
 @JS('rtl.getByText')
 external Element _jsGetByText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByText')
 external List< /*Element*/ dynamic> _jsGetAllByText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByText')
 external Element? _jsQueryByText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByText')
 external List< /*Element*/ dynamic> _jsQueryAllByText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);

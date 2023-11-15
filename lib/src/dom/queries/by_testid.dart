@@ -409,28 +409,28 @@ mixin ByTestIdQueries on IQueries {
 
 @JS('rtl.getByTestId')
 external Element _jsGetByTestId(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic testId, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByTestId')
 external List< /*Element*/ dynamic> _jsGetAllByTestId(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic testId, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByTestId')
 external Element? _jsQueryByTestId(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic testId, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByTestId')
 external List< /*Element*/ dynamic> _jsQueryAllByTestId(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic testId, [
   MatcherOptions? options,
 ]);

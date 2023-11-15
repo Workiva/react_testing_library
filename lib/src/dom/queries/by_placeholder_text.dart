@@ -309,28 +309,28 @@ mixin ByPlaceholderTextQueries on IQueries {
 
 @JS('rtl.getByPlaceholderText')
 external Element _jsGetByPlaceholderText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByPlaceholderText')
 external List< /*Element*/ dynamic> _jsGetAllByPlaceholderText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByPlaceholderText')
 external Element? _jsQueryByPlaceholderText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByPlaceholderText')
 external List< /*Element*/ dynamic> _jsQueryAllByPlaceholderText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);

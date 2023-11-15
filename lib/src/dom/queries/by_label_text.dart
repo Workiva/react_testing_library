@@ -334,28 +334,28 @@ mixin ByLabelTextQueries on IQueries {
 
 @JS('rtl.getByLabelText')
 external Element _jsGetByLabelText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByLabelText')
 external List< /*Element*/ dynamic> _jsGetAllByLabelText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByLabelText')
 external Element? _jsQueryByLabelText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByLabelText')
 external List< /*Element*/ dynamic> _jsQueryAllByLabelText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);

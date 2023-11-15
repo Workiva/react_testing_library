@@ -185,7 +185,7 @@ void main() {
     });
 
     group('getRoles', () {
-      Map<String, String> _getLoggedRoleMatches(Node? dom, {bool hidden = false}) {
+      Map<String, String> _getLoggedRoleMatches(Node dom, {bool hidden = false}) {
         final rolePattern = RegExp(r'(\w*):\n\n((.|(\n(?!-)))*)\n\n---');
         final printCalls = recordPrintCalls(() => rtl.logRoles(dom, hidden: hidden));
         expect(printCalls, hasLength(1));

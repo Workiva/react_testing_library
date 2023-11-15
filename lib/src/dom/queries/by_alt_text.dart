@@ -315,28 +315,28 @@ mixin ByAltTextQueries on IQueries {
 
 @JS('rtl.getByAltText')
 external Element _jsGetByAltText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByAltText')
 external List< /*Element*/ dynamic> _jsGetAllByAltText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByAltText')
 external Element? _jsQueryByAltText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByAltText')
 external List< /*Element*/ dynamic> _jsQueryAllByAltText(
-  Node? container,
+  Node container,
   /*TextMatch*/ dynamic text, [
   MatcherOptions? options,
 ]);

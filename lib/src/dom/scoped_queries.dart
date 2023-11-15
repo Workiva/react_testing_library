@@ -45,5 +45,5 @@ abstract class ScopedQueries
   /// @nodoc
   @protected
   @override
-  final Node? Function() getContainerForScope;
+  final Node Function() getContainerForScope;
 }

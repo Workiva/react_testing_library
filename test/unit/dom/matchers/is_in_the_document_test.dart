@@ -36,7 +36,7 @@ void main() {
       // ignore: unnecessary_cast
       final view = render(ShadowNested({}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
       final nodeWithShadowRoot = view.getByTestId(nodeWithShadowRootDefaultTestId);
-      shouldPass(within(nodeWithShadowRoot.shadowRoot).getByTestId('empty'), isInTheDocument);
+      shouldPass(within(nodeWithShadowRoot.shadowRoot!).getByTestId('empty'), isInTheDocument);
     });
 
     group('provides a useful failure message when', () {

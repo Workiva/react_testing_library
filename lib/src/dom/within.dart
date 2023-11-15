@@ -32,7 +32,7 @@ class WithinQueries extends ScopedQueries {
   WithinQueries._(this.container) : super(() => container);
 
   /// The node within which the queries are scoped.
-  final Node? container;
+  final Node container;
 }
 
 /// Takes a DOM [node] and binds it to the raw query functions.
@@ -66,7 +66,7 @@ WithinQueries within(Node? node) {
 
 @sealed
 class ScreenQueries extends WithinQueries {
-  ScreenQueries._() : super._(document.body);
+  ScreenQueries._() : super._(document.body!);
 
   /// A shortcut to print `prettyDOM(document.body)`.
   ///
