@@ -32,9 +32,8 @@ import 'package:react_testing_library/src/util/console_log_utils.dart';
 /// > Learn more: <https://testing-library.com/docs/dom-testing-library/api-accessibility/#getroles>
 ///
 /// {@category Accessibility}
-Map<String, List> getRoles(Node container, {bool hidden = false}) {
-  return Map.from(JsBackedMap.fromJs(_getRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)));
-}
+Map<String, List> getRoles(Node container, {bool hidden = false}) =>
+    Map.from(JsBackedMap.fromJs(_getRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap)));
 
 /// Prints a list of all the implicit ARIA roles within [container], each role containing a list of all of the
 /// nodes which match that role.
@@ -46,9 +45,8 @@ Map<String, List> getRoles(Node container, {bool hidden = false}) {
 /// > Learn more: <https://testing-library.com/docs/dom-testing-library/api-accessibility/#logroles>
 ///
 /// {@category Accessibility}
-void logRoles(Node container, {bool hidden = false}) {
-  printConsoleLogs(() => _logRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap));
-}
+void logRoles(Node container, {bool hidden = false}) =>
+    printConsoleLogs(() => _logRoles(container, jsifyAndAllowInterop({'hidden': hidden}) as JsMap));
 
 @JS('rtl.getRoles')
 external JsMap _getRoles(
