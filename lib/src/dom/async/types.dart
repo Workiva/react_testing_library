@@ -23,6 +23,7 @@ import 'package:meta/meta.dart';
 /// Returns either an `Error` or a `TestFailure` when provided with the [originalError].
 typedef QueryTimeoutFn = /*Error || TestFailure*/ Object Function(/*Error*/ Object originalError);
 
+// todo should all these be optional / nullable?
 @JS()
 @anonymous
 class SharedJsWaitForOptions {

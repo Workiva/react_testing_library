@@ -124,19 +124,16 @@ external JsMap get _fireEventObj;
 ///
 /// {@category UserActions}
 bool fireEventByName(String eventName, Element element, [Map? eventProperties]) {
-  if (!JsBackedMap.fromJs(_jsEventMap).keys.contains(eventName)) {
+  if (!JsBackedMap.fromJs(_fireEventObj).keys.contains(eventName)) {
     throw ArgumentError.value(eventName, 'eventName');
   }
 
   final jsFireEventByNameFn =
-      JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [/*JsObject*/ dynamic])?;
+      JsBackedMap.fromJs(_fireEventObj)[eventName] as bool Function(Element, [/*JsObject*/ dynamic]);
 
   if (eventProperties == null) {
-    return eventHandlerErrorCatcher(() => jsFireEventByNameFn!(element));
+    return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element));
   }
 
-  return eventHandlerErrorCatcher(() => jsFireEventByNameFn!(element, jsifyAndAllowInterop(eventProperties)));
+  return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties)));
 }
-
-@JS('rtl.eventMap')
-external JsMap get _jsEventMap;

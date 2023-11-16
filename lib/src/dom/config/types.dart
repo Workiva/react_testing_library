@@ -40,6 +40,6 @@ class JsConfig {
   external bool get throwSuggestions;
   external set throwSuggestions(bool value);
 
-  external /*JsError*/ dynamic Function(String message, Element container) get getElementError;
-  external set getElementError(/*JsError*/ dynamic Function(String message, Element container) value);
+  external /*JsError*/ dynamic Function(String? message, Element container) get getElementError;
+  external set getElementError(/*JsError*/ dynamic Function(String? message, Element container) value);
 }
