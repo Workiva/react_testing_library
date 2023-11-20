@@ -82,20 +82,20 @@ class PrettyDomOptions {
   /// ### [indent]
   /// The number of spaces in each level of indentation, defaulting to `2`.
   /// {@endtemplate}
-  external int get indent;
-  external set indent(int value);
+  external int? get indent;
+  external set indent(int? value);
 
   /// {@template prettyDomOptionsMaxDepth}
   /// ### [maxDepth]
   /// The number of nested levels to print in the DOM tree.
   /// {@endtemplate}
-  external int get maxDepth;
-  external set maxDepth(int value);
+  external int? get maxDepth;
+  external set maxDepth(int? value);
 
   /// {@template prettyDomOptionsMin}
   /// ### [min]
   /// Whether to minimize added space: no indentation nor line breaks. Defaults to `false`.
   /// {@endtemplate}
-  external bool get min;
-  external set min(bool value);
+  external bool? get min;
+  external set min(bool? value);
 }

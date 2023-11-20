@@ -55,6 +55,10 @@ void main() {
       test('when min is true', () {
         expect(rtl.prettyDOM(vDomRootRef.current, min: true), _expectedPrettyDomWithMinSetToTrue);
       });
+
+      test('with null input', () {
+        expect(rtl.prettyDOM(null), _expectedPrettyDomNull);
+      });
     });
   });
 }
@@ -95,3 +99,20 @@ const _expectedPrettyDomWithMaxDepthOfTwo = '''<div>
 </div>''';
 
 const _expectedPrettyDomWithMinSetToTrue = '<div><p>hi there!</p><div><p>you again?</p></div></div>';
+
+const _expectedPrettyDomNull = '''<body>
+  
+
+  <div>
+    <div>
+      <p>
+        hi there!
+      </p>
+      <div>
+        <p>
+          you again?
+        </p>
+      </div>
+    </div>
+  </div>
+</body>''';
