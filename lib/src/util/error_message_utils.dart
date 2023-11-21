@@ -53,7 +53,11 @@ class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
   factory TestingLibraryElementError.fromJs(/*JsError*/ dynamic jsError, [StackTrace? jsStackTrace]) {
-    final stack = jsError is JsError ? jsStackTrace ?? StackTrace.fromString(jsError.stack) : null;
+    StackTrace? stack;
+    if (jsError is JsError) {
+      final jsErrorStack = jsError.stack;
+      stack = jsStackTrace ?? (jsErrorStack != null ? StackTrace.fromString(jsErrorStack) : null);
+    }
     return TestingLibraryElementError(jsError.toString(), stack);
   }
 
@@ -76,8 +80,8 @@ class JsError {
   external String get message;
   external set message(String value);
 
-  external String get stack;
-  external set stack(String value);
+  external String? get stack;
+  external set stack(String? value);
 }
 
 @JS('rtl.buildJsGetElementError')

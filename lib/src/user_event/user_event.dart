@@ -111,7 +111,7 @@ abstract class UserEvent {
   /// {@category UserActions}
   static void click(
     Element element, {
-    Map? eventInit,
+    Map eventInit = const {},
     bool skipHover = false,
     int clickCount = 0,
     bool skipPointerEventsCheck = false,
@@ -200,7 +200,11 @@ abstract class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
-  static void dblClick(Element element, {Map? eventInit, bool skipPointerEventsCheck = false}) {
+  static void dblClick(
+    Element element, {
+    Map eventInit = const {},
+    bool skipPointerEventsCheck = false,
+  }) {
     final options = {
       'skipPointerEventsCheck': skipPointerEventsCheck,
     };
@@ -440,6 +444,7 @@ abstract class UserEvent {
         element,
         text,
         jsifyAndAllowInterop(options),
+        // Cast return type of JS function to be compatible with `promiseToFuture`.
       ) as Object);
     });
   }
@@ -631,6 +636,7 @@ abstract class UserEvent {
       return promiseToFuture(getProperty(_userEvent, 'keyboard')(
         text,
         jsifyAndAllowInterop(options),
+        // Cast return type of JS function to be compatible with `promiseToFuture`.
       ) as Object);
     });
   }
@@ -749,8 +755,8 @@ abstract class UserEvent {
   static void upload(
     /*InputElement | LabelElement*/ Element element,
     List<File> files, {
-    Map? clickInit,
-    Map? changeInit,
+    Map clickInit = const {},
+    Map changeInit = const {},
     bool applyAccept = false,
   }) {
     final init = {
@@ -911,7 +917,7 @@ abstract class UserEvent {
   static void selectOptions(
     SelectElement selectElement,
     List<dynamic> values, {
-    Map? clickInit,
+    Map clickInit = const {},
     bool skipPointerEventsCheck = false,
   }) {
     final options = {
@@ -1014,7 +1020,7 @@ abstract class UserEvent {
   static void deselectOptions(
     SelectElement selectElement,
     List values, {
-    Map? clickInit,
+    Map clickInit = const {},
     bool skipPointerEventsCheck = false,
   }) {
     final options = {
@@ -1123,7 +1129,10 @@ abstract class UserEvent {
   ///
   /// {@category UserActions}
   static void tab({bool shift = false, Element? focusTrap}) {
-    final options = {'shift': shift, 'focusTrap': focusTrap};
+    final options = {
+      'shift': shift,
+      if (focusTrap != null) 'focusTrap': focusTrap,
+    };
     eventHandlerErrorCatcher(() {
       getProperty(_userEvent, 'tab')(
         jsifyAndAllowInterop(options),
@@ -1210,7 +1219,7 @@ abstract class UserEvent {
   /// {@category UserActions}
   static void hover(
     Element element, {
-    Map? eventInit,
+    Map eventInit = const {},
     bool skipPointerEventsCheck = false,
   }) {
     final options = {
@@ -1309,7 +1318,11 @@ abstract class UserEvent {
   /// {@macro RenderSupportsReactAndOverReactCallout}
   ///
   /// {@category UserActions}
-  static void unhover(Element element, {Map? eventInit, bool skipPointerEventsCheck = false}) {
+  static void unhover(
+    Element element, {
+    Map eventInit = const {},
+    bool skipPointerEventsCheck = false,
+  }) {
     final options = {
       'skipPointerEventsCheck': skipPointerEventsCheck,
     };
@@ -1390,7 +1403,7 @@ abstract class UserEvent {
   static void paste(
     Element element,
     String text, {
-    Map? eventInit,
+    Map eventInit = const {},
     int? initialSelectionStart,
     int? initialSelectionEnd,
   }) {
@@ -1420,7 +1433,7 @@ class KeyboardState {
   external factory KeyboardState._();
 }
 
-dynamic _jsifyEventData(Map? eventData) => jsifyAndAllowInterop(eventData ?? const {});
+dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData);
 
 // Converts a JsMap FileList to a List<File>.
 List<File> _unjsifyFileList(List<File>? fileList) {

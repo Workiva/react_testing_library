@@ -51,18 +51,18 @@ class JsRenderResult {
 @JS()
 @anonymous
 class RenderOptions {
-  external Node get container;
-  external set container(Node value);
+  external Node? get container;
+  external set container(Node? value);
 
-  external Node get baseElement;
-  external set baseElement(Node value);
+  external Node? get baseElement;
+  external set baseElement(Node? value);
 
   external dynamic get wrapper;
   external set wrapper(dynamic value);
 
-  external bool get hydrate;
-  external set hydrate(bool value);
+  external bool? get hydrate;
+  external set hydrate(bool? value);
 
-  external JsMap get queries;
-  external set queries(JsMap value);
+  external JsMap? get queries;
+  external set queries(JsMap? value);
 }
