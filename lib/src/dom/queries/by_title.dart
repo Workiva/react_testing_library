@@ -240,9 +240,9 @@ mixin ByTitleQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTitle` instead of an
     // interop like `_jsFindByTitle` to give consumers better async stack traces.
@@ -254,9 +254,9 @@ mixin ByTitleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -295,9 +295,9 @@ mixin ByTitleQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTitle` instead of an
     // interop like `_jsFindAllByTitle` to give consumers better async stack traces.
@@ -309,9 +309,9 @@ mixin ByTitleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }

@@ -252,9 +252,9 @@ mixin ByTextQueries on IQueries {
     String? selector,
     /*String|bool*/ dynamic ignore = 'script',
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByText` instead of an
     // interop like `_jsFindByText` to give consumers better async stack traces.
@@ -268,9 +268,9 @@ mixin ByTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -313,9 +313,9 @@ mixin ByTextQueries on IQueries {
     String? selector,
     /*String|bool*/ dynamic ignore = 'script',
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByText` instead of an
     // interop like `_jsFindAllByText` to give consumers better async stack traces.
@@ -329,9 +329,9 @@ mixin ByTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }

@@ -53,6 +53,7 @@ mixin IQueries {
     if (timeout != null) waitForOptions.timeout = timeout.inMilliseconds;
     if (interval != null) waitForOptions.interval = interval.inMilliseconds;
     if (onTimeout != null) waitForOptions.onTimeout = allowInterop(onTimeout);
+    // ignore: invalid_use_of_protected_member
     waitForOptions.mutationObserverOptions = mutationObserverOptions.toJs();
 
     return waitForOptions;

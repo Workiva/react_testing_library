@@ -56,7 +56,7 @@ Future<T> waitFor<T>(
   FutureOr<T> Function() expectation, {
   Node? container,
   Duration? timeout,
-  Duration interval = const Duration(milliseconds: 50),
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {

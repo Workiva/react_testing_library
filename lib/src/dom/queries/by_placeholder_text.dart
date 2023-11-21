@@ -231,9 +231,9 @@ mixin ByPlaceholderTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByPlaceholderText` instead of an
     // interop like `_jsFindByPlaceholderText` to give consumers better async stack traces.
@@ -245,9 +245,9 @@ mixin ByPlaceholderTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -286,9 +286,9 @@ mixin ByPlaceholderTextQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByPlaceholderText` instead of an
     // interop like `_jsFindAllByPlaceholderText` to give consumers better async stack traces.
@@ -300,9 +300,9 @@ mixin ByPlaceholderTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }

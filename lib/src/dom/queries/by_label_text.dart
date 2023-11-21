@@ -254,9 +254,9 @@ mixin ByLabelTextQueries on IQueries {
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     String? selector,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByLabelText` instead of an
     // interop like `_jsFindByLabelText` to give consumers better async stack traces.
@@ -269,9 +269,9 @@ mixin ByLabelTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -310,9 +310,9 @@ mixin ByLabelTextQueries on IQueries {
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     String? selector,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByAltText` instead of an
     // interop like `_jsFindAllByAltText` to give consumers better async stack traces.
@@ -325,9 +325,9 @@ mixin ByLabelTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }

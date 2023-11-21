@@ -187,13 +187,12 @@ mixin ByDisplayValueQueries on IQueries {
     /*TextMatch*/ dynamic value, {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
-  }) {
-    return _jsQueryByDisplayValue(
-      getContainerForScope(),
-      TextMatch.toJs(value),
-      buildMatcherOptions(exact: exact, normalizer: normalizer),
-    ) as E?;
-  }
+  }) =>
+      _jsQueryByDisplayValue(
+        getContainerForScope(),
+        TextMatch.toJs(value),
+        buildMatcherOptions(exact: exact, normalizer: normalizer),
+      ) as E?;
 
   /// Returns a list of [InputElement]s, [TextAreaElement]s or [SelectElement]s that have the matching [value] displayed,
   /// defaulting to an [exact] match.
@@ -262,9 +261,9 @@ mixin ByDisplayValueQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByDisplayValue` instead of an
     // interop like `_jsFindByDisplayValue` to give consumers better async stack traces.
@@ -276,9 +275,9 @@ mixin ByDisplayValueQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -317,9 +316,9 @@ mixin ByDisplayValueQueries on IQueries {
     bool exact = true,
     NormalizerFn Function([NormalizerOptions?])? normalizer,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByDisplayValue` instead of an
     // interop like `_jsFindAllByDisplayValue` to give consumers better async stack traces.
@@ -331,9 +330,9 @@ mixin ByDisplayValueQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }

@@ -16,7 +16,7 @@ import 'dart:html'
     show AreaElement, Element, ImageElement, InputElement, LabelElement, Node, SelectElement, TextAreaElement;
 
 import 'package:react_testing_library/src/dom/async/types.dart'
-    show MutationObserverOptions, QueryTimeoutFn, defaultMutationObserverOptions;
+    show MutationObserverOptions, QueryTimeoutFn, defaultAsyncCallbackCheckInterval, defaultMutationObserverOptions;
 import 'package:react_testing_library/src/dom/matches/types.dart' show NormalizerFn, NormalizerOptions;
 import 'package:react_testing_library/src/dom/within.dart' show within;
 
@@ -193,7 +193,7 @@ Future<E> findByAltText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -246,7 +246,7 @@ Future<List<E>> findAllByAltText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -430,7 +430,7 @@ Future<E> findByDisplayValue<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -482,7 +482,7 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -666,7 +666,7 @@ Future<E> findByLabelText<E extends Element>(
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   String? selector,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -719,7 +719,7 @@ Future<List<E>> findAllByLabelText<E extends Element>(
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   String? selector,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -904,7 +904,7 @@ Future<E> findByPlaceholderText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -956,7 +956,7 @@ Future<List<E>> findAllByPlaceholderText<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -1248,7 +1248,7 @@ Future<E> findByRole<E extends Element>(
   bool queryFallbacks = false,
   int? level,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -1323,7 +1323,7 @@ Future<List<E>> findAllByRole<E extends Element>(
   bool queryFallbacks = false,
   int? level,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -1515,7 +1515,7 @@ Future<E> findByTestId<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -1567,7 +1567,7 @@ Future<List<E>> findAllByTestId<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -1767,7 +1767,7 @@ Future<E> findByText<E extends Element>(
   String? selector,
   /*String|bool*/ dynamic ignore = 'script',
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -1825,7 +1825,7 @@ Future<List<E>> findAllByText<E extends Element>(
   String? selector,
   /*String|bool*/ dynamic ignore = 'script',
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -2011,7 +2011,7 @@ Future<E> findByTitle<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
@@ -2063,7 +2063,7 @@ Future<List<E>> findAllByTitle<E extends Element>(
   bool exact = true,
   NormalizerFn Function([NormalizerOptions?])? normalizer,
   Duration? timeout,
-  Duration? interval,
+  Duration interval = defaultAsyncCallbackCheckInterval,
   QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>

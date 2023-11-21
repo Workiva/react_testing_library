@@ -17,13 +17,13 @@ library react_testing_library.src.dom.async.types;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
+import 'package:react_testing_library/src/dom/config/configure.dart' show getConfig;
 
 /// A function typedef used by `onTimeout` parameters in asynchronous `find*` / `waitFor` queries.
 ///
 /// Returns either an `Error` or a `TestFailure` when provided with the [originalError].
 typedef QueryTimeoutFn = /*Error || TestFailure*/ Object Function(/*Error*/ Object originalError);
 
-// todo should all these be optional / nullable?
 @JS()
 @anonymous
 class SharedJsWaitForOptions {
@@ -32,16 +32,16 @@ class SharedJsWaitForOptions {
   ///
   /// How long to wait for the node to appear in the DOM before throwing a `TestFailure`, defaulting to `1000ms`.
   /// {@endtemplate}
-  external int get timeout;
-  external set timeout(int value);
+  external int? get timeout;
+  external set timeout(int? value);
 
   /// {@template sharedWaitForOptionsIntervalDescription}
   /// ### [interval]
   ///
   /// How often the callback is called, defaulting to `50ms`.
   /// {@endtemplate}
-  external int get interval;
-  external set interval(int value);
+  external int? get interval;
+  external set interval(int? value);
 
   /// {@template sharedWaitForOptionsOnTimeoutDescription}
   /// ### [onTimeout]
@@ -72,20 +72,20 @@ class SharedJsWaitForOptions {
 @JS()
 @anonymous
 class JsMutationObserverOptions {
-  external bool get subtree;
-  external set subtree(bool value);
+  external bool? get subtree;
+  external set subtree(bool? value);
 
-  external bool get childList;
-  external set childList(bool value);
+  external bool? get childList;
+  external set childList(bool? value);
 
-  external bool get attributes;
-  external set attributes(bool value);
+  external bool? get attributes;
+  external set attributes(bool? value);
 
-  external bool get characterData;
-  external set characterData(bool value);
+  external bool? get characterData;
+  external set characterData(bool? value);
 
-  external List<String> get attributeFilter;
-  external set attributeFilter(List<String> value);
+  external List<String>? get attributeFilter;
+  external set attributeFilter(List<String>? value);
 }
 
 /// Builds a set of options that can be used for any async query like `waitFor`,

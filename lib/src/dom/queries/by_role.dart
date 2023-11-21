@@ -374,9 +374,9 @@ mixin ByRoleQueries on IQueries {
     bool queryFallbacks = false,
     int? level,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByRole` instead of an
     // interop like `_jsFindByRole` to give consumers better async stack traces.
@@ -396,9 +396,9 @@ mixin ByRoleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -452,9 +452,9 @@ mixin ByRoleQueries on IQueries {
     bool queryFallbacks = false,
     int? level,
     Duration? timeout,
-    Duration? interval,
+    Duration interval = defaultAsyncCallbackCheckInterval,
     QueryTimeoutFn? onTimeout,
-    MutationObserverOptions? mutationObserverOptions,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByRole` instead of an
     // interop like `_jsFindAllByRole` to give consumers better async stack traces.
@@ -474,9 +474,9 @@ mixin ByRoleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }
@@ -512,11 +512,11 @@ external List< /*Element*/ dynamic> _jsQueryAllByRole(
 @JS()
 @anonymous
 class ByRoleOptions {
-  external bool get exact;
-  external set exact(bool value);
+  external bool? get exact;
+  external set exact(bool? value);
 
-  external NormalizerFn Function([NormalizerOptions?]) get normalizer;
-  external set normalizer(NormalizerFn Function([NormalizerOptions?]) value);
+  external NormalizerFn Function([NormalizerOptions?])? get normalizer;
+  external set normalizer(NormalizerFn Function([NormalizerOptions?])? value);
 
   /// {@template byRoleOptionsName}
   /// You can also query the returned element(s) by their [accessible name](https://www.w3.org/TR/accname-1.1/)
@@ -543,8 +543,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#hidden> for more details and examples.
   /// {@endtemplate}
-  external bool get hidden;
-  external set hidden(bool value);
+  external bool? get hidden;
+  external set hidden(bool? value);
 
   /// {@template byRoleOptionsSelected}
   /// ### [selected]
@@ -555,8 +555,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#selected> for more details and examples.
   /// {@endtemplate}
-  external bool get selected;
-  external set selected(bool value);
+  external bool? get selected;
+  external set selected(bool? value);
 
   /// {@template byRoleOptionsChecked}
   /// ### [checked]
@@ -564,8 +564,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#checked> for more details and examples.
   /// {@endtemplate}
-  external bool get checked;
-  external set checked(bool value);
+  external bool? get checked;
+  external set checked(bool? value);
 
   /// {@template byRoleOptionsPressed}
   /// ### [pressed]
@@ -576,8 +576,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#pressed> for more details and examples.
   /// {@endtemplate}
-  external bool get pressed;
-  external set pressed(bool value);
+  external bool? get pressed;
+  external set pressed(bool? value);
 
   /// {@template byRoleOptionsExpanded}
   /// ### [expanded]
@@ -588,8 +588,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#expanded> for more details and examples.
   /// {@endtemplate}
-  external bool get expanded;
-  external set expanded(bool value);
+  external bool? get expanded;
+  external set expanded(bool? value);
 
   /// {@template byRoleOptionsQueryFallbacks}
   /// ### [queryFallbacks]
@@ -599,8 +599,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#queryfallbacks> for more details and examples.
   /// {@endtemplate}
-  external bool get queryFallbacks;
-  external set queryFallbacks(bool value);
+  external bool? get queryFallbacks;
+  external set queryFallbacks(bool? value);
 
   /// {@template byRoleOptionsLevel}
   /// ### [level]
@@ -615,6 +615,6 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#level> for more details and examples.
   /// {@endtemplate}
-  external int get level;
-  external set level(int value);
+  external int? get level;
+  external set level(int? value);
 }
