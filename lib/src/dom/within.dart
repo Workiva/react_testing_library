@@ -22,7 +22,6 @@ import 'package:meta/meta.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:react_testing_library/src/util/console_log_utils.dart';
-import 'package:react_testing_library/src/util/is_or_contains.dart';
 
 /// Queries scoped to the provided [container].
 ///
@@ -48,12 +47,11 @@ class WithinQueries extends ScopedQueries {
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-within>
 ///
 /// {@category Queries}
-WithinQueries within(Node? node) {
-  if (node == null) {
-    throw ArgumentError.notNull('node');
-  }
+WithinQueries within(Node node) {
+  // Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+  ArgumentError.checkNotNull(node);
 
-  if (node is! ShadowRoot && !isOrContains(document.body!, node)) {
+  if (node is! ShadowRoot && !(node.isConnected ?? false)) {
     throw ArgumentError.value(
         node,
         'node',

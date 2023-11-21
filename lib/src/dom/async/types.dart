@@ -17,7 +17,6 @@ library react_testing_library.src.dom.async.types;
 
 import 'package:js/js.dart';
 import 'package:meta/meta.dart';
-import 'package:react_testing_library/src/dom/config/configure.dart' show getConfig;
 
 /// A function typedef used by `onTimeout` parameters in asynchronous `find*` / `waitFor` queries.
 ///
