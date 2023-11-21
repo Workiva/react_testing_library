@@ -232,17 +232,22 @@ class _ClassNameMatcher extends Matcher {
 
   @override
   Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
-    final missingClasses = matchState['missingClasses'] as Set;
+    final missingClasses = matchState['missingClasses'] as Set?;
     final unwantedClasses = matchState['unwantedClasses'] as Set?;
     final extraneousClasses = matchState['extraneousClasses'] as List?;
 
+    if (missingClasses == null || unwantedClasses == null || extraneousClasses == null) {
+      throw ArgumentError(
+          '`matchState` should have the following keys: "missingClasses", "unwantedClasses", "extraneousClasses"');
+    }
+
     final descriptionParts = <String>[];
     if (allowExtraneous) {
-      if (unwantedClasses!.isNotEmpty) {
+      if (unwantedClasses.isNotEmpty) {
         descriptionParts.add('has unwanted classes: $unwantedClasses');
       }
     } else {
-      if (extraneousClasses!.isNotEmpty) {
+      if (extraneousClasses.isNotEmpty) {
         descriptionParts.add('has extraneous classes: $extraneousClasses');
       }
     }

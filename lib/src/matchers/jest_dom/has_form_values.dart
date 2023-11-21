@@ -175,6 +175,9 @@ JsObject _getJsFormOrFieldSet(Element form) => JsObject.fromBrowserObject(form);
 ///
 /// Wraps the [HTMLFormElement.elements](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements) property.
 List<Element> getFormElements(Element form) {
-  assert(form is FormElement || form is FieldSetElement);
-  return convertToArray<Element>(_getJsFormOrFieldSet(form)['elements'] as JsObject?);
+  final elements = _getJsFormOrFieldSet(form)['elements'] as JsObject?;
+  if ((form is! FormElement && form is! FieldSetElement) || elements == null) {
+    throw ArgumentError('should be a form or fieldset element with the elements property', 'form');
+  }
+  return convertToArray<Element>(elements);
 }

@@ -22,7 +22,7 @@ mixin ElementTextContentMatcherMixin on CustomMatcher {
     if (item is! Element) return null;
     if (!normalizeWhitespace) return item.text;
 
-    return item.text!.replaceAll(RegExp(r'\s+'), ' ');
+    return item.text?.replaceAll(RegExp(r'\s+'), ' ');
   }
 
   /// Returns a normalized [String] or [Matcher] based on the provided [userExpectedTextContent]

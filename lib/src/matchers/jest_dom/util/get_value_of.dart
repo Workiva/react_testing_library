@@ -36,12 +36,16 @@ dynamic getValueOf(Element element, {dynamic Function(OptionElement option)? get
     }
   } else if (element is SelectElement) {
     getOptionValue ??= (option) => option.value;
+    final multiple = element.multiple;
+    if (multiple == null) {
+      throw ArgumentError('If `element` is a `SelectElement`, it should always have the `multiple` property set.');
+    }
     final selectedOptions = element.options.where((option) => option.selected);
     if (selectedOptions.isEmpty) {
-      return element.multiple! ? const [] : null;
+      return multiple ? const [] : null;
     } else if (selectedOptions.length == 1) {
       final selectedValues = selectedOptions.map(getOptionValue);
-      return element.multiple! ? selectedValues.toList() : selectedValues.single;
+      return multiple ? selectedValues.toList() : selectedValues.single;
     } else {
       return selectedOptions.map(getOptionValue).toList();
     }
