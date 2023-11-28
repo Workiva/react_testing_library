@@ -30,10 +30,10 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    late rtl.RenderResult view;
-    late Element rootElement;
-
     group('waitFor()', () {
+      late rtl.RenderResult view;
+      late Element rootElement;
+
       setUp(() {
         view = rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}));
         rootElement = view.getByTestId('delayed-render-of-root');
@@ -193,6 +193,7 @@ void main() {
       late Node elementThatWontBeRemoved;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
+      late rtl.RenderResult view;
 
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
@@ -275,6 +276,7 @@ void main() {
       late Node anotherElementInDomButOutsideContainer;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
+      late rtl.RenderResult view;
 
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');

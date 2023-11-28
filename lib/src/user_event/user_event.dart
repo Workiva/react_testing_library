@@ -777,9 +777,9 @@ abstract class UserEvent {
     // map with with an `item` method to access files.
     final control = element is LabelElement ? element.control : null;
     if (control is InputElement) {
-      control.files = _unjsifyFileList(control.files);
+      control.files = _unjsifyFileList(control.files ?? []);
     } else if (element is FileUploadInputElement) {
-      element.files = _unjsifyFileList(element.files);
+      element.files = _unjsifyFileList(element.files ?? []);
     }
   }
 
@@ -1436,16 +1436,13 @@ class KeyboardState {
 dynamic _jsifyEventData(Map eventData) => jsifyAndAllowInterop(eventData);
 
 // Converts a JsMap FileList to a List<File>.
-List<File> _unjsifyFileList(List<File>? fileList) {
+List<File> _unjsifyFileList(List<File> fileList) {
   if (fileList is FileList) return fileList;
 
-  final jsFileList = JsBackedMap.fromJs((fileList ?? []) as JsMap);
+  final jsFileList = JsBackedMap.fromJs(fileList as JsMap);
   final convertedFiles = <File>[];
   for (var i = 0; i < (jsFileList['length'] as int); i++) {
-    final file = jsFileList['item'](i);
-    if (file is File) {
-      convertedFiles.add(file);
-    }
+    convertedFiles.add(jsFileList['item'](i) as File);
   }
   return convertedFiles;
 }

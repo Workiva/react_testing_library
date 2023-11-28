@@ -15,7 +15,6 @@
 import 'dart:html';
 import 'dart:js';
 
-import 'package:collection/collection.dart' show IterableExtension;
 import 'package:matcher/matcher.dart';
 import 'package:react_testing_library/dom/debugging.dart';
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -128,10 +127,10 @@ class _HasFormValues extends CustomMatcher {
               }
               break;
             case 'radio':
-              final allRadiosWithName = element.querySelectorAll('input[type="radio"][name="$childElementName"]');
-              final selectedRadioElement = allRadiosWithName.singleWhereOrNull(
-                (radioEl) => (radioEl as RadioButtonInputElement).checked!,
-              ) as RadioButtonInputElement?;
+              final allRadiosWithName =
+                  element.querySelectorAll<RadioButtonInputElement>('input[type="radio"][name="$childElementName"]');
+              final selectedRadioElements = allRadiosWithName.where((radioEl) => radioEl.checked!).toList();
+              final selectedRadioElement = selectedRadioElements.isEmpty ? null : selectedRadioElements.single;
               actualNamesAndValues[elementNameToTest] = selectedRadioElement?.value;
               break;
             default:

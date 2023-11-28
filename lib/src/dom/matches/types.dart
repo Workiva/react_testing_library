@@ -75,8 +75,8 @@ abstract class TextMatch {
   ///
   /// And instead, they see the [newValue] provided - which should contain a more helpful message that includes
   /// the value they provided as the `TextMatch` argument.
-  static Object Function(Object originalMessage, Element container) _replaceDartInteropFunctionStringWith(
-      Object newValue) {
+  static Object? Function(Object? originalMessage, Element container) _replaceDartInteropFunctionStringWith(
+      Object? newValue) {
     final dartInteropFunctionValueRegex = RegExp(r'([\"`]*)(function[\s\S]+})([\"`]*)(.*)([\s\S]+)*', multiLine: true);
 
     return (originalMessage, container) {

@@ -27,11 +27,11 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    late rtl.RenderResult view;
-
     group(
         'the selector argument can be specified to target only matching '
         'element(s) when more than one has matching text:', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.div(
           {},
@@ -137,6 +137,8 @@ void main() {
     });
 
     group('the ignore argument', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.div(
           {},

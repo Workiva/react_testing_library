@@ -81,8 +81,13 @@ void main() {
 
     group('contains queries that can be scoped to the specified container', () {
       const scopeName = 'top level';
-      late Node container;
-      late String expectedPrettyDom;
+      Node? container;
+      String? expectedPrettyDom;
+
+      tearDown(() {
+        container = null;
+        expectedPrettyDom = null;
+      });
 
       Function _renderForQuery(
         Function query, {
@@ -122,7 +127,7 @@ void main() {
         QueryType.AltText,
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByAltText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByAltText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -141,7 +146,7 @@ void main() {
           'findAllByAltText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByAltText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'alt text: $valueNotFoundPlaceholder',
       );
 
@@ -149,7 +154,7 @@ void main() {
         QueryType.DisplayValue,
         textMatchArgName: TextMatchArgName.value,
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByDisplayValue': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByDisplayValue, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -168,7 +173,7 @@ void main() {
           'findAllByDisplayValue': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByDisplayValue,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'display value: $valueNotFoundPlaceholder',
       );
 
@@ -176,7 +181,7 @@ void main() {
         QueryType.LabelText,
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByLabelText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByLabelText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -195,7 +200,7 @@ void main() {
           'findAllByLabelText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByLabelText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'label with the text of: $valueNotFoundPlaceholder',
       );
 
@@ -203,7 +208,7 @@ void main() {
         QueryType.PlaceholderText,
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByPlaceholderText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.queryByPlaceholderText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -225,7 +230,7 @@ void main() {
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery,
               testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'placeholder text of: $valueNotFoundPlaceholder',
       );
 
@@ -234,7 +239,7 @@ void main() {
         textMatchArgName: TextMatchArgName.role,
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -253,7 +258,7 @@ void main() {
           'findAllByRole': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByRole,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'with the role "$valueNotFoundPlaceholder"',
       );
 
@@ -262,7 +267,7 @@ void main() {
         textMatchArgName: TextMatchArgName.name,
         textMatchArgSupportsFuzzyMatching: false, // exact = false is not supported by role queries
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByRole': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByRole, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -281,7 +286,7 @@ void main() {
           'findAllByRole': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByRole,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'with the role "$validRoleInDom" and name "$valueNotFoundPlaceholder"',
       );
 
@@ -289,7 +294,7 @@ void main() {
         QueryType.TestId,
         textMatchArgName: TextMatchArgName.testId,
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByTestId': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByTestId, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -308,7 +313,7 @@ void main() {
           'findAllByTestId': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByTestId,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'an element by: [data-test-id="$valueNotFoundPlaceholder"',
       );
 
@@ -316,7 +321,7 @@ void main() {
         QueryType.Text,
         textMatchArgName: TextMatchArgName.text,
         queryShouldMatchOn: '$scopeName single byText match',
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByText': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByText, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -335,7 +340,7 @@ void main() {
           'findAllByText': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByText,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'an element with the text: $valueNotFoundPlaceholder',
       );
 
@@ -343,7 +348,7 @@ void main() {
         QueryType.Title,
         textMatchArgName: TextMatchArgName.title,
         queryShouldMatchOn: scopeName,
-        getContainerForTopLevelQueries: () => container,
+        getContainerForTopLevelQueries: () => container!,
         topLevelQueryQueriesByName: {
           'queryByTitle': ({renderMultipleElsMatchingQuery}) =>
               _renderForQuery(rtl.queryByTitle, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery),
@@ -362,7 +367,7 @@ void main() {
           'findAllByTitle': ({renderMultipleElsMatchingQuery}) => _renderForQuery(rtl.findAllByTitle,
               renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery, testAsyncQuery: true),
         },
-        getExpectedPrettyDom: () => expectedPrettyDom,
+        getExpectedPrettyDom: () => expectedPrettyDom!,
         failureSnapshotPattern: 'title: $valueNotFoundPlaceholder',
       );
     });

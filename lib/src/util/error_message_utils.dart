@@ -24,11 +24,11 @@ import 'package:react_testing_library/src/dom/config/configure.dart' show config
 /// Builds and configures react-testing-library to use a custom value for `JsConfig.getElementError`
 /// if any queries fail in the current test.
 void setEphemeralElementErrorMessage(
-    Object Function(Object originalMessage, Element container) customErrorMessageBuilder,
+    Object? Function(Object? originalMessage, Element container) customErrorMessageBuilder,
     {StackTrace? jsStackTrace}) {
   TestingLibraryElementError buildCustomDartGetElementError(Object? originalMessage, Element container) {
     return TestingLibraryElementError.fromJs(
-        buildJsGetElementError(customErrorMessageBuilder(originalMessage ?? '', container), container), jsStackTrace);
+        buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container), jsStackTrace);
   }
 
   configure(getElementError: buildCustomDartGetElementError);
@@ -85,4 +85,4 @@ class JsError {
 }
 
 @JS('rtl.buildJsGetElementError')
-external JsError buildJsGetElementError(Object message, Element container);
+external JsError buildJsGetElementError(Object? message, Element container);

@@ -28,9 +28,9 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    late rtl.RenderResult view;
-
     group('basic functionality', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.section(
             {},
@@ -275,6 +275,8 @@ void main() {
     group(
         'the testId argument can target a matching testid when more than '
         'one testId is present on the data-test-id attribute', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.section(
             {},
