@@ -1,5 +1,17 @@
 # React Testing Library Changelog
 
+## 3.0.1
+* [#75](https://github.com/Workiva/react_testing_library/pull/75) Update changelog for 3.0.0 Release 
+
+## 3.0.0
+* [#63](https://github.com/Workiva/react_testing_library/pull/63) Null Safety Migration
+
+## 2.1.3
+* [#57](https://github.com/Workiva/react_testing_library/pull/57) Migrate to GH deploy pages action
+
+## 2.1.2
+* [#56](https://github.com/Workiva/react_testing_library/pull/56) Raise analyzer minimum & unpin meta
+
 ## 2.1.1
 * [#54](https://github.com/Workiva/react_testing_library/pull/54) Update CHANGELOG for 2.1.1 Release
 * [#53](https://github.com/Workiva/react_testing_library/pull/53) Remove a CI check that was no longer working properly
