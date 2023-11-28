@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +14,6 @@
 
 import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasDisplayValue, hasValue;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -31,21 +28,18 @@ void main() {
 
 @isTestGroup
 void sharedHasValueTests(String description,
-    {Matcher Function([dynamic]) matcherFn, String valueDescription = 'value'}) {
+    {required Matcher Function([dynamic]) matcherFn, String valueDescription = 'value'}) {
   group(description, () {
-    RenderResult view;
-    tearDown(() {
-      view = null;
-    });
-
     group('passes when the provided value matches the value found in a', () {
       group('TextInputElement', () {
+        late RenderResult view;
+
         setUp(() {
           view = render(react.input({
             'type': 'text',
             'name': 'firstName',
             'defaultValue': 'John',
-          }) as ReactElement);
+          }));
         });
 
         test('exact match', () {
@@ -63,11 +57,13 @@ void sharedHasValueTests(String description,
       });
 
       group('TextAreaElement', () {
+        late RenderResult view;
+
         setUp(() {
           view = render(react.textarea({
             'name': 'comment',
             'defaultValue': 'I am here to say something nice about you',
-          }) as ReactElement);
+          }));
         });
 
         test('exact match', () {
@@ -80,12 +76,14 @@ void sharedHasValueTests(String description,
       });
 
       group('NumberInputElement', () {
+        late RenderResult view;
+
         setUp(() {
           view = render(react.input({
             'type': 'number',
             'name': 'age',
             'defaultValue': 35,
-          }) as ReactElement);
+          }));
         });
 
         test('exact match', () {
@@ -101,7 +99,7 @@ void sharedHasValueTests(String description,
         group('when only a single option can be selected', () {
           group('and a single option is selected', () {
             test('exact match', () {
-              view = render(react.select(
+              final view = render(react.select(
                 {
                   'name': 'account-type',
                   'defaultValue': 'business',
@@ -112,7 +110,7 @@ void sharedHasValueTests(String description,
                 react.option({
                   'value': 'business',
                 }, 'business description'),
-              ) as ReactElement);
+              ));
 
               if (matcherFn == hasValue) {
                 shouldPass(view.getByRole('combobox'), matcherFn('business'));
@@ -122,7 +120,7 @@ void sharedHasValueTests(String description,
             });
 
             test('using a matcher', () {
-              view = render(react.select(
+              final view = render(react.select(
                 {'name': 'account-type'},
                 react.option({
                   'value': 'personal',
@@ -130,7 +128,7 @@ void sharedHasValueTests(String description,
                 react.option({
                   'value': 'business',
                 }, 'business description'),
-              ) as ReactElement);
+              ));
 
               if (matcherFn == hasValue) {
                 shouldPass(
@@ -151,7 +149,7 @@ void sharedHasValueTests(String description,
           });
 
           test('and no option is selected', () {
-            view = render(react.select(
+            final view = render(react.select(
               {'name': 'account-type'},
               react.option({
                 'value': 'personal',
@@ -161,7 +159,7 @@ void sharedHasValueTests(String description,
                 'value': 'business',
                 'disabled': true,
               }, 'business'),
-            ) as ReactElement);
+            ));
 
             shouldPass(view.getByRole('combobox'), matcherFn());
           });
@@ -169,6 +167,8 @@ void sharedHasValueTests(String description,
 
         group('when multiple options can be selected', () {
           group('and a single option is selected', () {
+            late RenderResult view;
+
             setUp(() {
               view = render(react.select(
                 {
@@ -186,7 +186,7 @@ void sharedHasValueTests(String description,
                   'value': 'pineapple',
                   'disabled': true,
                 }, 'Processed Sweetened Pineapple'),
-              ) as ReactElement);
+              ));
             });
 
             test('exact match', () {
@@ -217,6 +217,8 @@ void sharedHasValueTests(String description,
           });
 
           group('and multiple options are selected', () {
+            late RenderResult view;
+
             setUp(() {
               view = render(react.select(
                 {
@@ -234,7 +236,7 @@ void sharedHasValueTests(String description,
                   'value': 'pineapple',
                   'disabled': true,
                 }, 'Processed Sweetened Pineapple'),
-              ) as ReactElement);
+              ));
             });
 
             test('exact match', () {
@@ -255,7 +257,7 @@ void sharedHasValueTests(String description,
           });
 
           test('and no option is selected', () {
-            view = render(react.select(
+            final view = render(react.select(
               {
                 'name': 'pizza-toppings',
                 'multiple': true,
@@ -272,7 +274,7 @@ void sharedHasValueTests(String description,
                 'value': 'pineapple',
                 'disabled': true,
               }, 'pineapple description'),
-            ) as ReactElement);
+            ));
 
             shouldPass(view.getByRole('listbox'), matcherFn());
           });
@@ -287,11 +289,11 @@ void sharedHasValueTests(String description,
 
       group('the element is', () {
         test('a CheckboxInputElement', () {
-          view = render(react.input({
+          final view = render(react.input({
             'type': 'checkbox',
             'name': 'business-in-front',
             'defaultChecked': true,
-          }) as ReactElement);
+          }));
 
           shouldFail(
               view.getByRole('checkbox'),
@@ -301,10 +303,10 @@ void sharedHasValueTests(String description,
         });
 
         test('an element with role="checkbox"', () {
-          view = render(react.div({
+          final view = render(react.div({
             'role': 'checkbox',
             'aria-checked': 'true',
-          }) as ReactElement);
+          }));
 
           shouldFail(
               view.getByRole('checkbox'),
@@ -314,11 +316,11 @@ void sharedHasValueTests(String description,
         });
 
         test('a RadioInputElement', () {
-          view = render(react.input({
+          final view = render(react.input({
             'type': 'radio',
             'name': 'business-in-front',
             'defaultChecked': true,
-          }) as ReactElement);
+          }));
 
           shouldFail(
               view.getByRole('radio'),
@@ -328,10 +330,10 @@ void sharedHasValueTests(String description,
         });
 
         test('an element with role="radio"', () {
-          view = render(react.div({
+          final view = render(react.div({
             'role': 'radio',
             'aria-checked': 'true',
-          }) as ReactElement);
+          }));
 
           shouldFail(
               view.getByRole('radio'),
@@ -343,11 +345,11 @@ void sharedHasValueTests(String description,
 
       group('the provided value does not match the value found in a', () {
         test('TextInputElement', () {
-          view = render(react.input({
+          final view = render(react.input({
             'type': 'text',
             'name': 'firstName',
             'defaultValue': 'John',
-          }) as ReactElement);
+          }));
 
           shouldFail(
             view.getByRole('textbox'),
@@ -360,10 +362,10 @@ void sharedHasValueTests(String description,
         });
 
         test('TextAreaElement', () {
-          view = render(react.textarea({
+          final view = render(react.textarea({
             'name': 'comments',
             'defaultValue': 'I have nothing nice to say',
-          }) as ReactElement);
+          }));
 
           shouldFail(
             view.getByRole('textbox'),
@@ -376,11 +378,11 @@ void sharedHasValueTests(String description,
         });
 
         test('NumberInputElement', () {
-          view = render(react.input({
+          final view = render(react.input({
             'type': 'number',
             'name': 'age',
             'defaultValue': 35,
-          }) as ReactElement);
+          }));
 
           shouldFail(
             view.getByRole('spinbutton'),
@@ -394,7 +396,7 @@ void sharedHasValueTests(String description,
 
         group('SelectElement', () {
           test('when only a single option can be selected', () {
-            view = render(react.select(
+            final view = render(react.select(
               {
                 'name': 'account-type',
                 'defaultValue': 'business',
@@ -405,7 +407,7 @@ void sharedHasValueTests(String description,
               react.option({
                 'value': 'business',
               }, 'business description'),
-            ) as ReactElement);
+            ));
 
             if (matcherFn == hasValue) {
               shouldFail(
@@ -429,7 +431,7 @@ void sharedHasValueTests(String description,
           });
 
           test('when multiple options can be selected', () {
-            view = render(react.select(
+            final view = render(react.select(
               {
                 'name': 'pizza-toppings',
                 'multiple': true,
@@ -445,7 +447,7 @@ void sharedHasValueTests(String description,
                 'value': 'pineapple',
                 'disabled': true,
               }, 'Processed Sweetened Pineapple'),
-            ) as ReactElement);
+            ));
 
             if (matcherFn == hasValue) {
               shouldFail(

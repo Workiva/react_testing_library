@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +22,6 @@ import 'package:meta/meta.dart';
 import 'package:react_testing_library/src/dom/pretty_dom.dart';
 import 'package:react_testing_library/src/dom/scoped_queries.dart' show ScopedQueries;
 import 'package:react_testing_library/src/util/console_log_utils.dart';
-import 'package:react_testing_library/src/util/is_or_contains.dart';
 
 /// Queries scoped to the provided [container].
 ///
@@ -51,11 +48,10 @@ class WithinQueries extends ScopedQueries {
 ///
 /// {@category Queries}
 WithinQueries within(Node node) {
-  if (node == null) {
-    throw ArgumentError.notNull('node');
-  }
+  // Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+  ArgumentError.checkNotNull(node);
 
-  if (node is! ShadowRoot && !isOrContains(document.body, node)) {
+  if (node is! ShadowRoot && !(node.isConnected ?? false)) {
     throw ArgumentError.value(
         node,
         'node',
@@ -68,15 +64,15 @@ WithinQueries within(Node node) {
 
 @sealed
 class ScreenQueries extends WithinQueries {
-  ScreenQueries._() : super._(document.body);
+  ScreenQueries._() : super._(document.body!);
 
   /// A shortcut to print `prettyDOM(document.body)`.
   ///
   /// > See: <https://testing-library.com/docs/queries/about/#screendebug>
   void debug([
-    Node baseElement,
-    int maxLength,
-    PrettyDomOptions options,
+    Node? baseElement,
+    int? maxLength,
+    PrettyDomOptions? options,
   ]) =>
       printConsoleLogs(() => _screen.debug(baseElement, maxLength, options));
 }

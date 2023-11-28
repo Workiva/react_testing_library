@@ -1,4 +1,3 @@
-// @dart = 2.7
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 // Copyright 2021 Workiva Inc.
@@ -16,7 +15,6 @@
 // limitations under the License.
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -32,7 +30,7 @@ void main() {
 
           ------------------------------
           Query Failure Stack Trace:''';
-      rtl.RenderResult view;
+      late rtl.RenderResult view;
 
       group('ByAltText query', () {
         const actualText = 'Johnny Be Good';
@@ -49,7 +47,7 @@ void main() {
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.img({'alt': actualText}) as ReactElement);
+          view = rtl.render(react.img({'alt': actualText}));
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -115,7 +113,7 @@ void main() {
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.input({'defaultValue': actualValue}) as ReactElement);
+          view = rtl.render(react.input({'defaultValue': actualValue}));
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -187,7 +185,7 @@ void main() {
               {},
               actualText,
               react.input({}),
-            ) as ReactElement,
+            ),
           );
         });
 
@@ -255,7 +253,7 @@ void main() {
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.input({'type': 'text', 'placeholder': actualText}) as ReactElement);
+          view = rtl.render(react.input({'type': 'text', 'placeholder': actualText}));
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -320,7 +318,7 @@ void main() {
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.button({}, 'Hello') as ReactElement);
+          view = rtl.render(react.button({}, 'Hello'));
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -386,7 +384,7 @@ void main() {
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.button({}, actualName) as ReactElement);
+          view = rtl.render(react.button({}, actualName));
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -454,7 +452,7 @@ void main() {
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.div({defaultTestIdKey: actualTestId}, 'Hello') as ReactElement);
+          view = rtl.render(react.div({defaultTestIdKey: actualTestId}, 'Hello'));
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -526,7 +524,7 @@ This could be because the text is broken up by multiple elements. In this case, 
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.div({}, actualText) as ReactElement);
+          view = rtl.render(react.div({}, actualText));
         });
 
         test('with a RegExp TextMatch arg value', () {
@@ -592,7 +590,7 @@ This could be because the text is broken up by multiple elements. In this case, 
 </body>$stackTraceHeading''';
 
         setUp(() {
-          view = rtl.render(react.div({'title': actualTitle}, 'Hello') as ReactElement);
+          view = rtl.render(react.div({'title': actualTitle}, 'Hello'));
         });
 
         test('with a RegExp TextMatch arg value', () {

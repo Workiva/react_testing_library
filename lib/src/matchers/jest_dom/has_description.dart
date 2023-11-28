@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -107,7 +105,7 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
   dynamic featureValueOf(dynamic item) {
     final elementsWithDescriptions = _elementsThatDescribe(item);
 
-    if (elementsWithDescriptions?.isEmpty ?? true) return null;
+    if (elementsWithDescriptions.isEmpty) return null;
     return elementsWithDescriptions
         .map((el) =>
             ElementTextContentMatcherMixin.getNormalizedTextContentOf(el, normalizeWhitespace: normalizeWhitespace))
@@ -123,17 +121,17 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
     } else if (_elementsThatDescribe(item).isEmpty) {
       return mismatchDescription
         ..add('has an aria-described by attribute value '
-            'of "${(item as Element).getAttribute('aria-describedby')}", which does not match the id attribute of '
+            'of "${item.getAttribute('aria-describedby')}", which does not match the id attribute of '
             'any Element in the DOM.');
     }
 
     return super.describeMismatch(item, mismatchDescription, matchState, verbose);
   }
 
-  List<String> _idsOfElementsThatDescribe(item) {
+  List<String>? _idsOfElementsThatDescribe(item) {
     if (item is! Element) return null;
 
-    final describedByAttrValue = (item as Element).getAttribute('aria-describedby');
+    final describedByAttrValue = item.getAttribute('aria-describedby');
     if (describedByAttrValue == null) return null;
     return describedByAttrValue.split(' ');
   }

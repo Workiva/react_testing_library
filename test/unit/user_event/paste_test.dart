@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
@@ -27,9 +24,9 @@ import '../util/event_handler_error.dart';
 
 void main() {
   group('UserEvent.paste', () {
-    List<ClipboardEvent> calls;
+    late List<ClipboardEvent> calls;
     rtl.RenderResult view;
-    InputElement input;
+    late InputElement input;
 
     setUp(() {
       calls = [];
@@ -49,7 +46,7 @@ void main() {
           },
         });
 
-        view = rtl.render(elementToRender as ReactElement);
+        view = rtl.render(elementToRender);
         input = view.getByRole('textbox');
         expect(input, hasValue(''));
       });
@@ -76,7 +73,7 @@ void main() {
           'defaultValue': 'this is a bad example',
         });
 
-        view = rtl.render(elementToRender as ReactElement);
+        view = rtl.render(elementToRender);
         input = view.getByRole('textbox');
         expect(input, hasValue('this is a bad example'));
       });

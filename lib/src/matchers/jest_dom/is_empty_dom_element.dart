@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -69,7 +67,7 @@ class _IsEmptyDomElement extends Matcher {
     matchState['isElement'] = item is Element;
     if (item == null || item is! Element) return false;
 
-    return (item as Element).innerHtml.isEmpty;
+    return item.innerHtml!.isEmpty;
   }
 
   @override

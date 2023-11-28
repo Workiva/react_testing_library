@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,15 +28,12 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult view;
-    Ref<Element> emptyElementRef;
-    tearDown(() {
-      view = null;
-    });
+    late rtl.RenderResult view;
+    late Ref<Element?> emptyElementRef;
 
     group('when more than one element has the same role,', () {
       setUp(() {
-        emptyElementRef = react.createRef<Element>();
+        emptyElementRef = react.createRef();
         view = rtl.render(react.article(
           {},
           react.h1({}, 'Heading'),
@@ -60,7 +55,7 @@ void main() {
           renderCheckbox(checked: true),
           renderCheckboxWithSwitchAsFallback(),
           react.div({'ref': emptyElementRef}),
-        ) as ReactElement);
+        ));
 
         expect(emptyElementRef.current, isNotNull);
         expect(view.queryAllByRole('button'), hasLength(greaterThan(1)));
@@ -271,7 +266,7 @@ void main() {
           });
 
           test('[no match]', () {
-            expect(rtl.within(emptyElementRef.current).queryByRole('checkbox', checked: true), isNull);
+            expect(rtl.within(emptyElementRef.current!).queryByRole('checkbox', checked: true), isNull);
           });
         });
 
@@ -282,7 +277,7 @@ void main() {
           });
 
           test('[no matches]', () {
-            expect(rtl.within(emptyElementRef.current).queryAllByRole('checkbox', checked: true), isEmpty);
+            expect(rtl.within(emptyElementRef.current!).queryAllByRole('checkbox', checked: true), isEmpty);
           });
         });
 
@@ -293,7 +288,7 @@ void main() {
 
           test('[no match]', () {
             expect(
-                () => rtl.within(emptyElementRef.current).getByRole('checkbox', checked: true),
+                () => rtl.within(emptyElementRef.current!).getByRole('checkbox', checked: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
@@ -312,7 +307,7 @@ void main() {
 
           test('[no matches]', () {
             expect(
-                () => rtl.within(emptyElementRef.current).getAllByRole('checkbox', checked: true),
+                () => rtl.within(emptyElementRef.current!).getAllByRole('checkbox', checked: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
@@ -330,7 +325,7 @@ void main() {
 
           test('[no match]', () async {
             expect(
-                () => rtl.within(emptyElementRef.current).findByRole('checkbox', checked: true),
+                () => rtl.within(emptyElementRef.current!).findByRole('checkbox', checked: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
@@ -349,7 +344,7 @@ void main() {
 
           test('[no matches]', () async {
             expect(
-                () => rtl.within(emptyElementRef.current).findAllByRole('checkbox', checked: true),
+                () => rtl.within(emptyElementRef.current!).findAllByRole('checkbox', checked: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "checkbox"')),
@@ -371,7 +366,7 @@ void main() {
           });
 
           test('[no match]', () {
-            expect(rtl.within(emptyElementRef.current).queryByRole('button', pressed: true), isNull);
+            expect(rtl.within(emptyElementRef.current!).queryByRole('button', pressed: true), isNull);
           });
         });
 
@@ -382,7 +377,7 @@ void main() {
           });
 
           test('[no matches]', () {
-            expect(rtl.within(emptyElementRef.current).queryAllByRole('button', pressed: true), isEmpty);
+            expect(rtl.within(emptyElementRef.current!).queryAllByRole('button', pressed: true), isEmpty);
           });
         });
 
@@ -393,7 +388,7 @@ void main() {
 
           test('[no match]', () {
             expect(
-                () => rtl.within(emptyElementRef.current).getByRole('button', pressed: true),
+                () => rtl.within(emptyElementRef.current!).getByRole('button', pressed: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
@@ -412,7 +407,7 @@ void main() {
 
           test('[no matches]', () {
             expect(
-                () => rtl.within(emptyElementRef.current).getAllByRole('button', pressed: true),
+                () => rtl.within(emptyElementRef.current!).getAllByRole('button', pressed: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
@@ -430,7 +425,7 @@ void main() {
 
           test('[no match]', () async {
             expect(
-                () => rtl.within(emptyElementRef.current).findByRole('button', pressed: true),
+                () => rtl.within(emptyElementRef.current!).findByRole('button', pressed: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
@@ -449,7 +444,7 @@ void main() {
 
           test('[no matches]', () async {
             expect(
-                () => rtl.within(emptyElementRef.current).findAllByRole('button', pressed: true),
+                () => rtl.within(emptyElementRef.current!).findAllByRole('button', pressed: true),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "button"')),
@@ -568,7 +563,7 @@ void main() {
           });
 
           test('[no match]', () {
-            expect(rtl.within(emptyElementRef.current).queryByRole('heading', level: 2), isNull);
+            expect(rtl.within(emptyElementRef.current!).queryByRole('heading', level: 2), isNull);
           });
         });
 
@@ -579,7 +574,7 @@ void main() {
           });
 
           test('[no matches]', () {
-            expect(rtl.within(emptyElementRef.current).queryAllByRole('heading', level: 2), isEmpty);
+            expect(rtl.within(emptyElementRef.current!).queryAllByRole('heading', level: 2), isEmpty);
           });
         });
 
@@ -590,7 +585,7 @@ void main() {
 
           test('[no match]', () {
             expect(
-                () => rtl.within(emptyElementRef.current).getByRole('heading', level: 2),
+                () => rtl.within(emptyElementRef.current!).getByRole('heading', level: 2),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
@@ -609,7 +604,7 @@ void main() {
 
           test('[no matches]', () {
             expect(
-                () => rtl.within(emptyElementRef.current).getAllByRole('heading', level: 2),
+                () => rtl.within(emptyElementRef.current!).getAllByRole('heading', level: 2),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
@@ -627,7 +622,7 @@ void main() {
 
           test('[no match]', () async {
             expect(
-                () => rtl.within(emptyElementRef.current).findByRole('heading', level: 2),
+                () => rtl.within(emptyElementRef.current!).findByRole('heading', level: 2),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
@@ -646,7 +641,7 @@ void main() {
 
           test('[no matches]', () async {
             expect(
-                () => rtl.within(emptyElementRef.current).findAllByRole('heading', level: 2),
+                () => rtl.within(emptyElementRef.current!).findAllByRole('heading', level: 2),
                 throwsA(allOf(
                   isA<TestingLibraryElementError>(),
                   hasToStringValue(contains('Unable to find an accessible element with the role "heading"')),
@@ -769,14 +764,14 @@ ReactElement renderButton({bool pressed = false, bool expanded = false}) {
       'aria-expanded': expanded,
     },
     'Click me',
-  ) as ReactElement;
+  );
 }
 
 ReactElement renderDialog() {
   return react.div(
     {'role': 'dialog'},
     'Read me',
-  ) as ReactElement;
+  );
 }
 
 ReactElement renderTab({bool selected = false}) {
@@ -787,7 +782,7 @@ ReactElement renderTab({bool selected = false}) {
       'aria-selected': selected,
     },
     'Select me',
-  ) as ReactElement;
+  );
 }
 
 ReactElement renderCheckbox({bool checked = false}) {
@@ -798,7 +793,7 @@ ReactElement renderCheckbox({bool checked = false}) {
       'aria-checked': checked,
     },
     'Check me out',
-  ) as ReactElement;
+  );
 }
 
 ReactElement renderCheckboxWithSwitchAsFallback({bool checked = false}) {
@@ -809,5 +804,5 @@ ReactElement renderCheckboxWithSwitchAsFallback({bool checked = false}) {
       'aria-checked': checked,
     },
     'Check me out',
-  ) as ReactElement;
+  );
 }

@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -77,20 +75,20 @@ abstract class TextMatch {
   ///
   /// And instead, they see the [newValue] provided - which should contain a more helpful message that includes
   /// the value they provided as the `TextMatch` argument.
-  static Object Function(Object originalMessage, Element container) _replaceDartInteropFunctionStringWith(
-      Object newValue) {
+  static Object? Function(Object? originalMessage, Element container) _replaceDartInteropFunctionStringWith(
+      Object? newValue) {
     final dartInteropFunctionValueRegex = RegExp(r'([\"`]*)(function[\s\S]+})([\"`]*)(.*)([\s\S]+)*', multiLine: true);
 
     return (originalMessage, container) {
       final newMessage = originalMessage.toString().replaceAllMapped(dartInteropFunctionValueRegex, (match) {
-        final optionalOpeningQuoteOrBacktick = match.group(1);
-        final optionalClosingQuoteOrBacktick = match.group(3);
+        final optionalOpeningQuoteOrBacktick = match.group(1)!;
+        final optionalClosingQuoteOrBacktick = match.group(3)!;
         final newValueLines = newValue.toString().split('\n');
         var restOfMessageBeforePrettyDomOrAccessibleRolesPrintout = match.group(4);
         if (newValueLines.length > 1) {
           // Prevent the first sentence after the multiline function signature from starting with "  . ".
           restOfMessageBeforePrettyDomOrAccessibleRolesPrintout =
-              restOfMessageBeforePrettyDomOrAccessibleRolesPrintout.replaceFirst(RegExp(r'^\s*\.*\s*'), '');
+              restOfMessageBeforePrettyDomOrAccessibleRolesPrintout!.replaceFirst(RegExp(r'^\s*\.*\s*'), '');
         }
         var returnValue = '${newValueLines.join('\n')}$restOfMessageBeforePrettyDomOrAccessibleRolesPrintout';
         if (optionalOpeningQuoteOrBacktick.isNotEmpty || optionalClosingQuoteOrBacktick.isNotEmpty) {
@@ -120,8 +118,8 @@ class MatcherOptions {
   /// not case-sensitive. It has no effect on regex or function arguments. In most cases using a regex
   /// instead of a string gives you more control over fuzzy matching and should be preferred over `exact: false`.
   /// {@endtemplate}
-  external bool get exact;
-  external set exact(bool value);
+  external bool? get exact;
+  external set exact(bool? value);
 
   /// {@template MatcherOptionsNormalizerArgDescription}
   /// ### [normalizer]
@@ -144,8 +142,8 @@ class MatcherOptions {
   /// [JS `TextMatch` normalization](https://testing-library.com/docs/queries/about#normalization) docs
   /// for more details and examples.
   /// {@endtemplate}
-  external NormalizerFn Function([NormalizerOptions]) get normalizer;
-  external set normalizer(NormalizerFn Function([NormalizerOptions]) value);
+  external NormalizerFn Function([NormalizerOptions?])? get normalizer;
+  external set normalizer(NormalizerFn Function([NormalizerOptions?])? value);
 
   /// {@template MatcherOptionsSelectorArgDescription}
   /// ### [selector]
@@ -153,8 +151,8 @@ class MatcherOptions {
   /// Set `selector` to a CSS selector that will narrow the scope of the existing query to
   /// only match element(s) that match the selector.
   /// {@endtemplate}
-  external String get selector;
-  external set selector(String value);
+  external String? get selector;
+  external set selector(String? value);
 
   /// {@template MatcherOptionsIgnoreArgDescription}
   /// ### [ignore]
@@ -176,16 +174,16 @@ class MatcherOptions {
 @anonymous
 class NormalizerOptions {
   /// Whether leading / trailing whitespace will be trimmed.
-  external bool get trim;
+  external bool? get trim;
 
   /// Whether leading / trailing whitespace should be trimmed.
-  external set trim(bool value);
+  external set trim(bool? value);
 
   /// Whether multiple spaces will be collapsed into a single space.
-  external bool get collapseWhitespace;
+  external bool? get collapseWhitespace;
 
   /// Whether multiple spaces should be collapsed into a single space.
-  external set collapseWhitespace(bool value);
+  external set collapseWhitespace(bool? value);
 }
 
 /// The function signature for a custom `normalizer` argument in a query.

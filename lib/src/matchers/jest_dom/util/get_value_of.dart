@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +21,7 @@ import 'dart:html';
 ///
 /// This function does not support `<input type="checkbox">` or `<input type="radio">` value parsing.
 /// The `hasFormValues` matcher has special logic built-in for that.
-dynamic getValueOf(Element element, {dynamic Function(OptionElement option) getOptionValue}) {
+dynamic getValueOf(Element element, {dynamic Function(OptionElement option)? getOptionValue}) {
   if (element is InputElement) {
     final type = element.getAttribute('type');
     switch (type) {
@@ -31,19 +29,23 @@ dynamic getValueOf(Element element, {dynamic Function(OptionElement option) getO
       case 'radio':
         throw ArgumentError('getValueOf() does not support checkbox / radio inputs.');
       case 'number':
-        return num.tryParse(element.value) ?? element.value;
+        return num.tryParse(element.value!) ?? element.value;
       case 'text':
       default:
         return element.value;
     }
   } else if (element is SelectElement) {
     getOptionValue ??= (option) => option.value;
+    final multiple = element.multiple;
+    if (multiple == null) {
+      throw ArgumentError('If `element` is a `SelectElement`, it should always have the `multiple` property set.');
+    }
     final selectedOptions = element.options.where((option) => option.selected);
     if (selectedOptions.isEmpty) {
-      return element.multiple ? const [] : null;
+      return multiple ? const [] : null;
     } else if (selectedOptions.length == 1) {
       final selectedValues = selectedOptions.map(getOptionValue);
-      return element.multiple ? selectedValues.toList() : selectedValues.single;
+      return multiple ? selectedValues.toList() : selectedValues.single;
     } else {
       return selectedOptions.map(getOptionValue).toList();
     }

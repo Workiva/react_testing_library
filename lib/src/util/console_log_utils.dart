@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +17,6 @@ library console_log_utils;
 
 import 'dart:async';
 import 'dart:html';
-import 'dart:js';
 import 'dart:js_util';
 
 import 'package:js/js.dart';
@@ -69,7 +66,7 @@ T printConsoleLogs<T>(
 /// See also: [printConsoleLogs], [startSpyingOnConsoleLogs]
 T spyOnConsoleLogs<T>(
   T Function() callback, {
-  @required void Function(String) onLog,
+  required void Function(String) onLog,
   ConsoleConfig configuration = ConsoleConfig.all,
 }) {
   final stopSpying = startSpyingOnConsoleLogs(configuration: configuration, onLog: onLog);
@@ -94,12 +91,12 @@ T spyOnConsoleLogs<T>(
 /// See also: [printConsoleLogs], [spyOnConsoleLogs]
 void Function() startSpyingOnConsoleLogs({
   ConsoleConfig configuration = ConsoleConfig.all,
-  @required void Function(String) onLog,
+  required void Function(String) onLog,
 }) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, /* JavascriptFunction */ dynamic>{};
   final consolePropertyDescriptors = <String, dynamic>{};
-  final _console = getProperty(window, 'console');
+  final _console = getProperty(window, 'console') as Object;
 
   _resetPropTypeWarningCache();
 
@@ -132,7 +129,7 @@ void Function() startSpyingOnConsoleLogs({
           final args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
             ..removeWhere((arg) => arg == _undefined);
           boundOnLog(format(message, args));
-          _jsFunctionApply(consoleRefs[config], [message, ...args], thisArg: self);
+          _jsFunctionApply(consoleRefs[config] as Object, [message, ...args], thisArg: self);
         })
       }),
     );
@@ -186,7 +183,7 @@ class ConsoleConfig {
   static const ConsoleConfig all = ConsoleConfig._('all');
 }
 
-dynamic _jsFunctionApply(dynamic jsFunction, List<dynamic> args, {dynamic thisArg}) {
+dynamic _jsFunctionApply(Object jsFunction, List<dynamic> args, {dynamic thisArg}) {
   return callMethod(jsFunction, 'apply', [thisArg, jsify(args)]);
 }
 

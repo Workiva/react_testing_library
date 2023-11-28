@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +14,6 @@
 
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasFormValues;
@@ -56,11 +53,6 @@ void main() {
       return render(vDom);
     }
 
-    RenderResult view;
-    tearDown(() {
-      view = null;
-    });
-
     group('passes when provided with a valid name/value combination for a', () {
       final unTestedChildFormElemThatShouldNotCauseFailure = _FormElemDefinition(react.input, {
         'type': 'text',
@@ -70,6 +62,8 @@ void main() {
       });
 
       group('TextInputElement', () {
+        late RenderResult view;
+
         setUp(() {
           view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
@@ -98,6 +92,8 @@ void main() {
       });
 
       group('TextAreaElement', () {
+        late RenderResult view;
+
         setUp(() {
           view = renderFormWithValues(react.form, [
             _FormElemDefinition(
@@ -122,6 +118,8 @@ void main() {
       });
 
       group('NumberInputElement', () {
+        late RenderResult view;
+
         setUp(() {
           view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
@@ -144,7 +142,7 @@ void main() {
 
       group('CheckboxInputElement', () {
         test('when each has a unique name', () {
-          view = renderFormWithValues(react.form, [
+          final view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
               'type': 'checkbox',
               'name': 'business-in-front',
@@ -174,6 +172,8 @@ void main() {
         });
 
         group('when they have the same names', () {
+          late RenderResult view;
+
           setUp(() {
             view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
@@ -238,6 +238,8 @@ void main() {
       });
 
       group('RadioInputElement', () {
+        late RenderResult view;
+
         setUp(() {
           view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
@@ -268,7 +270,7 @@ void main() {
         group('when only a single option can be selected', () {
           group('and a single option is selected', () {
             test('exact match', () {
-              view = renderFormWithValues(react.form, [
+              final view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
                   'defaultValue': 'business',
@@ -293,7 +295,7 @@ void main() {
             });
 
             test('using a matcher', () {
-              view = renderFormWithValues(react.form, [
+              final view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
                 }, [
@@ -318,7 +320,7 @@ void main() {
           });
 
           test('and no option is selected', () {
-            view = renderFormWithValues(react.form, [
+            final view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.select, {
                 'name': 'account-type',
               }, [
@@ -346,6 +348,8 @@ void main() {
 
         group('when multiple options can be selected', () {
           group('and a single option is selected', () {
+            late RenderResult view;
+
             setUp(() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
@@ -390,6 +394,8 @@ void main() {
           });
 
           group('and multiple options are selected', () {
+            late RenderResult view;
+
             setUp(() {
               view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
@@ -434,7 +440,7 @@ void main() {
           });
 
           test('and no option is selected', () {
-            view = renderFormWithValues(react.form, [
+            final view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.select, {
                 'name': 'pizza-toppings',
                 'multiple': true,
@@ -475,7 +481,7 @@ void main() {
       });
 
       group('provided with a valid name/value combination for a', () {
-        Matcher getMatcherForExpectedCustomMatcherMessage({@required Map expected, @required Map actual}) {
+        Matcher getMatcherForExpectedCustomMatcherMessage({required Map expected, required Map actual}) {
           final expectedFormValuesAsMatcherToStringValue = json
               .encode(expected)
               .replaceAll(',', ', ')
@@ -496,7 +502,7 @@ void main() {
         }
 
         test('element which has a name not used as a key in the provided map', () {
-          view = renderFormWithValues(react.form, [
+          final view = renderFormWithValues(react.form, [
             _FormElemDefinition(react.input, {
               'type': 'text',
               'name': 'firstName',
@@ -514,7 +520,7 @@ void main() {
 
         group('which has a name found in the provided map, but different value(s):', () {
           test('TextInputElement', () {
-            view = renderFormWithValues(react.form, [
+            final view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
                 'type': 'text',
                 'name': 'firstName',
@@ -531,7 +537,7 @@ void main() {
           });
 
           test('TextAreaElement', () {
-            view = renderFormWithValues(react.form, [
+            final view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.textarea, {
                 'name': 'comments',
                 'defaultValue': 'I have nothing nice to say',
@@ -549,7 +555,7 @@ void main() {
           });
 
           test('NumberInputElement', () {
-            view = renderFormWithValues(react.form, [
+            final view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
                 'type': 'number',
                 'name': 'age',
@@ -567,7 +573,7 @@ void main() {
 
           group('CheckboxInputElement', () {
             test('when each has a unique name', () {
-              view = renderFormWithValues(react.form, [
+              final view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'business-in-front',
@@ -596,7 +602,7 @@ void main() {
             });
 
             test('when they have the same names', () {
-              view = renderFormWithValues(react.form, [
+              final view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.input, {
                   'type': 'checkbox',
                   'name': 'pizza-toppings',
@@ -660,7 +666,7 @@ void main() {
           });
 
           test('RadioInputElement', () {
-            view = renderFormWithValues(react.form, [
+            final view = renderFormWithValues(react.form, [
               _FormElemDefinition(react.input, {
                 'type': 'radio',
                 'name': 'account-type',
@@ -685,7 +691,7 @@ void main() {
 
           group('SelectElement', () {
             test('when only a single option can be selected', () {
-              view = renderFormWithValues(react.form, [
+              final view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'account-type',
                   'defaultValue': 'business',
@@ -711,7 +717,7 @@ void main() {
             });
 
             test('when multiple options can be selected', () {
-              view = renderFormWithValues(react.form, [
+              final view = renderFormWithValues(react.form, [
                 _FormElemDefinition(react.select, {
                   'name': 'pizza-toppings',
                   'multiple': true,

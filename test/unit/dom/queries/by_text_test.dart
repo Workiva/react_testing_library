@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -30,14 +27,11 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult view;
-    tearDown(() {
-      view = null;
-    });
-
     group(
         'the selector argument can be specified to target only matching '
         'element(s) when more than one has matching text:', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.div(
           {},
@@ -49,7 +43,7 @@ void main() {
             {},
             'Foo',
           ),
-        ) as ReactElement);
+        ));
 
         expect(view.queryAllByText('Foo'), hasLength(2));
       });
@@ -143,6 +137,8 @@ void main() {
     });
 
     group('the ignore argument', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.div(
           {},
@@ -154,7 +150,7 @@ void main() {
             {},
             'Foo',
           ),
-        ) as ReactElement);
+        ));
       });
 
       group('can be set to a String query to ignore certain elements matching the selector query:', () {

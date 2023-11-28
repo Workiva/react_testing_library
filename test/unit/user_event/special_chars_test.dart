@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/user_event.dart';
@@ -25,10 +22,10 @@ import 'package:test/test.dart';
 
 void main() {
   group('SpecialChars', () {
-    InputElement input;
-    TextAreaElement textArea;
+    late InputElement input;
+    late TextAreaElement textArea;
     rtl.RenderResult view;
-    List<String> keyDownCalls;
+    late List<String> keyDownCalls;
 
     setUp(() {
       keyDownCalls = [];
@@ -41,7 +38,7 @@ void main() {
           'defaultValue': 'hello\n\nthere!',
           'onKeyDown': (e) => keyDownCalls.add((e as react.SyntheticKeyboardEvent).key),
         }),
-      ]) as ReactElement);
+      ]));
 
       input = view.getAllByRole('textbox').first as InputElement;
       textArea = view.getAllByRole('textbox')[1] as TextAreaElement;

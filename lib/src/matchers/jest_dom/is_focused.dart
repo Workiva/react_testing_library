@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,7 +77,7 @@ class _IsFocused extends Matcher {
       return mismatchDescription..add(notAnElementMismatchDescription);
     }
 
-    if (!document.documentElement.contains(item as Element)) {
+    if (!document.documentElement!.contains(item)) {
       return mismatchDescription
         ..add('is not attached to the document, and thus cannot be focused.')
         ..add(' If testing with React, you should use the `render` utility function '

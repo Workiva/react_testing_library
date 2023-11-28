@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +22,7 @@ import '../../util/matchers.dart';
 
 void main() {
   group('', () {
-    Element testElement;
+    late Element testElement;
 
     setUp(() {
       testElement = Element.div();

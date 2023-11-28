@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -85,7 +83,7 @@ class _ElementAttributeMatcher extends CustomMatcher {
   Description describeMismatch(dynamic item, Description mismatchDescription, Map matchState, bool verbose) {
     if (item is! Element) {
       return mismatchDescription..add(notAnElementMismatchDescription);
-    } else if (_valueOrMatcher != null && (item as Element).getAttribute(_attributeName) == null) {
+    } else if (_valueOrMatcher != null && item.getAttribute(_attributeName) == null) {
       return mismatchDescription..add('does not have an "$_attributeName" attribute.');
     }
 

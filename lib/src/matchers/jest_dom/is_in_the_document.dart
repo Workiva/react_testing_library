@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -78,7 +76,9 @@ class _IsInTheDocument extends Matcher {
   @override
   bool matches(dynamic item, Map matchState) {
     if (item is! Element) return false;
-    return item != null && (item as Element).ownerDocument == (item as Element).getRootNode({'composed': true});
+    // Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+    // ignore: unnecessary_null_comparison
+    return item != null && item.ownerDocument == item.getRootNode({'composed': true});
   }
 
   @override

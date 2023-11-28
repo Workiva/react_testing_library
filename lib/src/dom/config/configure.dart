@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,16 +27,16 @@ export 'package:react_testing_library/src/dom/config/types.dart' show JsConfig;
 ///
 /// > See: <https://testing-library.com/docs/dom-testing-library/api-configuration/>
 void configure({
-  String testIdAttribute,
-  int asyncUtilTimeout,
-  bool computedStyleSupportsPseudoElements,
-  bool defaultHidden,
-  bool showOriginalStackTrace,
-  bool throwSuggestions,
-  TestingLibraryElementError Function(Object message, Element container) getElementError,
+  String? testIdAttribute,
+  int? asyncUtilTimeout,
+  bool? computedStyleSupportsPseudoElements,
+  bool? defaultHidden,
+  bool? showOriginalStackTrace,
+  bool? throwSuggestions,
+  TestingLibraryElementError Function(Object? message, Element container)? getElementError,
 }) {
-  JsError _getJsGetElementError(Object message, Element container) {
-    final dartError = allowInterop(getElementError)(message, container);
+  JsError _getJsGetElementError(Object? message, Element container) {
+    final dartError = allowInterop(getElementError!)(message ?? '', container);
     return buildJsGetElementError(dartError.message, container);
   }
 
@@ -55,7 +53,7 @@ void configure({
 }
 
 @JS('rtl.configure')
-external void jsConfigure([JsConfig newConfig]);
+external void jsConfigure([JsConfig? newConfig]);
 
 /// Returns the configuration options being used by react-testing-library.
 ///

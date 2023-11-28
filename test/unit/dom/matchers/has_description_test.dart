@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html' show Element, querySelector;
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasDescription;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -27,7 +24,7 @@ import '../../util/matchers.dart';
 
 void main() {
   group('hasDescription matcher', () {
-    RenderResult view;
+    late RenderResult view;
 
     setUp(() {
       view = render(react.div(
@@ -44,15 +41,11 @@ void main() {
         react.button({'aria-describedby': 'not-found'}, 'Has id not found'),
         react.div({'id': 'description-close'}, 'Closing will discard   any changes'),
         react.div({'id': 'some-other-description'}, 'Some other  description'),
-      ) as ReactElement);
-    });
-
-    tearDown(() {
-      view = null;
+      ));
     });
 
     group('[element with a single id as its aria-describedby attribute value]', () {
-      Element closeButtonElement;
+      late Element closeButtonElement;
       setUp(() {
         closeButtonElement = view.getByRole('button', name: 'Close');
       });
@@ -81,7 +74,7 @@ void main() {
     });
 
     group('[element with multiple, space-separated ids as its aria-describedby attribute value]', () {
-      Element buttonElementWithMultipleDescriptions;
+      late Element buttonElementWithMultipleDescriptions;
       setUp(() {
         buttonElementWithMultipleDescriptions = view.getByRole('button', name: 'Has Multiple Descriptions');
       });

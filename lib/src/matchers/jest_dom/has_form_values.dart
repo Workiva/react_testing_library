@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -99,7 +97,7 @@ class _HasFormValues extends CustomMatcher {
     // If it's not a FormElement, the mismatch description will say so.
     if (item is! Element) return null;
 
-    final element = item as Element;
+    final element = item;
 
     final actualNamesAndValues = <String, dynamic>{};
     valuesMap.forEach((elementNameToTest, value) {
@@ -123,17 +121,16 @@ class _HasFormValues extends CustomMatcher {
                 actualNamesAndValues[elementNameToTest] = childElement.checked;
               } else {
                 final selectedCheckboxElements =
-                    allCheckboxesWithName.where((cboxEl) => (cboxEl as CheckboxInputElement).checked);
+                    allCheckboxesWithName.where((cboxEl) => (cboxEl as CheckboxInputElement).checked!);
                 actualNamesAndValues[elementNameToTest] =
                     selectedCheckboxElements.map((el) => el.getAttribute('value')).toList();
               }
               break;
             case 'radio':
-              final allRadiosWithName = element.querySelectorAll('input[type="radio"][name="$childElementName"]');
-              final selectedRadioElement = allRadiosWithName.singleWhere(
-                (radioEl) => (radioEl as RadioButtonInputElement).checked,
-                orElse: () => null,
-              ) as RadioButtonInputElement;
+              final allRadiosWithName =
+                  element.querySelectorAll<RadioButtonInputElement>('input[type="radio"][name="$childElementName"]');
+              final selectedRadioElements = allRadiosWithName.where((radioEl) => radioEl.checked!).toList();
+              final selectedRadioElement = selectedRadioElements.isEmpty ? null : selectedRadioElements.single;
               actualNamesAndValues[elementNameToTest] = selectedRadioElement?.value;
               break;
             default:
@@ -157,14 +154,14 @@ class _HasFormValues extends CustomMatcher {
 
     var extraDescription = '';
 
-    if (getItemFormElementsToTest(item as Element).isEmpty) {
+    if (getItemFormElementsToTest(item).isEmpty) {
       extraDescription = '\n\nNo elements were found with names matching ${valuesMap.keys}.';
     }
 
     return super.describeMismatch(item, mismatchDescription, matchState, verbose).add(extraDescription).add(
         // ignore: prefer_interpolation_to_compose_strings
         '\n\nThe DOM at time of failure is shown below:\n------------------------------------------\n' +
-            prettyDOM(item as Element));
+            prettyDOM(item));
   }
 }
 
@@ -177,6 +174,9 @@ JsObject _getJsFormOrFieldSet(Element form) => JsObject.fromBrowserObject(form);
 ///
 /// Wraps the [HTMLFormElement.elements](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements) property.
 List<Element> getFormElements(Element form) {
-  assert(form is FormElement || form is FieldSetElement);
-  return convertToArray<Element>(_getJsFormOrFieldSet(form)['elements'] as JsObject);
+  final elements = _getJsFormOrFieldSet(form)['elements'] as JsObject?;
+  if ((form is! FormElement && form is! FieldSetElement) || elements == null) {
+    throw ArgumentError('should be a form or fieldset element with the elements property', 'form');
+  }
+  return convertToArray<Element>(elements);
 }

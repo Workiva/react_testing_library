@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +33,6 @@ library react_testing_library.src.dom.queries.by_testid;
 import 'dart:html' show Element, Node;
 
 import 'package:js/js.dart';
-import 'package:meta/meta.dart';
 
 import 'package:react_testing_library/src/dom/async/types.dart';
 import 'package:react_testing_library/src/dom/async/wait_for.dart';
@@ -103,7 +100,7 @@ mixin ByTestIdQueries on IQueries {
   E getByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) {
     E jsQuery(dynamic testIdTextMatchValue) {
       return withErrorInterop(
@@ -126,7 +123,7 @@ mixin ByTestIdQueries on IQueries {
         // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
         // by the consumer since that is how they authored it.
         throw _errorWithMessageUsingStringTestIdProvided(
-            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId);
       } else {
         rethrow;
       }
@@ -157,7 +154,7 @@ mixin ByTestIdQueries on IQueries {
   List<E> getAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) {
     List<E> jsQuery(dynamic testIdTextMatchValue) {
       return withErrorInterop(
@@ -180,7 +177,7 @@ mixin ByTestIdQueries on IQueries {
         // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
         // by the consumer since that is how they authored it.
         throw _errorWithMessageUsingStringTestIdProvided(
-            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId);
       } else {
         rethrow;
       }
@@ -208,20 +205,20 @@ mixin ByTestIdQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByTestId<E extends Element>(
+  E? queryByTestId<E extends Element?>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) {
     // For strings, we need to jump through a few more hoops to ensure that we support matching a single
     // test id value on an element that may have more than one.
-    E jsQuery(dynamic testIdTextMatchValue) {
+    E? jsQuery(dynamic testIdTextMatchValue) {
       return withErrorInterop(
         () => _jsQueryByTestId(
           getContainerForScope(),
           testIdTextMatchValue,
           buildMatcherOptions(exact: exact, normalizer: normalizer),
-        ) as E,
+        ) as E?,
       );
     }
 
@@ -236,7 +233,7 @@ mixin ByTestIdQueries on IQueries {
         // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
         // by the consumer since that is how they authored it.
         throw _errorWithMessageUsingStringTestIdProvided(
-            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId);
       } else {
         rethrow;
       }
@@ -267,7 +264,7 @@ mixin ByTestIdQueries on IQueries {
   List<E> queryAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) {
     // For strings, we need to jump through a few more hoops to ensure that we support matching a single
     // test id value on an element that may have more than one.
@@ -292,7 +289,7 @@ mixin ByTestIdQueries on IQueries {
         // Replace regex produced by `_convertTestIdStringToRegExp` in the error message with the string provided
         // by the consumer since that is how they authored it.
         throw _errorWithMessageUsingStringTestIdProvided(
-            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId as String);
+            errorThrownUsingRegExTestIdValue: e, stackTrace: st, testId: testId);
       } else {
         rethrow;
       }
@@ -332,11 +329,11 @@ mixin ByTestIdQueries on IQueries {
   Future<E> findByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTestId` instead of an
     // interop like `_jsFindByTestId` to give consumers better async stack traces.
@@ -348,9 +345,9 @@ mixin ByTestIdQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -387,11 +384,11 @@ mixin ByTestIdQueries on IQueries {
   Future<List<E>> findAllByTestId<E extends Element>(
     /*TextMatch*/ dynamic testId, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTestId` instead of an
     // interop like `_jsFindAllByTestId` to give consumers better async stack traces.
@@ -403,9 +400,9 @@ mixin ByTestIdQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }
@@ -414,28 +411,28 @@ mixin ByTestIdQueries on IQueries {
 external Element _jsGetByTestId(
   Node container,
   /*TextMatch*/ dynamic testId, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByTestId')
 external List< /*Element*/ dynamic> _jsGetAllByTestId(
   Node container,
   /*TextMatch*/ dynamic testId, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByTestId')
-external Element _jsQueryByTestId(
+external Element? _jsQueryByTestId(
   Node container,
   /*TextMatch*/ dynamic testId, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByTestId')
 external List< /*Element*/ dynamic> _jsQueryAllByTestId(
   Node container,
   /*TextMatch*/ dynamic testId, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 /// Converts string [testId] values into a `RegExp` that matches whole words within a value that may contain one or
@@ -446,8 +443,8 @@ dynamic _convertTestIdStringToRegExp(dynamic testId, {bool exact = true}) {
   if (testId is! String) return TextMatch.toJs(testId);
 
   final testIdMatcher = exact
-      ? RegExp('(\\s|^)${RegExp.escape(testId as String)}(\\s|\$)')
-      : RegExp('(.?)${RegExp.escape(testId as String)}(.?)', caseSensitive: false);
+      ? RegExp('(\\s|^)${RegExp.escape(testId)}(\\s|\$)')
+      : RegExp('(.?)${RegExp.escape(testId)}(.?)', caseSensitive: false);
 
   return TextMatch.toJs(testIdMatcher);
 }
@@ -456,9 +453,9 @@ dynamic _convertTestIdStringToRegExp(dynamic testId, {bool exact = true}) {
 /// the consumer in its message so that the implementation details of our [_convertTestIdStringToRegExp] `RegExp`
 /// workaround are completely opaque to the consumer.
 TestingLibraryElementError _errorWithMessageUsingStringTestIdProvided({
-  @required TestingLibraryElementError errorThrownUsingRegExTestIdValue,
-  @required StackTrace stackTrace,
-  @required String testId,
+  required TestingLibraryElementError errorThrownUsingRegExTestIdValue,
+  required StackTrace stackTrace,
+  required String testId,
 }) {
   final messageUsingTestIdProvidedByUser =
       errorThrownUsingRegExTestIdValue.message.replaceAllMapped(RegExp(r'\[(.*)="RegExp\/(.*)\/".?\]'), (match) {

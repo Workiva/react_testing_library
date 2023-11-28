@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,6 +40,6 @@ class JsConfig {
   external bool get throwSuggestions;
   external set throwSuggestions(bool value);
 
-  external /*JsError*/ dynamic Function(String message, Element container) get getElementError;
-  external set getElementError(/*JsError*/ dynamic Function(String message, Element container) value);
+  external /*JsError*/ dynamic Function(String? message, Element container) get getElementError;
+  external set getElementError(/*JsError*/ dynamic Function(String? message, Element container) value);
 }

@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -27,11 +24,11 @@ import '../util/event_handler_error.dart';
 void main() {
   group('UserEvent.upload', () {
     void _uploadTestHelper({bool isMultiple = false}) {
-      List<MouseEvent> clickEventCalls;
-      List<Event> changeEventCalls;
-      FileUploadInputElement input;
-      LabelElement label;
-      List<File> files;
+      late List<MouseEvent> clickEventCalls;
+      late List<Event> changeEventCalls;
+      late FileUploadInputElement input;
+      late LabelElement label;
+      late List<File> files;
 
       setUp(() {
         files = isMultiple
@@ -60,7 +57,7 @@ void main() {
           }),
         ]);
 
-        final view = rtl.render(elementToRender as ReactElement);
+        final view = rtl.render(elementToRender);
         input = view.getByLabelText('Upload file:');
         label = view.getByText('Upload file:');
         expect(input.files, hasLength(0), reason: 'sanity check');
@@ -73,18 +70,18 @@ void main() {
       }) {
         if (isMultiple && applyAccept) {
           expect(input.files, hasLength(2), reason: 'file1 is not an image');
-          expect(input.files.first.name, 'file2.png');
-          expect(input.files[1].name, 'file3.jpeg');
+          expect(input.files!.first.name, 'file2.png');
+          expect(input.files![1].name, 'file3.jpeg');
         } else if (isMultiple) {
           expect(input.files, hasLength(3));
-          expect(input.files.first.name, 'file1.mp3');
-          expect(input.files[1].name, 'file2.png');
-          expect(input.files[2].name, 'file3.jpeg');
+          expect(input.files!.first.name, 'file1.mp3');
+          expect(input.files![1].name, 'file2.png');
+          expect(input.files![2].name, 'file3.jpeg');
         } else if (applyAccept) {
           expect(input.files, hasLength(0), reason: 'file1 is not an image');
         } else {
           expect(input.files, hasLength(1));
-          expect(input.files.first.name, 'file1.mp3');
+          expect(input.files!.first.name, 'file1.mp3');
         }
 
         // Don't check click/change events if `accept` is applied for single file

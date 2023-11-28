@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +16,6 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -33,15 +30,12 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult view;
-    Element rootElement;
-
     group('waitFor()', () {
+      late rtl.RenderResult view;
+      late Element rootElement;
+
       setUp(() {
-        view =
-            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-            // ignore: unnecessary_cast
-            rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}) as ReactElement);
+        view = rtl.render(DelayedRenderOf({'childrenToRenderAfterDelay': elementsForQuerying('waitFor')}));
         rootElement = view.getByTestId('delayed-render-of-root');
       });
 
@@ -194,17 +188,16 @@ void main() {
     });
 
     group('waitForElementToBeRemoved()', () {
-      Node elementThatWillBeRemovedAfterDelay;
-      Node elementInDomButOutsideContainer;
-      Node elementThatWontBeRemoved;
+      late Node elementThatWillBeRemovedAfterDelay;
+      late Node elementInDomButOutsideContainer;
+      late Node elementThatWontBeRemoved;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
+      late rtl.RenderResult view;
 
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
 
-        // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-        // ignore: unnecessary_cast
         view = rtl.render(react.div(
             {},
             'wontBeRemoved',
@@ -216,10 +209,10 @@ void main() {
                   {},
                   react.div({}, 'willBeRemoved'),
                   elementsForQuerying('waitForElementToBeRemoved'),
-                ))) as ReactElement);
+                ))));
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
         elementThatWontBeRemoved = view.getByText('wontBeRemoved');
-        elementInDomButOutsideContainer = document.body.append(DivElement()
+        elementInDomButOutsideContainer = document.body!.append(DivElement()
           ..id = 'notInScope'
           ..text = 'notInScope');
       });
@@ -263,15 +256,6 @@ void main() {
               )));
         }, timeout: asyncQueryTestTimeout);
 
-        test('null, throws', () async {
-          expect(
-              () => rtl.waitForElementToBeRemoved(() => null, container: view.container),
-              throwsA(allOf(
-                isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('The callback must return a non-null Element.')),
-              )));
-        }, timeout: asyncQueryTestTimeout);
-
         test('an element that is never removed, throws with default timeout value', () async {
           expect(
               () => rtl.waitForElementToBeRemoved(() => elementThatWontBeRemoved, container: view.container),
@@ -285,19 +269,18 @@ void main() {
     });
 
     group('waitForElementsToBeRemoved()', () {
-      Node elementThatWillBeRemovedAfterDelay;
-      Node anotherElementThatWillBeRemovedAfterDelay;
-      Node elementThatWillNotBeRemovedAfterDelay;
-      Node elementInDomButOutsideContainer;
-      Node anotherElementInDomButOutsideContainer;
+      late Node elementThatWillBeRemovedAfterDelay;
+      late Node anotherElementThatWillBeRemovedAfterDelay;
+      late Node elementThatWillNotBeRemovedAfterDelay;
+      late Node elementInDomButOutsideContainer;
+      late Node anotherElementInDomButOutsideContainer;
       final delayAfterWhichTheElementWillBeRemoved = asyncQueryTimeout ~/ 2;
       final shortTimeout = asyncQueryTimeout ~/ 4;
+      late rtl.RenderResult view;
 
       setUp(() {
         expect(shortTimeout, lessThan(delayAfterWhichTheElementWillBeRemoved), reason: 'test setup sanity check');
 
-        // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-        // ignore: unnecessary_cast
         view = rtl.render(DelayedRenderOf(
           {
             'childrenToRenderAfterDelay': elementsForQuerying('waitForElementToBeRemoved'),
@@ -309,14 +292,14 @@ void main() {
             react.div({}, 'willNotBeRemoved'),
             elementsForQuerying('waitForElementToBeRemoved'),
           ),
-        ) as ReactElement);
+        ));
         elementThatWillBeRemovedAfterDelay = view.getByText('willBeRemoved');
         anotherElementThatWillBeRemovedAfterDelay = view.getByText('willAlsoBeRemoved');
         elementThatWillNotBeRemovedAfterDelay = view.getByText('willNotBeRemoved');
-        elementInDomButOutsideContainer = document.body.append(DivElement()
+        elementInDomButOutsideContainer = document.body!.append(DivElement()
           ..id = 'notInScope'
           ..text = 'notInScope');
-        anotherElementInDomButOutsideContainer = document.body.append(DivElement()
+        anotherElementInDomButOutsideContainer = document.body!.append(DivElement()
           ..id = 'alsoNotInScope'
           ..text = 'alsoNotInScope');
       });
@@ -434,15 +417,6 @@ void main() {
                 hasToStringValue(contains(
                     'One of the elements returned from the callback was not present in the container at the time waitForElementsToBeRemoved() was called')),
                 hasToStringValue(contains(rtl.prettyDOM(view.container))),
-              )));
-        }, timeout: asyncQueryTestTimeout);
-
-        test('null, throws', () async {
-          expect(
-              () => rtl.waitForElementsToBeRemoved(() => null, container: view.container),
-              throwsA(allOf(
-                isA<TestingLibraryElementError>(),
-                hasToStringValue(contains('The callback must return one or more non-null Elements.')),
               )));
         }, timeout: asyncQueryTestTimeout);
 

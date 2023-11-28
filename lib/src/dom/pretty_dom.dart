@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,11 +52,11 @@ import 'package:js/js.dart';
 ///
 /// See the [JS `prettyDOM` docs](https://testing-library.com/docs/dom-testing-library/api-debugging/#prettydom) for more details and examples.
 String prettyDOM(
-  Node node, {
-  int maxLength,
-  int indent,
-  int maxDepth,
-  bool min,
+  Node? node, {
+  int? maxLength,
+  int? indent,
+  int? maxDepth,
+  bool? min,
 }) {
   final options = PrettyDomOptions();
   if (indent != null) options.indent = indent;
@@ -70,9 +68,9 @@ String prettyDOM(
 
 @JS('rtl.prettyDOM')
 external String _jsPrettyDOM([
-  Node dom,
-  int maxLength,
-  PrettyDomOptions options,
+  Node? dom,
+  int? maxLength,
+  PrettyDomOptions? options,
 ]);
 
 /// A subset of <https://github.com/facebook/jest/tree/master/packages/pretty-format#usage-with-options>
@@ -84,20 +82,20 @@ class PrettyDomOptions {
   /// ### [indent]
   /// The number of spaces in each level of indentation, defaulting to `2`.
   /// {@endtemplate}
-  external int get indent;
-  external set indent(int value);
+  external int? get indent;
+  external set indent(int? value);
 
   /// {@template prettyDomOptionsMaxDepth}
   /// ### [maxDepth]
   /// The number of nested levels to print in the DOM tree.
   /// {@endtemplate}
-  external int get maxDepth;
-  external set maxDepth(int value);
+  external int? get maxDepth;
+  external set maxDepth(int? value);
 
   /// {@template prettyDomOptionsMin}
   /// ### [min]
   /// Whether to minimize added space: no indentation nor line breaks. Defaults to `false`.
   /// {@endtemplate}
-  external bool get min;
-  external set min(bool value);
+  external bool? get min;
+  external set min(bool? value);
 }

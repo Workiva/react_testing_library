@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -30,10 +27,7 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult view;
-    tearDown(() {
-      view = null;
-    });
+    late rtl.RenderResult view;
 
     group(
         'the selector argument can be specified to target only matching '
@@ -51,7 +45,7 @@ void main() {
             'Username',
             react.textarea({}),
           ),
-        ) as ReactElement);
+        ));
 
         expect(view.queryAllByLabelText('Username'), hasLength(2));
       });

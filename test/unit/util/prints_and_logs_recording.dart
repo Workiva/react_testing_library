@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +14,6 @@
 
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:react_testing_library/src/util/console_log_utils.dart';
 
 /// Runs a provided [callback] and returns the print statements captured during the runtime
@@ -29,7 +26,7 @@ List<String> recordPrintCalls(void Function() callback) {
 
 /// Runs a provided [callback] and returns the print statements captured during the runtime
 /// of that function, and also catches errors.
-void spyOnPrintCalls(void Function() callback, {@required void Function(String) onPrint}) {
+void spyOnPrintCalls(void Function() callback, {required void Function(String) onPrint}) {
   // Bind to the current zone so the callback isn't called in our child zone.
   final boundOnPrint = Zone.current.bindUnaryCallback(onPrint);
   Zone.current.fork(specification: ZoneSpecification(

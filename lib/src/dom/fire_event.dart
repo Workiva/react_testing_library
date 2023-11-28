@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -125,8 +123,8 @@ external JsMap get _fireEventObj;
 /// See: <https://testing-library.com/docs/dom-testing-library/api-events/#fireeventeventname>
 ///
 /// {@category UserActions}
-bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
-  if (!JsBackedMap.fromJs(_jsEventMap).keys.contains(eventName)) {
+bool fireEventByName(String eventName, Element element, [Map? eventProperties]) {
+  if (!JsBackedMap.fromJs(_fireEventObj).keys.contains(eventName)) {
     throw ArgumentError.value(eventName, 'eventName');
   }
 
@@ -139,6 +137,3 @@ bool fireEventByName(String eventName, Element element, [Map eventProperties]) {
 
   return eventHandlerErrorCatcher(() => jsFireEventByNameFn(element, jsifyAndAllowInterop(eventProperties)));
 }
-
-@JS('rtl.eventMap')
-external JsMap get _jsEventMap;

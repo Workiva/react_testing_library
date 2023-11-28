@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +30,7 @@ import '../../../util/rendering.dart';
 import 'text_match_type_parsing_tests.dart';
 
 class ScopedQueriesTestWrapper {
-  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult renderResult])
+  ScopedQueriesTestWrapper(this.queries, [rtl.RenderResult? renderResult])
       : renderResult = renderResult ?? queries as rtl.RenderResult;
 
   final ScopedQueries queries;
@@ -42,20 +40,17 @@ class ScopedQueriesTestWrapper {
 @isTestGroup
 void hasQueriesScopedTo(
     String scopeName,
-    ScopedQueriesTestWrapper Function(String scopeName, {bool testAsyncQuery, bool renderMultipleElsMatchingQuery})
+    ScopedQueriesTestWrapper Function(String scopeName, {bool? testAsyncQuery, bool? renderMultipleElsMatchingQuery})
         getWrapper,
     {bool isGloballyScoped = true}) {
   group('$scopeName:', () {
-    ScopedQueries queries;
-    String expectedPrettyDom;
+    late String expectedPrettyDom;
 
-    initConfigForInternalTesting(() {
-      queries = null;
-    });
+    initConfigForInternalTesting();
 
     ScopedQueries renderAndGetQueries({
       bool testAsyncQuery = false,
-      bool renderMultipleElsMatchingQuery,
+      bool? renderMultipleElsMatchingQuery,
     }) {
       rtl.RenderResult renderResult;
       Node getQueryContainer(rtl.RenderResult result) => isGloballyScoped ? result.baseElement : result.container;
@@ -67,7 +62,7 @@ void hasQueriesScopedTo(
                 testAsyncQuery: testAsyncQuery, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery)
             .renderResult;
 
-        final delayedRenderOfRootNode = querySelector('[$defaultTestIdKey="delayed-render-of-root"]');
+        final delayedRenderOfRootNode = querySelector('[$defaultTestIdKey="delayed-render-of-root"]')!;
         expect(delayedRenderOfRootNode, isNotNull,
             reason: 'Async queries should be tested on DOM wrapped by / controlled by the DelayedRenderOf component.');
         expect(delayedRenderOfRootNode.children, isEmpty,
@@ -87,7 +82,7 @@ void hasQueriesScopedTo(
 
         expectedPrettyDom = prettyDOM(getQueryContainer(tempRenderResult));
         tempRenderResult.unmount();
-        tempRenderResult.container?.remove();
+        tempRenderResult.container.remove();
       }
 
       // Only render this after the async snapshot is taken to ensure
@@ -95,18 +90,17 @@ void hasQueriesScopedTo(
       final wrapper = getWrapper(scopeName,
           testAsyncQuery: testAsyncQuery, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
 
-      queries ??= wrapper.queries;
       renderResult = wrapper.renderResult;
 
       if (!testAsyncQuery) {
         expectedPrettyDom = prettyDOM(getQueryContainer(renderResult));
       }
 
-      return queries;
+      return wrapper.queries;
     }
 
     test('exposes all the expected queries', () {
-      queries = renderAndGetQueries();
+      final queries = renderAndGetQueries();
 
       expect(queries.getByAltText, isA<Function>(), reason: 'getByAltText');
       expect(queries.getAllByAltText, isA<Function>(), reason: 'getAllByAltText');
@@ -420,10 +414,10 @@ void hasQueriesScopedTo(
 
     test('limiting the scope of the query as expected', () {
       final outOfScopeElement = DivElement()..text = 'out-of-scope';
-      document.body.append(outOfScopeElement);
+      document.body!.append(outOfScopeElement);
       addTearDown(outOfScopeElement.remove);
 
-      queries = renderAndGetQueries();
+      final queries = renderAndGetQueries();
       if (queries.getContainerForScope() != document.body) {
         expect(queries.queryByText('out-of-scope'), isNull,
             reason: 'The scoped query should not return elements that are not found within the scoped container.');

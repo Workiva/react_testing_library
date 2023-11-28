@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -105,13 +103,13 @@ class _IsPartiallyChecked extends Matcher {
     if (item is InputElement) {
       final type = item.getAttribute('type');
       if (type == 'checkbox') {
-        return item.indeterminate;
+        return item.indeterminate!;
       }
     }
 
-    final role = (item as Element).getAttribute('role');
+    final role = item.getAttribute('role');
     if (role == 'checkbox') {
-      final ariaPartiallyCheckedValue = (item as Element).getAttribute('aria-checked');
+      final ariaPartiallyCheckedValue = item.getAttribute('aria-checked');
       return ariaPartiallyCheckedValue == 'mixed';
     }
 

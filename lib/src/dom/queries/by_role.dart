@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,15 +37,15 @@ mixin ByRoleQueries on IQueries {
   @protected
   ByRoleOptions buildByRoleOptions({
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
-    bool selected,
-    bool checked,
-    bool pressed,
-    bool expanded,
+    bool? selected,
+    bool? checked,
+    bool? pressed,
+    bool? expanded,
     bool queryFallbacks = false,
-    int level,
+    int? level,
   }) {
     final byRoleOptions = ByRoleOptions()
       ..exact = exact
@@ -126,15 +124,15 @@ mixin ByRoleQueries on IQueries {
   E getByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
-    bool selected,
-    bool checked,
-    bool pressed,
-    bool expanded,
+    bool? selected,
+    bool? checked,
+    bool? pressed,
+    bool? expanded,
     bool queryFallbacks = false,
-    int level,
+    int? level,
   }) =>
       withErrorInterop(
         () => _jsGetByRole(
@@ -184,15 +182,15 @@ mixin ByRoleQueries on IQueries {
   List<E> getAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
-    bool selected,
-    bool checked,
-    bool pressed,
-    bool expanded,
+    bool? selected,
+    bool? checked,
+    bool? pressed,
+    bool? expanded,
     bool queryFallbacks = false,
-    int level,
+    int? level,
   }) =>
       withErrorInterop(
         () => _jsGetAllByRole(
@@ -239,18 +237,18 @@ mixin ByRoleQueries on IQueries {
   /// {@macro byRoleOptionsExpanded}
   /// {@macro byRoleOptionsQueryFallbacks}
   /// {@macro byRoleOptionsLevel}
-  E queryByRole<E extends Element>(
+  E? queryByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
-    bool selected,
-    bool checked,
-    bool pressed,
-    bool expanded,
+    bool? selected,
+    bool? checked,
+    bool? pressed,
+    bool? expanded,
     bool queryFallbacks = false,
-    int level,
+    int? level,
   }) =>
       _jsQueryByRole(
         getContainerForScope(),
@@ -267,7 +265,7 @@ mixin ByRoleQueries on IQueries {
           queryFallbacks: queryFallbacks,
           level: level,
         ),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements with the given [role] value, defaulting to an [exact] match.
   ///
@@ -299,15 +297,15 @@ mixin ByRoleQueries on IQueries {
   List<E> queryAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
-    bool selected,
-    bool checked,
-    bool pressed,
-    bool expanded,
+    bool? selected,
+    bool? checked,
+    bool? pressed,
+    bool? expanded,
     bool queryFallbacks = false,
-    int level,
+    int? level,
   }) =>
       _jsQueryAllByRole(
         getContainerForScope(),
@@ -366,19 +364,19 @@ mixin ByRoleQueries on IQueries {
   Future<E> findByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
-    bool selected,
-    bool checked,
-    bool pressed,
-    bool expanded,
+    bool? selected,
+    bool? checked,
+    bool? pressed,
+    bool? expanded,
     bool queryFallbacks = false,
-    int level,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    int? level,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByRole` instead of an
     // interop like `_jsFindByRole` to give consumers better async stack traces.
@@ -398,9 +396,9 @@ mixin ByRoleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -444,19 +442,19 @@ mixin ByRoleQueries on IQueries {
   Future<List<E>> findAllByRole<E extends Element>(
     /*TextMatch*/ dynamic role, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
     bool hidden = false,
     /*TextMatch*/ dynamic name,
-    bool selected,
-    bool checked,
-    bool pressed,
-    bool expanded,
+    bool? selected,
+    bool? checked,
+    bool? pressed,
+    bool? expanded,
     bool queryFallbacks = false,
-    int level,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    int? level,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByRole` instead of an
     // interop like `_jsFindAllByRole` to give consumers better async stack traces.
@@ -476,9 +474,9 @@ mixin ByRoleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }
@@ -487,38 +485,38 @@ mixin ByRoleQueries on IQueries {
 external Element _jsGetByRole(
   Node container,
   /*TextMatch*/ dynamic role, [
-  ByRoleOptions options,
+  ByRoleOptions? options,
 ]);
 
 @JS('rtl.getAllByRole')
 external List< /*Element*/ dynamic> _jsGetAllByRole(
   Node container,
   /*TextMatch*/ dynamic role, [
-  ByRoleOptions options,
+  ByRoleOptions? options,
 ]);
 
 @JS('rtl.queryByRole')
-external Element _jsQueryByRole(
+external Element? _jsQueryByRole(
   Node container,
   /*TextMatch*/ dynamic role, [
-  ByRoleOptions options,
+  ByRoleOptions? options,
 ]);
 
 @JS('rtl.queryAllByRole')
 external List< /*Element*/ dynamic> _jsQueryAllByRole(
   Node container,
   /*TextMatch*/ dynamic role, [
-  ByRoleOptions options,
+  ByRoleOptions? options,
 ]);
 
 @JS()
 @anonymous
 class ByRoleOptions {
-  external bool get exact;
-  external set exact(bool value);
+  external bool? get exact;
+  external set exact(bool? value);
 
-  external NormalizerFn Function([NormalizerOptions]) get normalizer;
-  external set normalizer(NormalizerFn Function([NormalizerOptions]) value);
+  external NormalizerFn Function([NormalizerOptions?])? get normalizer;
+  external set normalizer(NormalizerFn Function([NormalizerOptions?])? value);
 
   /// {@template byRoleOptionsName}
   /// You can also query the returned element(s) by their [accessible name](https://www.w3.org/TR/accname-1.1/)
@@ -545,8 +543,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#hidden> for more details and examples.
   /// {@endtemplate}
-  external bool get hidden;
-  external set hidden(bool value);
+  external bool? get hidden;
+  external set hidden(bool? value);
 
   /// {@template byRoleOptionsSelected}
   /// ### [selected]
@@ -557,8 +555,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#selected> for more details and examples.
   /// {@endtemplate}
-  external bool get selected;
-  external set selected(bool value);
+  external bool? get selected;
+  external set selected(bool? value);
 
   /// {@template byRoleOptionsChecked}
   /// ### [checked]
@@ -566,8 +564,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#checked> for more details and examples.
   /// {@endtemplate}
-  external bool get checked;
-  external set checked(bool value);
+  external bool? get checked;
+  external set checked(bool? value);
 
   /// {@template byRoleOptionsPressed}
   /// ### [pressed]
@@ -578,8 +576,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#pressed> for more details and examples.
   /// {@endtemplate}
-  external bool get pressed;
-  external set pressed(bool value);
+  external bool? get pressed;
+  external set pressed(bool? value);
 
   /// {@template byRoleOptionsExpanded}
   /// ### [expanded]
@@ -590,8 +588,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#expanded> for more details and examples.
   /// {@endtemplate}
-  external bool get expanded;
-  external set expanded(bool value);
+  external bool? get expanded;
+  external set expanded(bool? value);
 
   /// {@template byRoleOptionsQueryFallbacks}
   /// ### [queryFallbacks]
@@ -601,8 +599,8 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#queryfallbacks> for more details and examples.
   /// {@endtemplate}
-  external bool get queryFallbacks;
-  external set queryFallbacks(bool value);
+  external bool? get queryFallbacks;
+  external set queryFallbacks(bool? value);
 
   /// {@template byRoleOptionsLevel}
   /// ### [level]
@@ -617,6 +615,6 @@ class ByRoleOptions {
   ///
   /// See: <https://testing-library.com/docs/queries/byrole#level> for more details and examples.
   /// {@endtemplate}
-  external int get level;
-  external set level(int value);
+  external int? get level;
+  external set level(int? value);
 }

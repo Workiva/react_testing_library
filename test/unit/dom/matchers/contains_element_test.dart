@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html' show DivElement;
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show containsElement;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -32,7 +29,7 @@ void main() {
       final view = render(react.span(
         {defaultTestIdKey: 'ancestor'},
         react.span({defaultTestIdKey: 'direct-descendant'}),
-      ) as ReactElement);
+      ));
       shouldPass(view.getByTestId('ancestor'), containsElement(view.getByTestId('direct-descendant')));
     });
 
@@ -43,7 +40,7 @@ void main() {
           {defaultTestIdKey: 'direct-descendant'},
           react.span({defaultTestIdKey: 'descendant'}),
         ),
-      ) as ReactElement);
+      ));
       shouldPass(view.getByTestId('ancestor'), containsElement(view.getByTestId('descendant')));
     });
 
@@ -53,20 +50,10 @@ void main() {
       });
 
       test('the matched item does not have a matching descendant', () {
-        final view = render(
-            react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})) as ReactElement);
+        final view = render(react.span({defaultTestIdKey: 'ancestor'}, react.span({defaultTestIdKey: 'descendant'})));
         final ancestor = view.getByTestId('ancestor');
         final descendant = view.getByTestId('descendant');
         shouldFail(descendant, containsElement(ancestor), contains('Which: does not contain $ancestor.'));
-      });
-
-      test('the descendant argument is null', () {
-        expect(
-            () => containsElement(null),
-            throwsA(allOf(
-              isA<ArgumentError>(),
-              hasToStringValue(contains('Invalid argument(s) (descendant): Must not be null')),
-            )));
       });
     });
   });

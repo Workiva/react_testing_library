@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +28,7 @@ import '../../util/shadow_dom.dart';
 void main() {
   group('isInTheDocument matcher', () {
     test('passes when provided an element found in the document', () {
-      final view = render(react.span({defaultTestIdKey: 'empty'}) as ReactElement);
+      final view = render(react.span({defaultTestIdKey: 'empty'}));
       shouldPass(view.getByTestId('empty'), isInTheDocument);
     });
 
@@ -38,7 +36,7 @@ void main() {
       // ignore: unnecessary_cast
       final view = render(ShadowNested({}, react.span({defaultTestIdKey: 'empty'})) as ReactElement);
       final nodeWithShadowRoot = view.getByTestId(nodeWithShadowRootDefaultTestId);
-      shouldPass(within(nodeWithShadowRoot.shadowRoot).getByTestId('empty'), isInTheDocument);
+      shouldPass(within(nodeWithShadowRoot.shadowRoot!).getByTestId('empty'), isInTheDocument);
     });
 
     group('provides a useful failure message when', () {

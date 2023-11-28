@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +16,7 @@ import 'dart:html'
     show AreaElement, Element, ImageElement, InputElement, LabelElement, Node, SelectElement, TextAreaElement;
 
 import 'package:react_testing_library/src/dom/async/types.dart'
-    show MutationObserverOptions, QueryTimeoutFn, defaultMutationObserverOptions;
+    show MutationObserverOptions, QueryTimeoutFn, defaultAsyncCallbackCheckInterval, defaultMutationObserverOptions;
 import 'package:react_testing_library/src/dom/matches/types.dart' show NormalizerFn, NormalizerOptions;
 import 'package:react_testing_library/src/dom/within.dart' show within;
 
@@ -54,7 +52,7 @@ E getByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getByAltText(text, exact: exact, normalizer: normalizer);
 
@@ -86,7 +84,7 @@ List<E> getAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getAllByAltText(text, exact: exact, normalizer: normalizer);
 
@@ -114,11 +112,11 @@ List<E> getAllByAltText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByAltText}
-E queryByAltText<E extends Element>(
+E? queryByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryByAltText(text, exact: exact, normalizer: normalizer);
 
@@ -150,7 +148,7 @@ List<E> queryAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryAllByAltText(text, exact: exact, normalizer: normalizer);
 
@@ -193,10 +191,10 @@ Future<E> findByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByAltText(text,
@@ -246,10 +244,10 @@ Future<List<E>> findAllByAltText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByAltText(text,
@@ -292,7 +290,7 @@ E getByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getByDisplayValue<E>(value, exact: exact, normalizer: normalizer);
 
@@ -324,7 +322,7 @@ List<E> getAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getAllByDisplayValue<E>(value, exact: exact, normalizer: normalizer);
 
@@ -352,11 +350,11 @@ List<E> getAllByDisplayValue<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByDisplayValue}
-E queryByDisplayValue<E extends Element>(
+E? queryByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryByDisplayValue<E>(value, exact: exact, normalizer: normalizer);
 
@@ -388,7 +386,7 @@ List<E> queryAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryAllByDisplayValue<E>(value, exact: exact, normalizer: normalizer);
 
@@ -430,10 +428,10 @@ Future<E> findByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByDisplayValue<E>(value,
@@ -482,10 +480,10 @@ Future<List<E>> findAllByDisplayValue<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic value, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByDisplayValue<E>(value,
@@ -527,8 +525,8 @@ E getByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
 }) =>
     within(container).getByLabelText<E>(text, exact: exact, normalizer: normalizer, selector: selector);
 
@@ -559,8 +557,8 @@ List<E> getAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
 }) =>
     within(container).getAllByLabelText<E>(text, exact: exact, normalizer: normalizer, selector: selector);
 
@@ -587,12 +585,12 @@ List<E> getAllByLabelText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByLabelText}
-E queryByLabelText<E extends Element>(
+E? queryByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
 }) =>
     within(container).queryByLabelText<E>(text, exact: exact, normalizer: normalizer, selector: selector);
 
@@ -623,8 +621,8 @@ List<E> queryAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
 }) =>
     within(container).queryAllByLabelText<E>(text, exact: exact, normalizer: normalizer, selector: selector);
 
@@ -665,11 +663,11 @@ Future<E> findByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByLabelText<E>(text,
@@ -718,11 +716,11 @@ Future<List<E>> findAllByLabelText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByLabelText<E>(text,
@@ -766,7 +764,7 @@ E getByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getByPlaceholderText<E>(text, exact: exact, normalizer: normalizer);
 
@@ -798,7 +796,7 @@ List<E> getAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getAllByPlaceholderText<E>(text, exact: exact, normalizer: normalizer);
 
@@ -826,11 +824,11 @@ List<E> getAllByPlaceholderText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByPlaceholderText}
-E queryByPlaceholderText<E extends Element>(
+E? queryByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryByPlaceholderText<E>(text, exact: exact, normalizer: normalizer);
 
@@ -862,7 +860,7 @@ List<E> queryAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryAllByPlaceholderText<E>(text, exact: exact, normalizer: normalizer);
 
@@ -904,10 +902,10 @@ Future<E> findByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByPlaceholderText<E>(text,
@@ -956,10 +954,10 @@ Future<List<E>> findAllByPlaceholderText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByPlaceholderText<E>(text,
@@ -1007,15 +1005,15 @@ E getByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
-  bool selected,
-  bool checked,
-  bool pressed,
-  bool expanded,
+  bool? selected,
+  bool? checked,
+  bool? pressed,
+  bool? expanded,
   bool queryFallbacks = false,
-  int level,
+  int? level,
 }) =>
     within(container).getByRole<E>(role,
         exact: exact,
@@ -1062,15 +1060,15 @@ List<E> getAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
-  bool selected,
-  bool checked,
-  bool pressed,
-  bool expanded,
+  bool? selected,
+  bool? checked,
+  bool? pressed,
+  bool? expanded,
   bool queryFallbacks = false,
-  int level,
+  int? level,
 }) =>
     within(container).getAllByRole<E>(role,
         exact: exact,
@@ -1113,19 +1111,19 @@ List<E> getAllByRole<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByRole}
-E queryByRole<E extends Element>(
+E? queryByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
-  bool selected,
-  bool checked,
-  bool pressed,
-  bool expanded,
+  bool? selected,
+  bool? checked,
+  bool? pressed,
+  bool? expanded,
   bool queryFallbacks = false,
-  int level,
+  int? level,
 }) =>
     within(container).queryByRole<E>(role,
         exact: exact,
@@ -1173,15 +1171,15 @@ List<E> queryAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
-  bool selected,
-  bool checked,
-  bool pressed,
-  bool expanded,
+  bool? selected,
+  bool? checked,
+  bool? pressed,
+  bool? expanded,
   bool queryFallbacks = false,
-  int level,
+  int? level,
 }) =>
     within(container).queryAllByRole<E>(role,
         exact: exact,
@@ -1240,18 +1238,18 @@ Future<E> findByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
-  bool selected,
-  bool checked,
-  bool pressed,
-  bool expanded,
+  bool? selected,
+  bool? checked,
+  bool? pressed,
+  bool? expanded,
   bool queryFallbacks = false,
-  int level,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  int? level,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByRole<E>(role,
@@ -1315,18 +1313,18 @@ Future<List<E>> findAllByRole<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic role, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
   bool hidden = false,
   /*TextMatch*/ dynamic name,
-  bool selected,
-  bool checked,
-  bool pressed,
-  bool expanded,
+  bool? selected,
+  bool? checked,
+  bool? pressed,
+  bool? expanded,
   bool queryFallbacks = false,
-  int level,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  int? level,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByRole<E>(role,
@@ -1377,7 +1375,7 @@ E getByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getByTestId<E>(testId, exact: exact, normalizer: normalizer);
 
@@ -1409,7 +1407,7 @@ List<E> getAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getAllByTestId<E>(testId, exact: exact, normalizer: normalizer);
 
@@ -1437,11 +1435,11 @@ List<E> getAllByTestId<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByTestId}
-E queryByTestId<E extends Element>(
+E? queryByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryByTestId<E>(testId, exact: exact, normalizer: normalizer);
 
@@ -1473,7 +1471,7 @@ List<E> queryAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryAllByTestId<E>(testId, exact: exact, normalizer: normalizer);
 
@@ -1515,10 +1513,10 @@ Future<E> findByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByTestId<E>(testId,
@@ -1567,10 +1565,10 @@ Future<List<E>> findAllByTestId<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic testId, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByTestId<E>(testId,
@@ -1614,8 +1612,8 @@ E getByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
   /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).getByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
@@ -1649,8 +1647,8 @@ List<E> getAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
   /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).getAllByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
@@ -1680,12 +1678,12 @@ List<E> getAllByText<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByText}
-E queryByText<E extends Element>(
+E? queryByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
   /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).queryByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
@@ -1719,8 +1717,8 @@ List<E> queryAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
   /*String|bool*/ dynamic ignore = 'script',
 }) =>
     within(container).queryAllByText<E>(text, exact: exact, normalizer: normalizer, selector: selector, ignore: ignore);
@@ -1765,12 +1763,12 @@ Future<E> findByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
   /*String|bool*/ dynamic ignore = 'script',
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByText<E>(text,
@@ -1823,12 +1821,12 @@ Future<List<E>> findAllByText<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic text, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  String selector,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  String? selector,
   /*String|bool*/ dynamic ignore = 'script',
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByText<E>(text,
@@ -1873,7 +1871,7 @@ E getByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getByTitle<E>(title, exact: exact, normalizer: normalizer);
 
@@ -1905,7 +1903,7 @@ List<E> getAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).getAllByTitle<E>(title, exact: exact, normalizer: normalizer);
 
@@ -1933,11 +1931,11 @@ List<E> getAllByTitle<E extends Element>(
 ///
 /// {@category Queries}
 /// {@category ByTitle}
-E queryByTitle<E extends Element>(
+E? queryByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryByTitle<E>(title, exact: exact, normalizer: normalizer);
 
@@ -1969,7 +1967,7 @@ List<E> queryAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
 }) =>
     within(container).queryAllByTitle<E>(title, exact: exact, normalizer: normalizer);
 
@@ -2011,10 +2009,10 @@ Future<E> findByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findByTitle<E>(title,
@@ -2063,10 +2061,10 @@ Future<List<E>> findAllByTitle<E extends Element>(
   Node container,
   /*TextMatch*/ dynamic title, {
   bool exact = true,
-  NormalizerFn Function([NormalizerOptions]) normalizer,
-  Duration timeout,
-  Duration interval,
-  QueryTimeoutFn onTimeout,
+  NormalizerFn Function([NormalizerOptions?])? normalizer,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) =>
     within(container).findAllByTitle<E>(title,

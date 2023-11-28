@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -94,7 +92,7 @@ mixin ByAltTextQueries on IQueries {
   E getByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetByAltText(
@@ -128,7 +126,7 @@ mixin ByAltTextQueries on IQueries {
   List<E> getAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetAllByAltText(
@@ -159,16 +157,16 @@ mixin ByAltTextQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByAltText<E extends Element>(
+  E? queryByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryByAltText(
         getContainerForScope(),
         TextMatch.toJs(text),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of [ImageElement]s, [InputElement]s and/or [AreaElement]s  with the given [text] as the value of
   /// the `alt` attribute, defaulting to an [exact] match.
@@ -194,7 +192,7 @@ mixin ByAltTextQueries on IQueries {
   List<E> queryAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryAllByAltText(
         getContainerForScope(),
@@ -236,11 +234,11 @@ mixin ByAltTextQueries on IQueries {
   Future<E> findByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByAltText` instead of an
     // interop like `_jsFindByAltText` to give consumers better async stack traces.
@@ -252,9 +250,9 @@ mixin ByAltTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -292,11 +290,11 @@ mixin ByAltTextQueries on IQueries {
   Future<List<E>> findAllByAltText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByAltText` instead of an
     // interop like `_jsFindAllByAltText` to give consumers better async stack traces.
@@ -308,9 +306,9 @@ mixin ByAltTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }
@@ -319,26 +317,26 @@ mixin ByAltTextQueries on IQueries {
 external Element _jsGetByAltText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByAltText')
 external List< /*Element*/ dynamic> _jsGetAllByAltText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByAltText')
-external Element _jsQueryByAltText(
+external Element? _jsQueryByAltText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByAltText')
 external List< /*Element*/ dynamic> _jsQueryAllByAltText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

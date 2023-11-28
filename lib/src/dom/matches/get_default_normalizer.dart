@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,11 +24,11 @@ import 'package:react_testing_library/src/dom/matches/types.dart';
 /// multiple adjacent whitespace characters into a single space.
 ///
 /// > See: <https://testing-library.com/docs/queries/about#normalization>
-NormalizerFn Function([NormalizerOptions]) getDefaultNormalizer([NormalizerOptions options]) {
+NormalizerFn Function([NormalizerOptions?]) getDefaultNormalizer([NormalizerOptions? options]) {
   return _jsGetDefaultNormalizer(NormalizerOptions()
     ..trim = options?.trim ?? true
     ..collapseWhitespace = options?.collapseWhitespace ?? true);
 }
 
 @JS('rtl.getDefaultNormalizer')
-external NormalizerFn Function([NormalizerOptions]) _jsGetDefaultNormalizer([NormalizerOptions options]);
+external NormalizerFn Function([NormalizerOptions?]) _jsGetDefaultNormalizer([NormalizerOptions? options]);

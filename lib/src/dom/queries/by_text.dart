@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -96,8 +94,8 @@ mixin ByTextQueries on IQueries {
   E getByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       withErrorInterop(
@@ -133,8 +131,8 @@ mixin ByTextQueries on IQueries {
   List<E> getAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       withErrorInterop(
@@ -167,18 +165,18 @@ mixin ByTextQueries on IQueries {
   /// {@macro MatcherOptionsNormalizerArgDescription}
   /// {@macro MatcherOptionsSelectorArgDescription}
   /// {@macro MatcherOptionsIgnoreArgDescription}
-  E queryByText<E extends Element>(
+  E? queryByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       _jsQueryByText(
         getContainerForScope(),
         TextMatch.toJs(text),
         buildMatcherOptions(exact: exact, normalizer: normalizer, selector: selector, ignore: ignore),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements with the given [text] content, defaulting to an [exact] match.
   ///
@@ -205,8 +203,8 @@ mixin ByTextQueries on IQueries {
   List<E> queryAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) =>
       _jsQueryAllByText(
@@ -250,13 +248,13 @@ mixin ByTextQueries on IQueries {
   Future<E> findByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByText` instead of an
     // interop like `_jsFindByText` to give consumers better async stack traces.
@@ -270,9 +268,9 @@ mixin ByTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -311,13 +309,13 @@ mixin ByTextQueries on IQueries {
   Future<List<E>> findAllByText<E extends Element>(
     /*TextMatch*/ dynamic text, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByText` instead of an
     // interop like `_jsFindAllByText` to give consumers better async stack traces.
@@ -331,9 +329,9 @@ mixin ByTextQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }
@@ -342,26 +340,26 @@ mixin ByTextQueries on IQueries {
 external Element _jsGetByText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByText')
 external List< /*Element*/ dynamic> _jsGetAllByText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByText')
-external Element _jsQueryByText(
+external Element? _jsQueryByText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByText')
 external List< /*Element*/ dynamic> _jsQueryAllByText(
   Node container,
   /*TextMatch*/ dynamic text, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

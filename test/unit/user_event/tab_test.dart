@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
@@ -28,8 +25,8 @@ import '../util/over_react_stubs.dart';
 
 void main() {
   group('UserEvent.tab events:', () {
-    rtl.RenderResult view;
-    List<InputElement> inputs;
+    late rtl.RenderResult view;
+    late List<InputElement> inputs;
 
     group('', () {
       setUp(() {
@@ -43,7 +40,7 @@ void main() {
           ]),
         ]);
 
-        view = rtl.render(elementToRender as ReactElement);
+        view = rtl.render(elementToRender);
         inputs = view.getAllByRole('textbox');
         expect(inputs, hasLength(3), reason: 'sanity check');
       });

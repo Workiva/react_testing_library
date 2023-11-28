@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +16,7 @@ import 'dart:html';
 
 import 'package:react/hooks.dart' show useState;
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactDartFunctionComponentFactoryProxy, ReactElement;
+import 'package:react/react_client.dart' show ReactDartFunctionComponentFactoryProxy;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
@@ -28,14 +26,14 @@ import '../util/event_handler_error.dart';
 
 void main() {
   group('UserEvent.hover and UserEvent.unhover', () {
-    List<MouseEvent> calls;
-    rtl.RenderResult view;
+    late List<MouseEvent> calls;
+    late rtl.RenderResult view;
 
     setUp(() {
       calls = [];
       view = rtl.render(react.div({}, [
         HoverTestComponent({'calls': calls})
-      ]) as ReactElement);
+      ]));
       // Sanity check.
       expect(view.queryByText('Hello!'), isNull);
     });
@@ -79,7 +77,7 @@ void main() {
         'style': {'pointerEvents': 'none'}
       }, [
         HoverTestComponent({'calls': calls})
-      ]) as ReactElement);
+      ]));
 
       UserEvent.hover(view.getByRole('button'), skipPointerEventsCheck: true);
       expect(view.getByText('Hello!'), isInTheDocument);

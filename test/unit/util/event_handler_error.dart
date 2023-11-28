@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -40,18 +37,18 @@ void testEventHandlerErrors(
 
   group('will rethrow', () {
     test('event handler error', () {
-      final view = rtl.render(buildTargetElement() as ReactElement);
+      final view = rtl.render(buildTargetElement());
 
       expect(() => userEventTrigger(view.getByTestId(targetTestId)), throwsA(isA<ExceptionForTesting>()));
     });
 
     test('multiple event handler errors as an exception', () {
       final toRender = react.div(buildEventHandlers(), buildTargetElement());
-      final view = rtl.render(toRender as ReactElement);
+      final view = rtl.render(toRender);
 
       expect(
         () => userEventTrigger(view.getByTestId(targetTestId)),
-        throwsA(predicate((e) {
+        throwsA(predicate((dynamic e) {
           return e is Exception && e.toString().contains('Multiple errors');
         })),
       );

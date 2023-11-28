@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -33,7 +30,7 @@ void main() {
             react.input({}),
             react.img({}),
             react.a({'href': '/'}),
-          ]) as ReactElement);
+          ]));
           expect(
             rtl.getRoles(view.container),
             equals({
@@ -51,7 +48,7 @@ void main() {
             react.input({'type': 'number'}),
             react.table({}),
             react.h1({}),
-          ]) as ReactElement);
+          ]));
           expect(
             rtl.getRoles(rtl.screen.container),
             equals({
@@ -69,7 +66,7 @@ void main() {
           final view = rtl.render(react.div({}, [
             react.button({}),
             react.img({}),
-          ]) as ReactElement);
+          ]));
           final button = view.getByRole('button');
           expect(
             rtl.getRoles(button),
@@ -81,13 +78,13 @@ void main() {
       });
 
       group('with hidden elements', () {
-        rtl.RenderResult view;
+        late rtl.RenderResult view;
 
         setUp(() {
           view = rtl.render(react.div({}, [
             react.div({'aria-hidden': true}, react.img({})),
             react.div({}, react.button({})),
-          ]) as ReactElement);
+          ]));
         });
 
         test('when `hidden` option is false (default)', () {
@@ -119,7 +116,7 @@ void main() {
           react.input({'type': 'color'}),
           react.i({}),
           react.a({}),
-        ]) as ReactElement);
+        ]));
         expect(
           rtl.getRoles(view.container),
           equals({
@@ -131,7 +128,7 @@ void main() {
     });
 
     group('isInaccessible', () {
-      rtl.RenderResult view;
+      late rtl.RenderResult view;
 
       setUp(() {
         view = rtl.render(react.div({}, [
@@ -151,7 +148,7 @@ void main() {
           }, react.select({})),
           react.div({'hidden': true, 'data-test-id': 'hidden'}, react.button({}, 'Hidden Button')),
           react.div({'aria-hidden': true, 'data-test-id': 'aria-hidden'}, react.p({}, 'Hidden Text')),
-        ]) as ReactElement);
+        ]));
       });
 
       test('for inaccessible elements', () {
@@ -193,7 +190,7 @@ void main() {
         final printCalls = recordPrintCalls(() => rtl.logRoles(dom, hidden: hidden));
         expect(printCalls, hasLength(1));
         return {
-          for (final match in rolePattern.allMatches(printCalls[0])) match[1]: match[2],
+          for (final match in rolePattern.allMatches(printCalls[0])) match[1]!: match[2]!,
         };
       }
 
@@ -203,7 +200,7 @@ void main() {
             react.input({}),
             react.img({}),
             react.a({'href': '/'}, 'click me!'),
-          ]) as ReactElement);
+          ]));
 
           final roleMatches = _getLoggedRoleMatches(view.container);
           expect(roleMatches, hasLength(3), reason: 'there are 3 roles in view');
@@ -217,7 +214,7 @@ void main() {
             react.input({}),
             react.img({}),
             react.a({'href': '/'}, 'click me!'),
-          ]) as ReactElement);
+          ]));
 
           final roleMatches = _getLoggedRoleMatches(rtl.screen.container);
           expect(roleMatches, hasLength(4), reason: 'there are 4 roles in screen');
@@ -232,7 +229,7 @@ void main() {
             react.button({}, 'Submit'),
             react.input({'type': 'number'}),
             react.button({}, 'Another button'),
-          ]) as ReactElement);
+          ]));
 
           final roleMatches = _getLoggedRoleMatches(view.container);
           expect(roleMatches, hasLength(2), reason: 'there are 2 roles in view');
@@ -250,7 +247,7 @@ void main() {
               react.img({}),
               react.input({'type': 'radio'}),
             ]),
-          ]) as ReactElement);
+          ]));
 
           final roleMatches = _getLoggedRoleMatches(view.getByTestId('container'));
           expect(roleMatches, hasLength(2), reason: 'there are 2 roles in container');
@@ -262,7 +259,7 @@ void main() {
           final view = rtl.render(react.div({}, [
             react.button({}, 'Click here!'),
             react.img({}),
-          ]) as ReactElement);
+          ]));
 
           final roleMatches = _getLoggedRoleMatches(view.getByRole('button', name: 'Click here!'));
           expect(roleMatches, hasLength(1), reason: 'the button has one role');
@@ -271,13 +268,13 @@ void main() {
       });
 
       group('with hidden elements', () {
-        rtl.RenderResult view;
+        late rtl.RenderResult view;
 
         setUp(() {
           view = rtl.render(react.div({}, [
             react.div({'aria-hidden': true}, react.img({})),
             react.div({}, react.button({})),
-          ]) as ReactElement);
+          ]));
         });
 
         test('when `hidden` option is false (default)', () {
@@ -299,7 +296,7 @@ void main() {
           react.input({'type': 'color'}),
           react.i({}),
           react.a({}),
-        ]) as ReactElement);
+        ]));
         final roleMatches = _getLoggedRoleMatches(view.container);
         expect(roleMatches, isEmpty, reason: 'there is are no roles in view');
       });

@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +16,6 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/matchers.dart';
 import 'package:react_testing_library/user_event.dart';
@@ -61,10 +58,10 @@ void main() {
 }
 
 void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
-  int clickEventCount;
-  Element element;
-  List<String> keyUpCalls;
-  rtl.RenderResult view;
+  late int clickEventCount;
+  late Element element;
+  late List<String> keyUpCalls;
+  late rtl.RenderResult view;
 
   void _verifyTypeEvent({
     bool skipClick = false,
@@ -78,9 +75,9 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
     int delay, {
     bool skipClick = false,
     bool skipAutoClose = false,
-    int initialSelectionStart,
-    int initialSelectionEnd,
-    int charsTyped,
+    int? initialSelectionStart,
+    int? initialSelectionEnd,
+    int? charsTyped,
   }) async {
     charsTyped ??= text.length;
     final timer = Stopwatch();
@@ -112,7 +109,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
         'id': 'root',
         'onClick': (_) => clickEventCount++,
         'onKeyUp': (e) => keyUpCalls.add((e as react.SyntheticKeyboardEvent).key),
-      }) as ReactElement);
+      }));
 
       element = view.getByRole('textbox');
       expect(element, hasValue(''), reason: 'sanity check');
@@ -212,14 +209,14 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
       final view = rtl.render((isTextArea ? react.textarea : react.input)({
         defaultTestIdKey: 'event-handle-error-tester',
         'onKeyUp': (e) => throw ExceptionForTesting('ow'),
-      }) as ReactElement);
+      }));
 
       expect(
         () async {
           await UserEvent.typeWithDelay(
               view.getByTestId('event-handle-error-tester'), stringToTest, Duration(milliseconds: 250));
         },
-        throwsA(predicate((e) {
+        throwsA(predicate((dynamic e) {
           return e is Exception && e.toString().contains('Multiple errors (${stringToTest.length})');
         })),
       );
@@ -245,7 +242,7 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
         'onClick': (_) => clickEventCount++,
         'onKeyUp': (e) => keyUpCalls.add((e as react.SyntheticKeyboardEvent).key),
         'defaultValue': 'this is a bad example',
-      }) as ReactElement);
+      }));
 
       element = view.getByRole('textbox');
       expect(element, hasValue('this is a bad example'), reason: 'sanity check');
@@ -288,9 +285,9 @@ void _typeTestHelper({bool hasDelay = false, bool isTextArea = false}) {
 }
 
 void _keyboardTestHelper({bool hasDelay = false}) {
-  List<String> calls;
+  late List<String> calls;
   rtl.RenderResult view;
-  InputElement input;
+  late InputElement input;
 
   setUp(() {
     calls = [];
@@ -299,9 +296,9 @@ void _keyboardTestHelper({bool hasDelay = false}) {
   Future<KeyboardState> _verifyKeyboardWithDelay(
     String text,
     int delay, {
-    KeyboardState keyboardState,
-    List<Map> keyboardMap,
-    int charsTyped,
+    KeyboardState? keyboardState,
+    List<Map>? keyboardMap,
+    int? charsTyped,
   }) async {
     charsTyped ??= text.length;
     final timer = Stopwatch();
@@ -334,7 +331,7 @@ void _keyboardTestHelper({bool hasDelay = false}) {
       },
     });
 
-    view = rtl.render(elementToRender as ReactElement);
+    view = rtl.render(elementToRender);
     input = view.getByRole('textbox');
     expect(input, hasValue(''));
   });

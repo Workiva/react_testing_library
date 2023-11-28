@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html' show Element;
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasTextContent;
 import 'package:react_testing_library/react_testing_library.dart' show render;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -28,16 +25,11 @@ import '../../util/over_react_stubs.dart';
 
 void main() {
   group('hasTextContent matcher', () {
-    Element rootElement;
+    late Element rootElement;
 
     setUp(() {
-      final view = render(
-          react.span({defaultTestIdKey: 'root'}, 'The quick brown fox jumps over the (lazy)    dog') as ReactElement);
+      final view = render(react.span({defaultTestIdKey: 'root'}, 'The quick brown fox jumps over the (lazy)    dog'));
       rootElement = view.getByTestId('root');
-    });
-
-    tearDown(() {
-      rootElement = null;
     });
 
     group('passes when provided a', () {

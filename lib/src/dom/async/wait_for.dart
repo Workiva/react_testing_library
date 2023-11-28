@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,48 +54,52 @@ export 'package:react_testing_library/src/dom/async/types.dart' show JsMutationO
 /// {@category Async}
 Future<T> waitFor<T>(
   FutureOr<T> Function() expectation, {
-  Node container,
-  Duration timeout,
-  Duration interval = const Duration(milliseconds: 50),
-  QueryTimeoutFn onTimeout,
+  Node? container,
+  Duration? timeout,
+  Duration interval = defaultAsyncCallbackCheckInterval,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   final config = getConfig();
-  container ??= document.body;
+  container ??= document.body!;
   timeout ??= Duration(milliseconds: config.asyncUtilTimeout);
   onTimeout ??= (error) => error;
 
-  /*Error*/ dynamic lastError;
-  MutationObserver observer;
-  Timer intervalTimer;
-  Timer overallTimeoutTimer;
+  /*Error*/ Object? lastError;
+  late MutationObserver observer;
+  late Timer intervalTimer;
+  late Timer overallTimeoutTimer;
   var isPending = false;
   final doneCompleter = Completer<T>();
 
-  void onDone(Object error, T result) {
+  void onDone(T result) {
     if (doneCompleter.isCompleted) return;
 
     overallTimeoutTimer.cancel();
     intervalTimer.cancel();
     observer.disconnect();
 
-    if (error != null) {
-      doneCompleter.completeError(error);
-    } else if (result is TestFailure) {
+    if (result is TestFailure) {
       doneCompleter.completeError(result);
     } else {
       doneCompleter.complete(result);
     }
   }
 
+  // Separate error handling to enforce non-nullability of the result.
+  void onDoneWithError(Object error) {
+    if (doneCompleter.isCompleted) return;
+
+    overallTimeoutTimer.cancel();
+    intervalTimer.cancel();
+    observer.disconnect();
+
+    doneCompleter.completeError(error);
+  }
+
   void handleTimeout() {
-    /*Error*/ dynamic error;
-    if (lastError != null) {
-      error = lastError;
-    } else {
-      error = TimeoutException('Timed out in waitFor after ${timeout.inMilliseconds}ms.');
-    }
-    onDone(onTimeout(error), null);
+    final error = lastError ?? TimeoutException('Timed out in waitFor after ${timeout!.inMilliseconds}ms.');
+    onDoneWithError(onTimeout!(error));
   }
 
   void checkCallback() {
@@ -106,11 +108,11 @@ Future<T> waitFor<T>(
       final result = expectation();
       if (result is Future) {
         isPending = true;
-        (result as Future)
-            .then((resolvedValue) => onDone(null, resolvedValue as T), onError: (e) => lastError = e)
+        (result! as Future)
+            .then((resolvedValue) => onDone(resolvedValue as T), onError: (e) => lastError = e)
             .whenComplete(() => isPending = false);
       } else {
-        onDone(null, result as T);
+        onDone(result);
       }
       // If `callback` throws, wait for the next mutation, interval, or timeout.
     } catch (error) {
@@ -159,20 +161,19 @@ Future<T> waitFor<T>(
 /// {@category Async}
 Future<void> waitForElementToBeRemoved(
   Node Function() callback, {
-  Node container,
-  Duration timeout,
+  Node? container,
+  Duration? timeout,
   Duration interval = const Duration(milliseconds: 50),
-  QueryTimeoutFn onTimeout,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
   final config = getConfig();
-  container ??= document.body;
+  container ??= document.body!;
   timeout ??= Duration(milliseconds: config.asyncUtilTimeout);
 
   final el = callback();
-  if (el == null) {
-    throw TestingLibraryElementError('The callback must return a non-null Element.');
-  }
+  // Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+  ArgumentError.checkNotNull(el);
 
   if (!container.contains(el)) {
     throw TestingLibraryElementError(
@@ -181,14 +182,14 @@ Future<void> waitForElementToBeRemoved(
   }
 
   await waitFor(
-    () => expect(container.contains(el), isFalse),
+    () => expect(container!.contains(el), isFalse),
     container: container,
     timeout: timeout,
     interval: interval,
     onTimeout: onTimeout ??
         (error) {
           return TimeoutException(
-              'The element returned from the callback was still present in the container after ${timeout.inMilliseconds}ms:\n\n'
+              'The element returned from the callback was still present in the container after ${timeout!.inMilliseconds}ms:\n\n'
               '${prettyDOM(container)}');
         },
     mutationObserverOptions: mutationObserverOptions,
@@ -216,16 +217,19 @@ Future<void> waitForElementToBeRemoved(
 /// {@category Async}
 Future<void> waitForElementsToBeRemoved(
   List<Node> Function() callback, {
-  Node container,
-  Duration timeout,
+  Node? container,
+  Duration? timeout,
   Duration interval = const Duration(milliseconds: 50),
-  QueryTimeoutFn onTimeout,
+  QueryTimeoutFn? onTimeout,
   MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
 }) async {
-  container ??= document.body;
+  container ??= document.body!;
   final els = callback();
 
-  if (els == null || els.isEmpty) {
+  // Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+  ArgumentError.checkNotNull(els);
+
+  if (els.isEmpty) {
     throw TestingLibraryElementError('The callback must return one or more non-null Elements.');
   }
 

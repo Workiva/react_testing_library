@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,8 +29,8 @@ mixin IQueries {
   @protected
   MatcherOptions buildMatcherOptions({
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    String selector,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    String? selector,
     /*String|bool*/ dynamic ignore = 'script',
   }) {
     final matcherOptions = MatcherOptions()..exact = exact;
@@ -46,9 +44,9 @@ mixin IQueries {
   /// @nodoc
   @protected
   SharedJsWaitForOptions buildWaitForOptions({
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
+    Duration? timeout,
+    Duration? interval,
+    QueryTimeoutFn? onTimeout,
     MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     final waitForOptions = SharedJsWaitForOptions();
@@ -56,7 +54,7 @@ mixin IQueries {
     if (interval != null) waitForOptions.interval = interval.inMilliseconds;
     if (onTimeout != null) waitForOptions.onTimeout = allowInterop(onTimeout);
     // ignore: invalid_use_of_protected_member
-    if (mutationObserverOptions != null) waitForOptions.mutationObserverOptions = mutationObserverOptions.toJs();
+    waitForOptions.mutationObserverOptions = mutationObserverOptions.toJs();
 
     return waitForOptions;
   }

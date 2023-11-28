@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -99,7 +97,7 @@ mixin ByTitleQueries on IQueries {
   E getByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetByTitle(
@@ -133,7 +131,7 @@ mixin ByTitleQueries on IQueries {
   List<E> getAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       withErrorInterop(
         () => _jsGetAllByTitle(
@@ -164,16 +162,16 @@ mixin ByTitleQueries on IQueries {
   /// {@macro TextMatchArgDescription}
   /// {@macro MatcherOptionsExactArgDescription}
   /// {@macro MatcherOptionsNormalizerArgDescription}
-  E queryByTitle<E extends Element>(
+  E? queryByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryByTitle(
         getContainerForScope(),
         TextMatch.toJs(title),
         buildMatcherOptions(exact: exact, normalizer: normalizer),
-      ) as E;
+      ) as E?;
 
   /// Returns a list of elements with the given [title] as the value of the `title` attribute,
   /// defaulting to an [exact] match.
@@ -199,7 +197,7 @@ mixin ByTitleQueries on IQueries {
   List<E> queryAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
   }) =>
       _jsQueryAllByTitle(
         getContainerForScope(),
@@ -240,11 +238,11 @@ mixin ByTitleQueries on IQueries {
   Future<E> findByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getByTitle` instead of an
     // interop like `_jsFindByTitle` to give consumers better async stack traces.
@@ -256,9 +254,9 @@ mixin ByTitleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 
@@ -295,11 +293,11 @@ mixin ByTitleQueries on IQueries {
   Future<List<E>> findAllByTitle<E extends Element>(
     /*TextMatch*/ dynamic title, {
     bool exact = true,
-    NormalizerFn Function([NormalizerOptions]) normalizer,
-    Duration timeout,
-    Duration interval,
-    QueryTimeoutFn onTimeout,
-    MutationObserverOptions mutationObserverOptions,
+    NormalizerFn Function([NormalizerOptions?])? normalizer,
+    Duration? timeout,
+    Duration interval = defaultAsyncCallbackCheckInterval,
+    QueryTimeoutFn? onTimeout,
+    MutationObserverOptions mutationObserverOptions = defaultMutationObserverOptions,
   }) {
     // NOTE: Using our own Dart `waitFor` as a wrapper around `getAllByTitle` instead of an
     // interop like `_jsFindAllByTitle` to give consumers better async stack traces.
@@ -311,9 +309,9 @@ mixin ByTitleQueries on IQueries {
       ),
       container: getContainerForScope(),
       timeout: timeout,
-      interval: interval ?? defaultAsyncCallbackCheckInterval,
+      interval: interval,
       onTimeout: onTimeout,
-      mutationObserverOptions: mutationObserverOptions ?? defaultMutationObserverOptions,
+      mutationObserverOptions: mutationObserverOptions,
     );
   }
 }
@@ -322,26 +320,26 @@ mixin ByTitleQueries on IQueries {
 external Element _jsGetByTitle(
   Node container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.getAllByTitle')
 external List< /*Element*/ dynamic> _jsGetAllByTitle(
   Node container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryByTitle')
-external Element _jsQueryByTitle(
+external Element? _jsQueryByTitle(
   Node container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);
 
 @JS('rtl.queryAllByTitle')
 external List< /*Element*/ dynamic> _jsQueryAllByTitle(
   Node container,
   /*TextMatch*/ dynamic title, [
-  MatcherOptions options,
+  MatcherOptions? options,
 ]);

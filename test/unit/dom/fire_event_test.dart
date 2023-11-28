@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
@@ -26,8 +23,8 @@ import '../util/matchers.dart';
 
 void main() {
   group('', () {
-    List<Event> calls;
-    rtl.RenderResult view;
+    late List<Event> calls;
+    late rtl.RenderResult view;
 
     setUp(() {
       calls = [];
@@ -36,7 +33,7 @@ void main() {
         'onClick': (event) {
           calls.add((event as react.SyntheticMouseEvent).nativeEvent as Event);
         }
-      }, 'oh hai') as ReactElement;
+      }, 'oh hai');
       view = rtl.render(elementToRender);
     });
 

@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -90,7 +88,7 @@ class _IsDisabled extends Matcher {
     if (!isElementThatCanBeDisabled(item, matchState)) return false;
     final formAncestor = (item as Element).closest('form');
     if (formAncestor != null && (formAncestor as FormElement).hasAttribute('disabled')) return true;
-    return item.disabled as bool;
+    return (item as dynamic).disabled as bool;
   }
 
   void setMatchState(dynamic item, Map matchState) {

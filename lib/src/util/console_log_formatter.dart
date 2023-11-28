@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // This code was adapted to Dart from
 // https://github.com/nodejs/node-v0.x-archive/blob/master/lib/util.js
 //
@@ -49,38 +47,35 @@ String format(dynamic f, List<dynamic> arguments) {
   }
 
   var str = '';
-  if (f is String) {
-    var i = 0;
-    final len = arguments.length;
-    str += f.replaceAllMapped(_formatRegExp, (m) {
-      final x = m[0];
-      if (x == '%%') return '%';
-      if (i >= len) return x;
-      switch (x) {
-        case '%s':
-          return arguments[i++].toString();
-        case '%i':
-        case '%d':
-        case '%f':
-          return num.tryParse(arguments[i++].toString()).toString();
-        case '%o':
-        case '%O':
-        case '%j':
-          try {
-            final argToStringify = arguments[i++];
-            return _jsonStringify(argToStringify);
-          } catch (_) {
-            return '[Circular]';
-          }
-          break;
-        default:
-          return x;
-      }
-    });
-
-    if (i < len) {
-      str += ' ${arguments.skip(i).join(' ')}';
+  var i = 0;
+  final len = arguments.length;
+  str += f.replaceAllMapped(_formatRegExp, (m) {
+    final x = m[0]!;
+    if (x == '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s':
+        return arguments[i++].toString();
+      case '%i':
+      case '%d':
+      case '%f':
+        return num.tryParse(arguments[i++].toString()).toString();
+      case '%o':
+      case '%O':
+      case '%j':
+        try {
+          final argToStringify = arguments[i++];
+          return _jsonStringify(argToStringify);
+        } catch (_) {
+          return '[Circular]';
+        }
+      default:
+        return x;
     }
+  });
+
+  if (i < len) {
+    str += ' ${arguments.skip(i).join(' ')}';
   }
 
   return str;

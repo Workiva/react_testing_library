@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +15,14 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement, Ref;
+import 'package:react/react_client.dart' show Ref;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
 void main() {
   group('prettyDOM', () {
     group('returns a formatted string of the HTML produced by the node provided', () {
-      Ref<DivElement> vDomRootRef;
+      late Ref<DivElement?> vDomRootRef;
       setUp(() {
         vDomRootRef = react.createRef();
         final vDom = react.div(
@@ -34,7 +32,7 @@ void main() {
             {},
             react.p({}, 'you again?'),
           ),
-        ) as ReactElement;
+        );
         rtl.render(vDom);
       });
 
@@ -56,6 +54,10 @@ void main() {
 
       test('when min is true', () {
         expect(rtl.prettyDOM(vDomRootRef.current, min: true), _expectedPrettyDomWithMinSetToTrue);
+      });
+
+      test('with null input', () {
+        expect(rtl.prettyDOM(null), _expectedPrettyDomNull);
       });
     });
   });
@@ -97,3 +99,20 @@ const _expectedPrettyDomWithMaxDepthOfTwo = '''<div>
 </div>''';
 
 const _expectedPrettyDomWithMinSetToTrue = '<div><p>hi there!</p><div><p>you again?</p></div></div>';
+
+const _expectedPrettyDomNull = '''<body>
+  
+
+  <div>
+    <div>
+      <p>
+        hi there!
+      </p>
+      <div>
+        <p>
+          you again?
+        </p>
+      </div>
+    </div>
+  </div>
+</body>''';

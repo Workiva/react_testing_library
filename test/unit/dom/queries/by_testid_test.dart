@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/src/util/error_message_utils.dart';
 import 'package:test/test.dart';
@@ -31,12 +28,9 @@ void main() {
   group('', () {
     initConfigForInternalTesting();
 
-    rtl.RenderResult view;
-    tearDown(() {
-      view = null;
-    });
-
     group('basic functionality', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.section(
             {},
@@ -48,7 +42,7 @@ void main() {
             }, 'Testing multiple'),
             react.span({
               'data-test-id': 'testId-2',
-            }, 'Testing duplicate')) as ReactElement);
+            }, 'Testing duplicate')));
       });
 
       group('getByTestId', () {
@@ -194,7 +188,7 @@ void main() {
           ' (by properly escaping the test ID when incorporating it into a RegExp)', () {
         final view = rtl.render(react.span({
           'data-test-id': 'testId(1)',
-        }) as ReactElement);
+        }));
 
         expect(view.getByTestId('testId(1)'), isA<SpanElement>());
       });
@@ -271,7 +265,7 @@ void main() {
             ' (by properly escaping the test ID when incorporating it into a RegExp)', () {
           final view = rtl.render(react.span({
             'data-test-id': 'testId(1)',
-          }) as ReactElement);
+          }));
 
           expect(view.getByTestId('estId(1)', exact: false), isA<SpanElement>());
         });
@@ -281,6 +275,8 @@ void main() {
     group(
         'the testId argument can target a matching testid when more than '
         'one testId is present on the data-test-id attribute', () {
+      late rtl.RenderResult view;
+
       setUp(() {
         view = rtl.render(react.section(
             {},
@@ -292,7 +288,7 @@ void main() {
             }, 'Testing single'),
             react.span({
               'data-test-id': 'testId-3 testId-2 testId-1',
-            }, 'Testing single')) as ReactElement);
+            }, 'Testing single')));
       });
 
       group('getByTestId', () {

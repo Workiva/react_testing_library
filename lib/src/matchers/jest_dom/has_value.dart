@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -101,7 +99,7 @@ Matcher hasDisplayValue([dynamic value]) =>
 
 class _HasValue extends CustomMatcher {
   final dynamic expectedValue;
-  final dynamic Function(OptionElement option) getOptionValue;
+  final dynamic Function(OptionElement option)? getOptionValue;
 
   _HasValue(this.expectedValue, {this.getOptionValue, String valueDescription = 'value'})
       : super('An element with ${expectedValue == null ? 'no $valueDescription' : 'a $valueDescription of'}', 'element',
@@ -120,7 +118,7 @@ class _HasValue extends CustomMatcher {
     // If it's not a Element, the mismatch description will say so.
     if (item is! Element) return null;
 
-    final element = item as Element;
+    final element = item;
 
     if (element is InputElement) {
       final type = element.getAttribute('type');

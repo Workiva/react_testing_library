@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:react_testing_library/user_event.dart';
 import 'package:test/test.dart';
@@ -26,9 +23,9 @@ import '../util/event_handler_error.dart';
 
 void main() {
   group('User click events:', () {
-    List<Event> calls;
-    int hoverEventCount;
-    rtl.RenderResult view;
+    late List<Event> calls;
+    late int hoverEventCount;
+    late rtl.RenderResult view;
 
     setUp(() {
       calls = [];
@@ -43,7 +40,7 @@ void main() {
         'onMouseOver': (_) => hoverEventCount++,
       }, 'oh hai');
 
-      view = rtl.render(elementToRender as ReactElement);
+      view = rtl.render(elementToRender);
     });
 
     group('UserEvent.click', () {
@@ -105,7 +102,7 @@ void main() {
           'onClick': (_) {
             wasClicked = true;
           }
-        }, 'oh hai') as ReactElement);
+        }, 'oh hai'));
 
         UserEvent.click(
           view.getByRole('button'),
@@ -164,7 +161,7 @@ void main() {
           'onDoubleClick': (_) {
             wasClicked = true;
           }
-        }, 'oh hai') as ReactElement);
+        }, 'oh hai'));
 
         UserEvent.dblClick(
           view.getByRole('button'),

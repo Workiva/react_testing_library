@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/matchers.dart' show hasStyles;
 import 'package:react_testing_library/react_testing_library.dart' show render, RenderResult;
 import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart';
@@ -27,13 +24,11 @@ import '../../util/matchers.dart';
 
 void main() {
   group('hasStyles matcher', () {
-    RenderResult view;
-    StyleElement externalStyleSheet;
+    late RenderResult view;
+    late StyleElement externalStyleSheet;
 
     tearDown(() {
-      view = null;
-      externalStyleSheet?.remove();
-      externalStyleSheet = null;
+      externalStyleSheet.remove();
     });
 
     setUp(() {
@@ -46,7 +41,7 @@ void main() {
           content: attr(title);
         }
       ''';
-      document.head.append(externalStyleSheet);
+      document.head!.append(externalStyleSheet);
 
       view = render(react.button({
         'className': 'foo',
@@ -58,7 +53,7 @@ void main() {
           'zIndex': 2,
         },
         'title': 'this is the title'
-      }) as ReactElement);
+      }));
     });
 
     group('passes', () {

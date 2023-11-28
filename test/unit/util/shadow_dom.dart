@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,8 +29,8 @@ final ShadowNested = react.forwardRef2((props, ref) {
 
   useEffect(() {
     final shadowRootFirstChild = DivElement()
-      ..dataset['test-id'] = props['shadowRootFirstChildTestId'] as String ?? 'shadowRootFirstChild';
-    divRef.current.attachShadow({'mode': 'open'}).append(shadowRootFirstChild);
+      ..dataset['test-id'] = props['shadowRootFirstChildTestId'] as String? ?? 'shadowRootFirstChild';
+    divRef.current!.attachShadow({'mode': 'open'}).append(shadowRootFirstChild);
     react_dom.render(react.Fragment({}, props['children']), shadowRootFirstChild);
     return () => react_dom.unmountComponentAtNode(shadowRootFirstChild);
   }, const []);

@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,9 +24,9 @@ import 'package:react_testing_library/src/dom/config/configure.dart' show config
 /// Builds and configures react-testing-library to use a custom value for `JsConfig.getElementError`
 /// if any queries fail in the current test.
 void setEphemeralElementErrorMessage(
-    Object Function(Object originalMessage, Element container) customErrorMessageBuilder,
-    {StackTrace jsStackTrace}) {
-  TestingLibraryElementError buildCustomDartGetElementError(Object originalMessage, Element container) {
+    Object? Function(Object? originalMessage, Element container) customErrorMessageBuilder,
+    {StackTrace? jsStackTrace}) {
+  TestingLibraryElementError buildCustomDartGetElementError(Object? originalMessage, Element container) {
     return TestingLibraryElementError.fromJs(
         buildJsGetElementError(customErrorMessageBuilder(originalMessage, container), container), jsStackTrace);
   }
@@ -54,13 +52,17 @@ T withErrorInterop<T>(T Function() getJsQueryResult) {
 class TestingLibraryElementError extends Error {
   TestingLibraryElementError(this.message, [this.jsStackTrace]) : super();
 
-  factory TestingLibraryElementError.fromJs(/*JsError*/ dynamic jsError, [StackTrace jsStackTrace]) {
-    final stack = jsError is JsError ? jsStackTrace ?? StackTrace.fromString(jsError.stack) : null;
+  factory TestingLibraryElementError.fromJs(/*JsError*/ dynamic jsError, [StackTrace? jsStackTrace]) {
+    StackTrace? stack;
+    if (jsError is JsError) {
+      final jsErrorStack = jsError.stack;
+      stack = jsStackTrace ?? (jsErrorStack != null ? StackTrace.fromString(jsErrorStack) : null);
+    }
     return TestingLibraryElementError(jsError.toString(), stack);
   }
 
   final String message;
-  final StackTrace jsStackTrace;
+  final StackTrace? jsStackTrace;
 
   @override
   String toString() => '$message\n\n'
@@ -78,9 +80,9 @@ class JsError {
   external String get message;
   external set message(String value);
 
-  external String get stack;
-  external set stack(String value);
+  external String? get stack;
+  external set stack(String? value);
 }
 
 @JS('rtl.buildJsGetElementError')
-external JsError buildJsGetElementError(Object message, Element container);
+external JsError buildJsGetElementError(Object? message, Element container);

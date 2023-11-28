@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,4 +17,6 @@ import 'dart:html' show Node;
 /// Returns whether [root] is the same as or contains the [other] node.
 ///
 /// Returns false if either [root] or [other] is null.
+// Keep null check to maintain backwards compatibility for consumers that are not opted in to null safety.
+// ignore: unnecessary_null_comparison
 bool isOrContains(Node root, Node other) => (root != null && other != null) && (root == other || root.contains(other));

@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -108,14 +106,14 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// [we would love to hear more about it!](https://github.com/Workiva/react_testing_library/issues/new)
 RenderResult render(
   ReactElement ui, {
-  Node container,
-  Node baseElement,
+  Node? container,
+  Node? baseElement,
   bool hydrate = false,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
   /*UiFactory || ReactComponentFactoryProxy*/ dynamic wrapper,
   bool autoTearDown = true,
-  void Function() onDidTearDown,
+  void Function()? onDidTearDown,
 }) {
   // ignore: invalid_use_of_visible_for_testing_member
   componentZone = Zone.current;
@@ -145,7 +143,7 @@ RenderResult render(
       if (autoTearDown) {
         addTearDown(() {
           jsResult.unmount();
-          jsResult.container?.remove();
+          jsResult.container.remove();
           onDidTearDown?.call();
         });
       }
@@ -194,9 +192,9 @@ class RenderResult extends ScopedQueries {
   ///
   /// > See: <https://testing-library.com/docs/react-testing-library/api/#debug>
   void debug([
-    Node baseElement,
-    int maxLength,
-    PrettyDomOptions options,
+    Node? baseElement,
+    int? maxLength,
+    PrettyDomOptions? options,
   ]) =>
       printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options));
 

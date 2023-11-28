@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 // Copyright 2021 Workiva Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +15,6 @@
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
-import 'package:react/react_client.dart' show ReactElement;
 import 'package:react_testing_library/dom/queries.dart' show WithinQueries;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
@@ -37,11 +34,7 @@ void main() {
       }) {
         final elsForQuerying =
             elementsForQuerying(scopeName, renderMultipleElsMatchingQuery: renderMultipleElsMatchingQuery);
-        final els = testAsyncQuery
-            // TODO: Remove ignore once we stop supporting Dart SDK 2.7.x
-            // ignore: unnecessary_cast
-            ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) as ReactElement
-            : elsForQuerying;
+        final els = testAsyncQuery! ? DelayedRenderOf({'childrenToRenderAfterDelay': elsForQuerying}) : elsForQuerying;
         final view = rtl.render(els);
         final queries = rtl.within(view.container);
         return ScopedQueriesTestWrapper(queries, view);
@@ -52,7 +45,7 @@ void main() {
       final elsForQuerying = elementsForQuerying('<container>');
       final view = rtl.render(elsForQuerying);
       final nodeWithShadowRoot = view.getByTestId(nodeWithShadowRootDefaultTestId);
-      expect(rtl.within(nodeWithShadowRoot.shadowRoot).getByRole('button'), isA<ButtonElement>());
+      expect(rtl.within(nodeWithShadowRoot.shadowRoot!).getByRole('button'), isA<ButtonElement>());
     });
   });
 
@@ -72,7 +65,7 @@ void main() {
           'defaultValue': '3',
           'key': 2,
         })
-      ]) as ReactElement);
+      ]));
 
       final printCalls = recordPrintCalls(rtl.screen.debug);
       expect(printCalls, [
