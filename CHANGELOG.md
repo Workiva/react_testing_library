@@ -1,5 +1,8 @@
 # React Testing Library Changelog
 
+## 3.0.1
+* [#75](https://github.com/Workiva/react_testing_library/pull/75) Update changelog for 3.0.0 Release 
+
 ## 3.0.0
 * [#63](https://github.com/Workiva/react_testing_library/pull/63) Null Safety Migration
 
