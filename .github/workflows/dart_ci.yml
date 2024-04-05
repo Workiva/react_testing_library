@@ -48,3 +48,7 @@ jobs:
           dart run build_runner test -r -- -P non-concurrent-tests
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
+      - uses: anchore/sbom-action@v0
+        with:
+          path: ./
+          format: cyclonedx-json
