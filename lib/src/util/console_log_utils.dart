@@ -203,9 +203,6 @@ external _PropertyDescriptor _getOwnPropertyDescriptor(dynamic object, String pr
 @JS('Object.defineProperty')
 external void _defineProperty(dynamic object, String propertyName, dynamic descriptor);
 
-@JS('Object.prototype.hasOwnProperty')
-external bool _hasOwnProperty(dynamic object, String name);
-
 @JS()
 @anonymous
 class _PropertyDescriptor {}
