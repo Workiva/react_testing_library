@@ -109,7 +109,7 @@ RenderResult render(
   Node? container,
   Node? baseElement,
   bool hydrate = false,
-  bool legacyRoot = false,
+  bool legacyRoot = true,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
   /*UiFactory || ReactComponentFactoryProxy*/ dynamic wrapper,
