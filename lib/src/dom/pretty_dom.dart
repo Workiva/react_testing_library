@@ -109,5 +109,5 @@ class PrettyDomOptions {
   /// node that you wish to include in the output.
   /// {@endtemplate}
   external bool? Function(Node?)? get filterNode;
-  external set filterNode(bool? Function(Node?) value);
+  external set filterNode(bool? Function(Node?)? value);
 }
