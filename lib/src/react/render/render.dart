@@ -109,6 +109,7 @@ RenderResult render(
   Node? container,
   Node? baseElement,
   bool hydrate = false,
+  bool legacyRoot = true,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
   /*UiFactory || ReactComponentFactoryProxy*/ dynamic wrapper,
@@ -118,7 +119,9 @@ RenderResult render(
   // ignore: invalid_use_of_visible_for_testing_member
   componentZone = Zone.current;
 
-  final renderOptions = RenderOptions()..hydrate = hydrate;
+  final renderOptions = RenderOptions()
+    ..hydrate = hydrate
+    ..legacyRoot = legacyRoot;
   if (container != null) renderOptions.container = container;
   if (baseElement != null) renderOptions.baseElement = baseElement;
   if (wrapper != null) {
@@ -196,7 +199,7 @@ class RenderResult extends ScopedQueries {
     int? maxLength,
     PrettyDomOptions? options,
   ]) =>
-      printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options));
+      printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options ?? PrettyDomOptions()));
 
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///
