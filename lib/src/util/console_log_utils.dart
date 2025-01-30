@@ -25,12 +25,21 @@ import 'package:react/react_client/react_interop.dart';
 
 import 'console_log_formatter.dart';
 
+// Filter out ReactDOM.render logs by default to help them from interfering with log assertions
+// during the transition to React 18 and createRoot.
+// TODO make this configurable so consumers can opt into these warnings; ideally in one place for all of react-dart, RTL, over_react_test
+bool _defaultLogFilter(String log) => !log.startsWith('Warning: ReactDOM.render is no longer supported in React 18.');
+
 /// Runs a provided [callback] and afterwards [print]s each log that occurs during the runtime
 /// of that function.
 ///
 /// [print] is called in the same Zone as this function was called in, similar to a Stream subscription.
 ///
 /// Can be used to print logs, warnings, or errors based on [configuration].
+///
+/// If [logFilter] returns false for a given log, [onLog] will not be called.
+/// The default filter omits React 18 `ReactDOM.render` deprecation messages.
+///
 ///
 /// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
@@ -40,13 +49,14 @@ import 'console_log_formatter.dart';
 T printConsoleLogs<T>(
   T Function() callback, {
   ConsoleConfig configuration = ConsoleConfig.all,
+  bool Function(String) logFilter = _defaultLogFilter,
 }) {
   // Collect all the print calls and then print them at the end so that we don't hit
   // StreamController state errors or stack overflows caused by calling `print` inside
   // a `console.log` call called by print.
   final printCalls = <String>[];
   try {
-    return spyOnConsoleLogs(callback, configuration: configuration, onLog: printCalls.add);
+    return spyOnConsoleLogs(callback, configuration: configuration, onLog: printCalls.add, logFilter: logFilter);
   } finally {
     printCalls.forEach(print);
   }
@@ -59,6 +69,9 @@ T printConsoleLogs<T>(
 ///
 /// Can be used to capture logs, warnings, or errors based on [configuration].
 ///
+/// If [logFilter] returns false for a given log, [onLog] will not be called.
+/// The default filter omits React 18 `ReactDOM.render` deprecation messages.
+///
 /// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
 /// is reset prior to calling the provided callback.
@@ -68,8 +81,9 @@ T spyOnConsoleLogs<T>(
   T Function() callback, {
   required void Function(String) onLog,
   ConsoleConfig configuration = ConsoleConfig.all,
+  bool Function(String) logFilter = _defaultLogFilter,
 }) {
-  final stopSpying = startSpyingOnConsoleLogs(configuration: configuration, onLog: onLog);
+  final stopSpying = startSpyingOnConsoleLogs(configuration: configuration, onLog: onLog, logFilter: logFilter);
   try {
     return callback();
   } finally {
@@ -84,6 +98,9 @@ T spyOnConsoleLogs<T>(
 ///
 /// Can be used to capture logs, warnings, or errors based on [configuration].
 ///
+/// If [logFilter] returns false for a given log, [onLog] will not be called.
+/// The default filter omits React 18 `ReactDOM.render` deprecation messages.
+///
 /// The function assumes that any `propType` warnings that occur during
 /// the function runtime should be captured. Consequently, the `PropType` cache
 /// is reset prior to calling the provided callback.
@@ -92,6 +109,7 @@ T spyOnConsoleLogs<T>(
 void Function() startSpyingOnConsoleLogs({
   ConsoleConfig configuration = ConsoleConfig.all,
   required void Function(String) onLog,
+  bool Function(String) logFilter = _defaultLogFilter,
 }) {
   final logTypeToCapture = configuration.logType == 'all' ? ConsoleConfig.types : [configuration.logType];
   final consoleRefs = <String, /* JavascriptFunction */ dynamic>{};
@@ -128,7 +146,12 @@ void Function() startSpyingOnConsoleLogs({
           // loop when the logType is set to `log`.
           final args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10]
             ..removeWhere((arg) => arg == _undefined);
-          boundOnLog(format(message, args));
+          {
+            final logAsCallbackArg = format(message, args);
+            if (logFilter(logAsCallbackArg)) {
+              boundOnLog(logAsCallbackArg);
+            }
+          }
           _jsFunctionApply(consoleRefs[config] as Object, [message, ...args], thisArg: self);
         })
       }),
