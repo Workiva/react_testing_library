@@ -2,7 +2,7 @@ import { resolve, dirname, parse } from 'path';
 import { defineConfig } from 'vite';
 import pkg from './package.json' assert { type: 'json' };
 
-const input = 'src/_react-testing-library.js';
+const input = 'src/index.js';
 const jsPackageName = 'rtl';
 
 const globals = {
