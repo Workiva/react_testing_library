@@ -7,8 +7,8 @@ import 'package:test/test.dart';
 void main() {
   // This test helps us verify our test setup, ensuring
   // we're running on the React version we expect to be.
-  test('Setup check: window.React is React 18', () {
-    expect(reactVersion, startsWith('18.'));
+  test('Setup check: window.React is React 17', () {
+    expect(reactVersion, startsWith('17.'));
   });
 
   // TODO: Once we do a dual-CI setup, we can conditionall verify this using tags
