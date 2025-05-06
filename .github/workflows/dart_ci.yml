@@ -16,11 +16,18 @@ jobs:
       fail-fast: false
       matrix:
         sdk: [ 2.19.6 ]
+        react: [ 17, 18 ]
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: ${{ matrix.sdk }}
+
+      - name: Switch to React 17 Test HTML
+        if: ${{ matrix.react == 17 }}
+        run: |
+          mv test/unit/unit_test_template.html test/unit/unit_test_template-old.html
+          mv test/templates/unit_test_template-react17.html test/templates/unit_test_template.html
 
       - id: install
         name: Install dependencies
@@ -37,15 +44,15 @@ jobs:
 
       - name: Run tests (DDC)
         run: |
-          dart run build_runner test -- -P concurrent-tests
-          dart run build_runner test -- -P non-concurrent-tests
+          dart run build_runner test -- -P concurrent-tests --preset=react${{ matrix.react }}
+          dart run build_runner test -- -P non-concurrent-tests --preset=react${{ matrix.react }}
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
 
       - name: Run tests (dart2js)
         run: |
-          dart run build_runner test -r -- -P concurrent-tests
-          dart run build_runner test -r -- -P non-concurrent-tests
+          dart run build_runner test -r -- -P concurrent-tests --preset=react${{ matrix.react }}
+          dart run build_runner test -r -- -P non-concurrent-tests --preset=react${{ matrix.react }}
         timeout-minutes: 10
         if: ${{ always() && steps.install.outcome == 'success' }}
       - uses: anchore/sbom-action@v0
