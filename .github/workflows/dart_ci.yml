@@ -27,7 +27,7 @@ jobs:
         if: ${{ matrix.react == 17 }}
         run: |
           mv test/unit/unit_test_template.html test/unit/unit_test_template-old.html
-          mv test/templates/unit_test_template-react17.html test/templates/unit_test_template.html
+          mv test/unit/unit_test_template-react17.html test/unit/unit_test_template.html
 
       - id: install
         name: Install dependencies
