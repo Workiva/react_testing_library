@@ -58,7 +58,7 @@ String prettyDOM(
   int? indent,
   int? maxDepth,
   bool? min,
-  bool? Function(Node?)? filterNode,
+  bool Function(Node)? filterNode,
 }) {
   final options = PrettyDomOptions();
   if (indent != null) options.indent = indent;
@@ -108,6 +108,6 @@ class PrettyDomOptions {
   /// You can configure this behavior by passing a custom `filterNode` function that should return true for every
   /// node that you wish to include in the output.
   /// {@endtemplate}
-  external bool? Function(Node?)? get filterNode;
-  external set filterNode(bool? Function(Node?)? value);
+  external bool Function(Node)? get filterNode;
+  external set filterNode(bool Function(Node)? value);
 }
