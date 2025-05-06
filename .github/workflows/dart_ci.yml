@@ -57,5 +57,5 @@ jobs:
         if: ${{ always() && steps.install.outcome == 'success' }}
       - uses: anchore/sbom-action@v0
         with:
-          path: ./
+          path: ./${{ matrix.react }}/
           format: cyclonedx-json
