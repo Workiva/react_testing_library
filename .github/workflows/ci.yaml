@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'test_consume_*'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  checks:
+    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.7
+    with:
+      format-check: false
+
+  build:
+    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.7
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.19.6
+
+      - name: Check formatting
+        run: dart format . -l 120 --set-exit-if-changed
+
+  test-unit:
+    runs-on: ubuntu-latest
+    name: unit tests (${{ matrix.release-mode && 'release' || 'dev' }})
+    strategy:
+      fail-fast: false
+      matrix:
+        release-mode: [true, false]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.19.6
+
+      - name: Install dependencies
+        run: dart pub get
+        timeout-minutes: 2
+
+      - name: Run tests
+        timeout-minutes: 10
+        run: |
+          args=()
+          if [[ "${{ matrix.release-mode }}" == "true" ]]; then
+            args+=(--release)
+          fi
+
+          dart run build_runner test "${args[@]}" -- -P concurrent-tests
+          dart run build_runner test "${args[@]}" -- -P non-concurrent-tests
