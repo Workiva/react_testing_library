@@ -77,7 +77,8 @@ abstract class TextMatch {
   /// the value they provided as the `TextMatch` argument.
   static Object? Function(Object? originalMessage, Element container) _replaceDartInteropFunctionStringWith(
       Object? newValue) {
-    final dartInteropFunctionValueRegex = RegExp(r'([\"`]*)(function[\s\S]+})([\"`]*)(.*)([\s\S]+)*', multiLine: true);
+    final dartInteropFunctionValueRegex =
+        RegExp(r'''([\"`]*)(function[\s\S]+})([\"`]*)(?:'\))*(.*)([\s\S]+)*''', multiLine: true);
 
     return (originalMessage, container) {
       final newMessage = originalMessage.toString().replaceAllMapped(dartInteropFunctionValueRegex, (match) {
