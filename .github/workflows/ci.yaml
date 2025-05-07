@@ -34,7 +34,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: Workiva/gha-setup-credentials@v2.0.9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
