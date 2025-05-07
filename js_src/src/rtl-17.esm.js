@@ -1,10 +1,11 @@
+// This file was created by copying the last React 17 UMD bundle build and updating the exports to
+// allow these APIs to be imported from index.js. Avoid changing this file until it is deleted in
+// the major to drop support for React 17 so that we can avoid running into RTL issues like
+// https://github.com/eps1lon/dom-accessibility-api/issues/1075 which appear on newer versions of RTL
+// and are addressed in the React 18 upgrade.
+
 import * as l from 'react';
 import m from 'react-dom';
-// (function (global, factory) {
-//     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-dom')) :
-//         typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-dom'], factory) :
-//             (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rtl = {}, global.React, global.ReactDOM));
-// }(this, (function (exports, l, m) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -25414,99 +25415,5 @@ import m from 'react-dom';
 
     var fireEventObj = fireEvent;
 
-    // exports.act = act;
-    // exports.buildJsGetElementError = buildJsGetElementError;
-    // exports.buildQueries = buildQueries;
-    // exports.cleanup = cleanup;
-    // exports.configure = configure;
-    // exports.createEvent = createEvent;
-    // exports.eventMap = eventMap_1.eventMap;
-    // exports.findAllByAltText = findAllByAltText;
-    // exports.findAllByDisplayValue = findAllByDisplayValue;
-    // exports.findAllByLabelText = findAllByLabelText;
-    // exports.findAllByPlaceholderText = findAllByPlaceholderText;
-    // exports.findAllByRole = findAllByRole;
-    // exports.findAllByTestId = findAllByTestId;
-    // exports.findAllByText = findAllByText;
-    // exports.findAllByTitle = findAllByTitle;
-    // exports.findByAltText = findByAltText;
-    // exports.findByDisplayValue = findByDisplayValue;
-    // exports.findByLabelText = findByLabelText;
-    // exports.findByPlaceholderText = findByPlaceholderText;
-    // exports.findByRole = findByRole;
-    // exports.findByTestId = findByTestId;
-    // exports.findByText = findByText;
-    // exports.findByTitle = findByTitle;
-    // exports.fireEvent = fireEvent;
-    // exports.fireEventObj = fireEventObj;
-    // exports.getAllByAltText = getAllByAltText;
-    // exports.getAllByDisplayValue = getAllByDisplayValue;
-    // exports.getAllByLabelText = getAllByLabelTextWithSuggestions;
-    // exports.getAllByPlaceholderText = getAllByPlaceholderText;
-    // exports.getAllByRole = getAllByRole;
-    // exports.getAllByTestId = getAllByTestId;
-    // exports.getAllByText = getAllByText;
-    // exports.getAllByTitle = getAllByTitle;
-    // exports.getByAltText = getByAltText;
-    // exports.getByDisplayValue = getByDisplayValue;
-    // exports.getByLabelText = getByLabelTextWithSuggestions;
-    // exports.getByPlaceholderText = getByPlaceholderText;
-    // exports.getByRole = getByRole;
-    // exports.getByTestId = getByTestId;
-    // exports.getByText = getByText;
-    // exports.getByTitle = getByTitle;
-    // exports.getConfig = getConfig;
-    // exports.getDefaultNormalizer = getDefaultNormalizer;
-    // exports.getElementError = getElementError;
-    // exports.getMultipleElementsFoundError = getMultipleElementsFoundError;
-    // exports.getNodeText = getNodeText;
-    // exports.getQueriesForElement = getQueriesForElement;
-    // exports.getRoles = getRoles;
-    // exports.getSuggestedQuery = getSuggestedQuery;
-    // exports.isInaccessible = isInaccessible;
-    // exports.logDOM = logDOM;
-    // exports.logRoles = logRoles;
-    // exports.makeFindQuery = makeFindQuery;
-    // exports.makeGetAllQuery = makeGetAllQuery;
-    // exports.makeSingleQuery = makeSingleQuery;
-    // exports.prettyDOM = prettyDOM;
-    // exports.prettyFormat = build$1;
-    // exports.queries = queries;
-    // exports.queryAllByAltText = queryAllByAltTextWithSuggestions;
-    // exports.queryAllByAttribute = queryAllByAttribute;
-    // exports.queryAllByDisplayValue = queryAllByDisplayValueWithSuggestions;
-    // exports.queryAllByLabelText = queryAllByLabelTextWithSuggestions;
-    // exports.queryAllByPlaceholderText = queryAllByPlaceholderTextWithSuggestions;
-    // exports.queryAllByRole = queryAllByRoleWithSuggestions;
-    // exports.queryAllByTestId = queryAllByTestIdWithSuggestions;
-    // exports.queryAllByText = queryAllByTextWithSuggestions;
-    // exports.queryAllByTitle = queryAllByTitleWithSuggestions;
-    // exports.queryByAltText = queryByAltText;
-    // exports.queryByAttribute = queryByAttribute;
-    // exports.queryByDisplayValue = queryByDisplayValue;
-    // exports.queryByLabelText = queryByLabelText;
-    // exports.queryByPlaceholderText = queryByPlaceholderText;
-    // exports.queryByRole = queryByRole;
-    // exports.queryByTestId = queryByTestId;
-    // exports.queryByText = queryByText;
-    // exports.queryByTitle = queryByTitle;
-    // exports.queryHelpers = queryHelpers;
-    // exports.render = render;
-    // exports.screen = screen;
-    // exports.userEvent = index;
-    // exports.wait = wait$1;
-    // exports.waitFor = waitForWrapper;
-    // exports.waitForDomChange = waitForDomChangeWrapper;
-    // exports.waitForElement = waitForElement;
-    // exports.waitForElementToBeRemoved = waitForElementToBeRemoved;
-    // exports.within = getQueriesForElement;
-    // exports.wrapAllByQueryWithSuggestion = wrapAllByQueryWithSuggestion;
-    // exports.wrapSingleQueryWithSuggestion = wrapSingleQueryWithSuggestion;
-    //
-    // Object.defineProperty(exports, '__esModule', { value: true });
 var eventMap$1 = eventMap_1.eventMap;
-
 export { act, buildJsGetElementError, buildQueries, cleanup, configure, createEvent, eventMap$1 as eventMap, findAllByAltText, findAllByDisplayValue, findAllByLabelText, findAllByPlaceholderText, findAllByRole, findAllByTestId, findAllByText, findAllByTitle, findByAltText, findByDisplayValue, findByLabelText, findByPlaceholderText, findByRole, findByTestId, findByText, findByTitle, fireEvent, fireEventObj, getAllByAltText, getAllByDisplayValue, getAllByLabelTextWithSuggestions as getAllByLabelText, getAllByPlaceholderText, getAllByRole, getAllByTestId, getAllByText, getAllByTitle, getByAltText, getByDisplayValue, getByLabelTextWithSuggestions as getByLabelText, getByPlaceholderText, getByRole, getByTestId, getByText, getByTitle, getConfig, getDefaultNormalizer, getElementError, getMultipleElementsFoundError, getNodeText, getQueriesForElement, getRoles, getSuggestedQuery, isInaccessible, logDOM, logRoles, makeFindQuery, makeGetAllQuery, makeSingleQuery, prettyDOM, build$1 as prettyFormat, queries, queryAllByAltTextWithSuggestions as queryAllByAltText, queryAllByAttribute, queryAllByDisplayValueWithSuggestions as queryAllByDisplayValue, queryAllByLabelTextWithSuggestions as queryAllByLabelText, queryAllByPlaceholderTextWithSuggestions as queryAllByPlaceholderText, queryAllByRoleWithSuggestions as queryAllByRole, queryAllByTestIdWithSuggestions as queryAllByTestId, queryAllByTextWithSuggestions as queryAllByText, queryAllByTitleWithSuggestions as queryAllByTitle, queryByAltText, queryByAttribute, queryByDisplayValue, queryByLabelText, queryByPlaceholderText, queryByRole, queryByTestId, queryByText, queryByTitle, queryHelpers, render, screen, index as userEvent, wait$1 as wait, waitForWrapper as waitFor, waitForDomChangeWrapper as waitForDomChange, waitForElement, waitForElementToBeRemoved, getQueriesForElement as within, wrapAllByQueryWithSuggestion, wrapSingleQueryWithSuggestion };
-
-
-// })));
