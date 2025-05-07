@@ -31,16 +31,23 @@ jobs:
 
   test-unit:
     runs-on: ubuntu-latest
-    name: unit tests (${{ matrix.release-mode && 'release' || 'dev' }})
+    name: unit tests - React ${{ matrix.react }} (${{ matrix.release-mode && 'release' || 'dev' }})
     strategy:
       fail-fast: false
       matrix:
+        react: [ 17, 18 ]
         release-mode: [true, false]
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: 2.19.6
+
+      - name: Switch to React 17 Test HTML
+        if: ${{ matrix.react == 17 }}
+        run: |
+          mv test/unit/unit_test_template.html test/unit/unit_test_template-old.html
+          mv test/unit/unit_test_template-react17.html test/unit/unit_test_template.html
 
       - name: Install dependencies
         run: dart pub get
@@ -54,5 +61,5 @@ jobs:
             args+=(--release)
           fi
 
-          dart run build_runner test "${args[@]}" -- -P concurrent-tests
-          dart run build_runner test "${args[@]}" -- -P non-concurrent-tests
+          dart run build_runner test "${args[@]}" -- -P concurrent-tests --preset=react${{ matrix.react }}
+          dart run build_runner test "${args[@]}" -- -P non-concurrent-tests --preset=react${{ matrix.react }}
