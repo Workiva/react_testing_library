@@ -34,13 +34,16 @@ jobs:
     runs-on: small-al2023
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node
+      - uses: Workiva/gha-setup-credentials@v2.0.9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: Build JSON specs
+      - name: Install dependencies
         run: npm install
         working-directory: ./js_src
 
-      - name: Build Dart components
+      - name: Build JS bundle
         run: npm run build
         working-directory: ./js_src
 
