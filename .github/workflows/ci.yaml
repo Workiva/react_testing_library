@@ -29,6 +29,24 @@ jobs:
       - name: Check formatting
         run: dart format . -l 120 --set-exit-if-changed
 
+  js-bundle:
+    name: Build JS bundle
+    runs-on: small-al2023
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node
+
+      - name: Build JSON specs
+        run: npm install
+        working-directory: ./js_src
+
+      - name: Build Dart components
+        run: npm run build
+        working-directory: ./js_src
+
+      - name: Check for untracked API changes
+        run: git diff --exit-code
+
   test-unit:
     runs-on: ubuntu-latest
     name: unit tests - React ${{ matrix.react }} (${{ matrix.release-mode && 'release' || 'dev' }})
