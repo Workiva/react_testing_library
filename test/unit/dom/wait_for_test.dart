@@ -58,7 +58,7 @@ void main() {
               var numRuns = 0;
               await rtl.waitFor(() async {
                 numRuns++;
-                expect(numRuns, 3);
+                expect(numRuns, 5);
               });
             }, timeout: asyncQueryTestTimeout);
 

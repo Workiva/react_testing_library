@@ -20,7 +20,9 @@ void main() {
     }, tags: 'react-18');
   });
 
-  // Verify that React 17 stays on a version before this issue: https://github.com/eps1lon/dom-accessibility-api/issues/1075
+  // Verify that React 17 stays on an RTL version before this issue: https://github.com/eps1lon/dom-accessibility-api/issues/1075
+  // `js_src/src/rtl-17.esm.js` should not be updated until it is deleted in the
+  // next major when React 17 support is dropped and this test can be deleted.
   test('Verify that RTL version breaking change does not exist for React 17 version', () {
     final view = render(react.button({}, ['abc', react.span({}, ' - '), 'abc']));
     expect(view.getByRole('button', name: 'abc - abc'), isInTheDocument);
