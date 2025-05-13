@@ -12,7 +12,7 @@ const globals = {
 
 export default defineConfig({
   define: {
-    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.NODE_ENV': JSON.stringify('development'),
   },
   build: {
     emptyOutDir: true,
