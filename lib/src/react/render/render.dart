@@ -92,6 +92,11 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// otherwise this defaults to `document.body`. This is used as the base element
 /// for the queries as well as what is printed when you use [RenderResult.debug].
 ///
+/// ### [legacyRoot]
+/// Whether [render] should support the legacy react_dom.render like in React 17 instead of `createRoot`.
+/// This is defaulted to true, but can be set to false to render with support for new
+/// concurrent features (i.e. `createRoot`).
+///
 /// ### [wrapper]
 /// An OverReact `UiFactory` or a [ReactComponentFactoryProxy] which will be wrapped around the [ui].
 /// This is especially useful when testing components that need a context provider of some kind.
