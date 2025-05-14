@@ -92,6 +92,11 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// otherwise this defaults to `document.body`. This is used as the base element
 /// for the queries as well as what is printed when you use [RenderResult.debug].
 ///
+/// ### [legacyRoot]
+/// Whether [render] should support the legacy react_dom.render like in React 17 instead of `createRoot`.
+/// This is defaulted to true, but can be set to false to render with support for new
+/// concurrent features (i.e. `createRoot`).
+///
 /// ### [wrapper]
 /// An OverReact `UiFactory` or a [ReactComponentFactoryProxy] which will be wrapped around the [ui].
 /// This is especially useful when testing components that need a context provider of some kind.
@@ -109,6 +114,7 @@ RenderResult render(
   Node? container,
   Node? baseElement,
   bool hydrate = false,
+  bool legacyRoot = true,
   // TODO: Implement if CPLAT-13502 is deemed necessary
   // Map<String, Query> queries,
   /*UiFactory || ReactComponentFactoryProxy*/ dynamic wrapper,
@@ -118,7 +124,9 @@ RenderResult render(
   // ignore: invalid_use_of_visible_for_testing_member
   componentZone = Zone.current;
 
-  final renderOptions = RenderOptions()..hydrate = hydrate;
+  final renderOptions = RenderOptions()
+    ..hydrate = hydrate
+    ..legacyRoot = legacyRoot;
   if (container != null) renderOptions.container = container;
   if (baseElement != null) renderOptions.baseElement = baseElement;
   if (wrapper != null) {
@@ -196,7 +204,7 @@ class RenderResult extends ScopedQueries {
     int? maxLength,
     PrettyDomOptions? options,
   ]) =>
-      printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options));
+      printConsoleLogs(() => _jsRenderResult.debug(baseElement, maxLength, options ?? PrettyDomOptions()));
 
   /// Updates the props of the [renderedElement] by providing an updated [ui] element.
   ///

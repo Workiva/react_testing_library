@@ -4,6 +4,7 @@ targets:
       build_web_compilers|entrypoint:
         # These are globs for the entrypoints you want to compile.
         generate_for:
+          - example/**
           - test/**.browser_test.dart
         options:
           # List any dart2js specific args here, or omit it.
