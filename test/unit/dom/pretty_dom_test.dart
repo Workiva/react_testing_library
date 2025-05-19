@@ -32,6 +32,7 @@ void main() {
             {},
             react.p({}, 'you again?'),
           ),
+          react.script({}),
         );
         rtl.render(vDom);
       });
@@ -54,6 +55,10 @@ void main() {
 
       test('when min is true', () {
         expect(rtl.prettyDOM(vDomRootRef.current, min: true), _expectedPrettyDomWithMinSetToTrue);
+      });
+
+      test('when filterNode is set', () {
+        expect(rtl.prettyDOM(vDomRootRef.current, filterNode: (_) => true), _expectedPrettyDomWithFilterNode);
       });
 
       test('with null input', () {
@@ -99,6 +104,18 @@ const _expectedPrettyDomWithMaxDepthOfTwo = '''<div>
 </div>''';
 
 const _expectedPrettyDomWithMinSetToTrue = '<div><p>hi there!</p><div><p>you again?</p></div></div>';
+
+const _expectedPrettyDomWithFilterNode = '''<div>
+  <p>
+    hi there!
+  </p>
+  <div>
+    <p>
+      you again?
+    </p>
+  </div>
+  <script />
+</div>''';
 
 const _expectedPrettyDomNull = '''<body>
   
