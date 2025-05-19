@@ -19,6 +19,8 @@ import 'package:react/react_client.dart' show Ref;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
+import '../react_version_test.dart';
+
 void main() {
   group('prettyDOM', () {
     group('returns a formatted string of the HTML produced by the node provided', () {
@@ -32,7 +34,8 @@ void main() {
             {},
             react.p({}, 'you again?'),
           ),
-          react.script({}),
+          // Only test filterNode on React 18.
+          reactVersion.startsWith('18.') ? react.script({}) : null,
         );
         rtl.render(vDom);
       });
@@ -59,7 +62,7 @@ void main() {
 
       test('when filterNode is set', () {
         expect(rtl.prettyDOM(vDomRootRef.current, filterNode: (_) => true), _expectedPrettyDomWithFilterNode);
-      });
+      }, tags: 'react-18');
 
       test('with null input', () {
         expect(rtl.prettyDOM(null), _expectedPrettyDomNull);
