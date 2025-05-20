@@ -21,3 +21,9 @@ presets:
     include_tags: run-alone
     concurrency: 1
     file: test/unit/user_event/type_test.dart
+
+  react18:
+    exclude_tags: react-17
+
+  react17:
+    exclude_tags: react-18

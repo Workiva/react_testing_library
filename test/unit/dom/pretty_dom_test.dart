@@ -19,6 +19,8 @@ import 'package:react/react_client.dart' show Ref;
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
+import '../react_version_test.dart';
+
 void main() {
   group('prettyDOM', () {
     group('returns a formatted string of the HTML produced by the node provided', () {
@@ -32,6 +34,8 @@ void main() {
             {},
             react.p({}, 'you again?'),
           ),
+          // Only test filterNode on React 18.
+          reactVersion.startsWith('18.') ? react.script({}) : null,
         );
         rtl.render(vDom);
       });
@@ -55,6 +59,10 @@ void main() {
       test('when min is true', () {
         expect(rtl.prettyDOM(vDomRootRef.current, min: true), _expectedPrettyDomWithMinSetToTrue);
       });
+
+      test('when filterNode is set', () {
+        expect(rtl.prettyDOM(vDomRootRef.current, filterNode: (_) => true), _expectedPrettyDomWithFilterNode);
+      }, tags: 'react-18');
 
       test('with null input', () {
         expect(rtl.prettyDOM(null), _expectedPrettyDomNull);
@@ -99,6 +107,18 @@ const _expectedPrettyDomWithMaxDepthOfTwo = '''<div>
 </div>''';
 
 const _expectedPrettyDomWithMinSetToTrue = '<div><p>hi there!</p><div><p>you again?</p></div></div>';
+
+const _expectedPrettyDomWithFilterNode = '''<div>
+  <p>
+    hi there!
+  </p>
+  <div>
+    <p>
+      you again?
+    </p>
+  </div>
+  <script />
+</div>''';
 
 const _expectedPrettyDomNull = '''<body>
   
