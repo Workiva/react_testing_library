@@ -66,7 +66,7 @@ String prettyDOM(
   if (min != null) options.min = min;
   if (filterNode != null) {
     // Convert from one arg to three args to work around typing issue in https://github.com/testing-library/dom-testing-library/issues/1360
-    final jsFilterNode = (Node n, _, __) => filterNode(n);
+    final jsFilterNode = (Node n, [_, __]) => filterNode(n);
 
     options.filterNode = allowInterop(jsFilterNode);
   }
@@ -113,6 +113,6 @@ class PrettyDomOptions {
   /// You can configure this behavior by passing a custom `filterNode` function that should return true for every
   /// node that you wish to include in the output.
   /// {@endtemplate}
-  external bool Function(Node, dynamic, dynamic)? get filterNode;
-  external set filterNode(bool Function(Node, dynamic, dynamic)? value);
+  external bool Function(Node, [dynamic, dynamic])? get filterNode;
+  external set filterNode(bool Function(Node, [dynamic, dynamic])? value);
 }
