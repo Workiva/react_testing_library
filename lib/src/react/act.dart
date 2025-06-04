@@ -24,6 +24,26 @@ import 'package:js/js.dart';
 external dynamic _act(void Function([dynamic, dynamic, dynamic]) callback);
 
 Future<void> act(FutureOr<void> Function() callback) async {
-  final promise = _act(allowInterop(([_, __, ___]) => callback())) as Object;
+  final callbackReturnValue = callback();
+  final promise = _act(allowInterop(([_, __, ___]) => callbackReturnValue is Future ? futureToPromise(callbackReturnValue) : callbackReturnValue)) as Object;
   await promiseToFuture<void>(promise);
+}
+
+// copied from react-dart https://github.com/Workiva/react-dart/blob/489d86fa72ab9a4ff60972180cf9a46c6ca2cffd/lib/src/js_interop_util.dart#L24-L40
+/// Creates JS `Promise` which is resolved when [future] completes.
+///
+/// See also:
+/// - [promiseToFuture]
+Promise futureToPromise<T>(Future<T> future) {
+  return Promise(allowInterop((resolve, reject) {
+    future.then((result) => resolve(result), onError: reject);
+  }));
+}
+
+@JS()
+abstract class Promise {
+  external factory Promise(
+      Function(dynamic Function(dynamic value) resolve, dynamic Function(dynamic error) reject) executor);
+
+  external Promise then(dynamic Function(dynamic value) onFulfilled, [dynamic Function(dynamic error) onRejected]);
 }

@@ -39,8 +39,24 @@ void main() {
       final view = rtl.render(ActTest({}));
       expect(useEffectCalls, 1);
 
-      final button = view.getByRole('button') as ButtonElement;
-      await rtl.act(() => button.click());
+      await rtl.act(() {
+        final button = view.getByRole('button') as ButtonElement;
+        button.click();
+      });
+      expect(useEffectCalls, 2);
+    });
+
+    test('also works with an async callback', () async {
+      expect(useEffectCalls, 0);
+      final view = rtl.render(ActTest({}));
+      expect(useEffectCalls, 1);
+
+      Future<void> asyncCallback() async {
+        final button = await view.findByRole('button') as ButtonElement;
+        button.click();
+      }
+
+      await rtl.act(asyncCallback);
       expect(useEffectCalls, 2);
     });
   });
