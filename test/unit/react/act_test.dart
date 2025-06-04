@@ -20,6 +20,8 @@ import 'package:react/react_client.dart';
 import 'package:react_testing_library/react_testing_library.dart' as rtl;
 import 'package:test/test.dart';
 
+import '../util/exception.dart';
+
 void main() {
   group('act', () {
     setUp(() => useEffectCalls = 0);
@@ -58,6 +60,16 @@ void main() {
 
       await rtl.act(asyncCallback);
       expect(useEffectCalls, 2);
+    });
+
+    test('errors thrown in sync callback propagate', () {
+      expect(() async => await rtl.act(() => throw ExceptionForTesting()),
+          throwsA(isA<ExceptionForTesting>()));
+    });
+
+    test('errors thrown in async callback propagate', () {
+      expect(() async => await rtl.act(() async => throw ExceptionForTesting()),
+          throwsA(isA<ExceptionForTesting>()));
     });
   });
 }
