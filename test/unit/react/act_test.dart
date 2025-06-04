@@ -63,13 +63,11 @@ void main() {
     });
 
     test('errors thrown in sync callback propagate', () {
-      expect(() async => await rtl.act(() => throw ExceptionForTesting()),
-          throwsA(isA<ExceptionForTesting>()));
+      expect(() async => await rtl.act(() => throw ExceptionForTesting()), throwsA(isA<ExceptionForTesting>()));
     });
 
     test('errors thrown in async callback propagate', () {
-      expect(() async => await rtl.act(() async => throw ExceptionForTesting()),
-          throwsA(isA<ExceptionForTesting>()));
+      expect(() async => await rtl.act(() async => throw ExceptionForTesting()), throwsA(isA<ExceptionForTesting>()));
     });
   });
 }
