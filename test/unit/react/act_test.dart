@@ -67,12 +67,11 @@ var useEffectCalls = 0;
 ReactDartFunctionComponentFactoryProxy ActTest = react.registerFunctionComponent((props) {
   final text = useState('123');
   useEffect(() => useEffectCalls++);
-  return
-    react.button({
-      'onClick': (e) {
-        text.set('abc');
-      },
-    }, [
-      'Click me!'
-    ]);
+  return react.button({
+    'onClick': (e) {
+      text.set('abc');
+    },
+  }, [
+    'Click me!'
+  ]);
 });
