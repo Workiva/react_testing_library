@@ -16,3 +16,4 @@
 library rtl.react;
 
 export '../src/react/render/render.dart' show render, RenderResult;
+export '../src/react/act.dart' show act;

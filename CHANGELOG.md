@@ -1,5 +1,15 @@
 # React Testing Library Changelog
 
+## 3.1.0
+* [#86](https://github.com/Workiva/react_testing_library/pull/86) Add Dart bindings for React `act`
+
+## 3.0.3
+* [#84](https://github.com/Workiva/react_testing_library/pull/84) React 18 dual support
+
+## 3.0.2
+* [#76](https://github.com/Workiva/react_testing_library/pull/76) GHA OSS changes
+* [#77](https://github.com/Workiva/react_testing_library/pull/77) Workiva analysis options v2
+
 ## 3.0.1
 * [#75](https://github.com/Workiva/react_testing_library/pull/75) Update changelog for 3.0.0 Release 
 
