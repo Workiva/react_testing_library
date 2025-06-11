@@ -141,7 +141,7 @@ class _HasDescription extends CustomMatcher with ElementTextContentMatcherMixin 
 
     final elementsWithDescriptions = <Element>[];
     _idsOfElementsThatDescribe(item)?.forEach((id) {
-      final elWithDesc = querySelector('#$id');
+      final elWithDesc = querySelector('#${Css.escape(id)}');
       if (elWithDesc != null) {
         elementsWithDescriptions.add(elWithDesc);
       }
