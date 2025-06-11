@@ -31,15 +31,16 @@ void main() {
         {},
         react.button({
           'aria-label': 'Close',
-          'aria-describedby': 'description-close',
+          // Use a special character to verify that it is escaped correctly in hasDescription.
+          'aria-describedby': 'r:description-close',
         }, 'X'),
         react.button({
           'aria-label': 'Has Multiple Descriptions',
-          'aria-describedby': 'description-close some-other-description',
+          'aria-describedby': 'r:description-close some-other-description',
         }, 'X'),
         react.button({}, 'Delete'),
         react.button({'aria-describedby': 'not-found'}, 'Has id not found'),
-        react.div({'id': 'description-close'}, 'Closing will discard   any changes'),
+        react.div({'id': 'r:description-close'}, 'Closing will discard   any changes'),
         react.div({'id': 'some-other-description'}, 'Some other  description'),
       ));
     });
