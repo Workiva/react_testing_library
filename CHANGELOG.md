@@ -1,5 +1,8 @@
 # React Testing Library Changelog
 
+## 3.1.1
+* [#89](https://github.com/Workiva/react_testing_library/pull/89) Escape special characters in ids in `hasDescription` matcher
+
 ## 3.1.0
 * [#86](https://github.com/Workiva/react_testing_library/pull/86) Add Dart bindings for React `act`
 
