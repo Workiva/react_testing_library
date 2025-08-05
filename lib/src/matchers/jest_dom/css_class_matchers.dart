@@ -34,8 +34,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// import 'package:react_testing_library/matchers.dart' show hasClasses;
-/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// 
+/// 
 /// import 'package:test/test.dart';
 ///
 /// main() {
@@ -78,8 +78,8 @@ Matcher hasClasses(dynamic classes) => _ElementClassNameMatcher(_ClassNameMatche
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// import 'package:react_testing_library/matchers.dart' show hasExactClasses;
-/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// 
+/// 
 /// import 'package:test/test.dart';
 ///
 /// main() {
@@ -120,8 +120,8 @@ Matcher hasExactClasses(dynamic classes) =>
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// import 'package:react_testing_library/matchers.dart' show excludesClasses;
-/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// 
+/// 
 /// import 'package:test/test.dart';
 ///
 /// main() {

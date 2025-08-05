@@ -24,7 +24,7 @@ import 'package:js/js.dart';
 /// This can be helpful when debugging tests:
 ///
 /// ```dart
-/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// 
 /// import 'package:test/test.dart';
 ///
 /// main() {

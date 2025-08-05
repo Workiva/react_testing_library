@@ -45,8 +45,8 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 /// ```dart
 /// import 'package:react/react.dart' as react;
 /// import 'package:test/test.dart';
-/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
-/// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+/// 
+/// 
 ///
 /// main() {
 ///   test('', () {
@@ -74,7 +74,7 @@ import 'package:react_testing_library/src/react/render/types.dart' show JsRender
 ///
 /// import 'package:react/react.dart' as react;
 /// import 'package:test/test.dart';
-/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+/// 
 ///
 /// main() {
 ///   test('', () {
