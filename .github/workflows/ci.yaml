@@ -11,12 +11,14 @@ on:
 
 jobs:
   checks:
-    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.7
+    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.11
     with:
       format-check: false
+      additional-checks: |
+        no_entrypoint_imports
 
   build:
-    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.7
+    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.11
 
   format:
     runs-on: ubuntu-latest
