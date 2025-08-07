@@ -29,8 +29,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/constants.dart'
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// 
-/// 
+/// import 'package:react_testing_library/matchers.dart' show isEmptyDomElement;
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {

@@ -47,8 +47,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/get_value_of.da
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// 
-/// 
+/// import 'package:react_testing_library/matchers.dart' show hasValue;
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {

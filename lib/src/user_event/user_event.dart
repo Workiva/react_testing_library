@@ -78,9 +78,9 @@ abstract class UserEvent {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show isChecked;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -162,9 +162,9 @@ abstract class UserEvent {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show isChecked;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -270,9 +270,9 @@ abstract class UserEvent {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -386,9 +386,9 @@ abstract class UserEvent {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -679,8 +679,8 @@ abstract class UserEvent {
   /// import 'dart:html';
   ///
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -797,9 +797,9 @@ abstract class UserEvent {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -872,9 +872,9 @@ abstract class UserEvent {
   /// import 'dart:html';
   ///
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -975,9 +975,9 @@ abstract class UserEvent {
   /// import 'dart:html';
   ///
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -1071,9 +1071,9 @@ abstract class UserEvent {
   /// import 'dart:html';
   ///
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show isFocused;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -1172,9 +1172,9 @@ abstract class UserEvent {
   /// ```dart
   /// import 'package:react/hooks.dart';
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -1267,9 +1267,9 @@ abstract class UserEvent {
   /// ```dart
   /// import 'package:react/hooks.dart';
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {
@@ -1367,9 +1367,9 @@ abstract class UserEvent {
   /// import 'dart:html';
   ///
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show hasValue;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
+  /// import 'package:react_testing_library/user_event.dart';
   /// import 'package:test/test.dart';
   ///
   /// void main() {

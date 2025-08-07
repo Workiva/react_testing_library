@@ -58,8 +58,8 @@ mixin ByPlaceholderTextQueries on IQueries {
   ///
   /// ```dart
   /// import 'package:react/react.dart' as react;
-  /// 
-  /// 
+  /// import 'package:react_testing_library/matchers.dart' show isInTheDocument;
+  /// import 'package:react_testing_library/react_testing_library.dart' as rtl;
   /// import 'package:test/test.dart';
   ///
   /// main() {

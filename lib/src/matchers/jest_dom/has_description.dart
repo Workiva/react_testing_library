@@ -51,8 +51,8 @@ import 'package:react_testing_library/src/matchers/jest_dom/util/element_text_co
 ///
 /// ```dart
 /// import 'package:react/react.dart' as react;
-/// 
-/// 
+/// import 'package:react_testing_library/matchers.dart' show hasDescription;
+/// import 'package:react_testing_library/react_testing_library.dart' as rtl;
 /// import 'package:test/test.dart';
 ///
 /// main() {
