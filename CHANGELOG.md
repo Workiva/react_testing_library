@@ -1,5 +1,8 @@
 # React Testing Library Changelog
 
+## 3.1.2
+* [#90](https://github.com/Workiva/react_testing_library/pull/90) Add no_entrypoint_imports to CI
+
 ## 3.1.1
 * [#89](https://github.com/Workiva/react_testing_library/pull/89) Escape special characters in ids in `hasDescription` matcher
 
