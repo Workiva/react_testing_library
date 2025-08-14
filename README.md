@@ -109,8 +109,7 @@ We *strongly* recommend using the [test_html_builder] library to create a templa
 <html lang="en">
   <head>
       <title>{{testName}}</title>
-      <script src="packages/react/react.js"></script>
-      <script src="packages/react/react_dom.js"></script>
+      <script src="packages/react/js/react.dev.js"></script>
       <script src="packages/react_testing_library/js/react-testing-library.js"></script>
 
       {{testScript}}
@@ -133,8 +132,7 @@ If for some reason you do not wish to use the [test_html_builder] library to gen
 <html lang="en">
   <head>
       <title>Some Unit Test</title>
-      <script src="packages/react/react.js"></script>
-      <script src="packages/react/react_dom.js"></script>
+      <script src="packages/react/js/react.dev.js"></script>
       <script src="packages/react_testing_library/js/react-testing-library.js"></script>
 
       <link rel="x-dart-test" href="some_unit_test.dart">
