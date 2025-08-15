@@ -1,5 +1,8 @@
 # React Testing Library Changelog
 
+## 3.1.3
+* [#92](https://github.com/Workiva/react_testing_library/pull/92) Update README to use React 18 JS files
+
 ## 3.1.2
 * [#90](https://github.com/Workiva/react_testing_library/pull/90) Add no_entrypoint_imports to CI
 
